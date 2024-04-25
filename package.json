@@ -1,10 +1,19 @@
 {
   "name": "shit-ap",
   "version": "0.1.0",
-  "description": "",
-  "main": "index.js",
+  "codename": "shit",
+  "repository": {
+		"type": "git",
+		"url": "https://git.gay/blueb/shit-ap.git"
+	},
+  "packageManager": "pnpm@8.15.2",
+  "workspaces": [
+		"packages/frontend",
+		"packages/backend"
+	],
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "pnpm -r build"
   },
   "keywords": [],
   "author": "blueb",

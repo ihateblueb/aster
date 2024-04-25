@@ -38,4 +38,4 @@ dbuser: shitap
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
-dbpw:
+dbpw: 1210
