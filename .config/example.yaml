@@ -1,0 +1,41 @@
+#
+#   SHIT-AP's CONFIG
+#
+
+# URL (url)
+# ---
+# Do not change this after your instance has begun federating!
+# Start this with https:// or http:// and end it with a /
+# e.g. https://ap.example.com/
+url: "https://"
+
+# PORT (port)
+# ----
+# Port that the instance will run on.
+# e.g. 3000
+port: 3000
+
+# DATABASE HOST (dbhost)
+# -------------
+# Hostname you'd use to connect to the Postgres instance
+# Typically, you won't need to change this.
+# e.g. localhost
+dbhost: localhost
+
+# DATABASE NAME (dbname)
+# -------------
+# Name of the database to connect to
+# e.g. shitap
+dbname: shitap
+
+# DATABASE USER (dbuser)
+# -------------
+# Name of the user to connect to the database as
+# e.g. shitap
+dbuser: shitap
+
+# DATABASE PASSWORD (dbpw)
+# -----------------
+# Password of the user to connect to the database as
+# Please randomly generate this!
+dbpw:
