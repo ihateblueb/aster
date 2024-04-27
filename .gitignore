@@ -1,7 +1,8 @@
 # super sensitive!
-.config/production.yaml
+.config/production.yml
 
 # Logs
+packages/backend/log
 packages/backend/logs
 packages/backend/*.log
 packages/backend/npm-debug.log*
