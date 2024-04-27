@@ -42,15 +42,15 @@ app.use('/', require('./routes/router.js'))
 app.use(errorHandler())
 
 app.use('*', (req, res) => {
-    res.setHeader('Content-Type', 'application/activity+json')
+	res.setHeader('Content-Type', 'application/activity+json')
 })
 
 app.use('*', (req, res) => {
-    res.status(404).json({ message: 'Not found.' })
+	res.status(404).json({ message: 'Not found.' })
 })
 
 app.listen(config.port, () =>
-    console.info(
-        `[backend] started instance as ${config.url} (port ${config.port})`
-    )
+	console.info(
+		`[backend] started instance as ${config.url} (port ${config.port})`
+	)
 )
