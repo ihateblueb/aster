@@ -28,27 +28,7 @@ const typeorm = require("typeorm");
 
 const config = require('./util/config.js');
 
-const dataSource = new typeorm.DataSource({
-    type: "postgres",
-    host: config.dbhost,
-    port: config.dbport,
-    username: config.dbuser,
-    password: config.dbpass,
-    database: config.dbname,
-    entities: ["./entities/"],
-    migrations: ["./migrations/"],
-    logging: true,
-})
-
-dataSource.initialize()
-    .then(() => {
-        console.log("[database] database connected successfully!");
-    })
-    .catch((e) => {
-        console.error("[database] "+e);
-        console.error("[database] fatal. now aborting.");
-        process.exit(1);
-    })
+const dataSource = require('./util/database.ts');
 
 const app = express();
 

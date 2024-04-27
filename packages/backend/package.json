@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "main": "src/server.js",
     "scripts": {
-        "migrations:generate": "",
+        "migrate": "pnpm exec typeorm migration:run -d ./src/util/database.ts",
         "start": "node src/server.js"
     },
     "license": "AGPL-3.0",

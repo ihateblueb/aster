@@ -12,7 +12,7 @@ module.exports = new EntitySchema({
         username: {
             type: "varchar",
         },
-        displayname: {
+        displayName: {
             type: "varchar",
         },
         avatar: {
@@ -24,7 +24,7 @@ module.exports = new EntitySchema({
         local: {
             type: "boolean",
         },
-        publickey: {
+        publicKey: {
             type: "text",
         },
     }
