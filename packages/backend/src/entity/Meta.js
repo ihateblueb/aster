@@ -1,19 +1,11 @@
 const EntitySchema = require("typeorm").EntitySchema
 
 module.exports = new EntitySchema({
-    name: "note",
-    tableName: "notes",
+    name: "meta",
+    tableName: "meta",
     columns: {
-        id: {
-            primary: true,
-            type: "int",
-            generated: true,
-        },
-        author: {
-            type: "varchar",
-        },
-        content: {
-            type: "text",
+        openregistrations: {
+            type: "boolean",
         },
     }
 })
