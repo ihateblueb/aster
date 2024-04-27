@@ -1,20 +1,20 @@
 {
-  "name": "aster",
-  "version": "0.1.0",
-  "repository": {
-		"type": "git",
-		"url": "https://git.gay/blueb/aster.git"
-	},
-  "packageManager": "pnpm@8.15.2",
-  "workspaces": [
-		"packages/frontend",
-		"packages/backend"
-	],
-  "private": true,
-  "scripts": {
-    "build": "pnpm -r build"
-  },
-  "keywords": [],
-  "author": "blueb",
-  "license": "AGPL-3.0"
+    "name": "aster",
+    "version": "0.1.0",
+    "repository": {
+        "type": "git",
+        "url": "https://git.gay/blueb/aster.git"
+    },
+    "packageManager": "pnpm@8.15.2",
+    "workspaces": [
+        "packages/frontend",
+        "packages/backend"
+    ],
+    "private": true,
+    "scripts": {
+        "build": "pnpm -r build"
+    },
+    "keywords": [],
+    "author": "blueb",
+    "license": "AGPL-3.0"
 }

@@ -1,13 +1,13 @@
-const router = require('express').Router();
+const router = require('express').Router()
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
     if (req.query.resource) {
         res.json({
-            "links": [
+            links: [
                 {
-                    "rel": "http://nodeinfo.diaspora.software/ns/schema/2.0",
-                    "href": "https://shit1.blueb.me/nodeinfo/2.0"
+                    rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
+                    href: 'https://shit1.blueb.me/nodeinfo/2.0'
                 }
             ]
         })
@@ -20,12 +20,12 @@ router.get('/.well-known/nodeinfo', (req, res) => {
 router.get('/.well-known/webfinger', (req, res) => {
     if (req.query.resource) {
         res.json({
-            "subject": "acct:blueb@shit1.blueb.me",
-            "links": [
+            subject: 'acct:blueb@shit1.blueb.me',
+            links: [
                 {
-                    "rel": "self",
-                    "type": "application/activity+json",
-                    "href": "https://shit1.blueb.me/users/blueb"
+                    rel: 'self',
+                    type: 'application/activity+json',
+                    href: 'https://shit1.blueb.me/users/blueb'
                 }
             ]
         })
@@ -34,4 +34,4 @@ router.get('/.well-known/webfinger', (req, res) => {
     }
 })
 
-module.exports = router;
+module.exports = router

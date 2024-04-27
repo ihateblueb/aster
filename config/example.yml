@@ -7,7 +7,7 @@
 # Do not change this after your instance has begun federating!
 # Start this with https:// or http:// and end it with a /
 # e.g. https://ap.example.com/
-url: "https://example.com/"
+url: 'https://example.com/'
 
 # PORT (port)
 # ----
@@ -38,10 +38,10 @@ dbuser: aster
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
-dbpass: 
+dbpass:
 
 # NODE NAME (nodename)
 # ---------
 # Name of your instance
 # e.g. Aster
-nodename: "Aster"
+nodename: 'Aster'
