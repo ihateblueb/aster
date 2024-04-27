@@ -34,8 +34,8 @@ dbname: shitap
 # e.g. shitap
 dbuser: shitap
 
-# DATABASE PASSWORD (dbpw)
+# DATABASE PASSWORD (dbpass)
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
-dbpw: 
+dbpass: 

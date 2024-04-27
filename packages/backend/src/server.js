@@ -4,9 +4,7 @@ inject();
 const yaml = require('js-yaml');
 const fs = require('fs');
 const express = require('express');
-const cookieParser = require('cookie-parser');
 const cors = require('cors');
-const helmet = require('helmet');
 const logger = require('./util/logger.js');
 
 console.log("[config] loading configuration...");
@@ -32,17 +30,14 @@ app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
 // Configure custom logger middleware
 app.use(logger.dev, logger.combined);
 
-app.use(cookieParser());
 app.use(cors());
-app.use(helmet());
 
 // This middleware adds the json header to every response
 app.use('*', (req, res, next) => {
-    res.setHeader('Content-Type', 'application/json');
+    res.setHeader('Content-Type', 'application/activity+json');
     next();
 })
 
-// Assign Routes
 app.use('/', require('./routes/router.js'));
 
 // Handle errors
@@ -52,7 +47,7 @@ app.use(errorHandler());
 app.use('*', (req, res) => {
     res
     .status(404)
-    .json( {status: false, message: 'Not found.'} );
+    .json( {message: 'Not found.'} );
 })
 
 app.listen(

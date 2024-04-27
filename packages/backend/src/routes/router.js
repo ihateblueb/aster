@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
-
-// You can require and use your routes here ;)
-
+router.use('/', require('./well-known.js'));
+router.use('/', require('./nodeinfo.js'));
+router.use('/', require('./user.js'));
+router.use('/', require('./note.js'));
 
 module.exports = router;

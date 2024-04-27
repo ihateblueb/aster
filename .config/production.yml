@@ -13,7 +13,7 @@ url: "https://"
 # ----
 # Port that the instance will run on.
 # e.g. 3000
-port: 3000
+port: 3093
 
 # DATABASE HOST (dbhost)
 # -------------
@@ -34,8 +34,8 @@ dbname: shitap
 # e.g. shitap
 dbuser: shitap
 
-# DATABASE PASSWORD (dbpw)
+# DATABASE PASSWORD (dbpass)
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
-dbpw: 1210
+dbpass: 243298234
