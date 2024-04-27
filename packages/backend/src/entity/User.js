@@ -21,6 +21,9 @@ module.exports = new EntitySchema({
         bio: {
             type: "text",
         },
+        local: {
+            type: "boolean",
+        },
         publickey: {
             type: "text",
         },

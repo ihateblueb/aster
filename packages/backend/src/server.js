@@ -26,7 +26,6 @@ const dataSource = new typeorm.DataSource({
     password: config.dbpass,
     database: config.dbname,
     entities: [
-        require('./entity/Meta.js'),
         require('./entity/User.js'),
         require('./entity/Note.js')
     ],
