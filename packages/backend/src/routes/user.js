@@ -4,23 +4,20 @@ const config = require('../util/config.js')
 const db = require('../util/database.ts')
 
 const { User } = require('../entities/User.js')
-const userRepository = db.getRepository(User)
-
-async function getUser(userid) {
-	const user = await userRepository.findOneBy({
-		id: userid
-	})
-
-	return await user
-}
 
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
 		return res.status(400).send('Bad request')
 	} else {
-		const returnedUser = await getUser(req.params.userid)
+		const grabbedUser = await db
+			.getRepository(User)
+			.createQueryBuilder('user')
+			.where('user.id = :id', { id: req.params.userid })
+			.getOne()
 
-		if (returnedUser) {
+		console.log(grabbedUser.User)
+
+		if (grabbedUser) {
 			res.json({
 				'@context': [
 					'https://www.w3.org/ns/activitystreams',

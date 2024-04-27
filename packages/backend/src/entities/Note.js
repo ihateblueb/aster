@@ -9,7 +9,7 @@ module.exports = new EntitySchema({
 			type: 'int',
 			generated: true
 		},
-		timePosted: {
+		timeposted: {
 			type: 'varchar'
 		},
 		author: {
