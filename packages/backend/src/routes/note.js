@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 router.get('/notes/:noteid', (req, res) => {
-    if (!noteid) {
+    if (!req.params.noteid) {
         return res.status(400).send('Bad request');
-    } else if (noteid === "1") {
+    } else if (req.params.noteid === "1") {
         res.json({
             
         })

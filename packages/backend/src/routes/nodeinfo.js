@@ -1,30 +1,38 @@
 const router = require('express').Router();
 
-import pkg from '../../../../package.json';
+const pkg = require('../../../../package.json');
+
+const yaml = require('js-yaml');
+const fs = require('fs');
+
+try {
+    var config = yaml.load(fs.readFileSync('../../config/production.yml', 'utf8'));
+    console.log("[config] configuration loaded successfully!");
+} catch (e) {
+    console.error("[config] "+e);
+    console.error("[config] fatal. now aborting.");
+    process.exit(1);
+}
 
 router.get('/nodeinfo/2.0', (req, res) => {
-    if (req.query.resource) {
-        res.json(JSON.parse(`{
-            "version": "2.0",
-            "software": {
-                "name": "${pkg.name}",
-                "version": "${pkg.version}"
-            },
-            "protocols": [
-                "activitypub"
-            ],
-            "services": {
-                "outbound": [],
-                "inbound": [],
-            },
-            "openRegistrations": false,
-            "metadata": {
-                "nodeName": "Shit AP Test Instance"
-            }
-        }`))
-    } else {
-        res.send()
-    }
+    res.json(JSON.parse(`{
+        "version": "2.0",
+        "software": {
+            "name": "${pkg.name}",
+            "version": "${pkg.version}"
+        },
+        "protocols": [
+            "activitypub"
+        ],
+        "services": {
+            "outbound": [],
+            "inbound": []
+        },
+        "openRegistrations": false,
+        "metadata": {
+            "nodeName": "${config.nodename}"
+        }
+    }`))
 })
 
 module.exports = router;

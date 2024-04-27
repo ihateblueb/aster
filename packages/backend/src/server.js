@@ -10,7 +10,7 @@ const logger = require('./util/logger.js');
 console.log("[config] loading configuration...");
 
 try {
-    var config = yaml.load(fs.readFileSync('../../.config/production.yml', 'utf8'));
+    var config = yaml.load(fs.readFileSync('../../config/production.yml', 'utf8'));
     console.log("[config] configuration loaded successfully!");
 } catch (e) {
     console.error("[config] "+e);

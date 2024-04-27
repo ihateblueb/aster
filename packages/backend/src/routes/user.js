@@ -1,9 +1,9 @@
 const router = require('express').Router();
 
 router.get('/users/:userid', (req, res) => {
-    if (!userid) {
+    if (!req.params.userid) {
         return res.status(400).send('Bad request');
-    } else if (userid === "blueb") {
+    } else if (req.params.userid === "blueb") {
         res.json({
             "@context": [
                 "https://www.w3.org/ns/activitystreams",
