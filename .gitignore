@@ -2,3 +2,5 @@ node_modules
 
 config/production.yml
 logs
+
+packages/frontend/.nuxt

@@ -15,11 +15,11 @@ try {
 }
 
 router.get('/nodeinfo/2.0', (req, res) => {
-    res.json(JSON.parse(`{
+    res.json({
         "version": "2.0",
         "software": {
-            "name": "${pkg.name}",
-            "version": "${pkg.version}"
+            "name": `${pkg.name}`,
+            "version": `${pkg.version}`
         },
         "protocols": [
             "activitypub"
@@ -30,9 +30,9 @@ router.get('/nodeinfo/2.0', (req, res) => {
         },
         "openRegistrations": false,
         "metadata": {
-            "nodeName": "${config.nodename}"
+            "nodeName": `${config.nodename}`
         }
-    }`))
+    })
 })
 
 module.exports = router;

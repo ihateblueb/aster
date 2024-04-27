@@ -7,7 +7,7 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('./util/logger.js');
 
-console.log("[config] loading configuration...");
+const typeorm = require("typeorm");
 
 try {
     var config = yaml.load(fs.readFileSync('../../config/production.yml', 'utf8'));
@@ -18,21 +18,39 @@ try {
     process.exit(1);
 }
 
-const port = config.port;
+const dataSource = new typeorm.DataSource({
+    type: "postgres",
+    host: config.dbhost,
+    port: config.dbport,
+    username: config.dbuser,
+    password: config.dbpass,
+    database: config.dbname,
+    entities: [
+        require('./entity/Meta.js'),
+        require('./entity/User.js'),
+        require('./entity/Note.js')
+    ],
+    synchronize: true,
+    logging: true,
+})
 
-// Instantiate an Express Application
+dataSource.initialize()
+    .then(() => {
+        console.log("[database] database connected successfully!");
+    })
+    .catch((e) => {
+        console.error("[database] "+e);
+        console.error("[database] fatal. now aborting.");
+        process.exit(1);
+    })
+
 const app = express();
 
-// Configure Express App Instance
 app.use(express.json( { limit: '50mb' } ));
 app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
-
-// Configure custom logger middleware
 app.use(logger.dev, logger.combined);
-
 app.use(cors());
 
-// This middleware adds the json header to every response
 app.use('*', (req, res, next) => {
     res.setHeader('Content-Type', 'application/activity+json');
     next();
@@ -40,17 +58,18 @@ app.use('*', (req, res, next) => {
 
 app.use('/', require('./routes/router.js'));
 
-// Handle errors
 app.use(errorHandler());
 
-// Handle not valid route
 app.use('*', (req, res) => {
     res
     .status(404)
     .json( {message: 'Not found.'} );
 })
 
+const url = config.url;
+const port = config.port;
+
 app.listen(
     port,
-    () => console.info(`[backend] listening on port ${port}`)
+    () => console.info(`[backend] started instance as ${url} (port ${port})`)
 );
