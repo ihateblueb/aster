@@ -16,7 +16,6 @@ router.get('/.well-known/nodeinfo', (req, res) => {
     }
 })
 
-
 // webfinger
 router.get('/.well-known/webfinger', (req, res) => {
     if (req.query.resource) {

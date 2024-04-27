@@ -1,5 +1,5 @@
 #
-#   SHIT-AP's CONFIG
+#   ASTER's CONFIG
 #
 
 # URL (url)
@@ -25,17 +25,23 @@ dbhost: localhost
 # DATABASE NAME (dbname)
 # -------------
 # Name of the database to connect to
-# e.g. shitap
-dbname: shitap
+# e.g. aster
+dbname: aster
 
 # DATABASE USER (dbuser)
 # -------------
 # Name of the user to connect to the database as
-# e.g. shitap
-dbuser: shitap
+# e.g. aster
+dbuser: aster
 
 # DATABASE PASSWORD (dbpass)
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
 dbpass: 
+
+# NODE NAME (nodename)
+# ---------
+# Name of your instance
+# e.g. Aster
+nodename: "Aster"
