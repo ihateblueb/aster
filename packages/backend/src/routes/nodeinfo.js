@@ -2,17 +2,7 @@ const router = require('express').Router();
 
 const pkg = require('../../../../package.json');
 
-const yaml = require('js-yaml');
-const fs = require('fs');
-
-try {
-    var config = yaml.load(fs.readFileSync('../../config/production.yml', 'utf8'));
-    console.log("[config] configuration loaded successfully!");
-} catch (e) {
-    console.error("[config] "+e);
-    console.error("[config] fatal. now aborting.");
-    process.exit(1);
-}
+const config = require('../util/config.js');
 
 router.get('/nodeinfo/2.0', (req, res) => {
     res.json({

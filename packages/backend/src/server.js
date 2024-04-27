@@ -20,22 +20,13 @@ console.log(" ");
 const {inject, errorHandler} = require('express-custom-error');
 inject();
 
-const yaml = require('js-yaml');
-const fs = require('fs');
 const express = require('express');
 const cors = require('cors');
 const logger = require('./util/logger.js');
 
 const typeorm = require("typeorm");
 
-try {
-    var config = yaml.load(fs.readFileSync('../../config/production.yml', 'utf8'));
-    console.log("[config] configuration loaded successfully!");
-} catch (e) {
-    console.error("[config] "+e);
-    console.error("[config] fatal. now aborting.");
-    process.exit(1);
-}
+const config = require('./util/config.js');
 
 const dataSource = new typeorm.DataSource({
     type: "postgres",
@@ -66,14 +57,13 @@ app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
 app.use(logger.dev, logger.combined);
 app.use(cors());
 
-app.use('*', (req, res, next) => {
-    res.setHeader('Content-Type', 'application/activity+json');
-    next();
-})
-
 app.use('/', require('./routes/router.js'));
 
 app.use(errorHandler());
+
+app.use('*', (req, res) => {
+    res.setHeader('Content-Type', 'application/activity+json');
+})
 
 app.use('*', (req, res) => {
     res
@@ -81,10 +71,7 @@ app.use('*', (req, res) => {
     .json( {message: 'Not found.'} );
 })
 
-const url = config.url;
-const port = config.port;
-
 app.listen(
-    port,
-    () => console.info(`[backend] started instance as ${url} (port ${port})`)
+    config.port,
+    () => console.info(`[backend] started instance as ${config.url} (port ${config.port})`)
 );
