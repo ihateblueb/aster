@@ -1,4 +1,4 @@
-const EntitySchema = require('typeorm').EntitySchema
+const EntitySchema = require('typeorm').EntitySchema;
 
 module.exports = new EntitySchema({
 	name: 'note',
@@ -22,4 +22,4 @@ module.exports = new EntitySchema({
 			nullable: true
 		}
 	}
-})
+});

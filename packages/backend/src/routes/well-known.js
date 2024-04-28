@@ -1,11 +1,11 @@
-const router = require('express').Router()
+const router = require('express').Router();
 
-const config = require('../util/config.js')
-const db = require('../util/database.ts')
+const config = require('../util/config.js');
+const db = require('../util/database.ts');
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
-	res.setHeader('Content-Type', 'application/activity+json')
+	res.setHeader('Content-Type', 'application/activity+json');
 	res.json({
 		links: [
 			{
@@ -13,13 +13,13 @@ router.get('/.well-known/nodeinfo', (req, res) => {
 				href: `${config.url}nodeinfo/2.0`
 			}
 		]
-	})
-})
+	});
+});
 
 // webfinger
 router.get('/.well-known/webfinger', async (req, res) => {
 	if (req.query.resource) {
-		res.setHeader('Content-Type', 'application/activity+json')
+		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (req.query.resource.startsWith('acct:')) {
 			var grabbedUser = await db.getRepository('users').find({
@@ -28,9 +28,9 @@ router.get('/.well-known/webfinger', async (req, res) => {
 						.replace('acct:', '')
 						.split('@')[0]
 				}
-			})
+			});
 
-			var grabbedUser = grabbedUser[0]
+			var grabbedUser = grabbedUser[0];
 
 			res.json({
 				subject: `acct:${grabbedUser.username}@${config.url
@@ -44,13 +44,13 @@ router.get('/.well-known/webfinger', async (req, res) => {
 						href: `${config.url}users/${grabbedUser.id}`
 					}
 				]
-			})
+			});
 		} else {
-			res.send()
+			res.send();
 		}
 	} else {
-		res.send()
+		res.send();
 	}
-})
+});
 
-module.exports = router
+module.exports = router;
