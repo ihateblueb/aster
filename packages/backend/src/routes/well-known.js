@@ -1,6 +1,7 @@
 const router = require('express').Router()
 
 const config = require('../util/config.js')
+const db = require('../util/database.ts')
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
@@ -20,18 +21,31 @@ router.get('/.well-known/nodeinfo', (req, res) => {
 })
 
 // webfinger
-router.get('/.well-known/webfinger', (req, res) => {
+router.get('/.well-known/webfinger', async (req, res) => {
 	if (req.query.resource) {
 		res.setHeader('Content-Type', 'application/activity+json')
 
 		if (req.query.resource.startsWith('acct:')) {
+			var grabbedUser = await db.getRepository('users').find({
+				where: {
+					username: req.query.resource
+						.replace('acct:', '')
+						.split('@')[0]
+				}
+			})
+
+			var grabbedUser = grabbedUser[0]
+
 			res.json({
-				subject: 'acct:blueb@as1.blueb.me',
+				subject: `acct:${grabbedUser.username}@${config.url
+					.replace('https://', '')
+					.replace('http://', '')
+					.replace('/', '')}`,
 				links: [
 					{
 						rel: 'self',
 						type: 'application/activity+json',
-						href: `${config.url}users/1`
+						href: `${config.url}users/${grabbedUser.id}`
 					}
 				]
 			})
