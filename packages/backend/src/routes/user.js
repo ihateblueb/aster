@@ -16,6 +16,7 @@ router.get('/users/:userid', async (req, res) => {
 		var grabbedUser = grabbedUser[0]
 
 		if (grabbedUser) {
+			res.setHeader('Content-Type', 'application/activity+json')
 			res.json({
 				'@context': [
 					'https://www.w3.org/ns/activitystreams',

@@ -6,6 +6,7 @@ router.get('/notes/:noteid', (req, res) => {
 	if (!req.params.noteid) {
 		return res.status(400).send('Bad request')
 	} else if (req.params.noteid === '1') {
+		res.setHeader('Content-Type', 'application/activity+json')
 		res.json({
 			id: `${config.url}notes/1`,
 			type: 'Note',

@@ -26,6 +26,9 @@ module.exports = new EntitySchema({
 		},
 		publickey: {
 			type: 'text'
+		},
+		privatekey: {
+			type: 'text'
 		}
 	}
 })

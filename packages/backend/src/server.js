@@ -42,10 +42,6 @@ app.use('/', require('./routes/router.js'))
 app.use(errorHandler())
 
 app.use('*', (req, res) => {
-	res.setHeader('Content-Type', 'application/activity+json')
-})
-
-app.use('*', (req, res) => {
 	res.status(404).json({ message: 'Not found.' })
 })
 
