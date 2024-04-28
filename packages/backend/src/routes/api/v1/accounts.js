@@ -22,6 +22,10 @@ router.get('/api/v1/accounts/:userid', async (req, res) => {
 			return res.status(410).json({
 				message: 'user suspended'
 			});
+		} else if (grabbedUser.suspended) {
+			return res.status(410).json({
+				message: 'user deactivated'
+			});
 		} else {
 			var userJson = {};
 

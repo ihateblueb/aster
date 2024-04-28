@@ -85,8 +85,20 @@ router.get('/users/:userid', async (req, res) => {
 });
 
 router.post('/users/:userid/inbox', async (req, res) => {
+	var grabbedUser = await db.getRepository('users').find({
+		where: {
+			id: Number(req.params.userid)
+		}
+	});
+
+	var grabbedUser = grabbedUser[0];
+
 	if (!req.params.userid) {
-		return res.status(400).send('Bad request');
+		return res.status(400).send('bad request');
+	} else if (grabbedUser.suspended) {
+		return res.status(410).send('user suspended');
+	} else if (grabbedUser.deactivated) {
+		return res.status(410).send('user deactivated');
 	} else {
 		var host = req.headers.host;
 		var date = req.headers.date;
@@ -115,21 +127,21 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			);
 			return res
 				.status(401)
-				.send('Host did not match instance configuration');
+				.send('host did not match instance configuration');
 		}
 		// checks if there is a digest
 		else if (!digest[1]) {
 			console.log(
 				'[ap] what? a request was sent that does not have a digest'
 			);
-			return res.status(401).send('Digest missing');
+			return res.status(401).send('digest missing');
 		}
 		// checks if the digest is the right algorithim
 		else if (!digest[0] === 'SHA-256') {
 			console.log(
 				'[ap] uh-oh! a request was sent with an invalid digest'
 			);
-			return res.status(401).send('Digest invalid');
+			return res.status(401).send('digest invalid');
 		}
 		// checks if the digest matches what it says it is
 		else {
@@ -139,6 +151,8 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			console.log('[ap] received request from id ' + remoteActorId);
 
 			// add blocking code here later
+
+			return res.status(200).send();
 		}
 
 		/*

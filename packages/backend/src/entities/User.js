@@ -25,6 +25,10 @@ module.exports = new EntitySchema({
 			type: 'boolean',
 			default: false
 		},
+		deactivated: {
+			type: 'boolean',
+			default: false
+		},
 		discoverable: {
 			type: 'boolean',
 			default: true
