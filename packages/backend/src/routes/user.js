@@ -98,6 +98,12 @@ router.post('/users/:userid/inbox', async (req, res) => {
 
 		// needs more validation!
 		// see: https://github.com/misskey-dev/misskey/blob/develop/packages/backend/src/server/ActivityPubServerService.ts
+
+		// split digest at =
+		var digest = digest.split(/=(.*)/s);
+		console.log(digest);
+
+		// checks if the host is the same as the instance url, or if it even exists on the request
 		if (
 			!host ||
 			host !==
@@ -109,7 +115,38 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			console.log(
 				'[ap] uh-oh! a request was sent that mismatches with the current host'
 			);
-		} else {
+			return res
+				.status(401)
+				.send('Host did not match instance configuration');
+		}
+		// checks if there is a digest
+		else if (!digest[1]) {
+			console.log(
+				'[ap] what? a request was sent that does not have a digest'
+			);
+			return res.status(401).send('Digest missing');
+		}
+		// checks if the digest is the right algorithim
+		else if (!digest[0] === 'SHA-256') {
+			console.log(
+				'[ap] uh-oh! a request was sent with an invalid digest'
+			);
+			return res.status(401).send('Digest invalid');
+		}
+		// checks if the digest matches what it says it is
+		else if (
+			!digest[1] === '12' // verify the request matches somehow later
+		) {
+			console.log(
+				'[ap] uh-oh! a request was sent with an invalid digest'
+			);
+			return res.status(401).send('Digest invalid');
+		}
+
+		/*
+
+			This will be executed after it is sent to a Redis-like software
+
 			if (grabbedUser) {
 				if (!grabbedUser.followerapproval) {
 					// send!
@@ -122,7 +159,8 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			} else {
 				return res.status(404).send('Not found');
 			}
-		}
+
+		*/
 	}
 });
 

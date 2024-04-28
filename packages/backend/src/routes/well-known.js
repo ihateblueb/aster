@@ -4,16 +4,13 @@ const config = require('../util/config.js');
 const db = require('../util/database.ts');
 
 // nodeinfo
-router.get('/.well-known/nodeinfo', (req, res) => {
-	res.setHeader('Content-Type', 'application/activity+json');
-	res.json({
-		links: [
-			{
-				rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
-				href: `${config.url}nodeinfo/2.0`
-			}
-		]
-	});
+router.get('/.well-known/host-meta', (req, res) => {
+	res.setHeader('Content-Type', 'application/xrd+xml');
+	res.send(
+		'<?xml version="1.0" encoding="UTF-8"?><XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd" type="application/xrd+xml" template="' +
+			config.url +
+			'.well-known/webfinger?resource={uri}"/></XRD>'
+	);
 });
 
 // webfinger
