@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const httpSignature = require('@peertube/http-signature');
 const crypto = require('crypto');
 
 const config = require('../util/config.js');
@@ -45,6 +46,13 @@ router.get('/users/:userid', async (req, res) => {
 				userJson.icon['url'] = grabbedUser.avatar;
 			}
 
+			if (grabbedUser.banner) {
+				userJson['image'] = {};
+				userJson.image['type'] = 'Image';
+				userJson.image['mediaType'] = 'image';
+				userJson.image['url'] = grabbedUser.banner;
+			}
+
 			if (grabbedUser.followerapproval) {
 				userJson['manuallyApprovesFollowers'] = true;
 			} else {
@@ -56,6 +64,8 @@ router.get('/users/:userid', async (req, res) => {
 			} else {
 				userJson['discoverable'] = false;
 			}
+
+			userJson['published'] = grabbedUser.createdat;
 
 			userJson['inbox'] =
 				config.url + 'users/' + grabbedUser.id + '/inbox';
@@ -78,23 +88,11 @@ router.post('/users/:userid/inbox', async (req, res) => {
 	if (!req.params.userid) {
 		return res.status(400).send('Bad request');
 	} else {
-		var grabbedUser = await db.getRepository('users').find({
-			where: {
-				id: Number(req.params.userid)
-			}
-		});
-
-		var grabbedUser = grabbedUser[0];
-
 		var host = req.headers.host;
 		var date = req.headers.date;
 		var digest = req.headers.digest;
-		var signature = req.headers.signature;
 
-		console.log(host);
-		console.log(date);
-		console.log(digest);
-		console.log(signature);
+		var httpSig = httpSignature.parseRequest(req);
 
 		// needs more validation!
 		// see: https://github.com/misskey-dev/misskey/blob/develop/packages/backend/src/server/ActivityPubServerService.ts
@@ -134,13 +132,13 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			return res.status(401).send('Digest invalid');
 		}
 		// checks if the digest matches what it says it is
-		else if (
-			!digest[1] === '12' // verify the request matches somehow later
-		) {
-			console.log(
-				'[ap] uh-oh! a request was sent with an invalid digest'
-			);
-			return res.status(401).send('Digest invalid');
+		else {
+			console.log(httpSig);
+
+			var remoteActorId = httpSig.keyId.split('#')[0];
+			console.log('[ap] received request from id ' + remoteActorId);
+
+			// add blocking code here later
 		}
 
 		/*

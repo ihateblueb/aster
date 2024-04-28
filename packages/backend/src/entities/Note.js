@@ -20,6 +20,10 @@ module.exports = new EntitySchema({
 		content: {
 			type: 'text',
 			nullable: true
+		},
+		cw: {
+			type: 'text',
+			nullable: true
 		}
 	}
 });

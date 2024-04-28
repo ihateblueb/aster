@@ -21,11 +21,23 @@ module.exports = new EntitySchema({
 			type: 'boolean',
 			default: false
 		},
+		suspended: {
+			type: 'boolean',
+			default: false
+		},
 		discoverable: {
 			type: 'boolean',
 			default: true
 		},
+		automated: {
+			type: 'boolean',
+			default: false
+		},
 		avatar: {
+			type: 'text',
+			nullable: true
+		},
+		banner: {
 			type: 'text',
 			nullable: true
 		},
@@ -35,6 +47,10 @@ module.exports = new EntitySchema({
 		},
 		local: {
 			type: 'boolean',
+			default: false
+		},
+		createdat: {
+			type: 'varchar',
 			nullable: true
 		},
 		publickey: {

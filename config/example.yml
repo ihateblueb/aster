@@ -45,3 +45,27 @@ dbpass:
 # Name of your instance
 # e.g. Aster
 nodename: 'Aster'
+
+#
+# ADMIN SETTINGS
+# eventually this will be in the database
+#
+
+# REGISTRATIONS (a_registrations)
+# -------------
+# Allow registrations to your instance
+# open: Anyone can register
+# invite0: anyone can register if they have the multi-use code
+# invite1: anyone can register if they have a one-time invite code
+# closed: nobody can register
+# Options: open, invite0, invite1, closed
+a_registrations: 'closed'
+
+# REGISTRATION CODE (a_invite0code)
+# -----------------
+# ONLY if your instance is set to invite0 for
+# registrations, anyone can sign up with this code.
+# I reccomend you randomly generate it like a password,
+# otherwise it may be able to be bruteforced.
+# If you use another registration type, leave this empty.
+a_invite0code: ''
