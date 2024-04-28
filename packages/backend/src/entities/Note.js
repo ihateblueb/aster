@@ -10,13 +10,16 @@ module.exports = new EntitySchema({
 			generated: true
 		},
 		timeposted: {
-			type: 'varchar'
+			type: 'varchar',
+			nullable: true
 		},
 		author: {
-			type: 'varchar'
+			type: 'varchar',
+			nullable: true
 		},
 		content: {
-			type: 'text'
+			type: 'text',
+			nullable: true
 		}
 	}
 })

@@ -10,25 +10,32 @@ module.exports = new EntitySchema({
 			generated: true
 		},
 		username: {
-			type: 'varchar'
+			type: 'varchar',
+			nullable: true
 		},
 		displayname: {
-			type: 'varchar'
+			type: 'varchar',
+			nullable: true
 		},
 		avatar: {
-			type: 'text'
+			type: 'text',
+			nullable: true
 		},
 		bio: {
-			type: 'text'
+			type: 'text',
+			nullable: true
 		},
 		local: {
-			type: 'boolean'
+			type: 'boolean',
+			nullable: true
 		},
 		publickey: {
-			type: 'text'
+			type: 'text',
+			nullable: true
 		},
 		privatekey: {
-			type: 'text'
+			type: 'text',
+			nullable: true
 		}
 	}
 })
