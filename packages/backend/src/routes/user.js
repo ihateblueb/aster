@@ -17,25 +17,54 @@ router.get('/users/:userid', async (req, res) => {
 
 		if (grabbedUser) {
 			res.setHeader('Content-Type', 'application/activity+json');
-			res.json({
+
+			var userJson = {
 				'@context': [
 					'https://www.w3.org/ns/activitystreams',
 					'https://w3id.org/security/v1'
-				],
+				]
+			};
 
-				id: `${config.url}users/${grabbedUser.id}`,
-				type: 'Person',
-				preferredUsername: `${grabbedUser.username}`,
-				name: `${grabbedUser.displayname}`,
-				inbox: `${config.url}users/${grabbedUser.id}/inbox`,
-				summary: `${grabbedUser.bio}`,
+			userJson['id'] = config.url + 'users/' + grabbedUser.id;
+			userJson['type'] = 'Person';
+			userJson['preferredUsername'] = grabbedUser.username;
 
-				publicKey: {
-					id: `${config.url}users/${grabbedUser.id}#main-key`,
-					owner: `${config.url}users/${grabbedUser.id}`,
-					publicKeyPem: `${grabbedUser.publickey}`
-				}
-			});
+			if (grabbedUser.displayname) {
+				userJson['name'] = grabbedUser.displayname;
+			}
+			if (grabbedUser.bio) {
+				userJson['summary'] = grabbedUser.bio;
+			}
+			if (grabbedUser.avatar) {
+				userJson['icon'] = {};
+				userJson.icon['type'] = 'Image';
+				userJson.icon['mediaType'] = 'image';
+				userJson.icon['url'] = grabbedUser.avatar;
+			}
+
+			if (grabbedUser.followerapproval) {
+				userJson['manuallyApprovesFollowers'] = true;
+			} else {
+				userJson['manuallyApprovesFollowers'] = false;
+			}
+
+			if (grabbedUser.discoverable) {
+				userJson['discoverable'] = true;
+			} else {
+				userJson['discoverable'] = false;
+			}
+
+			userJson['inbox'] =
+				config.url + 'users/' + grabbedUser.id + '/inbox';
+
+			userJson['publicKey'] = {};
+			userJson.publicKey['id'] =
+				config.url + 'users/' + grabbedUser.id + '#main-key';
+			userJson.publicKey['owner'] =
+				config.url + 'users/' + grabbedUser.id;
+			userJson.publicKey['publicKeyPem'] = grabbedUser.publickey;
+
+			res.json(userJson);
 		} else {
 			return res.status(404).send('Not found');
 		}

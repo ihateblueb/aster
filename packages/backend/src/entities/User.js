@@ -17,6 +17,14 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
+		followerapproval: {
+			type: 'boolean',
+			default: false
+		},
+		discoverable: {
+			type: 'boolean',
+			default: true
+		},
 		avatar: {
 			type: 'text',
 			nullable: true
