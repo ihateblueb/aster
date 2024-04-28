@@ -5,19 +5,15 @@ const db = require('../util/database.ts')
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
-	if (req.query.resource) {
-		res.setHeader('Content-Type', 'application/activity+json')
-		res.json({
-			links: [
-				{
-					rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
-					href: `${config.url}nodeinfo/2.0`
-				}
-			]
-		})
-	} else {
-		res.send()
-	}
+	res.setHeader('Content-Type', 'application/activity+json')
+	res.json({
+		links: [
+			{
+				rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
+				href: `${config.url}nodeinfo/2.0`
+			}
+		]
+	})
 })
 
 // webfinger
