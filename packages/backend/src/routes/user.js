@@ -7,11 +7,13 @@ router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
 		return res.status(400).send('Bad request')
 	} else {
-		const grabbedUser = await db.getRepository('users').find({
+		var grabbedUser = await db.getRepository('users').find({
 			where: {
 				id: Number(req.params.userid)
 			}
 		})
+
+		var grabbedUser = grabbedUser[0]
 
 		if (grabbedUser) {
 			res.json({
@@ -20,19 +22,21 @@ router.get('/users/:userid', async (req, res) => {
 					'https://w3id.org/security/v1'
 				],
 
-				id: `${config.url}users/${grabbedUser.User.id}`,
+				id: `${config.url}users/${grabbedUser.id}`,
 				type: 'Person',
-				preferredUsername: `${grabbedUser.User.username}`,
-				name: `${grabbedUser.User.displayname}`,
-				inbox: `${config.url}users/${grabbedUser.User.id}/inbox`,
-				summary: `${grabbedUser.User.bio}`,
+				preferredUsername: `${grabbedUser.username}`,
+				name: `${grabbedUser.displayname}`,
+				inbox: `${config.url}users/${grabbedUser.id}/inbox`,
+				summary: `${grabbedUser.bio}`,
 
 				publicKey: {
-					id: `${config.url}users/${grabbedUser.User.id}#main-key`,
-					owner: `${config.url}users/${grabbedUser.User.id}`,
-					publicKeyPem: `${grabbedUser.User.publickey}`
+					id: `${config.url}users/${grabbedUser.id}#main-key`,
+					owner: `${config.url}users/${grabbedUser.id}`,
+					publicKeyPem: `${grabbedUser.publickey}`
 				}
 			})
+		} else {
+			return res.status(404).send('Not found')
 		}
 	}
 })
