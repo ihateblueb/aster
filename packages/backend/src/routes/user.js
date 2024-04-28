@@ -3,18 +3,15 @@ const router = require('express').Router()
 const config = require('../util/config.js')
 const db = require('../util/database.ts')
 
-const { User } = require('../entities/User.js')
-
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
 		return res.status(400).send('Bad request')
 	} else {
-		const grabbedUser = await db
-			.createQueryBuilder(User, 'user')
-			.where('user.id = :userid', { userid: req.params.userid })
-			.getOne()
-
-		console.log(grabbedUser.User)
+		const grabbedUser = await db.getRepository('users').find({
+			where: {
+				id: Number(req.params.userid)
+			}
+		})
 
 		if (grabbedUser) {
 			res.json({
