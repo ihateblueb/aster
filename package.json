@@ -12,6 +12,7 @@
 	],
 	"private": true,
 	"scripts": {
+		"start": "pnpm --filter=backend start",
 		"build": "pnpm -r build"
 	},
 	"keywords": [],

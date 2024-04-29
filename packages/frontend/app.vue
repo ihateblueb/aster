@@ -1,5 +1,5 @@
 <template>
   <div>
-    <NuxtWelcome />
+    aster frontend :3
   </div>
 </template>

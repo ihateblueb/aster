@@ -4,3 +4,5 @@ config/production.yml
 logs
 
 packages/frontend/.nuxt
+packages/frontend/.output
+packages/frontend/dist

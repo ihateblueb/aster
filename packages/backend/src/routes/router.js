@@ -1,4 +1,7 @@
+const express = require('express');
 const router = require('express').Router();
+
+router.use('/', express.static('../../../frontend/.output/public'))
 
 router.use('/', require('./well-known.js'));
 router.use('/', require('./nodeinfo.js'));
