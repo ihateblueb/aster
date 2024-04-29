@@ -13,9 +13,15 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
-		instance: {
+		// activitypub id (eg. https://as.blueb.me/users/1)
+		apid: {
 			type: 'varchar',
 			nullable: true
+		},
+		local: {
+			type: 'boolean',
+			nullable: true,
+			default: false
 		},
 		displayname: {
 			type: 'varchar',
@@ -49,9 +55,21 @@ module.exports = new EntitySchema({
 			type: 'text',
 			nullable: true
 		},
+		background: {
+			type: 'text',
+			nullable: true
+		},
 		bio: {
 			type: 'text',
 			nullable: true
+		},
+		iscat: {
+			type: 'boolean',
+			default: false
+		},
+		speakascat: {
+			type: 'boolean',
+			default: false
 		},
 		createdat: {
 			type: 'varchar',

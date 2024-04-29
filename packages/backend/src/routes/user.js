@@ -19,7 +19,7 @@ router.get('/users/:userid', async (req, res) => {
 
 		var grabbedUser = grabbedUser[0];
 
-		if (grabbedUser) {
+		if (grabbedUser && grabbedUser.local) {
 			res.setHeader('Content-Type', 'application/activity+json');
 
 			var userJson = {
@@ -97,6 +97,8 @@ router.post('/users/:userid/inbox', async (req, res) => {
 
 	if (!req.params.userid) {
 		return res.status(400).send('bad request');
+	} else if (!grabbedUser.local) {
+		return res.status(404).send('not found');
 	} else if (grabbedUser.suspended) {
 		return res.status(410).send('user suspended');
 	} else if (grabbedUser.deactivated) {
@@ -113,7 +115,6 @@ router.post('/users/:userid/inbox', async (req, res) => {
 
 		// split digest at =
 		var digest = digest.split(/=(.*)/s);
-		console.log(digest);
 
 		// checks if the host is the same as the instance url, or if it even exists on the request
 		if (
@@ -147,13 +148,10 @@ router.post('/users/:userid/inbox', async (req, res) => {
 		}
 		// checks if the digest matches what it says it is
 		else {
-			console.log(httpSig);
-
 			var remoteActorId = httpSig.keyId.split('#')[0];
 			console.log('[ap] received request from id ' + remoteActorId);
 
-			var remoteActorKey = (await getRemoteActor(remoteActorId))
-				.publicKey;
+			console.log(await getRemoteActor(remoteActorId));
 
 			// add blocking code here later
 

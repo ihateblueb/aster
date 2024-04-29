@@ -17,6 +17,8 @@ const pkg = require('../../../package.json');
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
 
+const config = require('./util/config.js');
+
 const { inject, errorHandler } = require('express-custom-error');
 inject();
 
@@ -25,9 +27,6 @@ const cors = require('cors');
 const logger = require('./util/logger.js');
 
 const typeorm = require('typeorm');
-
-const config = require('./util/config.js');
-
 const dataSource = require('./util/database.ts');
 
 const app = express();
