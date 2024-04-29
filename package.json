@@ -13,7 +13,8 @@
 	"private": true,
 	"scripts": {
 		"start": "pnpm --filter=backend start",
-		"build": "pnpm -r build"
+		"build": "pnpm -r build",
+		"migrate": "pnpm --filter=backend migrate"
 	},
 	"keywords": [],
 	"author": "blueb",

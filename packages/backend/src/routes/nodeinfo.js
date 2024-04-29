@@ -1,12 +1,19 @@
 const router = require('express').Router();
 
 const pkg = require('../../../../package.json');
-
 const config = require('../util/config.js');
+const db = require('../util/database.ts');
 
-router.get('/nodeinfo/2.0', (req, res) => {
+router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
-	res.json({
+
+	var userCount = await db.getRepository('users').findAndCount();
+	var userCount = userCount[1];
+
+	var noteCount = await db.getRepository('notes').findAndCount();
+	var noteCount = noteCount[1];
+
+	var nodeinfoJson = {
 		version: '2.0',
 		software: {
 			name: `${pkg.name}`,
@@ -19,9 +26,19 @@ router.get('/nodeinfo/2.0', (req, res) => {
 		},
 		openRegistrations: false,
 		metadata: {
-			nodeName: `${config.nodename}`
+			nodeName: `${config.nodename}`,
+			nodeDescription: `${config.nodedesc}`,
+			themeColor: `${config.nodecolor}`
+		},
+		usage: {
+			users: {
+				total: `${userCount}`
+			},
+			localPosts: `${noteCount}`
 		}
-	});
+	};
+
+	res.json(nodeinfoJson);
 });
 
 module.exports = router;

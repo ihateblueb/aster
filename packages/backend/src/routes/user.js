@@ -5,6 +5,8 @@ const crypto = require('crypto');
 const config = require('../util/config.js');
 const db = require('../util/database.ts');
 
+const getRemoteActor = require('../util/getRemoteActor.js');
+
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
 		return res.status(400).send('Bad request');
@@ -149,6 +151,9 @@ router.post('/users/:userid/inbox', async (req, res) => {
 
 			var remoteActorId = httpSig.keyId.split('#')[0];
 			console.log('[ap] received request from id ' + remoteActorId);
+
+			var remoteActorKey = (await getRemoteActor(remoteActorId))
+				.publicKey;
 
 			// add blocking code here later
 

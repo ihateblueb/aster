@@ -43,8 +43,21 @@ dbpass:
 # NODE NAME (nodename)
 # ---------
 # Name of your instance
-# e.g. Aster
+# e.g. My Awesome Test Instance
 nodename: 'Aster'
+
+# NODE DESCRIPTION (nodedesc)
+# ----------------
+# Description of your instance
+# e.g. An instance I'm using to test Aster
+nodedesc: 'A fediverse instance running Aster'
+
+# NODE COLOR (nodecolor)
+# ----------
+# Color to represent your instance
+# Appears in places like Misskey instance ticker
+# e.g. #9f96ff
+nodecolor: '#9f96ff'
 
 #
 # ADMIN SETTINGS

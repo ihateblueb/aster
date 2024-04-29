@@ -13,6 +13,10 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
+		instance: {
+			type: 'varchar',
+			nullable: true
+		},
 		displayname: {
 			type: 'varchar',
 			nullable: true
@@ -48,10 +52,6 @@ module.exports = new EntitySchema({
 		bio: {
 			type: 'text',
 			nullable: true
-		},
-		local: {
-			type: 'boolean',
-			default: false
 		},
 		createdat: {
 			type: 'varchar',
