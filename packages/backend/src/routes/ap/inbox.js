@@ -2,10 +2,10 @@ const router = require('express').Router();
 const httpSignature = require('@peertube/http-signature');
 const crypto = require('crypto');
 
-const config = require('../utils/config.js');
-const db = require('../utils/database.ts');
+const config = require('../../utils/config.js');
+const db = require('../../utils/database.ts');
 
-const getRemoteActor = require('../utils/getRemoteActor.js');
+const getRemoteActor = require('../../utils/getRemoteActor.js');
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [

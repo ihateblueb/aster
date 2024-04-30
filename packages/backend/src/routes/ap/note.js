@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const config = require('../utils/config.js');
+const config = require('../../utils/config.js');
 
 router.get('/notes/:noteid', (req, res) => {
 	if (!req.params.noteid) {

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const config = require('../utils/config.js');
-const db = require('../utils/database.ts');
+const config = require('../../utils/config.js');
+const db = require('../../utils/database.ts');
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
