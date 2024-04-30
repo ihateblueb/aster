@@ -3,12 +3,16 @@
 working on some kind of ap server
 this should never be used seriously! i'm just being silly and having fun over here.
 
+## security
+
+if you find a vulnerability in my software please contact me privately. see https://blueb.me/
+
 ## configuration
 
 find it in config/example.yml.
 use that template and create a production.yml in that same directory.
 
-## the
+## followreq activity
 
 {
 '@context': [
