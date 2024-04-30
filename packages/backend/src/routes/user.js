@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
-const config = require('../util/config.js');
-const db = require('../util/database.ts');
+const config = require('../utils/config.js');
+const db = require('../utils/database.ts');
 
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {

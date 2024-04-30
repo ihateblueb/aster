@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const config = require('../util/config.js');
-const db = require('../util/database.ts');
+const config = require('../utils/config.js');
+const db = require('../utils/database.ts');
 
 async function updateRemoteActor(remoteActorUrl) {
 	console.log('[ap] attempting to update remote actor ' + remoteActorUrl);

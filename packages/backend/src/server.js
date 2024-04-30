@@ -17,7 +17,7 @@ const pkg = require('../../../package.json');
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
 
-const config = require('./util/config.js');
+const config = require('./utils/config.js');
 
 if (!config.nodeadmin) {
 	console.log(
@@ -36,10 +36,10 @@ inject();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const logger = require('./util/logger.js');
+const logger = require('./utils/logger.js');
 
 const typeorm = require('typeorm');
-const dataSource = require('./util/database.ts');
+const dataSource = require('./utils/database.ts');
 
 const app = express();
 
