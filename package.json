@@ -14,6 +14,7 @@
 	"scripts": {
 		"start": "pnpm --filter=backend start",
 		"build": "pnpm -r build",
+		"format": "pnpm -r format",
 		"migrate": "pnpm --filter=backend migrate"
 	},
 	"keywords": [],

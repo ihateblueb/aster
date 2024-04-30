@@ -4,13 +4,15 @@
 	"main": "src/server.js",
 	"scripts": {
 		"migrate": "pnpm exec typeorm migration:run -d ./src/utils/database.ts",
-		"start": "node src/server.js"
+		"start": "node src/server.js",
+		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc 'package.json' --write"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {
 		"@peertube/http-signature": "^1.7.0",
 		"axios": "^1.6.8",
 		"body-parser": "^1.20.2",
+		"chalk": "^5.3.0",
 		"cookie-parser": "^1.4.4",
 		"cors": "^2.8.5",
 		"express": "^4.17.1",
@@ -23,6 +25,7 @@
 		"module-alias": "^2.2.2",
 		"morgan": "^1.9.1",
 		"pg": "^8.5.1",
+		"prettier": "^3.2.5",
 		"redis": "^4.6.13",
 		"reflect-metadata": "^0.2.2",
 		"rotating-file-stream": "^1.4.6",

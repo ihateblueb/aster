@@ -36,7 +36,7 @@ inject();
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const logger = require('./utils/logger.js');
+const logger = require('./utils/requestLogger.js');
 
 const typeorm = require('typeorm');
 const dataSource = require('./utils/database.ts');
