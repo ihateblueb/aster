@@ -23,13 +23,13 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	var grabbedUser = grabbedUser[0];
 
 	if (!req.params.userid) {
-		return res.status(400).send('bad request');
+		return res.status(400).json({ message: 'bad request' });
 	} else if (!grabbedUser.local) {
-		return res.status(404).send('not found');
+		return res.status(404).json({ message: 'not found' });
 	} else if (grabbedUser.suspended) {
-		return res.status(410).send('user suspended');
+		return res.status(410).json({ message: 'user suspended' });
 	} else if (grabbedUser.deactivated) {
-		return res.status(410).send('user deactivated');
+		return res.status(410).json({ message: 'user deactivated' });
 	} else {
 		var host = req.headers.host;
 		var date = req.headers.date;
@@ -56,22 +56,22 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 				'[ap] uh-oh! a request was sent that mismatches with the current host'
 			);
 			return res
-				.status(401)
-				.send('host did not match instance configuration');
+				.status(400)
+				.json({ message: 'host did not match instance configuration' });
 		}
 		// checks if there is a digest
 		else if (!digest[1]) {
 			console.log(
 				'[ap] what? a request was sent that does not have a digest'
 			);
-			return res.status(401).send('digest missing');
+			return res.status(400).json({ message: 'digest missing' });
 		}
 		// checks if the digest is the right algorithim
 		else if (!digest[0] === 'SHA-256') {
 			console.log(
 				'[ap] uh-oh! a request was sent with an invalid digest'
 			);
-			return res.status(401).send('digest invalid');
+			return res.status(400).json({ message: 'digest invalid' });
 		}
 		// checks if the digest matches what it says it is
 		else {

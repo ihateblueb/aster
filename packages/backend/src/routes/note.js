@@ -4,7 +4,7 @@ const config = require('../utils/config.js');
 
 router.get('/notes/:noteid', (req, res) => {
 	if (!req.params.noteid) {
-		return res.status(400).send('Bad request');
+		return res.status(400).json({ message: 'bad request' });
 	} else if (req.params.noteid === '1') {
 		res.setHeader('Content-Type', 'application/activity+json');
 		res.json({

@@ -5,7 +5,7 @@ const db = require('../utils/database.ts');
 
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
-		return res.status(400).send('Bad request');
+		return res.status(400).json({ message: 'bad request' });
 	} else {
 		var grabbedUser = await db.getRepository('users').find({
 			where: {
@@ -77,7 +77,7 @@ router.get('/users/:userid', async (req, res) => {
 
 			res.json(userJson);
 		} else {
-			return res.status(404).send('Not found');
+			return res.status(404).json({ message: 'not found' });
 		}
 	}
 });
