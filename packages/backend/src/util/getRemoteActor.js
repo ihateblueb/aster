@@ -3,6 +3,8 @@ const axios = require('axios');
 const config = require('../util/config.js');
 const db = require('../util/database.ts');
 
+const updateRemoteActor = require('./updateRemoteActor.js');
+
 async function getRemoteActor(remoteActorUrl) {
 	console.log('[ap] attempting to grab remote actor ' + remoteActorUrl);
 
@@ -16,6 +18,7 @@ async function getRemoteActor(remoteActorUrl) {
 
 	if (grabbedUser) {
 		console.log('[ap] actor ' + remoteActorUrl + ' exists in database');
+		updateRemoteActor(remoteActorUrl);
 	} else {
 		console.log(
 			'[ap] actor ' + remoteActorUrl + ' does not exist in database'
@@ -26,7 +29,7 @@ async function getRemoteActor(remoteActorUrl) {
 			})
 			.then((res) => {
 				console.log(res);
-				processNewActor(res.data);
+				processNewActor(remoteActorUrl, res.data);
 			})
 			.catch((e) => {
 				if ((e.response.status = 410)) {
@@ -39,7 +42,7 @@ async function getRemoteActor(remoteActorUrl) {
 	}
 }
 
-async function processNewActor(res) {
+async function processNewActor(remoteActorUrl, res) {
 	if ((res.type = 'Person' && res.preferredUsername && res.id)) {
 		var userToInsert = {};
 
@@ -99,11 +102,15 @@ async function processNewActor(res) {
 
 		userToInsert['created_at'] = new Date(Date.now()).toISOString();
 
+		userToInsert['updated_at'] = new Date(Date.now()).toISOString();
+
 		if (!res.suspended) {
 			userToInsert['public_key'] = res.publicKey.publicKeyPem.toString();
 		}
 
 		await db.getRepository('users').insert(userToInsert);
+
+		console.log('[ap] created remote actor ' + remoteActorUrl);
 	}
 }
 

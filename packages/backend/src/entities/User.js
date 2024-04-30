@@ -78,6 +78,10 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
+		updated_at: {
+			type: 'varchar',
+			nullable: true
+		},
 		public_key: {
 			type: 'text',
 			nullable: true

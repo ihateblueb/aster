@@ -31,16 +31,22 @@ router.get('/api/v1/accounts/:userid', async (req, res) => {
 
 			userJson['id'] = grabbedUser.id;
 			userJson['username'] = grabbedUser.username;
-			userJson['acct'] = grabbedUser.username;
-			userJson['display_name'] = grabbedUser.displayname;
+			userJson['local'] = grabbedUser.local;
+			userJson['url'] = grabbedUser.url;
+			userJson['displayname'] = grabbedUser.displayname;
 			userJson['locked'] = grabbedUser.locked;
-			userJson['bot'] = grabbedUser.automated;
-			userJson['created_at'] = grabbedUser.created_at;
-			userJson['note'] = grabbedUser.bio;
-			userJson['url'] = config.url + 'users/' + grabbedUser.id;
-			// add static for both later as well
+			userJson['suspended'] = grabbedUser.suspended;
+			userJson['deactivated'] = grabbedUser.deactivated;
+			userJson['discoverable'] = grabbedUser.discoverable;
+			userJson['automated'] = grabbedUser.automated;
 			userJson['avatar'] = grabbedUser.avatar;
 			userJson['header'] = grabbedUser.banner;
+			userJson['background'] = grabbedUser.background;
+			userJson['bio'] = grabbedUser.bio;
+			userJson['is_cat'] = grabbedUser.is_cat;
+			userJson['speak_as_cat'] = grabbedUser.speak_as_cat;
+			userJson['created_at'] = grabbedUser.created_at;
+			userJson['updated_at'] = grabbedUser.updated_at;
 
 			res.json(userJson);
 		}
