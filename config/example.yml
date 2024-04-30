@@ -59,6 +59,18 @@ nodedesc: 'A fediverse instance running Aster'
 # e.g. #9f96ff
 nodecolor: '#9f96ff'
 
+# MAINTAINER (maintainer)
+# ----------
+# Admin's name
+# e.g. blueb
+maintainer: ''
+
+# MAINTAINER CONTACT (maintaineremail)
+# ------------------
+# Admin's contact email
+# e.g. ihateblueb@proton.me
+maintaineremail: ''
+
 #
 # ADMIN SETTINGS
 # eventually this will be in the database

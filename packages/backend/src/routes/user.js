@@ -55,7 +55,7 @@ router.get('/users/:userid', async (req, res) => {
 				userJson.image['url'] = grabbedUser.banner;
 			}
 
-			if (grabbedUser.followerapproval) {
+			if (grabbedUser.locked) {
 				userJson['manuallyApprovesFollowers'] = true;
 			} else {
 				userJson['manuallyApprovesFollowers'] = false;
@@ -87,6 +87,12 @@ router.get('/users/:userid', async (req, res) => {
 });
 
 router.post('/users/:userid/inbox', async (req, res) => {
+	res.setHeader('Accept', [
+		'application/json',
+		'application/activity+json',
+		'application/ld+json'
+	]);
+
 	var grabbedUser = await db.getRepository('users').find({
 		where: {
 			id: Number(req.params.userid)
@@ -155,6 +161,8 @@ router.post('/users/:userid/inbox', async (req, res) => {
 
 			// add blocking code here later
 
+			console.log(req.body);
+
 			return res.status(200).send();
 		}
 
@@ -163,7 +171,7 @@ router.post('/users/:userid/inbox', async (req, res) => {
 			This will be executed after it is sent to a Redis-like software
 
 			if (grabbedUser) {
-				if (!grabbedUser.followerapproval) {
+				if (!grabbedUser.locked) {
 					// send!
 					var followApprovalResponse = {
 						'@context': 'https://www.w3.org/ns/activitystreams'

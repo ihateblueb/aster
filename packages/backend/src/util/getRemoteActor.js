@@ -29,20 +29,25 @@ async function getRemoteActor(remoteActorUrl) {
 				processNewActor(res.data);
 			})
 			.catch((e) => {
-				console.error(e);
+				if ((e.response.status = 410)) {
+					console.error('[ap] actor ' + remoteActorUrl + ' is gone');
+				} else {
+					console.error(e);
+				}
 				return;
 			});
 	}
 }
 
 async function processNewActor(res) {
-	if ((res.type = 'Person' && res.name && res.id && res.publicKey)) {
+	if ((res.type = 'Person' && res.preferredUsername && res.id)) {
 		var userToInsert = {};
 
 		userToInsert['id'];
 
 		userToInsert['username'] = res.preferredUsername;
 		userToInsert['apid'] = res.id;
+		userToInsert['url'] = res.url;
 
 		userToInsert['local'] = false;
 
@@ -69,7 +74,7 @@ async function processNewActor(res) {
 		}
 
 		if (res.manuallyApprovesFollowers) {
-			userToInsert['followerapproval'] = res.manuallyApprovesFollowers;
+			userToInsert['locked'] = res.manuallyApprovesFollowers;
 		}
 
 		if (res.suspended) {
@@ -92,17 +97,13 @@ async function processNewActor(res) {
 			userToInsert['speakascat'] = res.speakAsCat;
 		}
 
-		if (res.createdat) {
-			userToInsert['createdat'] = Date.now().toString();
+		userToInsert['createdat'] = new Date(Date.now()).toISOString();
+
+		if (!res.suspended) {
+			userToInsert['publickey'] = res.publicKey.publicKeyPem.toString();
 		}
 
-		userToInsert['publicKey'] = res.publicKey.publicKeyPem.join();
-
-		var newActor = await db.getRepository('users').insert(userToInsert);
-
-		var newActor = newActor[0];
-
-		console.log(newActor);
+		await db.getRepository('users').insert(userToInsert);
 	}
 }
 

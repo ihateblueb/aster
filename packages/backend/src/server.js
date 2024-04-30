@@ -19,10 +19,22 @@ console.log(' ');
 
 const config = require('./util/config.js');
 
+if (!config.nodeadmin) {
+	console.log(
+		'[warn] its a good idea to specify your admin name in configuration'
+	);
+}
+if (!config.nodeadmincontact) {
+	console.log(
+		'[warn] its a good idea to specify your admin contact information in configuration'
+	);
+}
+
 const { inject, errorHandler } = require('express-custom-error');
 inject();
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const logger = require('./util/logger.js');
 
@@ -32,6 +44,7 @@ const dataSource = require('./util/database.ts');
 const app = express();
 
 app.use(logger.dev, logger.combined);
+app.use(express.json({ type: 'application/*+json', extended: true }));
 app.use(cors());
 
 app.use('/', require('./routes/router.js'));

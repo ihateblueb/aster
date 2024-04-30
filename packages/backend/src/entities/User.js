@@ -23,11 +23,15 @@ module.exports = new EntitySchema({
 			nullable: true,
 			default: false
 		},
+		url: {
+			type: 'varchar',
+			nullable: true
+		},
 		displayname: {
 			type: 'varchar',
 			nullable: true
 		},
-		followerapproval: {
+		locked: {
 			type: 'boolean',
 			default: false
 		},
