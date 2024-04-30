@@ -35,7 +35,7 @@ router.get('/api/v1/accounts/:userid', async (req, res) => {
 			userJson['display_name'] = grabbedUser.displayname;
 			userJson['locked'] = grabbedUser.locked;
 			userJson['bot'] = grabbedUser.automated;
-			userJson['created_at'] = grabbedUser.createdat;
+			userJson['created_at'] = grabbedUser.created_at;
 			userJson['note'] = grabbedUser.bio;
 			userJson['url'] = config.url + 'users/' + grabbedUser.id;
 			// add static for both later as well

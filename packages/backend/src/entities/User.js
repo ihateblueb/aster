@@ -13,8 +13,7 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
-		// activitypub id (eg. https://as.blueb.me/users/1)
-		apid: {
+		ap_id: {
 			type: 'varchar',
 			nullable: true
 		},
@@ -67,23 +66,23 @@ module.exports = new EntitySchema({
 			type: 'text',
 			nullable: true
 		},
-		iscat: {
+		is_cat: {
 			type: 'boolean',
 			default: false
 		},
-		speakascat: {
+		speak_as_cat: {
 			type: 'boolean',
 			default: false
 		},
-		createdat: {
+		created_at: {
 			type: 'varchar',
 			nullable: true
 		},
-		publickey: {
+		public_key: {
 			type: 'text',
 			nullable: true
 		},
-		privatekey: {
+		private_key: {
 			type: 'text',
 			nullable: true
 		}

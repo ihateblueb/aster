@@ -63,7 +63,7 @@ router.get('/users/:userid', async (req, res) => {
 				userJson['discoverable'] = false;
 			}
 
-			userJson['published'] = grabbedUser.createdat;
+			userJson['published'] = grabbedUser.created_at;
 
 			userJson['inbox'] =
 				config.url + 'users/' + grabbedUser.id + '/inbox';
@@ -73,7 +73,7 @@ router.get('/users/:userid', async (req, res) => {
 				config.url + 'users/' + grabbedUser.id + '#main-key';
 			userJson.publicKey['owner'] =
 				config.url + 'users/' + grabbedUser.id;
-			userJson.publicKey['publicKeyPem'] = grabbedUser.publickey;
+			userJson.publicKey['publicKeyPem'] = grabbedUser.public_key;
 
 			res.json(userJson);
 		} else {

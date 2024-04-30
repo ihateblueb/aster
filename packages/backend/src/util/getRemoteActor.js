@@ -8,7 +8,7 @@ async function getRemoteActor(remoteActorUrl) {
 
 	var grabbedUser = await db.getRepository('users').find({
 		where: {
-			apid: remoteActorUrl
+			ap_id: remoteActorUrl
 		}
 	});
 
@@ -46,7 +46,7 @@ async function processNewActor(res) {
 		userToInsert['id'];
 
 		userToInsert['username'] = res.preferredUsername;
-		userToInsert['apid'] = res.id;
+		userToInsert['ap_id'] = res.id;
 		userToInsert['url'] = res.url;
 
 		userToInsert['local'] = false;
@@ -90,17 +90,17 @@ async function processNewActor(res) {
 		}
 
 		if (res.isCat) {
-			userToInsert['iscat'] = res.isCat;
+			userToInsert['is_cat'] = res.isCat;
 		}
 
 		if (res.speakAsCat) {
-			userToInsert['speakascat'] = res.speakAsCat;
+			userToInsert['speak_as_cat'] = res.speakAsCat;
 		}
 
-		userToInsert['createdat'] = new Date(Date.now()).toISOString();
+		userToInsert['created_at'] = new Date(Date.now()).toISOString();
 
 		if (!res.suspended) {
-			userToInsert['publickey'] = res.publicKey.publicKeyPem.toString();
+			userToInsert['public_key'] = res.publicKey.publicKeyPem.toString();
 		}
 
 		await db.getRepository('users').insert(userToInsert);

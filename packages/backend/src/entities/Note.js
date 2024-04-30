@@ -9,7 +9,7 @@ module.exports = new EntitySchema({
 			type: 'int',
 			generated: true
 		},
-		timeposted: {
+		created_at: {
 			type: 'varchar',
 			nullable: true
 		},
