@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const config = require('../utils/config.js');
-const db = require('../utils/database.ts');
+const config = require('../../utils/config.js');
+const db = require('../../utils/database.ts');
 
 const updateRemoteActor = require('./updateRemoteActor.js');
 
@@ -111,6 +111,8 @@ async function processNewActor(remoteActorUrl, res) {
 		await db.getRepository('users').insert(userToInsert);
 
 		console.log('[ap] created remote actor ' + remoteActorUrl);
+
+		return await res;
 	}
 }
 

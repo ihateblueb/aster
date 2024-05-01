@@ -82,6 +82,15 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
+		following: {
+			type: 'text',
+			nullable: true
+		},
+		followers: {
+			type: 'text',
+			array: true,
+			nullable: true
+		},
 		public_key: {
 			type: 'text',
 			nullable: true

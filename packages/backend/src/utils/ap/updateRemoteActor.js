@@ -1,7 +1,7 @@
 const axios = require('axios');
 
-const config = require('../utils/config.js');
-const db = require('../utils/database.ts');
+const config = require('../../utils/config.js');
+const db = require('../../utils/database.ts');
 
 async function updateRemoteActor(remoteActorUrl) {
 	console.log('[ap] attempting to update remote actor ' + remoteActorUrl);
@@ -11,7 +11,6 @@ async function updateRemoteActor(remoteActorUrl) {
 			headers: { Accept: 'application/activity+json' }
 		})
 		.then((res) => {
-			console.log(res);
 			processActor(res.data);
 		})
 		.catch((e) => {
@@ -91,6 +90,8 @@ async function processActor(res) {
 		await db.getRepository('users').update(userToUpdate);
 
 		console.log('[ap] updated remote actor ' + remoteActorUrl);
+
+		return await res;
 	}
 }
 

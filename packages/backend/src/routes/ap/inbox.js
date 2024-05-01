@@ -5,7 +5,8 @@ const crypto = require('crypto');
 const config = require('../../utils/config.js');
 const db = require('../../utils/database.ts');
 
-const getRemoteActor = require('../../utils/getRemoteActor.js');
+const validateRequest = require('../../utils/ap/validateRequest.js');
+const getRemoteActor = require('../../utils/ap/getRemoteActor.js');
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -14,14 +15,18 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	var grabbedUser = await db.getRepository('users').find({
-		where: {
-			id: Number(req.params.userid)
-		}
-	});
+	// everything under it will not run if the signature is bad
+	validateRequest(req, res);
 
-	var grabbedUser = grabbedUser[0];
+	if (req.params.userid) {
+		var grabbedUser = await db.getRepository('users').find({
+			where: {
+				id: Number(req.params.userid)
+			}
+		});
 
+		var grabbedUser = grabbedUser[0];
+	}
 	if (!req.params.userid) {
 		return res.status(400).json({ message: 'bad request' });
 	} else if (!grabbedUser.local) {
@@ -31,80 +36,14 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	} else if (grabbedUser.deactivated) {
 		return res.status(410).json({ message: 'user deactivated' });
 	} else {
-		var host = req.headers.host;
-		var date = req.headers.date;
-		var digest = req.headers.digest;
-
 		var httpSig = httpSignature.parseRequest(req);
+		var remoteActorId = httpSig.keyId.split('#')[0];
 
-		// needs more validation!
-		// see: https://github.com/misskey-dev/misskey/blob/develop/packages/backend/src/server/ActivityPubServerService.ts
+		console.log('[ap] received request from id ' + remoteActorId);
 
-		// split digest at =
-		var digest = digest.split(/=(.*)/s);
+		console.log(await getRemoteActor(remoteActorId));
 
-		// checks if the host is the same as the instance url, or if it even exists on the request
-		if (
-			!host ||
-			host !==
-				config.url
-					.replace('https://', '')
-					.replace('http://', '')
-					.replace('/', '')
-		) {
-			console.log(
-				'[ap] uh-oh! a request was sent that mismatches with the current host'
-			);
-			return res
-				.status(400)
-				.json({ message: 'host did not match instance configuration' });
-		}
-		// checks if there is a digest
-		else if (!digest[1]) {
-			console.log(
-				'[ap] what? a request was sent that does not have a digest'
-			);
-			return res.status(400).json({ message: 'digest missing' });
-		}
-		// checks if the digest is the right algorithim
-		else if (!digest[0] === 'SHA-256') {
-			console.log(
-				'[ap] uh-oh! a request was sent with an invalid digest'
-			);
-			return res.status(400).json({ message: 'digest invalid' });
-		}
-		// checks if the digest matches what it says it is
-		else {
-			var remoteActorId = httpSig.keyId.split('#')[0];
-			console.log('[ap] received request from id ' + remoteActorId);
-
-			console.log(await getRemoteActor(remoteActorId));
-
-			// add blocking code here later
-
-			console.log(req.body);
-
-			return res.status(200).send();
-		}
-
-		/*
-
-			This will be executed after it is sent to a Redis-like software
-
-			if (grabbedUser) {
-				if (!grabbedUser.locked) {
-					// send!
-					var followApprovalResponse = {
-						'@context': 'https://www.w3.org/ns/activitystreams'
-					};
-				} else {
-					// wait.
-				}
-			} else {
-				return res.status(404).send('Not found');
-			}
-
-		*/
+		return res.status(200).send();
 	}
 });
 

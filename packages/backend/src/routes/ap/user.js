@@ -68,6 +68,9 @@ router.get('/users/:userid', async (req, res) => {
 			userJson['inbox'] =
 				config.url + 'users/' + grabbedUser.id + '/inbox';
 
+			userJson['endpoints'] = {};
+			userJson.endpoints['sharedInbox'] = config.url + 'inbox';
+
 			userJson['publicKey'] = {};
 			userJson.publicKey['id'] =
 				config.url + 'users/' + grabbedUser.id + '#main-key';
