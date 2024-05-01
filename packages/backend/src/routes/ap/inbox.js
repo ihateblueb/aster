@@ -6,7 +6,7 @@ const config = require('../../utils/config.js');
 const db = require('../../utils/database.ts');
 
 const validateRequest = require('../../utils/ap/validateRequest.js');
-const getRemoteActor = require('../../utils/ap/getRemoteActor.js');
+const fetchRemoteActor = require('../../utils/ap/fetchRemoteActor.js');
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -41,7 +41,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 		console.log('[ap] received request from id ' + remoteActorId);
 
-		console.log(await getRemoteActor(remoteActorId));
+		console.log(await fetchRemoteActor(remoteActorId));
 
 		return res.status(200).send();
 	}
