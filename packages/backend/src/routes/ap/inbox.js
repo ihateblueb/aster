@@ -39,11 +39,10 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		var httpSig = httpSignature.parseRequest(req);
 		var remoteActorId = httpSig.keyId.split('#')[0];
 
-		console.log('[ap] received request from id ' + remoteActorId);
+		return res.status(400).send();
 
-		console.log(await fetchRemoteActor(remoteActorId));
-
-		return res.status(200).send();
+		//console.log('[ap] received request from id ' + remoteActorId);
+		//console.log(await fetchRemoteActor(remoteActorId));
 	}
 });
 

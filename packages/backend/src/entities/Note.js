@@ -9,10 +9,6 @@ module.exports = new EntitySchema({
 			type: 'int',
 			generated: true
 		},
-		created_at: {
-			type: 'varchar',
-			nullable: true
-		},
 		author: {
 			type: 'varchar',
 			nullable: true
@@ -21,12 +17,16 @@ module.exports = new EntitySchema({
 			type: 'varchar',
 			nullable: true
 		},
+		cw: {
+			type: 'text',
+			nullable: true
+		},
 		content: {
 			type: 'text',
 			nullable: true
 		},
-		cw: {
-			type: 'text',
+		created_at: {
+			type: 'varchar',
 			nullable: true
 		}
 	}

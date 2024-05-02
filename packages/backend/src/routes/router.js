@@ -13,6 +13,8 @@ router.use('/', require('./ap/user.js'));
 router.use('/', require('./ap/note.js'));
 
 // api
+router.use('/', require('./api/v1/instance.js'));
 router.use('/', require('./api/v1/accounts.js'));
+router.use('/', require('./api/v1/notes.js'));
 
 module.exports = router;
