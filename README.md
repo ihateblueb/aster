@@ -3,6 +3,9 @@
 working on some kind of ap server
 this should never be used seriously! i'm just being silly and having fun over here.
 
+ignore all the inbox code. i need to redo all of it.
+i wasnt sure what i was doing and made a lot of mistakes while writing it, so im going to redo it so this software is actually good. maybe.
+
 ## security
 
 if you find a vulnerability in my software please contact me privately. see https://blueb.me/
