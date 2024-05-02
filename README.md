@@ -16,7 +16,8 @@ this should never be used seriously! i'm just being silly and having fun over he
 
 -   [x] fetchable users
 -   [x] fetchable notes
--   [ ] fetchable instance metadata
+-   [x] fetchable instance info
+-   [ ] fetchable remote instance info
 -   [ ] register users
 -   [ ] create notes
 
