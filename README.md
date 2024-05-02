@@ -7,17 +7,15 @@ this should never be used seriously! i'm just being silly and having fun over he
 
 ### activitypub
 
-[x] fetchable users
-
+-   [x] fetchable users
 -   [ ] fetchable notes
 -   [ ] accept activities (inboxes)
 -   [ ] announce activities
 
 ### backend
 
-[x] fetchable users
-[x] fetchable notes
-
+-   [x] fetchable users
+-   [x] fetchable notes
 -   [ ] fetchable instance metadata
 -   [ ] register users
 -   [ ] create notes
