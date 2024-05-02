@@ -3,6 +3,8 @@
 working on some kind of fedi software
 this should never be used seriously! i'm just being silly and having fun over here.
 
+originally, i was going to make it conform to the mastodon api. i think i will add a compatability thing later, but for now im just going to create my own similar but better (at least to me) api.
+
 ## project status
 
 ### activitypub
@@ -66,6 +68,7 @@ use that template and create a production.yml in that same directory.
 
 -   [ ] `misskey:_misskey_content`
 -   [ ] `misskey:_misskey_quote`
+-   [ ] `misskey:_misskey_vote` (i do not know what this is used for, but i will probably support it)
 -   [ ] `misskey:_misskey_reaction`
 -   [ ] `misskey:_misskey_summary`
 -   [ ] `misskey:isCat`
