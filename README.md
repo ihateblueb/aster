@@ -1,5 +1,7 @@
 # aster
 
+[![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
+
 working on some kind of fedi software
 this should never be used seriously! i'm just being silly and having fun over here.
 

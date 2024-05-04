@@ -24,6 +24,7 @@ if (!config.nodeadmin) {
 		'[warn] its a good idea to specify your admin name in configuration'
 	);
 }
+
 if (!config.nodeadmincontact) {
 	console.log(
 		'[warn] its a good idea to specify your admin contact information in configuration'
