@@ -44,7 +44,7 @@ const dataSource = require('./utils/database.ts');
 const app = express();
 
 app.use(logger.dev, logger.combined);
-app.use(express.json({ type: 'application/*+json', extended: true }));
+app.use(bodyParser.raw({ type: '*/*' }));
 app.use(cors());
 
 app.use('/', require('./routes/router.js'));

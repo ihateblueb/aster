@@ -1,6 +1,8 @@
 const config = require('../config.js');
 const db = require('../database.ts');
 
+const crypto = require('crypto');
+
 async function validateRequest(req, res) {
 	if (!req.headers.host) {
 		return res.status(400).json({ message: 'missing host' });
@@ -50,34 +52,34 @@ async function validateRequest(req, res) {
 			.status(400)
 			.json({ message: 'signature in headers not present' });
 	} else {
-		var signature = req.headers.signature;
 		console.log('[ap] signature in headers present');
 	}
 
-	if (!signature.keyId) {
-		console.log('[ap] signature keyId not present');
-		return res.status(400).json({ message: 'signature keyId not present' });
-	} else {
-		console.log('[ap] signature keyId present');
-	}
+	var digestValid = validateDigest(
+		req,
+		req.headers.digest.replace('SHA-256=', '')
+	);
 
-	if (signature.algorithm !== 'rsa-sha256') {
-		console.log('[ap] signature algorithm invalid');
-		return res
-			.status(400)
-			.json({ message: 'signature algorithim invalid' });
+	if (!digestValid) {
+		console.log('[ap] digest invalid');
+		return res.status(400).json({ message: 'digest invalid' });
 	} else {
-		console.log('[ap] signature algorithm valid');
-	}
-
-	if (!signature.signature) {
-		console.log('[ap] signature not present');
-		return res.status(400).json({ message: 'signature not present' });
-	} else {
-		console.log('[ap] signature present');
+		console.log('[ap] digest valid');
 	}
 
 	return res.status(400).send();
+}
+
+function validateDigest(req, digest) {
+	if (req && digest) {
+		return (
+			crypto.createHash('sha256').update(req.body).digest('base64') ===
+			digest
+		);
+	} else {
+		console.log('[ap validateDigest] body or digest missing');
+		return false;
+	}
 }
 
 async function validateSignature(req, res) {}

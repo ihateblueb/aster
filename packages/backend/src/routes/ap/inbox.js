@@ -9,7 +9,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	]);
 
 	console.log(req.headers);
-	console.log(req.body);
+	console.log(JSON.parse(req.body));
 
 	validateRequest(req, res);
 
