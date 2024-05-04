@@ -69,14 +69,18 @@ async function validateRequest(req, res) {
 		console.log('[ap] digest valid');
 	}
 
-	var grabbedActor = getRemoteActor(JSON.parse(req.body).actor);
+	var grabbedActor = await getRemoteActor(JSON.parse(req.body).actor);
 
-	console.log(await grabbedActor);
+	console.log(grabbedActor);
 
-	httpSignature.verifySignature(
-		req.headers.signature,
-		grabbedActor.remoteKey
-	);
+	if (grabbedActor === 'gone') {
+		return res.status(200).send();
+	} else {
+		var parsedRequest = httpSignature.parseRequest(req, {
+			headers: ['(request-target)', 'digest', 'host', 'date']
+		});
+		httpSignature.verifySignature(parsedRequest, grabbedActor.public_key);
+	}
 
 	return res.status(400).send();
 }
@@ -88,11 +92,9 @@ function validateDigest(req, digest) {
 			digest
 		);
 	} else {
-		console.log('[ap validateDigest] body or digest missing');
+		console.log('[ap] body or digest missing');
 		return false;
 	}
 }
-
-async function validateSignature(req, res) {}
 
 module.exports = validateRequest;
