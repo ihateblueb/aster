@@ -3,6 +3,8 @@ const router = require('express').Router();
 // const config = require('../../utils/config.js');
 // const db = require('../../utils/database.ts');
 
+const validateRequest = require('../../utils/ap/validation.js');
+
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
 		'application/json',
@@ -10,8 +12,10 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	// for now, return 400 until i rewrite this shitshow
-	return res.status(400).send();
+	console.log(req.headers);
+	console.log(req.body);
+
+	validateRequest(req, res);
 });
 
 module.exports = router;
