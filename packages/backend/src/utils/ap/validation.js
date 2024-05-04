@@ -2,6 +2,7 @@ const config = require('../config.js');
 const db = require('../database.ts');
 
 const crypto = require('crypto');
+const httpSignature = require('@peertube/http-signature');
 
 async function validateRequest(req, res) {
 	if (!req.headers.host) {
@@ -66,6 +67,10 @@ async function validateRequest(req, res) {
 	} else {
 		console.log('[ap] digest valid');
 	}
+
+	// get the user
+
+	httpSignature.verifySignature(req.headers.signature, grabbedUser.remoteKey);
 
 	return res.status(400).send();
 }
