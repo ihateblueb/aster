@@ -85,11 +85,6 @@ use that template and create a production.yml in that same directory.
 
 -   [ ] `mia:bite` (i think this is the extension?)
 
-### aster
-
--   [ ] `aster:statusEmoji`
--   [ ] `aster:statusContent`
-
 ## example followreq activity
 
 for my reference
