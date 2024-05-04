@@ -24,15 +24,26 @@ async function acceptInboxRequest(parsedBody, res) {
 			// accept
 		}
 	} else if (parsedBody.type === 'Delete') {
-		var grabbedActor = await db.getRepository('users').delete({
+		var grabbedRemoteActor = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.actor
 			}
 		});
 
-		console.log('[ap] deleted ' + parsedBody.actor);
+		var grabbedRemoteActor = grabbedRemoteActor[0];
 
-		return res.status(200).send();
+		if (grabbedRemoteActor) {
+			await db.getRepository('users').delete(grabbedRemoteActor.id);
+			console.log('[ap] deleted ' + parsedBody.actor);
+			return res.status(200).send();
+		} else {
+			console.log(
+				'[ap] accepted deletion of ' +
+					parsedBody.actor +
+					' even though it wasnt present'
+			);
+			return res.status(200).send();
+		}
 	}
 }
 
