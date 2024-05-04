@@ -73,7 +73,10 @@ async function validateRequest(req, res) {
 
 	console.log(grabbedActor);
 
-	if (grabbedActor === 'gone') {
+	if (!grabbedActor) {
+		console.log('shit and fuck');
+		return res.status(500).send();
+	} else if (grabbedActor === 'gone') {
 		return res.status(200).send();
 	} else {
 		var parsedRequest = httpSignature.parseRequest(req, {

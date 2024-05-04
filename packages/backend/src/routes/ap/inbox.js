@@ -13,6 +13,11 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 	validateRequest(req, res);
 
+	var parsedBody = JSON.parse(req.body);
+
+	if (parsedBody.type === 'Follow') {
+	}
+
 	// if it has passed the 40 validation checks, you can now trust it!
 });
 

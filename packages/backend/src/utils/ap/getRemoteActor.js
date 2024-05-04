@@ -1,6 +1,7 @@
 const axios = require('axios');
 
 const db = require('../database.ts');
+const pkg = require('../../../../../package.json');
 
 const updateRemoteActor = require('./updateRemoteActor.js');
 
@@ -14,27 +15,32 @@ async function getRemoteActor(apId) {
 	var grabbedRemoteActor = grabbedRemoteActor[0];
 
 	if (grabbedRemoteActor) {
-		console.log('[ap] remote actor present in database, updating');
+		console.log('[ap] remote actor present in database');
 		return grabbedRemoteActor;
 	} else {
-		console.log('[ap] remote actor not present in database, trying to get');
+		console.log('[ap] remote actor not present in database');
 
-		axios
+		let response;
+
+		await axios
 			.get(apId, {
-				headers: { Accept: 'application/activity+json' }
+				headers: {
+					Accept: 'application/activity+json'
+				}
 			})
 			.then(async (res) => {
-				console.log(res);
-				return await processNewActor(apId, res);
+				console.log('[ap] fetched actor successfully');
+				response = await processNewActor(apId, res);
 			})
 			.catch((e) => {
 				if (e.response.status === 410) {
-					console.error('[ap] actor ' + remoteActorUrl + ' is gone');
-					return 'gone';
+					response = 'gone';
 				} else {
 					console.log(e);
 				}
 			});
+
+		return response;
 	}
 }
 
@@ -71,7 +77,7 @@ async function processNewActor(apId, res) {
 		}
 
 		if (res.data.image) {
-			(actorToInsert['banner'] = res.data.o), age.url;
+			actorToInsert['banner'] = res.data.image.url;
 		}
 
 		if (res.data.backgroundUrl) {
@@ -79,7 +85,7 @@ async function processNewActor(apId, res) {
 		}
 
 		if (res.data.manuallyApprovesFollowers) {
-			userToInsert['locked'] = res.data.manuallyApprovesFollowers;
+			actorToInsert['locked'] = res.data.manuallyApprovesFollowers;
 		}
 
 		if (res.data.suspended) {
@@ -116,8 +122,6 @@ async function processNewActor(apId, res) {
 		console.log('[ap] created remote actor ' + apId);
 
 		return actorToInsert;
-	} else {
-		console.log('fuck!');
 	}
 }
 
