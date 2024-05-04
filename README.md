@@ -45,10 +45,10 @@ use that template and create a production.yml in that same directory.
 
 ### activitystreams
 
--   [ ] `as:manuallyApprovesFollowers`
--   [ ] `as:sensitive`
+-   [-] `as:manuallyApprovesFollowers`
+-   [-] `as:sensitive`
 -   [ ] `as:Hashtag`
--   [ ] `as:quoteUrl`
+-   [-] `as:quoteUrl`
 
 ### mastodon
 
@@ -57,7 +57,7 @@ use that template and create a production.yml in that same directory.
 
 ## fedibird
 
--   [ ] `fedibird:quoteUri`
+-   [-] `fedibird:quoteUri`
 
 ### schema
 
@@ -66,20 +66,20 @@ use that template and create a production.yml in that same directory.
 
 ### misskey
 
--   [ ] `misskey:_misskey_content`
--   [ ] `misskey:_misskey_quote`
+-   [-] `misskey:_misskey_content`
+-   [-] `misskey:_misskey_quote`
 -   [ ] `misskey:_misskey_vote` (i do not know what this is used for, but i will probably support it)
 -   [ ] `misskey:_misskey_reaction`
--   [ ] `misskey:_misskey_summary`
--   [ ] `misskey:isCat`
+-   [-] `misskey:_misskey_summary`
+-   [-] `misskey:isCat`
 
 ### firefish
 
--   [ ] `firefish:speakAsCat`
+-   [-] `firefish:speakAsCat`
 
 ### sharkey
 
--   [ ] `sharkey:backgroundUrl`
+-   [-] `sharkey:backgroundUrl`
 
 ### mia's iceshrimp patches
 
@@ -133,5 +133,56 @@ for my reference
 	"type": "Follow",
 	"actor": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
 	"object": "https://as1.blueb.me/users/1"
+}
+```
+
+### example note
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#"
+		}
+	],
+	"id": "https://eepy.zone/notes/9sv3rkmjjvdr000z",
+	"type": "Note",
+	"attributedTo": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+	"content": "<p>my silly ass made an ap request to my instance about a remote post</p>",
+	"published": "2024-05-04T03:22:39.019Z",
+	"to": ["https://www.w3.org/ns/activitystreams#Public"],
+	"cc": ["https://eepy.zone/users/9kfweg7wmdw7fnnt/followers"],
+	"inReplyTo": null,
+	"attachment": [],
+	"sensitive": false,
+	"tag": []
 }
 ```

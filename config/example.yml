@@ -94,3 +94,19 @@ a_registrations: 'closed'
 # otherwise it may be able to be bruteforced.
 # If you use another registration type, leave this empty.
 a_invite0code: ''
+#
+# DESTRUCTIVE
+# config options that may ruin your instance forever
+#
+
+# KILLSWITCH (d_killswitch)
+# ----------
+# The killswitch is for instances that are never returning.
+# Your domain will be rendered fully unusable, and this instance
+# will send out Delete activities and return 410 GONE to requests.
+#
+# It may take a while to do this. I reccomend you leave this up for
+# a week or so.
+#
+# In order to enable, set d_killswitch to 'IKnowWhatIAmDoingAndIWantThisInstanceToDie'
+#

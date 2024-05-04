@@ -21,6 +21,10 @@ module.exports = new EntitySchema({
 			type: 'text',
 			nullable: true
 		},
+		replying_to: {
+			type: 'varchar',
+			nullable: true
+		},
 		content: {
 			type: 'text',
 			nullable: true
