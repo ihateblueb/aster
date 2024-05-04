@@ -91,6 +91,11 @@ module.exports = new EntitySchema({
 			array: true,
 			nullable: true
 		},
+		pending_followers: {
+			type: 'text',
+			array: true,
+			nullable: true
+		},
 		public_key: {
 			type: 'text',
 			nullable: true

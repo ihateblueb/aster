@@ -78,14 +78,14 @@ async function validateRequest(req, res) {
 		return res.status(500).send();
 	} else if (grabbedActor === 'gone') {
 		return res.status(200).send();
+	} else if (grabbedActor.suspended) {
+		return res.status(200).send();
 	} else {
 		var parsedRequest = httpSignature.parseRequest(req, {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
 		httpSignature.verifySignature(parsedRequest, grabbedActor.public_key);
 	}
-
-	return res.status(400).send();
 }
 
 function validateDigest(req, digest) {

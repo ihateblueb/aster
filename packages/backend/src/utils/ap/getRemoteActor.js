@@ -112,7 +112,7 @@ async function processNewActor(apId, res) {
 
 		actorToInsert['updated_at'] = new Date(Date.now()).toISOString();
 
-		if (!res.data.suspended) {
+		if (res.data.publicKey.publicKeyPem) {
 			actorToInsert['public_key'] =
 				res.data.publicKey.publicKeyPem.toString();
 		}
