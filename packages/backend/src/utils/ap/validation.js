@@ -1,15 +1,9 @@
+const config = require('../config.js');
+const db = require('../database.ts');
+
 async function validateRequest(req, res) {
 	if (!req.headers.host) {
 		return res.status(400).json({ message: 'missing host' });
-	}
-
-	if (req.headers.host !== config.url) {
-		console.log('[ap] host header was not present');
-		return res
-			.status(400)
-			.json({ message: 'host doesnt match instance config' });
-	} else {
-		console.log('[ap] host header present');
 	}
 
 	if (
@@ -43,7 +37,46 @@ async function validateRequest(req, res) {
 		console.log('[ap] digest started with SHA-256=');
 	}
 
-	// fallback
+	if (!req.body) {
+		console.log('[ap] body not present');
+		return res.status(400).json({ message: 'body not present' });
+	} else {
+		console.log('[ap] body present');
+	}
+
+	if (!req.headers.signature) {
+		console.log('[ap] signature in headers not present');
+		return res
+			.status(400)
+			.json({ message: 'signature in headers not present' });
+	} else {
+		var signature = req.headers.signature;
+		console.log('[ap] signature in headers present');
+	}
+
+	if (!signature.keyId) {
+		console.log('[ap] signature keyId not present');
+		return res.status(400).json({ message: 'signature keyId not present' });
+	} else {
+		console.log('[ap] signature keyId present');
+	}
+
+	if (signature.algorithm !== 'rsa-sha256') {
+		console.log('[ap] signature algorithm invalid');
+		return res
+			.status(400)
+			.json({ message: 'signature algorithim invalid' });
+	} else {
+		console.log('[ap] signature algorithm valid');
+	}
+
+	if (!signature.signature) {
+		console.log('[ap] signature not present');
+		return res.status(400).json({ message: 'signature not present' });
+	} else {
+		console.log('[ap] signature present');
+	}
+
 	return res.status(400).send();
 }
 
