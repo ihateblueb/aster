@@ -1,8 +1,9 @@
 const config = require('../config.js');
-const db = require('../database.ts');
 
 const crypto = require('crypto');
 const httpSignature = require('@peertube/http-signature');
+
+const getRemoteActor = require('./getRemoteActor.js');
 
 async function validateRequest(req, res) {
 	if (!req.headers.host) {
@@ -68,9 +69,14 @@ async function validateRequest(req, res) {
 		console.log('[ap] digest valid');
 	}
 
-	// get the user
+	var grabbedActor = getRemoteActor(JSON.parse(req.body).actor);
 
-	httpSignature.verifySignature(req.headers.signature, grabbedUser.remoteKey);
+	console.log(await grabbedActor);
+
+	httpSignature.verifySignature(
+		req.headers.signature,
+		grabbedActor.remoteKey
+	);
 
 	return res.status(400).send();
 }
