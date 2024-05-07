@@ -63,6 +63,18 @@ router.get('/users/:userid', async (req, res) => {
 				userJson['discoverable'] = false;
 			}
 
+			if (grabbedUser.deactivated) {
+				userJson['deactivated'] = true;
+			} else {
+				userJson['deactivated'] = false;
+			}
+
+			if (grabbedUser.suspended) {
+				userJson['suspended'] = true;
+			} else {
+				userJson['suspended'] = false;
+			}
+
 			userJson['published'] = grabbedUser.created_at;
 
 			userJson['inbox'] =

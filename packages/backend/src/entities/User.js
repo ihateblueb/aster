@@ -103,10 +103,6 @@ module.exports = new EntitySchema({
 		private_key: {
 			type: 'text',
 			nullable: true
-		},
-		private_key: {
-			type: 'text',
-			nullable: true
 		}
 	}
 });

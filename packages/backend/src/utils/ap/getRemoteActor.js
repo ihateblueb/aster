@@ -33,7 +33,7 @@ async function getRemoteActor(apId) {
 				response = await processNewActor(apId, res);
 			})
 			.catch((e) => {
-				if (e.response.status === 410) {
+				if (e.response && e.response.status === 410) {
 					response = 'gone';
 				} else {
 					console.log(e);

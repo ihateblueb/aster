@@ -6,7 +6,7 @@
 # ---
 # Do not change this after your instance has begun federating!
 # Start this with https:// or http:// and end it with a /
-# e.g. https://ap.example.com/
+# e.g. https://as.example.com/
 url: 'https://example.com/'
 
 # PORT (port)
