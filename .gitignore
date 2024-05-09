@@ -3,6 +3,8 @@ node_modules
 config/production.yml
 logs
 
+packages/backend/built
+
 packages/frontend/.nuxt
 packages/frontend/.output
 packages/frontend/dist
