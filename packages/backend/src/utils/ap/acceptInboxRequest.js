@@ -1,8 +1,6 @@
-const { parse } = require('@peertube/http-signature');
-const config = require('../config.js');
-const db = require('../database.ts');
+import db from '../database.ts';
 
-async function acceptInboxRequest(parsedBody, res) {
+export async function acceptInboxRequest(parsedBody, res) {
 	if (parsedBody.type === 'Follow') {
 		console.log('[ap] follow request received!');
 
@@ -46,5 +44,3 @@ async function acceptInboxRequest(parsedBody, res) {
 		}
 	}
 }
-
-module.exports = acceptInboxRequest;

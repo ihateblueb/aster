@@ -1,7 +1,7 @@
-const router = require('express').Router();
+import router from 'express';
 
-const validateRequest = require('../../utils/ap/validation.js');
-const acceptInboxRequest = require('../../utils/ap/acceptInboxRequest.js');
+import validateRequest from '../../utils/ap/validation.js';
+import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -17,5 +17,3 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 	acceptInboxRequest(JSON.parse(req.body), res);
 });
-
-module.exports = router;

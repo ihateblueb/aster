@@ -1,6 +1,6 @@
-const config = require('../config.js');
+import config from '../config.js';
 
-async function signAndAccept(body, id, userId) {
+export async function signAndAccept(body, id, userId) {
 	var acceptMessage = {
 		'@context': 'https://www.w3.org/ns/activitystreams',
 		id: `${config.url}accept/${id}`,
@@ -11,5 +11,3 @@ async function signAndAccept(body, id, userId) {
 
 	console.log(acceptMessage);
 }
-
-module.exports = signAndAccept;

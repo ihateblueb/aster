@@ -1,7 +1,7 @@
-const router = require('express').Router();
+import router from 'express';
 
-const config = require('../../utils/config.js');
-const db = require('../../utils/database.ts');
+import config from '../../utils/config.js';
+import db from '../../utils/database.ts';
 
 router.get('/notes/:noteid', async (req, res) => {
 	if (!req.params.noteid) {
@@ -42,5 +42,3 @@ router.get('/notes/:noteid', async (req, res) => {
 		}
 	}
 });
-
-module.exports = router;

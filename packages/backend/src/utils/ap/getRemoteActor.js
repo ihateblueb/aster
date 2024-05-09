@@ -1,11 +1,10 @@
 import axios from 'axios';
 
 import db from '../database.ts';
-import pkg from '../../../../../package.json';
 
-import updateRemoteActor from './updateRemoteActor.js';
+// import updateRemoteActor from './updateRemoteActor.js';
 
-async function getRemoteActor(apId) {
+export async function getRemoteActor(apId) {
 	var grabbedRemoteActor = await db.getRepository('users').find({
 		where: {
 			ap_id: apId
@@ -44,7 +43,7 @@ async function getRemoteActor(apId) {
 	}
 }
 
-async function processNewActor(apId, res) {
+export async function processNewActor(apId, res) {
 	if (
 		res.data.type === 'Person' &&
 		res.data.preferredUsername &&
@@ -124,5 +123,3 @@ async function processNewActor(apId, res) {
 		return actorToInsert;
 	}
 }
-
-module.exports = getRemoteActor;

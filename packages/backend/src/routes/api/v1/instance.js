@@ -1,8 +1,8 @@
-const router = require('express').Router();
+import router from 'express';
 
-const pkg = require('../../../../../../package.json');
-const config = require('../../../utils/config.js');
-const db = require('../../../utils/database.ts');
+import pkg from '../../../../../../package.json' assert { type: 'json' };
+import config from '../../../utils/config.js';
+import db from '../../../utils/database.ts';
 
 router.get('/api/v1/instance', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -44,5 +44,3 @@ router.get('/api/v1/instance', async (req, res) => {
 
 	res.json(instanceJson);
 });
-
-module.exports = router;

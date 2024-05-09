@@ -10,7 +10,7 @@ console.log('  / ____ \\ ____) |  | |  | |____| | \\ \\ ');
 console.log(' /_/    \\_\\_____/   |_|  |______|_|  \\_\\');
 console.log('                                        ');
 
-import pkg from '../../../package.json';
+import pkg from '../../../package.json' assert { type: 'json' };
 
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');

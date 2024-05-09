@@ -1,20 +1,18 @@
-const express = require('express');
-const router = require('express').Router();
+import express from 'express';
+import router from 'express';
 
 // eventually will point towards static generated frontend
 router.use('/', express.static('../../frontend/.output/public'));
-router.use('/', require('./misc.js'));
+router.use('/', './misc.js');
 
 // required endpoints for federation
-router.use('/', require('./ap/well-known.js'));
-router.use('/', require('./ap/nodeinfo.js'));
-router.use('/', require('./ap/inbox.js'));
-router.use('/', require('./ap/user.js'));
-router.use('/', require('./ap/note.js'));
+router.use('/', './ap/well-known.js');
+router.use('/', './ap/nodeinfo.js');
+router.use('/', './ap/inbox.js');
+router.use('/', './ap/user.js');
+router.use('/', './ap/note.js');
 
 // api
-router.use('/', require('./api/v1/instance.js'));
-router.use('/', require('./api/v1/accounts.js'));
-router.use('/', require('./api/v1/notes.js'));
-
-module.exports = router;
+router.use('/', './api/v1/instance.js');
+router.use('/', './api/v1/accounts.js');
+router.use('/', './api/v1/notes.js');

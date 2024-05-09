@@ -1,8 +1,8 @@
-const router = require('express').Router();
+import router from 'express';
 
-const pkg = require('../../../../../package.json');
-const config = require('../../utils/config.js');
-const db = require('../../utils/database.ts');
+import pkg from '../../../../../package.json' assert { type: 'json' };
+import config from '../../utils/config.js';
+import db from '../../utils/database.ts';
 
 router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
@@ -56,5 +56,3 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 
 	res.json(nodeinfoJson);
 });
-
-module.exports = router;

@@ -1,7 +1,7 @@
-const router = require('express').Router();
+import router from 'express';
 
-const config = require('../../utils/config.js');
-const db = require('../../utils/database.ts');
+import config from '../../utils/config.js';
+import db from '../../utils/database.ts';
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
@@ -62,5 +62,3 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.send();
 	}
 });
-
-module.exports = router;

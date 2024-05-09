@@ -1,11 +1,11 @@
-const config = require('../config.js');
+import config from '../config.js';
 
-const crypto = require('crypto');
-const httpSignature = require('@peertube/http-signature');
+import crypto from 'crypto';
+import httpSignature from '@peertube/http-signature';
 
-const getRemoteActor = require('./getRemoteActor.js');
+import getRemoteActor from './getRemoteActor.js';
 
-async function validateRequest(req, res) {
+export async function validateRequest(req, res) {
 	if (!req.headers.host) {
 		return res.status(400).json({ message: 'missing host' });
 	}
@@ -88,7 +88,7 @@ async function validateRequest(req, res) {
 	}
 }
 
-function validateDigest(req, digest) {
+export function validateDigest(req, digest) {
 	if (req && digest) {
 		return (
 			crypto.createHash('sha256').update(req.body).digest('base64') ===
@@ -99,5 +99,3 @@ function validateDigest(req, digest) {
 		return false;
 	}
 }
-
-module.exports = validateRequest;
