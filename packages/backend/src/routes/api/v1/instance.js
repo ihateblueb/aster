@@ -3,7 +3,7 @@ const router = express.Router();
 
 import pkg from '../../../../../../package.json' assert { type: 'json' };
 import config from '../../../utils/config.js';
-import db from '../../../utils/database';
+import db from '../../../utils/database.js';
 
 router.get('/api/v1/instance', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');

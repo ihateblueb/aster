@@ -2,7 +2,7 @@ import express from 'express';
 const router = express.Router();
 
 import config from '../../utils/config.js';
-import db from '../../utils/database';
+import db from '../../utils/database.js';
 
 router.get('/notes/:noteid', async (req, res) => {
 	if (!req.params.noteid) {

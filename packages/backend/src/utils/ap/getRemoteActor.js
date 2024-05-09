@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import db from '../database';
+import db from '../database.js';
 
 // import updateRemoteActor from './updateRemoteActor.js';
 

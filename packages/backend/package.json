@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "src/server.js",
 	"scripts": {
-		"migrate": "pnpm exec typeorm migration:run -d ./src/utils/database",
+		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"start": "node built/server.js",
 		"build": "tsc",
 		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc 'package.json' --write"

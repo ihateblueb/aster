@@ -9,8 +9,8 @@ const AppDataSource = new DataSource({
 	username: config.dbuser,
 	password: config.dbpass,
 	database: config.dbname,
-	entities: ['./src/entities/*.ts'],
-	migrations: ['./src/migrations/*.ts'],
+	entities: ['./built/entities/*.js'],
+	migrations: ['./built/migrations/*.js'],
 	logging: 'all'
 });
 
@@ -23,3 +23,5 @@ AppDataSource.initialize()
 		console.error('[database] fatal. now aborting.');
 		process.exit(1);
 	});
+
+export default AppDataSource;

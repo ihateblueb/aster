@@ -59,13 +59,13 @@ export class User {
 	@Column()
 	updated_at: string;
 
-	@Column('string', { array: true })
+	@Column('text', { array: true })
 	following: string[];
 
-	@Column('string', { array: true })
+	@Column('text', { array: true })
 	followers: string[];
 
-	@Column('string', { array: true })
+	@Column('text', { array: true })
 	pending_followers: string[];
 
 	@Column()

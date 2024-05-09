@@ -23,3 +23,5 @@ router.use('/', ap_note);
 router.use('/', api_v1_instance);
 router.use('/', api_v1_accounts);
 router.use('/', api_v1_notes);
+
+export default router;
