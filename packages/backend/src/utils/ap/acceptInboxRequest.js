@@ -1,4 +1,4 @@
-import db from '../database.ts';
+import db from '../database';
 
 export async function acceptInboxRequest(parsedBody, res) {
 	if (parsedBody.type === 'Follow') {

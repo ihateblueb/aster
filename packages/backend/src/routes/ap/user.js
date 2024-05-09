@@ -1,7 +1,8 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
 import config from '../../utils/config.js';
-import db from '../../utils/database.ts';
+import db from '../../utils/database';
 
 router.get('/users/:userid', async (req, res) => {
 	if (!req.params.userid) {
@@ -96,3 +97,5 @@ router.get('/users/:userid', async (req, res) => {
 		}
 	}
 });
+
+export default router;

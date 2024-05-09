@@ -1,7 +1,8 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
 import config from '../../utils/config.js';
-import db from '../../utils/database.ts';
+import db from '../../utils/database';
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
@@ -62,3 +63,5 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.send();
 	}
 });
+
+export default router;

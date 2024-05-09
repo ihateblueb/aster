@@ -26,5 +26,9 @@
 		"eslint": "^9.2.0",
 		"globals": "^15.1.0",
 		"typescript-eslint": "^7.8.0"
+	},
+	"devDependencies": {
+		"ts-node": "^10.9.2",
+		"typescript": "^5.4.5"
 	}
 }

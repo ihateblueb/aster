@@ -1,7 +1,12 @@
 {
-    "compilerOptions": {
-        "target": "ES5",
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true
-    }
+	"compilerOptions": {
+		"target": "ES5",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"allowJs": true,
+		"outDir": "built",
+		"esModuleInterop": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
 }

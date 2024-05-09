@@ -1,6 +1,7 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
-import db from '../../../utils/database.ts';
+import db from '../../../utils/database';
 
 router.get('/api/v1/accounts/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -51,3 +52,5 @@ router.get('/api/v1/accounts/:userid', async (req, res) => {
 		}
 	}
 });
+
+export default router;

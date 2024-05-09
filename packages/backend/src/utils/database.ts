@@ -1,21 +1,20 @@
-const { DataSource, Logger } = require('typeorm');
+import { DataSource, Logger } from 'typeorm';
+import process from 'node:process';
+import config from './config.js';
 
-const config = require('./config.js');
-
-const dataSource = new DataSource({
+const AppDataSource = new DataSource({
 	type: 'postgres',
 	host: config.dbhost,
 	port: config.dbport,
 	username: config.dbuser,
 	password: config.dbpass,
 	database: config.dbname,
-	entities: ['./src/entities/*.js'],
-	migrations: ['./src/migrations/*.js'],
+	entities: ['./src/entities/*.ts'],
+	migrations: ['./src/migrations/*.ts'],
 	logging: 'all'
 });
 
-dataSource
-	.initialize()
+AppDataSource.initialize()
 	.then(() => {
 		console.log('[database] database connected successfully!');
 	})
@@ -24,5 +23,3 @@ dataSource
 		console.error('[database] fatal. now aborting.');
 		process.exit(1);
 	});
-
-module.exports = dataSource;

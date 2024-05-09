@@ -1,4 +1,5 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
 import validateRequest from '../../utils/ap/validation.js';
 import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
@@ -17,3 +18,5 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 	acceptInboxRequest(JSON.parse(req.body), res);
 });
+
+export default router;

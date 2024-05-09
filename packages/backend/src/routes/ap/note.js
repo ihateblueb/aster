@@ -1,7 +1,8 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
 import config from '../../utils/config.js';
-import db from '../../utils/database.ts';
+import db from '../../utils/database';
 
 router.get('/notes/:noteid', async (req, res) => {
 	if (!req.params.noteid) {
@@ -42,3 +43,5 @@ router.get('/notes/:noteid', async (req, res) => {
 		}
 	}
 });
+
+export default router;

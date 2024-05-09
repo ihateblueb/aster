@@ -1,8 +1,9 @@
-import router from 'express';
+import express from 'express';
+const router = express.Router();
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
 import config from '../../utils/config.js';
-import db from '../../utils/database.ts';
+import db from '../../utils/database';
 
 router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
@@ -56,3 +57,5 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 
 	res.json(nodeinfoJson);
 });
+
+export default router;
