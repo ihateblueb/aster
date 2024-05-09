@@ -1,17 +1,17 @@
 import axios from 'axios';
 
-import db from '../database.js';
+import db from '../database';
 
-// import updateRemoteActor from './updateRemoteActor.js';
+// import updateRemoteActor from './updateRemoteActor';
 
-export async function getRemoteActor(apId) {
-	var grabbedRemoteActor = await db.getRepository('users').find({
+export default async function getRemoteActor(apId) {
+	var grabbedRemoteActorDb = await db.getRepository('users').find({
 		where: {
 			ap_id: apId
 		}
 	});
 
-	var grabbedRemoteActor = grabbedRemoteActor[0];
+	var grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 	if (grabbedRemoteActor) {
 		console.log('[ap] remote actor present in database');
@@ -43,7 +43,7 @@ export async function getRemoteActor(apId) {
 	}
 }
 
-export async function processNewActor(apId, res) {
+async function processNewActor(apId, res) {
 	if (
 		res.data.type === 'Person' &&
 		res.data.preferredUsername &&

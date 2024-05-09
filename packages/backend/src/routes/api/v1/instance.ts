@@ -1,14 +1,16 @@
 import express from 'express';
 const router = express.Router();
 
-import pkg from '../../../../../../package.json' assert { type: 'json' };
-import config from '../../../utils/config.js';
-import db from '../../../utils/database.js';
+import pkg from '../../../../../../package.json';
+import config from '../../../utils/config';
+import db from '../../../utils/database';
 
 router.get('/api/v1/instance', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	var instanceJson = {};
+	var instanceJson = {
+		stats: {}
+	};
 
 	instanceJson['url'] = config.url;
 

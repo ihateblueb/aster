@@ -1,6 +1,6 @@
 import { DataSource, Logger } from 'typeorm';
 import process from 'node:process';
-import config from './config.js';
+import config from './config';
 
 const AppDataSource = new DataSource({
 	type: 'postgres',

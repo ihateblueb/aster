@@ -1,20 +1,20 @@
 import express from 'express';
 const router = express.Router();
 
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
+import config from '../../utils/config';
+import db from '../../utils/database';
 
 router.get('/notes/:noteid', async (req, res) => {
 	if (!req.params.noteid) {
 		return res.status(400).json({ message: 'bad request' });
 	} else {
-		var grabbedNote = await db.getRepository('notes').find({
+		var grabbedNoteDb = await db.getRepository('notes').find({
 			where: {
 				id: Number(req.params.noteid)
 			}
 		});
 
-		var grabbedNote = grabbedNote[0];
+		var grabbedNote = grabbedNoteDb[0];
 
 		if (grabbedNote && grabbedNote.local) {
 			res.setHeader('Content-Type', 'application/activity+json');

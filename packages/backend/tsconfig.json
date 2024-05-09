@@ -5,7 +5,8 @@
 		"experimentalDecorators": true,
 		"allowJs": true,
 		"outDir": "built",
-		"esModuleInterop": true
+		"esModuleInterop": true,
+		"resolveJsonModule": true
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules"]

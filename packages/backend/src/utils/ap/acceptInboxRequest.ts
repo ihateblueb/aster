@@ -1,16 +1,16 @@
-import db from '../database.js';
+import db from '../database';
 
-export async function acceptInboxRequest(parsedBody, res) {
+export default async function acceptInboxRequest(parsedBody, res) {
 	if (parsedBody.type === 'Follow') {
 		console.log('[ap] follow request received!');
 
-		var grabbedLocalUser = await db.getRepository('users').find({
+		var grabbedLocalUserDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.object
 			}
 		});
 
-		var grabbedLocalUser = grabbedLocalUser[0];
+		var grabbedLocalUser = grabbedLocalUserDb[0];
 
 		if (!grabbedLocalUser) {
 			console.log('local user not here!');
@@ -22,13 +22,13 @@ export async function acceptInboxRequest(parsedBody, res) {
 			// accept
 		}
 	} else if (parsedBody.type === 'Delete') {
-		var grabbedRemoteActor = await db.getRepository('users').find({
+		var grabbedRemoteActorDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.actor
 			}
 		});
 
-		var grabbedRemoteActor = grabbedRemoteActor[0];
+		var grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 		if (grabbedRemoteActor) {
 			await db.getRepository('users').delete(grabbedRemoteActor.id);

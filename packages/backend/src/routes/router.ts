@@ -2,15 +2,15 @@ import express from 'express';
 
 const router = express.Router();
 
-import ap_wellknown from './ap/well-known.js';
-import ap_nodeinfo from './ap/nodeinfo.js';
-import ap_inbox from './ap/inbox.js';
-import ap_user from './ap/user.js';
-import ap_note from './ap/note.js';
+import ap_wellknown from './ap/well-known';
+import ap_nodeinfo from './ap/nodeinfo';
+import ap_inbox from './ap/inbox';
+import ap_user from './ap/user';
+import ap_note from './ap/note';
 
-import api_v1_instance from './api/v1/instance.js';
-import api_v1_accounts from './api/v1/accounts.js';
-import api_v1_notes from './api/v1/notes.js';
+import api_v1_instance from './api/v1/instance';
+import api_v1_accounts from './api/v1/accounts';
+import api_v1_notes from './api/v1/notes';
 
 // required endpoints for federation
 router.use('/', ap_wellknown);

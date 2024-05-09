@@ -10,12 +10,12 @@ console.log('  / ____ \\ ____) |  | |  | |____| | \\ \\ ');
 console.log(' /_/    \\_\\_____/   |_|  |______|_|  \\_\\');
 console.log('                                        ');
 
-import pkg from '../../../package.json' assert { type: 'json' };
+import pkg from '../../../package.json';
 
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
 
-import config from './utils/config.js';
+import config from './utils/config';
 
 if (!config.nodeadmin) {
 	console.log(
@@ -36,9 +36,9 @@ import express from 'express';
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import logger from './utils/requestLogger.js';
+import logger from './utils/requestLogger';
 
-import router from './routes/router.js';
+import router from './routes/router';
 
 const app = express();
 

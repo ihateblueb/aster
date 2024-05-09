@@ -1,12 +1,11 @@
 {
 	"name": "backend",
 	"version": "1.0.0",
-	"main": "src/server.js",
 	"scripts": {
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"start": "node built/server.js",
 		"build": "tsc",
-		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc 'package.json' --write"
+		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc '**' --write"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {
@@ -24,7 +23,6 @@
 		"helmet": "^3.21.2",
 		"http-status": "^1.3.2",
 		"js-yaml": "^4.1.0",
-		"mandatoryenv": "^1.1.1",
 		"module-alias": "^2.2.2",
 		"morgan": "^1.9.1",
 		"pg": "^8.5.1",

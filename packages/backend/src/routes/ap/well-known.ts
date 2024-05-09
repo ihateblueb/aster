@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
+import config from '../../utils/config';
+import db from '../../utils/database';
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {
@@ -33,7 +33,7 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (req.query.resource.startsWith('acct:')) {
-			var grabbedUser = await db.getRepository('users').find({
+			var grabbedUserDb = await db.getRepository('users').find({
 				where: {
 					username: req.query.resource
 						.replace('acct:', '')
@@ -41,7 +41,7 @@ router.get('/.well-known/webfinger', async (req, res) => {
 				}
 			});
 
-			var grabbedUser = grabbedUser[0];
+			var grabbedUser = grabbedUserDb[0];
 
 			res.json({
 				subject: `acct:${grabbedUser.username}@${config.url

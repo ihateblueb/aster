@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import db from '../../../utils/database.js';
+import db from '../../../utils/database';
 
 router.get('/api/v1/notes/:noteid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -10,22 +10,22 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 			message: 'noteid paramater required'
 		});
 	} else {
-		var grabbedNote = await db.getRepository('notes').find({
+		var grabbedNoteDb = await db.getRepository('notes').find({
 			where: {
 				id: Number(req.params.noteid)
 			}
 		});
 
-		var grabbedNote = grabbedNote[0];
+		var grabbedNote = grabbedNoteDb[0];
 
 		if (grabbedNote) {
-			var grabbedAuthor = await db.getRepository('users').find({
+			var grabbedAuthorDb = await db.getRepository('users').find({
 				where: {
 					id: Number(grabbedNote.author)
 				}
 			});
 
-			var grabbedAuthor = grabbedAuthor[0];
+			var grabbedAuthor = grabbedAuthorDb[0];
 
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {
@@ -38,12 +38,13 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 					});
 				} else {
 					// good to go :3
-					var noteJson = {};
+					var noteJson = {
+						author: {}
+					};
 
 					noteJson['id'] = grabbedNote.id;
 					noteJson['local'] = grabbedNote.local;
 
-					noteJson['author'] = {};
 					noteJson.author['id'] = grabbedAuthor.id;
 					noteJson.author['username'] = grabbedAuthor.username;
 					noteJson.author['local'] = grabbedAuthor.local;

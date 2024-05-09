@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import db from '../../../utils/database.js';
+import db from '../../../utils/database';
 
 router.get('/api/v1/accounts/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
@@ -10,13 +10,13 @@ router.get('/api/v1/accounts/:userid', async (req, res) => {
 			message: 'userid paramater required'
 		});
 	} else {
-		var grabbedUser = await db.getRepository('users').find({
+		var grabbedUserDb = await db.getRepository('users').find({
 			where: {
 				id: Number(req.params.userid)
 			}
 		});
 
-		var grabbedUser = grabbedUser[0];
+		var grabbedUser = grabbedUserDb[0];
 
 		if (grabbedUser.suspended) {
 			return res.status(410).json({

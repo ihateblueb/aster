@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-import validateRequest from '../../utils/ap/validation.js';
-import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
+import validateRequest from '../../utils/ap/validation';
+import acceptInboxRequest from '../../utils/ap/acceptInboxRequest';
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [

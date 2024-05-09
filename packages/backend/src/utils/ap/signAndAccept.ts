@@ -1,6 +1,6 @@
-import config from '../config.js';
+import config from '../config';
 
-export async function signAndAccept(body, id, userId) {
+export default async function signAndAccept(body, id, userId) {
 	var acceptMessage = {
 		'@context': 'https://www.w3.org/ns/activitystreams',
 		id: `${config.url}accept/${id}`,

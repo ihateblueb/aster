@@ -1,26 +1,26 @@
 import express from 'express';
 const router = express.Router();
 
-import pkg from '../../../../../package.json' assert { type: 'json' };
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
+import pkg from '../../../../../package.json';
+import config from '../../utils/config';
+import db from '../../utils/database';
 
 router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
 
-	var userCount = await db.getRepository('users').findAndCount({
+	var userCountDb = await db.getRepository('users').findAndCount({
 		where: {
 			local: true
 		}
 	});
-	var userCount = userCount[1];
+	var userCount = userCountDb[1];
 
-	var noteCount = await db.getRepository('notes').findAndCount({
+	var noteCountDb = await db.getRepository('notes').findAndCount({
 		where: {
 			local: true
 		}
 	});
-	var noteCount = noteCount[1];
+	var noteCount = noteCountDb[1];
 
 	var nodeinfoJson = {
 		version: '2.0',
@@ -44,7 +44,8 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 				total: `${userCount}`
 			},
 			localPosts: `${noteCount}`
-		}
+		},
+		maintainer: {}
 	};
 
 	if (config.maintainer && config.maintaineremail) {
