@@ -1,6 +1,4 @@
-//
-// Aster
-//
+import process from 'node:process';
 
 process.title = 'Aster';
 
@@ -12,12 +10,12 @@ console.log('  / ____ \\ ____) |  | |  | |____| | \\ \\ ');
 console.log(' /_/    \\_\\_____/   |_|  |______|_|  \\_\\');
 console.log('                                        ');
 
-const pkg = require('../../../package.json');
+import pkg from '../../../package.json';
 
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
 
-const config = require('./utils/config.js');
+import config from './utils/config.js';
 
 if (!config.nodeadmin) {
 	console.log(
@@ -31,16 +29,18 @@ if (!config.nodeadmincontact) {
 	);
 }
 
-const { inject, errorHandler } = require('express-custom-error');
+import { inject, errorHandler } from 'express-custom-error';
 inject();
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const logger = require('./utils/requestLogger.js');
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import logger from './utils/requestLogger.js';
 
-const typeorm = require('typeorm');
-const dataSource = require('./utils/database.ts');
+import router from './routes/router.js';
+
+import typeorm from 'typeorm';
+import dataSource from './utils/database.ts';
 
 const app = express();
 
@@ -48,7 +48,7 @@ app.use(logger.dev, logger.combined);
 app.use(bodyParser.raw({ type: '*/*' }));
 app.use(cors());
 
-app.use('/', require('./routes/router.js'));
+app.use('/', router);
 
 app.use(errorHandler());
 
