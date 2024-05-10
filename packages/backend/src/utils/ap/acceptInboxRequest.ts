@@ -13,7 +13,7 @@ export default async function acceptInboxRequest(parsedBody, res) {
 		var grabbedLocalUser = grabbedLocalUserDb[0];
 
 		if (!grabbedLocalUser) {
-			console.log('local user not here!');
+			logger('debug', 'ap', 'local user not here');
 		}
 
 		if (grabbedLocalUser.locked) {
@@ -32,13 +32,15 @@ export default async function acceptInboxRequest(parsedBody, res) {
 
 		if (grabbedRemoteActor) {
 			await db.getRepository('users').delete(grabbedRemoteActor.id);
-			console.log('[ap] deleted ' + parsedBody.actor);
+			logger('info', 'ap', 'deleted ' + parsedBody.actor);
 			return res.status(200).send();
 		} else {
-			console.log(
-				'[ap] accepted deletion of ' +
+			logger(
+				'debug',
+				'ap',
+				'accepted deletion of ' +
 					parsedBody.actor +
-					' even though it wasnt present'
+					' even though it was not present'
 			);
 			return res.status(200).send();
 		}

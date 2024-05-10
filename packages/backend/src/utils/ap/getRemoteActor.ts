@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 import db from '../database';
+import logger from '../logger';
 
 // import updateRemoteActor from './updateRemoteActor';
 
@@ -14,10 +15,10 @@ export default async function getRemoteActor(apId) {
 	var grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 	if (grabbedRemoteActor) {
-		console.log('[ap] remote actor present in database');
+		logger('debug', 'ap', 'remote actor present in database');
 		return grabbedRemoteActor;
 	} else {
-		console.log('[ap] remote actor not present in database');
+		logger('debug', 'ap', 'remote actor not present in database');
 
 		let response;
 
@@ -28,14 +29,14 @@ export default async function getRemoteActor(apId) {
 				}
 			})
 			.then(async (res) => {
-				console.log('[ap] fetched actor successfully');
+				logger('debug', 'ap', 'fetched actor sucessfully');
 				response = await processNewActor(apId, res);
 			})
 			.catch((e) => {
 				if (e.response && e.response.status === 410) {
 					response = 'gone';
 				} else {
-					console.log(e);
+					logger('error', 'ap', e);
 				}
 			});
 
@@ -118,7 +119,7 @@ async function processNewActor(apId, res) {
 
 		await db.getRepository('users').insert(actorToInsert);
 
-		console.log('[ap] created remote actor ' + apId);
+		logger('info', 'ap', 'created remote actor' + apId);
 
 		return actorToInsert;
 	}

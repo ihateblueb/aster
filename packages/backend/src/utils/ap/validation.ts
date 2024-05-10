@@ -39,7 +39,6 @@ export default async function validateRequest(req, res) {
 			.status(400)
 			.json({ message: 'digest did not start with SHA-256=' });
 	} else {
-		console.log('[ap] digest started with SHA-256=');
 		logger('debug', 'ap', 'digest started with SHA-256=');
 	}
 

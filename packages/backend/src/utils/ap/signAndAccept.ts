@@ -1,4 +1,5 @@
 import config from '../config';
+import logger from '../logger';
 
 export default async function signAndAccept(body, id, userId) {
 	var acceptMessage = {
@@ -9,5 +10,5 @@ export default async function signAndAccept(body, id, userId) {
 		object: body
 	};
 
-	console.log(acceptMessage);
+	logger('debug', 'ap', 'acceptMessage');
 }
