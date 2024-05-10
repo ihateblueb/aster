@@ -71,6 +71,24 @@ maintainer: ''
 # e.g. ihateblueb@proton.me
 maintaineremail: ''
 
+# DEBUG (debug)
+# -----
+# If debug mode is on. This will increase the detail of logs.
+# e.g. false
+debug: false
+
+# LOGGING TYPE (logging)
+# ------------
+# How logs will be displayed in the command line.
+# Options: json, fancy
+logging: 'fancy'
+
+# SAVE LOGS (savelogs)
+# ---------
+# If logs should be saved to a file.
+# e.g. false
+savelogs: false
+
 #
 # ADMIN SETTINGS
 # eventually this will be in the database

@@ -1,6 +1,8 @@
 import { DataSource, Logger } from 'typeorm';
 import process from 'node:process';
 import config from './config';
+import logger from './logger';
+import { TypeormLogger } from './logger';
 
 const AppDataSource = new DataSource({
 	type: 'postgres',
@@ -11,17 +13,15 @@ const AppDataSource = new DataSource({
 	database: config.dbname,
 	entities: ['./built/entities/*.js'],
 	migrations: ['./built/migrations/*.js'],
-	logging: 'all'
+	logger: new TypeormLogger()
 });
 
 AppDataSource.initialize()
 	.then(() => {
-		console.log('[database] database connected successfully!');
+		logger('info', 'db', 'database connected successfully');
 	})
 	.catch((e) => {
-		console.error('[database] ' + e);
-		console.error('[database] fatal. now aborting.');
-		process.exit(1);
+		logger('fatal', 'db', e);
 	});
 
 export default AppDataSource;
