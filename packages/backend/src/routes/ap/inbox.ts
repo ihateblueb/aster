@@ -3,6 +3,7 @@ const router = express.Router();
 
 import validateRequest from '../../utils/ap/validation';
 import acceptInboxRequest from '../../utils/ap/acceptInboxRequest';
+import logger from '../../utils/logger';
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -10,7 +11,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	console.log(JSON.parse(req.body));
+	logger('debug', 'ap', JSON.parse(req.body));
 
 	validateRequest(req, res);
 

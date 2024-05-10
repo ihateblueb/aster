@@ -1,9 +1,9 @@
 import db from '../database';
+import logger from '../logger';
 
 export default async function acceptInboxRequest(parsedBody, res) {
+	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
 	if (parsedBody.type === 'Follow') {
-		console.log('[ap] follow request received!');
-
 		var grabbedLocalUserDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.object
