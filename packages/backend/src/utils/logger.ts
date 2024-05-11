@@ -78,8 +78,9 @@ export default function logger(level: String, section: String, message?: any) {
 		}
 	} else if (config.logging === 'json') {
 		console.log({
-			level: `${level}`,
-			section: `${section}`,
+			level: level,
+			section: section,
+			time: new Date(Date.now()).toISOString(),
 			message: message
 		});
 	}
