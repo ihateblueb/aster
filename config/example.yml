@@ -120,7 +120,7 @@ debug: false
 # ------------
 # How logs will be displayed in the command line.
 # Options: json, fancy
-logging: 'fancy'
+logging: 'json'
 
 # SAVE LOGS (savelogs)
 # ---------
