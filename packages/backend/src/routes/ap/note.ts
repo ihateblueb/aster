@@ -10,7 +10,7 @@ router.get('/notes/:noteid', async (req, res) => {
 	} else {
 		var grabbedNoteDb = await db.getRepository('notes').find({
 			where: {
-				id: Number(req.params.noteid)
+				id: req.params.noteid
 			}
 		});
 

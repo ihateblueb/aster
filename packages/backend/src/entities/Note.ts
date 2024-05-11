@@ -1,14 +1,14 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Note {
-	@PrimaryGeneratedColumn('uuid')
+export class Notes {
+	@PrimaryColumn()
 	id: string;
 
 	@Column()
 	created_at: string;
 
-	@Column()
+	@Column({ nullable: true })
 	replying_to: string;
 
 	@Column()
@@ -17,7 +17,7 @@ export class Note {
 	@Column({ default: false })
 	local: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	cw: string;
 
 	@Column()

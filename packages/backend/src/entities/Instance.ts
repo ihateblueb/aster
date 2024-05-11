@@ -1,14 +1,14 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
-export class Instance {
+export class Instances {
 	@PrimaryGeneratedColumn('uuid')
 	id: string;
 
 	@Column()
 	created_at: string;
 
-	@Column()
+	@Column({ nullable: true })
 	updated_at: string;
 
 	@Column()
@@ -17,10 +17,10 @@ export class Instance {
 	@Column({ default: true })
 	responding: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	user_count: number;
 
-	@Column()
+	@Column({ nullable: true })
 	note_count: number;
 
 	@Column({ default: false })
@@ -29,33 +29,33 @@ export class Instance {
 	@Column({ default: false })
 	silenced: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	mod_note: string;
 
 	@Column()
 	host: string;
 
-	@Column()
+	@Column({ nullable: true })
 	name: string;
 
-	@Column()
+	@Column({ nullable: true })
 	description: string;
 
-	@Column()
+	@Column({ nullable: true })
 	color: string;
 
-	@Column()
+	@Column({ nullable: true })
 	maintainer: string;
 
-	@Column()
+	@Column({ nullable: true })
 	maintainer_email: string;
 
-	@Column()
+	@Column({ nullable: true })
 	software: string;
 
-	@Column()
+	@Column({ nullable: true })
 	version: string;
 
-	@Column()
+	@Column({ nullable: true })
 	icon: string;
 }

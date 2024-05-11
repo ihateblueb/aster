@@ -1,24 +1,24 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class User {
-	@PrimaryGeneratedColumn('uuid')
+export class Users {
+	@PrimaryColumn()
 	id: string;
 
-	@Column()
+	@Column({ nullable: true })
 	ap_id: string;
 
 	@Column()
 	username: string;
 
-	@Column()
+	@Column({ nullable: true })
 	displayname: string;
 
 	@Column({ default: false })
 	local: boolean;
 
-	@Column()
-	url: string;
+	@Column({ nullable: true })
+	url!: string;
 
 	@Column({ default: true })
 	locked: boolean;
@@ -35,16 +35,16 @@ export class User {
 	@Column({ default: false })
 	automated: boolean;
 
-	@Column()
+	@Column({ nullable: true })
 	avatar: string;
 
-	@Column()
+	@Column({ nullable: true })
 	banner: string;
 
-	@Column()
-	background: string;
+	@Column({ nullable: true })
+	background!: string;
 
-	@Column()
+	@Column({ nullable: true })
 	bio: string;
 
 	@Column({ default: false })
@@ -56,24 +56,24 @@ export class User {
 	@Column()
 	created_at: string;
 
-	@Column()
+	@Column({ nullable: true })
 	updated_at: string;
 
-	@Column('text', { array: true })
+	@Column('text', { array: true, nullable: true })
 	following: string[];
 
-	@Column('text', { array: true })
+	@Column('text', { array: true, nullable: true })
 	followers: string[];
 
-	@Column('text', { array: true })
+	@Column('text', { array: true, nullable: true })
 	pending_followers: string[];
 
 	@Column()
 	public_key: string;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	private_key: string;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	password: string;
 }

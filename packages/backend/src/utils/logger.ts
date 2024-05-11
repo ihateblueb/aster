@@ -10,7 +10,7 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgCyan('debug') +
 					' ' +
-					chalk.cyan(section) +
+					chalk.cyan(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
@@ -20,7 +20,17 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgBlue('info') +
 					' ' +
-					chalk.blue(section) +
+					chalk.blue(section.toLowerCase()) +
+					']' +
+					' ' +
+					message
+			);
+		} else if (level === 'http') {
+			console.log(
+				'[' +
+					chalk.bgMagenta('http') +
+					' ' +
+					chalk.magenta(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
@@ -30,7 +40,7 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgYellow('warn') +
 					' ' +
-					chalk.yellow(section) +
+					chalk.yellow(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
@@ -40,7 +50,7 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgRed('error') +
 					' ' +
-					chalk.red(section) +
+					chalk.red(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
@@ -50,7 +60,7 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgRedBright('fatal') +
 					' ' +
-					chalk.redBright(section) +
+					chalk.redBright(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
@@ -59,7 +69,7 @@ export default function logger(level: String, section: String, message?: any) {
 				'[' +
 					chalk.bgRedBright('fatal') +
 					' ' +
-					chalk.redBright(section) +
+					chalk.redBright(section.toLowerCase()) +
 					']' +
 					' ' +
 					'fatal. now aborting.'

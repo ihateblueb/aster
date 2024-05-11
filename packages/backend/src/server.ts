@@ -2,8 +2,6 @@ import process from 'node:process';
 
 process.title = 'Aster';
 
-import config from './utils/config';
-import logger from './utils/logger';
 import pkg from '../../../package.json';
 
 console.log('            _____ _______ ______ _____  ');
@@ -16,6 +14,9 @@ console.log('                                        ');
 
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
+
+import config from './utils/config';
+import logger from './utils/logger';
 
 if (!config.nodeadmin) {
 	logger(

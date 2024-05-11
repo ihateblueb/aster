@@ -7,12 +7,12 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.noteid) {
 		return res.status(400).json({
-			message: 'noteid paramater required'
+			message: 'noteid parameter required'
 		});
 	} else {
 		var grabbedNoteDb = await db.getRepository('notes').find({
 			where: {
-				id: Number(req.params.noteid)
+				id: req.params.noteid
 			}
 		});
 
@@ -21,7 +21,7 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 		if (grabbedNote) {
 			var grabbedAuthorDb = await db.getRepository('users').find({
 				where: {
-					id: Number(grabbedNote.author)
+					id: grabbedNote.author
 				}
 			});
 

@@ -10,3 +10,7 @@ packages/frontend/.output
 packages/frontend/dist
 
 uploads
+
+# used for development when making users manually
+private.pem
+public.pem

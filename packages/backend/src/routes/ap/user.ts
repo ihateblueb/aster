@@ -10,7 +10,7 @@ router.get('/users/:userid', async (req, res) => {
 	} else {
 		var grabbedUserDb = await db.getRepository('users').find({
 			where: {
-				id: Number(req.params.userid)
+				id: req.params.userid
 			}
 		});
 

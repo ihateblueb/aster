@@ -135,7 +135,7 @@ for my reference
 }
 ```
 
-### example note
+## example note
 
 ```json
 {
@@ -185,3 +185,8 @@ for my reference
 	"tag": []
 }
 ```
+
+## rsa keygen commands
+
+`openssl genrsa -out private.pem 2048`
+`openssl rsa -in private.pem -outform PEM -pubout -out public.pem`
