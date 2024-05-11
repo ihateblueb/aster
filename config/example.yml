@@ -38,7 +38,46 @@ dbuser: aster
 # -----------------
 # Password of the user to connect to the database as
 # Please randomly generate this!
-dbpass:
+dbpass: ''
+
+# REDIS HOST (redishost)
+# ----------
+# Host to use to connect to your Redis instance.
+# Typically, you won't need to change this.
+redishost: localhost
+
+# REDIS PORT (redisport)
+# ----------
+# Port to use to connect to your Redis instance.
+# Typically, you won't need to change this.
+redisport: 6379
+
+# REDIS PREFIX (redisprefix)
+# ------------
+# Prefix to put in front of keys in Redis.
+# Typically, you won't need to set this.
+redisprefix: ''
+
+# REDIS DATABASE (redisdb)
+# ------------
+# Database used within Redis.
+# Typically, you won't need to set this if you don't expose
+# your Redis instance.
+redisdb: ''
+
+# REDIS USERNAME (redisuser)
+# --------------
+# Username used for Redis authentication.
+# Typically, you won't need to set this if you don't expose
+# your Redis instance and require authentication.
+redisuser: ''
+
+# REDIS PASSWORD (redispw)
+# --------------
+# Password used for Redis authentication.
+# Typically, you won't need to set this if you don't expose
+# your Redis instance and require authentication.
+redispw: ''
 
 # NODE NAME (nodename)
 # ---------

@@ -3,7 +3,7 @@ const router = express.Router();
 
 import db from '../../../utils/database';
 
-router.get('/api/v1/accounts/:userid', async (req, res) => {
+router.get('/api/v1/users/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
 		return res.status(400).json({

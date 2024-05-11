@@ -9,7 +9,7 @@ import ap_user from './ap/user';
 import ap_note from './ap/note';
 
 import api_v1_instance from './api/v1/instance';
-import api_v1_accounts from './api/v1/accounts';
+import api_v1_users from './api/v1/users';
 import api_v1_notes from './api/v1/notes';
 
 // required endpoints for federation
@@ -21,7 +21,7 @@ router.use('/', ap_note);
 
 // api
 router.use('/', api_v1_instance);
-router.use('/', api_v1_accounts);
+router.use('/', api_v1_users);
 router.use('/', api_v1_notes);
 
 export default router;
