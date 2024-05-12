@@ -14,7 +14,7 @@
 	"private": true,
 	"scripts": {
 		"start": "pnpm --filter=backend start",
-		"build": "pnpm -r build",
+		"build": "pnpm --filter=frontend build && pnpm --filter=backend build",
 		"format": "pnpm -r format",
 		"migrate": "pnpm --filter=backend migrate"
 	},
