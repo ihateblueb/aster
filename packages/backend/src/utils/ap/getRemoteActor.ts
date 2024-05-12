@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import db from '../database';
-import logger from '../logger';
+import db from '../database.js';
+import logger from '../logger.js';
 
 // import updateRemoteActor from './updateRemoteActor';
 

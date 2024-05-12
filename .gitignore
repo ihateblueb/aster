@@ -5,9 +5,8 @@ logs
 
 packages/backend/built
 
-packages/frontend/.nuxt
-packages/frontend/.output
-packages/frontend/dist
+packages/frontend/.svelte-kit
+packages/frontend/build
 
 uploads
 

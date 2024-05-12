@@ -1,9 +1,9 @@
 import { Job, MetricsTime, Worker } from 'bullmq';
 
-import config from './config';
-import logger from './logger';
+import config from './config.js';
+import logger from './logger.js';
 
-import inboxWorker from './processers/inboxWorker';
+import inboxWorker from './processers/inboxWorker.js';
 
 logger('info', 'redis', 'starting workers');
 

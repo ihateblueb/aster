@@ -1,11 +1,11 @@
 import morgan from 'morgan';
-import logger from './logger';
+import logger from './logger.js';
 import chalk from 'chalk';
 import rfs from 'rotating-file-stream';
 import path from 'path';
 import fs from 'fs';
 
-const logDirectory = path.resolve(__dirname, '../../../../logs');
+const logDirectory = path.resolve('../../../../logs');
 
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);
 

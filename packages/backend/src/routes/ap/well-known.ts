@@ -1,8 +1,8 @@
 import express from 'express';
 const router = express.Router();
 
-import config from '../../utils/config';
-import db from '../../utils/database';
+import config from '../../utils/config.js';
+import db from '../../utils/database.js';
 
 // nodeinfo
 router.get('/.well-known/nodeinfo', (req, res) => {

@@ -1,14 +1,21 @@
 {
 	"compilerOptions": {
-		"target": "ES5",
+		"target": "esnext",
+		"module": "esnext",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"allowJs": true,
 		"outDir": "built",
 		"rootDir": "src",
+		"allowJs": true,
 		"esModuleInterop": true,
-		"resolveJsonModule": true
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"sourceMap": true,
+		"moduleResolution": "bundler",
+		"noImplicitAny": false,
+		"strictPropertyInitialization": false
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules"]
+	"exclude": ["node_modules", "build"]
 }

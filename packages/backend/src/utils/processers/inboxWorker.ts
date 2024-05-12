@@ -1,6 +1,6 @@
 import { Job } from 'bullmq';
 
-import logger from '../logger';
+import logger from '../logger.js';
 
 export default async function inboxWorker(job: Job) {
 	try {

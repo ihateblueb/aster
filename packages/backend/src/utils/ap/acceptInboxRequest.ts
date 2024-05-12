@@ -1,5 +1,5 @@
-import db from '../database';
-import logger from '../logger';
+import db from '../database.js';
+import logger from '../logger.js';
 
 export default async function acceptInboxRequest(parsedBody, res) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');

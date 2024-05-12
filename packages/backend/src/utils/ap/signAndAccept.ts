@@ -1,5 +1,5 @@
-import config from '../config';
-import logger from '../logger';
+import config from '../config.js';
+import logger from '../logger.js';
 
 export default async function signAndAccept(body, id, userId) {
 	var acceptMessage = {

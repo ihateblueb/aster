@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 
-import db from '../../../utils/database';
+import db from '../../../utils/database.js';
 
 router.get('/api/v1/users/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
