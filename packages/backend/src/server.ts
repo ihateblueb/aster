@@ -51,7 +51,7 @@ app.use(cors());
 
 app.use('/', router);
 
-app.use('*', handler);
+app.use(handler);
 
 app.listen(config.port, () =>
 	logger(
