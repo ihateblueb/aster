@@ -21,6 +21,9 @@
 		"vite": "^5.0.3"
 	},
 	"dependencies": {
-		"@sveltejs/adapter-node": "^5.0.1"
+		"@sveltejs/adapter-node": "^5.0.1",
+		"node-sass": "^9.0.0",
+		"sass": "^1.77.1",
+		"svelte-preprocess": "^5.1.4"
 	}
 }

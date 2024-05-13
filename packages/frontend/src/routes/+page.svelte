@@ -4,4 +4,3 @@
 
 <h1>aster</h1>
 <p>wip fedi software</p>
-<p>route: {$page.url.pathname}</p>

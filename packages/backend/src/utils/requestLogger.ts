@@ -1,6 +1,5 @@
 import morgan from 'morgan';
 import logger from './logger.js';
-import chalk from 'chalk';
 import rfs from 'rotating-file-stream';
 import path from 'path';
 import fs from 'fs';
@@ -19,7 +18,7 @@ export default {
 		logger(
 			'http',
 			tokens.method(req, res),
-			`${tokens.url(req, res)} responded ${chalk.bold(tokens.status(req, res))} in ${chalk.bold(tokens['response-time'](req, res) + 'ms')}`
+			`${tokens.url(req, res)} responded ${tokens.status(req, res)} in ${tokens['response-time'](req, res) + 'ms'}`
 		);
 	}),
 	combined: morgan('combined', { stream: accessLogStream })
