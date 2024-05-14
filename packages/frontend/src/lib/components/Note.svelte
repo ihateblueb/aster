@@ -2,6 +2,16 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 
 	export let data;
+
+	let cwOpen = false;
+
+	function toggleCw() {
+		if (cwOpen) {
+			cwOpen = false;
+		} else if (!cwOpen) {
+			cwOpen = true;
+		}
+	}
 </script>
 
 <article class="note">
@@ -15,7 +25,10 @@
 
 	{#if data.cw}
 		<p>{data.cw}</p>
-		<p>{data.content}</p>
+		<button on:click={toggleCw}>cw open {cwOpen}</button>
+		{#if cwOpen}
+			<p>{data.content}</p>
+		{/if}
 	{:else}
 		<p>{data.content}</p>
 	{/if}
