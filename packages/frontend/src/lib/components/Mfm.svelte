@@ -36,6 +36,7 @@
 		- fn plain
 		- fn center
 		- fn small
+		- fn blur
 
 		elements todo:
 		- hashtag
@@ -50,7 +51,6 @@
 		- fg
 		- bg
 		- font
-		- blur 
 		- rotate
 		- sparkle
 		- position
@@ -66,6 +66,8 @@
 			return `<span>${object.props.text}</span>`;
 		} else if (object.type === 'url') {
 			return `<a href="${object.props.url}">${object.props.url}</a>`;
+		} else if (object.type === 'inlineCode') {
+			return `<code>` + object.props.code + `</code>`;
 		} else if (object.type === 'bold') {
 			let collectedOutput = '';
 			object.children.forEach((child) => {
@@ -203,6 +205,12 @@
 					collectedOutput = collectedOutput + basicRender(child);
 				});
 				return `<span class="mfm-plain">` + collectedOutput + `</span>`;
+			} else if (object.props.name === 'blur') {
+				let collectedOutput = '';
+				object.children.forEach((child) => {
+					collectedOutput = collectedOutput + basicRender(child);
+				});
+				return `<span class="mfm-blur">` + collectedOutput + `</span>`;
 			}
 		}
 	}
@@ -218,6 +226,10 @@
 			<a href={object.props.url}>
 				{object.props.url}
 			</a>
+		{:else if object.type === 'inlineCode'}
+			<code>
+				{object.props.code}
+			</code>
 		{:else if object.type === 'bold'}
 			<strong>
 				{#each object.children as child}
@@ -335,6 +347,12 @@
 				</span>
 			{:else if object.props.name === 'plain'}
 				<span class="mfm-plain">
+					{#each object.children as child}
+						{@html basicRender(child)}
+					{/each}
+				</span>
+			{:else if object.props.name === 'blur'}
+				<span class="mfm-blur">
 					{#each object.children as child}
 						{@html basicRender(child)}
 					{/each}
@@ -562,6 +580,14 @@
 
 		> * {
 			white-space: pre-wrap;
+		}
+	}
+
+	.mfm-blur {
+		filter: blur(6px);
+		transition: 0.1s;
+		&:hover {
+			filter: blur(0px);
 		}
 	}
 
