@@ -1,9 +1,10 @@
 <script>
 	export let data;
+	export let size = '55px';
 </script>
 
 <div class:cat={data.is_cat}>
-	<img class="avatar" src={data.avatar} />
+	<img class="avatar" src={data.avatar} height={size} width={size} />
 	{#if data.is_cat}
 		<div class="ears">
 			<div class="earLeft"></div>
@@ -78,8 +79,6 @@
 	.avatar {
 		position: relative;
 		z-index: 100;
-		height: 55px;
-		width: 55px;
 		border-radius: 10px;
 	}
 
