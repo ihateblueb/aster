@@ -1,4 +1,5 @@
 {
+	"plugins": ["prettier-plugin-svelte"],
 	"trailingComma": "none",
 	"tabWidth": 4,
 	"semi": true,

@@ -5,9 +5,17 @@
 </script>
 
 <div class="userHeader">
-	<img class="banner" src="{data.banner}">
+	<img class="banner" src={data.banner} />
 	<div class="innerHeader">
-		<img class="avatar" src="{data.avatar}">
+		<div class:cat={data.is_cat}>
+			<img class="avatar" src={data.avatar} />
+			{#if data.is_cat}
+				<div class="ears">
+					<div class="earLeft"></div>
+					<div class="earRight"></div>
+				</div>
+			{/if}
+		</div>
 		<div class="name">
 			<span class="displayname">{data.displayname}</span>
 			<span class="username">@{data.username}</span>
@@ -17,6 +25,8 @@
 </div>
 
 <style lang="scss">
+	/* cat ears stolen from misskey MkAvatar component */
+
 	.userHeader {
 		.banner {
 			height: 125px;
@@ -27,21 +37,82 @@
 			padding: 12px;
 			margin-top: -45px;
 			.avatar {
-			height: 55px;
-			width: 55px;
-			border-radius: 10px;
-			border: 4px solid var(--bg-primary);
-			margin-left: -4px;
-		}
-		.name {
-			> span {
-				display: block;
-				&.displayname {
-					font-weight: 700;
-					font-size: 18px;
+				position: relative;
+				z-index: 10;
+				height: 55px;
+				width: 55px;
+				border-radius: 10px;
+			}
+			.cat {
+				position: relative;
+				display: inline-block;
+				.ears {
+					contain: strict;
+					position: absolute;
+					z-index: 1;
+					display: flex;
+					top: -50%;
+					left: -50%;
+					width: 100%;
+					height: 100%;
+					padding: 50%;
+					pointer-events: none;
+					.earLeft,
+					.earRight {
+						contain: strict;
+						display: inline-block;
+						z-index: 1;
+						height: 50%;
+						width: 50%;
+						background: currentColor;
+
+						&::after {
+							contain: strict;
+							content: '';
+							display: block;
+							width: 60%;
+							height: 60%;
+							margin: 20%;
+							background: #df548f;
+						}
+					}
+					.earLeft {
+						transform: rotate(37.5deg) skew(30deg);
+
+						&,
+						&::after {
+							border-radius: 25% 75% 75%;
+						}
+					}
+					.earRight {
+						transform: rotate(-37.5deg) skew(-30deg);
+
+						&,
+						&::after {
+							border-radius: 75% 25% 75% 75%;
+						}
+					}
 				}
 			}
-		}
+			&:hover {
+				.ears {
+					.earLeft {
+						animation: earwiggleleft 1s infinite;
+					}
+					.earRight {
+						animation: earwiggleright 1s infinite;
+					}
+				}
+			}
+			.name {
+				> span {
+					display: block;
+					&.displayname {
+						font-weight: 700;
+						font-size: 18px;
+					}
+				}
+			}
 		}
 	}
 </style>
