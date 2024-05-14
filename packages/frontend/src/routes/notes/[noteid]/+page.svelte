@@ -4,7 +4,19 @@
 	export let data;
 </script>
 
-<h1>yaaaaaaaaay notes</h1>
-<p>noteid {$page.params.noteid}</p>
+<div>
+	<div class="pageHeader">
+		<p>Note by {data.author.displayname}</p>
+	</div>
+	<div class="pageContent">
+		{@html JSON.stringify(data)}
+	</div>
+</div>
 
-<div>{@html data}</div>
+<style lang="scss">
+	.pageHeader {
+		width: 100%;
+		padding: 8px;
+		background-color: var(--bg-primary-50);
+	}
+</style>

@@ -5,17 +5,21 @@
 	export let data;
 </script>
 
-<div class="userHeader">
-	<img class="banner" src={data.banner} />
-	<div class="innerHeader">
-		<Avatar {data} />
-		<div class="name">
-			<span class="displayname">{data.displayname}</span>
-			<span class="username">@{data.username}</span>
+{#if data}
+	<div class="userHeader">
+		<img class="banner" src={data.banner} />
+		<div class="innerHeader">
+			<Avatar {data} />
+			<div class="name">
+				<span class="displayname">{data.displayname}</span>
+				<span class="username">@{data.username}</span>
+			</div>
+			<p>{data.bio}</p>
 		</div>
-		<p>{data.bio}</p>
 	</div>
-</div>
+{:else}
+	<h1>User not found</h1>
+{/if}
 
 <style lang="scss">
 	.userHeader {
@@ -23,6 +27,7 @@
 			height: 125px;
 			width: 100%;
 			object-fit: cover;
+			background-color: var(--bg-secondary);
 		}
 		.innerHeader {
 			padding: 12px;

@@ -34,6 +34,10 @@
 	margin: 0px;
 }
 
+:global(a) {
+	color: var(--accent);
+}
+
 .page {
 	display: flex;
 	align-items: center;
@@ -42,4 +46,5 @@
 
 main {
 	max-width: 1024px;
+	min-width: 200px;
 }
