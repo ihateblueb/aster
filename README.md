@@ -29,7 +29,9 @@ you do need to build the backend to run migrations. i know that sounds silly but
 
 ### frontend
 
-later...
+todo:
+
+-   background, avatar, and banner alt text after added to backend
 
 ### misc
 

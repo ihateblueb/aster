@@ -5,8 +5,8 @@
 
 :global(body) {
 	margin: 0px;
-	background-color: $bg-primary;
-	color: $txt-secondary;
+	background-color: var(--bg-primary);
+	color: var(--txt-secondary);
 	font-family: 'Figtree', Arial, Helvetica, sans-serif;
 }
 
@@ -32,4 +32,14 @@
 
 :global(h6) {
 	margin: 0px;
+}
+
+.page {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+main {
+	max-width: 1024px;
 }
