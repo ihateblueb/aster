@@ -1,12 +1,13 @@
 @import './static/themes/purpura.scss';
 
 // font
-@import './static/Figtree/Figtree.css';
+@import './static/figtree.scss';
 
 :global(body) {
 	margin: 0px;
 	background-color: $bg-primary;
 	color: $txt-secondary;
+	font-family: 'Figtree', Arial, Helvetica, sans-serif;
 }
 
 :global(h1) {
