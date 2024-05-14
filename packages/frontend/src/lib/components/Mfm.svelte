@@ -13,21 +13,49 @@
 	}
 
 	/*
-        working mfm:
+        elements working:
         - text
+		- url
         - bold
         - italic
         - strikethrough
         - quote
+		- plain
+		- center
+		- small
         - fn spin
         - fn tada
         - fn jump
         - fn bounce
         - fn twitch
         - fn shake
+        - fn rainbow
         - fn x2
         - fn x3
         - fn x4
+		- fn plain
+		- fn center
+		- fn small
+
+		elements todo:
+		- hashtag
+		- mention
+		- math
+		- inline math
+		- code
+		- inline code
+		- emoji
+		- search
+		- flip
+		- fg
+		- bg
+		- font
+		- blur 
+		- rotate
+		- sparkle
+		- position
+		- scale
+		- additional options (speed, x/y, alternate, etc.)
 
         known issues:
         they dont stack.
@@ -36,6 +64,8 @@
 	function basicRender(object) {
 		if (object.type === 'text') {
 			return `<span>${object.props.text}</span>`;
+		} else if (object.type === 'url') {
+			return `<a href="${object.props.url}">${object.props.url}</a>`;
 		} else if (object.type === 'bold') {
 			let collectedOutput = '';
 			object.children.forEach((child) => {
@@ -72,6 +102,12 @@
 				collectedOutput = collectedOutput + basicRender(child);
 			});
 			return `<span class="mfm-center">` + collectedOutput + `</span>`;
+		} else if (object.type === 'plain') {
+			let collectedOutput = '';
+			object.children.forEach((child) => {
+				collectedOutput = collectedOutput + basicRender(child);
+			});
+			return `<span class="mfm-plain">` + collectedOutput + `</span>`;
 		} else if (object.type === 'fn') {
 			if (object.props.name === 'spin') {
 				let collectedOutput = '';
@@ -161,6 +197,12 @@
 				return (
 					`<span class="mfm-center">` + collectedOutput + `</span>`
 				);
+			} else if (object.props.name === 'plain') {
+				let collectedOutput = '';
+				object.children.forEach((child) => {
+					collectedOutput = collectedOutput + basicRender(child);
+				});
+				return `<span class="mfm-plain">` + collectedOutput + `</span>`;
 			}
 		}
 	}
@@ -172,6 +214,10 @@
 	{#each mfmTree as object}
 		{#if object.type === 'text'}
 			<span>{object.props.text}</span>
+		{:else if object.type === 'url'}
+			<a href={object.props.url}>
+				{object.props.url}
+			</a>
 		{:else if object.type === 'bold'}
 			<strong>
 				{#each object.children as child}
@@ -204,6 +250,12 @@
 			</small>
 		{:else if object.type === 'center'}
 			<span class="mfm-center">
+				{#each object.children as child}
+					{@html basicRender(child)}
+				{/each}
+			</span>
+		{:else if object.type === 'plain'}
+			<span class="mfm-plain">
 				{#each object.children as child}
 					{@html basicRender(child)}
 				{/each}
@@ -281,8 +333,8 @@
 						{@html basicRender(child)}
 					{/each}
 				</span>
-			{:else}
-				<span>
+			{:else if object.props.name === 'plain'}
+				<span class="mfm-plain">
 					{#each object.children as child}
 						{@html basicRender(child)}
 					{/each}
@@ -523,6 +575,10 @@
 		text-align: center;
 	}
 
+	.mfm-plain {
+		display: block;
+	}
+
 	.mfm-rainbow {
 		background-image: linear-gradient(
 			to right,
@@ -585,5 +641,7 @@
 	blockquote {
 		margin: 4px 12px;
 		color: var(--txt-tertiary);
+		padding-left: 8px;
+		border-left: 2px solid var(--txt-tertiary);
 	}
 </style>
