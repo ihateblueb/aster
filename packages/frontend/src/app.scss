@@ -1,0 +1,34 @@
+@import './static/themes/purpura.scss';
+
+// font
+@import './static/Figtree/Figtree.css';
+
+:global(body) {
+	margin: 0px;
+	background-color: $bg-primary;
+	color: $txt-secondary;
+}
+
+:global(h1) {
+	margin: 0px;
+}
+
+:global(h2) {
+	margin: 0px;
+}
+
+:global(h3) {
+	margin: 0px;
+}
+
+:global(h4) {
+	margin: 0px;
+}
+
+:global(h5) {
+	margin: 0px;
+}
+
+:global(h6) {
+	margin: 0px;
+}

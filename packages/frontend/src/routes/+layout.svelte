@@ -3,3 +3,7 @@
 </script>
 
 <slot></slot>
+
+<style lang="scss" global>
+	@import '../app';
+</style>

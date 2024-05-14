@@ -45,7 +45,7 @@ router.get('/api/v1/instance', async (req, res) => {
 
 	instanceJson['registration_type'] = config.a_registrations;
 
-	res.json(instanceJson);
+	res.status(200).json(instanceJson);
 });
 
 export default router;

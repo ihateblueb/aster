@@ -49,7 +49,7 @@ router.get('/api/v1/users/:userid', async (req, res) => {
 				userJson['created_at'] = grabbedUser.created_at;
 				userJson['updated_at'] = grabbedUser.updated_at;
 
-				res.json(userJson);
+				res.status(200).json(userJson);
 			}
 		} else {
 			return res.status(404).json({

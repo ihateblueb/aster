@@ -90,7 +90,7 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 					noteJson['content'] = grabbedNote.content;
 					noteJson['created_at'] = grabbedNote.created_at;
 
-					res.json(noteJson);
+					res.status(200).json(noteJson);
 				}
 			} else {
 				return res.status(500).json({

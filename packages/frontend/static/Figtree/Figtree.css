@@ -1,0 +1,98 @@
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 900;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Black.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 900;
+	font-display: swap;
+	src: url('/Figtree/Figtree-BlackItalic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 800;
+	font-display: swap;
+	src: url('/Figtree/Figtree-ExtraBold.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 800;
+	font-display: swap;
+	src: url('/Figtree/Figtree-ExtraBoldItalic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Bold.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 700;
+	font-display: swap;
+	src: url('/Figtree/Figtree-BoldItalic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/Figtree/Figtree-SemiBold.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 600;
+	font-display: swap;
+	src: url('/Figtree/Figtree-SemiBoldItalic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Medium.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 500;
+	font-display: swap;
+	src: url('/Figtree/Figtree-MediumItalic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Regular.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 400;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Italic.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: normal;
+	font-weight: 300;
+	font-display: swap;
+	src: url('/Figtree/Figtree-Light.ttf');
+}
+@font-face {
+	font-family: 'Figtree';
+	font-style: italic;
+	font-weight: 300;
+	font-display: swap;
+	src: url('/Figtree/Figtree-LightItalic.ttf');
+}
