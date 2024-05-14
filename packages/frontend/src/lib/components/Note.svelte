@@ -1,5 +1,6 @@
 <script>
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	export let data;
 	export let detailed;
@@ -32,10 +33,10 @@
 			<p>{data.cw}</p>
 			<button on:click={toggleCw}>cw open {cwOpen}</button>
 			{#if cwOpen}
-				<p>{data.content}</p>
+				<Mfm content={data.content} />
 			{/if}
 		{:else}
-			<p>{data.content}</p>
+			<Mfm content={data.content} />
 		{/if}
 	</p>
 

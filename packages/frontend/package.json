@@ -22,6 +22,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.0.1",
+		"mfm-js": "^0.24.0",
 		"node-sass": "^9.0.0",
 		"sass": "^1.77.1",
 		"svelte-preprocess": "^5.1.4"

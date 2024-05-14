@@ -1,6 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	export let data;
 </script>
@@ -11,10 +12,14 @@
 		<div class="innerHeader">
 			<Avatar {data} size="75px" />
 			<div class="name">
-				<span class="displayname">{data.displayname}</span>
+				<span class="displayname">
+					<Mfm content={data.displayname} />
+				</span>
 				<span class="username">@{data.username}</span>
 			</div>
-			<p class="bio">{data.bio}</p>
+			<p class="bio">
+				<Mfm content={data.bio} />
+			</p>
 		</div>
 	</div>
 {:else}
