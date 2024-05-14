@@ -14,7 +14,7 @@
 				<span class="displayname">{data.displayname}</span>
 				<span class="username">@{data.username}</span>
 			</div>
-			<p class=bio>{data.bio}</p>
+			<p class="bio">{data.bio}</p>
 		</div>
 	</div>
 {:else}

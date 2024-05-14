@@ -17,35 +17,33 @@
 
 <article class="note">
 	<div class="noteHeader">
-		<div class=left>
-		<Avatar data={data.author} size="45px" />
-		<div class="names">
-			<span class="displayname">{data.author.displayname}</span>
-			<span class="username">@{data.author.username}</span>
+		<div class="left">
+			<Avatar data={data.author} size="45px" />
+			<div class="names">
+				<span class="displayname">{data.author.displayname}</span>
+				<span class="username">@{data.author.username}</span>
+			</div>
 		</div>
-		</div>
-		<div class=right>
-			now
-		</div>
+		<div class="right">now</div>
 	</div>
 
-	<p class=noteContent>
+	<p class="noteContent">
 		{#if data.cw}
-		<p>{data.cw}</p>
-		<button on:click={toggleCw}>cw open {cwOpen}</button>
-		{#if cwOpen}
+			<p>{data.cw}</p>
+			<button on:click={toggleCw}>cw open {cwOpen}</button>
+			{#if cwOpen}
+				<p>{data.content}</p>
+			{/if}
+		{:else}
 			<p>{data.content}</p>
 		{/if}
-	{:else}
-		<p>{data.content}</p>
-	{/if}
 	</p>
 
-	<div class=noteFooter>
-	{#if detailed}
-		Posted at {data.created_at}
-	{/if}
-		<div class=postButtons>
+	<div class="noteFooter">
+		{#if detailed}
+			Posted at {data.created_at}
+		{/if}
+		<div class="postButtons">
 			<button>Reply</button>
 			<button>Quote</button>
 			<button>Repeat</button>
@@ -71,17 +69,17 @@
 	.noteHeader {
 		display: flex;
 		.left {
-			display:flex;
+			display: flex;
 			flex-grow: 2;
 			> .names {
-			margin-left: 10px;
-			> span {
-				display: block;
-				&.displayname {
-					font-weight: 600;
+				margin-left: 10px;
+				> span {
+					display: block;
+					&.displayname {
+						font-weight: 600;
+					}
 				}
 			}
-		}
 		}
 	}
 </style>
