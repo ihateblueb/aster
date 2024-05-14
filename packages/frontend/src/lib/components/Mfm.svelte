@@ -119,6 +119,14 @@
 					collectedOutput = collectedOutput + basicRender(child);
 				});
 				return `<span class="mfm-x2">` + collectedOutput + `</span>`;
+			} else if (object.props.name === 'rainbow') {
+				let collectedOutput = '';
+				object.children.forEach((child) => {
+					collectedOutput = collectedOutput + basicRender(child);
+				});
+				return (
+					`<span class="mfm-rainbow">` + collectedOutput + `</span>`
+				);
 			} else if (object.props.name === 'x2') {
 				let collectedOutput = '';
 				object.children.forEach((child) => {
@@ -233,6 +241,12 @@
 				</span>
 			{:else if object.props.name === 'shake'}
 				<span class="mfm-shake">
+					{#each object.children as child}
+						{@html basicRender(child)}
+					{/each}
+				</span>
+			{:else if object.props.name === 'rainbow'}
+				<span class="mfm-rainbow">
 					{#each object.children as child}
 						{@html basicRender(child)}
 					{/each}
@@ -507,6 +521,22 @@
 		display: block;
 		width: 100%;
 		text-align: center;
+	}
+
+	.mfm-rainbow {
+		background-image: linear-gradient(
+			to right,
+			rgb(255, 0, 0) 0%,
+			rgb(255, 165, 0) 17%,
+			rgb(255, 255, 0) 33%,
+			rgb(0, 255, 0) 50%,
+			rgb(0, 255, 255) 67%,
+			rgb(0, 0, 255) 83%,
+			rgb(255, 0, 255) 100%
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
 	}
 
 	.mfm-jump {
