@@ -29,6 +29,8 @@ you do need to build the backend to run migrations. i know that sounds silly but
 
 ### frontend
 
+for development only purposes you can set an api url to use that isnt default by setting `PUBLIC_APIURL` in the .env of packages/frontend.
+
 todo:
 
 -   background, avatar, and banner alt text after added to backend

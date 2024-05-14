@@ -11,14 +11,5 @@
 	</div>
 	<div class="pageContent">
 		<Note {data} />
-		{@html JSON.stringify(data)}
 	</div>
 </div>
-
-<style lang="scss">
-	.pageHeader {
-		width: 100%;
-		padding: 8px;
-		background-color: var(--bg-primary-50);
-	}
-</style>

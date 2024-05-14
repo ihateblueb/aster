@@ -3,13 +3,14 @@ node_modules
 config/production.yml
 logs
 
-packages/backend/built
-
-packages/frontend/.svelte-kit
-packages/frontend/build
+build
+built
+.svelte-kit
 
 uploads
 
 # used for development when making users manually
 private.pem
 public.pem
+
+.env

@@ -38,6 +38,10 @@
 	color: var(--accent);
 }
 
+:global(p) {
+	margin: 0px;
+}
+
 .page {
 	display: flex;
 	align-items: center;
@@ -46,5 +50,17 @@
 
 main {
 	max-width: 1024px;
-	min-width: 200px;
+	width: 550px;
+	min-width: 250px;
+
+	height: 100vh;
+
+	border-left: 1px solid var(--bg-tertiary);
+	border-right: 1px solid var(--bg-tertiary);
+}
+
+:global(.pageHeader) {
+	width: 100%;
+	padding: 12px 16px;
+	background-color: var(--bg-primary-50);
 }
