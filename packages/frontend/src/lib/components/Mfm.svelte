@@ -158,15 +158,17 @@
 					? 'serif'
 					: object.props.args.monospace
 						? 'monospace'
-						: object.props.args.cursive
-							? 'cursive'
-							: object.props.args.fantasy
-								? 'fantasy'
-								: object.props.args.emoji
-									? 'emoji'
-									: object.props.args.math
-										? 'math'
-										: null;
+						: object.props.args.mono
+							? 'monospace'
+							: object.props.args.cursive
+								? 'cursive'
+								: object.props.args.fantasy
+									? 'fantasy'
+									: object.props.args.emoji
+										? 'emoji'
+										: object.props.args.math
+											? 'math'
+											: null;
 				return `<span style="display: inline-block; font-family: ${font};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'blur') {
 				return `<span class="mfm-blur" style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;
@@ -257,8 +259,6 @@
 		background-clip: text;
 		color: transparent;
 	}
-
-	/* animations taken from misskey's style.scss */
 
 	@keyframes mfm-spin {
 		0% {
