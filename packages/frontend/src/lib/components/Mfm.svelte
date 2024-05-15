@@ -13,7 +13,7 @@
 	}
 
 	/*
-        elements working:
+        elements todo:
         - text
 		- url
         - bold
@@ -38,7 +38,6 @@
 		- fn small
 		- fn blur
 
-		elements todo:
 		- hashtag
 		- mention
 		- math
@@ -52,6 +51,7 @@
 		- bg
 		- font
 		- rotate
+		- jelly
 		- sparkle
 		- position
 		- scale
@@ -61,156 +61,28 @@
         they dont stack.
     */
 
-	function basicRender(object) {
+	function renderEachChild(objChild) {
+		let collectedChildren = '';
+		objChild.forEach((child) => {
+			collectedChildren = collectedChildren + renderMfm(child);
+		});
+		return collectedChildren;
+	}
+
+	function renderMfm(object) {
 		if (object.type === 'text') {
-			return `<span>${object.props.text}</span>`;
-		} else if (object.type === 'url') {
-			return `<a href="${object.props.url}">${object.props.url}</a>`;
-		} else if (object.type === 'inlineCode') {
-			return `<code>` + object.props.code + `</code>`;
+			return object.props.text.replace(/(\r\n|\n|\r)/g, '\n');
 		} else if (object.type === 'bold') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<strong>` + collectedOutput + `</strong>`;
-		} else if (object.type === 'italic') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<i>` + collectedOutput + `</i>`;
+			return `<b>${renderEachChild(object.children)}</b>`;
 		} else if (object.type === 'strike') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<s>` + collectedOutput + `</s>`;
-		} else if (object.type === 'quote') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<blockquote>` + collectedOutput + `</blockquote>`;
-		} else if (object.type === 'small') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<small class="mfm-small">` + collectedOutput + `</small>`;
-		} else if (object.type === 'center') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<span class="mfm-center">` + collectedOutput + `</span>`;
-		} else if (object.type === 'plain') {
-			let collectedOutput = '';
-			object.children.forEach((child) => {
-				collectedOutput = collectedOutput + basicRender(child);
-			});
-			return `<span class="mfm-plain">` + collectedOutput + `</span>`;
+			return `<s>${renderEachChild(object.children)}</ss>`;
+		} else if (object.type === 'italic') {
+			return `<i>${renderEachChild(object.children)}</i>`;
 		} else if (object.type === 'fn') {
-			if (object.props.name === 'spin') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-spin">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'tada') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-tada">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'jump') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-jump">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'bounce') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return (
-					`<span class="mfm-bounce">` + collectedOutput + `</span>`
-				);
-			} else if (object.props.name === 'twitch') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return (
-					`<span class="mfm-twitch">` + collectedOutput + `</span>`
-				);
-			} else if (object.props.name === 'shake') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-shake">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'x2') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-x2">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'rainbow') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return (
-					`<span class="mfm-rainbow">` + collectedOutput + `</span>`
-				);
-			} else if (object.props.name === 'x2') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-x2">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'x3') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-x3">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'x4') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-x4">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'small') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return (
-					`<small class="mfm-small">` + collectedOutput + `</small>`
-				);
-			} else if (object.props.name === 'center') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return (
-					`<span class="mfm-center">` + collectedOutput + `</span>`
-				);
-			} else if (object.props.name === 'plain') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-plain">` + collectedOutput + `</span>`;
-			} else if (object.props.name === 'blur') {
-				let collectedOutput = '';
-				object.children.forEach((child) => {
-					collectedOutput = collectedOutput + basicRender(child);
-				});
-				return `<span class="mfm-blur">` + collectedOutput + `</span>`;
+			if (object.props.name === 'tada') {
+				let speed = object.props.args.speed || '1s';
+				let delay = object.props.args.delay || '0s';
+				return `<span style="font-size: 150%; animation: ${speed} linear ${delay} infinite normal both running mfm-tada;">${renderEachChild(object.children)}</span>`;
 			}
 		}
 	}
@@ -218,149 +90,11 @@
 	console.log(mfmTree);
 </script>
 
-<p class="mfmCtn">
+<span class="mfmCtn">
 	{#each mfmTree as object}
-		{#if object.type === 'text'}
-			<span>{object.props.text}</span>
-		{:else if object.type === 'url'}
-			<a href={object.props.url}>
-				{object.props.url}
-			</a>
-		{:else if object.type === 'inlineCode'}
-			<code>
-				{object.props.code}
-			</code>
-		{:else if object.type === 'bold'}
-			<strong>
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</strong>
-		{:else if object.type === 'italic'}
-			<i>
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</i>
-		{:else if object.type === 'strike'}
-			<strike>
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</strike>
-		{:else if object.type === 'quote'}
-			<blockquote>
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</blockquote>
-		{:else if object.type === 'small'}
-			<small class="mfm-small">
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</small>
-		{:else if object.type === 'center'}
-			<span class="mfm-center">
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</span>
-		{:else if object.type === 'plain'}
-			<span class="mfm-plain">
-				{#each object.children as child}
-					{@html basicRender(child)}
-				{/each}
-			</span>
-		{:else if object.type === 'fn'}
-			{#if object.props.name === 'spin'}
-				<span class="mfm-spin">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'tada'}
-				<span class="mfm-tada">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'jump'}
-				<span class="mfm-jump">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'bounce'}
-				<span class="mfm-bounce">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'twitch'}
-				<span class="mfm-twitch">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'shake'}
-				<span class="mfm-shake">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'rainbow'}
-				<span class="mfm-rainbow">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'x2'}
-				<span class="mfm-x2">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'x3'}
-				<span class="mfm-x3">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'x4'}
-				<span class="mfm-x4">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'small'}
-				<small class="mfm-small">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</small>
-			{:else if object.props.name === 'center'}
-				<span class="mfm-center">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'plain'}
-				<span class="mfm-plain">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{:else if object.props.name === 'blur'}
-				<span class="mfm-blur">
-					{#each object.children as child}
-						{@html basicRender(child)}
-					{/each}
-				</span>
-			{/if}
-		{/if}
+		{@html renderMfm(object)}
 	{/each}
-</p>
+</span>
 <br />
 <p>
 	Raw MFM Tree:
@@ -577,9 +311,12 @@
 
 	.mfmCtn {
 		display: block;
+		overflow-wrap: break-word;
+		position: relative;
+		white-space: preserve;
 
 		> * {
-			white-space: pre-wrap;
+			white-space: preserve;
 		}
 	}
 
@@ -602,7 +339,7 @@
 	}
 
 	.mfm-plain {
-		display: block;
+		display: inline-block;
 	}
 
 	.mfm-rainbow {
