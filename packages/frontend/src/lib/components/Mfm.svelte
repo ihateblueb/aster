@@ -59,11 +59,26 @@
 		- emoji
 		- search
 		- ruby
+		- unixtime
 
         known issues:
         they dont stack.
 		animations dont work although they are applied.
     */
+
+	function nyaise(text) {
+		let nya = text;
+		// ja-JP
+		nya = nya.replaceAll('な', 'にゃ');
+		nya = nya.replaceAll('ナ', 'ニャ');
+		nya = nya.replaceAll('ﾅ', 'ﾆｬ');
+		// en-US
+		nya = nya.replaceAll(/na/gi, 'nya');
+		nya = nya.replaceAll('morning', 'mornyan');
+		nya = nya.replaceAll('everyone', 'everynyan');
+		// ko-KR
+		return nya;
+	}
 
 	function renderEachChild(objChild, scale) {
 		let collectedChildren = '';
@@ -277,25 +292,21 @@
 		from {
 			transform: scale3d(1, 1, 1);
 		}
-
 		10%,
 		20% {
 			transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
 		}
-
 		30%,
 		50%,
 		70%,
 		90% {
 			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
 		}
-
 		40%,
 		60%,
 		80% {
 			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
 		}
-
 		to {
 			transform: scale3d(1, 1, 1);
 		}

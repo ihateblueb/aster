@@ -1,6 +1,7 @@
 <script>
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 
 	export let data;
 	export let detailed;
@@ -30,8 +31,20 @@
 
 	<p class="noteContent">
 		{#if data.cw}
-			<p>{data.cw}</p>
-			<button on:click={toggleCw}>cw open {cwOpen}</button>
+			<div class="warning" class:isOpen={cwOpen}>
+				<div class="left">
+					<Icon
+						name="alert-triangle"
+						size="18px"
+						color="var(--warn)"
+						margin="0px 5px 0px 0px"
+					/>
+					<span>{data.cw}</span>
+				</div>
+				<div class="right">
+					<button on:click={toggleCw}>cw open {cwOpen}</button>
+				</div>
+			</div>
 			{#if cwOpen}
 				<Mfm content={data.content} />
 			{/if}
@@ -46,25 +59,25 @@
 		{/if}
 		<div class="postButtons">
 			<button>
-				<i class="ti ti-arrow-back-up"></i>
+				<Icon name="arrow-back-up" />
 			</button>
 			<button>
-				<i class="ti ti-quote"></i>
+				<Icon name="quote" />
 			</button>
 			<button>
-				<i class="ti ti-repeat"></i>
+				<Icon name="repeat" />
 			</button>
 			<button>
-				<i class="ti ti-star"></i>
+				<Icon name="star" />
 			</button>
 			<button>
-				<i class="ti ti-plus"></i>
+				<Icon name="plus" />
 			</button>
 			<button>
-				<i class="ti ti-bookmark"></i>
+				<Icon name="bookmark" />
 			</button>
 			<button>
-				<i class="ti ti-dots"></i>
+				<Icon name="dots" />
 			</button>
 		</div>
 	</div>
@@ -77,7 +90,7 @@
 	}
 	.note {
 		margin: 10px;
-		padding: 16px;
+		padding: 20px;
 		border-radius: 12px;
 		background-color: var(--bg-secondary);
 	}
@@ -98,6 +111,40 @@
 					}
 				}
 			}
+		}
+	}
+	.postButtons {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		> button {
+			background: none;
+			border: none;
+			margin: 0px;
+			padding: 0px;
+		}
+	}
+	.warning {
+		display: flex;
+		align-items: center;
+		color: var(--warn);
+		background-color: var(--warn-35);
+		padding: 5px 8px;
+		border-radius: 8px;
+
+		.left {
+			display: inline-flex;
+			align-items: center;
+			flex-grow: 1;
+		}
+		.right {
+			display: inline-flex;
+			align-items: center;
+			flex-grow: 0;
+		}
+		&.isOpen {
+			margin-bottom: 10px;
 		}
 	}
 </style>
