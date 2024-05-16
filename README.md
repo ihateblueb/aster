@@ -2,8 +2,10 @@
 
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 
-working on some kind of fedi software. 
+working on some kind of fedi software.
 this should never be used seriously! i'm just being silly and having fun over here.
+
+frontend written in svelte and styling in sass. backend is in typescript.
 
 originally, i was going to make it conform to the mastodon api. i think i will add a compatability thing later, but for now im just going to create my own similar but better (at least to me) api.
 

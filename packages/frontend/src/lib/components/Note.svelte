@@ -45,13 +45,27 @@
 			Posted at {data.created_at}
 		{/if}
 		<div class="postButtons">
-			<button>Reply</button>
-			<button>Quote</button>
-			<button>Repeat</button>
-			<button>Like</button>
-			<button>React</button>
-			<button>Bookmark</button>
-			<button>More</button>
+			<button>
+				<i class="ti ti-arrow-back-up"></i>
+			</button>
+			<button>
+				<i class="ti ti-quote"></i>
+			</button>
+			<button>
+				<i class="ti ti-repeat"></i>
+			</button>
+			<button>
+				<i class="ti ti-star"></i>
+			</button>
+			<button>
+				<i class="ti ti-plus"></i>
+			</button>
+			<button>
+				<i class="ti ti-bookmark"></i>
+			</button>
+			<button>
+				<i class="ti ti-dots"></i>
+			</button>
 		</div>
 	</div>
 </article>
@@ -78,6 +92,9 @@
 					display: block;
 					&.displayname {
 						font-weight: 600;
+					}
+					&.username {
+						font-size: 15px;
 					}
 				}
 			}
