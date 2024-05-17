@@ -1,9 +1,28 @@
 import express from 'express';
+import { Queue, Job } from 'bullmq';
+import config from '../../utils/config.js';
+
 const router = express.Router();
 
-import validateRequest from '../../utils/ap/validation.js';
-import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
-import logger from '../../utils/logger.js';
+const inboxQueue = new Queue('inbox', {
+	connection: {
+		host: config.redishost,
+		port: config.redisport,
+		keyPrefix: config.redisprefix,
+		db: config.redisdb,
+		username: config.redisuser,
+		password: config.redispw
+	},
+	defaultJobOptions: {
+		removeOnComplete: true,
+		attempts: 5,
+		backoff: {
+			type: 'exponential',
+			delay: 1000
+		},
+		removeOnFail: 10000
+	}
+});
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -11,13 +30,13 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	logger('debug', 'ap', JSON.parse(req.body));
+	let jobData = {
+		req,
+		res
+	};
 
-	validateRequest(req, res);
-
-	// if it has passed the 40 validation checks, you can now trust it!
-
-	acceptInboxRequest(JSON.parse(req.body), res);
+	// yeah uuhjsdfd
+	// await Job.create(inboxQueue);
 });
 
 export default router;

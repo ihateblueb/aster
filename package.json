@@ -6,7 +6,6 @@
 		"type": "git",
 		"url": "https://git.gay/blueb/aster.git"
 	},
-	"packageManager": "pnpm@8.15.2",
 	"workspaces": [
 		"packages/frontend",
 		"packages/backend"

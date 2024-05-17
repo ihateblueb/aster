@@ -7,7 +7,7 @@ import inboxWorker from './processers/inboxWorker.js';
 
 logger('info', 'redis', 'starting workers');
 
-const inboxw = new Worker('inbox', (job: Job) => inboxWorker(job), {
+const iw = new Worker('inbox', (job: Job) => inboxWorker(job), {
 	connection: {
 		host: config.redishost,
 		port: config.redisport,
@@ -19,4 +19,4 @@ const inboxw = new Worker('inbox', (job: Job) => inboxWorker(job), {
 	concurrency: 50
 });
 
-export default { inboxw };
+export default { iw };
