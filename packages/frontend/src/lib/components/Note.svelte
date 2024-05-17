@@ -123,6 +123,7 @@
 			border: none;
 			margin: 0px;
 			padding: 0px;
+			color: var(--txt-tertiary);
 		}
 	}
 	.warning {
