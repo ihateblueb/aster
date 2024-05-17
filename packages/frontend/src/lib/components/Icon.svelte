@@ -5,7 +5,4 @@
 	export let margin = '0px 0px 0px 0px';
 </script>
 
-<i
-	class="ti ti-{name}"
-	style="font-size: {size}; color: {color}; margin: {margin}"
-></i>
+<i class="ti ti-{name}" style="font-size: {size}; margin: {margin}"></i>
