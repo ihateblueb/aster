@@ -7,6 +7,8 @@ this should never be used seriously! i'm just being silly and having fun over he
 
 frontend written in svelte and styling in sass. backend is in typescript.
 
+static files can be placed in packages/frontend/static
+
 originally, i was going to make it conform to the mastodon api. i think i will add a compatability thing later, but for now im just going to create my own similar but better (at least to me) api.
 
 you do need to build the backend to run migrations. i know that sounds silly but everything here is silly.

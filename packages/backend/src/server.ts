@@ -49,6 +49,11 @@ app.use(requestLogger.dev, requestLogger.combined);
 app.use(bodyParser.raw({ type: '*/*' }));
 app.use(cors());
 
+app.use((req, res, next) => {
+	res.setHeader('TDM-Reservation', '1');
+	next();
+});
+
 app.use('/', router);
 
 app.use(handler);
