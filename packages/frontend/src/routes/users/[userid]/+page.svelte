@@ -7,6 +7,10 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>{data.displayname} (@{data.username})</title>
+</svelte:head>
+
 {#if data}
 	<div class="userHeader">
 		<img class="banner" src={data.banner} />
