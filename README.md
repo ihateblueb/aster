@@ -11,6 +11,9 @@ originally, i was going to make it conform to the mastodon api. i think i will a
 
 you do need to build the backend to run migrations. i know that sounds silly but everything here is silly.
 
+shout out wafrn. i used it as a reference for a lot of stuff, its neat
+https://github.com/gabboman/wafrn
+
 ## project status
 
 ### activitypub
