@@ -1,10 +1,13 @@
 import express from 'express';
-import { Queue, Job } from 'bullmq';
+// import { Queue, Job } from 'bullmq';
 import config from '../../utils/config.js';
+import validateRequest from '../../utils/ap/validation.js';
+import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
+import logger from '../../utils/logger.js';
 
 const router = express.Router();
 
-const inboxQueue = new Queue('inbox', {
+/* const inboxQueue = new Queue('inbox', {
 	connection: {
 		host: config.redishost,
 		port: config.redisport,
@@ -22,7 +25,7 @@ const inboxQueue = new Queue('inbox', {
 		},
 		removeOnFail: 10000
 	}
-});
+}); */
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -34,6 +37,12 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		req,
 		res
 	};
+
+	logger('debug', 'ap', JSON.parse(req.body));
+
+	validateRequest(req, res);
+
+	acceptInboxRequest(JSON.parse(req.body), res);
 
 	// yeah uuhjsdfd
 	// await Job.create(inboxQueue);

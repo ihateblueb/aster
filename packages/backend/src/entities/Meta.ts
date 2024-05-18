@@ -1,8 +1,8 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity()
 export class Instances {
-	@Column()
+	@PrimaryColumn()
 	created_at: string;
 
 	@Column('text', { array: true, nullable: true })
