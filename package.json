@@ -13,9 +13,11 @@
 	"private": true,
 	"scripts": {
 		"start": "pnpm --filter=backend start",
-		"build": "pnpm --filter=frontend build && pnpm --filter=backend build",
+		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
 		"format": "pnpm -r format",
-		"migrate": "pnpm --filter=backend migrate"
+		"migrate": "pnpm --filter=backend migrate",
+		"clean": "./clean.sh",
+		"cleanall": "./cleanall.sh"
 	},
 	"keywords": [],
 	"author": "blueb",

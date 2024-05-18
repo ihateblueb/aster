@@ -36,7 +36,7 @@ router.get('/api/v1/instance', async (req, res) => {
 	instanceJson.stats['total_note_count'] = await db
 		.getRepository('notes')
 		.count();
-	instanceJson.stats['nstance_count'] = await db
+	instanceJson.stats['instance_count'] = await db
 		.getRepository('instances')
 		.count();
 

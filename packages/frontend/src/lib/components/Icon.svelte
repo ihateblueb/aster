@@ -14,8 +14,8 @@
 		font-style: normal;
 		font-weight: 400;
 		src:
-			url('../fonts/icons/tabler-icons.woff2?v3.4.0') format('woff2'),
-			url('../fonts/icons/tabler-icons.woff?') format('woff'),
-			url('../fonts/icons/tabler-icons.ttf?v3.4.0') format('truetype');
+			url('/fonts/icons/tabler-icons.woff2?v3.4.0') format('woff2'),
+			url('/fonts/icons/tabler-icons.woff?') format('woff'),
+			url('/fonts/icons/tabler-icons.ttf?v3.4.0') format('truetype');
 	}
 </style>

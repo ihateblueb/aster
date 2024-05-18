@@ -14,3 +14,6 @@
 		href="/notes/a2c2ca31-5487-4d44-a8d7-eacaebf71a7d">this</a
 	>.
 </p>
+<p>
+	<a href="/login">login</a>
+</p>

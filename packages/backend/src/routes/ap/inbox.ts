@@ -16,6 +16,9 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		res
 	};
 
+	// dont let requests in for now
+	res.send(500);
+
 	logger('debug', 'ap', JSON.parse(req.body));
 
 	validateRequest(req, res);

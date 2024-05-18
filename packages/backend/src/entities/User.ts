@@ -70,10 +70,4 @@ export class Users {
 
 	@Column()
 	public_key: string;
-
-	@Column({ select: false, nullable: true })
-	private_key: string;
-
-	@Column({ select: false, nullable: true })
-	password: string;
 }

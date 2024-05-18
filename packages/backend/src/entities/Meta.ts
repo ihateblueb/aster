@@ -1,8 +1,11 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity()
-export class Instances {
+export class Meta {
 	@PrimaryColumn()
+	name: string;
+
+	@Column()
 	created_at: string;
 
 	@Column('text', { array: true, nullable: true })
