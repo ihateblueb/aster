@@ -42,7 +42,13 @@
 					<span>{data.cw}</span>
 				</div>
 				<div class="right">
-					<button on:click={toggleCw}>cw open {cwOpen}</button>
+					<button on:click={toggleCw}>
+						{#if cwOpen}
+							Close
+						{:else}
+							Open
+						{/if}
+					</button>
 				</div>
 			</div>
 			{#if cwOpen}
@@ -130,14 +136,15 @@
 		display: flex;
 		align-items: center;
 		color: var(--warn);
-		background-color: var(--warn-35);
-		padding: 5px 8px;
+		background-color: var(--warn-20);
+		padding: 6px;
 		border-radius: 8px;
 
 		.left {
 			display: inline-flex;
 			align-items: center;
 			flex-grow: 1;
+			padding-left: 3px;
 		}
 		.right {
 			display: inline-flex;
@@ -146,6 +153,13 @@
 		}
 		&.isOpen {
 			margin-bottom: 10px;
+		}
+		button {
+			color: var(--warn);
+			background: var(--warn-20);
+			border: none;
+			padding: 5px 8px;
+			border-radius: 6px;
 		}
 	}
 </style>
