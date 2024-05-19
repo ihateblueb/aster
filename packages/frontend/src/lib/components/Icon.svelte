@@ -5,7 +5,10 @@
 	export let margin = '0px 0px 0px 0px';
 </script>
 
-<i class="ti ti-{name}" style="font-size: {size}; margin: {margin}"></i>
+<i
+	class="ti ti-{name}"
+	style="font-size: {size}; margin: {margin}; color: {color};"
+></i>
 
 <style>
 	@import '../../../node_modules/@tabler/icons-webfont/dist/tabler-icons.min.css';

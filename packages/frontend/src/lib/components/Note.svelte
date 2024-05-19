@@ -71,19 +71,19 @@
 				<Icon name="quote" />
 			</button>
 			<button>
-				<Icon name="repeat" />
+				<Icon name="repeat" color="var(--txt-tertiary)" />
 			</button>
 			<button>
-				<Icon name="star" />
+				<Icon name="star" color="var(--txt-tertiary)" />
 			</button>
 			<button>
-				<Icon name="plus" />
+				<Icon name="plus" color="var(--txt-tertiary)" />
 			</button>
 			<button>
-				<Icon name="bookmark" />
+				<Icon name="bookmark" color="var(--txt-tertiary)" />
 			</button>
 			<button>
-				<Icon name="dots" />
+				<Icon name="dots" color="var(--txt-tertiary)" />
 			</button>
 		</div>
 	</div>
