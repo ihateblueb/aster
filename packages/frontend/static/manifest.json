@@ -1,0 +1,10 @@
+{
+	"short_name": "Aster",
+	"name": "Aster",
+	"id": "/",
+	"start_url": "/",
+	"background_color": "#221f29",
+	"display": "standalone",
+	"scope": "/",
+	"theme_color": "#221f29"
+}

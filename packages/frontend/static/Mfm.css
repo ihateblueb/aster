@@ -58,6 +58,24 @@
 	}
 }
 
+@keyframes mfm-spinX {
+	0% {
+		transform: perspective(128px) rotateX(0deg);
+	}
+	100% {
+		transform: perspective(128px) rotateX(360deg);
+	}
+}
+
+@keyframes mfm-spinY {
+	0% {
+		transform: perspective(128px) rotateY(0deg);
+	}
+	100% {
+		transform: perspective(128px) rotateY(360deg);
+	}
+}
+
 @keyframes mfm-tada {
 	from {
 		transform: scale3d(1, 1, 1);

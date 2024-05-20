@@ -1,15 +1,14 @@
 <script>
 	import { page } from '$app/stores';
+	import Button from '$lib/components/Button.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 </script>
 
-<div class=errorPage>
-	<h1>{$page.status}</h1>
-	<h2>{$page.error.message}</h2>
-</div>
+<svelte:head>
+	<title>Uh oh!</title>
+</svelte:head>
 
-<style lang="scss">
-.errorPage {
-	margin-top: 10px;
-	text-align: center;
-}
-</style>
+<h1>{$page.status}</h1>
+<h2>{$page.error.message}</h2>
+
+<div class="errorPage"></div>
