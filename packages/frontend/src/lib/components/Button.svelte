@@ -14,7 +14,7 @@
 		background-color: var(--bg-tertiary);
 		color: var(--txt-secondary);
 		text-decoration: none;
-		padding: 10px 12px;
+		padding: 8px 14px;
 		margin: 4px;
 		border-radius: 8px;
 

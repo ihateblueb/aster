@@ -1,9 +1,33 @@
 import express from 'express';
+import { Queue, Worker } from 'bullmq';
+
+import config from '../../utils/config.js';
+import logger from '../../utils/logger.js';
 import validateRequest from '../../utils/ap/validation.js';
 import acceptInboxRequest from '../../utils/ap/acceptInboxRequest.js';
-import logger from '../../utils/logger.js';
+import inboxWorker from '../../utils/workers.js';
 
 const router = express.Router();
+
+const inboxQueue = new Queue('inbox', {
+	connection: {
+		host: config.redishost,
+		port: config.redisport,
+		keyPrefix: config.redisprefix,
+		db: config.redisdb,
+		username: config.redisuser,
+		password: config.redispw
+	},
+	defaultJobOptions: {
+		removeOnComplete: true,
+		attempts: 5,
+		backoff: {
+			type: 'exponential',
+			delay: 1000
+		},
+		removeOnFail: 10000
+	}
+});
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -11,19 +35,12 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	let jobData = {
-		req,
-		res
-	};
-
 	// dont let requests in for now
-	res.send(500);
+	// res.send(500);
 
 	logger('debug', 'ap', JSON.parse(req.body));
 
-	validateRequest(req, res);
-
-	acceptInboxRequest(JSON.parse(req.body), res);
+	await inboxQueue.add('inbox', { req, res }, { jobId: req.body.id });
 });
 
 export default router;

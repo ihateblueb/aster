@@ -1,7 +1,8 @@
-import axios from 'axios';
-
 import db from '../database.js';
 import logger from '../logger.js';
+
+import axios from 'axios';
+import { v4 as uuidv4 } from 'uuid';
 
 // import updateRemoteActor from './updateRemoteActor';
 
@@ -54,7 +55,7 @@ async function processNewActor(apId, res) {
 		var actorToInsert = {};
 
 		// this will be generated
-		actorToInsert['id'];
+		actorToInsert['id'] = uuidv4();
 
 		actorToInsert['username'] = res.data.preferredUsername;
 		actorToInsert['ap_id'] = res.data.id;
