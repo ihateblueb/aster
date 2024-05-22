@@ -72,12 +72,11 @@ export default async function validateRequest(req, res) {
 
 	var grabbedActor = await getRemoteActor(JSON.parse(req.body).actor);
 
-	logger('debug', 'ap', grabbedActor);
-
 	if (!grabbedActor) {
 		logger('error', 'ap', 'actor not properly grabbed');
 		return res.status(500).send();
 	} else if (grabbedActor === 'gone') {
+		// they aren't in the database and cannot be fetched, accept activity and just pretend something happened
 		return res.status(200).send();
 	} else if (grabbedActor.suspended) {
 		return res.status(200).send();

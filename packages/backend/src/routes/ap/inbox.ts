@@ -23,7 +23,7 @@ const inboxQueue = new Queue('inbox', {
 			type: 'exponential',
 			delay: 1000
 		},
-		removeOnFail: 10000
+		removeOnFail: 15000
 	}
 });
 
@@ -47,17 +47,6 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		},
 		{ jobId: req.body.id }
 	);
-
-	inboxQueueEvents.on('completed', async ({ jobId }) => {
-		const job = await Job.fromId(inboxQueue, jobId);
-
-		if (jobId === req.body.id) {
-			logger('debug', 'ap', `job completed`);
-			logger('debug', 'ap', JSON.stringify(job));
-		} else {
-			logger('debug', 'ap', `a job completed, but not the one i wanted`);
-		}
-	});
 
 	res.status(500).send();
 });

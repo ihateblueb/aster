@@ -17,16 +17,17 @@ export default async function acceptInboxRequest(parsedBody) {
 		}
 
 		if (grabbedLocalUser.locked) {
-			// wait for the user to accept
+			// this will have to add them to the pending follower array and wait to be moved
 			return {
-				status: '500',
-				message: 'not implemented lol'
+				status: '501',
+				message: 'not implemented'
 			};
 		} else {
-			// accept
+			// this will have to add them to the follower array, send an accept, and then it's good
+			// followers should be stored at their AP ids to minimize sql queries later
 			return {
-				status: '500',
-				message: 'not implemented lol'
+				status: '501',
+				message: 'not implemented'
 			};
 		}
 	} else if (parsedBody.type === 'Delete') {
@@ -55,7 +56,7 @@ export default async function acceptInboxRequest(parsedBody) {
 			);
 			return {
 				status: 200,
-				message: 'actor deleted'
+				message: 'pretended to delete actor'
 			};
 		}
 	}
