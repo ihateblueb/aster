@@ -22,4 +22,19 @@ export class Notes {
 
 	@Column()
 	content: string;
+
+	@Column('text', { array: true, nullable: true })
+	replies: string[];
+
+	@Column('text', { array: true, nullable: true })
+	repeats: string[];
+
+	@Column('text', { array: true, nullable: true })
+	quotes: string[];
+
+	@Column('text', { array: true, nullable: true })
+	likes: string[];
+
+	@Column('text', { array: true, nullable: true })
+	reactions: string[];
 }
