@@ -23,7 +23,7 @@ export default async function validateRequest(req, res) {
 			.status(400)
 			.json({ message: 'host doesnt match instance config' });
 	} else {
-		logger('error', 'ap', 'host header matches configuration');
+		logger('debug', 'ap', 'host header matches configuration');
 	}
 
 	if (!req.headers.digest) {
