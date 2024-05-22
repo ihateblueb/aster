@@ -40,7 +40,11 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 	logger('debug', 'ap', JSON.parse(req.body));
 
-	await inboxQueue.add('inbox', { req, res }, { jobId: req.body.id });
+	await inboxQueue.add(
+		'inbox',
+		{ req: req, res: res },
+		{ jobId: req.body.id }
+	);
 });
 
 export default router;
