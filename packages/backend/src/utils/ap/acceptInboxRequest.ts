@@ -19,14 +19,14 @@ export default async function acceptInboxRequest(parsedBody) {
 		if (grabbedLocalUser.locked) {
 			// wait for the user to accept
 			return {
-				status: '200',
-				message: 'follow pending'
+				status: '500',
+				message: 'not implemented lol'
 			};
 		} else {
 			// accept
 			return {
-				status: '200',
-				message: 'follow accepted'
+				status: '500',
+				message: 'not implemented lol'
 			};
 		}
 	} else if (parsedBody.type === 'Delete') {

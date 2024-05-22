@@ -1,11 +1,9 @@
 import express from 'express';
-import { Queue, QueueEvents, Worker } from 'bullmq';
+import { Queue, QueueEvents, Job } from 'bullmq';
 
 import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
 import validateRequest from '../../utils/ap/validation.js';
-
-import inboxWorker from '../../utils/workers.js';
 
 const router = express.Router();
 
@@ -42,7 +40,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	// this will return before the following can run
 	validateRequest(req, res);
 
-	var inboxQueueResponse = await inboxQueue.add(
+	await inboxQueue.add(
 		'inbox',
 		{
 			body: req.body
@@ -50,7 +48,16 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		{ jobId: req.body.id }
 	);
 
-	console.log(inboxQueueResponse);
+	inboxQueueEvents.on('completed', async ({ jobId }) => {
+		const job = await Job.fromId(inboxQueue, jobId);
+
+		if (jobId === req.body.id) {
+			logger('debug', 'ap', `job completed`);
+			logger('debug', 'ap', JSON.stringify(job));
+		} else {
+			logger('debug', 'ap', `a job completed, but not the one i wanted`);
+		}
+	});
 
 	res.status(500).send();
 });
