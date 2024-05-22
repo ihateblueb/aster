@@ -1,5 +1,5 @@
 import express from 'express';
-import { Queue, Worker } from 'bullmq';
+import { Queue, QueueEvents, Worker } from 'bullmq';
 
 import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
@@ -29,6 +29,8 @@ const inboxQueue = new Queue('inbox', {
 	}
 });
 
+const inboxQueueEvents = new QueueEvents('inbox');
+
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
 		'application/activity+json',
@@ -36,15 +38,27 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	]);
 
 	// dont let requests in for now
-	// res.send(500);
+	res.send(500);
 
-	logger('debug', 'ap', JSON.parse(req.body));
+	logger('debug', 'ap', JSON.stringify(JSON.parse(req.body)));
+
+	/*
 
 	await inboxQueue.add(
 		'inbox',
-		{ req: req, res: res },
+		{
+			data: {
+				req: JSON.parse(req)
+			}
+		},
 		{ jobId: req.body.id }
 	);
+
+	inboxQueueEvents.on('completed', ({ jobId }) => {
+		console.log('done painting');
+	});
+
+	*/
 });
 
 export default router;
