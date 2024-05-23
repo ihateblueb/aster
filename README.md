@@ -21,8 +21,8 @@ https://github.com/gabboman/wafrn
 ### activitypub
 
 -   [x] fetchable users
--   [ ] fetchable notes
--   [ ] accept activities (inboxes)
+-   [x] fetchable notes
+-   [-] accept activities (inboxes)
 -   [ ] announce activities
 
 ### backend
@@ -32,20 +32,14 @@ https://github.com/gabboman/wafrn
 -   [x] fetchable instance info
 -   [ ] fetchable remote instance info
 -   [ ] register users
+-   [ ] login users
 -   [ ] create notes
 
 ### frontend
 
-for development only purposes you can set an api url to use that isnt default by setting `PUBLIC_APIURL` in the .env of packages/frontend.
-
 todo:
 
 -   background, avatar, and banner alt text after added to backend
-
-### misc
-
--   [ ] prettier logs
--   [ ] split it up into workers so the entire thing doesnt crumble on error
 
 ## security
 
@@ -63,7 +57,7 @@ use that template and create a production.yml in that same directory.
 -   [-] `as:manuallyApprovesFollowers`
 -   [-] `as:sensitive`
 -   [ ] `as:Hashtag`
--   [-] `as:quoteUrl`
+-   [ ] `as:quoteUrl`
 
 ### mastodon
 
@@ -72,7 +66,7 @@ use that template and create a production.yml in that same directory.
 
 ## fedibird
 
--   [-] `fedibird:quoteUri`
+-   [ ] `fedibird:quoteUri`
 
 ### schema
 
@@ -82,7 +76,7 @@ use that template and create a production.yml in that same directory.
 ### misskey
 
 -   [-] `misskey:_misskey_content`
--   [-] `misskey:_misskey_quote`
+-   [ ] `misskey:_misskey_quote`
 -   [ ] `misskey:_misskey_vote` (i do not know what this is used for, but i will probably support it)
 -   [ ] `misskey:_misskey_reaction`
 -   [-] `misskey:_misskey_summary`
