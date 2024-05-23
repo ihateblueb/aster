@@ -20,7 +20,7 @@ const inboxQueue = new Queue('inbox', {
 	},
 	defaultJobOptions: {
 		removeOnComplete: true,
-		attempts: 5,
+		attempts: 15,
 		backoff: {
 			type: 'exponential',
 			delay: 5000

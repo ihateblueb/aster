@@ -65,7 +65,6 @@ export default async function acceptInboxRequest(parsedBody) {
 			};
 		}
 	} else if (parsedBody.type === 'Follow') {
-		logger('debug', 'ap', 'awawwawa ' + JSON.stringify(parsedBody.object));
 		let grabbedLocalUserDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.object
@@ -94,19 +93,11 @@ export default async function acceptInboxRequest(parsedBody) {
 				message: 'not implemented'
 			};
 		} else {
-			// this will have to add them to the follower array, send an accept, and then it's good
-			// followers should be stored at their AP ids to minimize sql queries later
-
-			// this is causing errors
 			await db
-				.getRepository(Users)
-				.createQueryBuilder('user')
-				.update({
-					followers: () =>
-						`array_append("followers", "${grabbedRemoteActor.ap_id})"`
-				})
-				.where(`id = "${grabbedLocalUser.id}"`)
-				.execute();
+				.getRepository('users')
+				.query(
+					`UPDATE "users" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
+				);
 
 			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
 		}
