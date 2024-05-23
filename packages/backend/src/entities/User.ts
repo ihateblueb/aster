@@ -8,6 +8,9 @@ export class Users {
 	@Column({ nullable: true })
 	ap_id: string;
 
+	@Column({ nullable: true })
+	inbox: string;
+
 	@Column()
 	username: string;
 

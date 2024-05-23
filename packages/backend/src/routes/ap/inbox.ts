@@ -48,7 +48,22 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		{ jobId: req.body.id }
 	);
 
-	res.status(500).send();
+	inboxQueueEvents.on('completed', ({ jobId }) => {
+		console.log('done painting');
+	});
+
+	inboxQueueEvents.on('waiting', ({ jobId }) => {
+		console.log('waiting');
+	});
+
+	inboxQueueEvents.on(
+		'failed',
+		({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
+			console.error('error painting', failedReason);
+		}
+	);
+
+	res.status(200).send();
 });
 
 export default router;

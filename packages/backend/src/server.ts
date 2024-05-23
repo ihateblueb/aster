@@ -35,6 +35,7 @@ if (!config.nodeadmincontact) {
 }
 
 import express from 'express';
+// this error can be ignored
 import { handler } from 'frontend/build/handler.js';
 
 import bodyParser from 'body-parser';

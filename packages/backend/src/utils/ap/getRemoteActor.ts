@@ -60,12 +60,21 @@ async function processNewActor(apId, res) {
 
 		actorToInsert['username'] = res.data.preferredUsername;
 		actorToInsert['ap_id'] = res.data.id;
+
+		if (res.data.inbox) {
+			actorToInsert['inbox'] = res.data.inbox;
+		} else if (res.data.sharedInbox) {
+			actorToInsert['inbox'] = res.data.sharedInbox;
+		} else {
+			actorToInsert['inbox'] = res.data.endpoints.sharedInbox;
+		}
+
 		actorToInsert['url'] = res.data.url;
 
 		actorToInsert['local'] = false;
 
 		if (res.data.name) {
-			actorToInsert['displayname'] = res.data.mame;
+			actorToInsert['displayname'] = res.data.name;
 		}
 
 		if (res.data._misskey_summary) {

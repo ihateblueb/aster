@@ -1,5 +1,8 @@
 import db from '../database.js';
 import logger from '../logger.js';
+import getRemoteActor from './getRemoteActor.js';
+import accept from './accept.js';
+import { Users } from '../../entities/User.js';
 
 /*
 	Done activity types:
@@ -33,13 +36,13 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Create') {
 		// create
 	} else if (parsedBody.type === 'Delete') {
-		var grabbedRemoteActorDb = await db.getRepository('users').find({
+		let grabbedRemoteActorDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.actor
 			}
 		});
 
-		var grabbedRemoteActor = grabbedRemoteActorDb[0];
+		let grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 		if (grabbedRemoteActor) {
 			await db.getRepository('users').delete(grabbedRemoteActor.id);
@@ -62,17 +65,26 @@ export default async function acceptInboxRequest(parsedBody) {
 			};
 		}
 	} else if (parsedBody.type === 'Follow') {
-		var grabbedLocalUserDb = await db.getRepository('users').find({
+		let grabbedLocalUserDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.object
 			}
 		});
 
-		var grabbedLocalUser = grabbedLocalUserDb[0];
+		let grabbedLocalUser = grabbedLocalUserDb[0];
 
 		if (!grabbedLocalUser) {
 			logger('debug', 'ap', 'local user not here');
 		}
+
+		if (!grabbedLocalUser.local) {
+			return {
+				status: '400',
+				message: 'user is not local'
+			};
+		}
+
+		let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
 
 		if (grabbedLocalUser.locked) {
 			// this will have to add them to the pending follower array and wait to be moved
@@ -83,11 +95,17 @@ export default async function acceptInboxRequest(parsedBody) {
 		} else {
 			// this will have to add them to the follower array, send an accept, and then it's good
 			// followers should be stored at their AP ids to minimize sql queries later
-			let acceptBody = {};
-			return {
-				status: '501',
-				message: 'not implemented'
-			};
+			await db
+				.getRepository(Users)
+				.createQueryBuilder('user')
+				.update({
+					followers: () =>
+						`array_append("followers", ${grabbedRemoteActor.ap_id})`
+				})
+				.where('id = :id', { id: 1 })
+				.execute();
+
+			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
 		}
 	} else if (parsedBody.type === 'Update') {
 		// update

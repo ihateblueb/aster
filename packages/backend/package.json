@@ -4,12 +4,13 @@
 	"type": "module",
 	"scripts": {
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
-		"start": "node built/server.js",
-		"build": "tsc",
+		"start": "NODE_DEBUG=bull node built/server.js",
+		"build": "tsc -b --verbose",
 		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc '**' --write"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {
+		"@bull-board/express": "^5.18.1",
 		"@peertube/http-signature": "^1.7.0",
 		"@rollup/plugin-commonjs": "^25.0.7",
 		"@rollup/plugin-node-resolve": "^15.2.3",
