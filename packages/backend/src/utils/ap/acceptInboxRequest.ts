@@ -95,6 +95,8 @@ export default async function acceptInboxRequest(parsedBody) {
 		} else {
 			// this will have to add them to the follower array, send an accept, and then it's good
 			// followers should be stored at their AP ids to minimize sql queries later
+
+			//  the waiting forever may be caused by this fucked up db thing
 			await db
 				.getRepository(Users)
 				.createQueryBuilder('user')
