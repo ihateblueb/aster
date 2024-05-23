@@ -8,7 +8,11 @@
 </script>
 
 <svelte:head>
-	<title>{data.displayname} (@{data.username})</title>
+	{#if data.local}
+		<title>{data.displayname} (@{data.username})</title>
+	{:else}
+		<title>{data.displayname} (@{data.username}@{data.host})</title>
+	{/if}
 </svelte:head>
 
 {#if data}
@@ -36,7 +40,9 @@
 						{/if}
 					</div>
 				</span>
-				<span class="username">@{data.username}</span>
+				<span class="username"
+					>@{data.username}{#if !data.local}@{data.host}{/if}</span
+				>
 			</div>
 			<p class="bio">
 				<Mfm content={data.bio} />
@@ -71,7 +77,7 @@
 			user-select: none;
 		}
 		.innerHeader {
-			padding: 12px;
+			padding: 12px 16px;
 			margin-top: -45px;
 
 			.name {

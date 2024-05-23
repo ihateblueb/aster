@@ -8,7 +8,9 @@
 	<title>Uh oh!</title>
 </svelte:head>
 
-<h1>{$page.status}</h1>
-<h2>{$page.error.message}</h2>
+<div class="paddedPage">
+	<h1>{$page.status}</h1>
+	<h2>{$page.error.message}</h2>
+</div>
 
 <div class="errorPage"></div>

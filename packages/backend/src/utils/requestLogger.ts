@@ -15,11 +15,14 @@ const accessLogStream = rfs('requests.log', {
 
 export default {
 	dev: morgan(function (tokens, req, res) {
-		logger(
-			'http',
-			tokens.method(req, res),
-			`${tokens.url(req, res)} responded ${tokens.status(req, res)} in ${tokens['response-time'](req, res) + 'ms'}`
-		);
+		// ignore the svelte stuff
+		if (!tokens.url(req, res).startsWith('/_app/')) {
+			logger(
+				'http',
+				tokens.method(req, res),
+				`${tokens.url(req, res)} responded ${tokens.status(req, res)} in ${tokens['response-time'](req, res) + 'ms'}`
+			);
+		}
 	}),
 	combined: morgan('combined', { stream: accessLogStream })
 };

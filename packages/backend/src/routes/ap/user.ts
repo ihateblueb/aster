@@ -95,7 +95,17 @@ router.get('/users/:userid', async (req, res, next) => {
 				return res.status(404).json({ message: 'not found' });
 			}
 		} else {
-			next();
+			var grabbedUser = await db.getRepository('users').findOne({
+				where: {
+					id: req.params.userid
+				}
+			});
+
+			if (!grabbedUser.local) {
+				res.redirect(`/@${grabbedUser.username}@${grabbedUser.host}`);
+			} else {
+				res.redirect(`/@${grabbedUser.username}`);
+			}
 		}
 	}
 });
