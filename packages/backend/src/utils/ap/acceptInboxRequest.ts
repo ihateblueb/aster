@@ -6,12 +6,19 @@ import { Users } from '../../entities/User.js';
 
 /*
 	Done activity types:
+
+	Follow
+	- without approval
+	Undo
+	- follow
+
 	Todo activity types:
 
 	Accept
 	Announce
 	Create
 	Follow
+	- with approval
 	Update
 	Undo
 	Like
@@ -87,11 +94,11 @@ export default async function acceptInboxRequest(parsedBody) {
 		let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
 
 		if (grabbedLocalUser.locked) {
-			// this will have to add them to the pending follower array and wait to be moved
-			return {
-				status: '501',
-				message: 'not implemented'
-			};
+			await db
+				.getRepository('users')
+				.query(
+					`UPDATE "users" SET "pending_followers" = array_append("pending_followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
+				);
 		} else {
 			await db
 				.getRepository('users')
@@ -104,7 +111,48 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Update') {
 		// update
 	} else if (parsedBody.type === 'Undo') {
-		// undo
+		let grabbedLocalUserDb = await db.getRepository('users').find({
+			where: {
+				ap_id: parsedBody.object.object
+			}
+		});
+
+		let grabbedLocalUser = grabbedLocalUserDb[0];
+
+		if (!grabbedLocalUser) {
+			logger('debug', 'ap', 'local user not here');
+			return {
+				status: '400',
+				message: 'user is not here'
+			};
+		}
+
+		if (!grabbedLocalUser.local) {
+			return {
+				status: '400',
+				message: 'user is not local'
+			};
+		}
+
+		let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
+
+		if (parsedBody.object.type === 'Follow') {
+			await db
+				.getRepository('users')
+				.query(
+					`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
+				);
+
+			logger(
+				'debug',
+				'ap',
+				'some ASSHOLE unfollowed someone on this instance.. stupid.. asshole..'
+			);
+
+			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
+		} else {
+			return;
+		}
 	} else if (parsedBody.type === 'Like') {
 		// like
 	} else if (parsedBody.type === 'EmojiReact') {
@@ -119,5 +167,7 @@ export default async function acceptInboxRequest(parsedBody) {
 			status: 501,
 			message: 'not implemented'
 		};
+	} else {
+		console.log('oh god oh fuck new activity type ' + parsedBody.type);
 	}
 }

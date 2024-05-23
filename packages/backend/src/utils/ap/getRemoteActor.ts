@@ -34,8 +34,10 @@ export default async function getRemoteActor(apId) {
 				response = await processNewActor(apId, res);
 			})
 			.catch((e) => {
+				// in case they can't be fetched, this will be sent so they are ignored.
 				if (e.response && e.response.status === 410) {
-					// in case they can't be fetched, this will be sent so they are ignored.
+					response = 'gone';
+				} else if (e.response && e.response.status === 401) {
 					response = 'gone';
 				} else {
 					logger('error', 'ap', e);

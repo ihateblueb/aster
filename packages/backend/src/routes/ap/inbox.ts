@@ -56,7 +56,13 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	});
 
 	workers.inboxWorker.on('completed', (job) => {
-		logger('info', 'inbox', `job ${job.id} completed`);
+		if (job.id === JSON.parse(req.body).id) {
+			logger(
+				'info',
+				'inbox',
+				`job ${job.id} completed. ${JSON.stringify(job.returnvalue)}`
+			);
+		}
 	});
 
 	workers.inboxWorker.on('failed', (job, failedReason) => {

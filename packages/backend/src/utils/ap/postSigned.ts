@@ -54,6 +54,7 @@ export default async function postSigned(inbox, localUserId, body) {
 			}
 		})
 		.then((res) => {
+			// 202 is Accepted
 			if (res.status !== 202) {
 				logger(
 					'error',
