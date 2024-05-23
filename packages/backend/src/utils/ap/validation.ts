@@ -11,13 +11,7 @@ export default async function validateRequest(req, res) {
 		return res.status(400).json({ message: 'missing host' });
 	}
 
-	if (
-		req.headers.host !==
-		config.url
-			.replace('https://', '')
-			.replace('http://', '')
-			.replace('/', '')
-	) {
+	if (req.headers.host !== new URL(config.url).host) {
 		logger('error', 'ap', 'host header did not match configuration');
 		return res
 			.status(400)
