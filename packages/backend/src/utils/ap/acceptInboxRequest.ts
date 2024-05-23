@@ -65,6 +65,7 @@ export default async function acceptInboxRequest(parsedBody) {
 			};
 		}
 	} else if (parsedBody.type === 'Follow') {
+		logger('debug', 'ap', 'awawwawa ' + JSON.stringify(parsedBody.object));
 		let grabbedLocalUserDb = await db.getRepository('users').find({
 			where: {
 				ap_id: parsedBody.object
@@ -96,15 +97,15 @@ export default async function acceptInboxRequest(parsedBody) {
 			// this will have to add them to the follower array, send an accept, and then it's good
 			// followers should be stored at their AP ids to minimize sql queries later
 
-			//  the waiting forever may be caused by this fucked up db thing
+			// this is causing errors
 			await db
 				.getRepository(Users)
 				.createQueryBuilder('user')
 				.update({
 					followers: () =>
-						`array_append("followers", ${grabbedRemoteActor.ap_id})`
+						`array_append("followers", "${grabbedRemoteActor.ap_id})"`
 				})
-				.where('id = :id', { id: 1 })
+				.where(`id = "${grabbedLocalUser.id}"`)
 				.execute();
 
 			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);

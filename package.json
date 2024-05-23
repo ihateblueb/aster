@@ -1,6 +1,6 @@
 {
 	"name": "aster",
-	"version": "0.1.0",
+	"version": "2024.05.23",
 	"module": "true",
 	"repository": {
 		"type": "git",
@@ -14,10 +14,14 @@
 	"scripts": {
 		"start": "pnpm --filter=backend start",
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
+		"build-be": "pnpm clean-be && pnpm --filter=backend build",
+		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
 		"format": "pnpm -r format",
 		"migrate": "pnpm --filter=backend migrate",
-		"clean": "./clean.sh",
-		"cleanall": "./cleanall.sh"
+		"clean-be": "./scripts/clean-be.sh",
+		"clean-fe": "./scripts/clean-fe.sh",
+		"clean": "./scripts/clean.sh",
+		"cleanall": "./scripts/cleanall.sh"
 	},
 	"keywords": [],
 	"author": "blueb",

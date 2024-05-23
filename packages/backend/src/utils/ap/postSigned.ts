@@ -1,7 +1,7 @@
 import { createHash, createSign } from 'node:crypto';
-import logger from '../logger';
-import config from '../config';
-import db from '../database';
+import logger from '../logger.js';
+import config from '../config.js';
+import db from '../database.js';
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
 

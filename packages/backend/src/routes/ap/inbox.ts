@@ -3,6 +3,8 @@ import { Queue, QueueEvents, Job } from 'bullmq';
 
 import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
+
+import workers from '../../utils/workers.js';
 import validateRequest from '../../utils/ap/validation.js';
 
 const router = express.Router();
@@ -21,13 +23,10 @@ const inboxQueue = new Queue('inbox', {
 		attempts: 5,
 		backoff: {
 			type: 'exponential',
-			delay: 1000
-		},
-		removeOnFail: 15000
+			delay: 5000
+		}
 	}
 });
-
-const inboxQueueEvents = new QueueEvents('inbox');
 
 router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	res.setHeader('Accept', [
@@ -43,25 +42,26 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	await inboxQueue.add(
 		'inbox',
 		{
-			body: req.body
+			body: JSON.parse(req.body)
 		},
-		{ jobId: req.body.id }
+		{ jobId: JSON.parse(req.body).id }
 	);
 
-	inboxQueueEvents.on('completed', ({ jobId }) => {
-		console.log('done painting');
+	workers.inboxWorker.on('progress', async (job, progress) => {
+		logger(
+			'info',
+			'inbox',
+			`job ${job.id} says ${JSON.stringify(progress)}`
+		);
 	});
 
-	inboxQueueEvents.on('waiting', ({ jobId }) => {
-		console.log('waiting');
+	workers.inboxWorker.on('completed', (job) => {
+		logger('info', 'inbox', `job ${job.id} completed`);
 	});
 
-	inboxQueueEvents.on(
-		'failed',
-		({ jobId, failedReason }: { jobId: string; failedReason: string }) => {
-			console.error('error painting', failedReason);
-		}
-	);
+	workers.inboxWorker.on('failed', (job, failedReason) => {
+		logger('error', 'inbox', `job ${job.id} failed. ${failedReason}`);
+	});
 
 	res.status(200).send();
 });
