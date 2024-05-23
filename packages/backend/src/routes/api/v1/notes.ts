@@ -10,22 +10,18 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 			message: 'noteid parameter required'
 		});
 	} else {
-		var grabbedNoteDb = await db.getRepository('notes').find({
+		var grabbedNote = await db.getRepository('notes').findOne({
 			where: {
 				id: req.params.noteid
 			}
 		});
 
-		var grabbedNote = grabbedNoteDb[0];
-
 		if (grabbedNote) {
-			var grabbedAuthorDb = await db.getRepository('users').find({
+			var grabbedAuthor = await db.getRepository('users').findOne({
 				where: {
 					id: grabbedNote.author
 				}
 			});
-
-			var grabbedAuthor = grabbedAuthorDb[0];
 
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {

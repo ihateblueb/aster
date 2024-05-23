@@ -9,13 +9,11 @@ router.get('/notes/:noteid', async (req, res, next) => {
 		return res.status(400).json({ message: 'bad request' });
 	} else {
 		if (!req.accepts('html')) {
-			var grabbedNoteDb = await db.getRepository('notes').find({
+			var grabbedNote = await db.getRepository('notes').findOne({
 				where: {
 					id: req.params.noteid
 				}
 			});
-
-			var grabbedNote = grabbedNoteDb[0];
 
 			if (grabbedNote && grabbedNote.local) {
 				res.setHeader('Content-Type', 'application/activity+json');

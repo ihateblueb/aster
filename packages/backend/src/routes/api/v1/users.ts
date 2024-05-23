@@ -3,6 +3,7 @@ const router = express.Router();
 
 import db from '../../../utils/database.js';
 
+// lookup by id
 router.get('/api/v1/users/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
@@ -10,13 +11,11 @@ router.get('/api/v1/users/:userid', async (req, res) => {
 			message: 'userid parameter required'
 		});
 	} else {
-		var grabbedUserDb = await db.getRepository('users').find({
+		var grabbedUser = await db.getRepository('users').findOne({
 			where: {
 				id: req.params.userid
 			}
 		});
-
-		var grabbedUser = grabbedUserDb[0];
 
 		if (grabbedUser) {
 			if (grabbedUser.suspended) {
@@ -32,6 +31,7 @@ router.get('/api/v1/users/:userid', async (req, res) => {
 
 				userJson['id'] = grabbedUser.id;
 				userJson['username'] = grabbedUser.username;
+				userJson['host'] = grabbedUser.host;
 				userJson['local'] = grabbedUser.local;
 				userJson['url'] = grabbedUser.url;
 				userJson['displayname'] = grabbedUser.displayname;

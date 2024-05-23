@@ -33,15 +33,13 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (req.query.resource.startsWith('acct:')) {
-			var grabbedUserDb = await db.getRepository('users').find({
+			var grabbedUser = await db.getRepository('users').findOne({
 				where: {
 					username: req.query.resource
 						.replace('acct:', '')
 						.split('@')[0]
 				}
 			});
-
-			var grabbedUser = grabbedUserDb[0];
 
 			res.json({
 				subject: `acct:${grabbedUser.username}@${config.url

@@ -43,13 +43,11 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Create') {
 		// create
 	} else if (parsedBody.type === 'Delete') {
-		let grabbedRemoteActorDb = await db.getRepository('users').find({
+		let grabbedRemoteActor = await db.getRepository('users').findOne({
 			where: {
 				ap_id: parsedBody.actor
 			}
 		});
-
-		let grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 		if (grabbedRemoteActor) {
 			await db.getRepository('users').delete(grabbedRemoteActor.id);
@@ -72,13 +70,11 @@ export default async function acceptInboxRequest(parsedBody) {
 			};
 		}
 	} else if (parsedBody.type === 'Follow') {
-		let grabbedLocalUserDb = await db.getRepository('users').find({
+		let grabbedLocalUser = await db.getRepository('users').findOne({
 			where: {
 				ap_id: parsedBody.object
 			}
 		});
-
-		let grabbedLocalUser = grabbedLocalUserDb[0];
 
 		if (!grabbedLocalUser) {
 			logger('debug', 'ap', 'local user not here');
@@ -99,6 +95,10 @@ export default async function acceptInboxRequest(parsedBody) {
 				.query(
 					`UPDATE "users" SET "pending_followers" = array_append("pending_followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 				);
+			return {
+				status: 200,
+				message: 'added pending follower'
+			};
 		} else {
 			await db
 				.getRepository('users')
@@ -111,13 +111,11 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Update') {
 		// update
 	} else if (parsedBody.type === 'Undo') {
-		let grabbedLocalUserDb = await db.getRepository('users').find({
+		let grabbedLocalUser = await db.getRepository('users').findOne({
 			where: {
 				ap_id: parsedBody.object.object
 			}
 		});
-
-		let grabbedLocalUser = grabbedLocalUserDb[0];
 
 		if (!grabbedLocalUser) {
 			logger('debug', 'ap', 'local user not here');
@@ -143,13 +141,12 @@ export default async function acceptInboxRequest(parsedBody) {
 					`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 				);
 
-			logger(
-				'debug',
-				'ap',
-				'some ASSHOLE unfollowed someone on this instance.. stupid.. asshole..'
-			);
-
 			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
+
+			return {
+				status: 200,
+				message: 'undo follow accepted'
+			};
 		} else {
 			return;
 		}

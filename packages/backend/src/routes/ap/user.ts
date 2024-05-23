@@ -9,13 +9,11 @@ router.get('/users/:userid', async (req, res, next) => {
 		return res.status(400).json({ message: 'bad request' });
 	} else {
 		if (!req.accepts('html')) {
-			var grabbedUserDb = await db.getRepository('users').find({
+			var grabbedUser = await db.getRepository('users').findOne({
 				where: {
 					id: req.params.userid
 				}
 			});
-
-			var grabbedUser = grabbedUserDb[0];
 
 			if (grabbedUser && grabbedUser.local) {
 				res.setHeader('Content-Type', 'application/activity+json');

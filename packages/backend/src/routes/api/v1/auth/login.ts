@@ -19,6 +19,7 @@ router.post('/api/v1/login', async (req, res) => {
 			content is username and pw encoded in base64 separated by a colon
 		*/
 		logger('debug', 'auth', req.body);
+		atob(req.body);
 	}
 });
 

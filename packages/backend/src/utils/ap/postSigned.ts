@@ -8,21 +8,17 @@ import axios from 'axios';
 import pkg from '../../../../../package.json' assert { type: 'json' };
 
 export default async function postSigned(inbox, localUserId, body) {
-	let grabbedLocalUserDb = await db.getRepository('users').find({
+	let grabbedLocalUser = await db.getRepository('users').findOne({
 		where: {
 			id: localUserId
 		}
 	});
 
-	let grabbedLocalUser = grabbedLocalUserDb[0];
-
-	let grabbedLocalUserPrivDb = await db.getRepository('users_priv').find({
+	let grabbedLocalUserPriv = await db.getRepository('users_priv').findOne({
 		where: {
 			id: localUserId
 		}
 	});
-
-	let grabbedLocalUserPriv = grabbedLocalUserPrivDb[0];
 
 	const inboxUrl = new URL(inbox);
 	const digest = createHash('sha256')

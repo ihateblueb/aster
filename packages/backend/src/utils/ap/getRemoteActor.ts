@@ -7,13 +7,11 @@ import { v4 as uuidv4 } from 'uuid';
 // import updateRemoteActor from './updateRemoteActor';
 
 export default async function getRemoteActor(apId) {
-	var grabbedRemoteActorDb = await db.getRepository('users').find({
+	var grabbedRemoteActor = await db.getRepository('users').findOne({
 		where: {
 			ap_id: apId
 		}
 	});
-
-	var grabbedRemoteActor = grabbedRemoteActorDb[0];
 
 	if (grabbedRemoteActor) {
 		logger('debug', 'ap', 'remote actor present in database');
@@ -61,6 +59,7 @@ async function processNewActor(apId, res) {
 		actorToInsert['id'] = uuidv4();
 
 		actorToInsert['username'] = res.data.preferredUsername;
+		actorToInsert['host'] = new URL(res.data.url).host;
 		actorToInsert['ap_id'] = res.data.id;
 
 		if (res.data.inbox) {

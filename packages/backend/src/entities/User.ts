@@ -15,6 +15,9 @@ export class Users {
 	username: string;
 
 	@Column({ nullable: true })
+	host: string;
+
+	@Column({ nullable: true })
 	displayname: string;
 
 	@Column({ default: false })
