@@ -1,9 +1,23 @@
+import { Queue } from 'bullmq';
+
 import config from '../config.js';
 import logger from '../logger.js';
 
-import postSigned from './postSigned.js';
+import redis from '../redis.js';
 
 import { v4 as uuidv4 } from 'uuid';
+
+const deliverQueue = new Queue('deliver', {
+	connection: redis,
+	defaultJobOptions: {
+		removeOnComplete: true,
+		attempts: 5,
+		backoff: {
+			type: 'exponential',
+			delay: 10000
+		}
+	}
+});
 
 export default async function signAndAccept(userId, remoteInbox, body) {
 	const activityId = uuidv4();
@@ -18,5 +32,9 @@ export default async function signAndAccept(userId, remoteInbox, body) {
 
 	logger('debug', 'ap', JSON.stringify(acceptMessage));
 
-	postSigned(remoteInbox, userId, acceptMessage);
+	await deliverQueue.add('deliver', {
+		inbox: remoteInbox,
+		localUserId: userId,
+		body: acceptMessage
+	});
 }

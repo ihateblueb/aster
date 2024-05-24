@@ -1,9 +1,9 @@
 import db from '../database.js';
 import logger from '../logger.js';
+
+import accept from '../ap/accept.js';
+
 import getRemoteActor from './getRemoteActor.js';
-import accept from './accept.js';
-import { Users } from '../../entities/User.js';
-import { parse } from 'path';
 
 /*
 	Done activity types:
@@ -61,7 +61,7 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Delete') {
 		// disabled because this deletes actor no matter what even though it could be a deleted note
 		/*
-		
+
 		let grabbedRemoteActor = await db.getRepository('users').findOne({
 			where: {
 				ap_id: parsedBody.actor

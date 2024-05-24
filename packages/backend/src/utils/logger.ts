@@ -88,7 +88,7 @@ export default function logger(level: String, section: String, message?: any) {
 
 export class TypeormLogger implements Logger {
 	logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-		logger('info', 'db', query);
+		logger('debug', 'db', query);
 	}
 	logQueryError(
 		error: string | Error,

@@ -57,6 +57,10 @@ export default async function postSigned(inbox, localUserId, body) {
 					'ap',
 					`status ${res.status} returned from attempted post ${res.config.url}`
 				);
+				return {
+					status: 202,
+					message: 'accepted'
+				};
 			}
 		});
 

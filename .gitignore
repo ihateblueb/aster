@@ -14,3 +14,5 @@ private.pem
 public.pem
 
 .env
+
+packages/frontend/static/favicon.ico

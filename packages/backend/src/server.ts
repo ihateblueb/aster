@@ -34,6 +34,40 @@ if (!config.nodeadmincontact) {
 	);
 }
 
+import { inboxWorker, deliverWorker } from './utils/workers.js';
+
+inboxWorker.on('progress', async (job, progress) => {
+	logger('info', 'inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
+});
+
+inboxWorker.on('completed', (job) => {
+	logger(
+		'info',
+		'inbox',
+		`job ${job.id} completed. ${JSON.stringify(job.returnvalue)}`
+	);
+});
+
+inboxWorker.on('failed', (job, failedReason) => {
+	logger('error', 'inbox', `job ${job.id} failed. ${failedReason}`);
+});
+
+deliverWorker.on('progress', async (job, progress) => {
+	logger('info', 'deliver', `job ${job.id} says ${JSON.stringify(progress)}`);
+});
+
+deliverWorker.on('completed', (job) => {
+	logger(
+		'info',
+		'deliver',
+		`job ${job.id} completed. ${JSON.stringify(job.returnvalue)}`
+	);
+});
+
+deliverWorker.on('failed', (job, failedReason) => {
+	logger('error', 'deliver', `job ${job.id} failed. ${failedReason}`);
+});
+
 import express from 'express';
 // this error can be ignored
 import { handler } from 'frontend/build/handler.js';

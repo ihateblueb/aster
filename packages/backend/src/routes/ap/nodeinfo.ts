@@ -37,26 +37,21 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 		metadata: {
 			nodeName: `${config.nodename}`,
 			nodeDescription: `${config.nodedesc}`,
-			themeColor: `${config.nodecolor}`
+			themeColor: `${config.nodecolor}`,
+			maintainer: {
+				name: `${config.maintainer}`,
+				email: `${config.maintaineremail}`
+			}
 		},
 		usage: {
 			users: {
 				total: `${userCount}`
 			},
 			localPosts: `${noteCount}`
-		},
-		maintainer: {}
+		}
 	};
 
-	if (config.maintainer && config.maintaineremail) {
-		nodeinfoJson['maintainer'] = {};
-		nodeinfoJson.maintainer = {
-			name: `${config.nodeadmin}`,
-			email: `${config.nodeadmincontact}`
-		};
-	}
-
-	res.json(nodeinfoJson);
+	res.status(200).json(nodeinfoJson);
 });
 
 export default router;
