@@ -14,7 +14,7 @@ awesome $[small (terrible)] $[spin.x work in progress] fedi software that's $[je
 	<Button type="bg-primary" to="/login">Login</Button>
 	<Button type="bg-primary" to="/register">Register</Button>
 	<br />
-	<Button type="bg-primary" to="/notes/a2c2ca31-5487-4d44-a8d7-eacaebf71a7d"
+	<Button type="bg-primary" to="/notes/aee066ac-a4e8-4442-8c58-e981cded9964"
 		>See Example Note</Button
 	>
 	<Button type="bg-primary" to="/@breen">See Example Profile</Button>

@@ -8,7 +8,7 @@ export class Notes {
 	@Column()
 	created_at: string;
 
-	@Column()
+	@Column({ default: 'public' })
 	visibility: string;
 
 	@Column({ nullable: true })
