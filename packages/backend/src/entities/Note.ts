@@ -8,6 +8,9 @@ export class Notes {
 	@Column()
 	created_at: string;
 
+	@Column()
+	visibility: string;
+
 	@Column({ nullable: true })
 	replying_to: string;
 

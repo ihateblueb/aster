@@ -13,6 +13,8 @@ import api_v1_users from './api/v1/users.js';
 import api_v1_notes from './api/v1/notes.js';
 import api_v1_lookup from './api/v1/lookup.js';
 
+import api_v1_login from './api/v1/login.js';
+
 // required endpoints for federation
 router.use('/', ap_wellknown);
 router.use('/', ap_nodeinfo);
@@ -25,5 +27,7 @@ router.use('/', api_v1_instance);
 router.use('/', api_v1_users);
 router.use('/', api_v1_notes);
 router.use('/', api_v1_lookup);
+
+router.use('/', api_v1_login);
 
 export default router;

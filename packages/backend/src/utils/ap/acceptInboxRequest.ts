@@ -3,6 +3,7 @@ import logger from '../logger.js';
 import getRemoteActor from './getRemoteActor.js';
 import accept from './accept.js';
 import { Users } from '../../entities/User.js';
+import { parse } from 'path';
 
 /*
 	Done activity types:
@@ -40,9 +41,27 @@ export default async function acceptInboxRequest(parsedBody) {
 		// accept
 	} else if (parsedBody.type === 'Announce') {
 		// announce
+	} else if (parsedBody.type === 'Bite') {
+		// YEEEOWWWCH!
+		// https://ns.mia.jetzt/as/#Bite
 	} else if (parsedBody.type === 'Create') {
-		// create
+		if (parsedBody.object.type === 'Note') {
+			// create note with replying_to
+			//var noteToInsert = {};
+			// this will be generated
+			//noteToInsert['id'] = uuidv4();
+			//noteToInsert['created_at'] = parsedBody.object.published;
+			/*
+				DETERMINING VISIBILITY IS HARD AND SUCKS...
+			*/
+			//await db.getRepository('notes').insert(noteToInsert);
+			//logger('info', 'ap', 'created note ' + noteToInsert.id);
+			// add noteid to replies in the original note
+		}
 	} else if (parsedBody.type === 'Delete') {
+		// disabled because this deletes actor no matter what even though it could be a deleted note
+		/*
+		
 		let grabbedRemoteActor = await db.getRepository('users').findOne({
 			where: {
 				ap_id: parsedBody.actor
@@ -69,6 +88,7 @@ export default async function acceptInboxRequest(parsedBody) {
 				message: 'pretended to delete actor'
 			};
 		}
+		*/
 	} else if (parsedBody.type === 'Follow') {
 		let grabbedLocalUser = await db.getRepository('users').findOne({
 			where: {
@@ -151,9 +171,9 @@ export default async function acceptInboxRequest(parsedBody) {
 			return;
 		}
 	} else if (parsedBody.type === 'Like') {
-		// like
+		console.log(parsedBody);
 	} else if (parsedBody.type === 'EmojiReact') {
-		// emoji react
+		console.log(parsedBody);
 	} else if (parsedBody.type === 'Add') {
 		// add
 	} else if (parsedBody.type === 'Block') {

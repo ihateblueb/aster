@@ -1,10 +1,17 @@
 <script>
-	let username;
-	let password;
+	let username = '';
+	let password = '';
 
-	function startLogin() {
+	async function startLogin() {
 		console.log('starting login...');
 		var credentialsToSend = btoa(`${username}:${password}`);
+
+		const response = await fetch(`/api/v1/auth/login`, {
+			method: 'POST',
+			body: credentialsToSend
+		});
+
+		console.log(response);
 	}
 </script>
 

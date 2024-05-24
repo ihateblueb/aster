@@ -1,6 +1,6 @@
 import express from 'express';
-import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
+import db from '../../../utils/database.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -20,6 +20,8 @@ router.post('/api/v1/login', async (req, res) => {
 		*/
 		logger('debug', 'auth', req.body);
 		console.log(atob(req.body));
+
+		res.status(200);
 	}
 });
 
