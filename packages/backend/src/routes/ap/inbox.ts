@@ -9,15 +9,33 @@ import validateRequest from '../../utils/ap/validation.js';
 
 const router = express.Router();
 
+if (!config.redishost) {
+	logger('fatal', 'core', 'no redis host configured');
+}
+if (!config.redisport) {
+	logger('fatal', 'core', 'no redis port configured');
+}
+
+const redisConnection = {
+	host: config.redishost,
+	port: config.redisport
+};
+
+if (config.redisprefix) {
+	redisConnection['keyPrefix'] = config.redisprefix;
+}
+if (config.redisdb) {
+	redisConnection['db'] = config.redisdb;
+}
+if (config.redisuser) {
+	redisConnection['username'] = config.redisuser;
+}
+if (config.redispass) {
+	redisConnection['password'] = config.redispass;
+}
+
 const inboxQueue = new Queue('inbox', {
-	connection: {
-		host: config.redishost,
-		port: config.redisport,
-		keyPrefix: config.redisprefix,
-		db: config.redisdb,
-		username: config.redisuser,
-		password: config.redispw
-	},
+	connection: redisConnection,
 	defaultJobOptions: {
 		removeOnComplete: true,
 		attempts: 15,
