@@ -1,20 +1,20 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import logger from '../../logger.js';
 import getRemoteActor from '../getRemoteActor.js';
 
 export default async function processNote(parsedBody) {
 	let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
 
-	// create note with replying_to
-	//var noteToInsert = {};
-	// this will be generated
-	//noteToInsert['id'] = uuidv4();
-	//noteToInsert['created_at'] = parsedBody.object.published;
-	/*
-		DETERMINING VISIBILITY IS HARD AND SUCKS...
-	*/
-	//await db.getRepository('notes').insert(noteToInsert);
-	//logger('info', 'ap', 'created note ' + noteToInsert.id);
-	// add noteid to replies in the original note
+	let noteToInsert = {};
+
+	// const originalNoteId
+	// how the fuck do i get the note its replying to
+
+	const noteId = uuidv4();
+
+	noteToInsert['id'] = noteId;
+	noteToInsert['created_at'] = parsedBody.object.published;
 
 	// default to direct to not leak dms
 	let visibility;
@@ -62,6 +62,39 @@ export default async function processNote(parsedBody) {
 	) {
 		visibility = 'public';
 	}
+
+	noteToInsert['visibility'] = visibility;
+
+	// id of note above
+	//noteToInsert['replying_to'] = sobbing;
+
+	noteToInsert['author'] = grabbedRemoteActor.id;
+	noteToInsert['local'] = false;
+
+	if (parsedBody.object.subject) {
+		noteToInsert['cw'] = parsedBody.object.subject;
+	}
+
+	if (
+		parsedBody.object.source &&
+		parsedBody.object.source.content &&
+		parsedBody.object.source.mediaType === 'text/x.misskeymarkdown'
+	) {
+		// raw mfm
+		noteToInsert['content'] = parsedBody.object.source.content;
+	} else {
+		noteToInsert['content'] = parsedBody.object.content;
+	}
+
+	/*
+			await db.getRepository('notes').insert(noteToInsert);
+
+			await db
+				.getRepository('notes')
+				.query(
+					`UPDATE "notes" SET "replies" = array_append("replies", '${originalNoteId}') WHERE "id" = '${noteId}'`
+				);
+	*/
 
 	logger('debug', 'ap', `MEOWWMWMROE MEOW the visibility is ${visibility}`);
 }
