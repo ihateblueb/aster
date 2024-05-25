@@ -6,7 +6,7 @@
 		console.log('starting login...');
 		var credentialsToSend = btoa(`${username}:${password}`);
 
-		const response = await fetch(`/api/v1/auth/login`, {
+		const response = await fetch(`/api/v1/login`, {
 			method: 'POST',
 			body: credentialsToSend
 		});
