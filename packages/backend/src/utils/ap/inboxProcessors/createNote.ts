@@ -16,26 +16,51 @@ export default async function processNote(parsedBody) {
 	//logger('info', 'ap', 'created note ' + noteToInsert.id);
 	// add noteid to replies in the original note
 
-	// aster:Visibility
+	// default to direct to not leak dms
+	let visibility;
+	visibility = 'direct';
+
+	// aster:Visibility extension
 	if (parsedBody.object.visibility) {
 		/*
 			not directly
 			visibility = parsedBody.object.visibility
-			because it could have other stuff.
+			because it could have other stuff
 		*/
 		if (parsedBody.object.visibility === 'public') {
-			var visibility = 'public';
+			visibility = 'public';
 		} else if (parsedBody.object.visibility === 'unlisted') {
-			var visibility = 'unlisted';
+			visibility = 'unlisted';
 		} else if (parsedBody.object.visibility === 'followers') {
-			var visibility = 'followers';
+			visibility = 'followers';
 		} else if (parsedBody.object.visibility === 'direct') {
-			var visibility = 'direct';
+			visibility = 'direct';
 		}
 	}
 
 	if (parsedBody.object.directMessage) {
-		var visibility = 'direct';
+		visibility = 'direct';
+	}
+
+	if (parsedBody.object.to.includes(grabbedRemoteActor.followers_url)) {
+		visibility = 'followers';
+	}
+
+	if (
+		parsedBody.object.cc.includes(
+			'https://www.w3.org/ns/activitystreams#Public'
+		) &&
+		parsedBody.object.to.includes(grabbedRemoteActor.followers_url)
+	) {
+		visibility = 'unlisted';
+	}
+
+	if (
+		parsedBody.object.to.includes(
+			'https://www.w3.org/ns/activitystreams#Public'
+		)
+	) {
+		visibility = 'public';
 	}
 
 	logger('debug', 'ap', `MEOWWMWMROE MEOW the visibility is ${visibility}`);

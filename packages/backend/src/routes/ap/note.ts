@@ -37,11 +37,19 @@ router.get('/notes/:noteid', async (req, res, next) => {
 				};
 
 				noteJson['published'] = grabbedNote.created_at;
-				noteJson['to'] = [
-					'https://www.w3.org/ns/activitystreams#Public'
-				];
+
+				// aster:Visibility extension
+				noteJson['visibility'] = grabbedNote.visibility;
+
+				if (grabbedNote.visibility === 'public') {
+					noteJson['to'] = [
+						'https://www.w3.org/ns/activitystreams#Public'
+					];
+				}
+
 				noteJson['cc'] =
 					config.url + 'users/' + grabbedNote.author + '/followers';
+
 				noteJson['inReplyTo'] = grabbedNote.replying_to;
 
 				res.json(noteJson);

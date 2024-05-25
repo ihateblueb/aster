@@ -47,7 +47,7 @@ export default async function acceptInboxRequest(parsedBody) {
 		// https://ns.mia.jetzt/as/#Bite
 	} else if (parsedBody.type === 'Create') {
 		if (parsedBody.object.type === 'Note') {
-			createNote(parsedBody);
+			await createNote(parsedBody);
 		}
 	} else if (parsedBody.type === 'Delete') {
 		// disabled because this deletes actor no matter what even though it could be a deleted note

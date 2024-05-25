@@ -42,7 +42,7 @@ export default async function getRemoteActor(apId) {
 				}
 			});
 
-		return response;
+		return await response;
 	}
 }
 
@@ -124,6 +124,9 @@ async function processNewActor(apId, res) {
 
 		actorToInsert['updated_at'] = new Date(Date.now()).toISOString();
 
+		actorToInsert['following_url'] = res.data.following;
+		actorToInsert['followers_url'] = res.data.followers;
+
 		if (res.data.publicKey.publicKeyPem) {
 			actorToInsert['public_key'] =
 				res.data.publicKey.publicKeyPem.toString();
@@ -131,7 +134,7 @@ async function processNewActor(apId, res) {
 
 		await db.getRepository('users').insert(actorToInsert);
 
-		logger('info', 'ap', 'created remote actor' + apId);
+		logger('info', 'ap', 'created remote actor ' + apId);
 
 		return actorToInsert;
 	}
