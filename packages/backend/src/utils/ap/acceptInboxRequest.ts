@@ -2,8 +2,9 @@ import db from '../database.js';
 import logger from '../logger.js';
 
 import accept from '../ap/accept.js';
-
 import getRemoteActor from './getRemoteActor.js';
+
+import createNote from './inboxProcessors/createNote.js';
 
 /*
 	Done activity types:
@@ -46,17 +47,7 @@ export default async function acceptInboxRequest(parsedBody) {
 		// https://ns.mia.jetzt/as/#Bite
 	} else if (parsedBody.type === 'Create') {
 		if (parsedBody.object.type === 'Note') {
-			// create note with replying_to
-			//var noteToInsert = {};
-			// this will be generated
-			//noteToInsert['id'] = uuidv4();
-			//noteToInsert['created_at'] = parsedBody.object.published;
-			/*
-				DETERMINING VISIBILITY IS HARD AND SUCKS...
-			*/
-			//await db.getRepository('notes').insert(noteToInsert);
-			//logger('info', 'ap', 'created note ' + noteToInsert.id);
-			// add noteid to replies in the original note
+			createNote(parsedBody);
 		}
 	} else if (parsedBody.type === 'Delete') {
 		// disabled because this deletes actor no matter what even though it could be a deleted note

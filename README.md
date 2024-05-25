@@ -16,6 +16,8 @@ you do need to build the backend to run migrations. i know that sounds silly but
 shout out wafrn. i used it as a reference for a lot of stuff, its neat
 https://github.com/gabboman/wafrn
 
+extensions to ap in extensions.md
+
 ## project status
 
 ### activitypub
@@ -319,64 +321,276 @@ for my reference
 }
 ```
 
-## example reply
+## example replies from akkoma
+
+direct note
 
 ```json
 {
-  '@context': [
-    'https://www.w3.org/ns/activitystreams',
-    'https://w3id.org/security/v1',
-    {
-      Key: 'sec:Key',
-      manuallyApprovesFollowers: 'as:manuallyApprovesFollowers',
-      sensitive: 'as:sensitive',
-      Hashtag: 'as:Hashtag',
-      quoteUrl: 'as:quoteUrl',
-      fedibird: 'http://fedibird.com/ns#',
-      quoteUri: 'fedibird:quoteUri',
-      toot: 'http://joinmastodon.org/ns#',
-      Emoji: 'toot:Emoji',
-      featured: 'toot:featured',
-      discoverable: 'toot:discoverable',
-      schema: 'http://schema.org#',
-      PropertyValue: 'schema:PropertyValue',
-      value: 'schema:value',
-      misskey: 'https://misskey-hub.net/ns#',
-      _misskey_content: 'misskey:_misskey_content',
-      _misskey_quote: 'misskey:_misskey_quote',
-      _misskey_reaction: 'misskey:_misskey_reaction',
-      _misskey_votes: 'misskey:_misskey_votes',
-      _misskey_summary: 'misskey:_misskey_summary',
-      isCat: 'misskey:isCat',
-      firefish: 'https://joinfirefish.org/ns#',
-      speakAsCat: 'firefish:speakAsCat',
-      sharkey: 'https://joinsharkey.org/ns#',
-      backgroundUrl: 'sharkey:backgroundUrl',
-      listenbrainz: 'sharkey:listenbrainz',
-      vcard: 'http://www.w3.org/2006/vcard/ns#'
-    }
-  ],
-  id: 'https://eepy.zone/notes/9tnj8y2kryzh00ic/activity',
-  actor: 'https://eepy.zone/users/9kfweg7wmdw7fnnt',
-  type: 'Create',
-  published: '2024-05-24T00:53:36.764Z',
-  object: {
-    id: 'https://eepy.zone/notes/9tnj8y2kryzh00ic',
-    type: 'Note',
-    attributedTo: 'https://eepy.zone/users/9kfweg7wmdw7fnnt',
-    content: '<p><a href="https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87" class="u-url mention">@breen@as2.blueb.me</a> i was trying ti figure out how to determine visibility but that didnt work because my logs were immediately flooded. i think im a little stupid. just a bit</p>',
-    published: '2024-05-24T00:53:36.764Z',
-    to: [ 'https://eepy.zone/users/9kfweg7wmdw7fnnt/followers' ],
-    cc: [
-      'https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87'
-    ],
-    inReplyTo: 'https://as2.blueb.me/notes/aee066ac-a4e8-4442-8c58-e981cded9964',
-    attachment: [],
-    sensitive: false,
-    tag: [ [Object] ]
-  },
-  to: [ 'https://eepy.zone/users/9kfweg7wmdw7fnnt/followers' ],
-  cc: [ 'https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87' ]
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"cc": [],
+	"context": "https://akko.eepy.zone/contexts/f718a425-60ea-4bda-92c6-b4266aff97cc",
+	"directMessage": true,
+	"id": "https://akko.eepy.zone/activities/7d0ff46e-e6b5-46ed-8ca6-427745cb7d6a",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"attachment": [],
+		"attributedTo": "https://akko.eepy.zone/users/harper",
+		"cc": [],
+		"content": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> private post to mention</p>",
+		"contentMap": {
+			"en": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> private post to mention</p>"
+		},
+		"context": "https://akko.eepy.zone/contexts/f718a425-60ea-4bda-92c6-b4266aff97cc",
+		"conversation": "https://akko.eepy.zone/contexts/f718a425-60ea-4bda-92c6-b4266aff97cc",
+		"id": "https://akko.eepy.zone/objects/ceb3d417-11a0-4873-a879-7f1b07f620d4",
+		"published": "2024-05-24T19:49:52.780645Z",
+		"sensitive": null,
+		"source": {
+			"content": "@breen@as2.blueb.me private post to mention",
+			"mediaType": "text/x.misskeymarkdown"
+		},
+		"summary": "",
+		"tag": [
+			{
+				"href": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+				"name": "@breen@as2.blueb.me",
+				"type": "Mention"
+			}
+		],
+		"to": [
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Note"
+	},
+	"published": "2024-05-24T19:49:52.780595Z",
+	"to": ["https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"],
+	"type": "Create"
+}
+```
+
+followers
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"cc": [],
+	"context": "https://akko.eepy.zone/contexts/c47464de-15b3-4e0e-9d88-449bd1fe54d3",
+	"directMessage": false,
+	"id": "https://akko.eepy.zone/activities/a39e8d3e-3285-42bb-b92e-89e91dc2e53e",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"attachment": [],
+		"attributedTo": "https://akko.eepy.zone/users/harper",
+		"cc": [],
+		"content": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> followers</p>",
+		"contentMap": {
+			"en": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> followers</p>"
+		},
+		"context": "https://akko.eepy.zone/contexts/c47464de-15b3-4e0e-9d88-449bd1fe54d3",
+		"conversation": "https://akko.eepy.zone/contexts/c47464de-15b3-4e0e-9d88-449bd1fe54d3",
+		"id": "https://akko.eepy.zone/objects/ff8a06d0-a3e5-4f38-a6fc-d4ffdaaaa393",
+		"published": "2024-05-24T19:51:26.088869Z",
+		"sensitive": true,
+		"source": {
+			"content": "@breen@as2.blueb.me followers",
+			"mediaType": "text/x.misskeymarkdown"
+		},
+		"summary": "test",
+		"tag": [
+			{
+				"href": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+				"name": "@breen@as2.blueb.me",
+				"type": "Mention"
+			}
+		],
+		"to": [
+			"https://akko.eepy.zone/users/harper/followers",
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Note"
+	},
+	"published": "2024-05-24T19:51:26.088804Z",
+	"to": [
+		"https://akko.eepy.zone/users/harper/followers",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Create"
+}
+```
+
+unlisted
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+	"context": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+	"directMessage": false,
+	"id": "https://akko.eepy.zone/activities/d92c50ae-7b71-4bce-8666-8a28fd002f6c",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"attachment": [],
+		"attributedTo": "https://akko.eepy.zone/users/harper",
+		"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+		"content": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> unlisted</p>",
+		"contentMap": {
+			"en": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> unlisted</p>"
+		},
+		"context": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+		"conversation": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+		"id": "https://akko.eepy.zone/objects/e86244f6-ecc2-4dc6-8f70-fc8ec49fadea",
+		"published": "2024-05-24T19:53:09.985963Z",
+		"sensitive": true,
+		"source": {
+			"content": "@breen@as2.blueb.me unlisted",
+			"mediaType": "text/x.misskeymarkdown"
+		},
+		"summary": "test",
+		"tag": [
+			{
+				"href": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+				"name": "@breen@as2.blueb.me",
+				"type": "Mention"
+			}
+		],
+		"to": [
+			"https://akko.eepy.zone/users/harper/followers",
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Note"
+	},
+	"published": "2024-05-24T19:53:09.985915Z",
+	"to": [
+		"https://akko.eepy.zone/users/harper/followers",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Create"
+}
+```
+
+unlisted
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+	"context": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+	"directMessage": false,
+	"id": "https://akko.eepy.zone/activities/d92c50ae-7b71-4bce-8666-8a28fd002f6c",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"attachment": [],
+		"attributedTo": "https://akko.eepy.zone/users/harper",
+		"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+		"content": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> unlisted</p>",
+		"contentMap": {
+			"en": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> unlisted</p>"
+		},
+		"context": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+		"conversation": "https://akko.eepy.zone/contexts/35f11819-6b15-438c-986f-b4e6f7e1ee49",
+		"id": "https://akko.eepy.zone/objects/e86244f6-ecc2-4dc6-8f70-fc8ec49fadea",
+		"published": "2024-05-24T19:53:09.985963Z",
+		"sensitive": true,
+		"source": {
+			"content": "@breen@as2.blueb.me unlisted",
+			"mediaType": "text/x.misskeymarkdown"
+		},
+		"summary": "test",
+		"tag": [
+			{
+				"href": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+				"name": "@breen@as2.blueb.me",
+				"type": "Mention"
+			}
+		],
+		"to": [
+			"https://akko.eepy.zone/users/harper/followers",
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Note"
+	},
+	"published": "2024-05-24T19:53:09.985915Z",
+	"to": [
+		"https://akko.eepy.zone/users/harper/followers",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Create"
+}
+```
+
+global
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"cc": ["https://akko.eepy.zone/users/harper/followers"],
+	"context": "https://akko.eepy.zone/contexts/b2d711fe-9a05-4995-8f60-801101cf075c",
+	"directMessage": false,
+	"id": "https://akko.eepy.zone/activities/2c8f4e83-9298-4a0a-8cac-13a818978f40",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"attachment": [],
+		"attributedTo": "https://akko.eepy.zone/users/harper",
+		"cc": ["https://akko.eepy.zone/users/harper/followers"],
+		"content": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> global</p>",
+		"contentMap": {
+			"en": "<p><span class=\"h-card\"><a class=\"u-url mention\" data-user=\"AiCSHFYUAx5ND0J2KO\" href=\"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87\" rel=\"ugc\">@<span>breen</span></a></span> global</p>"
+		},
+		"context": "https://akko.eepy.zone/contexts/b2d711fe-9a05-4995-8f60-801101cf075c",
+		"conversation": "https://akko.eepy.zone/contexts/b2d711fe-9a05-4995-8f60-801101cf075c",
+		"id": "https://akko.eepy.zone/objects/3fad37d2-6f42-4be5-a653-a7aa93566da5",
+		"published": "2024-05-24T19:53:47.430173Z",
+		"sensitive": true,
+		"source": {
+			"content": "@breen@as2.blueb.me global",
+			"mediaType": "text/x.misskeymarkdown"
+		},
+		"summary": "test",
+		"tag": [
+			{
+				"href": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+				"name": "@breen@as2.blueb.me",
+				"type": "Mention"
+			}
+		],
+		"to": [
+			"https://www.w3.org/ns/activitystreams#Public",
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Note"
+	},
+	"published": "2024-05-24T19:53:47.430122Z",
+	"to": [
+		"https://www.w3.org/ns/activitystreams#Public",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Create"
 }
 ```
 

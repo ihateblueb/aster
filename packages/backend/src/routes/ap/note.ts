@@ -29,7 +29,13 @@ router.get('/notes/:noteid', async (req, res, next) => {
 				noteJson['type'] = 'Note';
 				noteJson['attributedTo'] =
 					config.url + 'users/' + grabbedNote.author;
+
 				noteJson['content'] = grabbedNote.content;
+				noteJson['source'] = {
+					content: grabbedNote.content,
+					mediaType: 'text/x.misskeymarkdown'
+				};
+
 				noteJson['published'] = grabbedNote.created_at;
 				noteJson['to'] = [
 					'https://www.w3.org/ns/activitystreams#Public'

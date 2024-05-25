@@ -50,18 +50,7 @@ export default async function postSigned(inbox, localUserId, body) {
 			}
 		})
 		.then((res) => {
-			// 202 is Accepted
-			if (res.status !== 202) {
-				logger(
-					'error',
-					'ap',
-					`status ${res.status} returned from attempted post ${res.config.url}`
-				);
-				return {
-					status: 202,
-					message: 'accepted'
-				};
-			}
+			return `status ${res.status} returned from attempted post to ${res.config.url}`;
 		});
 
 	return inboxResponse;
