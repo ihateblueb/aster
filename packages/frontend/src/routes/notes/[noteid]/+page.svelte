@@ -1,8 +1,8 @@
 <script>
 	import { page } from '$app/stores';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Note from '$lib/components/Note.svelte';
-	import Icon from '$lib/components/Icon.svelte';
-	import Button from '$lib/components/Button.svelte';
+	import Button from '$lib/components/LinkButton.svelte';
 
 	export let data;
 </script>
@@ -11,4 +11,7 @@
 	<title>Note by {data.author.displayname}</title>
 </svelte:head>
 
-<Note {data} />
+<PageHeader title="Note by {data.author.displayname}" />
+<div class="pageContent">
+	<Note {data} />
+</div>

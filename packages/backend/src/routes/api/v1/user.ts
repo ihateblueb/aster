@@ -4,7 +4,7 @@ const router = express.Router();
 import db from '../../../utils/database.js';
 
 // lookup by id
-router.get('/api/v1/users/:userid', async (req, res) => {
+router.get('/api/v1/user/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
 		return res.status(400).json({
@@ -57,6 +57,27 @@ router.get('/api/v1/users/:userid', async (req, res) => {
 			});
 		}
 	}
+});
+
+// create user
+router.post(`/api/v1/user`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
+});
+
+// edit user
+router.patch(`/api/v1/user`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
+});
+
+// delete user
+router.delete(`/api/v1/user`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
 });
 
 export default router;

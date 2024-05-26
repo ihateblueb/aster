@@ -9,8 +9,8 @@ import ap_user from './ap/user.js';
 import ap_note from './ap/note.js';
 
 import api_v1_instance from './api/v1/instance.js';
-import api_v1_users from './api/v1/users.js';
-import api_v1_notes from './api/v1/notes.js';
+import api_v1_users from './api/v1/user.js';
+import api_v1_notes from './api/v1/note.js';
 import api_v1_lookup from './api/v1/lookup.js';
 
 import api_v1_login from './api/v1/login.js';

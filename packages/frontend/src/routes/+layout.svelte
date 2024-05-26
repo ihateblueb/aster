@@ -4,17 +4,7 @@
 
 <div class="page">
 	<main>
-		<div class="pageHeader">
-			<!--
-			<Button type="header" on:click={() => history.back()}>
-				<Icon name="arrow-left" />
-			</Button>
-			-->
-			<p>Page</p>
-		</div>
-		<div class="pageContent">
-			<slot></slot>
-		</div>
+		<slot></slot>
 	</main>
 </div>
 

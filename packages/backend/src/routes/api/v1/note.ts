@@ -3,7 +3,7 @@ const router = express.Router();
 
 import db from '../../../utils/database.js';
 
-router.get('/api/v1/notes/:noteid', async (req, res) => {
+router.get('/api/v1/note/:noteid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.noteid) {
 		return res.status(400).json({
@@ -99,6 +99,27 @@ router.get('/api/v1/notes/:noteid', async (req, res) => {
 			});
 		}
 	}
+});
+
+// create note
+router.post(`/api/v1/note`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
+});
+
+// edit note
+router.patch(`/api/v1/note`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
+});
+
+// delete note
+router.delete(`/api/v1/note`, async (req, res) => {
+	return res.status(501).json({
+		message: 'not implemented'
+	});
 });
 
 export default router;
