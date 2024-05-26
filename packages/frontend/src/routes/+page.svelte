@@ -4,32 +4,77 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
+
+	export let data;
 </script>
 
 <template>
 	<PageHeader title="Welcome" />
 	<div class="pageContent">
-		<div class="paddedPage">
-			<Mfm
-				content="$[x2 **aster**]
-awesome $[small (terrible)] $[spin.x work in progress] fedi software that's $[jelly silly]"
-			/>
-			<br />
-			<LinkButton type="bg-primary" to="/login">Login</LinkButton>
-			<LinkButton type="bg-primary" to="/register">Register</LinkButton>
-			<br />
-			<LinkButton
-				type="bg-primary"
-				to="/notes/aee066ac-a4e8-4442-8c58-e981cded9964"
-				>See Example Note</LinkButton
-			>
-			<LinkButton type="bg-primary" to="/@breen"
-				>See Example Profile</LinkButton
-			>
-			<br />
-			<LinkButton type="bg-primary" to="/playground"
-				>MFM Playground</LinkButton
-			>
+		<div class="paddedPage welcomePage">
+			<h1>{data.name}</h1>
+			<span class="version">running {data.software} v{data.version}</span>
+			<div class="statsCtn">
+				<div class="stat">
+					{data.stats.local_user_count} users
+				</div>
+				<div class="stat">
+					{data.stats.local_note_count} notes
+				</div>
+				<div class="stat">
+					{data.stats.instance_count} instances
+				</div>
+			</div>
+			<p><Mfm content={data.description} /></p>
+			<h2>Instance Rules</h2>
+			<ol>
+				{#each data.rules as rule}
+					<li>{rule}</li>
+				{/each}
+			</ol>
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+	.welcomePage {
+		h1 {
+			margin-bottom: 0px;
+		}
+		.version,
+		p {
+			margin-bottom: 10px;
+		}
+		.version {
+			display: block;
+			font-size: 16px;
+			font-weight: 400;
+			opacity: 75%;
+		}
+		ol,
+		ul {
+			margin: 6px 0;
+			padding-left: 30px;
+		}
+		li {
+			padding: 2px 0;
+		}
+		.statsCtn {
+			display: flex;
+			gap: 10px;
+			justify-content: space-around;
+			margin-bottom: 10px;
+
+			.stat {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 100%;
+				padding: 8px 12px;
+				color: var(--accent);
+				background-color: var(--accent-20);
+				border-radius: 8px;
+			}
+		}
+	}
+</style>
