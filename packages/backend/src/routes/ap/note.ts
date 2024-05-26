@@ -6,7 +6,7 @@ import db from '../../utils/database.js';
 
 router.get('/notes/:noteid', async (req, res, next) => {
 	if (!req.params.noteid) {
-		return res.status(400).json({ message: 'bad request' });
+		return res.status(400).json({ message: 'Note ID parameter required' });
 	} else {
 		if (!req.accepts('html')) {
 			var grabbedNote = await db.getRepository('notes').findOne({
@@ -54,7 +54,7 @@ router.get('/notes/:noteid', async (req, res, next) => {
 
 				res.json(noteJson);
 			} else {
-				return res.status(404).json({ message: 'not found' });
+				return res.status(404).json({ message: 'Not found' });
 			}
 		} else {
 			next();

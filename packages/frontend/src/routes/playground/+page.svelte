@@ -6,13 +6,15 @@
 	let mfmContent = '';
 </script>
 
-<PageHeader title="MFM Playground" />
-<div class="pageContent">
-	<strong>Input:</strong><br />
-	<textarea bind:value={mfmContent} />
-	<br /><br />
-	<strong>Output:</strong><br />
-	{#key mfmContent}
-		<Mfm content={mfmContent} />
-	{/key}
-</div>
+<template>
+	<PageHeader title="MFM Playground" />
+	<div class="pageContent">
+		<strong>Input:</strong><br />
+		<textarea bind:value={mfmContent} />
+		<br /><br />
+		<strong>Output:</strong><br />
+		{#key mfmContent}
+			<Mfm content={mfmContent} />
+		{/key}
+	</div>
+</template>

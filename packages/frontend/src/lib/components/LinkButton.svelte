@@ -3,6 +3,8 @@
 	export let to = '/';
 </script>
 
-<a class="btn {type}" href={to}>
-	<slot></slot>
-</a>
+<template>
+	<a class="btn {type}" href={to}>
+		<slot></slot>
+	</a>
+</template>

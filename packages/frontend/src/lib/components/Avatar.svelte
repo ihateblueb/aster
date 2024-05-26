@@ -3,15 +3,17 @@
 	export let size = '55px';
 </script>
 
-<div class:cat={data.is_cat}>
-	<img class="avatar" src={data.avatar} height={size} width={size} />
-	{#if data.is_cat}
-		<div class="ears">
-			<div class="earLeft"></div>
-			<div class="earRight"></div>
-		</div>
-	{/if}
-</div>
+<template>
+	<div class:cat={data.is_cat}>
+		<img class="avatar" src={data.avatar} height={size} width={size} />
+		{#if data.is_cat}
+			<div class="ears">
+				<div class="earLeft"></div>
+				<div class="earRight"></div>
+			</div>
+		{/if}
+	</div>
+</template>
 
 <style lang="scss">
 	/* cat ears stolen from misskey MkAvatar component */

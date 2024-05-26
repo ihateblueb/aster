@@ -17,77 +17,79 @@
 	}
 </script>
 
-<article class="note">
-	<div class="noteHeader">
-		<div class="left">
-			<Avatar data={data.author} size="45px" />
-			<div class="names">
-				<span class="displayname">{data.author.displayname}</span>
-				<span class="username">@{data.author.username}</span>
+<template>
+	<article class="note">
+		<div class="noteHeader">
+			<div class="left">
+				<Avatar data={data.author} size="45px" />
+				<div class="names">
+					<span class="displayname">{data.author.displayname}</span>
+					<span class="username">@{data.author.username}</span>
+				</div>
 			</div>
+			<div class="right">now</div>
 		</div>
-		<div class="right">now</div>
-	</div>
 
-	<p class="noteContent">
-		{#if data.cw}
-			<div class="warning" class:isOpen={cwOpen}>
-				<div class="left">
-					<Icon
-						name="alert-triangle"
-						size="18px"
-						color="var(--warn)"
-						margin="0px 5px 0px 0px"
-					/>
-					<span>{data.cw}</span>
+		<p class="noteContent">
+			{#if data.cw}
+				<div class="warning" class:isOpen={cwOpen}>
+					<div class="left">
+						<Icon
+							name="alert-triangle"
+							size="18px"
+							color="var(--warn)"
+							margin="0px 5px 0px 0px"
+						/>
+						<span>{data.cw}</span>
+					</div>
+					<div class="right">
+						<button on:click={toggleCw}>
+							{#if cwOpen}
+								Close
+							{:else}
+								Open
+							{/if}
+						</button>
+					</div>
 				</div>
-				<div class="right">
-					<button on:click={toggleCw}>
-						{#if cwOpen}
-							Close
-						{:else}
-							Open
-						{/if}
-					</button>
-				</div>
-			</div>
-			{#if cwOpen}
+				{#if cwOpen}
+					<Mfm content={data.content} />
+				{/if}
+			{:else}
 				<Mfm content={data.content} />
 			{/if}
-		{:else}
-			<Mfm content={data.content} />
-		{/if}
-	</p>
+		</p>
 
-	<div class="noteFooter">
-		{#if detailed}
-			Posted at {data.created_at}
-		{/if}
-		<div class="postButtons">
-			<button>
-				<Icon name="arrow-back-up" />
-			</button>
-			<button>
-				<Icon name="quote" />
-			</button>
-			<button>
-				<Icon name="repeat" color="var(--txt-tertiary)" />
-			</button>
-			<button>
-				<Icon name="star" color="var(--txt-tertiary)" />
-			</button>
-			<button>
-				<Icon name="plus" color="var(--txt-tertiary)" />
-			</button>
-			<button>
-				<Icon name="bookmark" color="var(--txt-tertiary)" />
-			</button>
-			<button>
-				<Icon name="dots" color="var(--txt-tertiary)" />
-			</button>
+		<div class="noteFooter">
+			{#if detailed}
+				Posted at {data.created_at}
+			{/if}
+			<div class="postButtons">
+				<button>
+					<Icon name="arrow-back-up" />
+				</button>
+				<button>
+					<Icon name="quote" />
+				</button>
+				<button>
+					<Icon name="repeat" color="var(--txt-tertiary)" />
+				</button>
+				<button>
+					<Icon name="star" color="var(--txt-tertiary)" />
+				</button>
+				<button>
+					<Icon name="plus" color="var(--txt-tertiary)" />
+				</button>
+				<button>
+					<Icon name="bookmark" color="var(--txt-tertiary)" />
+				</button>
+				<button>
+					<Icon name="dots" color="var(--txt-tertiary)" />
+				</button>
+			</div>
 		</div>
-	</div>
-</article>
+	</article>
+</template>
 
 <style lang="scss">
 	.noteContent {

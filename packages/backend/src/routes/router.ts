@@ -8,7 +8,7 @@ import ap_inbox from './ap/inbox.js';
 import ap_user from './ap/user.js';
 import ap_note from './ap/note.js';
 
-import api_v1_instance from './api/v1/instance.js';
+import api_v1_meta from './api/v1/meta.js';
 import api_v1_users from './api/v1/user.js';
 import api_v1_notes from './api/v1/note.js';
 import api_v1_lookup from './api/v1/lookup.js';
@@ -23,7 +23,7 @@ router.use('/', ap_user);
 router.use('/', ap_note);
 
 // api
-router.use('/', api_v1_instance);
+router.use('/', api_v1_meta);
 router.use('/', api_v1_users);
 router.use('/', api_v1_notes);
 router.use('/', api_v1_lookup);

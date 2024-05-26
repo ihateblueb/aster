@@ -16,64 +16,66 @@
 	{/if}
 </svelte:head>
 
-{#if data.local}
-	<PageHeader title="{data.displayname} (@{data.username})" />
-{:else}
-	<PageHeader title="{data.displayname} (@{data.username}@{data.host})" />
-{/if}
-<div class="pageContent">
-	{#if data}
-		<div class="userHeader">
-			<img class="banner" src={data.banner} />
-			<div class="innerHeader">
-				<Avatar {data} size="75px" />
-				<div class="name">
-					<span class="displayname">
-						<Mfm content={data.displayname} />
-						<div class="indicators">
-							{#if data.locked}
-								<Icon
-									name="lock"
-									size="18px"
-									color="var(--txt-tertiary)"
-								/>
-							{/if}
-							{#if data.automated}
-								<Icon
-									name="robot"
-									size="18px"
-									color="var(--txt-tertiary)"
-								/>
-							{/if}
-						</div>
-					</span>
-					<span class="username"
-						>@{data.username}{#if !data.local}@{data.host}{/if}</span
-					>
-				</div>
-				<p class="bio">
-					<Mfm content={data.bio} />
-				</p>
-				<p class="joined">
-					Joined on {new Date(data.created_at).toLocaleTimeString(
-						undefined,
-						{
-							weekday: 'long',
-							month: 'long',
-							day: 'numeric',
-							year: 'numeric',
-							hour: 'numeric',
-							minute: '2-digit',
-							second: '2-digit'
-						}
-					)}
-				</p>
-			</div>
-		</div>
+<template>
+	{#if data.local}
+		<PageHeader title="{data.displayname} (@{data.username})" />
 	{:else}
-		<h1>User not found</h1>
+		<PageHeader title="{data.displayname} (@{data.username}@{data.host})" />
 	{/if}
-</div>
+	<div class="pageContent">
+		{#if data}
+			<div class="userHeader">
+				<img class="banner" src={data.banner} />
+				<div class="innerHeader">
+					<Avatar {data} size="75px" />
+					<div class="name">
+						<span class="displayname">
+							<Mfm content={data.displayname} />
+							<div class="indicators">
+								{#if data.locked}
+									<Icon
+										name="lock"
+										size="18px"
+										color="var(--txt-tertiary)"
+									/>
+								{/if}
+								{#if data.automated}
+									<Icon
+										name="robot"
+										size="18px"
+										color="var(--txt-tertiary)"
+									/>
+								{/if}
+							</div>
+						</span>
+						<span class="username"
+							>@{data.username}{#if !data.local}@{data.host}{/if}</span
+						>
+					</div>
+					<p class="bio">
+						<Mfm content={data.bio} />
+					</p>
+					<p class="joined">
+						Joined on {new Date(data.created_at).toLocaleTimeString(
+							undefined,
+							{
+								weekday: 'long',
+								month: 'long',
+								day: 'numeric',
+								year: 'numeric',
+								hour: 'numeric',
+								minute: '2-digit',
+								second: '2-digit'
+							}
+						)}
+					</p>
+				</div>
+			</div>
+		{:else}
+			<h1>User not found</h1>
+		{/if}
+	</div>
+</template>
 
 <style lang="scss">
 	.userHeader {

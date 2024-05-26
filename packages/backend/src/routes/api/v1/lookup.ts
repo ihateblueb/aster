@@ -9,7 +9,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.username) {
 		return res.status(400).json({
-			message: 'username parameter required'
+			message: 'Username parameter required'
 		});
 	} else {
 		// set default
@@ -28,11 +28,11 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 		if (grabbedUser) {
 			if (grabbedUser.suspended) {
 				return res.status(410).json({
-					message: 'user suspended'
+					message: 'User suspended'
 				});
 			} else if (grabbedUser.deactivated) {
 				return res.status(410).json({
-					message: 'user deactivated'
+					message: 'User deactivated'
 				});
 			} else {
 				var userJson = {};
@@ -43,7 +43,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 			}
 		} else {
 			return res.status(404).json({
-				message: 'user doesnt exist'
+				message: 'User does not exist'
 			});
 		}
 	}

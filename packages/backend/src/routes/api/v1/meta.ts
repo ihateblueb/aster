@@ -5,8 +5,12 @@ import pkg from '../../../../../../package.json' assert { type: 'json' };
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
 
-router.get('/api/v1/instance', async (req, res) => {
+router.get('/api/v1/meta', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
+
+	const metaDb = await db.getRepository('meta').find();
+
+	const meta = metaDb[0];
 
 	var instanceJson = {
 		stats: {}
@@ -14,10 +18,11 @@ router.get('/api/v1/instance', async (req, res) => {
 
 	instanceJson['url'] = config.url;
 
-	instanceJson['name'] = config.nodename;
-	instanceJson['description'] = config.nodedesc;
-	instanceJson['color'] = config.nodecolor;
-	instanceJson['icon'] = config.nodeicon;
+	instanceJson['name'] = meta.name;
+	instanceJson['created_at'] = meta.created_at;
+	instanceJson['description'] = meta.description_long;
+	instanceJson['description_short'] = meta.description;
+	instanceJson['color'] = meta.color;
 
 	instanceJson['software'] = pkg.name;
 	instanceJson['version'] = pkg.version;
@@ -40,10 +45,12 @@ router.get('/api/v1/instance', async (req, res) => {
 		.getRepository('instances')
 		.count();
 
-	instanceJson['maintainer'] = config.maintainer;
-	instanceJson['maintaineremail'] = config.maintaineremail;
+	instanceJson['maintainer'] = meta.maintainer;
+	instanceJson['maintainer_email'] = meta.maintainer_email;
 
-	instanceJson['registration_type'] = config.a_registrations;
+	instanceJson['registration'] = meta.registration;
+
+	instanceJson['rules'] = meta.rules;
 
 	res.status(200).json(instanceJson);
 });

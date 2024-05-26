@@ -7,7 +7,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.noteid) {
 		return res.status(400).json({
-			message: 'noteid parameter required'
+			message: 'Note ID parameter required'
 		});
 	} else {
 		var grabbedNote = await db.getRepository('notes').findOne({
@@ -26,11 +26,11 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {
 					return res.status(400).json({
-						message: 'note author suspended'
+						message: 'Note author suspended'
 					});
 				} else if (grabbedAuthor.deactivated) {
 					return res.status(400).json({
-						message: 'note author deactivated'
+						message: 'Note author deactivated'
 					});
 				} else {
 					// good to go :3
@@ -90,12 +90,12 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 				}
 			} else {
 				return res.status(500).json({
-					message: 'author of note invalid'
+					message: 'Author of note invalid'
 				});
 			}
 		} else {
 			return res.status(404).json({
-				message: 'note doesnt exist'
+				message: 'Note does not exist'
 			});
 		}
 	}
@@ -104,21 +104,21 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 // create note
 router.post(`/api/v1/note`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 
 // edit note
 router.patch(`/api/v1/note`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 
 // delete note
 router.delete(`/api/v1/note`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 

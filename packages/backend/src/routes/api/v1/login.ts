@@ -12,7 +12,7 @@ router.post('/api/v1/login', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.body) {
 		return res.status(400).json({
-			message: 'body required'
+			message: 'Body required'
 		});
 	} else {
 		/*
@@ -29,11 +29,11 @@ router.post('/api/v1/login', async (req, res) => {
 
 		if (!user) {
 			res.status(400).json({
-				message: 'username required'
+				message: 'Username required'
 			});
 		} else if (!pass) {
 			res.status(400).json({
-				message: 'password required'
+				message: 'Password required'
 			});
 		} else {
 			var grabbedUser = await db.getRepository('users').findOne({
@@ -46,11 +46,11 @@ router.post('/api/v1/login', async (req, res) => {
 				if (grabbedUser.local) {
 					if (grabbedUser.suspended) {
 						res.status(401).json({
-							message: 'account suspended'
+							message: 'Account suspended'
 						});
 					} else if (grabbedUser.deactivated) {
 						res.status(401).json({
-							message: 'account deactivated'
+							message: 'Account deactivated'
 						});
 					} else {
 						var grabbedUserPriv = await db
@@ -87,7 +87,7 @@ router.post('/api/v1/login', async (req, res) => {
 									res.status(200).json(token);
 								} else {
 									res.status(401).json({
-										message: 'incorrect password'
+										message: 'Incorrect password'
 									});
 								}
 							}
@@ -95,12 +95,12 @@ router.post('/api/v1/login', async (req, res) => {
 					}
 				} else {
 					res.status(400).json({
-						message: 'account is not local'
+						message: 'Account is not local'
 					});
 				}
 			} else {
 				res.status(404).json({
-					message: 'account does not exist'
+					message: 'Account does not exist'
 				});
 			}
 		}

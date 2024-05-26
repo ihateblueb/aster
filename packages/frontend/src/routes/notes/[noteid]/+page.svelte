@@ -11,7 +11,9 @@
 	<title>Note by {data.author.displayname}</title>
 </svelte:head>
 
-<PageHeader title="Note by {data.author.displayname}" />
-<div class="pageContent">
-	<Note {data} />
-</div>
+<template>
+	<PageHeader title="Note by {data.author.displayname}" />
+	<div class="pageContent">
+		<Note {data} />
+	</div>
+</template>

@@ -64,7 +64,7 @@ export default async function acceptInboxRequest(parsedBody) {
 			logger('info', 'ap', 'deleted ' + parsedBody.actor);
 			return {
 				status: 200,
-				message: 'actor deleted'
+				message: 'Actor deleted'
 			};
 		} else {
 			logger(
@@ -76,7 +76,7 @@ export default async function acceptInboxRequest(parsedBody) {
 			);
 			return {
 				status: 200,
-				message: 'pretended to delete actor'
+				message: 'Pretended to delete actor'
 			};
 		}
 		*/
@@ -94,7 +94,7 @@ export default async function acceptInboxRequest(parsedBody) {
 		if (!grabbedLocalUser.local) {
 			return {
 				status: '400',
-				message: 'user is not local'
+				message: 'User is not local'
 			};
 		}
 
@@ -108,7 +108,7 @@ export default async function acceptInboxRequest(parsedBody) {
 				);
 			return {
 				status: 200,
-				message: 'added pending follower'
+				message: 'Added pending follower'
 			};
 		} else {
 			await db
@@ -132,14 +132,14 @@ export default async function acceptInboxRequest(parsedBody) {
 			logger('debug', 'ap', 'local user not here');
 			return {
 				status: '400',
-				message: 'user is not here'
+				message: 'User is not here'
 			};
 		}
 
 		if (!grabbedLocalUser.local) {
 			return {
 				status: '400',
-				message: 'user is not local'
+				message: 'User is not local'
 			};
 		}
 
@@ -156,7 +156,7 @@ export default async function acceptInboxRequest(parsedBody) {
 
 			return {
 				status: 200,
-				message: 'undo follow accepted'
+				message: 'Undo follow accepted'
 			};
 		} else {
 			return;
@@ -173,7 +173,7 @@ export default async function acceptInboxRequest(parsedBody) {
 		// this will not be implemented
 		return {
 			status: 501,
-			message: 'not implemented'
+			message: 'Not implemented'
 		};
 	} else {
 		console.log('oh god oh fuck new activity type ' + parsedBody.type);

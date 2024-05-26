@@ -8,21 +8,21 @@ import getRemoteActor from './getRemoteActor.js';
 
 export default async function validateRequest(req, res) {
 	if (!req.headers.host) {
-		return res.status(400).json({ message: 'missing host' });
+		return res.status(400).json({ message: 'Missing host' });
 	}
 
 	if (req.headers.host !== new URL(config.url).host) {
 		logger('error', 'ap', 'host header did not match configuration');
 		return res
 			.status(400)
-			.json({ message: 'host doesnt match instance config' });
+			.json({ message: 'Host doesnt match instance config' });
 	} else {
 		logger('debug', 'ap', 'host header matches configuration');
 	}
 
 	if (!req.headers.digest) {
 		logger('error', 'ap', 'digest not present');
-		return res.status(400).json({ message: 'digest not present' });
+		return res.status(400).json({ message: 'Digest not present' });
 	} else {
 		logger('debug', 'ap', 'digest present');
 	}
@@ -31,14 +31,14 @@ export default async function validateRequest(req, res) {
 		logger('error', 'ap', 'digest did not start with SHA-256=');
 		return res
 			.status(400)
-			.json({ message: 'digest did not start with SHA-256=' });
+			.json({ message: 'Digest did not start with SHA-256=' });
 	} else {
 		logger('debug', 'ap', 'digest started with SHA-256=');
 	}
 
 	if (!req.body) {
 		logger('error', 'ap', 'body not present');
-		return res.status(400).json({ message: 'body not present' });
+		return res.status(400).json({ message: 'Body not present' });
 	} else {
 		logger('debug', 'ap', 'body present');
 	}
@@ -47,7 +47,7 @@ export default async function validateRequest(req, res) {
 		logger('error', 'ap', 'signature header not present');
 		return res
 			.status(400)
-			.json({ message: 'signature header not present' });
+			.json({ message: 'Signature header not present' });
 	} else {
 		logger('debug', 'ap', 'signature header present');
 	}
@@ -59,7 +59,7 @@ export default async function validateRequest(req, res) {
 
 	if (!digestValid) {
 		logger('error', 'ap', 'digest invalid');
-		return res.status(400).json({ message: 'digest invalid' });
+		return res.status(400).json({ message: 'Digest invalid' });
 	} else {
 		logger('debug', 'ap', 'digest valid');
 	}

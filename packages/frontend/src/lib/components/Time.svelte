@@ -2,6 +2,8 @@
 	export let time;
 </script>
 
-<time>
-	{time}
-</time>
+<template>
+	<time>
+		{time}
+	</time>
+</template>

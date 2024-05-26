@@ -3,25 +3,15 @@
 
 	let username = '';
 	let password = '';
-
-	let loginRes = {};
+	let invite = '';
 
 	async function startLogin() {
 		var credentialsToSend = btoa(`${username}:${password}`);
 
-		var loginReq = await fetch(`/api/v1/login`, {
+		await fetch(`/api/v1/register`, {
 			method: 'POST',
 			body: credentialsToSend
 		});
-
-		loginRes = await loginReq.json();
-
-		console.log(loginRes);
-
-		if (loginReq.status === 200) {
-			console.log('yaay! were logged in.');
-			// put the token in localstorage so we can use it now
-		}
 	}
 
 	export let data;
@@ -31,13 +21,31 @@
 	<div class="pageContent">
 		<div class="paddedPage">
 			<div class="authCtn">
-				<h1>Login to {data.name}</h1>
+				<h1>Register to {data.name}</h1>
 				<p>{data.description_short}</p>
-				{#if loginRes.message}
-					<InfoBox type="danger">
-						{loginRes.message}
+				{#if data.registration === 'closed'}
+					<InfoBox type="warn">
+						Registrations are currently closed.
+					</InfoBox>
+				{:else if data.registration === 'invite0'}
+					<InfoBox type="warn">
+						Registrations require an invite code.
+					</InfoBox>
+				{:else if data.registration === 'invite1'}
+					<InfoBox type="warn">
+						Registrations require an invite code.
+					</InfoBox>
+				{:else if data.registration === 'open'}
+					<InfoBox type="success">
+						Registrations are currently open.
 					</InfoBox>
 				{/if}
+				<input
+					class="ipt"
+					type="invite"
+					placeholder="Invite Code"
+					bind:value={invite}
+				/>
 				<input
 					class="ipt"
 					type="username"
@@ -50,8 +58,13 @@
 					placeholder="Password"
 					bind:value={password}
 				/>
-				<br />
-				<button class="btn" on:click={startLogin}>Login</button>
+				<b>Instance Rules</b>
+				<ol>
+					{#each data.rules as rule}
+						<li>{rule}</li>
+					{/each}
+				</ol>
+				<button class="btn" on:click={startLogin}>Register</button>
 			</div>
 		</div>
 	</div>
@@ -79,6 +92,17 @@
 				font-size: 16px;
 				margin-bottom: 10px;
 				color: var(--txt-tertiary);
+			}
+			b {
+				display: block;
+				padding-top: 10px;
+			}
+			ol {
+				margin: 6px 0px 6px 0;
+				padding-left: 30px;
+			}
+			li {
+				padding: 2px 0px 2px 0;
 			}
 		}
 	}

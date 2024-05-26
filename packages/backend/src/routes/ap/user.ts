@@ -6,7 +6,7 @@ import db from '../../utils/database.js';
 
 router.get('/users/:userid', async (req, res, next) => {
 	if (!req.params.userid) {
-		return res.status(400).json({ message: 'bad request' });
+		return res.status(400).json({ message: 'User ID parameter required' });
 	} else {
 		if (!req.accepts('html')) {
 			var grabbedUser = await db.getRepository('users').findOne({
@@ -92,7 +92,7 @@ router.get('/users/:userid', async (req, res, next) => {
 
 				res.json(userJson);
 			} else {
-				return res.status(404).json({ message: 'not found' });
+				return res.status(404).json({ message: 'Not found' });
 			}
 		} else {
 			var grabbedUser = await db.getRepository('users').findOne({

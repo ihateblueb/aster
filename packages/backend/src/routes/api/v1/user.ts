@@ -8,7 +8,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
 		return res.status(400).json({
-			message: 'userid parameter required'
+			message: 'User ID parameter required'
 		});
 	} else {
 		var grabbedUser = await db.getRepository('users').findOne({
@@ -20,11 +20,11 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 		if (grabbedUser) {
 			if (grabbedUser.suspended) {
 				return res.status(410).json({
-					message: 'user suspended'
+					message: 'User suspended'
 				});
 			} else if (grabbedUser.deactivated) {
 				return res.status(410).json({
-					message: 'user deactivated'
+					message: 'User deactivated'
 				});
 			} else {
 				var userJson = {};
@@ -53,7 +53,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 			}
 		} else {
 			return res.status(404).json({
-				message: 'user doesnt exist'
+				message: 'User does not exist'
 			});
 		}
 	}
@@ -62,21 +62,21 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 // create user
 router.post(`/api/v1/user`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 
 // edit user
 router.patch(`/api/v1/user`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 
 // delete user
 router.delete(`/api/v1/user`, async (req, res) => {
 	return res.status(501).json({
-		message: 'not implemented'
+		message: 'Not implemented'
 	});
 });
 

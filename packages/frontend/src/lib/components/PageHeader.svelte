@@ -2,14 +2,16 @@
 	export let title = 'Page';
 </script>
 
-<div class="pageHeader">
-	<!--
-	<Button type="header" on:click={() => history.back()}>
-		<Icon name="arrow-left" />
-	</Button>
-	-->
-	<p>{title}</p>
-</div>
+<template>
+	<div class="pageHeader">
+		<!--
+		<Button type="header" on:click={() => history.back()}>
+			<Icon name="arrow-left" />
+		</Button>
+		-->
+		<p>{title}</p>
+	</div>
+</template>
 
 <style lang="scss">
 	.pageHeader {

@@ -242,8 +242,10 @@
 	console.log(mfmTree);
 </script>
 
-<span class="mfmCtn">
-	{#each mfmTree as object}
-		{@html renderMfm(object)}
-	{/each}
-</span>
+<template>
+	<span class="mfmCtn">
+		{#each mfmTree as object}
+			{@html renderMfm(object)}
+		{/each}
+	</span>
+</template>
