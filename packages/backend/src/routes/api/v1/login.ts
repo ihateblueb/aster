@@ -1,6 +1,7 @@
 import express from 'express';
 import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
@@ -63,17 +64,25 @@ router.post('/api/v1/login', async (req, res) => {
 						bcrypt.compare(
 							pass,
 							grabbedUserPriv.password,
-							(e, result) => {
+							async (e, result) => {
 								if (e) {
 									logger('error', 'auth', e);
 								}
-								console.log(result);
 								if (result) {
 									const token = crypto
 										.randomBytes(64)
 										.toString('hex');
 
-									// insert to db along with expire date in the date format ending with a Z
+									await db
+										.getRepository('users_auth')
+										.insert({
+											id: uuidv4(),
+											user: grabbedUser.id,
+											created_at: new Date(
+												Date.now()
+											).toISOString(),
+											token: token
+										});
 
 									res.status(200).json(token);
 								} else {

@@ -4,6 +4,7 @@ process.title = 'Aster';
 
 import pkg from '../../../package.json' assert { type: 'json' };
 
+console.log('                                        ');
 console.log('            _____ _______ ______ _____  ');
 console.log('     /\\    / ____|__   __|  ____|  __ \\ ');
 console.log('    /  \\  | (___    | |  | |__  | |__) |');
