@@ -17,7 +17,6 @@
 	.pageHeader {
 		display: flex;
 		align-items: center;
-		width: 100%;
 		padding: 12px 16px;
 		background-color: var(--bg-primary-50);
 		backdrop-filter: blur(6px);

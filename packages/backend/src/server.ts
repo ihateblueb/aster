@@ -19,22 +19,6 @@ console.log(' ');
 import config from './utils/config.js';
 import logger from './utils/logger.js';
 
-if (!config.nodeadmin) {
-	logger(
-		'warn',
-		'core',
-		'its a good idea to specify your admin name in configuration'
-	);
-}
-
-if (!config.nodeadmincontact) {
-	logger(
-		'warn',
-		'core',
-		'its a good idea to specify your admin contact in configuration'
-	);
-}
-
 import { inboxWorker, deliverWorker } from './utils/workers.js';
 
 inboxWorker.on('progress', async (job, progress) => {
