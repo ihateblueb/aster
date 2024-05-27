@@ -80,6 +80,9 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	pending_followers: string[];
 
+	@Column('text', { array: true, nullable: true })
+	roles: string[];
+
 	@Column()
 	public_key: string;
 }
