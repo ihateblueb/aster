@@ -16,12 +16,12 @@
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
 		"build-be": "pnpm clean-be && pnpm --filter=backend build",
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
-		"format": "pnpm -r format",
+		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
 		"migrate": "pnpm --filter=backend migrate",
 		"clean-be": "./scripts/clean-be.sh",
 		"clean-fe": "./scripts/clean-fe.sh",
 		"clean": "./scripts/clean.sh",
-		"cleanall": "./scripts/cleanall.sh"
+		"clean-all": "./scripts/clean-all.sh"
 	},
 	"keywords": [],
 	"author": "blueb",
@@ -30,10 +30,11 @@
 		"@eslint/js": "^9.2.0",
 		"eslint": "^9.2.0",
 		"globals": "^15.1.0",
-		"prettier-plugin-svelte": "^3.2.3",
 		"typescript-eslint": "^7.8.0"
 	},
 	"devDependencies": {
+		"prettier-plugin-svelte": "^3.2.3",
+		"prettier-plugin-sh": "^0.14.0",
 		"ts-node": "^10.9.2",
 		"typescript": "^5.4.5"
 	}

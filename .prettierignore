@@ -1,5 +1,10 @@
 built
 build
-.sveltekit
+.svelte-kit
 *.ttf
+*.woff
+*.woff2
+*.txt
 .npmrc
+.env
+.editorconfig

@@ -3,10 +3,9 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
-		"start": "node built/server.js",
 		"build": "tsc -b --verbose",
-		"format": "prettier --config ../../.prettierrc 'src/**' --write && prettier --config ../../.prettierrc '**' --write"
+		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
+		"start": "node built/server.js"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {
