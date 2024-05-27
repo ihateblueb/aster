@@ -1,8 +1,8 @@
-import db from '../database.js';
-import logger from '../logger.js';
-
 import axios from 'axios';
 import { v4 as uuidv4 } from 'uuid';
+
+import db from '../database.js';
+import logger from '../logger.js';
 
 // import updateRemoteActor from './updateRemoteActor';
 

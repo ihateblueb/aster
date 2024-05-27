@@ -1,9 +1,10 @@
 import express from 'express';
-const router = express.Router();
 
 import pkg from '../../../../../../package.json' assert { type: 'json' };
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
+
+const router = express.Router();
 
 router.get('/api/v1/meta', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');

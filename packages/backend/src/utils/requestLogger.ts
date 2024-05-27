@@ -1,8 +1,9 @@
 import morgan from 'morgan';
-import logger from './logger.js';
 import rfs from 'rotating-file-stream';
 import path from 'path';
 import fs from 'fs';
+
+import logger from './logger.js';
 
 const logDirectory = path.resolve('../../../../logs');
 

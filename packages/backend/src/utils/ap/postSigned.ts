@@ -1,11 +1,9 @@
 import { createHash, createSign } from 'node:crypto';
-import logger from '../logger.js';
-import config from '../config.js';
-import db from '../database.js';
-
 import axios from 'axios';
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
+import config from '../config.js';
+import db from '../database.js';
 
 export default async function postSigned(inbox, localUserId, body) {
 	let grabbedLocalUser = await db.getRepository('users').findOne({

@@ -1,8 +1,22 @@
 import process from 'node:process';
-
-process.title = 'Aster';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
 
 import pkg from '../../../package.json' assert { type: 'json' };
+
+import config from './utils/config.js';
+import logger from './utils/logger.js';
+import { inboxWorker, deliverWorker } from './utils/workers.js';
+import requestLogger from './utils/requestLogger.js';
+
+import router from './routes/router.js';
+// an error here can be ignored
+import { handler } from 'frontend/build/handler.js';
+
+const app = express();
+
+process.title = 'Aster';
 
 console.log('                                        ');
 console.log('            _____ _______ ______ _____  ');
@@ -15,11 +29,6 @@ console.log('                                        ');
 
 console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
 console.log(' ');
-
-import config from './utils/config.js';
-import logger from './utils/logger.js';
-
-import { inboxWorker, deliverWorker } from './utils/workers.js';
 
 inboxWorker.on('progress', async (job, progress) => {
 	logger('info', 'inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
@@ -52,18 +61,6 @@ deliverWorker.on('completed', (job) => {
 deliverWorker.on('failed', (job, failedReason) => {
 	logger('error', 'deliver', `job ${job.id} failed. ${failedReason}`);
 });
-
-import express from 'express';
-// this error can be ignored
-import { handler } from 'frontend/build/handler.js';
-
-import bodyParser from 'body-parser';
-import cors from 'cors';
-import requestLogger from './utils/requestLogger.js';
-
-import router from './routes/router.js';
-
-const app = express();
 
 app.use(requestLogger.dev, requestLogger.combined);
 app.use(bodyParser.raw({ type: '*/*' }));

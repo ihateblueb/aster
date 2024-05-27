@@ -1,11 +1,9 @@
 import { Queue } from 'bullmq';
+import { v4 as uuidv4 } from 'uuid';
 
 import config from '../config.js';
 import logger from '../logger.js';
-
 import redis from '../redis.js';
-
-import { v4 as uuidv4 } from 'uuid';
 
 const deliverQueue = new Queue('deliver', {
 	connection: redis,

@@ -1,9 +1,8 @@
-import config from '../config.js';
-import logger from '../logger.js';
-
 import crypto from 'crypto';
 import httpSignature from '@peertube/http-signature';
 
+import config from '../config.js';
+import logger from '../logger.js';
 import getRemoteActor from './getRemoteActor.js';
 
 export default async function validateRequest(req, res) {

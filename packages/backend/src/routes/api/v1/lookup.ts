@@ -1,8 +1,9 @@
 import express from 'express';
-const router = express.Router();
 
 import db from '../../../utils/database.js';
 import config from '../../../utils/config.js';
+
+const router = express.Router();
 
 // lookup by username
 router.get('/api/v1/lookup/@:username', async (req, res) => {

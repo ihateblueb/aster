@@ -1,9 +1,9 @@
 import db from '../database.js';
 import logger from '../logger.js';
-
 import accept from '../ap/accept.js';
 import getRemoteActor from './getRemoteActor.js';
 
+// inbox processors
 import createNote from './inboxProcessors/createNote.js';
 
 /*

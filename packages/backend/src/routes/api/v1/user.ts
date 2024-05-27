@@ -1,7 +1,8 @@
 import express from 'express';
-const router = express.Router();
 
 import db from '../../../utils/database.js';
+
+const router = express.Router();
 
 // lookup by id
 router.get('/api/v1/user/:userid', async (req, res) => {
