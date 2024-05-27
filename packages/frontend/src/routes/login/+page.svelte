@@ -1,5 +1,6 @@
 <script>
 	import InfoBox from '$lib/components/InfoBox.svelte';
+	import Store from '$lib/store';
 
 	let username = '';
 	let password = '';
@@ -16,11 +17,9 @@
 
 		loginRes = await loginReq.json();
 
-		console.log(loginRes);
-
 		if (loginReq.status === 200) {
 			console.log('yaay! were logged in.');
-			// put the token in localstorage so we can use it now
+			Store.set('a_token', loginRes.token);
 		}
 	}
 

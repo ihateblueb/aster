@@ -84,7 +84,9 @@ router.post('/api/v1/login', async (req, res) => {
 											token: token
 										});
 
-									res.status(200).json(token);
+									res.status(200).json({
+										token: token
+									});
 								} else {
 									res.status(401).json({
 										message: 'Incorrect password'
