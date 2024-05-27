@@ -2,7 +2,6 @@ import express from 'express';
 const router = express.Router();
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 
 router.get('/nodeinfo/2.0', async (req, res) => {
@@ -22,6 +21,9 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 	});
 	var noteCount = noteCountDb[1];
 
+	var metaDb = await db.getRepository('meta').find();
+	var meta = metaDb[1];
+
 	var nodeinfoJson = {
 		version: '2.0',
 		software: {
@@ -35,12 +37,12 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 		},
 		openRegistrations: false,
 		metadata: {
-			nodeName: `${config.nodename}`,
-			nodeDescription: `${config.nodedesc}`,
-			themeColor: `${config.nodecolor}`,
+			nodeName: `${meta.name}`,
+			nodeDescription: `${meta.description_long}`,
+			themeColor: `${meta.color}`,
 			maintainer: {
-				name: `${config.maintainer}`,
-				email: `${config.maintaineremail}`
+				name: `${meta.maintainer}`,
+				email: `${meta.maintainer_email}`
 			}
 		},
 		usage: {

@@ -4,8 +4,8 @@ import { Logger, QueryRunner } from 'typeorm';
 import config from './config.js';
 
 export default function logger(level: String, section: String, message?: any) {
-	if (config.logging === 'fancy') {
-		if (level === 'debug' && config.debug) {
+	if (config.logging.type === 'fancy') {
+		if (level === 'debug' && config.logging.debug) {
 			console.log(
 				'[' +
 					chalk.bgCyan('debug') +
@@ -76,7 +76,7 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 			process.exit(1);
 		}
-	} else if (config.logging === 'json') {
+	} else if (config.logging.type === 'json') {
 		console.log({
 			level: level,
 			section: section,

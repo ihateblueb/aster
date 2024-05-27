@@ -1,15 +1,12 @@
-import yaml from 'js-yaml';
-import fs from 'fs';
+import { readFile } from 'node:fs/promises';
+import { parse } from 'ini';
 
-try {
-	var config = yaml.load(
-		fs.readFileSync('../../config/production.yml', 'utf8')
-	);
-	console.log('[config] configuration loaded successfully!');
-} catch (e) {
-	console.error('[config] ' + e);
-	console.error('[config] fatal. now aborting.');
-	process.exit(1);
-}
+let configText = await readFile(`../../config/production.ini`, {
+	encoding: 'utf-8'
+});
+
+const config = parse(configText);
+
+console.log('configuration loaded');
 
 export default config;

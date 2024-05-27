@@ -28,7 +28,7 @@
 		"has-keys": "^0.1.0",
 		"helmet": "^3.21.2",
 		"http-status": "^1.3.2",
-		"js-yaml": "^4.1.0",
+		"ini": "^4.1.3",
 		"module-alias": "^2.2.2",
 		"morgan": "^1.9.1",
 		"pg": "^8.5.1",
