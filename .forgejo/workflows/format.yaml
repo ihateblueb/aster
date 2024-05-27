@@ -1,0 +1,22 @@
+name: Build
+
+on:
+    push:
+        branches: 'main'
+
+jobs:
+    build_site:
+        runs-on: docker
+        steps:
+            - name: Checkout repository
+              uses: https://code.forgejo.org/actions/checkout@v4
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Build
+              run: |
+                  pnpm build
