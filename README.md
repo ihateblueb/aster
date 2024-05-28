@@ -11,7 +11,7 @@ If you see something that is a bad practice, slow, very stupid, or a security vu
 The frontend is written with Svelte and Sass using mfm.js to parse MFM.
 The backend is written with TypeScript using Express, BullMQ, TypeORM, and other important libraries.
 
-Aster extends ActivityPub to make determining note visibility easier. See `extensions.md` for more information.
+Aster extends ActivityPub to make determining note visibility easier. See `docs/extensions.md` for more information.
 
 ## Planned Features
 
@@ -22,7 +22,7 @@ Aster extends ActivityPub to make determining note visibility easier. See `exten
     -   Quote posts
 -   Mia's biting extension
 -   Sharkey profile backgrounds
--   Federated user statuses (see `planned-extensions.md`)
+-   Federated user statuses (see `docs/planned-extensions.md`)
 
 ## Project Status
 
