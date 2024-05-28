@@ -1,11 +1,11 @@
 export default {
 	set: (key: string, val: string) => {
-		localStorage.setItem(key, val);
+		return localStorage.setItem(key, val);
 	},
 	get: (key: string) => {
-		localStorage.getItem(key);
+		return localStorage.getItem(key);
 	},
 	del: (key: string) => {
-		localStorage.removeItem(key);
+		return localStorage.removeItem(key);
 	}
 };

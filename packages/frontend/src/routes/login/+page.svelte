@@ -1,6 +1,6 @@
 <script>
 	import InfoBox from '$lib/components/InfoBox.svelte';
-	import Store from '$lib/scripts/store';
+	import Store from '$lib/scripts/Store';
 
 	let username = '';
 	let password = '';

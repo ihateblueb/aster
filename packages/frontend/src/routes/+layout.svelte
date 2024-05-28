@@ -5,11 +5,11 @@
 
 <template>
 	<div class="page">
-		<Sidebar />
+		<Sidebar side="left" auth={false} />
 		<main>
 			<slot></slot>
 		</main>
-		<Sidebar />
+		<Sidebar side="right" auth={false} />
 	</div>
 </template>
 
