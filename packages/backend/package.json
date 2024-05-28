@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"build": "tsc -b --verbose",
+		"build": "tsc",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"start": "node built/server.js"
 	},

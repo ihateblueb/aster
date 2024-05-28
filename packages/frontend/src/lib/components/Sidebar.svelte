@@ -19,7 +19,7 @@
 	export let side = 'left';
 	export let auth = false;
 
-	if (auth) {
+	/*if (auth) {
 		if (side === 'left') {
 			let widgetsLeftTop = Store.get('widgetsLeftTop');
 			let widgetsLeftMid = Store.get('widgetsLeftTop');
@@ -69,7 +69,11 @@
 		} else if (side === 'right') {
 			var widgetsTop = [Welcome];
 		}
-	}
+	}*/
+
+	var widgetsTop = [InstanceLogo];
+	var widgetsMid = [Navigation];
+	var widgetsBtm = [Login];
 </script>
 
 <template>
