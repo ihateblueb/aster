@@ -14,7 +14,7 @@ Permissions intended for anyone
 
 ### Modify
 
--   modifyNote
+-   modifyAll
 -   modifyNote
 -   modifyFile (add alt text, set sensitive)
 -   modifyProfile
