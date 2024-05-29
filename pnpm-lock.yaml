@@ -34,8 +34,6 @@ importers:
         specifier: ^5.4.5
         version: 5.4.5
 
-  packages/aster-js: {}
-
   packages/backend:
     dependencies:
       '@bull-board/express':
@@ -175,9 +173,6 @@ importers:
       '@sveltejs/vite-plugin-svelte':
         specifier: ^3.0.0
         version: 3.1.0(svelte@4.2.16)(vite@5.2.11(@types/node@20.12.11)(sass@1.77.1))
-      aster-js:
-        specifier: workspace:aster-js
-        version: link:../aster-js
       svelte:
         specifier: ^4.2.7
         version: 4.2.16

@@ -1,4 +1,3 @@
 packages:
-    - 'packages/aster-js'
     - 'packages/frontend'
     - 'packages/backend'

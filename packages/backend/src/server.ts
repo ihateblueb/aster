@@ -73,7 +73,12 @@ app.use((req, res, next) => {
 
 app.use('/', router);
 
-app.use(handler);
+if (config.frontend.enable) {
+	app.use(handler);
+} else {
+	logger('info', 'core', `frontend disabled`);
+}
+
 
 app.listen(config.port, () =>
 	logger(

@@ -7,14 +7,13 @@
 		"url": "https://git.gay/blueb/aster.git"
 	},
 	"workspaces": [
-		"packages/aster-js",
 		"packages/frontend",
 		"packages/backend"
 	],
 	"private": true,
 	"scripts": {
 		"start": "pnpm --filter=backend start",
-		"build": "pnpm clean && pnpm --filter=aster-js build && pnpm --filter=frontend build && pnpm --filter=backend build",
+		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
 		"build-be": "pnpm clean-be && pnpm --filter=backend build",
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
 		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
