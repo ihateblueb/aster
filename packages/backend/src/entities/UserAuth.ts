@@ -13,4 +13,7 @@ export class UsersAuth {
 
 	@Column({ nullable: true })
 	token: string;
+
+	@Column('text', { array: true, nullable: true })
+	permissions: string[];
 }

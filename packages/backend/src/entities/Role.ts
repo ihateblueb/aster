@@ -11,6 +11,12 @@ export class Roles {
 	@Column({ nullable: true })
 	color: string;
 
+	@Column({ nullable: true })
+	icon: string;
+
+	@Column({ default: true })
+	hidden: boolean;
+
 	@Column('text', { array: true, nullable: true })
 	users: string[];
 
