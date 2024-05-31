@@ -5,6 +5,9 @@ export class Notes {
 	@PrimaryColumn()
 	id: string;
 
+	@Column({ nullable: true })
+	ap_id: string;
+
 	@Column()
 	created_at: string;
 

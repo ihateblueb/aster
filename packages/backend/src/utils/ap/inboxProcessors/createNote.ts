@@ -8,9 +8,6 @@ export default async function processNote(parsedBody) {
 
 	let noteToInsert = {};
 
-	// const originalNoteId
-	// how the fuck do i get the note its replying to
-
 	const noteId = uuidv4();
 
 	noteToInsert['id'] = noteId;
@@ -65,8 +62,10 @@ export default async function processNote(parsedBody) {
 
 	noteToInsert['visibility'] = visibility;
 
-	// id of note above
-	//noteToInsert['replying_to'] = sobbing;
+	if (parsedBody.object.inReplyTo) {
+		// get parsedBody.object.inReplyTo
+		noteToInsert['replying_to'];
+	}
 
 	noteToInsert['author'] = grabbedRemoteActor.id;
 	noteToInsert['local'] = false;
