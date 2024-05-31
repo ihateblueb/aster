@@ -79,7 +79,6 @@ if (config.frontend.enable) {
 	logger('info', 'core', `frontend disabled`);
 }
 
-
 app.listen(config.port, () =>
 	logger(
 		'info',
