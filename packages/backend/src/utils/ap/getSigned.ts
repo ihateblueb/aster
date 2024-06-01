@@ -5,18 +5,37 @@ import pkg from '../../../../../package.json' assert { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
 
-export default async function getSigned(url, localUserId) {
-	let grabbedLocalUser = await db.getRepository('users').findOne({
-		where: {
-			id: localUserId
-		}
-	});
+export default async function getSigned(url, localUserId?) {
+	if (localUserId) {
+		var grabbedLocalUser = await db.getRepository('users').findOne({
+			where: {
+				id: localUserId
+			}
+		});
 
-	let grabbedLocalUserPriv = await db.getRepository('users_priv').findOne({
-		where: {
-			id: localUserId
-		}
-	});
+		var grabbedLocalUserPriv = await db
+			.getRepository('users_priv')
+			.findOne({
+				where: {
+					id: localUserId
+				}
+			});
+	} else {
+		// instance actor!! woooooooOOOOOOOOOOO! YEAH!!!!!!!
+		var grabbedLocalUser = await db.getRepository('users').findOne({
+			where: {
+				username: 'instanceactor'
+			}
+		});
+
+		var grabbedLocalUserPriv = await db
+			.getRepository('users_priv')
+			.findOne({
+				where: {
+					id: grabbedLocalUser.id
+				}
+			});
+	}
 
 	const getUrl = new URL(url);
 	const sendDate = new Date().toISOString();

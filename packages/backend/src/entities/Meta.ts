@@ -28,4 +28,7 @@ export class Meta {
 
 	@Column({ nullable: true })
 	description_long: string;
+
+	@Column({ default: false })
+	init: boolean;
 }

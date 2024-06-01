@@ -62,10 +62,11 @@ export default async function processNewNote(body) {
 		noteToInsert['visibility'] = visibility;
 
 		if (body.inReplyTo) {
+			let actorBeingRepliedTo;
 			let replyingToNote = await getRemoteNote(body.inReplyTo);
 			console.log(body.inReplyTo);
 			console.log(replyingToNote);
-			console.log('LOOKL!');
+			console.log('LOOK!');
 			noteToInsert['replying_to'] = replyingToNote.id;
 		}
 

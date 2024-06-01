@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "tsc",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
+		"init": "node built/scripts/init.js",
 		"start": "node built/server.js"
 	},
 	"license": "AGPL-3.0",

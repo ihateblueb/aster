@@ -6,7 +6,7 @@ import getSigned from './getSigned.js';
 
 import processNewNote from './processNewNote.js';
 
-export default async function getRemoteNote(apId) {
+export default async function getRemoteNote(apId, localUserId?) {
 	var grabbedRemoteNote = await db.getRepository('notes').findOne({
 		where: {
 			ap_id: apId
@@ -21,11 +21,10 @@ export default async function getRemoteNote(apId) {
 
 		let response;
 
-		// needs userid, figure out how to give that
-		await getSigned(apId)
+		await getSigned(apId, localUserId)
 			.then(async (res) => {
 				logger('debug', 'ap', 'fetched note sucessfully');
-				response = await processNewNote(res.data);
+				response = await processNewNote(res);
 			})
 			.catch((e) => {
 				// in case they can't be fetched, this will be sent so they are ignored.
