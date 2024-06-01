@@ -7,7 +7,8 @@ export default function logger(level: String, section: String, message?: any) {
 	if (config.logging.type === 'fancy') {
 		if (level === 'debug' && config.logging.debug) {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgCyan('debug') +
 					' ' +
 					chalk.cyan(section.toLowerCase()) +
@@ -17,7 +18,8 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'info') {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgBlue('info') +
 					' ' +
 					chalk.blue(section.toLowerCase()) +
@@ -27,7 +29,8 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'http') {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgMagenta('http') +
 					' ' +
 					chalk.magenta(section.toLowerCase()) +
@@ -35,9 +38,21 @@ export default function logger(level: String, section: String, message?: any) {
 					' ' +
 					message
 			);
+		} else if (level === 'sql' && config.logging.sql) {
+			console.log(
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
+					chalk.bgGreen('sql') +
+					' ' +
+					chalk.green(section.toLowerCase()) +
+					']' +
+					' ' +
+					message
+			);
 		} else if (level === 'warn') {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgYellow('warn') +
 					' ' +
 					chalk.yellow(section.toLowerCase()) +
@@ -47,7 +62,8 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'error') {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgRed('error') +
 					' ' +
 					chalk.red(section.toLowerCase()) +
@@ -57,7 +73,8 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'fatal') {
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgRedBright('fatal') +
 					' ' +
 					chalk.redBright(section.toLowerCase()) +
@@ -66,7 +83,8 @@ export default function logger(level: String, section: String, message?: any) {
 					message
 			);
 			console.log(
-				'[' +
+				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+					' [' +
 					chalk.bgRedBright('fatal') +
 					' ' +
 					chalk.redBright(section.toLowerCase()) +
@@ -88,7 +106,7 @@ export default function logger(level: String, section: String, message?: any) {
 
 export class TypeormLogger implements Logger {
 	logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-		logger('debug', 'db', query);
+		logger('sql', 'query', query);
 	}
 	logQueryError(
 		error: string | Error,
@@ -96,8 +114,8 @@ export class TypeormLogger implements Logger {
 		parameters?: any[],
 		queryRunner?: QueryRunner
 	) {
-		logger('error', 'db', error);
-		logger('error', 'db', query);
+		logger('error', 'query', error);
+		logger('error', 'query', query);
 	}
 	logQuerySlow(
 		time: number,
@@ -105,8 +123,8 @@ export class TypeormLogger implements Logger {
 		parameters?: any[],
 		queryRunner?: QueryRunner
 	) {
-		logger('warn', 'db', time);
-		logger('warn', 'db', query);
+		logger('warn', 'query', time);
+		logger('warn', 'query', query);
 	}
 	logSchemaBuild(message: string, queryRunner?: QueryRunner) {
 		logger('info', 'db', message);

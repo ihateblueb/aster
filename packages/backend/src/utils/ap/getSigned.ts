@@ -4,6 +4,7 @@ import axios from 'axios';
 import pkg from '../../../../../package.json' assert { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
+import logger from '../logger.js';
 
 export default async function getSigned(url, localUserId?) {
 	if (localUserId) {
@@ -37,6 +38,8 @@ export default async function getSigned(url, localUserId?) {
 			});
 	}
 
+	console.log('getting note as ' + grabbedLocalUser.username);
+
 	const getUrl = new URL(url);
 	const sendDate = new Date().toISOString();
 
@@ -54,7 +57,7 @@ export default async function getSigned(url, localUserId?) {
 		.sign(grabbedLocalUserPriv.private_key)
 		.toString('base64');
 
-	const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
+	const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signedString}"`;
 
 	let getResponse = await axios
 		.get(url, {
@@ -70,8 +73,13 @@ export default async function getSigned(url, localUserId?) {
 			}
 		})
 		.then((res) => {
-			return `status ${res.status} returned from attempted post to ${res.config.url}`;
+			return `status ${res.status} returned from attempted get to ${res.config.url}`;
+		})
+		.catch((e) => {
+			logger('error', 'ap', e);
 		});
+
+	console.log(getResponse);
 
 	return getResponse;
 }
