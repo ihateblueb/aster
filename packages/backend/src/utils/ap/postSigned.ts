@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
 import config from '../config.js';
+import logger from '../logger.js';
 import db from '../database.js';
 
 export default async function postSigned(inbox, localUserId, body) {
@@ -47,8 +48,8 @@ export default async function postSigned(inbox, localUserId, body) {
 				Signature: signatureHeader
 			}
 		})
-		.then((res) => {
-			return `status ${res.status} returned from attempted post to ${res.config.url}`;
+		.catch((e) => {
+			logger('error', 'ap', e);
 		});
 
 	return postResponse;
