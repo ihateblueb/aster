@@ -3,8 +3,7 @@ import logger from '../logger.js';
 import accept from '../ap/accept.js';
 import getRemoteActor from './getRemoteActor.js';
 
-// inbox processors
-import createNote from './inboxProcessors/createNote.js';
+import processNewNote from './processNewNote.js';
 
 /*
 	Done activity types:
@@ -47,7 +46,7 @@ export default async function acceptInboxRequest(parsedBody) {
 		// https://ns.mia.jetzt/as/#Bite
 	} else if (parsedBody.type === 'Create') {
 		if (parsedBody.object.type === 'Note') {
-			await createNote(parsedBody);
+			await processNewNote(parsedBody.object);
 		}
 	} else if (parsedBody.type === 'Delete') {
 		// disabled because this deletes actor no matter what even though it could be a deleted note
