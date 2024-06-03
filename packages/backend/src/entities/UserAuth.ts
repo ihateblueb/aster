@@ -11,6 +11,9 @@ export class UsersAuth {
 	@Column({ nullable: true })
 	created_at: string;
 
+	@Column('text', { array: true, nullable: true })
+	used_at: string[];
+
 	@Column({ nullable: true })
 	token: string;
 

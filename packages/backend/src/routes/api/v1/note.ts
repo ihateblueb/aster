@@ -104,9 +104,18 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 // create note
 router.post(`/api/v1/note`, async (req, res) => {
-	return res.status(501).json({
-		message: 'Not implemented'
-	});
+	var authHeader = JSON.parse(req.headers).authorization;
+	if (authHeader) {
+		console.log(authHeader);
+
+		return res.status(501).json({
+			message: 'Not implemented'
+		});
+	} else {
+		return res.status(401).json({
+			message: 'Authorization header missing.'
+		});
+	}
 });
 
 // edit note

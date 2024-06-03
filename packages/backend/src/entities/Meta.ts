@@ -31,4 +31,21 @@ export class Meta {
 
 	@Column({ default: false })
 	init: boolean;
+
+	// statistics
+
+	@Column({ nullable: true })
+	local_user_count: number;
+
+	@Column({ nullable: true })
+	total_user_count: number;
+
+	@Column({ nullable: true })
+	local_note_count: number;
+
+	@Column({ nullable: true })
+	total__count: number;
+
+	@Column({ nullable: true })
+	instance_count: number;
 }
