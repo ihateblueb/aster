@@ -83,6 +83,9 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
+	@Column('text', { array: true, nullable: true })
+	pinned_notes: string[];
+
 	@Column()
 	public_key: string;
 }

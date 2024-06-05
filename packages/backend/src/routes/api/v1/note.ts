@@ -1,6 +1,11 @@
 import express from 'express';
+import { v4 as uuidv4 } from 'uuid';
+import { JSDOM } from 'jsdom';
+import DOMPurify from 'dompurify';
 
+import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -86,6 +91,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 					noteJson['cw'] = grabbedNote.cw;
 					noteJson['content'] = grabbedNote.content;
 					noteJson['created_at'] = grabbedNote.created_at;
+					noteJson['visibility'] = grabbedNote.visibility;
 
 					res.status(200).json(noteJson);
 				}
@@ -104,13 +110,66 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 // create note
 router.post(`/api/v1/note`, async (req, res) => {
-	var authHeader = JSON.parse(req.headers).authorization;
+	var authHeader = req.headers.authorization;
 	if (authHeader) {
-		console.log(authHeader);
+		console.log(authHeader.replace('Bearer ', ''));
 
-		return res.status(501).json({
-			message: 'Not implemented'
-		});
+		if (authHeader.startsWith('Bearer ')) {
+			logger('debug', 'auth', 'token starts with bearer');
+
+			var grabbedUserAuth = await db.getRepository('users_auth').findOne({
+				where: {
+					token: authHeader.replace('Bearer ', '')
+				}
+			});
+
+			if (grabbedUserAuth.token === authHeader.replace('Bearer ', '')) {
+				const noteId = uuidv4();
+
+				var noteToInsert = { author: {} };
+
+				noteToInsert['id'] = noteId;
+				noteToInsert['ap_id'] = `${config.url}notes/${noteId}`;
+
+				noteToInsert['local'] = true;
+
+				noteToInsert['author'] = grabbedUserAuth.user;
+
+				const window = new JSDOM('').window;
+				const purify = DOMPurify(window);
+
+				noteToInsert['cw'] = purify.sanitize(JSON.parse(req.body).cw);
+				noteToInsert['content'] = purify.sanitize(
+					JSON.parse(req.body).content
+				);
+
+				noteToInsert['created_at'] = new Date(Date.now()).toISOString();
+
+				if (JSON.parse(req.body).visibility === 'public') {
+					noteToInsert['visibility'] = 'public';
+				} else if (JSON.parse(req.body).visibility === 'unlisted') {
+					noteToInsert['visibility'] = 'unlisted';
+				} else if (JSON.parse(req.body).visibility === 'followers') {
+					noteToInsert['visibility'] = 'followers';
+				} else if (JSON.parse(req.body).visibility === 'direct') {
+					noteToInsert['visibility'] = 'direct';
+				} else {
+					noteToInsert['visibility'] = 'public';
+				}
+
+				console.log(noteToInsert);
+
+				await db.getRepository('notes').insert(noteToInsert);
+
+				return res.status(200).json({
+					message: 'Note created'
+				});
+			}
+		} else {
+			return res.status(400).json({
+				message: 'Token is not type Bearer'
+			});
+		}
 	} else {
 		return res.status(401).json({
 			message: 'Authorization header missing.'
