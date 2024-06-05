@@ -141,12 +141,11 @@ router.post(`/api/v1/note`, async (req, res) => {
 			noteToInsert['visibility'] = 'public';
 		}
 
-		console.log(noteToInsert);
-
 		await db.getRepository('notes').insert(noteToInsert);
 
 		return res.status(200).json({
-			message: 'Note created'
+			message: 'Note created',
+			note: noteToInsert
 		});
 	} else {
 		return res.status(authRes.status).json({
@@ -160,7 +159,6 @@ router.patch(`/api/v1/note`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
-		logger('debug', 'note', 'note edit requested');
 		return res.status(501).json({
 			message: 'Not implemented'
 		});
@@ -176,10 +174,34 @@ router.delete(`/api/v1/note`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
-		logger('debug', 'note', 'note delete requested');
-		return res.status(501).json({
-			message: 'Not implemented'
-		});
+		if (JSON.parse(req.body).id) {
+			let noteFromDb = await db.getRepository('notes').findOne({
+				where: {
+					id: JSON.parse(req.body).id
+				}
+			});
+
+			if (noteFromDb) {
+				if (noteFromDb.author === authRes.grabbedUserAuth.user) {
+					await db.getRepository('notes').delete(noteFromDb.id);
+					return res.status(200).json({
+						message: 'Note deleted.'
+					});
+				} else {
+					return res.status(401).json({
+						message: "You cannot delete other people's notes."
+					});
+				}
+			} else {
+				return res.status(404).json({
+					message: 'Note not found.'
+				});
+			}
+		} else {
+			return res.status(400).json({
+				message: 'Note ID required.'
+			});
+		}
 	} else {
 		return res.status(authRes.status).json({
 			message: authRes.message

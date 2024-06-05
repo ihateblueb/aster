@@ -14,6 +14,6 @@
 <template>
 	<PageHeader title="Note by {data.author.displayname}" />
 	<div class="pageContent">
-		<Note {data} />
+		<Note {data} detailed={true} />
 	</div>
 </template>

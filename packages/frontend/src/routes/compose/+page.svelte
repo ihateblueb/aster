@@ -43,7 +43,7 @@
 				placeholder="What's on your mind?"
 				bind:value={noteContent}
 			/>
-			<button class="btn" on:click={sendNote}>note</button>
+			<button class="btn" on:click={sendNote}>Note</button>
 		</div>
 	</div>
 </template>
