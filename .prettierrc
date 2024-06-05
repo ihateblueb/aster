@@ -1,5 +1,9 @@
 {
-	"plugins": ["prettier-plugin-svelte", "prettier-plugin-sh"],
+	"plugins": [
+		"prettier-plugin-svelte",
+		"prettier-plugin-sh",
+		"prettier-plugin-ini"
+	],
 	"trailingComma": "none",
 	"tabWidth": 4,
 	"semi": true,
