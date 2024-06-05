@@ -1,11 +1,11 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-import { JSDOM } from 'jsdom';
-import DOMPurify from 'dompurify';
 
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
+import sanitize from '../../../utils/sanitize.js';
+import verifyToken from '../../../utils/auth/verifyToken.js';
 
 const router = express.Router();
 
@@ -110,72 +110,47 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 // create note
 router.post(`/api/v1/note`, async (req, res) => {
-	var authHeader = req.headers.authorization;
-	if (authHeader) {
-		if (authHeader.startsWith('Bearer ')) {
-			var grabbedUserAuth = await db.getRepository('users_auth').findOne({
-				where: {
-					token: authHeader.replace('Bearer ', '')
-				}
-			});
+	var authRes = await verifyToken(req.headers.authorization);
 
-			if (
-				grabbedUserAuth &&
-				grabbedUserAuth.token === authHeader.replace('Bearer ', '')
-			) {
-				const noteId = uuidv4();
+	if (authRes.status === 200) {
+		const noteId = uuidv4();
 
-				var noteToInsert = { author: {} };
+		var noteToInsert = { author: {} };
 
-				noteToInsert['id'] = noteId;
-				noteToInsert['ap_id'] = `${config.url}notes/${noteId}`;
+		noteToInsert['id'] = noteId;
+		noteToInsert['ap_id'] = `${config.url}notes/${noteId}`;
 
-				noteToInsert['local'] = true;
+		noteToInsert['local'] = true;
 
-				noteToInsert['author'] = grabbedUserAuth.user;
+		noteToInsert['author'] = authRes.grabbedUserAuth.user;
 
-				const window = new JSDOM('').window;
-				const purify = DOMPurify(window);
+		noteToInsert['cw'] = sanitize(JSON.parse(req.body).cw);
+		noteToInsert['content'] = sanitize(JSON.parse(req.body).content);
 
-				noteToInsert['cw'] = purify.sanitize(JSON.parse(req.body).cw);
-				noteToInsert['content'] = purify.sanitize(
-					JSON.parse(req.body).content
-				);
+		noteToInsert['created_at'] = new Date(Date.now()).toISOString();
 
-				noteToInsert['created_at'] = new Date(Date.now()).toISOString();
-
-				if (JSON.parse(req.body).visibility === 'public') {
-					noteToInsert['visibility'] = 'public';
-				} else if (JSON.parse(req.body).visibility === 'unlisted') {
-					noteToInsert['visibility'] = 'unlisted';
-				} else if (JSON.parse(req.body).visibility === 'followers') {
-					noteToInsert['visibility'] = 'followers';
-				} else if (JSON.parse(req.body).visibility === 'direct') {
-					noteToInsert['visibility'] = 'direct';
-				} else {
-					noteToInsert['visibility'] = 'public';
-				}
-
-				console.log(noteToInsert);
-
-				await db.getRepository('notes').insert(noteToInsert);
-
-				return res.status(200).json({
-					message: 'Note created'
-				});
-			} else {
-				return res.status(401).json({
-					message: 'Invalid authentication token.'
-				});
-			}
+		if (JSON.parse(req.body).visibility === 'public') {
+			noteToInsert['visibility'] = 'public';
+		} else if (JSON.parse(req.body).visibility === 'unlisted') {
+			noteToInsert['visibility'] = 'unlisted';
+		} else if (JSON.parse(req.body).visibility === 'followers') {
+			noteToInsert['visibility'] = 'followers';
+		} else if (JSON.parse(req.body).visibility === 'direct') {
+			noteToInsert['visibility'] = 'direct';
 		} else {
-			return res.status(400).json({
-				message: 'Token is not type Bearer'
-			});
+			noteToInsert['visibility'] = 'public';
 		}
+
+		console.log(noteToInsert);
+
+		await db.getRepository('notes').insert(noteToInsert);
+
+		return res.status(200).json({
+			message: 'Note created'
+		});
 	} else {
-		return res.status(401).json({
-			message: 'Authorization header missing.'
+		return res.status(authRes.status).json({
+			message: authRes.message
 		});
 	}
 });
