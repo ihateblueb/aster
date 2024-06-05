@@ -157,16 +157,34 @@ router.post(`/api/v1/note`, async (req, res) => {
 
 // edit note
 router.patch(`/api/v1/note`, async (req, res) => {
-	return res.status(501).json({
-		message: 'Not implemented'
-	});
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (authRes.status === 200) {
+		logger('debug', 'note', 'note edit requested');
+		return res.status(501).json({
+			message: 'Not implemented'
+		});
+	} else {
+		return res.status(authRes.status).json({
+			message: authRes.message
+		});
+	}
 });
 
 // delete note
 router.delete(`/api/v1/note`, async (req, res) => {
-	return res.status(501).json({
-		message: 'Not implemented'
-	});
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (authRes.status === 200) {
+		logger('debug', 'note', 'note delete requested');
+		return res.status(501).json({
+			message: 'Not implemented'
+		});
+	} else {
+		return res.status(authRes.status).json({
+			message: authRes.message
+		});
+	}
 });
 
 export default router;
