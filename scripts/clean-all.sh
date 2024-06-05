@@ -1,8 +1,6 @@
-echo "removing build files and node modules"
+echo "removing all build files and node modules"
 rm -Rf packages/backend/built
 rm -Rf packages/backend/node_modules
-rm -Rf packages/aster-js/built
-rm -Rf packages/aster-js/node_modules
 rm -Rf packages/frontend/.svelte-kit
 rm -Rf packages/frontend/build
 rm -Rf packages/frontend/node_modules
