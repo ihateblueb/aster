@@ -112,18 +112,17 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 router.post(`/api/v1/note`, async (req, res) => {
 	var authHeader = req.headers.authorization;
 	if (authHeader) {
-		console.log(authHeader.replace('Bearer ', ''));
-
 		if (authHeader.startsWith('Bearer ')) {
-			logger('debug', 'auth', 'token starts with bearer');
-
 			var grabbedUserAuth = await db.getRepository('users_auth').findOne({
 				where: {
 					token: authHeader.replace('Bearer ', '')
 				}
 			});
 
-			if (grabbedUserAuth.token === authHeader.replace('Bearer ', '')) {
+			if (
+				grabbedUserAuth &&
+				grabbedUserAuth.token === authHeader.replace('Bearer ', '')
+			) {
 				const noteId = uuidv4();
 
 				var noteToInsert = { author: {} };
@@ -163,6 +162,10 @@ router.post(`/api/v1/note`, async (req, res) => {
 
 				return res.status(200).json({
 					message: 'Note created'
+				});
+			} else {
+				return res.status(401).json({
+					message: 'Invalid authentication token.'
 				});
 			}
 		} else {
