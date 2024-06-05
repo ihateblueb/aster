@@ -86,6 +86,12 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	pinned_notes: string[];
 
+	// stored like
+	// { {"key":"val"} }
+
+	@Column('text', { array: true, nullable: true })
+	metadata: string[];
+
 	@Column()
 	public_key: string;
 }
