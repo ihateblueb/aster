@@ -7,12 +7,7 @@ export default async function verifyToken(authHeader) {
 			message: 'No authorization header.'
 		};
 	} else {
-		if (!authHeader.startsWith('Bearer ')) {
-			return {
-				status: 400,
-				message: 'Incorrect authorization type. Must be bearer.'
-			};
-		} else {
+		if (authHeader.startsWith('Bearer ')) {
 			var grabbedUserAuth = await db.getRepository('users_auth').findOne({
 				where: {
 					token: authHeader.replace('Bearer ', '')
@@ -20,20 +15,25 @@ export default async function verifyToken(authHeader) {
 			});
 
 			if (
-				!grabbedUserAuth &&
-				!grabbedUserAuth.token === authHeader.replace('Bearer ', '')
+				grabbedUserAuth &&
+				grabbedUserAuth.token === authHeader.replace('Bearer ', '')
 			) {
-				return {
-					status: 401,
-					message: 'Invalied authentication token.'
-				};
-			} else {
 				return {
 					status: 200,
 					message: 'Authorized',
 					grabbedUserAuth: grabbedUserAuth
 				};
+			} else {
+				return {
+					status: 401,
+					message: 'Invalid authentication token.'
+				};
 			}
+		} else {
+			return {
+				status: 400,
+				message: 'Incorrect authorization type.'
+			};
 		}
 	}
 }
