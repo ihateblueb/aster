@@ -30,6 +30,9 @@ export class Notes {
 	content: string;
 
 	@Column('text', { array: true, nullable: true })
+	edits: string[];
+
+	@Column('text', { array: true, nullable: true })
 	replies: string[];
 
 	@Column('text', { array: true, nullable: true })
