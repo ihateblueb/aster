@@ -78,23 +78,26 @@
 
 <template>
 	<div class="sidebar">
-		<PageHeader title="Sidebar" />
-		<div>
-			<div>
-				{#each widgetsTop as widget}
+		<div class="top">
+			{#each widgetsTop as widget}
+				<div class="widget">
 					<svelte:component this={widget} />
-				{/each}
-			</div>
-			<div>
-				{#each widgetsMid as widget}
+				</div>
+			{/each}
+		</div>
+		<div class="mid">
+			{#each widgetsMid as widget}
+				<div class="widget">
 					<svelte:component this={widget} />
-				{/each}
-			</div>
-			<div>
-				{#each widgetsBtm as widget}
+				</div>
+			{/each}
+		</div>
+		<div class="btm">
+			{#each widgetsBtm as widget}
+				<div class="widget">
 					<svelte:component this={widget} />
-				{/each}
-			</div>
+				</div>
+			{/each}
 		</div>
 	</div>
 </template>
@@ -107,6 +110,26 @@
 		max-width: 375px;
 		width: 300px;
 		min-width: 200px;
+		.top {
+			height: fit-content;
+			.widget {
+				margin: 8px;
+			}
+		}
+		.mid {
+			margin-bottom: auto;
+			height: fit-content;
+			.widget {
+				margin: 8px;
+			}
+		}
+		.btm {
+			margin-top: auto;
+			height: fit-content;
+			.widget {
+				margin: 8px;
+			}
+		}
 	}
 
 	@media screen and (max-width: 1060px) {

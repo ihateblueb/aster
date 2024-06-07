@@ -17,8 +17,6 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 		let splitUsername = ['unknown', new URL(config.url).host];
 		splitUsername = req.params.username.split('@');
 
-		console.log(JSON.stringify(splitUsername));
-
 		var grabbedUser = await db.getRepository('users').findOne({
 			where: {
 				username: splitUsername[0],

@@ -67,6 +67,12 @@ main {
 	}
 }
 
+:global(.pageContent) {
+	overflow-y: scroll;
+	// 43px is header height
+	height: calc(100vh - 43px);
+}
+
 :global(.paddedPage) {
 	padding: 12px 16px;
 }
@@ -79,7 +85,8 @@ main {
 :global(.btn) {
 	cursor: pointer;
 	user-select: none;
-	display: inline-block;
+	display: inline-flex;
+	align-content: center;
 	background-color: var(--bg-tertiary);
 	color: var(--txt-secondary);
 	font-size: 15px;
@@ -92,14 +99,6 @@ main {
 
 	outline: 2px var(--accent);
 	outline-offset: 1px;
-
-	&.header {
-		border: none;
-		background-color: transparent;
-		padding: 0px;
-		margin: 0px;
-		margin-right: 5px;
-	}
 }
 
 :global(.ipt) {
