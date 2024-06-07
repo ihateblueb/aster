@@ -1,6 +1,9 @@
 import express from 'express';
 
 import db from '../../../utils/database.js';
+import logger from '../../../utils/logger.js';
+import verifyToken from '../../../utils/auth/verifyToken.js';
+import sanitize from '../../../utils/sanitize.js';
 
 const router = express.Router();
 
@@ -79,6 +82,76 @@ router.delete(`/api/v1/user`, async (req, res) => {
 	return res.status(501).json({
 		message: 'Not implemented'
 	});
+});
+
+/*
+	User Interactions
+*/
+
+// follow user
+router.post(`/api/v1/user/:userid/follow`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.userid) {
+		if (authRes.status === 200) {
+			logger('debug', 'user', 'user follow requested');
+			return res.status(501).json({
+				message: 'Not implemented'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'User ID parameter required'
+		});
+	}
+});
+
+// report user
+router.post(`/api/v1/user/:userid/report`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.userid) {
+		if (authRes.status === 200) {
+			logger('debug', 'user', 'user report requested');
+			return res.status(501).json({
+				message: 'Not implemented'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'User ID parameter required'
+		});
+	}
+});
+
+// bite user
+router.post(`/api/v1/user/:userid/bite`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.userid) {
+		if (authRes.status === 200) {
+			logger('debug', 'user', 'user bite requested');
+			return res.status(501).json({
+				message: 'Not implemented'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'User ID parameter required'
+		});
+	}
 });
 
 export default router;
