@@ -3,12 +3,14 @@
 	export let size = '22px';
 	export let name = 'question-mark';
 	export let margin = '0px 0px 0px 0px';
+	export let title = '';
 </script>
 
 <template>
 	<i
 		class="ti ti-{name}"
 		style="font-size: {size}; margin: {margin}; color: {color};"
+		{title}
 	></i>
 </template>
 

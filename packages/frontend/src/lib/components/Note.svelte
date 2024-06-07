@@ -1,4 +1,6 @@
 <script>
+	import Store from '$lib/scripts/Store';
+
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Icon from '$lib/components/Icon.svelte';
@@ -15,6 +17,30 @@
 			cwOpen = true;
 		}
 	}
+
+	let noteRes = {};
+
+	async function deleteNote() {
+		var noteReq = await fetch(`/api/v1/note`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${Store.get('a_token')}`
+			},
+			body: JSON.stringify({
+				id: data.id
+			})
+		});
+
+		noteRes = await noteReq.json();
+
+		if (noteReq.status === 200) {
+			console.log(noteRes);
+		} else {
+			console.log(noteRes);
+		}
+	}
 </script>
 
 <template>
@@ -27,7 +53,39 @@
 					<span class="username">@{data.author.username}</span>
 				</div>
 			</div>
-			<div class="right">now</div>
+			<div class="right">
+				{#if data.visibility === 'public'}
+					<Icon
+						name="planet"
+						size="18px"
+						color="var(--txt-primary)"
+						title="Public"
+					/>
+				{:else if data.visibility === 'unlisted'}
+					<Icon
+						name="home"
+						size="18px"
+						color="var(--txt-primary)"
+						title="Unlisted"
+					/>
+				{:else if data.visibility === 'followers'}
+					<Icon
+						name="lock"
+						size="18px"
+						color="var(--txt-primary)"
+						title="Followers Only"
+					/>
+				{:else if data.visibility === 'direct'}
+					<Icon
+						name="mail"
+						size="18px"
+						color="var(--txt-primary)"
+						title="Direct Note"
+					/>
+				{:else}
+					 <!-- else content here -->
+				{/if}
+			</div>
 		</div>
 
 		<p class="noteContent">
@@ -38,7 +96,7 @@
 							name="alert-triangle"
 							size="18px"
 							color="var(--warn)"
-							margin="0px 5px 0px 0px"
+							margin="0px 7px 0px 0px"
 						/>
 						<span>{data.cw}</span>
 					</div>
@@ -62,29 +120,45 @@
 
 		<div class="noteFooter">
 			{#if detailed}
-				Posted at {data.created_at}
+				<div class="details">
+					Posted at {new Date(data.created_at).toLocaleTimeString(
+						undefined,
+						{
+							weekday: 'long',
+							month: 'long',
+							day: 'numeric',
+							year: 'numeric',
+							hour: 'numeric',
+							minute: '2-digit',
+							second: '2-digit'
+						}
+					)}
+				</div>
 			{/if}
 			<div class="postButtons">
 				<button>
-					<Icon name="arrow-back-up" />
+					<Icon name="arrow-back-up" color="inherit" />
 				</button>
 				<button>
-					<Icon name="quote" />
+					<Icon name="quote" color="inherit" />
 				</button>
 				<button>
-					<Icon name="repeat" color="var(--txt-tertiary)" />
+					<Icon name="repeat" color="inherit" />
 				</button>
 				<button>
-					<Icon name="star" color="var(--txt-tertiary)" />
+					<Icon name="star" color="inherit" />
 				</button>
 				<button>
-					<Icon name="plus" color="var(--txt-tertiary)" />
+					<Icon name="plus" color="inherit" />
 				</button>
 				<button>
-					<Icon name="bookmark" color="var(--txt-tertiary)" />
+					<Icon name="bookmark" color="inherit" />
+				</button>
+				<button on:click={deleteNote}>
+					<Icon name="trash" color="var(--danger)" />
 				</button>
 				<button>
-					<Icon name="dots" color="var(--txt-tertiary)" />
+					<Icon name="dots" color="inherit" />
 				</button>
 			</div>
 		</div>
@@ -121,17 +195,30 @@
 			}
 		}
 	}
-	.postButtons {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		> button {
-			background: none;
-			border: none;
-			margin: 0px;
-			padding: 0px;
+	.noteFooter {
+		.details {
 			color: var(--txt-tertiary);
+			margin-bottom: 10px;
+		}
+
+		.postButtons {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
+			> button {
+				background: none;
+				border: none;
+				margin: 0px;
+				padding: 0px;
+				color: var(--txt-secondary);
+				cursor: pointer;
+				transition: 0.1s;
+
+				&:hover {
+					color: var(--txt-primary);
+				}
+			}
 		}
 	}
 	.warning {
@@ -139,7 +226,7 @@
 		align-items: center;
 		color: var(--warn);
 		background-color: var(--warn-20);
-		padding: 6px;
+		padding: 4px 6px;
 		border-radius: 8px;
 
 		.left {
@@ -152,6 +239,10 @@
 			display: inline-flex;
 			align-items: center;
 			flex-grow: 0;
+
+			> button {
+				font-family: var(--font);
+			}
 		}
 		&.isOpen {
 			margin-bottom: 10px;
