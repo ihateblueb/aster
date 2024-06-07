@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
 	export let color = 'inherit';
 	export let size = '22px';
 	export let name = 'question-mark';
 	export let margin = '0px 0px 0px 0px';
-	export let title = '';
+	export let title: string;
 </script>
 
 <template>

@@ -1,8 +1,8 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 
-	export let type = 'regular';
-	export let to;
+	export let type: string | undefined;
+	export let to: string | undefined;
 </script>
 
 <template>

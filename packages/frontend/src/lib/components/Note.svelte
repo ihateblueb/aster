@@ -9,16 +9,11 @@
 	import DropdownItem from './DropdownItem.svelte';
 
 	import noteBookmark from '$lib/api/note/bookmark';
-	import noteCreate from '$lib/api/note/create';
 	import noteDelete from '$lib/api/note/delete';
-	import noteEdit from '$lib/api/note/edit';
-	import noteQuote from '$lib/api/note/quote';
 	import noteReact from '$lib/api/note/react';
 	import noteRepeat from '$lib/api/note/repeat';
-	import noteReport from '$lib/api/note/report';
 
 	import userBite from '$lib/api/user/bite';
-	import userReport from '$lib/api/user/report';
 
 	export let data;
 	export let detailed;
@@ -115,9 +110,6 @@
 			{:else}
 				<Mfm content={data.content} />
 			{/if}
-		</p>
-
-		<div class="noteFooter">
 			{#if detailed}
 				<div class="details">
 					Posted at {new Date(data.created_at).toLocaleTimeString(
@@ -134,6 +126,9 @@
 					)}
 				</div>
 			{/if}
+		</p>
+
+		<div class="noteFooter">
 			<div class="postButtons">
 				<button>
 					<Icon name="arrow-back-up" color="inherit" />
@@ -249,14 +244,18 @@
 		border-right: 0px;
 	}
 	.noteContent {
-		margin-top: 10px;
-		margin-bottom: 10px;
+		margin-top: 15px;
+		margin-bottom: 15px;
 	}
 	.note {
 		margin: 10px;
 		padding: 20px;
 		border-radius: 12px;
 		background-color: var(--bg-secondary);
+	}
+	.details {
+		color: var(--txt-tertiary);
+		margin-top: 10px;
 	}
 	.noteHeader {
 		display: flex;
@@ -281,11 +280,6 @@
 		}
 	}
 	.noteFooter {
-		.details {
-			color: var(--txt-tertiary);
-			margin-bottom: 10px;
-		}
-
 		.postButtons {
 			display: flex;
 			justify-content: space-between;

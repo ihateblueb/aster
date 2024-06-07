@@ -1,7 +1,7 @@
-<script>
+<script lang="ts">
 	import PageHeader from './PageHeader.svelte';
 	import Store from '$lib/scripts/Store';
-	// widgets
+
 	import Account from './widgets/Account.svelte';
 	import Clock from './widgets/Clock.svelte';
 	import HardwareMetrics from './widgets/HardwareMetrics.svelte';
