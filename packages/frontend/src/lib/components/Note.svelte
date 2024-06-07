@@ -8,14 +8,17 @@
 	import Dropdown from './Dropdown.svelte';
 	import DropdownItem from './DropdownItem.svelte';
 
-	import noteBookmark from '../api/note/bookmark';
-	import noteCreate from '../api/note/create';
-	import noteDelete from '../api/note/delete';
-	import noteEdit from '../api/note/edit';
-	import noteQuote from '../api/note/quote';
-	import noteReact from '../api/note/react';
-	import noteRepeat from '../api/note/repeat';
-	import noteReport from '../api/note/report';
+	import noteBookmark from '$lib/api/note/bookmark';
+	import noteCreate from '$lib/api/note/create';
+	import noteDelete from '$lib/api/note/delete';
+	import noteEdit from '$lib/api/note/edit';
+	import noteQuote from '$lib/api/note/quote';
+	import noteReact from '$lib/api/note/react';
+	import noteRepeat from '$lib/api/note/repeat';
+	import noteReport from '$lib/api/note/report';
+
+	import userBite from '$lib/api/user/bite';
+	import userReport from '$lib/api/user/report';
 
 	export let data;
 	export let detailed;
@@ -212,6 +215,11 @@
 				margin="0px 8px 0px 0px"
 			/>
 			<span>Report author</span>
+		</DropdownItem>
+		<hr />
+		<DropdownItem on:click={() => userBite(data.id)}>
+			<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
+			<span>Bite author</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem>
