@@ -217,7 +217,7 @@ router.delete(`/api/v1/note`, async (req, res) => {
 router.post(`/api/v1/note/:noteid/react`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
-	if (req.params.nodeId) {
+	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note react requested');
 			return res.status(501).json({
@@ -239,7 +239,7 @@ router.post(`/api/v1/note/:noteid/react`, async (req, res) => {
 router.post(`/api/v1/note/:noteid/repeat`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
-	if (req.params.nodeId) {
+	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note repeat requested');
 			return res.status(501).json({
@@ -261,7 +261,7 @@ router.post(`/api/v1/note/:noteid/repeat`, async (req, res) => {
 router.post(`/api/v1/note/:noteid/quote`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
-	if (req.params.nodeId) {
+	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note quote requested');
 			return res.status(501).json({
@@ -283,9 +283,31 @@ router.post(`/api/v1/note/:noteid/quote`, async (req, res) => {
 router.post(`/api/v1/note/:noteid/bookmark`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
-	if (req.params.nodeId) {
+	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note bookmark requested');
+			return res.status(501).json({
+				message: 'Not implemented'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'Note ID parameter required'
+		});
+	}
+});
+
+// report note
+router.post(`/api/v1/note/:noteid/report`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.noteid) {
+		if (authRes.status === 200) {
+			logger('debug', 'note', 'note report requested');
 			return res.status(501).json({
 				message: 'Not implemented'
 			});
