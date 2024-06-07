@@ -8,6 +8,15 @@
 	import Dropdown from './Dropdown.svelte';
 	import DropdownItem from './DropdownItem.svelte';
 
+	import noteBookmark from '../api/note/bookmark';
+	import noteCreate from '../api/note/create';
+	import noteDelete from '../api/note/delete';
+	import noteEdit from '../api/note/edit';
+	import noteQuote from '../api/note/quote';
+	import noteReact from '../api/note/react';
+	import noteRepeat from '../api/note/repeat';
+	import noteReport from '../api/note/report';
+
 	export let data;
 	export let detailed;
 
@@ -18,30 +27,6 @@
 			cwOpen = false;
 		} else if (!cwOpen) {
 			cwOpen = true;
-		}
-	}
-
-	let noteRes = {};
-
-	async function deleteNote() {
-		var noteReq = await fetch(`/api/v1/note`, {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
-			},
-			body: JSON.stringify({
-				id: data.id
-			})
-		});
-
-		noteRes = await noteReq.json();
-
-		if (noteReq.status === 200) {
-			console.log(noteRes);
-		} else {
-			console.log(noteRes);
 		}
 	}
 
@@ -153,16 +138,16 @@
 				<button>
 					<Icon name="quote" color="inherit" />
 				</button>
-				<button>
+				<button on:click={() => noteRepeat(data.id)}>
 					<Icon name="repeat" color="inherit" />
 				</button>
-				<button>
+				<button on:click={() => noteReact(data.id)}>
 					<Icon name="star" color="inherit" />
 				</button>
 				<button>
 					<Icon name="plus" color="inherit" />
 				</button>
-				<button>
+				<button on:click={() => noteBookmark(data.id)}>
 					<Icon name="bookmark" color="inherit" />
 				</button>
 				<button on:click={(e) => more.open(e)}>
@@ -233,7 +218,7 @@
 			<Icon size="18px" name="pencil" margin="0px 8px 0px 0px" />
 			<span>Edit note</span>
 		</DropdownItem>
-		<DropdownItem type="danger" on:click={deleteNote}>
+		<DropdownItem type="danger" on:click={() => noteDelete(data.id)}>
 			<Icon
 				size="18px"
 				name="trash"

@@ -2,16 +2,16 @@
 	import { goto } from '$app/navigation';
 
 	export let type = 'regular';
-	export let to = '/';
+	export let to;
 </script>
 
 <template>
-	{#if type === 'regular'}
+	{#if to}
 		<button class="dropdownItem" on:click={() => goto(to)}>
 			<slot></slot>
 		</button>
-	{:else if type === 'danger'}
-		<button class="dropdownItem danger">
+	{:else}
+		<button class={'dropdownItem ' + type}>
 			<slot></slot>
 		</button>
 	{/if}
