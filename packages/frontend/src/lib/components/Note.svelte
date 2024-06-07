@@ -197,7 +197,7 @@
 		</DropdownItem>
 		<DropdownItem>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
-			<span>Copy author id</span>
+			<span>Copy user id</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem>
@@ -214,12 +214,12 @@
 				name="exclamation-circle"
 				margin="0px 8px 0px 0px"
 			/>
-			<span>Report author</span>
+			<span>Report user</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem on:click={() => userBite(data.id)}>
 			<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
-			<span>Bite author</span>
+			<span>Bite user</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem>
