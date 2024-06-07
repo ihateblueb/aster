@@ -95,8 +95,6 @@
 						color="var(--txt-primary)"
 						title="Direct Note"
 					/>
-				{:else}
-					<!-- else content here -->
 				{/if}
 			</div>
 		</div>
