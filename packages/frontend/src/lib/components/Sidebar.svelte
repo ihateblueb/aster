@@ -108,4 +108,10 @@
 		width: 300px;
 		min-width: 200px;
 	}
+
+	@media screen and (max-width: 1060px) {
+		.sidebar {
+			display: none;
+		}
+	}
 </style>

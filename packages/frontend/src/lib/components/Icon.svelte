@@ -1,5 +1,5 @@
 <script>
-	export let color = 'var(--txt-primary)';
+	export let color = 'inherit';
 	export let size = '22px';
 	export let name = 'question-mark';
 	export let margin = '0px 0px 0px 0px';

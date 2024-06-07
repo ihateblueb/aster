@@ -1,9 +1,12 @@
-<script>
+<script lang="ts">
+	import { goto } from '$app/navigation';
 	import Store from '$lib/scripts/Store';
 
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Dropdown from './Dropdown.svelte';
+	import DropdownItem from './DropdownItem.svelte';
 
 	export let data;
 	export let detailed;
@@ -41,16 +44,26 @@
 			console.log(noteRes);
 		}
 	}
+
+	let more: Dropdown;
 </script>
 
 <template>
 	<article class="note">
 		<div class="noteHeader">
 			<div class="left">
-				<Avatar data={data.author} size="45px" />
+				<a href={'/@' + data.author.username} class="displayname subtle"
+					><Avatar data={data.author} size="45px" /></a
+				>
 				<div class="names">
-					<span class="displayname">{data.author.displayname}</span>
-					<span class="username">@{data.author.username}</span>
+					<a
+						href={'/@' + data.author.username}
+						class="displayname subtle">{data.author.displayname}</a
+					>
+					<a
+						href={'/@' + data.author.username}
+						class="username subtle">@{data.author.username}</a
+					>
 				</div>
 			</div>
 			<div class="right">
@@ -83,7 +96,7 @@
 						title="Direct Note"
 					/>
 				{:else}
-					 <!-- else content here -->
+					<!-- else content here -->
 				{/if}
 			</div>
 		</div>
@@ -154,18 +167,96 @@
 				<button>
 					<Icon name="bookmark" color="inherit" />
 				</button>
-				<button on:click={deleteNote}>
-					<Icon name="trash" color="var(--danger)" />
-				</button>
-				<button>
+				<button on:click={(e) => more.open(e)}>
 					<Icon name="dots" color="inherit" />
 				</button>
 			</div>
 		</div>
 	</article>
+
+	<Dropdown bind:this={more}>
+		{#if !detailed}
+			<DropdownItem to={'/notes/' + data.id}>
+				<Icon
+					size="18px"
+					name="arrows-maximize"
+					margin="0px 8px 0px 0px"
+				/>
+				<span>Expand note</span>
+			</DropdownItem>
+			<hr />
+		{/if}
+		<DropdownItem>
+			<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
+			<span>Copy link</span>
+		</DropdownItem>
+		{#if !data.local}
+			<DropdownItem>
+				<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
+				<span>Copy link (origin)</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon
+					size="18px"
+					name="external-link"
+					margin="0px 8px 0px 0px"
+				/>
+				<span>View on remote instance</span>
+			</DropdownItem>
+			<hr />
+		{/if}
+		<DropdownItem>
+			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+			<span>Copy note id</span>
+		</DropdownItem>
+		<DropdownItem>
+			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+			<span>Copy author id</span>
+		</DropdownItem>
+		<hr />
+		<DropdownItem>
+			<Icon
+				size="18px"
+				name="exclamation-circle"
+				margin="0px 8px 0px 0px"
+			/>
+			<span>Report note</span>
+		</DropdownItem>
+		<DropdownItem>
+			<Icon
+				size="18px"
+				name="exclamation-circle"
+				margin="0px 8px 0px 0px"
+			/>
+			<span>Report author</span>
+		</DropdownItem>
+		<hr />
+		<DropdownItem>
+			<Icon size="18px" name="pencil" margin="0px 8px 0px 0px" />
+			<span>Edit note</span>
+		</DropdownItem>
+		<DropdownItem type="danger" on:click={deleteNote}>
+			<Icon
+				size="18px"
+				name="trash"
+				color="var(--danger)"
+				margin="0px 8px 0px 0px"
+			/>
+			<span>Delete note</span>
+		</DropdownItem>
+	</Dropdown>
 </template>
 
 <style lang="scss">
+	hr {
+		width: calc(100% - 12px);
+		margin-left: 6px;
+		margin-right: 6px;
+		border-top: 1px solid var(--bg-accent);
+		border-bottom: 0px;
+		border-left: 0px;
+		border-right: 0px;
+	}
 	.noteContent {
 		margin-top: 10px;
 		margin-bottom: 10px;
@@ -182,8 +273,11 @@
 			display: flex;
 			flex-grow: 2;
 			> .names {
+				display: inline-flex;
+				justify-content: center;
+				flex-direction: column;
 				margin-left: 10px;
-				> span {
+				> a {
 					display: block;
 					&.displayname {
 						font-weight: 600;
