@@ -6,6 +6,10 @@
 	let mfmContent = '';
 </script>
 
+<svelte:head>
+	<title>MFM Playground</title>
+</svelte:head>
+
 <template>
 	<PageHeader title="MFM Playground" />
 	<div class="pageContent">

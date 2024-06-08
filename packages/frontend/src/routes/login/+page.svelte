@@ -26,6 +26,10 @@
 	export let data;
 </script>
 
+<svelte:head>
+	<title>Login to {data.name}</title>
+</svelte:head>
+
 <template>
 	<div class="pageContent">
 		<div class="paddedPage">
