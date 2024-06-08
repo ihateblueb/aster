@@ -12,6 +12,7 @@
 	import noteDelete from '$lib/api/note/delete';
 	import noteReact from '$lib/api/note/react';
 	import noteRepeat from '$lib/api/note/repeat';
+	import notePin from '$lib/api/note/pin';
 
 	import userBite from '$lib/api/user/bite';
 
@@ -212,9 +213,14 @@
 			<span>Report user</span>
 		</DropdownItem>
 		<hr />
-		<DropdownItem on:click={() => userBite(data.id)}>
+		<DropdownItem on:click={() => userBite(data.author.id)}>
 			<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
 			<span>Bite user</span>
+		</DropdownItem>
+		<hr />
+		<DropdownItem on:click={() => notePin(data.id)}>
+			<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
+			<span>Pin note</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem>

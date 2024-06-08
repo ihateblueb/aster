@@ -1,6 +1,6 @@
 import Store from '$lib/scripts/Store';
 
-export default async function noteDelete(noteId: String) {
+export default async function noteDelete(noteId: string) {
 	let noteRes = {};
 
 	var noteReq = await fetch(`/api/v1/note`, {

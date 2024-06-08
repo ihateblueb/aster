@@ -1,9 +1,9 @@
 import Store from '$lib/scripts/Store';
 
 export default async function noteEdit(
-	noteId: String,
-	noteCw?: String,
-	noteContent?: String
+	noteId: string,
+	noteCw?: string,
+	noteContent?: string
 ) {
 	let noteRes = {};
 

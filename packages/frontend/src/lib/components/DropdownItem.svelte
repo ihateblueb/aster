@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 
-	export let type: string | undefined;
-	export let to: string | undefined;
+	export let type: string = '';
+	export let to: string = '';
 </script>
 
 <template>
@@ -11,7 +11,7 @@
 			<slot></slot>
 		</button>
 	{:else}
-		<button class={'dropdownItem ' + type}>
+		<button class={'dropdownItem ' + type} on:click>
 			<slot></slot>
 		</button>
 	{/if}

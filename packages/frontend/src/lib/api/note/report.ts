@@ -1,8 +1,8 @@
 import Store from '$lib/scripts/Store';
 
 export default async function noteReport(
-	noteId: String,
-	reportContent: String
+	noteId: string,
+	reportContent: string
 ) {
 	let noteRes = {};
 

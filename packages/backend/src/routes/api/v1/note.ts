@@ -301,6 +301,28 @@ router.post(`/api/v1/note/:noteid/bookmark`, async (req, res) => {
 	}
 });
 
+// pin note
+router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.noteid) {
+		if (authRes.status === 200) {
+			logger('debug', 'note', 'note pin requested');
+			return res.status(501).json({
+				message: 'Not implemented'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'Note ID parameter required'
+		});
+	}
+});
+
 // report note
 router.post(`/api/v1/note/:noteid/report`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);

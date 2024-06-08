@@ -1,6 +1,6 @@
 import Store from '$lib/scripts/Store';
 
-export default async function userBite(userId: String) {
+export default async function userBite(userId: string) {
 	let userRes = {};
 
 	var userReq = await fetch(`/api/v1/user/${userId}/bite`, {

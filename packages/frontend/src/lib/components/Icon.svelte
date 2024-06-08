@@ -3,7 +3,7 @@
 	export let size = '22px';
 	export let name = 'question-mark';
 	export let margin = '0px 0px 0px 0px';
-	export let title: string;
+	export let title: string = '';
 </script>
 
 <template>

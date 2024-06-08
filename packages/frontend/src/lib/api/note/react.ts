@@ -1,6 +1,6 @@
 import Store from '$lib/scripts/Store';
 
-export default async function noteReact(noteId: String, reaction?: String) {
+export default async function noteReact(noteId: string, reaction?: string) {
 	let noteRes = {};
 
 	var noteReq = await fetch(`/api/v1/note/${noteId}/react`, {
