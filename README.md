@@ -18,8 +18,11 @@ Aster extends ActivityPub to make determining note visibility easier. See `docs/
 Aster is developed with the following:
 
 PostgreSQL 16.2
+
 DragonflyDB 1.18 or Redis 6.2.11
+
 NodeJS 22.2.0
+
 pnpm 9.1.4
 
 This may be flexible, but hasn't been tested or looked further into.
