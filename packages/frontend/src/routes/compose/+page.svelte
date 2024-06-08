@@ -36,18 +36,6 @@
 
 <template>
 	<div class="pageContent">
-		<div class="paddedPage">
-			<input
-				class="ipt"
-				placeholder="Content warning"
-				bind:value={noteCw}
-			/>
-			<textarea
-				class="ipt"
-				placeholder="What's on your mind?"
-				bind:value={noteContent}
-			/>
-			<button class="btn" on:click={sendNote}>Note</button>
-		</div>
+		<div class="paddedPage"></div>
 	</div>
 </template>

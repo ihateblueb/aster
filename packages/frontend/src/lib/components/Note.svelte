@@ -13,11 +13,15 @@
 	import noteReact from '$lib/api/note/react';
 	import noteRepeat from '$lib/api/note/repeat';
 	import notePin from '$lib/api/note/pin';
+	import noteUnpin from '$lib/api/note/unpin';
 
 	import userBite from '$lib/api/user/bite';
 
 	export let data;
-	export let detailed;
+	export let pinned: boolean = false;
+	export let repeated: boolean = false;
+	export let repeatedBy: string = '';
+	export let detailed: boolean = false;
 
 	let cwOpen = false;
 
@@ -34,6 +38,28 @@
 
 <template>
 	<article class="note">
+		{#if pinned}
+			<div class="notePreheader">
+				<Icon
+					name="pin"
+					size="16px"
+					color="var(--txt-tertiary)"
+					margin="0px 5px 0px 0px"
+				/>
+				<span> Pinned note </span>
+			</div>
+		{/if}
+		{#if repeated}
+			<div class="notePreheader">
+				<Icon
+					name="repeat"
+					size="16px"
+					color="var(--txt-tertiary)"
+					margin="0px 5px 0px 0px"
+				/>
+				<span> Repeated by {repeatedBy} </span>
+			</div>
+		{/if}
 		<div class="noteHeader">
 			<div class="left">
 				<a href={'/@' + data.author.username} class="displayname subtle"
@@ -132,25 +158,25 @@
 		<div class="noteFooter">
 			<div class="postButtons">
 				<button>
-					<Icon name="arrow-back-up" color="inherit" />
+					<Icon name="arrow-back-up" size="20px" color="inherit" />
 				</button>
 				<button>
-					<Icon name="quote" color="inherit" />
+					<Icon name="quote" size="20px" color="inherit" />
 				</button>
 				<button on:click={() => noteRepeat(data.id)}>
-					<Icon name="repeat" color="inherit" />
+					<Icon name="repeat" size="20px" color="inherit" />
 				</button>
 				<button on:click={() => noteReact(data.id)}>
-					<Icon name="star" color="inherit" />
+					<Icon name="star" size="20px" color="inherit" />
 				</button>
 				<button>
-					<Icon name="plus" color="inherit" />
+					<Icon name="plus" size="20px" color="inherit" />
 				</button>
 				<button on:click={() => noteBookmark(data.id)}>
-					<Icon name="bookmark" color="inherit" />
+					<Icon name="bookmark" size="20px" color="inherit" />
 				</button>
 				<button on:click={(e) => more.open(e)}>
-					<Icon name="dots" color="inherit" />
+					<Icon name="dots" size="20px" color="inherit" />
 				</button>
 			</div>
 		</div>
@@ -218,10 +244,17 @@
 			<span>Bite user</span>
 		</DropdownItem>
 		<hr />
-		<DropdownItem on:click={() => notePin(data.id)}>
-			<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
-			<span>Pin note</span>
-		</DropdownItem>
+		{#if !pinned}
+			<DropdownItem on:click={() => notePin(data.id)}>
+				<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
+				<span>Pin note</span>
+			</DropdownItem>
+		{:else}
+			<DropdownItem on:click={() => noteUnpin(data.id)}>
+				<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
+				<span>Unpin note</span>
+			</DropdownItem>
+		{/if}
 		<hr />
 		<DropdownItem>
 			<Icon size="18px" name="pencil" margin="0px 8px 0px 0px" />
@@ -250,8 +283,8 @@
 		border-right: 0px;
 	}
 	.noteContent {
-		margin-top: 15px;
-		margin-bottom: 15px;
+		margin-top: 10px;
+		margin-bottom: 10px;
 	}
 	.note {
 		margin: 10px;
@@ -262,6 +295,13 @@
 	.details {
 		color: var(--txt-tertiary);
 		margin-top: 10px;
+	}
+	.notePreheader {
+		display: flex;
+		align-items: center;
+		font-size: 14px;
+		color: var(--txt-tertiary);
+		margin-bottom: 10px;
 	}
 	.noteHeader {
 		display: flex;
@@ -283,6 +323,10 @@
 					}
 				}
 			}
+		}
+		.right {
+			display: flex;
+			gap: 4px;
 		}
 	}
 	.noteFooter {

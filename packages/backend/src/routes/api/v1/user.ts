@@ -52,6 +52,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 				userJson['speak_as_cat'] = grabbedUser.speak_as_cat;
 				userJson['created_at'] = grabbedUser.created_at;
 				userJson['updated_at'] = grabbedUser.updated_at;
+				userJson['pinned_notes'] = grabbedUser.pinned_notes;
 
 				res.status(200).json(userJson);
 			}

@@ -72,7 +72,7 @@
 	}*/
 
 	var widgetsTop = [InstanceLogo];
-	var widgetsMid = [Navigation];
+	var widgetsMid = [Navigation, PostForm];
 	var widgetsBtm = [Login];
 </script>
 

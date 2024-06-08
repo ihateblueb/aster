@@ -308,8 +308,44 @@ router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note pin requested');
-			return res.status(501).json({
-				message: 'Not implemented'
+
+			await db
+				.getRepository('users')
+				.query(
+					`UPDATE "users" SET "pinned_notes" = array_append("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
+				);
+
+			return res.status(200).json({
+				message: 'Pinned note'
+			});
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'Note ID parameter required'
+		});
+	}
+});
+
+// unpin note
+router.post(`/api/v1/note/:noteid/unpin`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.noteid) {
+		if (authRes.status === 200) {
+			logger('debug', 'note', 'note pin requested');
+
+			await db
+				.getRepository('users')
+				.query(
+					`UPDATE "users" SET "pinned_notes" = array_remove("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
+				);
+
+			return res.status(200).json({
+				message: 'Pinned note'
 			});
 		} else {
 			return res.status(authRes.status).json({

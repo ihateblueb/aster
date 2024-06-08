@@ -1,9 +1,13 @@
 <script>
 	import { page } from '$app/stores';
+
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Note from '$lib/components/Note.svelte';
+
+	import noteGet from '$lib/api/note/get';
 
 	export let data;
 </script>
@@ -19,8 +23,10 @@
 <template>
 	{#if data.local}
 		<PageHeader title="{data.displayname} (@{data.username})" />
-	{:else}
+	{:else if !data.local}
 		<PageHeader title="{data.displayname} (@{data.username}@{data.host})" />
+	{:else}
+		<PageHeader title="User not found" />
 	{/if}
 	<div class="pageContent">
 		{#if data}
@@ -71,6 +77,13 @@
 					</p>
 				</div>
 			</div>
+			<div>
+				{#each data.pinned_notes as noteId}
+					{#await noteGet(noteId) then note}
+						<Note data={note} pinned pinnedBy={data.displayname} />
+					{/await}
+				{/each}
+			</div>
 		{:else}
 			<h1>User not found</h1>
 		{/if}
@@ -89,6 +102,7 @@
 		.innerHeader {
 			padding: 12px 16px;
 			margin-top: -45px;
+			border-bottom: 1px solid var(--bg-tertiary);
 
 			.name {
 				margin-bottom: 10px;
