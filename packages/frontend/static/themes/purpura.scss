@@ -1,18 +1,40 @@
+@media (prefers-color-scheme: dark) {
+	:root {
+		--bg-primary: #221f29;
+		--bg-secondary: #1d1a22;
+		--bg-tertiary: #19171f;
+		--bg-accent: #35313f;
+
+		--bg-primary-50: #221f2950;
+		--bg-secondary-50: #1f1c2550;
+		--bg-tertiary-50: #1a181f50;
+		--bg-accent-50: #35313f50;
+
+		--txt-primary: #ffffff;
+		--txt-secondary: #e3e0eb;
+		--txt-tertiary: #c7c1d1;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		--bg-primary: #d9d2e8;
+		--bg-secondary: #cabee3;
+		--bg-tertiary: #c1b3e1;
+		--bg-accent: #ab99ca;
+
+		--bg-primary-50: #d2c8e850;
+		--bg-secondary-50: #bdb1d750;
+		--bg-tertiary-50: #b7a9d550;
+		--bg-accent-50: #e5e0ee50;
+
+		--txt-primary: #19171f;
+		--txt-secondary: #1d1a22;
+		--txt-tertiary: #221f29;
+	}
+}
+
 :root {
-	--bg-primary: #221f29;
-	--bg-secondary: #1d1a22;
-	--bg-tertiary: #19171f;
-	--bg-accent: #35313f;
-
-	--bg-primary-50: #221f2950;
-	--bg-secondary-50: #1f1c2550;
-	--bg-tertiary-50: #1a181f50;
-	--bg-accent-50: #35313f50;
-
-	--txt-primary: #ffffff;
-	--txt-secondary: #e3e0eb;
-	--txt-tertiary: #c7c1d1;
-
 	--accent: #9671ff;
 	--accent-20: #9671ff20;
 
