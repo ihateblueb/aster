@@ -1,5 +1,7 @@
 <script>
 	import { page } from '$app/stores';
+	import { locale } from '$lib/locale';
+
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 
@@ -7,16 +9,16 @@
 </script>
 
 <svelte:head>
-	<title>MFM Playground</title>
+	<title>{locale('mfm_playground')}</title>
 </svelte:head>
 
 <template>
-	<PageHeader title="MFM Playground" />
+	<PageHeader title={locale('mfm_playground')} />
 	<div class="pageContent">
-		<strong>Input:</strong><br />
+		<strong>{locale('input')}:</strong><br />
 		<textarea bind:value={mfmContent} />
 		<br /><br />
-		<strong>Output:</strong><br />
+		<strong>{locale('output')}:</strong><br />
 		{#key mfmContent}
 			<Mfm content={mfmContent} />
 		{/key}

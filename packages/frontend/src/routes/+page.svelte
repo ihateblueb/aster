@@ -1,9 +1,11 @@
 <script>
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { locale } from '$lib/locale';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import LinkButton from '$lib/components/LinkButton.svelte';
+	import Ad from '$lib/components/Ad.svelte';
 
 	export let data;
 </script>
@@ -13,25 +15,32 @@
 	<div class="pageContent">
 		<div class="paddedPage welcomePage">
 			<h1>{data.name}</h1>
-			<span class="version">running {data.software} v{data.version}</span>
+			<span class="version"
+				>{locale('running')} {data.software} v{data.version}</span
+			>
 			<div class="statsCtn">
 				<div class="stat">
-					{data.stats.local_user_count} users
+					{data.stats.local_user_count}
+					{locale('users')}
 				</div>
 				<div class="stat">
-					{data.stats.local_note_count} notes
+					{data.stats.local_note_count}
+					{locale('notes')}
 				</div>
 				<div class="stat">
-					{data.stats.instance_count} instances
+					{data.stats.instance_count}
+					{locale('instances')}
 				</div>
 			</div>
 			<p><Mfm content={data.description} /></p>
-			<h2>Instance Rules</h2>
+			<h2>{locale('instance_rules')}</h2>
 			<ol>
 				{#each data.rules as rule}
 					<li>{rule}</li>
 				{/each}
 			</ol>
+			<h2>{locale('advertisement')}</h2>
+			<Ad />
 		</div>
 	</div>
 </template>

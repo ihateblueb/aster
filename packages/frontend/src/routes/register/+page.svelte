@@ -1,4 +1,6 @@
 <script>
+	import { locale } from '$lib/locale';
+
 	import InfoBox from '$lib/components/InfoBox.svelte';
 
 	let username = '';
@@ -18,57 +20,59 @@
 </script>
 
 <svelte:head>
-	<title>Register to {data.name}</title>
+	<title>{locale('register_to')} {data.name}</title>
 </svelte:head>
 
 <template>
 	<div class="pageContent">
 		<div class="paddedPage">
 			<div class="authCtn">
-				<h1>Register to {data.name}</h1>
+				<h1>{locale('register_to')} {data.name}</h1>
 				<p>{data.description_short}</p>
 				{#if data.registration === 'closed'}
 					<InfoBox type="warn">
-						Registrations are currently closed.
+						{locale('registrations_closed')}
 					</InfoBox>
 				{:else if data.registration === 'invite0'}
 					<InfoBox type="warn">
-						Registrations require an invite code.
+						{locale('registrations_invite')}
 					</InfoBox>
 				{:else if data.registration === 'invite1'}
 					<InfoBox type="warn">
-						Registrations require an invite code.
+						{locale('registrations_invite')}
 					</InfoBox>
 				{:else if data.registration === 'open'}
 					<InfoBox type="success">
-						Registrations are currently open.
+						{locale('registrations_open')}
 					</InfoBox>
 				{/if}
 				<input
 					class="ipt"
 					type="invite"
-					placeholder="Invite Code"
+					placeholder={locale('invite_code')}
 					bind:value={invite}
 				/>
 				<input
 					class="ipt"
 					type="username"
-					placeholder="Username"
+					placeholder={locale('username')}
 					bind:value={username}
 				/>
 				<input
 					class="ipt"
 					type="password"
-					placeholder="Password"
+					placeholder={locale('password')}
 					bind:value={password}
 				/>
-				<b>Instance Rules</b>
+				<b>{locale('instance_rules')}</b>
 				<ol>
 					{#each data.rules as rule}
 						<li>{rule}</li>
 					{/each}
 				</ol>
-				<button class="btn" on:click={startLogin}>Register</button>
+				<button class="btn" on:click={startLogin}
+					>{locale('register')}</button
+				>
 			</div>
 		</div>
 	</div>

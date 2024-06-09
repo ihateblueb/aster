@@ -1,11 +1,12 @@
 <script>
 	import { page } from '$app/stores';
+	import { locale } from '$lib/locale';
 	import Button from '$lib/components/LinkButton.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 </script>
 
 <svelte:head>
-	<title>Uh oh!</title>
+	<title>{locale('ohno')}</title>
 </svelte:head>
 
 <div class="paddedPage">

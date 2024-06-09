@@ -1,4 +1,6 @@
 <script>
+	import { locale } from '$lib/locale';
+
 	import noteCreate from '$lib/api/note/create';
 
 	let noteCw = '';
@@ -6,14 +8,14 @@
 </script>
 
 <template>
-	<input class="ipt" placeholder="Content warning" bind:value={noteCw} />
+	<input class="ipt" placeholder={locale('cw')} bind:value={noteCw} />
 	<textarea
 		class="ipt"
-		placeholder="What's on your mind?"
+		placeholder={locale('whats_on_your_mind')}
 		style="resize-x: none;"
 		bind:value={noteContent}
 	/>
 	<button class="btn" on:click={() => noteCreate(noteCw, noteContent)}
-		>Note</button
+		>{locale('note')}</button
 	>
 </template>

@@ -1,4 +1,6 @@
 <script>
+	import { locale } from '$lib/locale';
+
 	import InfoBox from '$lib/components/InfoBox.svelte';
 	import Store from '$lib/scripts/Store';
 
@@ -27,14 +29,14 @@
 </script>
 
 <svelte:head>
-	<title>Login to {data.name}</title>
+	<title>{locale('login_to')} {data.name}</title>
 </svelte:head>
 
 <template>
 	<div class="pageContent">
 		<div class="paddedPage">
 			<div class="authCtn">
-				<h1>Login to {data.name}</h1>
+				<h1>{locale('login_to')} {data.name}</h1>
 				<p>{data.description_short}</p>
 				{#if loginRes.message}
 					<InfoBox type="danger">
@@ -44,17 +46,19 @@
 				<input
 					class="ipt"
 					type="username"
-					placeholder="Username"
+					placeholder={locale('username')}
 					bind:value={username}
 				/>
 				<input
 					class="ipt"
 					type="password"
-					placeholder="Password"
+					placeholder={locale('password')}
 					bind:value={password}
 				/>
 				<br />
-				<button class="btn" on:click={startLogin}>Login</button>
+				<button class="btn" on:click={startLogin}
+					>{locale('login')}</button
+				>
 			</div>
 		</div>
 	</div>

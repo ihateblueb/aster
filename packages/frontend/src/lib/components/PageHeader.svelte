@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { locale } from '$lib/locale';
+
 	export let title = 'Page';
 </script>
 

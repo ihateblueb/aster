@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import Store from '$lib/scripts/Store';
+	import { locale } from '$lib/locale';
 
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
@@ -46,7 +47,7 @@
 					color="var(--txt-tertiary)"
 					margin="0px 5px 0px 0px"
 				/>
-				<span> Pinned note </span>
+				<span> {locale('note_pinned')} </span>
 			</div>
 		{/if}
 		{#if repeated}
@@ -57,7 +58,7 @@
 					color="var(--txt-tertiary)"
 					margin="0px 5px 0px 0px"
 				/>
-				<span> Repeated by {repeatedBy} </span>
+				<span> {repeatedBy} {locale('repeated')} </span>
 			</div>
 		{/if}
 		<div class="noteHeader">
@@ -82,28 +83,28 @@
 						name="planet"
 						size="18px"
 						color="var(--txt-primary)"
-						title="Public"
+						title={locale('public')}
 					/>
 				{:else if data.visibility === 'unlisted'}
 					<Icon
 						name="home"
 						size="18px"
 						color="var(--txt-primary)"
-						title="Unlisted"
+						title={locale('unlisted')}
 					/>
 				{:else if data.visibility === 'followers'}
 					<Icon
 						name="lock"
 						size="18px"
 						color="var(--txt-primary)"
-						title="Followers Only"
+						title={locale('followers_only')}
 					/>
 				{:else if data.visibility === 'direct'}
 					<Icon
 						name="mail"
 						size="18px"
 						color="var(--txt-primary)"
-						title="Direct Note"
+						title={locale('direct_note')}
 					/>
 				{/if}
 			</div>
@@ -124,9 +125,9 @@
 					<div class="right">
 						<button on:click={toggleCw}>
 							{#if cwOpen}
-								Close
+								{locale('close')}
 							{:else}
-								Open
+								{locale('open')}
 							{/if}
 						</button>
 					</div>
@@ -139,18 +140,16 @@
 			{/if}
 			{#if detailed}
 				<div class="details">
-					Posted at {new Date(data.created_at).toLocaleTimeString(
-						undefined,
-						{
-							weekday: 'long',
-							month: 'long',
-							day: 'numeric',
-							year: 'numeric',
-							hour: 'numeric',
-							minute: '2-digit',
-							second: '2-digit'
-						}
-					)}
+					{locale('posted_at')}
+					{new Date(data.created_at).toLocaleTimeString(undefined, {
+						weekday: 'long',
+						month: 'long',
+						day: 'numeric',
+						year: 'numeric',
+						hour: 'numeric',
+						minute: '2-digit',
+						second: '2-digit'
+					})}
 				</div>
 			{/if}
 		</p>
@@ -190,18 +189,18 @@
 					name="arrows-maximize"
 					margin="0px 8px 0px 0px"
 				/>
-				<span>Expand note</span>
+				<span>{locale('expand_note')}</span>
 			</DropdownItem>
 			<hr />
 		{/if}
 		<DropdownItem>
 			<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
-			<span>Copy link</span>
+			<span>{locale('copy_link')}</span>
 		</DropdownItem>
 		{#if !data.local}
 			<DropdownItem>
 				<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
-				<span>Copy link (origin)</span>
+				<span>{locale('copy_link_origin')}</span>
 			</DropdownItem>
 			<DropdownItem>
 				<Icon
@@ -209,17 +208,17 @@
 					name="external-link"
 					margin="0px 8px 0px 0px"
 				/>
-				<span>View on remote instance</span>
+				<span>{locale('view_on_remote')}</span>
 			</DropdownItem>
 			<hr />
 		{/if}
 		<DropdownItem>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
-			<span>Copy note id</span>
+			<span>{locale('copy_note_id')}</span>
 		</DropdownItem>
 		<DropdownItem>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
-			<span>Copy user id</span>
+			<span>{locale('copy_user_id')}</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem>
@@ -228,7 +227,7 @@
 				name="exclamation-circle"
 				margin="0px 8px 0px 0px"
 			/>
-			<span>Report note</span>
+			<span>{locale('report_note')}</span>
 		</DropdownItem>
 		<DropdownItem>
 			<Icon
@@ -236,29 +235,29 @@
 				name="exclamation-circle"
 				margin="0px 8px 0px 0px"
 			/>
-			<span>Report user</span>
+			<span>{locale('report_user')}</span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem on:click={() => userBite(data.author.id)}>
 			<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
-			<span>Bite user</span>
+			<span>{locale('bite_user')}</span>
 		</DropdownItem>
 		<hr />
 		{#if !pinned}
 			<DropdownItem on:click={() => notePin(data.id)}>
 				<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
-				<span>Pin note</span>
+				<span>{locale('pin_note')}</span>
 			</DropdownItem>
 		{:else}
 			<DropdownItem on:click={() => noteUnpin(data.id)}>
 				<Icon size="18px" name="pin" margin="0px 8px 0px 0px" />
-				<span>Unpin note</span>
+				<span>{locale('unpin_note')}</span>
 			</DropdownItem>
 		{/if}
 		<hr />
 		<DropdownItem>
 			<Icon size="18px" name="pencil" margin="0px 8px 0px 0px" />
-			<span>Edit note</span>
+			<span>{locale('edit_note')}</span>
 		</DropdownItem>
 		<DropdownItem type="danger" on:click={() => noteDelete(data.id)}>
 			<Icon
@@ -267,7 +266,16 @@
 				color="var(--danger)"
 				margin="0px 8px 0px 0px"
 			/>
-			<span>Delete note</span>
+			<span>{locale('delete_edit_note')}</span>
+		</DropdownItem>
+		<DropdownItem type="danger" on:click={() => noteDelete(data.id)}>
+			<Icon
+				size="18px"
+				name="trash"
+				color="var(--danger)"
+				margin="0px 8px 0px 0px"
+			/>
+			<span>{locale('delete_note')}</span>
 		</DropdownItem>
 	</Dropdown>
 </template>

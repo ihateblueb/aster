@@ -1,5 +1,7 @@
 <script>
 	import { page } from '$app/stores';
+	import { locale } from '$lib/locale';
+
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Note from '$lib/components/Note.svelte';
 	import Button from '$lib/components/LinkButton.svelte';
@@ -8,11 +10,11 @@
 </script>
 
 <svelte:head>
-	<title>Note by {data.author.displayname}</title>
+	<title>{locale('note_by')} {data.author.displayname}</title>
 </svelte:head>
 
 <template>
-	<PageHeader title="Note by {data.author.displayname}" />
+	<PageHeader title="{locale('note_by')} {data.author.displayname}" />
 	<div class="pageContent">
 		<Note {data} detailed={true} />
 	</div>

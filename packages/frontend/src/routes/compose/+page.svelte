@@ -1,5 +1,6 @@
 <script>
 	import Store from '$lib/scripts/Store';
+	import { locale } from '$lib/locale';
 
 	let noteCw = '';
 	let noteContent = '';

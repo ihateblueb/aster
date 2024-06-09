@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -26,7 +27,7 @@
 	{:else if !data.local}
 		<PageHeader title="{data.displayname} (@{data.username}@{data.host})" />
 	{:else}
-		<PageHeader title="User not found" />
+		<PageHeader title={locale('user_not_found')} />
 	{/if}
 	<div class="pageContent">
 		{#if data}
@@ -62,7 +63,8 @@
 						<Mfm content={data.bio} />
 					</p>
 					<p class="joined">
-						Joined on {new Date(data.created_at).toLocaleTimeString(
+						{locale('joined_on')}
+						{new Date(data.created_at).toLocaleTimeString(
 							undefined,
 							{
 								weekday: 'long',
@@ -85,7 +87,7 @@
 				{/each}
 			</div>
 		{:else}
-			<h1>User not found</h1>
+			<h1>{locale('user_not_found')}</h1>
 		{/if}
 	</div>
 </template>
