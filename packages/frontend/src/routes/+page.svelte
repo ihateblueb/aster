@@ -47,7 +47,7 @@
 		}
 		.version {
 			display: block;
-			font-size: 16px;
+			font-size: var(--font-l);
 			font-weight: 400;
 			opacity: 75%;
 		}
@@ -73,7 +73,7 @@
 				padding: 8px 12px;
 				color: var(--accent);
 				background-color: var(--accent-20);
-				border-radius: 8px;
+				border-radius: var(--border-m);
 			}
 		}
 	}

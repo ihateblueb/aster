@@ -75,11 +75,11 @@
 				margin: 5px 0px 5px 0;
 			}
 			h1 {
-				font-size: 20px;
+				font-size: var(--font-xxl);
 				margin-bottom: 6px;
 			}
 			p {
-				font-size: 16px;
+				font-size: var(--font-l);
 				margin-bottom: 10px;
 				color: var(--txt-tertiary);
 			}

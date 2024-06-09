@@ -24,7 +24,7 @@
 
 <style lang="scss">
 	.infoBox {
-		border-radius: 8px;
+		border-radius: var(--border-m);
 		padding: 6px 12px;
 		margin: 10px 0px 10px 0px;
 

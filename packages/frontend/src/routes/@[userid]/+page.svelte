@@ -102,7 +102,7 @@
 		.innerHeader {
 			padding: 12px 16px;
 			margin-top: -45px;
-			border-bottom: 1px solid var(--bg-tertiary);
+			border-bottom: var(--border-width-s) solid var(--bg-tertiary);
 
 			.name {
 				margin-bottom: 10px;
@@ -113,7 +113,7 @@
 						display: flex;
 						margin-top: 10px;
 						font-weight: 700;
-						font-size: 18px;
+						font-size: var(--font-xl);
 						> .indicators {
 							margin-left: 5px;
 						}

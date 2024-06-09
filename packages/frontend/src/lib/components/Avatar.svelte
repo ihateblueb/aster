@@ -81,7 +81,7 @@
 	.avatar {
 		position: relative;
 		z-index: 100;
-		border-radius: 10px;
+		border-radius: var(--border-l);
 		user-select: none;
 	}
 

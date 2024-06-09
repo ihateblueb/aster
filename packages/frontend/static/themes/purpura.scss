@@ -1,6 +1,4 @@
 :root {
-	--font: 'Figtree', Arial, Helvetica, sans-serif;
-
 	--bg-primary: #221f29;
 	--bg-secondary: #1d1a22;
 	--bg-tertiary: #19171f;
@@ -26,4 +24,29 @@
 
 	--danger: #e85858;
 	--danger-20: #e8585820;
+
+	// Font family
+	--font: 'Figtree', Arial, Helvetica, sans-serif;
+
+	// Font size
+	--font-xxl: 20px;
+	--font-xl: 18px;
+	--font-l: 16px;
+	--font-m: 15px;
+	--font-s: 14px;
+	--font-xs: 12px;
+	--font-xxs: 10px;
+
+	// Border radius
+	--border-xxl: 16px;
+	--border-xl: 12px;
+	--border-l: 10px;
+	--border-m: 8px;
+	--border-s: 6px;
+	--border-xs: 4px;
+	--border-xxs: 0px;
+
+	// Border width
+	--border-width-s: 1px;
+	--border-width-m: 2px;
 }

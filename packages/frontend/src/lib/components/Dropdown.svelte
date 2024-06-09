@@ -58,9 +58,9 @@
 		box-shadow: 0px 0px 15px #00000025;
 		background-color: var(--bg-secondary);
 		color: var(--txt-secondary);
-		font-size: 14px;
+		font-size: var(--font-s);
 
-		border-radius: 8px;
+		border-radius: var(--border-m);
 		border: none;
 
 		min-width: 175px;

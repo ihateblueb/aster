@@ -28,7 +28,7 @@
 		color: inherit;
 		font-family: inherit;
 		font-size: inherit;
-		border-radius: 6px;
+		border-radius: var(--border-s);
 		border: none;
 
 		cursor: pointer;

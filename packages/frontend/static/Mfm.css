@@ -9,7 +9,7 @@
 	margin: 8px 12px;
 	color: var(--txt-tertiary);
 	padding-left: 10px;
-	border-left: 2px solid var(--txt-tertiary);
+	border-left: var(--border-width-m) solid var(--txt-tertiary);
 }
 
 .mfm-blur {

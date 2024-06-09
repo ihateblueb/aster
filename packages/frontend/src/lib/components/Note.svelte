@@ -277,7 +277,7 @@
 		width: calc(100% - 12px);
 		margin-left: 6px;
 		margin-right: 6px;
-		border-top: 1px solid var(--bg-accent);
+		border-top: var(--border-width-s) solid var(--bg-accent);
 		border-bottom: 0px;
 		border-left: 0px;
 		border-right: 0px;
@@ -289,7 +289,7 @@
 	.note {
 		margin: 10px;
 		padding: 20px;
-		border-radius: 12px;
+		border-radius: var(--border-xl);
 		background-color: var(--bg-secondary);
 	}
 	.details {
@@ -299,7 +299,7 @@
 	.notePreheader {
 		display: flex;
 		align-items: center;
-		font-size: 14px;
+		font-size: var(--font-s);
 		color: var(--txt-tertiary);
 		margin-bottom: 10px;
 	}
@@ -319,7 +319,7 @@
 						font-weight: 600;
 					}
 					&.username {
-						font-size: 15px;
+						font-size: var(--font-m);
 					}
 				}
 			}
@@ -356,7 +356,7 @@
 		color: var(--warn);
 		background-color: var(--warn-20);
 		padding: 4px 6px;
-		border-radius: 8px;
+		border-radius: var(--border-m);
 
 		.left {
 			display: inline-flex;
@@ -381,7 +381,7 @@
 			background: var(--warn-20);
 			border: none;
 			padding: 5px 8px;
-			border-radius: 6px;
+			border-radius: var(--border-s);
 		}
 	}
 </style>
