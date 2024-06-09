@@ -32,6 +32,8 @@ export class Notes {
 	@Column('text', { array: true, nullable: true })
 	edits: string[];
 
+	// these can be counted when building the api response
+
 	@Column('text', { array: true, nullable: true })
 	replies: string[];
 

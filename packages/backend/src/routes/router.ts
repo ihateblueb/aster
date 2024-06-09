@@ -15,6 +15,8 @@ import api_v1_lookup from './api/v1/lookup.js';
 
 import api_v1_login from './api/v1/login.js';
 
+import api_v1_ads from './api/v1/ads.js';
+
 // required endpoints for federation
 router.use('/', ap_wellknown);
 router.use('/', ap_nodeinfo);
@@ -29,5 +31,7 @@ router.use('/', api_v1_notes);
 router.use('/', api_v1_lookup);
 
 router.use('/', api_v1_login);
+
+router.use('/', api_v1_ads);
 
 export default router;

@@ -86,6 +86,17 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	pinned_notes: string[];
 
+	// counts
+
+	@Column({ nullable: true })
+	total_notes: number;
+
+	@Column({ nullable: true })
+	total_followers: number;
+
+	@Column({ nullable: true })
+	total_following: number;
+
 	// stored like
 	// { {"key":"val"} }
 
