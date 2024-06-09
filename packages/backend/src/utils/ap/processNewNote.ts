@@ -6,6 +6,8 @@ import logger from '../logger.js';
 import getRemoteNote from './getRemoteNote.js';
 import getRemoteActor from './getRemoteActor.js';
 
+import sanitize from '../sanitize.js';
+
 export default async function processNewNote(body) {
 	if (body.object.type === 'Note') {
 		let grabbedRemoteActor = await getRemoteActor(body.object.actor);
@@ -80,7 +82,7 @@ export default async function processNewNote(body) {
 		noteToInsert['local'] = false;
 
 		if (body.object.subject) {
-			noteToInsert['cw'] = body.object.subject;
+			noteToInsert['cw'] = sanitize(body.object.subject);
 		}
 
 		if (
@@ -89,9 +91,9 @@ export default async function processNewNote(body) {
 			body.object.source.mediaType === 'text/x.misskeymarkdown'
 		) {
 			// raw mfm
-			noteToInsert['content'] = body.object.source.content;
+			noteToInsert['content'] = sanitize(body.object.source.content);
 		} else {
-			noteToInsert['content'] = body.object.content;
+			noteToInsert['content'] = sanitize(body.object.content);
 		}
 
 		//await db.getRepository('notes').insert(noteToInsert);

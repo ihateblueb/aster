@@ -1,9 +1,19 @@
 import db from '../database.js';
 import logger from '../logger.js';
-import accept from '../ap/accept.js';
-import getRemoteActor from './getRemoteActor.js';
 
-import processNewNote from './processNewNote.js';
+import IPAccept from './inboxProcessors/accept.js';
+import IPAdd from './inboxProcessors/add.js';
+import IPAnnounce from './inboxProcessors/announce.js';
+import IPBite from './inboxProcessors/bite.js';
+import IPBlock from './inboxProcessors/block.js';
+import IPCreate from './inboxProcessors/create.js';
+import IPDelete from './inboxProcessors/delete.js';
+import IPEmojiReact from './inboxProcessors/emojireact.js';
+import IPFollow from './inboxProcessors/follow.js';
+import IPLike from './inboxProcessors/like.js';
+import IPMove from './inboxProcessors/move.js';
+import IPUndo from './inboxProcessors/undo.js';
+import IPUpdate from './inboxProcessors/update.js';
 
 /*
 	Done activity types:
@@ -38,142 +48,31 @@ export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
 
 	if (parsedBody.type === 'Accept') {
-		// accept
+		await IPAccept(parsedBody);
 	} else if (parsedBody.type === 'Announce') {
-		// announce
+		await IPAnnounce(parsedBody);
 	} else if (parsedBody.type === 'Bite') {
-		// YEEEOWWWCH!
-		// https://ns.mia.jetzt/as/#Bite
+		await IPBite(parsedBody);
 	} else if (parsedBody.type === 'Create') {
-		if (parsedBody.object.type === 'Note') {
-			await processNewNote(parsedBody.object);
-		}
+		await IPCreate(parsedBody);
 	} else if (parsedBody.type === 'Delete') {
-		// disabled because this deletes actor no matter what even though it could be a deleted note
-		/*
-
-		let grabbedRemoteActor = await db.getRepository('users').findOne({
-			where: {
-				ap_id: parsedBody.actor
-			}
-		});
-
-		if (grabbedRemoteActor) {
-			await db.getRepository('users').delete(grabbedRemoteActor.id);
-			logger('info', 'ap', 'deleted ' + parsedBody.actor);
-			return {
-				status: 200,
-				message: 'Actor deleted'
-			};
-		} else {
-			logger(
-				'debug',
-				'ap',
-				'accepted deletion of ' +
-					parsedBody.actor +
-					' even though it was not present'
-			);
-			return {
-				status: 200,
-				message: 'Pretended to delete actor'
-			};
-		}
-		*/
+		await IPDelete(parsedBody);
 	} else if (parsedBody.type === 'Follow') {
-		let grabbedLocalUser = await db.getRepository('users').findOne({
-			where: {
-				ap_id: parsedBody.object
-			}
-		});
-
-		if (!grabbedLocalUser) {
-			logger('debug', 'ap', 'local user not here');
-		}
-
-		if (!grabbedLocalUser.local) {
-			return {
-				status: '400',
-				message: 'User is not local'
-			};
-		}
-
-		let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
-
-		if (grabbedLocalUser.locked) {
-			await db
-				.getRepository('users')
-				.query(
-					`UPDATE "users" SET "pending_followers" = array_append("pending_followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
-				);
-			return {
-				status: 200,
-				message: 'Added pending follower'
-			};
-		} else {
-			await db
-				.getRepository('users')
-				.query(
-					`UPDATE "users" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
-				);
-
-			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
-		}
+		await IPFollow(parsedBody);
 	} else if (parsedBody.type === 'Update') {
-		// update
+		await IPUpdate(parsedBody);
 	} else if (parsedBody.type === 'Undo') {
-		let grabbedLocalUser = await db.getRepository('users').findOne({
-			where: {
-				ap_id: parsedBody.object.object
-			}
-		});
-
-		if (!grabbedLocalUser) {
-			logger('debug', 'ap', 'local user not here');
-			return {
-				status: '400',
-				message: 'User is not here'
-			};
-		}
-
-		if (!grabbedLocalUser.local) {
-			return {
-				status: '400',
-				message: 'User is not local'
-			};
-		}
-
-		let grabbedRemoteActor = await getRemoteActor(parsedBody.actor);
-
-		if (parsedBody.object.type === 'Follow') {
-			await db
-				.getRepository('users')
-				.query(
-					`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
-				);
-
-			accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, parsedBody);
-
-			return {
-				status: 200,
-				message: 'Undo follow accepted'
-			};
-		} else {
-			return;
-		}
+		await IPUndo(parsedBody);
 	} else if (parsedBody.type === 'Like') {
-		console.log(parsedBody);
+		await IPLike(parsedBody);
 	} else if (parsedBody.type === 'EmojiReact') {
-		console.log(parsedBody);
+		await IPEmojiReact(parsedBody);
 	} else if (parsedBody.type === 'Add') {
-		// add
+		await IPAdd(parsedBody);
 	} else if (parsedBody.type === 'Block') {
-		// block
+		await IPBlock(parsedBody);
 	} else if (parsedBody.type === 'Move') {
-		// this will not be implemented
-		return {
-			status: 501,
-			message: 'Not implemented'
-		};
+		await IPMove(parsedBody);
 	} else {
 		console.log('oh god oh fuck new activity type ' + parsedBody.type);
 	}

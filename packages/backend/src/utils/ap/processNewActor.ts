@@ -3,6 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import db from '../database.js';
 import logger from '../logger.js';
 
+import sanitize from '../sanitize.js';
+
 export default async function processNewActor(body) {
 	if (
 		body.type === 'Person' &&
@@ -15,7 +17,7 @@ export default async function processNewActor(body) {
 		// this will be generated
 		actorToInsert['id'] = uuidv4();
 
-		actorToInsert['username'] = body.preferredUsername;
+		actorToInsert['username'] = sanitize(body.preferredUsername);
 		actorToInsert['host'] = new URL(body.url).host;
 		actorToInsert['ap_id'] = body.id;
 
@@ -32,13 +34,13 @@ export default async function processNewActor(body) {
 		actorToInsert['local'] = false;
 
 		if (body.name) {
-			actorToInsert['displayname'] = body.name;
+			actorToInsert['displayname'] = sanitize(body.name);
 		}
 
 		if (body._misskey_summary) {
-			actorToInsert['bio'] = body._misskey_summary;
+			actorToInsert['bio'] = sanitize(body._misskey_summary);
 		} else if (body.summary) {
-			actorToInsert['bio'] = body.summary;
+			actorToInsert['bio'] = sanitize(body.summary);
 		}
 
 		if (body.icon) {
