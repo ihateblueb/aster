@@ -1,4 +1,4 @@
-import Store from '$lib/scripts/Store';
+import Store from '$lib/utils/Store';
 
 export async function getLocaleFile(locale) {
 	if (locale) {

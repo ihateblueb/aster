@@ -1,4 +1,4 @@
-import Store from '$lib/scripts/Store';
+import Store from '$lib/utils/Store';
 
 export default async function noteCreate(noteCw: String, noteContent: String) {
 	let noteRes = {};

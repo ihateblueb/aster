@@ -3,7 +3,12 @@ export default {
 		return localStorage.setItem(key, val);
 	},
 	get: (key: string) => {
-		return localStorage.getItem(key);
+		let toReturn = localStorage.getItem(key);
+		if (toReturn) {
+			return toReturn;
+		} else {
+			return import(`./defaultStore.json`)[key];
+		}
 	},
 	del: (key: string) => {
 		return localStorage.removeItem(key);

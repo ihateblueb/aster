@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+
 	import Sidebar from '$lib/components/Sidebar.svelte';
 </script>
 

@@ -1,8 +1,8 @@
 <script>
 	import { locale } from '$lib/locale';
+	import Store from '$lib/utils/Store';
 
 	import InfoBox from '$lib/components/InfoBox.svelte';
-	import Store from '$lib/scripts/Store';
 
 	let username = '';
 	let password = '';

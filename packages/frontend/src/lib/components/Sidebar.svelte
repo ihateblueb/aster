@@ -1,6 +1,6 @@
 <script lang="ts">
 	import PageHeader from './PageHeader.svelte';
-	import Store from '$lib/scripts/Store';
+	import Store from '$lib/utils/Store';
 
 	import Account from './widgets/Account.svelte';
 	import Clock from './widgets/Clock.svelte';

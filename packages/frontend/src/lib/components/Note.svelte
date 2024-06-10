@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import Store from '$lib/scripts/Store';
 	import { locale } from '$lib/locale';
 
 	import Avatar from '$lib/components/Avatar.svelte';

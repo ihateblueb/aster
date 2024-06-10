@@ -1,0 +1,58 @@
+@media (prefers-color-scheme: dark) {
+	.iceshrimp {
+		--bg-primary: #363146;
+		--bg-secondary: #403a52;
+		--bg-tertiary: #443e57;
+		--bg-accent: #4d4663;
+
+		--txt-primary: #e7edff;
+		--txt-secondary: #d8def1;
+		--txt-tertiary: #cad0e6;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	.iceshrimp {
+		--bg-primary: #e7edff;
+		--bg-secondary: #d8def1;
+		--bg-tertiary: #cad0e6;
+		--bg-accent: #afb7d1;
+
+		--txt-primary: #363146;
+		--txt-secondary: #403a52;
+		--txt-tertiary: #443e57;
+	}
+}
+
+.iceshrimp {
+	--font: 'Figtree', Arial, Helvetica, sans-serif;
+
+	--font-xxl: 20px;
+	--font-xl: 18px;
+	--font-l: 16px;
+	--font-m: 15px;
+	--font-s: 14px;
+	--font-xs: 12px;
+	--font-xxs: 10px;
+
+	--border-xxl: 16px;
+	--border-xl: 12px;
+	--border-l: 10px;
+	--border-m: 8px;
+	--border-s: 6px;
+	--border-xs: 4px;
+	--border-xxs: 0px;
+
+	--border-width-s: 1px;
+	--border-width-m: 2px;
+
+	--accent: #9a92ff;
+	--success: #78cca1;
+	--warn: #ffd690;
+	--danger: #ec9c9c;
+
+	--accent-20: #9a92ff20;
+	--success-20: #78cca120;
+	--warn-20: #ffd69020;
+	--danger-20: #ec9c9c20;
+}

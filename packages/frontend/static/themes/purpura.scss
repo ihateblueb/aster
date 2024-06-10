@@ -1,5 +1,5 @@
 @media (prefers-color-scheme: dark) {
-	:root {
+	.purpura {
 		--bg-primary: #221f29;
 		--bg-secondary: #1d1a22;
 		--bg-tertiary: #19171f;
@@ -17,7 +17,7 @@
 }
 
 @media (prefers-color-scheme: light) {
-	:root {
+	.purpura {
 		--bg-primary: #d9d2e8;
 		--bg-secondary: #cabee3;
 		--bg-tertiary: #c1b3e1;
@@ -34,23 +34,9 @@
 	}
 }
 
-:root {
-	--accent: #9671ff;
-	--accent-20: #9671ff20;
-
-	--success: #43c984;
-	--success-20: #43c98420;
-
-	--warn: #ffc45d;
-	--warn-20: #ffc45d20;
-
-	--danger: #e85858;
-	--danger-20: #e8585820;
-
-	// Font family
+.purpura {
 	--font: 'Figtree', Arial, Helvetica, sans-serif;
 
-	// Font size
 	--font-xxl: 20px;
 	--font-xl: 18px;
 	--font-l: 16px;
@@ -59,7 +45,6 @@
 	--font-xs: 12px;
 	--font-xxs: 10px;
 
-	// Border radius
 	--border-xxl: 16px;
 	--border-xl: 12px;
 	--border-l: 10px;
@@ -68,7 +53,16 @@
 	--border-xs: 4px;
 	--border-xxs: 0px;
 
-	// Border width
 	--border-width-s: 1px;
 	--border-width-m: 2px;
+
+	--accent: #9671ff;
+	--success: #43c984;
+	--warn: #ffc45d;
+	--danger: #e85858;
+
+	--accent-20: #9671ff20;
+	--success-20: #43c98420;
+	--warn-20: #ffc45d20;
+	--danger-20: #e8585820;
 }

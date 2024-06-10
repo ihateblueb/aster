@@ -1,4 +1,4 @@
-import Store from '$lib/scripts/Store';
+import Store from '$lib/utils/Store';
 
 export default async function noteUnpin(noteId: string) {
 	let noteRes = {};
