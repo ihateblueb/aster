@@ -4,7 +4,7 @@
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Note from '$lib/components/Note.svelte';
-	import Button from '$lib/components/LinkButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 
 	export let data;
 </script>

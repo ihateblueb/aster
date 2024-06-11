@@ -4,7 +4,7 @@
 	import { locale } from '$lib/locale';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
-	import LinkButton from '$lib/components/LinkButton.svelte';
+	import Button from '$lib/components/Button.svelte';
 	import Ad from '$lib/components/Ad.svelte';
 
 	export let data;

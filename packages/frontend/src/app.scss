@@ -84,41 +84,6 @@ main {
 	color: var(--bg-primary);
 }
 
-:global(.btn) {
-	cursor: pointer;
-	user-select: none;
-	display: inline-flex;
-	align-content: center;
-	background-color: var(--bg-tertiary);
-	color: var(--txt-secondary);
-	font-size: var(--font-m);
-	text-decoration: none;
-	padding: 8px 14px;
-	margin: 4px;
-	border-radius: var(--border-m);
-	border: none;
-	font-family: inherit;
-
-	outline: 2px var(--accent);
-	outline-offset: 1px;
-}
-
-:global(.ipt) {
-	display: inline-block;
-	background-color: var(--bg-secondary);
-	color: var(--txt-secondary);
-	font-size: var(--font-m);
-	padding: 8px 14px;
-	margin: 4px;
-	border-radius: var(--border-m);
-	border: none;
-	font-family: inherit;
-	width: 250px;
-
-	outline: 2px var(--accent);
-	outline-offset: 1px;
-}
-
 :global(a.subtle) {
 	display: inherit;
 	text-decoration: none;

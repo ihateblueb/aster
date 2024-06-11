@@ -2,6 +2,8 @@
 	import { locale } from '$lib/locale';
 	import Store from '$lib/utils/Store';
 
+	import Button from '$lib/components/Button.svelte';
+	import Input from '$lib/components/Input.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
 
 	let username = '';
@@ -43,22 +45,18 @@
 						{loginRes.message}
 					</InfoBox>
 				{/if}
-				<input
-					class="ipt"
-					type="username"
+				<Input
+					formtype="username"
 					placeholder={locale('username')}
 					bind:value={username}
 				/>
-				<input
-					class="ipt"
-					type="password"
+				<Input
+					formtype="password"
 					placeholder={locale('password')}
 					bind:value={password}
 				/>
 				<br />
-				<button class="btn" on:click={startLogin}
-					>{locale('login')}</button
-				>
+				<Button on:click={startLogin}>{locale('login')}</Button>
 			</div>
 		</div>
 	</div>

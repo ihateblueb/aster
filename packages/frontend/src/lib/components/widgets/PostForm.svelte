@@ -1,6 +1,9 @@
 <script>
 	import { locale } from '$lib/locale';
 
+	import Button from '$lib/components/Button.svelte';
+	import Input from '$lib/components/Input.svelte';
+
 	import noteCreate from '$lib/api/note/create';
 
 	let noteCw = '';
@@ -8,14 +11,14 @@
 </script>
 
 <template>
-	<input class="ipt" placeholder={locale('cw')} bind:value={noteCw} />
-	<textarea
-		class="ipt"
+	<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}></Input>
+	<Input
+		type="wide"
+		big
 		placeholder={locale('whats_on_your_mind')}
-		style="resize-x: none;"
 		bind:value={noteContent}
-	/>
-	<button class="btn" on:click={() => noteCreate(noteCw, noteContent)}
-		>{locale('note')}</button
-	>
+	></Input>
+	<Button on:click={() => noteCreate(noteCw, noteContent)}>
+		{locale('note')}
+	</Button>
 </template>

@@ -1,6 +1,7 @@
 <script>
 	import { locale } from '$lib/locale';
 
+	import Button from '$lib/components/Button.svelte';
 	import InfoBox from '$lib/components/InfoBox.svelte';
 
 	let username = '';
@@ -70,9 +71,7 @@
 						<li>{rule}</li>
 					{/each}
 				</ol>
-				<button class="btn" on:click={startLogin}
-					>{locale('register')}</button
-				>
+				<Button on:click={startLogin}>{locale('register')}</Button>
 			</div>
 		</div>
 	</div>
