@@ -77,6 +77,17 @@
 							}
 						)}
 					</p>
+					<div class="stats">
+						<div>
+							<b>0</b> notes
+						</div>
+						<div>
+							<b>0</b> followers
+						</div>
+						<div>
+							<b>0</b> following
+						</div>
+					</div>
 				</div>
 			</div>
 			<div>
@@ -131,6 +142,11 @@
 			.joined {
 				color: var(--txt-tertiary);
 			}
+		}
+		.stats {
+			display: flex;
+			gap: 10px;
+			width: 100%;
 		}
 	}
 </style>
