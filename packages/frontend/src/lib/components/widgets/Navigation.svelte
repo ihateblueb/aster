@@ -16,7 +16,7 @@
 	</Button>
 	<Button type="nav" to="/followrequests">
 		<Icon name="user-plus" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_followrequests')}
+		{locale('nav_follow_requests')}
 	</Button>
 	<hr />
 	<Button type="nav" to="/explore">
@@ -47,7 +47,7 @@
 	<hr />
 	<Button type="nav" to="/admin">
 		<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_adminpanel')}
+		{locale('nav_admin_panel')}
 	</Button>
 	<Button type="nav" to="/settings">
 		<Icon name="settings" size="18px" margin="0px 6px 0px 0px" />
