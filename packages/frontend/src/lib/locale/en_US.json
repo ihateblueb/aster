@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "3",
+	"__version__": "6",
 
 	"user": "User",
 	"user_not_found": "User not found",
@@ -68,5 +68,20 @@
 	"advertisement": "Advertisement",
 	"ohno": "Oh no!",
 	"cw": "Content warning",
-	"whats_on_your_mind": "What's on your mind?"
+	"whats_on_your_mind": "What's on your mind?",
+	"nav_home": "Home",
+	"nav_notifications": "Notifications",
+	"nav_followrequests": "Follow Requests",
+	"nav_explore": "Explore",
+	"nav_announcements": "Announcements",
+	"nav_search": "Search",
+	"nav_bookmarks": "Bookmarks",
+	"nav_drive": "Drive",
+	"nav_drafts": "Drafts",
+	"nav_adminpanel": "Admin Panel",
+	"nav_settings": "Settings",
+	"s_appearance": "Appearance",
+	"s_appearance_theme": "Theme",
+	"s_behavior": "Behavior",
+	"s_account": "Account"
 }

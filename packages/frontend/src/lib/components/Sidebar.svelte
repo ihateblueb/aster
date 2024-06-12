@@ -61,39 +61,33 @@
 				});
 			}
 		}
-	} else {
-		if (side === 'left') {
-			var widgetsTop = [InstanceLogo];
-			var widgetsMid = [Navigation];
-			var widgetsBtm = [Login];
-		} else if (side === 'right') {
-			var widgetsTop = [Welcome];
-		}
-	}*/
+	} else {*/
 
-	var widgetsTop = [InstanceLogo];
-	var widgetsMid = [Navigation, PostForm];
-	var widgetsBtm = [Login];
+	var widgets = {
+		top: [InstanceLogo],
+		mid: [Navigation],
+		btm: [Login]
+	};
 </script>
 
 <template>
 	<div class="sidebar">
 		<div class="top">
-			{#each widgetsTop as widget}
+			{#each widgets.top as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>
 			{/each}
 		</div>
 		<div class="mid">
-			{#each widgetsMid as widget}
+			{#each widgets.mid as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>
 			{/each}
 		</div>
 		<div class="btm">
-			{#each widgetsBtm as widget}
+			{#each widgets.btm as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>
@@ -110,6 +104,7 @@
 		max-width: 375px;
 		width: 300px;
 		min-width: 200px;
+		overflow-y: hidden;
 		.top {
 			height: fit-content;
 			.widget {
@@ -119,6 +114,7 @@
 		.mid {
 			margin-bottom: auto;
 			height: fit-content;
+			overflow-y: scroll;
 			.widget {
 				margin: 8px;
 			}

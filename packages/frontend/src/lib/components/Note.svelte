@@ -281,13 +281,11 @@
 
 <style lang="scss">
 	hr {
-		width: calc(100% - 12px);
-		margin-left: 6px;
-		margin-right: 6px;
+		width: calc(100% - 16px);
+		margin-left: 8px;
+		margin-right: 8px;
+		border: 0px solid;
 		border-top: var(--border-width-s) solid var(--bg-accent);
-		border-bottom: 0px;
-		border-left: 0px;
-		border-right: 0px;
 	}
 	.noteContent {
 		margin-top: 10px;

@@ -20,7 +20,7 @@
 		cursor: pointer;
 		user-select: none;
 		display: inline-flex;
-		align-content: center;
+		align-items: center;
 		background-color: var(--bg-tertiary);
 		color: var(--txt-secondary);
 		font-size: var(--font-m);
@@ -36,7 +36,20 @@
 			box-sizing: border-box;
 		}
 
-		&:not(.wide) {
+		&.nav {
+			width: 100%;
+			box-sizing: border-box;
+			margin: 2.5px 0px;
+			padding: 8px 12px;
+			background-color: transparent;
+
+			&:hover {
+				color: var(--accent);
+				background-color: var(--accent-20);
+			}
+		}
+
+		&:not(.wide, .nav) {
 			width: fit-content;
 		}
 

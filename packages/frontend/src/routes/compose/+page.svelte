@@ -1,34 +1,5 @@
 <script>
-	import Store from '$lib/utils/Store';
-	import { locale } from '$lib/locale';
-
-	let noteCw = '';
-	let noteContent = '';
-
-	let noteRes = {};
-
-	async function sendNote() {
-		var noteReq = await fetch(`/api/v1/note`, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
-			},
-			body: JSON.stringify({
-				cw: noteCw,
-				content: noteContent
-			})
-		});
-
-		noteRes = await noteReq.json();
-
-		if (noteReq.status === 200) {
-			console.log(noteRes);
-		} else {
-			console.log(noteRes);
-		}
-	}
+	import PostForm from '$lib/components/widgets/PostForm.svelte';
 </script>
 
 <svelte:head>
@@ -37,6 +8,8 @@
 
 <template>
 	<div class="pageContent">
-		<div class="paddedPage"></div>
+		<div class="paddedPage">
+			<PostForm />
+		</div>
 	</div>
 </template>
