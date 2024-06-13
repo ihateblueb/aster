@@ -91,11 +91,17 @@
 				</div>
 			</div>
 			<div>
-				{#each data.pinned_notes as noteId}
-					{#await noteGet(noteId) then note}
-						<Note data={note} pinned pinnedBy={data.displayname} />
-					{/await}
-				{/each}
+				{#if data.pinned_notes}
+					{#each data.pinned_notes as noteId}
+						{#await noteGet(noteId) then note}
+							<Note
+								data={note}
+								pinned
+								pinnedBy={data.displayname}
+							/>
+						{/await}
+					{/each}
+				{/if}
 			</div>
 		{:else}
 			<h1>{locale('user_not_found')}</h1>
