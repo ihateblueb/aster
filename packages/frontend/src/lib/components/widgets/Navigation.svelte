@@ -8,50 +8,50 @@
 <template>
 	<Button type="nav" to="/">
 		<Icon name="home" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_home')}
+		{locale('home')}
 	</Button>
 	<Button type="nav" to="/notifications">
 		<Icon name="bell" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_notifications')}
+		{locale('notifications')}
 	</Button>
 	<Button type="nav" to="/followrequests">
 		<Icon name="user-plus" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_follow_requests')}
+		{locale('follow_requests')}
 	</Button>
 	<hr />
 	<Button type="nav" to="/explore">
 		<Icon name="compass" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_explore')}
+		{locale('explore')}
 	</Button>
 	<Button type="nav" to="/announcements">
 		<Icon name="speakerphone" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_announcements')}
+		{locale('announcements')}
 	</Button>
 	<Button type="nav" to="/search">
 		<Icon name="search" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_search')}
+		{locale('search')}
 	</Button>
 	<hr />
 	<Button type="nav" to="/bookmarks">
 		<Icon name="bookmarks" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_bookmarks')}
+		{locale('bookmarks')}
 	</Button>
 	<Button type="nav" to="/drive">
 		<Icon name="folder" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_drive')}
+		{locale('drive')}
 	</Button>
 	<Button type="nav" to="/drafts">
 		<Icon name="pencil-minus" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_drafts')}
+		{locale('drafts')}
 	</Button>
 	<hr />
 	<Button type="nav" to="/admin">
 		<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_admin_panel')}
+		{locale('admin_panel')}
 	</Button>
 	<Button type="nav" to="/settings">
 		<Icon name="settings" size="18px" margin="0px 6px 0px 0px" />
-		{locale('nav_settings')}
+		{locale('settings')}
 	</Button>
 </template>
 

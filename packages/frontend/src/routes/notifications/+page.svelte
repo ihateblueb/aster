@@ -2,6 +2,8 @@
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
+
+	export let data;
 </script>
 
 <svelte:head>

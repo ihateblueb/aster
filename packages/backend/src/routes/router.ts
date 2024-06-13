@@ -12,10 +12,10 @@ import api_v1_meta from './api/v1/meta.js';
 import api_v1_users from './api/v1/user.js';
 import api_v1_notes from './api/v1/note.js';
 import api_v1_lookup from './api/v1/lookup.js';
-
 import api_v1_login from './api/v1/login.js';
-
 import api_v1_ads from './api/v1/ads.js';
+import api_v1_notification from './api/v1/notification.js';
+import api_v1_followrequests from './api/v1/followrequest.js';
 
 // required endpoints for federation
 router.use('/', ap_wellknown);
@@ -29,9 +29,9 @@ router.use('/', api_v1_meta);
 router.use('/', api_v1_users);
 router.use('/', api_v1_notes);
 router.use('/', api_v1_lookup);
-
 router.use('/', api_v1_login);
-
 router.use('/', api_v1_ads);
+router.use('/', api_v1_notification);
+router.use('/', api_v1_followrequests);
 
 export default router;

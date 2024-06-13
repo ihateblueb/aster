@@ -78,9 +78,6 @@ export class Users {
 	followers: string[];
 
 	@Column('text', { array: true, nullable: true })
-	pending_followers: string[];
-
-	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
 	@Column('text', { array: true, nullable: true })
