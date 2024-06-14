@@ -1,9 +1,9 @@
 import Store from '$lib/utils/Store';
 
-export default async function acceptFollowrequest(id) {
+export default async function followrequestDeny(id) {
 	let followrequestsRes = {};
 
-	var followrequestsReq = await fetch(`/api/v1/followrequest/accept`, {
+	var followrequestsReq = await fetch(`/api/v1/followrequest/deny`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

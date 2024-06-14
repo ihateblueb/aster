@@ -1,18 +1,15 @@
 import Store from '$lib/utils/Store';
 
-export default async function denyFollowrequest(id) {
+export default async function followrequestGet() {
 	let followrequestsRes = {};
 
-	var followrequestsReq = await fetch(`/api/v1/followrequest/deny`, {
-		method: 'POST',
+	var followrequestsReq = await fetch(`/api/v1/followrequests`, {
+		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 			Authorization: `Bearer ${Store.get('a_token')}`
-		},
-		body: JSON.stringify({
-			id: id
-		})
+		}
 	});
 
 	followrequestsRes = await followrequestsReq.json();

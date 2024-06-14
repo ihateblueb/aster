@@ -1,9 +1,9 @@
 <script>
 	import { locale } from '$lib/locale';
 
-	import getFollowrequests from '$lib/api/self/getFollowrequests';
-	import acceptFollowrequest from '$lib/api/self/acceptFollowrequest';
-	import denyFollowrequest from '$lib/api/self/denyFollowrequest';
+	import followrequestGet from '$lib/api/followrequest/get';
+	import followrequestAccept from '$lib/api/followrequest/accept';
+	import followrequestDeny from '$lib/api/followrequest/deny';
 
 	import userGet from '$lib/api/user/get';
 
@@ -20,7 +20,7 @@
 	<PageHeader title={locale('follow_requests')} />
 	<div class="pageContent">
 		<div class="paddedPage">
-			{#await getFollowrequests() then requests}
+			{#await followrequestGet() then requests}
 				{#each requests as request}
 					{#await userGet(request.from) then from}
 						<div class="followRequest">
@@ -46,13 +46,13 @@
 							<div class="right">
 								<Button
 									on:click={() =>
-										acceptFollowrequest(request.id)}
-									>Accept</Button
+										followrequestAccept(request.id)}
+									>{locale('accept')}</Button
 								>
 								<Button
 									on:click={() =>
-										denyFollowrequest(request.id)}
-									>Deny</Button
+										followrequestDeny(request.id)}
+									>{locale('deny')}</Button
 								>
 							</div>
 						</div>
