@@ -2,9 +2,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import db from '../../database.js';
 import logger from '../../logger.js';
-import accept from '../../ap/accept.js';
 import getRemoteActor from '../getRemoteActor.js';
 import createNotification from '../../createNotification.js';
+import signAndAccept from '../../ap/accept.js';
 
 export default async function IPFollow(body) {
 	let grabbedLocalUser = await db.getRepository('users').findOne({
@@ -65,6 +65,6 @@ export default async function IPFollow(body) {
 			'follow'
 		);
 
-		accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
+		signAndAccept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
 	}
 }

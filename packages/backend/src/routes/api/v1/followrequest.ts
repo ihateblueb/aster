@@ -2,8 +2,8 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
-import accept from '../../../utils/ap/accept.js';
-import reject from '../../../utils/ap/reject.js';
+import signAndAccept from '../../../utils/ap/accept.js';
+import signAndReject from '../../../utils/ap/reject.js';
 
 const router = express.Router();
 
@@ -57,10 +57,17 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 				id: JSON.parse(req.body).id
 			});
 
-			accept(
+			console.log([
+				'deny',
 				grabbedToUser.id,
 				grabbedFromUser.inbox,
-				grabbedFollowrequest.body
+				JSON.parse(grabbedFollowrequest.object)
+			]);
+
+			signAndAccept(
+				grabbedToUser.id,
+				grabbedFromUser.inbox,
+				JSON.parse(grabbedFollowrequest.object)
 			);
 
 			return res.status(200).json({
@@ -108,7 +115,14 @@ router.post('/api/v1/followrequest/deny', async (req, res) => {
 				id: JSON.parse(req.body).id
 			});
 
-			reject(
+			console.log([
+				'deny',
+				grabbedToUser.id,
+				grabbedFromUser.inbox,
+				JSON.parse(grabbedFollowrequest.object)
+			]);
+
+			signAndReject(
 				grabbedToUser.id,
 				grabbedFromUser.inbox,
 				JSON.parse(grabbedFollowrequest.object)

@@ -1,7 +1,7 @@
 import db from '../../database.js';
 import logger from '../../logger.js';
-import accept from '../../ap/accept.js';
 import getRemoteActor from '../getRemoteActor.js';
+import signAndAccept from '../../ap/accept.js';
 
 export default async function IPUndo(body) {
 	let grabbedLocalUser = await db.getRepository('users').findOne({
@@ -34,7 +34,7 @@ export default async function IPUndo(body) {
 				`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
-		accept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
+		signAndAccept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
 
 		return {
 			status: 200,
