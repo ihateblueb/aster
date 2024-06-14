@@ -19,6 +19,7 @@ router.get('/api/v1/followrequests', async (req, res) => {
 					to: authRes.grabbedUserAuth.user
 				}
 			});
+
 		return res.status(200).json(grabbedFollowrequests);
 	} else {
 		return res.status(authRes.status).json({

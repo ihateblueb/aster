@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "8",
+	"__version__": "9",
 
 	"user": "User",
 	"user_not_found": "User not found",
@@ -56,6 +56,8 @@
 	"direct_note": "Direct Note",
 	"open": "Open",
 	"close": "Close",
+	"accept": "Accept",
+	"deny": "Deny",
 	"running": "running",
 	"users": "users",
 	"notes": "notes",
