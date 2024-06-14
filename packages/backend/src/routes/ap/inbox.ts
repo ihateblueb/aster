@@ -1,6 +1,7 @@
 import express from 'express';
 import { Queue } from 'bullmq';
 
+import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
 import validateRequest from '../../utils/ap/validation.js';
 import redis from '../../utils/redis.js';
@@ -11,10 +12,10 @@ const inboxQueue = new Queue('inbox', {
 	connection: redis,
 	defaultJobOptions: {
 		removeOnComplete: true,
-		attempts: 5,
+		attempts: config.inbox.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: 5000
+			delay: config.inbox.backoff
 		}
 	}
 });
@@ -30,13 +31,9 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	// this will return before the following can run if it's invalid
 	validateRequest(req, res);
 
-	await inboxQueue.add(
-		'inbox',
-		{
-			body: JSON.parse(req.body)
-		},
-		{ jobId: JSON.parse(req.body).id }
-	);
+	await inboxQueue.add('inbox', {
+		body: JSON.parse(req.body)
+	});
 
 	res.status(200).send();
 });

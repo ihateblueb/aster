@@ -17,22 +17,22 @@ const deliverQueue = new Queue('deliver', {
 	}
 });
 
-export default async function signAndAccept(userId, remoteInbox, body) {
+export default async function signAndReject(userId, remoteInbox, body) {
 	const activityId = uuidv4();
 
-	var acceptMessage = {
+	var rejectMessage = {
 		'@context': 'https://www.w3.org/ns/activitystreams',
-		id: `${config.url}accept/${activityId}`,
-		type: 'Accept',
+		id: `${config.url}reject/${activityId}`,
+		type: 'Reject',
 		actor: `${config.url}users/${userId}`,
 		object: body
 	};
 
-	logger('debug', 'ap', JSON.stringify(acceptMessage));
+	logger('debug', 'ap', JSON.stringify(rejectMessage));
 
 	await deliverQueue.add('deliver', {
 		inbox: remoteInbox,
 		localUserId: userId,
-		body: acceptMessage
+		body: rejectMessage
 	});
 }

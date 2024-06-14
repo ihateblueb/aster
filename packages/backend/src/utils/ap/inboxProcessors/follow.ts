@@ -35,6 +35,7 @@ export default async function IPFollow(body) {
 		followrequestToInsert['to'] = grabbedLocalUser.id;
 		followrequestToInsert['from'] = grabbedRemoteActor.id;
 		followrequestToInsert['time'] = new Date(Date.now()).toISOString();
+		followrequestToInsert['object'] = JSON.stringify(body);
 
 		await db
 			.getRepository('users_followrequest')

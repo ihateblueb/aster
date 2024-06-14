@@ -18,5 +18,5 @@ export class UsersNotification {
 	time: string;
 
 	@Column({ nullable: true })
-	item: string;
+	object: string;
 }

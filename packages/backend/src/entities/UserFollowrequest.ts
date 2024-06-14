@@ -13,4 +13,7 @@ export class UsersFollowrequest {
 
 	@Column({ nullable: true })
 	time: string;
+
+	@Column({ nullable: true })
+	object: string;
 }

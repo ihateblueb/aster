@@ -48,31 +48,31 @@ export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
 
 	if (parsedBody.type === 'Accept') {
-		await IPAccept(parsedBody);
+		IPAccept(parsedBody);
 	} else if (parsedBody.type === 'Announce') {
-		await IPAnnounce(parsedBody);
+		IPAnnounce(parsedBody);
 	} else if (parsedBody.type === 'Bite') {
-		await IPBite(parsedBody);
+		IPBite(parsedBody);
 	} else if (parsedBody.type === 'Create') {
-		await IPCreate(parsedBody);
+		IPCreate(parsedBody);
 	} else if (parsedBody.type === 'Delete') {
-		await IPDelete(parsedBody);
+		IPDelete(parsedBody);
 	} else if (parsedBody.type === 'Follow') {
-		await IPFollow(parsedBody);
+		IPFollow(parsedBody);
 	} else if (parsedBody.type === 'Update') {
-		await IPUpdate(parsedBody);
+		IPUpdate(parsedBody);
 	} else if (parsedBody.type === 'Undo') {
-		await IPUndo(parsedBody);
+		IPUndo(parsedBody);
 	} else if (parsedBody.type === 'Like') {
-		await IPLike(parsedBody);
+		IPLike(parsedBody);
 	} else if (parsedBody.type === 'EmojiReact') {
-		await IPEmojiReact(parsedBody);
+		IPEmojiReact(parsedBody);
 	} else if (parsedBody.type === 'Add') {
-		await IPAdd(parsedBody);
+		IPAdd(parsedBody);
 	} else if (parsedBody.type === 'Block') {
-		await IPBlock(parsedBody);
+		IPBlock(parsedBody);
 	} else if (parsedBody.type === 'Move') {
-		await IPMove(parsedBody);
+		IPMove(parsedBody);
 	} else {
 		console.log('oh god oh fuck new activity type ' + parsedBody.type);
 	}
