@@ -49,6 +49,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 					noteJson.author['id'] = grabbedAuthor.id;
 					noteJson.author['username'] = grabbedAuthor.username;
+					noteJson.author['host'] = grabbedAuthor.host;
 					noteJson.author['local'] = grabbedAuthor.local;
 					noteJson.author['url'] = grabbedAuthor.url;
 

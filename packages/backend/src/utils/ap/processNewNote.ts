@@ -76,6 +76,11 @@ export default async function processNewNote(body) {
 				getReplyingTo.id
 			);
 			noteToInsert['replying_to'] = replyingToNote.id;
+			await db
+				.getRepository('notes')
+				.query(
+					`UPDATE "notes" SET "replies" = array_append("replies", '${replyingToNote.id}') WHERE "id" = '${noteId}'`
+				);
 		}
 
 		noteToInsert['author'] = grabbedRemoteActor.id;
@@ -96,15 +101,7 @@ export default async function processNewNote(body) {
 			noteToInsert['content'] = sanitize(body.object.content);
 		}
 
-		//await db.getRepository('notes').insert(noteToInsert);
-
-		/*
-			await db
-				.getRepository('notes')
-				.query(
-					`UPDATE "notes" SET "replies" = array_append("replies", '${originalNoteId}') WHERE "id" = '${noteId}'`
-				);
-		*/
+		await db.getRepository('notes').insert(noteToInsert);
 
 		console.log(noteToInsert);
 		logger('info', 'ap', 'created remote note ' + body.object.id);

@@ -15,7 +15,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	logger('debug', 'ap', JSON.stringify(JSON.parse(req.body)));
 
 	// this will return before the following can run if it's invalid
-	validateRequest(req, res);
+	await validateRequest(req, res);
 
 	await inboxQueue.add('inbox', {
 		body: JSON.parse(req.body)

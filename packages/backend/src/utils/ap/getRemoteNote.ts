@@ -21,7 +21,10 @@ export default async function getRemoteNote(apId, localUserId?) {
 
 		let response;
 
-		await getSigned(apId, localUserId)
+		var grabbedNote = await getSigned(apId, localUserId)
+			.then(async (res) => {
+				logger('debug', 'ap', 'fetched note sucessfully');
+			})
 			.catch((e) => {
 				// in case they can't be fetched, this will be sent so they are ignored.
 				if (e.response && e.response.status === 410) {
@@ -31,11 +34,13 @@ export default async function getRemoteNote(apId, localUserId?) {
 				} else {
 					logger('error', 'ap', e);
 				}
-			})
-			.then(async (res) => {
-				logger('debug', 'ap', 'fetched note sucessfully');
-				response = await processNewNote(res);
 			});
+
+		console.log(grabbedNote);
+		console.log('HEY LOOK AT THAT!!');
+		console.log('HEY LOOK AT THAT!!');
+		console.log('HEY LOOK AT THAT!!');
+		response = await processNewNote(grabbedNote);
 
 		return await response;
 	}

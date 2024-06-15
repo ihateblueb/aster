@@ -62,17 +62,28 @@
 		{/if}
 		<div class="noteHeader">
 			<div class="left">
-				<a href={'/@' + data.author.username} class="displayname subtle"
+				<a
+					href={'/@' + data.author.username + '@' + data.author.host}
+					class="displayname subtle"
 					><Avatar data={data.author} size="45px" /></a
 				>
 				<div class="names">
 					<a
-						href={'/@' + data.author.username}
+						href={'/@' +
+							data.author.username +
+							'@' +
+							data.author.host}
 						class="displayname subtle">{data.author.displayname}</a
 					>
 					<a
-						href={'/@' + data.author.username}
-						class="username subtle">@{data.author.username}</a
+						href={'/@' +
+							data.author.username +
+							'@' +
+							data.author.host}
+						class="username subtle"
+						>@{data.author.username}{#if !data.author.local}
+							@{data.author.host}
+						{/if}</a
 					>
 				</div>
 			</div>

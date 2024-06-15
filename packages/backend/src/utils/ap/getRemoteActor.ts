@@ -20,7 +20,7 @@ export default async function getRemoteActor(apId) {
 
 		let response;
 
-		await axios
+		var res = await axios
 			.get(apId, {
 				headers: {
 					Accept: 'application/activity+json'
