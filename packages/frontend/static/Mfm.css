@@ -65,6 +65,22 @@
 	color: transparent;
 }
 
+.mfm-mention {
+	color: var(--accent);
+	text-decoration: none;
+	background: var(--accent-20);
+	border-radius: var(--border-s);
+	padding: 0px 3px;
+}
+
+.mfm-mention:hover {
+	color: var(--accent);
+	text-decoration: underline;
+	background: var(--accent-20);
+	border-radius: var(--border-s);
+	padding: 0px 3px;
+}
+
 @keyframes mfm-spin {
 	0% {
 		transform: rotate(0deg);
@@ -314,5 +330,17 @@
 	}
 	100% {
 		filter: hue-rotate(360deg) contrast(150%) saturate(150%);
+	}
+}
+
+@keyframes mfm-fade {
+	0% {
+		opacity: 0;
+	}
+	50% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
 	}
 }

@@ -60,43 +60,59 @@
 			if (object.props.name === 'tada') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-tada ${speed} linear infinite; animation-delay: ${delay}; font-size: 150%;">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-tada ${speed} linear ${loop}; animation-delay: ${delay}; font-size: 150%;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'jelly') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-jelly ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-jelly ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'twitch') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-twitch ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-twitch ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'shake') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-shake ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-shake ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'spin') {
 				let direction = 'normal';
 				if (object.props.args.left) {
@@ -114,33 +130,59 @@
 				}
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: ${animation} ${speed} linear infinite; animation-delay: ${delay}; animation-direction: ${direction};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: ${animation} ${speed} linear ${loop}; animation-delay: ${delay}; animation-direction: ${direction};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'jump') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-jump ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-jump ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'bounce') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-bounce ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-bounce ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+			} else if (object.props.name === 'fade') {
+				let speed = '1s';
+				let delay = '0s';
+				let loop = 'infinite';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-fade ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'flip') {
 				let transform = 'scaleX(-1)';
 				if (object.props.args.h && object.props.args.v) {
@@ -185,13 +227,17 @@
 			} else if (object.props.name === 'rainbow') {
 				let speed = '1s';
 				let delay = '0s';
+				let loop = 'infinite';
 				if (object.props.args.speed) {
 					speed = object.props.args.speed;
 				}
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span style="display: inline-block; animation: mfm-rainbow ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				if (object.props.args.loop) {
+					loop = object.props.args.loop;
+				}
+				return `<span style="display: inline-block; animation: mfm-rainbow ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'sparkle') {
 				// deal with this later
 				return renderEachChild(object.children, scale);
