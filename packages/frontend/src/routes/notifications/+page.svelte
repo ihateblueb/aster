@@ -3,7 +3,8 @@
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 
-	export let data;
+	import notificationsGet from '$lib/api/notifications/get';
+	import Notifications from '$lib/components/widgets/Notifications.svelte';
 </script>
 
 <svelte:head>
@@ -13,6 +14,24 @@
 <template>
 	<PageHeader title={locale('notifications')} />
 	<div class="pageContent">
-		<div class="paddedPage"></div>
+		<div class="paddedPage">
+			{#await notificationsGet() then notifications}
+				{#each notifications as notification}
+					{#if notification.type === 'follow'}
+						<div>
+							{notification.from} followed you
+						</div>
+					{:else if notification.type === 'followrequest'}
+						<div>
+							{notification.from} requested to follow you
+						</div>
+					{:else}
+						<div>
+							{JSON.stringify(notification)}
+						</div>
+					{/if}
+				{/each}
+			{/await}
+		</div>
 	</div>
 </template>

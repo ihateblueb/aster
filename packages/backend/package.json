@@ -10,6 +10,7 @@
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {
+		"@bull-board/api": "^5.20.1",
 		"@bull-board/express": "^5.18.1",
 		"@peertube/http-signature": "^1.7.0",
 		"@rollup/plugin-commonjs": "^25.0.7",
@@ -19,6 +20,7 @@
 		"axios": "^1.6.8",
 		"bcryptjs": "^2.4.3",
 		"body-parser": "^1.20.2",
+		"bullMQAdapter": "link:@bull-board/api/bullMQAdapter",
 		"bullmq": "^5.7.9",
 		"chalk": "^4.1.2",
 		"cookie-parser": "^1.4.4",
@@ -39,6 +41,7 @@
 		"reflect-metadata": "^0.2.2",
 		"rollup": "^4.17.2",
 		"rotating-file-stream": "^1.4.6",
+		"systeminformation": "^5.22.11",
 		"ts-yaml": "^1.0.0",
 		"typeorm": "^0.3.20",
 		"uuid": "^9.0.1",

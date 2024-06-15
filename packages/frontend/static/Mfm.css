@@ -33,6 +33,18 @@
 	font-size: 400%;
 }
 
+.mfm-blockCode {
+	display: block;
+	overflow-wrap: anywhere;
+	background: var(--bg-tertiary);
+	padding: 8px 12px;
+	margin: 5px 0px;
+	overflow: auto;
+	border-radius: var(--border-m);
+	font-family: monospace;
+	font-size: var(--font-s);
+}
+
 .mfm-rainbow {
 	background-image: linear-gradient(
 		to right,

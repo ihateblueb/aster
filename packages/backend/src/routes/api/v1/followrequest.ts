@@ -4,6 +4,7 @@ import db from '../../../utils/database.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import signAndAccept from '../../../utils/ap/accept.js';
 import signAndReject from '../../../utils/ap/reject.js';
+import createNotification from '../../../utils/createNotification.js';
 
 const router = express.Router();
 
@@ -70,6 +71,8 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 				grabbedFromUser.inbox,
 				JSON.parse(grabbedFollowrequest.object)
 			);
+
+			createNotification(grabbedToUser.id, grabbedFromUser.id, 'follow');
 
 			return res.status(200).json({
 				message: 'Accepted follow request'

@@ -41,55 +41,113 @@
 		} else if (object.type === 'url') {
 			return `<a href="${object.props.url}" rel="nofollow noopener">${object.props.url}</a>`;
 		} else if (object.type === 'link') {
-			return `<a href="${object.props.url}" rel="nofollow noopener">${renderEachChild(object.children, scale)}</a> <small style="font-size: 75%; color: var(--txt-tertiary);">(${object.props.url})</small>`;
+			return `<a href="${object.props.url}" rel="nofollow noopener" title="${object.props.url}">${renderEachChild(object.children, scale)}</a>`;
 		} else if (object.type === 'quote') {
 			return `<blockquote class="mfm-quote">${renderEachChild(object.children, scale)}</blockquote>`;
+		} else if (object.type === 'emojiCode') {
+			return `<span class="mfm-emoji">:${object.props.name}:</span>`;
+		} else if (object.type === 'unicodeEmoji') {
+			return `<span class="mfm-emoji">${object.props.emoji}</span>`;
+		} else if (object.type === 'mention') {
+			return `<a class="mfm-mention" href='/${object.props.acct}'>${object.props.acct}</a>`;
+		} else if (object.type === 'hashtag') {
+			return `<a class="mfm-hashtag" href='/hastag/${object.props.hashtag}'>#${object.props.hashtag}</a>`;
+		} else if (object.type === 'inlineCode') {
+			return `<code class="mfm-inlineCode">${object.props.code}</code>`;
+		} else if (object.type === 'blockCode') {
+			return `<div class="mfm-blockCode">${object.props.code}</div>`;
 		} else if (object.type === 'fn') {
 			if (object.props.name === 'tada') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-tada ${speed} linear infinite; animation-delay: ${delay}; font-size: 150%;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'jelly') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-jelly ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'twitch') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-twitch ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'shake') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-shake ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'spin') {
-				let direction = object.props.args.left
-					? 'reverse'
-					: object.props.args.alternate
-						? 'alternate'
-						: 'normal';
-				let animation = object.props.args.x
-					? 'mfm-spinX'
-					: object.props.args.y
-						? 'mfm-spinY'
-						: 'mfm-spin';
-				let speed = object.props.args.speed || '1.5s';
-				let delay = object.props.args.delay || '0s';
+				let direction = 'normal';
+				if (object.props.args.left) {
+					direction = 'reverse';
+				}
+				if (object.props.args.alternate) {
+					direction = 'alternate';
+				}
+				let animation = 'mfm-spin';
+				if (object.props.args.x) {
+					direction = 'mfm-spinX';
+				}
+				if (object.props.args.y) {
+					direction = 'mfm-spinY';
+				}
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: ${animation} ${speed} linear infinite; animation-delay: ${delay}; animation-direction: ${direction};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'jump') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-jump ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'bounce') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span style="display: inline-block; animation: mfm-bounce ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'flip') {
-				let transform =
-					object.props.args.h && object.props.args.v
-						? 'scale(-1,-1)'
-						: object.props.args.v
-							? 'scaleY(-1)'
-							: 'scaleX(-1)';
+				let transform = 'scaleX(-1)';
+				if (object.props.args.h && object.props.args.v) {
+					transform = 'scaleX(-1,-1)';
+				} else if (object.props.args.v) {
+					transform = 'scaleX(-1)';
+				}
 				return `<span style="display: inline-block; transform: ${transform}">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'x2') {
 				scale = scale * 2;
@@ -101,59 +159,104 @@
 				scale = scale * 4;
 				return `<span class="mfm-x4" style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'font') {
-				let font = object.props.args.serif
-					? 'serif'
-					: object.props.args.monospace
-						? 'monospace'
-						: object.props.args.system
-							? 'system-ui'
-							: object.props.args.sans
-								? 'sans'
-								: object.props.args.mono
-									? 'monospace'
-									: object.props.args.cursive
-										? 'cursive'
-										: object.props.args.fantasy
-											? 'fantasy'
-											: object.props.args.emoji
-												? 'emoji'
-												: object.props.args.math
-													? 'math'
-													: null;
+				let font = 'var(--font)';
+				if (object.props.args.serif) {
+					font = 'serif';
+				} else if (object.props.args.monospace) {
+					font = 'monospace';
+				} else if (object.props.args.mono) {
+					font = 'monospace';
+				} else if (object.props.args.system) {
+					font = 'system-ui';
+				} else if (object.props.args.sans) {
+					font = 'sans';
+				} else if (object.props.args.cursive) {
+					font = 'cursive';
+				} else if (object.props.args.fantasy) {
+					font = 'fantasy';
+				} else if (object.props.args.emoji) {
+					font = 'emoji';
+				} else if (object.props.args.math) {
+					font = 'math';
+				}
 				return `<span style="display: inline-block; font-family: ${font};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'blur') {
 				return `<span class="mfm-blur" style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'rainbow') {
-				let speed = object.props.args.speed || '1s';
-				let delay = object.props.args.delay || '0s';
+				let speed = '1s';
+				let delay = '0s';
+				if (object.props.args.speed) {
+					speed = object.props.args.speed;
+				}
+				if (object.props.args.delay) {
+					delay = object.props.args.delay;
+				}
 				return `<span class="mfm-rainbow" style="display: inline-block; animation: mfm-rainbow ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'sparkle') {
 				// deal with this later
 				return renderEachChild(object.children, scale);
 			} else if (object.props.name === 'rotate') {
-				let degrees = object.props.args.deg || '90';
+				let degrees = '90';
+				if (object.props.args.deg) {
+					degrees = object.props.args.deg;
+				}
 				return `<span style="display: inline-block; transform: rotate(${degrees}deg); transform-origin: center center;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'position') {
-				let x = object.props.args.x || 0;
-				let y = object.props.args.y || 0;
+				let x = 0;
+				let y = 0;
+				if (object.props.args.x) {
+					x = object.props.args.x;
+				}
+				if (object.props.args.y) {
+					y = object.props.args.y;
+				}
 				return `<span style="display: inline-block; transform: translateX(${x}em) translateY(${y}em);">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'scale') {
-				let x = Math.min(object.props.args.x) || 1;
-				let y = Math.min(object.props.args.y) || 1;
+				let x = 1;
+				let y = 1;
+				if (object.props.args.x) {
+					x = Math.min(object.props.args.x);
+				}
+				if (object.props.args.y) {
+					y = Math.min(object.props.args.y);
+				}
 				scale = scale * Math.max(x, y);
 				return `<span style="display: inline-block; transform: scale(${x}, ${y});">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'fg') {
-				let color = object.props.args.color || 'f00';
+				let color = 'f00';
+				if (object.props.args.color) {
+					color = object.props.args.color;
+				}
 				return `<span style="display: inline-block; color: #${color};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'bg') {
-				let color = object.props.args.color || 'f00';
+				let color = 'f00';
+				if (object.props.args.color) {
+					color = object.props.args.color;
+				}
 				return `<span style="display: inline-block; background-color: #${color};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'border') {
-				let color = object.props.args.color || 'var(--accent)';
-				let style = object.props.args.style || 'solid';
-				let width = object.props.args.width || 1;
-				let radius = object.props.args.radius || 0;
-				let noclip = object.props.args.noclip ? '' : ' ovrflow: clip;';
+				let color = 'var(--accent)';
+				let style = 'solid';
+				let width = 1;
+				let radius = 0;
+				let noclip = '';
+				if (object.props.args.color) {
+					color = object.props.args.color;
+				}
+				if (object.props.args.style) {
+					style = object.props.args.style;
+				}
+				if (object.props.args.width) {
+					width = object.props.args.width;
+				}
+				if (object.props.args.radius) {
+					radius = object.props.args.radius;
+				}
+				if (object.props.args.noclip) {
+					noclip = '';
+				} else {
+					noclip = ' overflow: clip;';
+				}
 				return `<span style="display: inline-block; border: ${width}px ${style} ${color}; border-raidus: ${radius};${noclip}">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'plain') {
 				return `<span style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;

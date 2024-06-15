@@ -2,8 +2,6 @@ import process from 'node:process';
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
-import { Queue } from 'bullmq';
-import { v4 as uuidv4 } from 'uuid';
 
 import pkg from '../../../package.json' assert { type: 'json' };
 
@@ -13,9 +11,9 @@ import { inboxWorker, deliverWorker, statsWorker } from './utils/workers.js';
 import requestLogger from './utils/requestLogger.js';
 
 import router from './routes/router.js';
-// an error here can be ignored
+/* an error here can be ignored */
 import { handler } from 'frontend/build/handler.js';
-import redisConnection from './utils/redis.js';
+import { server } from 'frontend/build';
 
 const app = express();
 
