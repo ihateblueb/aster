@@ -33,6 +33,10 @@
 	font-size: 400%;
 }
 
+.mfm-inlineCode {
+	font-size: var(--font-s);
+}
+
 .mfm-blockCode {
 	display: block;
 	overflow-wrap: anywhere;

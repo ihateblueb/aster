@@ -191,7 +191,7 @@
 				if (object.props.args.delay) {
 					delay = object.props.args.delay;
 				}
-				return `<span class="mfm-rainbow" style="display: inline-block; animation: mfm-rainbow ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
+				return `<span style="display: inline-block; animation: mfm-rainbow ${speed} linear infinite; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'sparkle') {
 				// deal with this later
 				return renderEachChild(object.children, scale);
