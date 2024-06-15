@@ -13,9 +13,16 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 			message: 'Username parameter required'
 		});
 	} else {
-		// set default
-		let splitUsername = ['unknown', new URL(config.url).host];
+		let splitUsername = [];
 		splitUsername = req.params.username.split('@');
+
+		if (!splitUsername[0]) {
+			splitUsername[0] = 'unknown';
+		}
+
+		if (!splitUsername[1]) {
+			splitUsername[1] = new URL(config.url).host;
+		}
 
 		var grabbedUser = await db.getRepository('users').findOne({
 			where: {
