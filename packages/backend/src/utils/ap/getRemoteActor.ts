@@ -22,14 +22,10 @@ export default async function getRemoteActor(apId) {
 
 		let res = await getSigned(apId);
 
-		console.log(res);
-
-		if (res.error) {
-			if (res.status === 401) {
-				response = 'gone';
-			} else if (res.status === '410') {
-				response = 'gone';
-			}
+		if (res.status === 401) {
+			response = 'gone';
+		} else if (res.status === '410') {
+			response = 'gone';
 		} else {
 			logger('debug', 'ap', 'fetched actor sucessfully');
 			response = await processNewActor(res.data);

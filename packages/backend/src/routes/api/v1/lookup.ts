@@ -45,7 +45,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				let userJson = buildUser(grabbedUser);
+				let userJson = await buildUser(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {
@@ -65,7 +65,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 						message: 'User deactivated'
 					});
 				} else {
-					let userJson = buildUser(fetchedRemoteActor);
+					let userJson = await buildUser(fetchedRemoteActor);
 					res.status(200).json(userJson);
 				}
 			} else {

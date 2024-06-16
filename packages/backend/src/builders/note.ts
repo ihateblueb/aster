@@ -7,7 +7,7 @@ export default async function buildNote(grabbedNote, grabbedAuthor) {
 	noteJson['local'] = grabbedNote.local;
 	noteJson['visibility'] = grabbedNote.visibility;
 
-	noteJson['author'] = buildUser(grabbedAuthor);
+	noteJson['author'] = await buildUser(grabbedAuthor);
 
 	noteJson['cw'] = grabbedNote.cw;
 	noteJson['content'] = grabbedNote.content;

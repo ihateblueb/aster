@@ -22,7 +22,7 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 		});
 
 		if (grabbedInstance) {
-			var instanceJson = buildInstance(grabbedInstance);
+			var instanceJson = await buildInstance(grabbedInstance);
 			res.status(200).json(instanceJson);
 		} else {
 			return res.status(404).json({

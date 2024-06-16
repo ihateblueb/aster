@@ -41,7 +41,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
-					var noteJson = buildNote(grabbedNote, grabbedAuthor);
+					var noteJson = await buildNote(grabbedNote, grabbedAuthor);
 					res.status(200).json(noteJson);
 				}
 			} else {

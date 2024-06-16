@@ -28,5 +28,5 @@
 	],
 	"importOrderSeparation": true,
 	"importOrderSortSpecifiers": true,
-	"importOrderParserPlugins": ["svelte", "typescript", "importAttributes"]
+	"importOrderParserPlugins": ["typescript", "importAttributes", "decorators"]
 }

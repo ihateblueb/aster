@@ -20,7 +20,7 @@ export default async function buildUser(grabbedUser) {
 	userJson['speak_as_cat'] = grabbedUser.speak_as_cat;
 	userJson['created_at'] = grabbedUser.created_at;
 	userJson['updated_at'] = grabbedUser.updated_at;
-	userJson['pinned_notes'] = grabbedUser.pinnedNotes;
+	userJson['pinned_notes'] = grabbedUser.pinned_notes;
 
 	return userJson;
 }

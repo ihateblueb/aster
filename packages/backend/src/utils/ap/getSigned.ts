@@ -89,6 +89,11 @@ export default async function getSigned(url, localUserId?) {
 		})
 		.catch((e) => {
 			logger('error', 'ap', e);
+			console.log(e.response.status)
+			console.log(e.response.status)
+			console.log(e.response.status)
+			console.log(e.response.status)
+			console.log(e.response.status)
 			return {
 				error: true,
 				status: e.response.status,

@@ -26,7 +26,7 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		});
 
 		if (grabbedAd) {
-			var adJson = buildAd(grabbedAd);
+			var adJson = await buildAd(grabbedAd);
 			res.status(200).json(adJson);
 		} else {
 			return res.status(404).json({

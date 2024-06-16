@@ -7,17 +7,16 @@ export default async function buildMeta(grabbedMeta) {
 
 	metaJson['url'] = config.url;
 
-	metaJson['name'] = meta.name;
-	metaJson['created_at'] = meta.created_at;
-	metaJson['description'] = meta.description_long;
-	metaJson['description_short'] = meta.description;
-	metaJson['color'] = meta.color;
+	metaJson['name'] = grabbedMeta.name;
+	metaJson['created_at'] = grabbedMeta.created_at;
+	metaJson['description'] = grabbedMeta.description_long;
+	metaJson['description_short'] = grabbedMeta.description;
+	metaJson['color'] = grabbedMeta.color;
 
 	metaJson['software'] = pkg.name;
 	metaJson['version'] = pkg.version;
 	metaJson['author'] = pkg.author;
 
-	metaJson['stats'] = {};
 	metaJson.stats['local_user_count'] = await db
 		.getRepository('users')
 		.count({ where: { local: true } });
@@ -34,12 +33,12 @@ export default async function buildMeta(grabbedMeta) {
 		.getRepository('instances')
 		.count();
 
-	metaJson['maintainer'] = meta.maintainer;
-	metaJson['maintainer_email'] = meta.maintainer_email;
+	metaJson['maintainer'] = grabbedMeta.maintainer;
+	metaJson['maintainer_email'] = grabbedMeta.maintainer_email;
 
-	metaJson['registration'] = meta.registration;
+	metaJson['registration'] = grabbedMeta.registration;
 
-	metaJson['rules'] = meta.rules;
+	metaJson['rules'] = grabbedMeta.rules;
 
 	return metaJson;
 }

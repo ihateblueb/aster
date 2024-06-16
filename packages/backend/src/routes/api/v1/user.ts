@@ -32,7 +32,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				var userJson = buildUser(grabbedUser);
+				var userJson = await buildUser(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {

@@ -2,7 +2,7 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildMeta from '../../../builders/meta';
+import buildMeta from '../../../builders/meta.js';
 
 const router = express.Router();
 
@@ -12,7 +12,7 @@ router.get('/api/v1/meta', async (req, res) => {
 	const metaDb = await db.getRepository('meta').find();
 	const grabbedMeta = metaDb[0];
 
-	var metaJson = buildMeta(grabbedMeta);
+	var metaJson = await buildMeta(grabbedMeta);
 
 	res.status(200).json(metaJson);
 });
