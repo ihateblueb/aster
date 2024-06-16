@@ -9,10 +9,6 @@
 	import SelectItem from '$lib/components/SelectItem.svelte';
 </script>
 
-<svelte:head>
-	<title>{locale('settings')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('settings')} />
 	<div class="pageContent">

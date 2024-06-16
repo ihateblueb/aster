@@ -12,10 +12,6 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 </script>
 
-<svelte:head>
-	<title>{locale('follow_requests')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('follow_requests')} />
 	<div class="pageContent">

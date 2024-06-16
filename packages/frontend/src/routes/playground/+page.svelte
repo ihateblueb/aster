@@ -8,10 +8,6 @@
 	let mfmContent = '';
 </script>
 
-<svelte:head>
-	<title>{locale('mfm_playground')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('mfm_playground')} />
 	<div class="pageContent">

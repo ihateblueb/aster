@@ -7,10 +7,6 @@
 	import Notifications from '$lib/components/widgets/Notifications.svelte';
 </script>
 
-<svelte:head>
-	<title>{locale('notifications')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('notifications')} />
 	<div class="pageContent">

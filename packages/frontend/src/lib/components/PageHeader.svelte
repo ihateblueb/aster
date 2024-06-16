@@ -5,6 +5,7 @@
 </script>
 
 <template>
+	<title>{title}</title>
 	<div class="pageHeader">
 		<p>{title}</p>
 	</div>

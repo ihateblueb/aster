@@ -4,10 +4,6 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 </script>
 
-<svelte:head>
-	<title>{locale('explore')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('explore')} />
 	<div class="pageContent">

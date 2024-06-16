@@ -9,10 +9,6 @@
 	export let data;
 </script>
 
-<svelte:head>
-	<title>{locale('note_by')} {data.author.displayname}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title="{locale('note_by')} {data.author.displayname}" />
 	<div class="pageContent">

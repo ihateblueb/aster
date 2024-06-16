@@ -9,104 +9,102 @@
 	import Note from '$lib/components/Note.svelte';
 
 	import noteGet from '$lib/api/note/get';
-
-	export let data;
+	import userGet from '$lib/api/user/get';
+	import userLookup from '$lib/api/user/lookup';
 </script>
 
-<svelte:head>
-	{#if data.local}
-		<title>{data.displayname} (@{data.username})</title>
-	{:else}
-		<title>{data.displayname} (@{data.username}@{data.host})</title>
-	{/if}
-</svelte:head>
-
 <template>
-	{#if data.local}
-		<PageHeader title="{data.displayname} (@{data.username})" />
-	{:else if !data.local}
-		<PageHeader title="{data.displayname} (@{data.username}@{data.host})" />
-	{:else}
-		<PageHeader title={locale('user_not_found')} />
-	{/if}
-	<div class="pageContent">
-		{#if data}
-			<div class="userHeader">
-				<img class="banner" src={data.banner} />
-				<div class="innerHeader">
-					<Avatar {data} size="75px" />
-					<div class="name">
-						<span class="displayname">
-							<Mfm content={data.displayname} />
-							<div class="indicators">
-								{#if data.locked}
-									<Icon
-										name="lock"
-										size="18px"
-										color="var(--txt-tertiary)"
-									/>
-								{/if}
-								{#if data.automated}
-									<Icon
-										name="robot"
-										size="18px"
-										color="var(--txt-tertiary)"
-									/>
-								{/if}
+	{#await userLookup($page.params.userid) then lookup}
+		{#await userGet(lookup.id) then user}
+			{#if user.local}
+				<PageHeader title="{user.displayname} (@{user.username})" />
+			{:else if !user.local}
+				<PageHeader
+					title="{user.displayname} (@{user.username}@{user.host})"
+				/>
+			{:else}
+				<PageHeader title={locale('user_not_found')} />
+			{/if}
+			<div class="pageContent">
+				{#if user}
+					<div class="userHeader">
+						<img class="banner" src={user.banner} />
+						<div class="innerHeader">
+							<Avatar data={user} size="75px" />
+							<div class="name">
+								<span class="displayname">
+									<Mfm content={user.displayname} />
+									<div class="indicators">
+										{#if user.locked}
+											<Icon
+												name="lock"
+												size="18px"
+												color="var(--txt-tertiary)"
+											/>
+										{/if}
+										{#if user.automated}
+											<Icon
+												name="robot"
+												size="18px"
+												color="var(--txt-tertiary)"
+											/>
+										{/if}
+									</div>
+								</span>
+								<span class="username"
+									>@{user.username}{#if !user.local}@{user.host}{/if}</span
+								>
 							</div>
-						</span>
-						<span class="username"
-							>@{data.username}{#if !data.local}@{data.host}{/if}</span
-						>
-					</div>
-					<p class="bio">
-						<Mfm content={data.bio} />
-					</p>
-					<p class="joined">
-						{locale('joined_on')}
-						{new Date(data.created_at).toLocaleTimeString(
-							undefined,
-							{
-								weekday: 'long',
-								month: 'long',
-								day: 'numeric',
-								year: 'numeric',
-								hour: 'numeric',
-								minute: '2-digit',
-								second: '2-digit'
-							}
-						)}
-					</p>
-					<div class="stats">
-						<div>
-							<b>0</b> notes
-						</div>
-						<div>
-							<b>0</b> followers
-						</div>
-						<div>
-							<b>0</b> following
+							<p class="bio">
+								<Mfm content={user.bio} />
+							</p>
+							<p class="joined">
+								{locale('joined_on')}
+								{new Date(user.created_at).toLocaleTimeString(
+									undefined,
+									{
+										weekday: 'long',
+										month: 'long',
+										day: 'numeric',
+										year: 'numeric',
+										hour: 'numeric',
+										minute: '2-digit',
+										second: '2-digit'
+									}
+								)}
+							</p>
+							<div class="stats">
+								<div>
+									<b>0</b> notes
+								</div>
+								<div>
+									<b>0</b> followers
+								</div>
+								<div>
+									<b>0</b> following
+								</div>
+							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-			<div>
-				{#if data.pinned_notes}
-					{#each data.pinned_notes as noteId}
-						{#await noteGet(noteId) then note}
-							<Note
-								data={note}
-								pinned
-								pinnedBy={data.displayname}
-							/>
-						{/await}
-					{/each}
+					<div>
+						{#if user.pinned_notes}
+							{#each user.pinned_notes as noteId}
+								{#await noteGet(noteId) then note}
+									<Note
+										data={note}
+										pinned
+										pinnedBy={user.displayname}
+									/>
+								{/await}
+							{/each}
+						{/if}
+					</div>
+				{:else}
+					<h1>{locale('user_not_found')}</h1>
 				{/if}
 			</div>
-		{:else}
-			<h1>{locale('user_not_found')}</h1>
-		{/if}
-	</div>
+		{/await}
+	{/await}
 </template>
 
 <style lang="scss">

@@ -7,10 +7,6 @@
 	import Icon from '$lib/components/Icon.svelte';
 </script>
 
-<svelte:head>
-	<title>{locale('ohno')}</title>
-</svelte:head>
-
 <template>
 	<PageHeader title={locale('ohno')} />
 	<div class="pageContent">
