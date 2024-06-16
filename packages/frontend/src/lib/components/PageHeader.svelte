@@ -4,8 +4,11 @@
 	export let title = 'Page';
 </script>
 
-<template>
+<svelte:head>
 	<title>{title}</title>
+</svelte:head>
+
+<template>
 	<div class="pageHeader">
 		<p>{title}</p>
 	</div>
