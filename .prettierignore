@@ -5,6 +5,12 @@ build
 *.woff
 *.woff2
 *.txt
+*.png
+*.webp
+*.ico
+*.gif
+*.jpg
+*.jpeg
 .npmrc
 .env
 .editorconfig

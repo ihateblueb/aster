@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { createHash, createSign } from 'node:crypto';
 
-import pkg from '../../../../../package.json' assert { type: 'json' };
+import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
 import logger from '../logger.js';

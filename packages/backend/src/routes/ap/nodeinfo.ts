@@ -1,6 +1,6 @@
 import express from 'express';
 
-import pkg from '../../../../../package.json' assert { type: 'json' };
+import pkg from '../../../../../package.json' with { type: 'json' };
 import db from '../../utils/database.js';
 
 const router = express.Router();

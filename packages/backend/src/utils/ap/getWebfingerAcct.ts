@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import pkg from '../../../../../package.json' assert { type: 'json' };
+import pkg from '../../../../../package.json' with { type: 'json' };
 import logger from '../logger.js';
 
 export default async function getWebfingerAcct(user, host) {
