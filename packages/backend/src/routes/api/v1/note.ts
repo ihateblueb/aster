@@ -1,6 +1,7 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
+import OutCreate from '../../../utils/ap/outgoing/create.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
@@ -91,6 +92,8 @@ router.post(`/api/v1/note`, async (req, res) => {
 		}
 
 		await db.getRepository('notes').insert(noteToInsert);
+
+		await OutCreate(authRes.grabbedUserAuth.user, 'note', noteToInsert);
 
 		return res.status(200).json({
 			message: 'Note created',

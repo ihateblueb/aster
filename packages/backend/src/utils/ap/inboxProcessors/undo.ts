@@ -34,7 +34,11 @@ export default async function IPUndo(body) {
 				`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
-		signAndAccept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
+		await signAndAccept(
+			grabbedLocalUser.id,
+			grabbedRemoteActor.inbox,
+			body
+		);
 
 		return {
 			status: 200,

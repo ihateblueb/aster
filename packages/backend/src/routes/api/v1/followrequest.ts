@@ -43,40 +43,56 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 					}
 				});
 
-			var grabbedToUser = await db.getRepository('users').findOne({
-				where: {
-					id: grabbedFollowrequest.to
-				}
-			});
+			if (grabbedFollowrequest) {
+				var grabbedToUser = await db.getRepository('users').findOne({
+					where: {
+						id: grabbedFollowrequest.to
+					}
+				});
 
-			var grabbedFromUser = await db.getRepository('users').findOne({
-				where: {
-					id: grabbedFollowrequest.from
-				}
-			});
+				var grabbedFromUser = await db.getRepository('users').findOne({
+					where: {
+						id: grabbedFollowrequest.from
+					}
+				});
 
-			await db.getRepository('users_followrequest').delete({
-				id: JSON.parse(req.body).id
-			});
+				await db.getRepository('users_followrequest').delete({
+					id: JSON.parse(req.body).id
+				});
 
-			console.log([
-				'deny',
-				grabbedToUser.id,
-				grabbedFromUser.inbox,
-				JSON.parse(grabbedFollowrequest.object)
-			]);
+				console.log([
+					'deny',
+					grabbedToUser.id,
+					grabbedFromUser.inbox,
+					JSON.parse(grabbedFollowrequest.object)
+				]);
 
-			signAndAccept(
-				grabbedToUser.id,
-				grabbedFromUser.inbox,
-				JSON.parse(grabbedFollowrequest.object)
-			);
+				signAndAccept(
+					grabbedToUser.id,
+					grabbedFromUser.inbox,
+					JSON.parse(grabbedFollowrequest.object)
+				);
 
-			createNotification(grabbedToUser.id, grabbedFromUser.id, 'follow');
+				await db
+					.getRepository('users')
+					.query(
+						`UPDATE "users" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
+					);
 
-			return res.status(200).json({
-				message: 'Accepted follow request'
-			});
+				createNotification(
+					grabbedToUser.id,
+					grabbedFromUser.id,
+					'follow'
+				);
+
+				return res.status(200).json({
+					message: 'Accepted follow request'
+				});
+			} else {
+				return res.status(400).json({
+					message: 'Follow request doesnt exist'
+				});
+			}
 		} else {
 			return res.status(400).json({
 				message: 'No follow request id'
