@@ -38,7 +38,7 @@ export default async function getSigned(url, localUserId?) {
 			});
 	}
 
-	console.log('getting note as ' + grabbedLocalUser.username);
+	console.log('getting ' + url + ' as ' + grabbedLocalUser.username);
 
 	const getUrl = new URL(url);
 	const sendDate = new Date(Date.now()).toISOString();
@@ -67,7 +67,7 @@ export default async function getSigned(url, localUserId?) {
 
 	console.log(signatureHeader);
 
-	await axios
+	return await axios
 		.get(url, {
 			headers: {
 				'Content-Type': 'application/activity+json',
@@ -81,10 +81,18 @@ export default async function getSigned(url, localUserId?) {
 			}
 		})
 		.then((res) => {
-			console.log(res.data);
-			return res.data;
+			return {
+				error: false,
+				status: 200,
+				data: res.data
+			};
 		})
 		.catch((e) => {
 			logger('error', 'ap', e);
+			return {
+				error: true,
+				status: e.response.status,
+				data: {}
+			};
 		});
 }

@@ -42,19 +42,23 @@ router.get('/.well-known/webfinger', async (req, res) => {
 				}
 			});
 
-			res.json({
-				subject: `acct:${grabbedUser.username}@${config.url
-					.replace('https://', '')
-					.replace('http://', '')
-					.replace('/', '')}`,
-				links: [
-					{
-						rel: 'self',
-						type: 'application/activity+json',
-						href: `${config.url}users/${grabbedUser.id}`
-					}
-				]
-			});
+			if (grabbedUser) {
+				res.json({
+					subject: `acct:${grabbedUser.username}@${config.url
+						.replace('https://', '')
+						.replace('http://', '')
+						.replace('/', '')}`,
+					links: [
+						{
+							rel: 'self',
+							type: 'application/activity+json',
+							href: `${config.url}users/${grabbedUser.id}`
+						}
+					]
+				});
+			} else {
+				res.send();
+			}
 		} else {
 			res.send();
 		}

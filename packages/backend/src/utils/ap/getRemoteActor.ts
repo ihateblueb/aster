@@ -2,10 +2,13 @@ import axios from 'axios';
 
 import db from '../database.js';
 import logger from '../logger.js';
+import getSigned from './getSigned.js';
 
 import processNewActor from './processNewActor.js';
 
 export default async function getRemoteActor(apId) {
+	logger('debug', 'ap', 'getting remote actor with id ' + apId);
+
 	var grabbedRemoteActor = await db.getRepository('users').findOne({
 		where: {
 			ap_id: apId
@@ -20,26 +23,18 @@ export default async function getRemoteActor(apId) {
 
 		let response;
 
-		var res = await axios
-			.get(apId, {
-				headers: {
-					Accept: 'application/activity+json'
-				}
-			})
-			.then(async (res) => {
-				logger('debug', 'ap', 'fetched actor sucessfully');
-				response = await processNewActor(res.data);
-			})
-			.catch((e) => {
-				// in case they can't be fetched, this will be sent so they are ignored.
-				if (e.response && e.response.status === 410) {
-					response = 'gone';
-				} else if (e.response && e.response.status === 401) {
-					response = 'gone';
-				} else {
-					logger('error', 'ap', e);
-				}
-			});
+		let res = await getSigned(apId);
+
+		if (res.error) {
+			if (res.status === 401) {
+				response = 'gone';
+			} else if (res.status === '410') {
+				response = 'gone';
+			}
+		} else {
+			logger('debug', 'ap', 'fetched actor sucessfully');
+			response = await processNewActor(res.data);
+		}
 
 		return await response;
 	}

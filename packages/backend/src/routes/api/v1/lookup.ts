@@ -2,6 +2,8 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 import config from '../../../utils/config.js';
+import getRemoteActor from '../../../utils/ap/getRemoteActor.js';
+import getWebfingerAcct from '../../../utils/ap/getWebfingerAcct.js';
 
 const router = express.Router();
 
@@ -41,16 +43,40 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				var userJson = {};
+				let userJson = {};
 
 				userJson['id'] = grabbedUser.id;
 
 				res.status(200).json(userJson);
 			}
 		} else {
-			return res.status(404).json({
-				message: 'User does not exist'
-			});
+			let actorApId = await getWebfingerAcct(
+				splitUsername[0],
+				splitUsername[1]
+			);
+			let fetchedRemoteActor = await getRemoteActor(actorApId);
+
+			if (fetchedRemoteActor) {
+				if (fetchedRemoteActor.suspended) {
+					return res.status(410).json({
+						message: 'User suspended'
+					});
+				} else if (fetchedRemoteActor.deactivated) {
+					return res.status(410).json({
+						message: 'User deactivated'
+					});
+				} else {
+					let userJson = {};
+
+					userJson['id'] = fetchedRemoteActor.id;
+
+					res.status(200).json(userJson);
+				}
+			} else {
+				return res.status(404).json({
+					message: 'User does not exist'
+				});
+			}
 		}
 	}
 });
