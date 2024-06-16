@@ -1,6 +1,4 @@
-import db from '../database.js';
 import logger from '../logger.js';
-
 import IPAccept from './inboxProcessors/accept.js';
 import IPAdd from './inboxProcessors/add.js';
 import IPAnnounce from './inboxProcessors/announce.js';

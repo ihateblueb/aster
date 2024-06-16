@@ -1,7 +1,7 @@
+import signAndAccept from '../../ap/accept.js';
 import db from '../../database.js';
 import logger from '../../logger.js';
 import getRemoteActor from '../getRemoteActor.js';
-import signAndAccept from '../../ap/accept.js';
 
 export default async function IPUndo(body) {
 	let grabbedLocalUser = await db.getRepository('users').findOne({

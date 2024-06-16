@@ -1,8 +1,8 @@
-export const ssr = false;
+import { getLocaleFile } from '$lib/locale';
 
 import Store from '$lib/utils/Store';
 
-import { getLocaleFile } from '$lib/locale';
+export const ssr = false;
 
 export async function load() {
 	// get meta

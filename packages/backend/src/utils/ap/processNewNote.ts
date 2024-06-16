@@ -1,12 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import db from '../database.js';
 import logger from '../logger.js';
-
-import getRemoteNote from './getRemoteNote.js';
-import getRemoteActor from './getRemoteActor.js';
-
 import sanitize from '../sanitize.js';
+import getRemoteActor from './getRemoteActor.js';
+import getRemoteNote from './getRemoteNote.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewNote(body) {
 	if (body.object.type === 'Note') {

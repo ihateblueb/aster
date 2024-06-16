@@ -1,7 +1,7 @@
 import express from 'express';
 
-import inboxQueue from '../../../../utils/inboxQueue.js';
 import deliverQueue from '../../../../utils/deliverQueue.js';
+import inboxQueue from '../../../../utils/inboxQueue.js';
 
 const router = express.Router();
 

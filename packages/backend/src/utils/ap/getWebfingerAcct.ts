@@ -1,9 +1,6 @@
-import { createHash, createSign } from 'node:crypto';
 import axios from 'axios';
 
 import pkg from '../../../../../package.json' assert { type: 'json' };
-import config from '../config.js';
-import db from '../database.js';
 import logger from '../logger.js';
 
 export default async function getWebfingerAcct(user, host) {

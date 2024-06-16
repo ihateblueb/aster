@@ -1,10 +1,10 @@
 import express from 'express';
 
-import db from '../../../utils/database.js';
-import verifyToken from '../../../utils/auth/verifyToken.js';
 import signAndAccept from '../../../utils/ap/accept.js';
 import signAndReject from '../../../utils/ap/reject.js';
+import verifyToken from '../../../utils/auth/verifyToken.js';
 import createNotification from '../../../utils/createNotification.js';
+import db from '../../../utils/database.js';
 
 const router = express.Router();
 

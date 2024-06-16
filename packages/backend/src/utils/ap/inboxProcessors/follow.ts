@@ -1,10 +1,9 @@
-import { v4 as uuidv4 } from 'uuid';
-
+import signAndAccept from '../../ap/accept.js';
+import createNotification from '../../createNotification.js';
 import db from '../../database.js';
 import logger from '../../logger.js';
 import getRemoteActor from '../getRemoteActor.js';
-import createNotification from '../../createNotification.js';
-import signAndAccept from '../../ap/accept.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPFollow(body) {
 	let grabbedLocalUser = await db.getRepository('users').findOne({

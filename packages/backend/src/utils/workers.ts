@@ -1,10 +1,8 @@
-import { Worker } from 'bullmq';
-
-import logger from './logger.js';
-import redis from './redis.js';
-
 import acceptInboxRequest from './ap/acceptInboxRequest.js';
 import postSigned from './ap/postSigned.js';
+import logger from './logger.js';
+import redis from './redis.js';
+import { Worker } from 'bullmq';
 
 logger('info', 'core', 'starting workers');
 const inboxWorker = new Worker(
@@ -36,6 +34,4 @@ const statsWorker = new Worker(
 	{ connection: redis, concurrency: 1 }
 );
 
-export { inboxWorker };
-export { deliverWorker };
-export { statsWorker };
+export { deliverWorker, inboxWorker, statsWorker };

@@ -1,7 +1,6 @@
+import config from './config.js';
 import chalk from 'chalk';
 import { Logger, QueryRunner } from 'typeorm';
-
-import config from './config.js';
 
 export default function logger(level: String, section: String, message?: any) {
 	if (config.logging.type === 'fancy') {

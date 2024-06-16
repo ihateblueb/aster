@@ -1,11 +1,13 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
+import verifyToken from '../../../utils/auth/verifyToken.js';
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
-import verifyToken from '../../../utils/auth/verifyToken.js';
+
+import buildNote from '../../../builders/note.js';
 
 const router = express.Router();
 
@@ -39,61 +41,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
-					// good to go :3
-					var noteJson = {
-						author: {}
-					};
-
-					noteJson['id'] = grabbedNote.id;
-					noteJson['local'] = grabbedNote.local;
-
-					noteJson.author['id'] = grabbedAuthor.id;
-					noteJson.author['username'] = grabbedAuthor.username;
-					noteJson.author['host'] = grabbedAuthor.host;
-					noteJson.author['local'] = grabbedAuthor.local;
-					noteJson.author['url'] = grabbedAuthor.url;
-
-					if (grabbedAuthor.displayname) {
-						noteJson.author['displayname'] =
-							grabbedAuthor.displayname;
-					}
-
-					noteJson.author['locked'] = grabbedAuthor.locked;
-					noteJson.author['suspended'] = grabbedAuthor.suspended;
-					noteJson.author['deactivated'] = grabbedAuthor.deactivated;
-					noteJson.author['discoverable'] =
-						grabbedAuthor.discoverable;
-					noteJson.author['automated'] = grabbedAuthor.automated;
-
-					if (grabbedAuthor.avatar) {
-						noteJson.author['avatar'] = grabbedAuthor.avatar;
-					}
-					if (grabbedAuthor.banner) {
-						noteJson.author['banner'] = grabbedAuthor.banner;
-					}
-					if (grabbedAuthor.background) {
-						noteJson.author['background'] =
-							grabbedAuthor.background;
-					}
-					if (grabbedAuthor.bio) {
-						noteJson.author['bio'] = grabbedAuthor.bio;
-					}
-
-					noteJson.author['is_cat'] = grabbedAuthor.is_cat;
-					noteJson.author['speak_as_cat'] =
-						grabbedAuthor.speak_as_cat;
-					noteJson.author['created_at'] = grabbedAuthor.created_at;
-
-					if (grabbedAuthor.updated_at) {
-						noteJson.author['updated_at'] =
-							grabbedAuthor.updated_at;
-					}
-
-					noteJson['cw'] = grabbedNote.cw;
-					noteJson['content'] = grabbedNote.content;
-					noteJson['created_at'] = grabbedNote.created_at;
-					noteJson['visibility'] = grabbedNote.visibility;
-
+					var noteJson = buildNote(grabbedNote, grabbedAuthor);
 					res.status(200).json(noteJson);
 				}
 			} else {

@@ -1,11 +1,10 @@
 import express from 'express';
-import { v4 as uuidv4 } from 'uuid';
 
-import config from '../../../utils/config.js';
+import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
-import sanitize from '../../../utils/sanitize.js';
-import verifyToken from '../../../utils/auth/verifyToken.js';
+
+import buildInstance from '../../../builders/instance.js';
 
 const router = express.Router();
 
@@ -23,29 +22,7 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 		});
 
 		if (grabbedInstance) {
-			var instanceJson = {};
-
-			instanceJson['id'] = grabbedInstance.id;
-			instanceJson['host'] = grabbedInstance.host;
-			instanceJson['name'] = grabbedInstance.name;
-			instanceJson['description'] = grabbedInstance.description;
-			instanceJson['color'] = grabbedInstance.color;
-			instanceJson['software'] = grabbedInstance.software;
-			instanceJson['version'] = grabbedInstance.version;
-			instanceJson['icon'] = grabbedInstance.icon;
-			instanceJson['maintainer'] = grabbedInstance.maintainer;
-			instanceJson['maintainer_email'] = grabbedInstance.maintainer_email;
-			instanceJson['created_at'] = grabbedInstance.created_at;
-			instanceJson['updated_at'] = grabbedInstance.updated_at;
-			instanceJson['last_communicated'] =
-				grabbedInstance.last_communicated;
-			instanceJson['responding'] = grabbedInstance.responding;
-			instanceJson['user_count'] = grabbedInstance.user_count;
-			instanceJson['note_count'] = grabbedInstance.note_count;
-			instanceJson['suspended'] = grabbedInstance.suspended;
-			instanceJson['silenced'] = grabbedInstance.silenced;
-			instanceJson['mod_note'] = grabbedInstance.mod_note;
-
+			var instanceJson = buildInstance(grabbedInstance);
 			res.status(200).json(instanceJson);
 		} else {
 			return res.status(404).json({

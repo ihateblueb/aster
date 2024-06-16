@@ -1,6 +1,6 @@
-import express from 'express';
-import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
+import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 import db from '../../../utils/database.js';

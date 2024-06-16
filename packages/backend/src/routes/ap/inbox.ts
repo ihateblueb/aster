@@ -1,8 +1,8 @@
 import express from 'express';
 
-import logger from '../../utils/logger.js';
 import validateRequest from '../../utils/ap/validation.js';
 import inboxQueue from '../../utils/inboxQueue.js';
+import logger from '../../utils/logger.js';
 
 const router = express.Router();
 

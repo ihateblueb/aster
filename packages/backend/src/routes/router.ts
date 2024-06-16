@@ -1,24 +1,21 @@
+import ap_inbox from './ap/inbox.js';
+import ap_nodeinfo from './ap/nodeinfo.js';
+import ap_note from './ap/note.js';
+import ap_user from './ap/user.js';
+import ap_wellknown from './ap/well-known.js';
+import api_v1_ads from './api/v1/ads.js';
+import api_v1_followrequests from './api/v1/followrequest.js';
+import api_v1_login from './api/v1/login.js';
+import api_v1_lookup from './api/v1/lookup.js';
+import api_v1_meta from './api/v1/meta.js';
+import api_v1_metrics_hardware from './api/v1/metrics/hardware.js';
+import api_v1_metrics_queue from './api/v1/metrics/queue.js';
+import api_v1_notes from './api/v1/note.js';
+import api_v1_notification from './api/v1/notification.js';
+import api_v1_users from './api/v1/user.js';
 import express from 'express';
 
 const router = express.Router();
-
-import ap_wellknown from './ap/well-known.js';
-import ap_nodeinfo from './ap/nodeinfo.js';
-import ap_inbox from './ap/inbox.js';
-import ap_user from './ap/user.js';
-import ap_note from './ap/note.js';
-
-import api_v1_meta from './api/v1/meta.js';
-import api_v1_users from './api/v1/user.js';
-import api_v1_notes from './api/v1/note.js';
-import api_v1_lookup from './api/v1/lookup.js';
-import api_v1_login from './api/v1/login.js';
-import api_v1_ads from './api/v1/ads.js';
-import api_v1_notification from './api/v1/notification.js';
-import api_v1_followrequests from './api/v1/followrequest.js';
-
-import api_v1_metrics_queue from './api/v1/metrics/queue.js';
-import api_v1_metrics_hardware from './api/v1/metrics/hardware.js';
 
 // required endpoints for federation
 router.use('/', ap_wellknown);

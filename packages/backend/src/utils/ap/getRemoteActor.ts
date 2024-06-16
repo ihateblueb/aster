@@ -1,9 +1,6 @@
-import axios from 'axios';
-
 import db from '../database.js';
 import logger from '../logger.js';
 import getSigned from './getSigned.js';
-
 import processNewActor from './processNewActor.js';
 
 export default async function getRemoteActor(apId) {
@@ -24,6 +21,8 @@ export default async function getRemoteActor(apId) {
 		let response;
 
 		let res = await getSigned(apId);
+
+		console.log(res);
 
 		if (res.error) {
 			if (res.status === 401) {

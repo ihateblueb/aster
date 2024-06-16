@@ -1,9 +1,6 @@
-import axios from 'axios';
-
 import db from '../database.js';
 import logger from '../logger.js';
 import getSigned from './getSigned.js';
-
 import processNewNote from './processNewNote.js';
 
 export default async function getRemoteNote(apId, localUserId?) {

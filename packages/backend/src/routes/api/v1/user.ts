@@ -1,9 +1,10 @@
 import express from 'express';
 
+import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
-import verifyToken from '../../../utils/auth/verifyToken.js';
-import sanitize from '../../../utils/sanitize.js';
+
+import buildUser from '../../../builders/user.js';
 
 const router = express.Router();
 
@@ -31,29 +32,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				var userJson = {};
-
-				userJson['id'] = grabbedUser.id;
-				userJson['username'] = grabbedUser.username;
-				userJson['host'] = grabbedUser.host;
-				userJson['local'] = grabbedUser.local;
-				userJson['url'] = grabbedUser.url;
-				userJson['displayname'] = grabbedUser.displayname;
-				userJson['locked'] = grabbedUser.locked;
-				userJson['suspended'] = grabbedUser.suspended;
-				userJson['deactivated'] = grabbedUser.deactivated;
-				userJson['discoverable'] = grabbedUser.discoverable;
-				userJson['automated'] = grabbedUser.automated;
-				userJson['avatar'] = grabbedUser.avatar;
-				userJson['banner'] = grabbedUser.banner;
-				userJson['background'] = grabbedUser.background;
-				userJson['bio'] = sanitize(grabbedUser.bio);
-				userJson['is_cat'] = grabbedUser.is_cat;
-				userJson['speak_as_cat'] = grabbedUser.speak_as_cat;
-				userJson['created_at'] = grabbedUser.created_at;
-				userJson['updated_at'] = grabbedUser.updated_at;
-				userJson['pinned_notes'] = grabbedUser.pinned_notes;
-
+				var userJson = buildUser(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {

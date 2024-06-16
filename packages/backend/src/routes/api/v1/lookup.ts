@@ -1,9 +1,11 @@
 import express from 'express';
 
-import db from '../../../utils/database.js';
-import config from '../../../utils/config.js';
 import getRemoteActor from '../../../utils/ap/getRemoteActor.js';
 import getWebfingerAcct from '../../../utils/ap/getWebfingerAcct.js';
+import config from '../../../utils/config.js';
+import db from '../../../utils/database.js';
+
+import buildUser from '../../../builders/user.js';
 
 const router = express.Router();
 
@@ -43,10 +45,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				let userJson = {};
-
-				userJson['id'] = grabbedUser.id;
-
+				let userJson = buildUser(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {
@@ -66,10 +65,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 						message: 'User deactivated'
 					});
 				} else {
-					let userJson = {};
-
-					userJson['id'] = fetchedRemoteActor.id;
-
+					let userJson = buildUser(fetchedRemoteActor);
 					res.status(200).json(userJson);
 				}
 			} else {

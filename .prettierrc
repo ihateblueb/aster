@@ -2,12 +2,31 @@
 	"plugins": [
 		"prettier-plugin-svelte",
 		"prettier-plugin-sh",
-		"prettier-plugin-ini"
+		"prettier-plugin-ini",
+		"@trivago/prettier-plugin-sort-imports"
 	],
 	"trailingComma": "none",
 	"tabWidth": 4,
 	"semi": true,
 	"singleQuote": true,
 	"bracketSameLine": false,
-	"vueIndentScriptAndStyle": true
+	"vueIndentScriptAndStyle": true,
+	"importOrder": [
+		"<THIRD_PARTY_MODULES>",
+		"utils",
+		"builders",
+		"entities",
+		"migrations",
+		"routes/api",
+		"routes/ap",
+		"scripts",
+		"$lib/utils",
+		"$lib/api",
+		"$lib/components/widgets",
+		"$lib/components",
+		"$lib/locale"
+	],
+	"importOrderSeparation": true,
+	"importOrderSortSpecifiers": true,
+	"importOrderParserPlugins": ["svelte", "typescript", "importAttributes"]
 }

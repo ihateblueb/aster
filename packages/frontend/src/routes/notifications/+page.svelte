@@ -4,7 +4,6 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	import notificationsGet from '$lib/api/notifications/get';
-	import Notifications from '$lib/components/widgets/Notifications.svelte';
 </script>
 
 <template>

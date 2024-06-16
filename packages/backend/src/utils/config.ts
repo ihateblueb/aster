@@ -1,5 +1,5 @@
-import { readFile } from 'node:fs/promises';
 import { parse } from 'ini';
+import { readFile } from 'node:fs/promises';
 
 let configText = await readFile(`../../config/production.ini`, {
 	encoding: 'utf-8'

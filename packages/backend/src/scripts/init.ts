@@ -1,8 +1,7 @@
 // to be run ONCE and ONLY ONCE EVER.
 // it does not work for some reason
-
-import { v4 as uuidv4 } from 'uuid';
 import { generateKeyPairSync } from 'crypto';
+import { v4 as uuidv4 } from 'uuid';
 
 import config from '../utils/config.js';
 import db from '../utils/database.js';

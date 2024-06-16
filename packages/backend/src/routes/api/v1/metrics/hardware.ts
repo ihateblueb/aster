@@ -2,8 +2,8 @@ import express from 'express';
 import os from 'node:os';
 import si from 'systeminformation';
 
-import db from '../../../../utils/database.js';
 import config from '../../../../utils/config.js';
+import db from '../../../../utils/database.js';
 
 const router = express.Router();
 

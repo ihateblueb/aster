@@ -1,9 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import db from '../database.js';
 import logger from '../logger.js';
-
 import sanitize from '../sanitize.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewActor(body) {
 	if (

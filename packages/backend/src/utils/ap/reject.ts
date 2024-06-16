@@ -1,8 +1,7 @@
-import { v4 as uuidv4 } from 'uuid';
-
 import config from '../config.js';
-import logger from '../logger.js';
 import deliverQueue from '../deliverQueue.js';
+import logger from '../logger.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default async function signAndReject(userId, remoteInbox, body) {
 	const activityId = uuidv4();
