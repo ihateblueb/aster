@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesLike {
+export class NotesRepeat {
 	@PrimaryColumn()
 	id: string;
 

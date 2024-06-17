@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesLike {
+export class NotesReact {
 	@PrimaryColumn()
 	id: string;
 
