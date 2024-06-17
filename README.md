@@ -48,7 +48,7 @@ Things that work!
 -   You can follow users on Aster from other instances if they do not have follow requests enabled
 -   Nodeinfo 2.0 is there
 -   Well-known stuff works, too
--	When a note is posted it is announced to followers with Create activity
+-   When a note is posted it is announced to followers with Create activity
 
 ### Internal API
 
@@ -56,10 +56,10 @@ Things that work!
 -   Lookup users by username and get their ids
 -   Fetch notes
 -   Fetch users
--	Post notes
+-   Post notes
 
 ### Frontend
 
 -   Advanced MFM rendering
--	View notes
--	View profiles
+-   View notes
+-   View profiles

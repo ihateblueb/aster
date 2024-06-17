@@ -1,3 +1,5 @@
+import defaultStore from './defaultStore.json' with { type: 'json' };
+
 export default {
 	set: (key: string, val: string) => {
 		return localStorage.setItem(key, val);
@@ -7,7 +9,7 @@ export default {
 		if (toReturn) {
 			return toReturn;
 		} else {
-			return import(`./defaultStore.json`)[key];
+			return defaultStore[key];
 		}
 	},
 	del: (key: string) => {

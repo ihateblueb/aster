@@ -8,10 +8,7 @@ export default async function signAndAccept(userId, remoteInbox, body) {
 	const activityId = uuidv4();
 
 	var acceptMessage = {
-		'@context': [
-			'https://www.w3.org/ns/activitystreams',
-			contexts
-		],
+		'@context': ['https://www.w3.org/ns/activitystreams', contexts],
 		id: `${config.url}accept/${activityId}`,
 		type: 'Accept',
 		actor: `${config.url}users/${userId}`,

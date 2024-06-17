@@ -3,14 +3,11 @@ import config from '../../utils/config.js';
 
 export default async function buildApNote(grabbedNote) {
 	let noteJson = {
-		"@context": [
-			"https://www.w3.org/ns/activitystreams",
-			contexts
-		],
-		"published": "",
-		"visibility": "",
-		"to": [],
-		"cc": []
+		'@context': ['https://www.w3.org/ns/activitystreams', contexts],
+		published: '',
+		visibility: '',
+		to: [],
+		cc: []
 	};
 
 	noteJson['id'] = config.url + 'notes/' + grabbedNote.id;
