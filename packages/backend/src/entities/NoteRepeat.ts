@@ -1,14 +1,17 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Notes {
+export class NotesLike {
 	@PrimaryColumn()
 	id: string;
 
 	@Column({ nullable: true })
 	ap_id: string;
 
-	@Column()
+	@Column({ nullable: true })
+	original_note: string;
+
+	@Column({ nullable: true })
 	created_at: string;
 
 	@Column({ default: 'public' })

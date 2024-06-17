@@ -21,13 +21,9 @@ export default async function postSigned(inbox, localUserId, body) {
 
 	const inboxUrl = new URL(inbox);
 
-	console.log(inboxUrl)
-
 	const digest = createHash('sha256')
 		.update(JSON.stringify(body))
 		.digest('base64');
-
-		console.log(digest)
 
 	const signer = createSign('sha256');
 	const sendDate = new Date().toISOString();
