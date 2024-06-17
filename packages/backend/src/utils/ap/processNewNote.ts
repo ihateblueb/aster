@@ -73,11 +73,6 @@ export default async function processNewNote(body) {
 				getReplyingTo.id
 			);
 			noteToInsert['replying_to'] = replyingToNote.id;
-			await db
-				.getRepository('notes')
-				.query(
-					`UPDATE "notes" SET "replies" = array_append("replies", '${replyingToNote.id}') WHERE "id" = '${noteId}'`
-				);
 		}
 
 		noteToInsert['author'] = grabbedRemoteActor.id;

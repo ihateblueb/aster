@@ -31,4 +31,7 @@ export class Notes {
 
 	@Column('text', { array: true, nullable: true })
 	edits: string[];
+
+	@Column({ nullable: true })
+	original_note: string;
 }
