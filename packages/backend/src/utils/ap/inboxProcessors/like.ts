@@ -14,21 +14,49 @@ export default async function IPLike(body) {
 			if (grabbedNote) {
 				var grabbedRemoteUser = await getRemoteActor(body.actor);
 
-				await db.getRepository('notes_like').insert({
-					id: uuidv4(),
-					ap_id: body.id,
-					note: new URL(body.object).pathname.replace('/notes/', ''),
-					created_at: new Date(Date.now()).toISOString(),
-					user: grabbedRemoteUser.id
-				});
+				if (body.content) {
+					// this is a reaction, not a like
+					console.log('reaction of ' + body.content + ' received!');
+					var reactionUrl = body.tag.find(
+						(e) => e.name === body.content
+					).icon.url;
+					console.log('reaction url is ' + reactionUrl);
 
-				await createNotification(
-					grabbedNote.author,
-					grabbedRemoteUser.id,
-					'like',
-					grabbedNote
-				);
+					await db.getRepository('notes_like').insert({
+						id: uuidv4(),
+						ap_id: body.id,
+						note: new URL(body.object).pathname.replace(
+							'/notes/',
+							''
+						),
+						created_at: new Date(Date.now()).toISOString(),
+						user: grabbedRemoteUser.id
+					});
 
+					await createNotification(
+						grabbedNote.author,
+						grabbedRemoteUser.id,
+						'react',
+						grabbedNote.id
+					);
+				} else {
+					await db.getRepository('notes_like').insert({
+						id: uuidv4(),
+						ap_id: body.id,
+						note: new URL(body.object).pathname.replace(
+							'/notes/',
+							''
+						),
+						created_at: new Date(Date.now()).toISOString(),
+						user: grabbedRemoteUser.id
+					});
+					await createNotification(
+						grabbedNote.author,
+						grabbedRemoteUser.id,
+						'like',
+						grabbedNote.id
+					);
+				}
 				return {
 					status: 200
 				};

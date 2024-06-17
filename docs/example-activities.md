@@ -627,3 +627,159 @@ undo
 	"type": "Undo"
 }
 ```
+
+## repeat
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#"
+		}
+	],
+	"id": "https://grimgreenfo.rest/notes/9umoznfw12gp00lz/activity",
+	"actor": "https://grimgreenfo.rest/users/9sgt2c6wtxwi00xi",
+	"type": "Announce",
+	"published": "2024-06-17T15:26:16.940Z",
+	"to": ["https://grimgreenfo.rest/users/9sgt2c6wtxwi00xi/followers"],
+	"cc": [],
+	"object": "https://as2.blueb.me/notes/72e8c7e6-4ef6-43e5-8d3e-09b926862f81"
+}
+```
+
+## bite
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"movedTo": {
+				"@id": "https://www.w3.org/ns/activitystreams#movedTo",
+				"@type": "@id"
+			},
+			"movedToUri": "as:movedTo",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUri": "fedibird:quoteUri",
+			"quoteUrl": "as:quoteUrl",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_talk": "misskey:_misskey_talk",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"fedibird": "http://fedibird.com/ns#",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"litepub": "http://litepub.social/ns#",
+			"EmojiReact": "litepub:EmojiReact",
+			"EmojiReaction": "litepub:EmojiReaction",
+			"Bite": "https://ns.mia.jetzt/as#Bite"
+		}
+	],
+	"id": "https://is.blueb.me/bites/9umqynv2ky1hzqsg",
+	"type": "Bite",
+	"actor": "https://is.blueb.me/users/9umpru0trdkoi45u",
+	"target": "https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87",
+	"published": "2024-06-17T16:21:30.062Z",
+	"to": "9umq2pnhpy0ubij2"
+}
+```
+
+like react
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#"
+		}
+	],
+	"type": "Like",
+	"id": "https://grimgreenfo.rest/likes/9umsn4i3idr20001",
+	"actor": "https://grimgreenfo.rest/users/9sgt2c6wtxwi00xi",
+	"object": "https://as2.blueb.me/notes/b50ef536-a063-41a7-85df-8aca36d877e1",
+	"content": ":cat_attack:",
+	"_misskey_reaction": ":cat_attack:",
+	"tag": [
+		{
+			"id": "https://grimgreenfo.rest/emojis/cat_attack",
+			"type": "Emoji",
+			"name": ":cat_attack:",
+			"updated": "2023-12-30T06:19:12.430Z",
+			"icon": {
+				"type": "Image",
+				"mediaType": "image/gif",
+				"url": "https://grimgreenfo.rest/files/9e84b135-9d3c-489d-bb60-d5dcff730028"
+			}
+		}
+	]
+}
+```
