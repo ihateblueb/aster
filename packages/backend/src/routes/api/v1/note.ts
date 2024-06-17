@@ -55,10 +55,37 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						})
 						.getMany();
 
+					var sortedReactions = [];
+
+					grabbedReactions.forEach(async (reaction) => {
+						if (
+							sortedReactions.find(
+								(e) => e.id === reaction.emoji.id
+							)
+						) {
+							sortedReactions.find(
+								(e) => e.id === reaction.emoji.id
+							).count += 1;
+							sortedReactions
+								.find((e) => e.id === reaction.emoji.id)
+								.from.push(reaction.user);
+						} else {
+							sortedReactions.push({
+								id: reaction.emoji.id,
+								url: reaction.emoji.url,
+								name: reaction.emoji.name,
+								host: reaction.emoji.host,
+								local: reaction.emoji.local,
+								count: 1,
+								from: [reaction.user]
+							});
+						}
+					});
+
 					var noteJson = await buildNote(
 						grabbedNote,
 						grabbedAuthor,
-						grabbedReactions
+						sortedReactions
 					);
 					res.status(200).json(noteJson);
 				}

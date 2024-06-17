@@ -20,7 +20,6 @@ export default async function processNewEmoji(body) {
 
 		await db.getRepository('emojis').insert(emojiToInsert);
 
-		console.log(emojiToInsert);
 		logger('info', 'ap', 'created remote emoji ' + body.data.id);
 
 		return emojiToInsert;

@@ -95,7 +95,6 @@ export default async function processNewNote(body) {
 
 		await db.getRepository('notes').insert(noteToInsert);
 
-		console.log(noteToInsert);
 		logger('info', 'ap', 'created remote note ' + body.object.id);
 
 		return noteToInsert;

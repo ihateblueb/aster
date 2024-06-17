@@ -5,8 +5,9 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import Dropdown from './Dropdown.svelte';
-	import DropdownItem from './DropdownItem.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import DropdownItem from '$lib/components/DropdownItem.svelte';
+	import Emoji from '$lib/components/Emoji.svelte';
 
 	import noteBookmark from '$lib/api/note/bookmark';
 	import noteDelete from '$lib/api/note/delete';
@@ -167,7 +168,7 @@
 		{#if data.reactions}
 			<div class="reactions">
 				{#each data.reactions as reaction}
-					<span>{reaction}</span>
+					<Emoji data={reaction} /> {reaction.count}
 				{/each}
 			</div>
 		{/if}
