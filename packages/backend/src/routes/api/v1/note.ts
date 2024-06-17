@@ -42,7 +42,24 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
-					var noteJson = await buildNote(grabbedNote, grabbedAuthor);
+					/*var grabbedReactions = await db
+						.getRepository('notes_react')
+						.find({ where: { note: grabbedNote.id } });*/
+
+					var grabbedReactions = await db
+						.getRepository('notes_react')
+						.createQueryBuilder('notes_react')
+						.leftJoinAndSelect('notes_react.emoji', 'emoji')
+						.where('notes_react.note = :note', {
+							note: grabbedNote.id
+						})
+						.getMany();
+
+					var noteJson = await buildNote(
+						grabbedNote,
+						grabbedAuthor,
+						grabbedReactions
+					);
 					res.status(200).json(noteJson);
 				}
 			} else {

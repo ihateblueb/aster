@@ -164,6 +164,14 @@
 			{/if}
 		</p>
 
+		{#if data.reactions}
+			<div class="reactions">
+				{#each data.reactions as reaction}
+					<span>{reaction}</span>
+				{/each}
+			</div>
+		{/if}
+
 		<div class="noteFooter">
 			<div class="postButtons">
 				<button>

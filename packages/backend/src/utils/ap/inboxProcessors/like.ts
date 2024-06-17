@@ -36,6 +36,13 @@ export default async function IPLike(body) {
 						user: grabbedRemoteUser.id
 					});
 
+					console.log([
+						grabbedNote.author,
+						grabbedRemoteUser.id,
+						'react',
+						grabbedEmoji.id
+					]);
+
 					await createNotification(
 						grabbedNote.author,
 						grabbedRemoteUser.id,

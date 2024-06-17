@@ -5,6 +5,7 @@
 	"scripts": {
 		"build": "tsc",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
+		"revert": "pnpm exec typeorm migration:revert -d ./built/utils/database.js",
 		"init": "node built/scripts/init.js",
 		"start": "node built/server.js"
 	},

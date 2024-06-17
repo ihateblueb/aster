@@ -18,6 +18,7 @@
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
 		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
 		"migrate": "pnpm build-be && pnpm --filter=backend migrate",
+		"revert": "pnpm build-be && pnpm --filter=backend revert",
 		"init": "pnpm run --filter=backend init",
 		"clean-be": "./scripts/clean-be.sh",
 		"clean-fe": "./scripts/clean-fe.sh",

@@ -1,6 +1,10 @@
 import buildUser from './user.js';
 
-export default async function buildNote(grabbedNote, grabbedAuthor) {
+export default async function buildNote(
+	grabbedNote,
+	grabbedAuthor,
+	grabbedReactions
+) {
 	var noteJson = {};
 
 	noteJson['id'] = grabbedNote.id;
@@ -12,6 +16,8 @@ export default async function buildNote(grabbedNote, grabbedAuthor) {
 	noteJson['cw'] = grabbedNote.cw;
 	noteJson['content'] = grabbedNote.content;
 	noteJson['created_at'] = grabbedNote.created_at;
+
+	noteJson['reactions'] = grabbedReactions;
 
 	return noteJson;
 }
