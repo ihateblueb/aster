@@ -2,6 +2,8 @@
 
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 
+Original repository is located at [git.gay/blueb/aster](https://git.gay/blueb/aster) but also able to be contributed from [codeberg.org/blueb/aster](https://codeberg.org/blueb/aster).
+
 Aster is a work-in-progress federated social media software. So far, development is going fine! Please don't use it in production yet.
 I don't fully know what I'm doing when it comes to ActivityPub, a lot of this is learning as I go.
 I do not expect this software to be extra special, performant, or even stable. If it ends up being somewhat finished, maybe I'll polish it up to be usable.
