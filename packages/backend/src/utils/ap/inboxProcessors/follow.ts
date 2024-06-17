@@ -40,7 +40,7 @@ export default async function IPFollow(body) {
 			.getRepository('users_followrequest')
 			.insert(followrequestToInsert);
 
-		createNotification(
+		await createNotification(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'followrequest',
@@ -58,12 +58,16 @@ export default async function IPFollow(body) {
 				`UPDATE "users" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
-		createNotification(
+		await createNotification(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'follow'
 		);
 
-		signAndAccept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
+		await signAndAccept(
+			grabbedLocalUser.id,
+			grabbedRemoteActor.inbox,
+			body
+		);
 	}
 }

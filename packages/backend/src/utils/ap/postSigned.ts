@@ -20,9 +20,15 @@ export default async function postSigned(inbox, localUserId, body) {
 	});
 
 	const inboxUrl = new URL(inbox);
+
+	console.log(inboxUrl)
+
 	const digest = createHash('sha256')
 		.update(JSON.stringify(body))
 		.digest('base64');
+
+		console.log(digest)
+
 	const signer = createSign('sha256');
 	const sendDate = new Date().toISOString();
 
@@ -35,7 +41,7 @@ export default async function postSigned(inbox, localUserId, body) {
 
 	const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
 
-	let postResponse = await axios
+	return await axios
 		.post(inbox, body, {
 			headers: {
 				'Content-Type': 'application/activity+json',
@@ -48,9 +54,10 @@ export default async function postSigned(inbox, localUserId, body) {
 				Signature: signatureHeader
 			}
 		})
+		.then(() => {
+			logger('debug', 'ap', 'successfully send a post request signed');
+		})
 		.catch((e) => {
 			logger('error', 'ap', e);
 		});
-
-	return postResponse;
 }
