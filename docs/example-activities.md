@@ -567,3 +567,63 @@ global
 
 `openssl genrsa -out private.pem 2048`
 `openssl rsa -in private.pem -outform PEM -pubout -out public.pem`
+
+## like
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"bcc": [],
+	"bto": [],
+	"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+	"context": "https://as2.blueb.me/notes/b50ef536-a063-41a7-85df-8aca36d877e1",
+	"id": "https://akko.eepy.zone/activities/d7009131-8991-4b47-9efc-867b359ff738",
+	"object": "https://as2.blueb.me/notes/b50ef536-a063-41a7-85df-8aca36d877e1",
+	"to": [
+		"https://akko.eepy.zone/users/harper/followers",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Like"
+}
+```
+
+undo
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://akko.eepy.zone/schemas/litepub-0.1.jsonld",
+		{ "@language": "und" }
+	],
+	"actor": "https://akko.eepy.zone/users/harper",
+	"bcc": [],
+	"bto": [],
+	"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+	"id": "https://akko.eepy.zone/activities/1265026a-e239-4f06-97ec-a71fcc9e53a4",
+	"object": {
+		"actor": "https://akko.eepy.zone/users/harper",
+		"bcc": [],
+		"bto": [],
+		"cc": ["https://www.w3.org/ns/activitystreams#Public"],
+		"context": "https://as2.blueb.me/notes/b50ef536-a063-41a7-85df-8aca36d877e1",
+		"id": "https://akko.eepy.zone/activities/8baa76a2-8da2-4cee-b6e9-2f6639d7f0d0",
+		"object": "https://as2.blueb.me/notes/b50ef536-a063-41a7-85df-8aca36d877e1",
+		"to": [
+			"https://akko.eepy.zone/users/harper/followers",
+			"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+		],
+		"type": "Like"
+	},
+	"to": [
+		"https://akko.eepy.zone/users/harper/followers",
+		"https://as2.blueb.me/users/690d0271-4147-4302-ac50-7806f3ad8f87"
+	],
+	"type": "Undo"
+}
+```

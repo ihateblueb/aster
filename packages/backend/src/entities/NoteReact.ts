@@ -5,6 +5,9 @@ export class NotesReact {
 	@PrimaryColumn()
 	id: string;
 
+	@Column()
+	ap_id: string;
+
 	@Column({ nullable: true })
 	note: string;
 

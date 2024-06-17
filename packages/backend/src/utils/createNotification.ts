@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import db from '../utils/database.js';
 
-export default async function createNotification(to, from, type, item?) {
+export default async function createNotification(to, from, type, object?) {
 	var notificationToInsert = {};
 
 	notificationToInsert['id'] = uuidv4();
@@ -13,13 +13,11 @@ export default async function createNotification(to, from, type, item?) {
 	/*
 		followrequest
 		follow
+		like
 	*/
 
 	notificationToInsert['time'] = new Date(Date.now()).toISOString();
-
-	if (item) {
-		notificationToInsert['item'] = item;
-	}
+	notificationToInsert['object'] = object;
 
 	await db.getRepository('users_notification').insert(notificationToInsert);
 }

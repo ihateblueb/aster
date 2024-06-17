@@ -5,6 +5,9 @@ export class NotesLike {
 	@PrimaryColumn()
 	id: string;
 
+	@Column()
+	ap_id: string;
+
 	@Column({ nullable: true })
 	note: string;
 
