@@ -55,10 +55,18 @@ export default async function IPUndo(body) {
 				}
 			});
 			if (grabbedNote) {
-				await db
-					.getRepository('notes_like')
-					.delete({ ap_id: body.object.id });
-
+				if (body.object.content) {
+					var emojiReaction = body.object.tag.find(
+						(e) => e.name === body.object.content
+					);
+					await db
+						.getRepository('notes_react')
+						.delete({ ap_id: emojiReaction.id });
+				} else {
+					await db
+						.getRepository('notes_like')
+						.delete({ ap_id: body.object.id });
+				}
 				return {
 					status: 200,
 					message: 'Undo like accepted'

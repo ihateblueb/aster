@@ -44,6 +44,7 @@ inboxWorker.on('completed', (job) => {
 
 inboxWorker.on('failed', (job, failedReason) => {
 	logger('error', 'inbox', `job ${job.id} failed. ${failedReason}`);
+	logger('debug', 'deliver', JSON.stringify(job.stacktrace));
 });
 
 deliverWorker.on('progress', async (job, progress) => {
@@ -60,6 +61,7 @@ deliverWorker.on('completed', (job) => {
 
 deliverWorker.on('failed', (job, failedReason) => {
 	logger('error', 'deliver', `job ${job.id} failed. ${failedReason}`);
+	logger('debug', 'deliver', JSON.stringify(job.stacktrace));
 });
 
 app.use(requestLogger.dev, requestLogger.combined);

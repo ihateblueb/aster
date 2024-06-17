@@ -1,6 +1,7 @@
 import createNotification from '../../createNotification.js';
 import db from '../../database.js';
 import getRemoteActor from '../getRemoteActor.js';
+import getRemoteEmoji from '../getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPLike(body) {
@@ -16,20 +17,22 @@ export default async function IPLike(body) {
 
 				if (body.content) {
 					// this is a reaction, not a like
-					console.log('reaction of ' + body.content + ' received!');
-					var reactionUrl = body.tag.find(
-						(e) => e.name === body.content
-					).icon.url;
-					console.log('reaction url is ' + reactionUrl);
 
-					await db.getRepository('notes_like').insert({
+					var reactionEmoji = body.tag.find(
+						(e) => e.name === body.content
+					);
+
+					var grabbedEmoji = await getRemoteEmoji(reactionEmoji.id);
+
+					await db.getRepository('notes_react').insert({
 						id: uuidv4(),
-						ap_id: body.id,
+						ap_id: grabbedEmoji.ap_id,
 						note: new URL(body.object).pathname.replace(
 							'/notes/',
 							''
 						),
 						created_at: new Date(Date.now()).toISOString(),
+						emoji: grabbedEmoji.id,
 						user: grabbedRemoteUser.id
 					});
 
@@ -37,7 +40,7 @@ export default async function IPLike(body) {
 						grabbedNote.author,
 						grabbedRemoteUser.id,
 						'react',
-						grabbedNote.id
+						grabbedEmoji.id
 					);
 				} else {
 					await db.getRepository('notes_like').insert({
