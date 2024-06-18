@@ -15,9 +15,6 @@ export default async function signAndAccept(userId, remoteInbox, body) {
 		object: body
 	};
 
-	logger('debug', 'ap', JSON.stringify(acceptMessage));
-	logger('debug', 'ap', ' they call me The Sillier ');
-
 	await deliverQueue.add('deliver', {
 		inbox: remoteInbox,
 		localUserId: userId,

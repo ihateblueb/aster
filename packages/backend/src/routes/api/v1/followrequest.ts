@@ -60,13 +60,6 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 					id: JSON.parse(req.body).id
 				});
 
-				console.log([
-					'deny',
-					grabbedToUser.id,
-					grabbedFromUser.inbox,
-					JSON.parse(grabbedFollowrequest.object)
-				]);
-
 				signAndAccept(
 					grabbedToUser.id,
 					grabbedFromUser.inbox,
@@ -134,13 +127,6 @@ router.post('/api/v1/followrequest/deny', async (req, res) => {
 			await db.getRepository('users_followrequest').delete({
 				id: JSON.parse(req.body).id
 			});
-
-			console.log([
-				'deny',
-				grabbedToUser.id,
-				grabbedFromUser.inbox,
-				JSON.parse(grabbedFollowrequest.object)
-			]);
 
 			signAndReject(
 				grabbedToUser.id,

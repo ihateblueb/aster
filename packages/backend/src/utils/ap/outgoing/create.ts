@@ -14,8 +14,6 @@ export default async function OutCreate(localUserId, type, object) {
 	if (grabbedUser.local) {
 		var createJson = await buildApActivityCreate(grabbedUser, type, object);
 
-		console.log(grabbedUser.followers);
-
 		grabbedUser.followers.forEach(async (e) => {
 			let grabbedFollower = await db.getRepository('users').findOne({
 				where: {

@@ -38,20 +38,20 @@ export default async function getSigned(url, localUserId?) {
 			});
 	}
 
-	console.log('getting ' + url + ' as ' + grabbedLocalUser.username);
+	logger(
+		'debug',
+		'ap',
+		'getting ' + url + ' as ' + grabbedLocalUser.username
+	);
 
 	const getUrl = new URL(url);
 	const sendDate = new Date(Date.now()).toISOString();
 
 	const stringToSign = `(request-target): get ${getUrl.pathname}\nhost: ${getUrl.host}\ndate: ${sendDate}\naccept: application/activity+json`;
 
-	console.log(stringToSign);
-
 	const digest = createHash('sha256')
 		.update(JSON.stringify(stringToSign))
 		.digest('base64');
-
-	console.log(digest);
 
 	const signer = createSign('sha256');
 	signer.update(stringToSign);
@@ -61,11 +61,7 @@ export default async function getSigned(url, localUserId?) {
 		.sign(grabbedLocalUserPriv.private_key)
 		.toString('base64');
 
-	console.log(signedString);
-
 	const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signedString}"`;
-
-	console.log(signatureHeader);
 
 	return await axios
 		.get(url, {
