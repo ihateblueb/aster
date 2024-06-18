@@ -168,7 +168,10 @@
 		{#if data.reactions}
 			<div class="reactions">
 				{#each data.reactions as reaction}
-					<Emoji data={reaction} /> {reaction.count}
+					<div class="reaction">
+						<Emoji data={reaction} />
+						{reaction.count}
+					</div>
 				{/each}
 			</div>
 		{/if}
@@ -352,6 +355,20 @@
 		.right {
 			display: flex;
 			gap: 4px;
+		}
+	}
+	.reactions {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		margin-bottom: 5px;
+		overflow: hidden;
+		flex-wrap: wrap;
+		.reaction {
+			display: flex;
+			align-items: center;
+			gap: 4px;
+			margin-bottom: 5px;
 		}
 	}
 	.noteFooter {

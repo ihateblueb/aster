@@ -47,6 +47,7 @@ export default async function IPLike(body) {
 						grabbedNote.author,
 						grabbedRemoteUser.id,
 						'react',
+						grabbedNote.id,
 						grabbedEmoji.id
 					);
 				} else {
