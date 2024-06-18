@@ -1,4 +1,6 @@
 <script>
+	import { goto, invalidateAll } from '$app/navigation';
+
 	import { locale } from '$lib/locale';
 	import Store from '$lib/utils/Store';
 
@@ -10,6 +12,7 @@
 	let password = '';
 
 	let loginRes = {};
+	let accountRes = {};
 
 	async function startLogin() {
 		var credentialsToSend = btoa(`${username}:${password}`);
@@ -22,8 +25,17 @@
 		loginRes = await loginReq.json();
 
 		if (loginReq.status === 200) {
-			console.log('yaay! were logged in.');
 			Store.set('a_token', loginRes.token);
+
+			var accountReq = await fetch(`/api/v1/user/${loginRes.id}`);
+			accountRes = await accountReq.json();
+
+			console.log(accountRes);
+
+			if (accountReq.status === 200) {
+				Store.set('account', JSON.stringify(accountRes));
+				location.replace('/');
+			}
 		}
 	}
 

@@ -85,6 +85,7 @@ router.post('/api/v1/login', async (req, res) => {
 										});
 
 									res.status(200).json({
+										id: grabbedUser.id,
 										token: token
 									});
 								} else {

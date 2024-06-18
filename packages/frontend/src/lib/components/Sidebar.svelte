@@ -15,79 +15,81 @@
 
 	import Login from './widgets/unauthenticated/Login.svelte';
 	import Welcome from './widgets/unauthenticated/Welcome.svelte';
+	import GuestNavigation from './widgets/unauthenticated/Navigation.svelte';
 
-	export let side = 'left';
-	export let auth = false;
+	export let widgets;
 
-	/*if (auth) {
-		if (side === 'left') {
-			let widgetsLeftTop = Store.get('widgetsLeftTop');
-			let widgetsLeftMid = Store.get('widgetsLeftTop');
-			let widgetsLeftBtm = Store.get('widgetsLeftBtm');
-
-			if (widgetsLeftTop) {
-				JSON.parse(widgetsLeftTop).forEach((element) => {
-					console.log(element);
-				});
-			}
-			if (widgetsLeftMid) {
-				JSON.parse(widgetsLeftMid).forEach((element) => {
-					console.log(element);
-				});
-			}
-			if (widgetsLeftBtm) {
-				JSON.parse(widgetsLeftBtm).forEach((element) => {
-					console.log(element);
-				});
-			}
-		} else if (side === 'right') {
-			let widgetsRightTop = Store.get('widgetsRightTop');
-			let widgetsRightMid = Store.get('widgetsRightTop');
-			let widgetsRightBtm = Store.get('widgetsRightBtm');
-
-			if (widgetsRightTop) {
-				JSON.parse(widgetsRightTop).forEach((element) => {
-					console.log(element);
-				});
-			}
-			if (widgetsRightMid) {
-				JSON.parse(widgetsRightMid).forEach((element) => {
-					console.log(element);
-				});
-			}
-			if (widgetsRightBtm) {
-				JSON.parse(widgetsRightBtm).forEach((element) => {
-					console.log(element);
-				});
-			}
-		}
-	} else {*/
-
-	var widgets = {
-		top: [InstanceLogo],
-		mid: [Navigation],
-		btm: [Login]
+	let convertedWidgets = {
+		top: [],
+		mid: [],
+		btm: []
 	};
+
+	function convertWidgets(e, section) {
+		if (e === 'account') {
+			convertedWidgets[section].push(Account);
+		} else if (e === 'clock') {
+			convertedWidgets[section].push(Clock);
+		} else if (e === 'hardwaremetrics') {
+			convertedWidgets[section].push(HardwareMetrics);
+		} else if (e === 'instancelogo') {
+			convertedWidgets[section].push(InstanceLogo);
+		} else if (e === 'navigation') {
+			convertedWidgets[section].push(Navigation);
+		} else if (e === 'guestnavigation') {
+			convertedWidgets[section].push(GuestNavigation);
+		} else if (e === 'notepad') {
+			convertedWidgets[section].push(Notepad);
+		} else if (e === 'notifications') {
+			convertedWidgets[section].push(Notifications);
+		} else if (e === 'onlineusers') {
+			convertedWidgets[section].push(OnlineUsers);
+		} else if (e === 'postbutton') {
+			convertedWidgets[section].push(PostButton);
+		} else if (e === 'postform') {
+			convertedWidgets[section].push(PostForm);
+		} else if (e === 'login') {
+			convertedWidgets[section].push(Login);
+		} else if (e === 'welcome') {
+			convertedWidgets[section].push(Welcome);
+		}
+	}
+
+	if (widgets.top) {
+		widgets.top.forEach((e) => {
+			convertWidgets(e, 'top');
+		});
+	}
+	if (widgets.mid) {
+		widgets.mid.forEach((e) => {
+			convertWidgets(e, 'mid');
+		});
+	}
+	if (widgets.btm) {
+		widgets.btm.forEach((e) => {
+			convertWidgets(e, 'btm');
+		});
+	}
 </script>
 
 <template>
 	<div class="sidebar">
 		<div class="top">
-			{#each widgets.top as widget}
+			{#each convertedWidgets.top as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>
 			{/each}
 		</div>
 		<div class="mid">
-			{#each widgets.mid as widget}
+			{#each convertedWidgets.mid as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>
 			{/each}
 		</div>
 		<div class="btm">
-			{#each widgets.btm as widget}
+			{#each convertedWidgets.btm as widget}
 				<div class="widget">
 					<svelte:component this={widget} />
 				</div>

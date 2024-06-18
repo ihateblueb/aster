@@ -3,6 +3,7 @@
 	"__name__": "English (US)",
 	"__version__": "9",
 
+	"welcome": "Welcome",
 	"user": "User",
 	"user_not_found": "User not found",
 	"joined_on": "Joined on",

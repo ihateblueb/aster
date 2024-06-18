@@ -6,43 +6,56 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Ad from '$lib/components/Ad.svelte';
+	import Store from '$lib/utils/Store';
 
 	export let data;
 </script>
 
 <template>
-	<PageHeader title="Welcome" />
-	<div class="pageContent">
-		<div class="paddedPage welcomePage">
-			<h1>{data.name}</h1>
-			<span class="version"
-				>{locale('running')} {data.software} v{data.version}</span
-			>
-			<div class="statsCtn">
-				<div class="stat">
-					{data.stats.local_user_count}
-					{locale('users')}
-				</div>
-				<div class="stat">
-					{data.stats.local_note_count}
-					{locale('notes')}
-				</div>
-				<div class="stat">
-					{data.stats.instance_count}
-					{locale('instances')}
-				</div>
+	{#if Store.get('a_token')}
+		<PageHeader title={locale('home')} />
+		<div class="pageContent">
+			<div class="paddedPage">
+				<p>
+					This is filler content. Soon, a timeline of sorts will be
+					here.
+				</p>
 			</div>
-			<p><Mfm content={data.description} /></p>
-			<h2>{locale('instance_rules')}</h2>
-			<ol>
-				{#each data.rules as rule}
-					<li>{rule}</li>
-				{/each}
-			</ol>
-			<h2>{locale('advertisement')}</h2>
-			<Ad />
 		</div>
-	</div>
+	{:else}
+		<PageHeader title={locale('welcome')} />
+		<div class="pageContent">
+			<div class="paddedPage welcomePage">
+				<h1>{data.name}</h1>
+				<span class="version"
+					>{locale('running')} {data.software} v{data.version}</span
+				>
+				<div class="statsCtn">
+					<div class="stat">
+						{data.stats.local_user_count}
+						{locale('users')}
+					</div>
+					<div class="stat">
+						{data.stats.local_note_count}
+						{locale('notes')}
+					</div>
+					<div class="stat">
+						{data.stats.instance_count}
+						{locale('instances')}
+					</div>
+				</div>
+				<p><Mfm content={data.description} /></p>
+				<h2>{locale('instance_rules')}</h2>
+				<ol>
+					{#each data.rules as rule}
+						<li>{rule}</li>
+					{/each}
+				</ol>
+				<h2>{locale('advertisement')}</h2>
+				<Ad />
+			</div>
+		</div>
+	{/if}
 </template>
 
 <style lang="scss">

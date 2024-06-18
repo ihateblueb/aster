@@ -1,16 +1,35 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
+	import Store from '$lib/utils/Store';
+
+	let defaultLeftWidgets = {
+		top: ['instancelogo'],
+		mid: ['guestnavigation'],
+		btm: ['login']
+	};
+	let defaultRightWidgets = {
+		top: ['welcome']
+	};
 </script>
 
 <template>
 	<div class="page">
-		<Sidebar side="left" auth={false} />
+		{#if Store.get('a_token')}
+			<Sidebar widgets={Store.get('widgets_left')} />
+		{:else}
+			<Sidebar widgets={defaultLeftWidgets} />
+		{/if}
 		<main>
 			<slot></slot>
 		</main>
-		<Sidebar side="right" auth={false} />
+		{#if Store.get('a_token')}
+			<Sidebar widgets={Store.get('widgets_right')} />
+		{:else}
+			<Sidebar widgets={defaultRightWidgets} />
+		{/if}
 	</div>
 </template>
 
