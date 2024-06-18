@@ -74,7 +74,8 @@
 							data.author.username +
 							'@' +
 							data.author.host}
-						class="displayname subtle">{data.author.displayname}</a
+						class="displayname subtle"
+						><Mfm content={data.author.displayname} simple /></a
 					>
 					<a
 						href={'/@' +

@@ -33,7 +33,7 @@
 							<Avatar data={user} size="75px" />
 							<div class="name">
 								<span class="displayname">
-									<Mfm content={user.displayname} />
+									<Mfm content={user.displayname} simple />
 									<div class="indicators">
 										{#if user.locked}
 											<Icon

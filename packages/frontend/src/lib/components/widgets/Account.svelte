@@ -8,9 +8,16 @@
 
 <template>
 	<div class="account">
-		<Avatar data={account} size="40px" />
-		<div>
-			<Mfm content={account.displayname} />
+		<a href={'/@' + account.username} class="displayname subtle"
+			><Avatar data={account} size="40px" /></a
+		>
+		<div class="usernames">
+			<a href={'/@' + account.username} class="displayname subtle"
+				><Mfm content={account.displayname} simple /></a
+			>
+			<a href={'/@' + account.username} class="username subtle"
+				>@{account.username}</a
+			>
 		</div>
 	</div>
 </template>
@@ -19,5 +26,18 @@
 	.account {
 		display: flex;
 		align-items: center;
+		.usernames {
+			display: flex;
+			justify-content: center;
+			flex-direction: column;
+			padding-left: 10px;
+			padding-right: 10px;
+			.displayname {
+				font-weight: 600;
+			}
+			.username {
+				font-size: var(--font-s);
+			}
+		}
 	}
 </style>
