@@ -49,24 +49,30 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 				res.status(200).json(userJson);
 			}
 		} else {
-			let actorApId = await getWebfingerAcct(
-				splitUsername[0],
-				splitUsername[1]
-			);
-			let fetchedRemoteActor = await getRemoteActor(actorApId);
+			if (splitUsername[1] !== new URL(config.url).host) {
+				let actorApId = await getWebfingerAcct(
+					splitUsername[0],
+					splitUsername[1]
+				);
+				let fetchedRemoteActor = await getRemoteActor(actorApId);
 
-			if (fetchedRemoteActor) {
-				if (fetchedRemoteActor.suspended) {
-					return res.status(410).json({
-						message: 'User suspended'
-					});
-				} else if (fetchedRemoteActor.deactivated) {
-					return res.status(410).json({
-						message: 'User deactivated'
-					});
+				if (fetchedRemoteActor) {
+					if (fetchedRemoteActor.suspended) {
+						return res.status(410).json({
+							message: 'User suspended'
+						});
+					} else if (fetchedRemoteActor.deactivated) {
+						return res.status(410).json({
+							message: 'User deactivated'
+						});
+					} else {
+						let userJson = await buildUser(fetchedRemoteActor);
+						res.status(200).json(userJson);
+					}
 				} else {
-					let userJson = await buildUser(fetchedRemoteActor);
-					res.status(200).json(userJson);
+					return res.status(404).json({
+						message: 'User does not exist'
+					});
 				}
 			} else {
 				return res.status(404).json({
