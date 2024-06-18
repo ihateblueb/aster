@@ -30,8 +30,6 @@
 			var accountReq = await fetch(`/api/v1/user/${loginRes.id}`);
 			accountRes = await accountReq.json();
 
-			console.log(accountRes);
-
 			if (accountReq.status === 200) {
 				Store.set('account', JSON.stringify(accountRes));
 				location.replace('/');
