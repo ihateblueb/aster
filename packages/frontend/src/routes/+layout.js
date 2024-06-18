@@ -38,11 +38,10 @@ export async function load() {
 
 	document.body.classList.add(Store.get('theme'));
 
-	var account = JSON.parse(Store.get('account'));
-
 	// update account
-	if (account.id) {
-		var accountReq = await fetch(`/api/v1/user/${account.id}`);
+	var account = Store.get('account');
+	if (account && JSON.parse(account).id) {
+		var accountReq = await fetch(`/api/v1/user/${JSON.parse(account).id}`);
 		var accountRes = await accountReq.json();
 
 		if (accountReq.status === 200) {
