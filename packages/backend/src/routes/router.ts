@@ -13,6 +13,7 @@ import api_v1_metrics_queue from './api/v1/metrics/queue.js';
 import api_v1_notes from './api/v1/note.js';
 import api_v1_notification from './api/v1/notification.js';
 import api_v1_users from './api/v1/user.js';
+import api_v1_search from './api/v1/search.js';
 import express from 'express';
 
 const router = express.Router();
@@ -33,6 +34,7 @@ router.use('/', api_v1_login);
 router.use('/', api_v1_ads);
 router.use('/', api_v1_notification);
 router.use('/', api_v1_followrequests);
+router.use('/', api_v1_search);
 
 // metrics
 router.use('/', api_v1_metrics_queue);

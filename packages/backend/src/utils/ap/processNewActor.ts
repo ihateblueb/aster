@@ -10,7 +10,9 @@ export default async function processNewActor(body) {
 		body.id &&
 		body.url
 	) {
-		var actorToInsert = {};
+		let actorToInsert = {
+			id: ''
+		};
 
 		// this will be generated
 		actorToInsert['id'] = uuidv4();

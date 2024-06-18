@@ -6,70 +6,66 @@ import getRemoteNote from './getRemoteNote.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewNote(body) {
-	if (body.object.type === 'Note') {
-		let grabbedRemoteActor = await getRemoteActor(body.object.actor);
+	if (body.type === 'Note') {
+		let grabbedRemoteActor = await getRemoteActor(body.attributedTo);
 
-		let noteToInsert = {};
+		let noteToInsert = {
+			id: ''
+		};
 
 		const noteId = uuidv4();
 
 		noteToInsert['id'] = noteId;
-		noteToInsert['ap_id'] = body.object.id;
-		noteToInsert['created_at'] = body.object.published;
+		noteToInsert['ap_id'] = body.id;
+		noteToInsert['created_at'] = body.published;
 
 		// default to direct to not leak dms
 		let visibility;
 		visibility = 'direct';
 
 		// aster:Visibility extension
-		if (body.object.visibility) {
+		if (body.visibility) {
 			/*
 				not directly
-				visibility = body.object.visibility
+				visibility = body.visibility
 				because it could have other stuff
 			*/
-			if (body.object.visibility === 'public') {
+			if (body.visibility === 'public') {
 				visibility = 'public';
-			} else if (body.object.visibility === 'unlisted') {
+			} else if (body.visibility === 'unlisted') {
 				visibility = 'unlisted';
-			} else if (body.object.visibility === 'followers') {
+			} else if (body.visibility === 'followers') {
 				visibility = 'followers';
-			} else if (body.object.visibility === 'direct') {
+			} else if (body.visibility === 'direct') {
 				visibility = 'direct';
 			}
 		}
 
-		if (body.object.directMessage) {
+		if (body.directMessage) {
 			visibility = 'direct';
 		}
 
-		if (body.object.to.includes(grabbedRemoteActor.followers_url)) {
+		if (body.to.includes(grabbedRemoteActor.followers_url)) {
 			visibility = 'followers';
 		}
 
 		if (
-			body.object.cc.includes(
-				'https://www.w3.org/ns/activitystreams#Public'
-			) &&
-			body.object.to.includes(grabbedRemoteActor.followers_url)
+			body.cc.includes('https://www.w3.org/ns/activitystreams#Public') &&
+			body.to.includes(grabbedRemoteActor.followers_url)
 		) {
 			visibility = 'unlisted';
 		}
 
-		if (
-			body.object.to.includes(
-				'https://www.w3.org/ns/activitystreams#Public'
-			)
-		) {
+		if (body.to.includes('https://www.w3.org/ns/activitystreams#Public')) {
 			visibility = 'public';
 		}
 
 		noteToInsert['visibility'] = visibility;
 
-		if (body.object.inReplyTo) {
-			let getReplyingTo = await getRemoteActor(body.object.to[1]);
+		if (body.inReplyTo) {
+			let getReplyingTo = await getRemoteActor(body.to[1]);
 			let replyingToNote = await getRemoteNote(
-				body.object.inReplyTo,
+				body.inReplyTo,
 				getReplyingTo.id
 			);
 			noteToInsert['replying_to'] = replyingToNote.id;
@@ -78,24 +74,24 @@ export default async function processNewNote(body) {
 		noteToInsert['author'] = grabbedRemoteActor.id;
 		noteToInsert['local'] = false;
 
-		if (body.object.subject) {
-			noteToInsert['cw'] = sanitize(body.object.subject);
+		if (body.subject) {
+			noteToInsert['cw'] = sanitize(body.subject);
 		}
 
 		if (
-			body.object.source &&
-			body.object.source.content &&
-			body.object.source.mediaType === 'text/x.misskeymarkdown'
+			body.source &&
+			body.source.content &&
+			body.source.mediaType === 'text/x.misskeymarkdown'
 		) {
 			// raw mfm
-			noteToInsert['content'] = sanitize(body.object.source.content);
+			noteToInsert['content'] = sanitize(body.source.content);
 		} else {
-			noteToInsert['content'] = sanitize(body.object.content);
+			noteToInsert['content'] = sanitize(body.content);
 		}
 
 		await db.getRepository('notes').insert(noteToInsert);
 
-		logger('info', 'ap', 'created remote note ' + body.object.id);
+		logger('info', 'ap', 'created remote note ' + body.id);
 
 		return noteToInsert;
 	}

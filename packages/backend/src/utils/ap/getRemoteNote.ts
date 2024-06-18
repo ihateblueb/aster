@@ -27,7 +27,7 @@ export default async function getRemoteNote(apId, localUserId?) {
 		} else {
 			logger('debug', 'ap', 'fetched note sucessfully');
 
-			response = await processNewNote(grabbedNote);
+			response = await processNewNote(grabbedNote.data);
 		}
 
 		return await response;

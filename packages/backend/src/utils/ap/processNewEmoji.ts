@@ -5,7 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewEmoji(body) {
 	if (body.data.type === 'Emoji') {
-		let emojiToInsert = {};
+		let emojiToInsert = {
+			id: ''
+		};
 
 		const emojiId = uuidv4();
 
