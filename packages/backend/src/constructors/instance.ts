@@ -1,7 +1,7 @@
-import { Instances } from "../entities/Instance.js";
+import { Instances } from '../entities/Instance.js';
 
 export default async function buildInstance(grabbedInstance) {
-	grabbedInstance = new Instances()
+	grabbedInstance = new Instances();
 	var instanceJson = {};
 
 	instanceJson['id'] = grabbedInstance.id;

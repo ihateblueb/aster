@@ -1,7 +1,6 @@
 import { Notes } from './Note.js';
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
-
 @Entity()
 export class Users {
 	@PrimaryColumn()

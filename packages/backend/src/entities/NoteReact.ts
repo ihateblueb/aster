@@ -1,6 +1,6 @@
-import { Emojis } from './Emoji.js';import { Notes } from './Note.js';
-import { Column, Entity,  ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
-
+import { Emojis } from './Emoji.js';
+import { Notes } from './Note.js';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class NotesReact {

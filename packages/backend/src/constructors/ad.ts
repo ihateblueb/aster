@@ -1,4 +1,4 @@
-import { Ads } from "../entities/Ad.js";
+import { Ads } from '../entities/Ad.js';
 
 export default async function buildAd(grabbedAd) {
 	var ad = new Ads();

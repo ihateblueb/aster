@@ -4,15 +4,17 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 
 export default async function buildMeta(grabbedMeta) {
-	grabbedMeta = new Meta()
+	grabbedMeta = new Meta();
 	var metaJson = { stats: {} };
 
 	metaJson['url'] = config.url;
 
 	metaJson['name'] = grabbedMeta.name ?? 'Aster';
 	metaJson['created_at'] = grabbedMeta.created_at ?? undefined;
-	metaJson['description'] = grabbedMeta.description_long ?? 'An instance running Aster';
-	metaJson['description_short'] = grabbedMeta.description ?? 'An instance running Aster';
+	metaJson['description'] =
+		grabbedMeta.description_long ?? 'An instance running Aster';
+	metaJson['description_short'] =
+		grabbedMeta.description ?? 'An instance running Aster';
 	metaJson['color'] = grabbedMeta.color ?? '#756bcf';
 
 	metaJson['software'] = pkg.name;
@@ -35,20 +37,18 @@ export default async function buildMeta(grabbedMeta) {
 		.getRepository('instances')
 		.count();
 
-		if (grabbedMeta.maintainer) {
-
-			metaJson['maintainer'] = grabbedMeta.maintainer;
-			}
+	if (grabbedMeta.maintainer) {
+		metaJson['maintainer'] = grabbedMeta.maintainer;
+	}
 	if (grabbedMeta.maintainer_email) {
-
-	metaJson['maintainer_email'] = grabbedMeta.maintainer_email;
+		metaJson['maintainer_email'] = grabbedMeta.maintainer_email;
 	}
 
 	metaJson['registration'] = grabbedMeta.registration || 'closed';
 
-if (grabbedMeta.rules) {
-	metaJson['rules'] = grabbedMeta.rules;
-}
+	if (grabbedMeta.rules) {
+		metaJson['rules'] = grabbedMeta.rules;
+	}
 
 	return metaJson;
 }

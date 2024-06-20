@@ -1,6 +1,13 @@
 import { NotesEdit } from './NoteEdit.js';
 import { Users } from './User.js';
-import { Column, Entity, OneToOne, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import {
+	Column,
+	Entity,
+	OneToOne,
+	ManyToOne,
+	PrimaryColumn,
+	Relation
+} from 'typeorm';
 
 @Entity()
 export class Notes {

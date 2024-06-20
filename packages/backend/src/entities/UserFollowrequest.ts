@@ -1,7 +1,6 @@
 import { Users } from './User.js';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
-
 @Entity()
 export class UsersFollowrequest {
 	@PrimaryColumn()
