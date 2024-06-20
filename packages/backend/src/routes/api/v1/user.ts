@@ -4,7 +4,7 @@ import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 
-import buildUser from '../../../builders/user.js';
+import User from '../../../constructors/user.js';
 
 const router = express.Router();
 
@@ -32,7 +32,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				var userJson = await buildUser(grabbedUser);
+				var userJson = new User(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {

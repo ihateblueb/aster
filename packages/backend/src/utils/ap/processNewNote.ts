@@ -67,7 +67,12 @@ export default async function processNewNote(body) {
 		noteToInsert['visibility'] = visibility;
 
 		if (body.inReplyTo) {
-			//										 this sucks
+			/*
+				not doing this rn but i will later
+				this should have to filter out the author and the authors followers
+				rn this will crash when this sees a follower id and tries
+				fetching it like a regualr actor. 
+			*/
 			let getReplyingTo = await getRemoteActor(body.to[1]);
 			let replyingToNote = await getRemoteNote(
 				body.inReplyTo,

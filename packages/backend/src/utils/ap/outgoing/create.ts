@@ -2,7 +2,7 @@ import db from '../../database.js';
 import deliverQueue from '../../deliverQueue.js';
 import logger from '../../logger.js';
 
-import buildApActivityCreate from '../../../builders/ap/activities/create.js';
+import buildApActivityCreate from '../../../constructors/ap/activities/create.js';
 
 export default async function OutCreate(localUserId, type, object) {
 	var grabbedUser = await db.getRepository('users').findOne({

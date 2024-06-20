@@ -8,7 +8,7 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 
-import buildNote from '../../../builders/note.js';
+import buildNote from '../../../constructors/note.js';
 
 const router = express.Router();
 

@@ -3,7 +3,7 @@ import express from 'express';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 
-import buildApNote from '../../builders/ap/note.js';
+import buildApNote from '../../constructors/ap/note.js';
 
 const router = express.Router();
 

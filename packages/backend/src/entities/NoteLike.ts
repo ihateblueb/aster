@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Notes } from './Note.js';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class NotesLike {
@@ -8,8 +9,8 @@ export class NotesLike {
 	@Column()
 	ap_id: string;
 
-	@Column({ nullable: true })
-	note: string;
+	@OneToOne(() => Notes, (note) => note)
+	note: Notes;
 
 	@Column({ nullable: true })
 	created_at: string;

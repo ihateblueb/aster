@@ -1,5 +1,6 @@
-import { Emojis } from './Emoji.js';
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Emojis } from './Emoji.js';import { Notes } from './Note.js';
+import { Column, Entity,  ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+
 
 @Entity()
 export class NotesReact {
@@ -9,8 +10,8 @@ export class NotesReact {
 	@Column()
 	ap_id: string;
 
-	@Column({ nullable: true })
-	note: string;
+	@OneToOne(() => Notes, (note) => note)
+	note: Notes;
 
 	@Column({ nullable: true })
 	created_at: string;

@@ -2,7 +2,7 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildMeta from '../../../builders/meta.js';
+import buildMeta from '../../../constructors/meta.js';
 
 const router = express.Router();
 

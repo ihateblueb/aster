@@ -5,7 +5,7 @@ import getWebfingerAcct from '../../../utils/ap/getWebfingerAcct.js';
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
 
-import buildUser from '../../../builders/user.js';
+import User from '../../../constructors/user.js';
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				let userJson = await buildUser(grabbedUser);
+				let userJson = new User(grabbedUser);
 				res.status(200).json(userJson);
 			}
 		} else {
@@ -66,7 +66,7 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 							message: 'User deactivated'
 						});
 					} else {
-						let userJson = await buildUser(fetchedRemoteActor);
+						let userJson = new User(fetchedRemoteActor);
 						res.status(200).json(userJson);
 					}
 				} else {

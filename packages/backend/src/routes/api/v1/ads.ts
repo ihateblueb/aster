@@ -2,7 +2,7 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildAd from '../../../builders/ad.js';
+import buildAd from '../../../constructors/ad.js';
 
 const router = express.Router();
 

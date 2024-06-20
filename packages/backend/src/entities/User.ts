@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Notes } from './Note.js';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+
 
 @Entity()
 export class Users {
@@ -80,8 +82,8 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
-	@Column('text', { array: true, nullable: true })
-	pinned_notes: string[];
+	@ManyToOne(() => Notes, (note) => note)
+	pinned_notes: Notes[] | null;
 
 	// counts
 
