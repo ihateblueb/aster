@@ -23,6 +23,10 @@ export default async function processNewNote(body) {
 		let visibility;
 		visibility = 'direct';
 
+		/*
+			Theres a problem here with replies I believe
+		*/
+
 		// aster:Visibility extension
 		if (body.visibility) {
 			/*
@@ -63,6 +67,7 @@ export default async function processNewNote(body) {
 		noteToInsert['visibility'] = visibility;
 
 		if (body.inReplyTo) {
+			//										 this sucks
 			let getReplyingTo = await getRemoteActor(body.to[1]);
 			let replyingToNote = await getRemoteNote(
 				body.inReplyTo,
