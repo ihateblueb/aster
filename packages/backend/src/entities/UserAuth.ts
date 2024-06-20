@@ -1,13 +1,13 @@
-import { Users } from './User.js';
+import { User } from './User.js';
 import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class UsersAuth {
+export class UserAuth {
 	@PrimaryColumn()
 	id: string;
 
-	@OneToOne(() => Users, (user) => user)
-	user: Users | null;
+	@OneToOne(() => User, (user) => user)
+	user: User | null;
 
 	@Column({ nullable: true })
 	created_at: string;

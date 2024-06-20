@@ -1,20 +1,19 @@
-import { Notes } from './Note.js';
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesLike {
+export class NoteLike {
 	@PrimaryColumn()
 	id: string;
 
 	@Column()
 	ap_id: string;
 
-	@OneToOne(() => Notes, (note) => note)
-	note: Notes;
+	@Column()
+	note: string;
 
-	@Column({ nullable: true })
+	@Column()
 	created_at: string;
 
-	@Column({ nullable: true })
+	@Column()
 	user: string;
 }

@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Emojis {
+export class Emoji {
 	@PrimaryColumn()
 	id: string;
 

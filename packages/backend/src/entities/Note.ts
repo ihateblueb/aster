@@ -1,5 +1,5 @@
-import { NotesEdit } from './NoteEdit.js';
-import { Users } from './User.js';
+import { NoteEdit } from './NoteEdit.js';
+import { User } from './User.js';
 import {
 	Column,
 	Entity,
@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Notes {
+export class Note {
 	@PrimaryColumn()
 	id: string;
 
@@ -26,8 +26,8 @@ export class Notes {
 	@Column({ nullable: true })
 	replying_to: string;
 
-	@OneToOne(() => Users, (user) => user)
-	author: Relation<Users> | null;
+	@OneToOne(() => User, (user) => user)
+	author: Relation<User> | null;
 
 	@Column({ default: false })
 	local: boolean;
@@ -38,9 +38,9 @@ export class Notes {
 	@Column()
 	content: string;
 
-	@ManyToOne(() => NotesEdit, (edit) => edit)
-	edits: NotesEdit[] | null;
+	@ManyToOne(() => NoteEdit, (edit) => edit)
+	edits: NoteEdit[] | null;
 
-	@OneToOne(() => Notes, (note) => note)
-	original_note: Notes;
+	@OneToOne(() => Note, (note) => note)
+	original_note: Note;
 }

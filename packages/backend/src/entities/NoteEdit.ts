@@ -1,13 +1,12 @@
-import { Notes } from './Note.js';
-import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesEdit {
+export class NoteEdit {
 	@PrimaryColumn()
 	id: string;
 
-	@OneToOne(() => Notes, (note) => note)
-	note: Relation<Notes>;
+	@Column({ nullable: true })
+	note: string;
 
 	@Column({ nullable: true })
 	created_at: string;
@@ -17,7 +16,4 @@ export class NotesEdit {
 
 	@Column({ nullable: true })
 	content: string;
-
-	@Column('text', { array: true, nullable: true })
-	permissions: string[];
 }
