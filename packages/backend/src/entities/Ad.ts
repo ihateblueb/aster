@@ -8,8 +8,6 @@ export class Ad {
 	@Column({ nullable: true })
 	created_at: string;
 
-	// when null, it never expires
-
 	@Column({ nullable: true })
 	expire_at: string;
 
