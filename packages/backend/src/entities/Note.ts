@@ -23,8 +23,8 @@ export class Note {
 	@Column({ default: 'public' })
 	visibility: string;
 
-	@Column({ nullable: true })
-	replying_to: string;
+	@OneToOne(() => Note, (note) => note)
+	replying_to: Relation<Note> | null;
 
 	@OneToOne(() => User, (user) => user)
 	author: Relation<User> | null;
@@ -40,6 +40,9 @@ export class Note {
 
 	@ManyToOne(() => NoteEdit, (edit) => edit)
 	edits: NoteEdit[] | null;
+
+	@ManyToOne(() => Note, (note) => note.replying_to)
+	replies: Relation<Note[]> | null;
 
 	@OneToOne(() => Note, (note) => note)
 	original_note: Note;
