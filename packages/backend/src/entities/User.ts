@@ -1,4 +1,5 @@
 import { Note } from './Note.js';
+import { UserMetadata } from './UserMetadata.js';
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
@@ -11,6 +12,9 @@ export class User {
 
 	@Column({ nullable: true })
 	inbox: string;
+
+	@Column({ nullable: true })
+	outbox: string;
 
 	@Column()
 	username: string;
@@ -25,7 +29,7 @@ export class User {
 	local: boolean;
 
 	@Column({ nullable: true })
-	url!: string;
+	url: string;
 
 	@Column({ default: true })
 	locked: boolean;
@@ -66,6 +70,9 @@ export class User {
 	@Column({ nullable: true })
 	bio: string;
 
+	@Column({ nullable: true })
+	location: string;
+
 	@Column({ default: false })
 	is_cat: boolean;
 
@@ -96,6 +103,9 @@ export class User {
 	@ManyToOne(() => Note, (note) => note)
 	pinned_notes: Note[] | null;
 
+	@ManyToOne(() => UserMetadata, (metadata) => metadata)
+	metadata: UserMetadata[] | null;
+
 	// counts
 
 	@Column({ nullable: true })
@@ -106,12 +116,6 @@ export class User {
 
 	@Column({ nullable: true })
 	total_following: number;
-
-	// stored like
-	// { {"key":"val"} }
-
-	@Column('text', { array: true, nullable: true })
-	metadata: string[];
 
 	@Column()
 	public_key: string;
