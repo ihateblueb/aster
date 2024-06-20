@@ -4,7 +4,6 @@ import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import ApNote from '../../constructors/ApNote.js';
 
-
 const router = express.Router();
 
 router.get('/notes/:noteid', async (req, res, next) => {

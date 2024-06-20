@@ -1,39 +1,39 @@
 export default class ApNote {
-    id: string;
+	id: string;
 
-    readonly type: string = "Note";
-    
-    attributedTo: string;
-    actor: string;
+	readonly type: string = 'Note';
 
-    context: string;
-    conversation: string;
-    
-    content: string;
-    contentMap: object;
-    source: {
-        content: string;
-        mediaType: string;
-    };
+	attributedTo: string;
+	actor: string;
 
-    published: string;
-    sensitive: boolean;
+	context: string;
+	conversation: string;
 
-    inReplyTo?: string;
+	content: string;
+	contentMap: object;
+	source: {
+		content: string;
+		mediaType: string;
+	};
 
-    to?: Array<string>;
-    cc?: Array<string>;
-    
-    attachment?: Array<object>;
-    tag?: Array<object>;
+	published: string;
+	sensitive: boolean;
 
-    constructor(grabbedNote) {
-        this.id = grabbedNote.ap_id
-        this.attributedTo = grabbedNote.author.ap_id
-        this.actor = grabbedNote.author.ap_id
+	inReplyTo?: string;
 
-        this.content = grabbedNote.content 
-        this.source.content = grabbedNote.content
-        this.source.mediaType = 'text/x.misskeymarkdown'
-    }
+	to?: Array<string>;
+	cc?: Array<string>;
+
+	attachment?: Array<object>;
+	tag?: Array<object>;
+
+	constructor(grabbedNote) {
+		this.id = grabbedNote.ap_id;
+		this.attributedTo = grabbedNote.author.ap_id;
+		this.actor = grabbedNote.author.ap_id;
+
+		this.content = grabbedNote.content;
+		this.source.content = grabbedNote.content;
+		this.source.mediaType = 'text/x.misskeymarkdown';
+	}
 }
