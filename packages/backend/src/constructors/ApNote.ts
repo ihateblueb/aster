@@ -3,7 +3,7 @@ import { Note } from "../entities/Note.js";
 export default class ApNote {
 	id: string;
 
-	readonly type: string = 'Note';
+	readonly type: 'Note';
 
 	attributedTo: string;
 	actor: string;

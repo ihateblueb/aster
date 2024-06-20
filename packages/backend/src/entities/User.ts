@@ -40,16 +40,28 @@ export class User {
 	discoverable: boolean;
 
 	@Column({ default: false })
+	indexable: boolean;
+
+	@Column({ default: false })
 	automated: boolean;
 
 	@Column({ nullable: true })
 	avatar: string;
 
 	@Column({ nullable: true })
+	avatar_alt: string;
+
+	@Column({ nullable: true })
 	banner: string;
 
 	@Column({ nullable: true })
-	background!: string;
+	banner_alt: string;
+
+	@Column({ nullable: true })
+	background: string;
+
+	@Column({ nullable: true })
+	background_alt: string;
 
 	@Column({ nullable: true })
 	bio: string;
