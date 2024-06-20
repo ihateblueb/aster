@@ -1,7 +1,6 @@
 import express from 'express';
 
 import db from '../../../utils/database.js';
-import buildNote from '../../../constructors/note.js';
 import getSigned from '../../../utils/ap/getSigned.js';
 import processNewActor from '../../../utils/ap/processNewActor.js';
 import processNewNote from '../../../utils/ap/processNewNote.js';

@@ -2,19 +2,14 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildMeta from '../../../constructors/meta.js';
-
 const router = express.Router();
 
 router.get('/api/v1/meta', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	const metaDb = await db.getRepository('meta').find();
-	const grabbedMeta = metaDb[0];
+	const grabbedMeta = await db.getRepository('meta').find();
 
-	var metaJson = await buildMeta(grabbedMeta);
-
-	res.status(200).json(metaJson);
+	res.status(200).json(grabbedMeta[0]);
 });
 
 export default router;

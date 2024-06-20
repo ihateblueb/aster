@@ -2,8 +2,8 @@ import express from 'express';
 
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
+import ApNote from '../../constructors/ApNote.js';
 
-import buildApNote from '../../constructors/ap/note.js';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.get('/notes/:noteid', async (req, res, next) => {
 
 			if (grabbedNote && grabbedNote.local) {
 				res.setHeader('Content-Type', 'application/activity+json');
-				var noteJson = await buildApNote(grabbedNote);
+				var noteJson = new ApNote(grabbedNote);
 				res.json(noteJson);
 			} else {
 				return res.status(404).json({ message: 'Not found' });

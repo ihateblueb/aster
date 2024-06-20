@@ -4,8 +4,6 @@ import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 
-import buildInstance from '../../../constructors/instance.js';
-
 const router = express.Router();
 
 router.get('/api/v1/instance/:host', async (req, res) => {
@@ -22,8 +20,7 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 		});
 
 		if (grabbedInstance) {
-			var instanceJson = await buildInstance(grabbedInstance);
-			res.status(200).json(instanceJson);
+			res.status(200).json(grabbedInstance);
 		} else {
 			return res.status(404).json({
 				message: 'Note does not exist'

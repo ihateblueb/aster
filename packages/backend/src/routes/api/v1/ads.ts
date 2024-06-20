@@ -2,8 +2,6 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildAd from '../../../constructors/ad.js';
-
 const router = express.Router();
 
 // get ad by id or random
@@ -26,8 +24,7 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		});
 
 		if (grabbedAd) {
-			var adJson = await buildAd(grabbedAd);
-			res.status(200).json(adJson);
+			res.status(200).json(grabbedAd);
 		} else {
 			return res.status(404).json({
 				message: 'Ad does not exist'
