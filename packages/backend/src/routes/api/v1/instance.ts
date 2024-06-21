@@ -13,11 +13,12 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 			message: 'Host parameter required'
 		});
 	} else {
-		var grabbedInstance = await db.getRepository('instances').findOne({
-			where: {
-				host: req.params.host
-			}
-		});
+		var grabbedInstance = await db
+			.getRepository('instance')
+			.createQueryBuilder()
+			.select('instance')
+			.where({ host: req.params.host })
+			.getOne();
 
 		if (grabbedInstance) {
 			res.status(200).json(grabbedInstance);

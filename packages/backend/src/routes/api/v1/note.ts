@@ -7,6 +7,7 @@ import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
+import ApNote from '../../../constructors/ApNote.js';
 
 const router = express.Router();
 
@@ -124,9 +125,11 @@ router.post(`/api/v1/note`, async (req, res) => {
 			noteToInsert['visibility'] = 'public';
 		}
 
-		await db.getRepository('notes').insert(noteToInsert);
+		let insertedNote = (
+			await db.getRepository('notes').insert(noteToInsert)
+		).raw;
 
-		await OutCreate(authRes.grabbedUserAuth.user, 'note', noteToInsert);
+		await OutCreate(authRes.grabbedUserAuth.user, new ApNote(insertedNote));
 
 		return res.status(200).json({
 			message: 'Note created',
