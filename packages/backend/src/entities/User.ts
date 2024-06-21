@@ -7,19 +7,19 @@ export class User {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	ap_id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	inbox: string;
 
-	@Column({ nullable: true })
+	@Column()
 	outbox: string;
 
 	@Column()
 	username: string;
 
-	@Column({ nullable: true })
+	@Column()
 	host: string;
 
 	@Column({ nullable: true })
@@ -28,7 +28,7 @@ export class User {
 	@Column({ default: false })
 	local: boolean;
 
-	@Column({ nullable: true })
+	@Column()
 	url: string;
 
 	@Column({ default: true })

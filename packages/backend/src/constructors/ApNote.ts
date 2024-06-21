@@ -76,4 +76,8 @@ export default class ApNote {
 
 		// collection of replies?
 	}
+
+    build() {
+        return this;
+    }
 }

@@ -104,4 +104,8 @@ export default class ApActor {
             })
         })
 	}
+
+    build() {
+        return this;
+    }
 }
