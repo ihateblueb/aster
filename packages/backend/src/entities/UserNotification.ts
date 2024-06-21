@@ -1,15 +1,16 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { User } from './User.js';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class UsersNotification {
+export class UserNotification {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
-	to: string;
+	@OneToOne(() => User, (user) => user)
+	to: User | null;
 
-	@Column({ nullable: true })
-	from: string;
+	@OneToOne(() => User, (user) => user)
+	from: User | null;
 
 	@Column({ nullable: true })
 	type: string;
@@ -19,8 +20,6 @@ export class UsersNotification {
 
 	@Column({ nullable: true })
 	object: string;
-
-	// this gets its own column because the object would already hold the note id
 
 	@Column({ nullable: true })
 	reaction: string;

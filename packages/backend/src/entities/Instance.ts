@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Instances {
+export class Instance {
 	@PrimaryColumn()
 	id: string;
 

@@ -1,14 +1,12 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Ads {
+export class Ad {
 	@PrimaryColumn()
 	id: string;
 
 	@Column({ nullable: true })
 	created_at: string;
-
-	// when null, it never expires
 
 	@Column({ nullable: true })
 	expire_at: string;

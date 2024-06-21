@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesEdit {
+export class NoteEdit {
 	@PrimaryColumn()
 	id: string;
 
@@ -16,7 +16,4 @@ export class NotesEdit {
 
 	@Column({ nullable: true })
 	content: string;
-
-	@Column('text', { array: true, nullable: true })
-	permissions: string[];
 }

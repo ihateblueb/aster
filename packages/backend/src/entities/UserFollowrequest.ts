@@ -1,15 +1,16 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { User } from './User.js';
+import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class UsersFollowrequest {
+export class UserFollowrequest {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
-	to: string;
+	@OneToOne(() => User, (user) => user)
+	to: User | null;
 
-	@Column({ nullable: true })
-	from: string;
+	@OneToOne(() => User, (user) => user)
+	from: User | null;
 
 	@Column({ nullable: true })
 	time: string;

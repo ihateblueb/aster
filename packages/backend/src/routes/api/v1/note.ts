@@ -8,8 +8,6 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 
-import buildNote from '../../../builders/note.js';
-
 const router = express.Router();
 
 router.get('/api/v1/note/:noteid', async (req, res) => {
@@ -42,10 +40,6 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
-					/*var grabbedReactions = await db
-						.getRepository('notes_react')
-						.find({ where: { note: grabbedNote.id } });*/
-
 					var grabbedReactions = await db
 						.getRepository('notes_react')
 						.createQueryBuilder('notes_react')
@@ -82,12 +76,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						}
 					});
 
-					var noteJson = await buildNote(
-						grabbedNote,
-						grabbedAuthor,
-						sortedReactions
-					);
-					res.status(200).json(noteJson);
+					res.status(200).json(grabbedNote);
 				}
 			} else {
 				return res.status(500).json({

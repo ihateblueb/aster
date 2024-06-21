@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { User } from './User.js';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Roles {
+export class Role {
 	@PrimaryColumn()
 	id: string;
 
@@ -14,11 +15,11 @@ export class Roles {
 	@Column({ nullable: true })
 	icon: string;
 
-	@Column({ default: true })
+	@Column()
 	hidden: boolean;
 
-	@Column('text', { array: true, nullable: true })
-	users: string[];
+	@ManyToOne(() => User, (user) => user)
+	users: User[];
 
 	@Column('text', { array: true, nullable: true })
 	permissions: string[];

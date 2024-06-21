@@ -1,20 +1,25 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Note } from './Note.js';
+import { UserMetadata } from './UserMetadata.js';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Users {
+export class User {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	ap_id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	inbox: string;
+
+	@Column()
+	outbox: string;
 
 	@Column()
 	username: string;
 
-	@Column({ nullable: true })
+	@Column()
 	host: string;
 
 	@Column({ nullable: true })
@@ -23,8 +28,8 @@ export class Users {
 	@Column({ default: false })
 	local: boolean;
 
-	@Column({ nullable: true })
-	url!: string;
+	@Column()
+	url: string;
 
 	@Column({ default: true })
 	locked: boolean;
@@ -39,19 +44,34 @@ export class Users {
 	discoverable: boolean;
 
 	@Column({ default: false })
+	indexable: boolean;
+
+	@Column({ default: false })
 	automated: boolean;
 
 	@Column({ nullable: true })
 	avatar: string;
 
 	@Column({ nullable: true })
+	avatar_alt: string;
+
+	@Column({ nullable: true })
 	banner: string;
 
 	@Column({ nullable: true })
-	background!: string;
+	banner_alt: string;
+
+	@Column({ nullable: true })
+	background: string;
+
+	@Column({ nullable: true })
+	background_alt: string;
 
 	@Column({ nullable: true })
 	bio: string;
+
+	@Column({ nullable: true })
+	location: string;
 
 	@Column({ default: false })
 	is_cat: boolean;
@@ -80,8 +100,11 @@ export class Users {
 	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
-	@Column('text', { array: true, nullable: true })
-	pinned_notes: string[];
+	@ManyToOne(() => Note, (note) => note)
+	pinned_notes: Note[] | null;
+
+	@ManyToOne(() => UserMetadata, (metadata) => metadata)
+	metadata: UserMetadata[] | null;
 
 	// counts
 
@@ -93,12 +116,6 @@ export class Users {
 
 	@Column({ nullable: true })
 	total_following: number;
-
-	// stored like
-	// { {"key":"val"} }
-
-	@Column('text', { array: true, nullable: true })
-	metadata: string[];
 
 	@Column()
 	public_key: string;

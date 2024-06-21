@@ -1,10 +1,10 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class UserPref {
+export class Activity {
 	@PrimaryColumn()
 	id: string;
 
-	@Column('text', { array: true, nullable: true })
-	prefs: string[];
+	@Column()
+	object: object;
 }

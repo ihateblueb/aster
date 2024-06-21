@@ -2,8 +2,6 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 
-import buildAd from '../../../builders/ad.js';
-
 const router = express.Router();
 
 // get ad by id or random
@@ -15,9 +13,12 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		});
 	} else if (req.params.adId === 'random') {
 		var grabbedRandomAd = await db
-			.getRepository('ads')
-			.query(`SELECT * FROM ads ORDER BY random() LIMIT 1`);
-		return res.status(200).json(grabbedRandomAd[0]);
+			.getRepository('ad')
+			.createQueryBuilder()
+			.select('ad')
+			.orderBy('RANDOM()')
+			.getOne();
+		return res.status(200).json(grabbedRandomAd);
 	} else {
 		var grabbedAd = await db.getRepository('ads').findOne({
 			where: {
@@ -26,8 +27,7 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		});
 
 		if (grabbedAd) {
-			var adJson = await buildAd(grabbedAd);
-			res.status(200).json(adJson);
+			res.status(200).json(grabbedAd);
 		} else {
 			return res.status(404).json({
 				message: 'Ad does not exist'
