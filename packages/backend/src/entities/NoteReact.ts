@@ -1,23 +1,26 @@
 import { Emoji } from './Emoji.js';
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Note } from './Note.js';
+import { User } from './User.js';
+import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class NotesReact {
+export class NoteReact {
 	@PrimaryColumn()
 	id: string;
 
 	@Column()
 	ap_id: string;
 
-	@Column()
-	note: string;
+	@OneToOne(() => Note, (note) => note)
+	note: Note;
 
 	@Column()
 	created_at: string;
 
-	@ManyToOne(() => Emoji, (emoji) => emoji)
-	emoji: Emoji[] | null;
+	// empty if like 
+	@OneToOne(() => Emoji, (emoji) => emoji)
+	emoji: Emoji | null;
 
-	@Column()
-	user: string;
+	@OneToOne(() => User, (user) => user)
+	user: User;
 }

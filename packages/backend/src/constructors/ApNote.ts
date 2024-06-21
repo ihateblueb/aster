@@ -26,11 +26,11 @@ export default class ApNote {
 
 	inReplyTo?: string;
 
-	to?: Array<string>;
-	cc?: Array<string>;
+	to?: string[];
+	cc?: string[];
 
-	attachment?: Array<object>;
-	tag?: Array<object>;
+	attachment?: object[];
+	tag?: object[];
 
 	constructor(grabbedNote: Note) {
 		this.id = grabbedNote.ap_id;

@@ -40,7 +40,7 @@ export default class ApActor {
         url?: string;
         description?: string;
         sensitive: false;
-    };;
+    };
 
     preferredUsername?: string;
     summary?: string;
@@ -107,5 +107,5 @@ export default class ApActor {
 
     build() {
         return this;
-    }
+    } 
 }

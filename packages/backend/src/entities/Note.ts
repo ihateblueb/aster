@@ -1,4 +1,5 @@
 import { NoteEdit } from './NoteEdit.js';
+import { NoteReact } from './NoteReact.js';
 import { User } from './User.js';
 import {
 	Column,
@@ -43,6 +44,9 @@ export class Note {
 
 	@ManyToOne(() => Note, (note) => note.replying_to)
 	replies: Relation<Note[]> | null;
+
+	@ManyToOne(() => NoteReact, (react) => react)
+	reactions: Relation<NoteReact[]> | null;
 
 	@OneToOne(() => Note, (note) => note)
 	original_note: Note;

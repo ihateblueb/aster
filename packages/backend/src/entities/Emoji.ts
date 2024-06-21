@@ -5,24 +5,27 @@ export class Emoji {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	ap_id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	created_at: string;
 
-	@Column({ nullable: true })
+	@Column()
 	updated_at: string;
 
-	@Column({ nullable: true })
+	@Column()
 	local: string;
 
-	@Column({ nullable: true })
+	@Column()
 	host: string;
 
-	@Column({ nullable: true })
+	@Column()
 	name: string;
 
-	@Column({ nullable: true })
+	@Column()
 	url: string;
+
+	@Column()
+	mime: string;
 }
