@@ -1,6 +1,6 @@
 import { Note } from './Note.js';
 import { UserMetadata } from './UserMetadata.js';
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 
 @Entity()
 export class User {
@@ -101,10 +101,10 @@ export class User {
 	roles: string[];
 
 	@ManyToOne(() => Note, (note) => note)
-	pinned_notes: Note[] | null;
+	pinned_notes: Relation<Note[]> | null;
 
 	@ManyToOne(() => UserMetadata, (metadata) => metadata)
-	metadata: UserMetadata[] | null;
+	metadata: Relation<UserMetadata[]> | null;
 
 	// counts
 

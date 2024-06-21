@@ -20,7 +20,7 @@ router.get('/api/v1/followrequests', async (req, res) => {
 			.where({ toId: authRes.grabbedUserAuth })
 			.innerJoinAndSelect('user.to', 'user')
 			.innerJoinAndSelect('user.from', 'user')
-			.getRawOne();
+			.getOne();
 
 		return res.status(200).json(grabbedFollowrequests);
 	} else {

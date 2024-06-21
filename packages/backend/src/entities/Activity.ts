@@ -5,6 +5,6 @@ export class Activity {
 	@PrimaryColumn()
 	id: string;
 
-	@Column()
-	object: object;
+	@Column('jsonb')
+	object: string;
 }

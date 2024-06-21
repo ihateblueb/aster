@@ -1,8 +1,10 @@
+import { v4 as uuidv4 } from 'uuid';
+import ActCreate from '../../../constructors/activity/Create.js';
 import db from '../../database.js';
 import deliverQueue from '../../deliverQueue.js';
 import logger from '../../logger.js';
 
-export default async function OutCreate(localUserId, type, object) {
+export default async function OutCreate(localUserId, object) {
 	var grabbedUser = await db.getRepository('users').findOne({
 		where: {
 			id: localUserId
@@ -10,7 +12,11 @@ export default async function OutCreate(localUserId, type, object) {
 	});
 
 	if (grabbedUser.local) {
-		var createJson = await buildApActivityCreate(grabbedUser, type, object);
+		var createJson = new ActCreate({
+			id: uuidv4(),
+			actor: grabbedUser,
+			object: object
+		});
 
 		grabbedUser.followers.forEach(async (e) => {
 			let grabbedFollower = await db.getRepository('users').findOne({
