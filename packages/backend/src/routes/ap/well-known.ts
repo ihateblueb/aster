@@ -34,20 +34,23 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (req.query.resource.startsWith('acct:')) {
-			var grabbedUser = await db.getRepository('users').findOne({
-				where: {
+			var grabbedUser = await db
+				.getRepository('user')
+				.createQueryBuilder()
+				.select('user')
+				.where({
 					username: req.query.resource
 						.replace('acct:', '')
-						.split('@')[0]
-				}
-			});
+						.split('@')[0],
+					local: true
+				})
+				.innerJoinAndSelect('user.pinned_note', 'user')
+				.innerJoinAndSelect('user.metadata', 'user')
+				.getRawOne();
 
 			if (grabbedUser) {
 				res.json({
-					subject: `acct:${grabbedUser.username}@${config.url
-						.replace('https://', '')
-						.replace('http://', '')
-						.replace('/', '')}`,
+					subject: `acct:${grabbedUser.username}@${new URL(config.url).host}`,
 					links: [
 						{
 							rel: 'self',

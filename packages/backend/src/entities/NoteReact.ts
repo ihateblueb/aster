@@ -17,7 +17,7 @@ export class NoteReact {
 	@Column()
 	created_at: string;
 
-	// empty if like 
+	// empty if like
 	@OneToOne(() => Emoji, (emoji) => emoji)
 	emoji: Emoji | null;
 

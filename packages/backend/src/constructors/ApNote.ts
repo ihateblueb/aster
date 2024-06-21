@@ -1,4 +1,4 @@
-import { Note } from "../entities/Note.js";
+import { Note } from '../entities/Note.js';
 
 export default class ApNote {
 	id: string;
@@ -46,29 +46,29 @@ export default class ApNote {
 		this.source.content = grabbedNote.content;
 		this.source.mediaType = 'text/x.misskeymarkdown';
 
-		this.published = grabbedNote.created_at
-		this.sensitive = (grabbedNote.cw) ? true : false;
+		this.published = grabbedNote.created_at;
+		this.sensitive = grabbedNote.cw ? true : false;
 
 		if (grabbedNote.visibility === 'public') {
 			this.directMessage = false;
-			this.visibility = 'public'
+			this.visibility = 'public';
 
-			this.to = [ 'https://www.w3.org/ns/activitystreams#Public' ]
+			this.to = ['https://www.w3.org/ns/activitystreams#Public'];
 		} else if (grabbedNote.visibility === 'unlisted') {
 			this.directMessage = false;
-			this.visibility = 'unlisted'
+			this.visibility = 'unlisted';
 
-			this.to = [ grabbedNote.author.followers_url ]
-			this.cc = [ 'https://www.w3.org/ns/activitystreams#Public' ]
+			this.to = [grabbedNote.author.followers_url];
+			this.cc = ['https://www.w3.org/ns/activitystreams#Public'];
 		} else if (grabbedNote.visibility === 'followers') {
 			this.directMessage = false;
-			this.visibility = 'followers'
+			this.visibility = 'followers';
 
-			this.to = [ grabbedNote.author.followers_url ]
+			this.to = [grabbedNote.author.followers_url];
 		} else if (grabbedNote.visibility === 'direct') {
 			this.directMessage = true;
-			this.visibility = 'direct'
-			
+			this.visibility = 'direct';
+
 			// this needs to be figured out later
 			//this.to = []
 			//this.cc = []
@@ -77,7 +77,7 @@ export default class ApNote {
 		// collection of replies?
 	}
 
-    build() {
-        return this;
-    }
+	build() {
+		return this;
+	}
 }

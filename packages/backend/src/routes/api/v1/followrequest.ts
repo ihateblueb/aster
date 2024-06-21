@@ -14,12 +14,13 @@ router.get('/api/v1/followrequests', async (req, res) => {
 
 	if (authRes.status === 200) {
 		var grabbedFollowrequests = await db
-			.getRepository('users_followrequest')
-			.find({
-				where: {
-					to: authRes.grabbedUserAuth.user
-				}
-			});
+			.getRepository('user_followrequest')
+			.createQueryBuilder()
+			.select('user')
+			.where({ toId: authRes.grabbedUserAuth })
+			.innerJoinAndSelect('user.to', 'user')
+			.innerJoinAndSelect('user.from', 'user')
+			.getRawOne();
 
 		return res.status(200).json(grabbedFollowrequests);
 	} else {

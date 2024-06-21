@@ -1,29 +1,29 @@
-import { Emoji } from "../entities/Emoji.js";
+import { Emoji } from '../entities/Emoji.js';
 
 export default class ApEmoji {
-    id: string;
+	id: string;
 
-    readonly type: 'Emoji';
+	readonly type: 'Emoji';
 
-    name: string;
-    updated: string;
+	name: string;
+	updated: string;
 
-    icon: {
-        type: 'Image';
-        mediaType: string;
-        url: string;
-    }
+	icon: {
+		type: 'Image';
+		mediaType: string;
+		url: string;
+	};
 
-    constructor(grabbedEmoji: Emoji) {
-        this.id = grabbedEmoji.ap_id;
-        this.name = grabbedEmoji.name;
-        this.updated = grabbedEmoji.updated_at
+	constructor(grabbedEmoji: Emoji) {
+		this.id = grabbedEmoji.ap_id;
+		this.name = grabbedEmoji.name;
+		this.updated = grabbedEmoji.updated_at;
 
-        this.icon.mediaType = grabbedEmoji.mime;
-        this.icon.url = grabbedEmoji.url
-    }
+		this.icon.mediaType = grabbedEmoji.mime;
+		this.icon.url = grabbedEmoji.url;
+	}
 
-    build() {
-        return this;
-    }
+	build() {
+		return this;
+	}
 }

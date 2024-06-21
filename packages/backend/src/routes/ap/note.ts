@@ -12,20 +12,21 @@ router.get('/notes/:noteid', async (req, res, next) => {
 		return res.status(400).json({ message: 'Note ID parameter required' });
 	} else {
 		if (!req.accepts('html')) {
-			var grabbedNote = await db.getRepository('note').createQueryBuilder()
-				.select("note")
+			var grabbedNote = await db
+				.getRepository('note')
+				.createQueryBuilder()
+				.select('note')
 				.where({ id: req.params.noteid })
-				.innerJoinAndSelect("note.replying_to", "note")
-				.innerJoinAndSelect("note.author", "user")
-				.innerJoinAndSelect("note.edits", "note_edit")
-				.innerJoinAndSelect("note.replies", "note")
-				.innerJoinAndSelect("note.reactions", "note_react")
+				.innerJoinAndSelect('note.replying_to', 'note')
+				.innerJoinAndSelect('note.author', 'user')
+				.innerJoinAndSelect('note.edits', 'note_edit')
+				.innerJoinAndSelect('note.replies', 'note')
+				.innerJoinAndSelect('note.reactions', 'note_react')
 				.getRawOne();
 
 			if (grabbedNote && grabbedNote.local) {
 				res.setHeader('Content-Type', 'application/activity+json');
-				var noteJson = new ApNote(grabbedNote);
-				res.json(noteJson);
+				res.json(new ApNote(grabbedNote));
 			} else {
 				return res.status(404).json({ message: 'Not found' });
 			}

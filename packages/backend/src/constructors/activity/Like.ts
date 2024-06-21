@@ -1,34 +1,32 @@
-import { NoteReact } from "../../entities/NoteReact.js";
-import config from "../../utils/config.js";
-import ApEmoji from "../ApEmoji.js";
+import { NoteReact } from '../../entities/NoteReact.js';
+import config from '../../utils/config.js';
+import ApEmoji from '../ApEmoji.js';
 
 export default class ActLike {
-    id: string;
+	id: string;
 
-    readonly type: 'Like'
-    
-    actor: string;
-    object: string;
+	readonly type: 'Like';
 
-    content?: string;
-    _misskey_reaction?: string;
-    tag?: object[];
+	actor: string;
+	object: string;
 
-    constructor(reaction: NoteReact) {
-        this.id = config.url+'activities/'+reaction.id;
-        this.actor = reaction.user.ap_id;
-        this.object = reaction.note.author.ap_id;
+	content?: string;
+	_misskey_reaction?: string;
+	tag?: object[];
 
-        if (reaction.emoji) {
-            this.content = reaction.emoji.name
+	constructor(reaction: NoteReact) {
+		this.id = config.url + 'activities/' + reaction.id;
+		this.actor = reaction.user.ap_id;
+		this.object = reaction.note.author.ap_id;
 
-            this.tag = [
-                new ApEmoji(reaction.emoji)
-            ]
-        }
-    }
+		if (reaction.emoji) {
+			this.content = reaction.emoji.name;
 
-    build() {
-        return this;
-    }
+			this.tag = [new ApEmoji(reaction.emoji)];
+		}
+	}
+
+	build() {
+		return this;
+	}
 }

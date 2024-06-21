@@ -13,9 +13,12 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		});
 	} else if (req.params.adId === 'random') {
 		var grabbedRandomAd = await db
-			.getRepository('ads')
-			.query(`SELECT * FROM ads ORDER BY random() LIMIT 1`);
-		return res.status(200).json(grabbedRandomAd[0]);
+			.getRepository('ad')
+			.createQueryBuilder()
+			.select('ad')
+			.orderBy('RANDOM()')
+			.getOne();
+		return res.status(200).json(grabbedRandomAd);
 	} else {
 		var grabbedAd = await db.getRepository('ads').findOne({
 			where: {
