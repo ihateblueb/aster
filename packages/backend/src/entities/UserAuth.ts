@@ -1,5 +1,5 @@
 import { User } from './User.js';
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
 
 @Entity()
 export class UserAuth {
@@ -7,7 +7,7 @@ export class UserAuth {
 	id: string;
 
 	@OneToOne(() => User, (user) => user)
-	user: User | null;
+	user: Relation<User> | null;
 
 	@Column({ nullable: true })
 	created_at: string;

@@ -1,5 +1,5 @@
 import { User } from './User.js';
-import { Column, Entity, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
 
 @Entity()
 export class UserNotification {
@@ -7,10 +7,10 @@ export class UserNotification {
 	id: string;
 
 	@OneToOne(() => User, (user) => user)
-	to: User | null;
+	to: Relation<User> | null;
 
 	@OneToOne(() => User, (user) => user)
-	from: User | null;
+	from: Relation<User> | null;
 
 	@Column({ nullable: true })
 	type: string;

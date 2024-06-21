@@ -1,5 +1,5 @@
 import { User } from './User.js';
-import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
 
 @Entity()
 export class Role {
@@ -19,7 +19,7 @@ export class Role {
 	hidden: boolean;
 
 	@ManyToOne(() => User, (user) => user)
-	users: User[];
+	users: Relation<User[]>;
 
 	@Column('text', { array: true, nullable: true })
 	permissions: string[];

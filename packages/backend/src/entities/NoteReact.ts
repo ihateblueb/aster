@@ -1,7 +1,7 @@
 import { Emoji } from './Emoji.js';
 import { Note } from './Note.js';
 import { User } from './User.js';
-import { Column, Entity, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, Relation, OneToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class NoteReact {
@@ -12,15 +12,15 @@ export class NoteReact {
 	ap_id: string;
 
 	@OneToOne(() => Note, (note) => note)
-	note: Note;
+	note: Relation<Note>;
 
 	@Column()
 	created_at: string;
 
 	// empty if like
 	@OneToOne(() => Emoji, (emoji) => emoji)
-	emoji: Emoji | null;
+	emoji: Relation<Emoji> | null;
 
 	@OneToOne(() => User, (user) => user)
-	user: User;
+	user: Relation<User>;
 }

@@ -40,7 +40,7 @@ export class Note {
 	content: string;
 
 	@ManyToOne(() => NoteEdit, (edit) => edit)
-	edits: NoteEdit[] | null;
+	edits: Relation<NoteEdit[]> | null;
 
 	@ManyToOne(() => Note, (note) => note.replying_to)
 	replies: Relation<Note[]> | null;
@@ -49,5 +49,5 @@ export class Note {
 	reactions: Relation<NoteReact[]> | null;
 
 	@OneToOne(() => Note, (note) => note)
-	original_note: Note;
+	original_note: Relation<Note>;
 }
