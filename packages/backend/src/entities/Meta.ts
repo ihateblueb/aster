@@ -29,9 +29,6 @@ export class Meta {
 	@Column({ nullable: true })
 	description_long: string;
 
-	@Column({ default: false })
-	init: boolean;
-
 	// statistics
 
 	@Column({ nullable: true })
@@ -44,7 +41,7 @@ export class Meta {
 	local_note_count: number;
 
 	@Column({ nullable: true })
-	total__count: number;
+	total_note_count: number;
 
 	@Column({ nullable: true })
 	instance_count: number;

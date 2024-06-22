@@ -7,71 +7,59 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 
-const metaDb = await db.getRepository('meta').find();
+logger(
+	'warn',
+	'init',
+	'if you have not yet run migrations, this init script will fail'
+);
 
-const meta = metaDb[0];
+const iaId = uuidv4();
 
-if (!meta.init) {
-	logger(
-		'warn',
-		'init',
-		'if you have not yet run migrations, this init script will fail'
-	);
+const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+	modulusLength: 2048,
+	publicKeyEncoding: {
+		type: 'spki',
+		format: 'pem'
+	},
+	privateKeyEncoding: {
+		type: 'pkcs8',
+		format: 'pem'
+	}
+});
 
-	const iaId = uuidv4();
+let instanceActorToInsert = {
+	id: iaId,
+	ap_id: `${config.url}users/${iaId}`,
+	inbox: `${config.url}users/${iaId}/inbox`,
+	username: 'instanceactor',
+	host: new URL(config.url).host,
+	displayname: 'Instance Actor',
+	local: true,
+	url: `${config.url}@instanceactor`,
+	locked: true,
+	suspended: false,
+	deactivated: false,
+	discoverable: false,
+	automated: true,
+	bio: 'automated account required for federation',
+	is_cat: true,
+	speak_as_cat: false,
+	created_at: new Date(Date.now()).toISOString(),
+	updated_at: new Date(Date.now()).toISOString(),
+	following_url: `${config.url}users/${iaId}/following`,
+	followers_url: `${config.url}users/${iaId}/followers`,
+	public_key: publicKey
+};
 
-	const { publicKey, privateKey } = generateKeyPairSync('rsa', {
-		modulusLength: 2048,
-		publicKeyEncoding: {
-			type: 'spki',
-			format: 'pem'
-		},
-		privateKeyEncoding: {
-			type: 'pkcs8',
-			format: 'pem'
-		}
-	});
+logger('info', 'init', JSON.stringify(instanceActorToInsert));
 
-	let instanceActorToInsert = {
-		id: iaId,
-		ap_id: `${config.url}users/${iaId}`,
-		inbox: `${config.url}users/${iaId}/inbox`,
-		username: 'instanceactor',
-		host: new URL(config.url).host,
-		displayname: 'Instance Actor',
-		local: true,
-		url: `${config.url}@instanceactor`,
-		locked: true,
-		suspended: false,
-		deactivated: false,
-		discoverable: false,
-		automated: true,
-		bio: 'automated account required for federation',
-		is_cat: true,
-		speak_as_cat: false,
-		created_at: new Date(Date.now()).toISOString(),
-		updated_at: new Date(Date.now()).toISOString(),
-		following_url: `${config.url}users/${iaId}/following`,
-		followers_url: `${config.url}users/${iaId}/followers`,
-		public_key: publicKey
-	};
+await db.getRepository('user').insert(instanceActorToInsert);
 
-	console.log(instanceActorToInsert);
+let instanceActorPrivToInsert = {
+	id: iaId,
+	private_key: privateKey
+};
 
-	//await db.getRepository('users').insert(instanceActorToInsert);
+logger('info', 'init', JSON.stringify(instanceActorPrivToInsert));
 
-	let instanceActorPrivToInsert = {
-		id: iaId,
-		private_key: privateKey
-	};
-
-	console.log(instanceActorPrivToInsert);
-
-	//await db.getRepository('users_priv').insert(instanceActorPrivToInsert);
-} else {
-	logger(
-		'fatal',
-		'init',
-		"hey. hey what the fuck do you think you're doing. this script was already run"
-	);
-}
+await db.getRepository('user_priv').insert(instanceActorPrivToInsert);
