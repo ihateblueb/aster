@@ -53,13 +53,13 @@ let instanceActorToInsert = {
 
 logger('info', 'init', JSON.stringify(instanceActorToInsert));
 
-await db.getRepository('user').insert(instanceActorToInsert);
-
 let instanceActorPrivToInsert = {
 	id: iaId,
 	private_key: privateKey
 };
 
 logger('info', 'init', JSON.stringify(instanceActorPrivToInsert));
+
+await db.getRepository('user').insert(instanceActorToInsert);
 
 await db.getRepository('user_priv').insert(instanceActorPrivToInsert);
