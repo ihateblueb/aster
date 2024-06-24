@@ -45,7 +45,7 @@
 		<div class="paddedPage">
 			<div class="authCtn">
 				<h1>{locale('login_to')} {data.name}</h1>
-				<p>{data.description_short}</p>
+				<p>{data.description}</p>
 				{#if loginRes.message}
 					<InfoBox type="danger">
 						{loginRes.message}

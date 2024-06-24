@@ -25,7 +25,7 @@
 		<div class="paddedPage">
 			<div class="authCtn">
 				<h1>{locale('register_to')} {data.name}</h1>
-				<p>{data.description_short}</p>
+				<p>{data.description}</p>
 				{#if data.registration === 'closed'}
 					<InfoBox type="warn">
 						{locale('registrations_closed')}

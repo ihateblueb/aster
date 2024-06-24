@@ -15,7 +15,6 @@ router.get('/api/v1/ad/:adId', async (req, res) => {
 		var grabbedRandomAd = await db
 			.getRepository('ad')
 			.createQueryBuilder()
-			.select('ad')
 			.orderBy('RANDOM()')
 			.getOne();
 		return res.status(200).json(grabbedRandomAd);

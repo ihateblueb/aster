@@ -31,7 +31,8 @@
 #include "user/lookup.c"
 #include "user/report.c"
 
-int main() {
-    printf("aster-wasm has been loaded\n");
-    return 0;
+int main()
+{
+	printf("aster-wasm has been loaded\n");
+	return 0;
 }

@@ -32,15 +32,15 @@
 				>
 				<div class="statsCtn">
 					<div class="stat">
-						{data.stats.local_user_count}
+						{data.local_user_count}
 						{locale('users')}
 					</div>
 					<div class="stat">
-						{data.stats.local_note_count}
+						{data.local_note_count}
 						{locale('notes')}
 					</div>
 					<div class="stat">
-						{data.stats.instance_count}
+						{data.instance_count}
 						{locale('instances')}
 					</div>
 				</div>

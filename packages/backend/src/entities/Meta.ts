@@ -31,18 +31,18 @@ export class Meta {
 
 	// statistics
 
-	@Column({ nullable: true })
+	@Column({ default: 0 })
 	local_user_count: number;
 
-	@Column({ nullable: true })
+	@Column({ default: 0 })
 	total_user_count: number;
 
-	@Column({ nullable: true })
+	@Column({ default: 0 })
 	local_note_count: number;
 
-	@Column({ nullable: true })
+	@Column({ default: 0 })
 	total_note_count: number;
 
-	@Column({ nullable: true })
+	@Column({ default: 0 })
 	instance_count: number;
 }

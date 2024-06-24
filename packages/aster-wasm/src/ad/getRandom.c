@@ -12,5 +12,5 @@
 EXTERN EMSCRIPTEN_KEEPALIVE void adGetRandom()
 {
 	printf("adGetRandom\n");
-	http('GET', '/ad/random');
+	http("GET", "ad/random");
 }
