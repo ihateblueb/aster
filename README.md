@@ -24,6 +24,7 @@ Aster is developed with the following:
 -   DragonflyDB 1.18 or Redis 6.2.11,
 -   NodeJS 22.2.0,
 -   pnpm 9.1.4
+-   libcurl
 
 This may be flexible, but hasn't been tested or looked further into.
 
