@@ -5,7 +5,9 @@ import pkgBe from '../../package.json' with { type: 'json' };
 import readlineSync from 'readline-sync';
 import { spawnSync } from 'child_process';
 import { generateKeyPairSync } from 'crypto';
+import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import chalk from 'chalk';
 
 import config from '../utils/config.js';
 import db from '../utils/database.js';
@@ -92,11 +94,11 @@ if (readlineSync.keyInYN('what should your instance be named')) {
 */
 
 readlineSync.promptCLLoop({
-	db: function (action, key, val) {
+	db: function (action, key, val, where, is, table) {
 		if (action === 'set') {
 			if (
 				readlineSync.keyInYN(
-					`[db set] are you sure you'd like to set ${key} to ${val}?`
+					`[db set] are you sure you'd like to set ${key} to ${val} where ${where} is ${is} in ${table}?`
 				)
 			) {
 				console.log('[db set] change done');
@@ -114,6 +116,77 @@ readlineSync.promptCLLoop({
 			} else {
 				console.log('[db del] change cancelled');
 			}
+		}
+	},
+	createuser: function (
+		username,
+		displayname,
+		locked,
+		discoverable,
+		automated,
+		bio,
+		is_cat,
+		speak_as_cat,
+		password
+	) {
+		const userId = uuidv4();
+
+		const { publicKey, privateKey } = generateKeyPairSync('rsa', {
+			modulusLength: 2048,
+			publicKeyEncoding: {
+				type: 'spki',
+				format: 'pem'
+			},
+			privateKeyEncoding: {
+				type: 'pkcs8',
+				format: 'pem'
+			}
+		});
+
+		let user = {
+			id: userId,
+			ap_id: `${config.url}users/${userId}`,
+			inbox: `${config.url}users/${userId}/inbox`,
+			username: username,
+			host: new URL(config.url).host,
+			displayname: displayname,
+			local: true,
+			url: `${config.url}@${username}`,
+			locked: locked,
+			suspended: false,
+			deactivated: false,
+			discoverable: discoverable,
+			automated: automated,
+			bio: bio,
+			is_cat: is_cat,
+			speak_as_cat: speak_as_cat,
+			created_at: new Date(Date.now()).toISOString(),
+			updated_at: new Date(Date.now()).toISOString(),
+			following_url: `${config.url}users/${userId}/following`,
+			followers_url: `${config.url}users/${userId}/followers`,
+			public_key: publicKey
+		};
+
+		for (const [key, value] of Object.entries(user)) {
+			console.log(
+				`[${chalk.cyan('createuser')}] [${chalk.green('user')}.${chalk.greenBright(key)}] `
+			);
+			console.log(value);
+		}
+
+		let userPrivate = {
+			id: userId,
+			password: password,
+			private_key: privateKey
+		};
+
+		console.log('');
+
+		for (const [key, value] of Object.entries(userPrivate)) {
+			console.log(
+				`[${chalk.cyan('createuser')}] [${chalk.red('user_priv')}.${chalk.redBright(key)}] `
+			);
+			console.log(value);
 		}
 	},
 	init: function () {

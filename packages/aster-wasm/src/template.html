@@ -1,0 +1,9 @@
+<body>
+	<button id="adGet">adGet</button>
+	{{{ SCRIPT }}}
+</body>
+<script>
+	document.getElementById('adGet').addEventListener('click', () => {
+		Module.ccall('adGet');
+	});
+</script>
