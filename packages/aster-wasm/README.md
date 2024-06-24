@@ -1,3 +1,3 @@
 # aster-wasm
 
-library written in rust and compiled to web assembly for aster
+library written in c and compiled to web assembly for aster
