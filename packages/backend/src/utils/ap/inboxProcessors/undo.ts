@@ -5,7 +5,7 @@ import getRemoteActor from '../getRemoteActor.js';
 
 export default async function IPUndo(body) {
 	if (body.object.type === 'Follow') {
-		let grabbedLocalUser = await db.getRepository('users').findOne({
+		let grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {
 				ap_id: body.object.object
 			}
@@ -29,7 +29,7 @@ export default async function IPUndo(body) {
 		let grabbedRemoteActor = await getRemoteActor(body.actor);
 
 		await db
-			.getRepository('users')
+			.getRepository('user')
 			.query(
 				`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);

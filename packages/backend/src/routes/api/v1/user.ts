@@ -14,7 +14,7 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 			message: 'User ID parameter required'
 		});
 	} else {
-		var grabbedUser = await db.getRepository('users').findOne({
+		var grabbedUser = await db.getRepository('user').findOne({
 			where: {
 				id: req.params.userid
 			}

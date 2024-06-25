@@ -8,7 +8,7 @@ const router = express.Router();
 router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
 
-	var userCount = await db.getRepository('users').count({
+	var userCount = await db.getRepository('user').count({
 		where: {
 			local: true
 		}

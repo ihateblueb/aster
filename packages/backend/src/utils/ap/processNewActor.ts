@@ -91,7 +91,7 @@ export default async function processNewActor(body) {
 				body.publicKey.publicKeyPem.toString();
 		}
 
-		await db.getRepository('users').insert(actorToInsert);
+		await db.getRepository('user').insert(actorToInsert);
 
 		logger('info', 'ap', 'created remote actor ' + body.id);
 

@@ -36,7 +36,7 @@ router.post('/api/v1/login', async (req, res) => {
 				message: 'Password required'
 			});
 		} else {
-			var grabbedUser = await db.getRepository('users').findOne({
+			var grabbedUser = await db.getRepository('user').findOne({
 				where: {
 					username: user
 				}

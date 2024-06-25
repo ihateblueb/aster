@@ -33,7 +33,7 @@
 				<div class="statsCtn">
 					<div class="stat">
 						{data.local_user_count}
-						{locale('users')}
+						{locale('user')}
 					</div>
 					<div class="stat">
 						{data.local_note_count}

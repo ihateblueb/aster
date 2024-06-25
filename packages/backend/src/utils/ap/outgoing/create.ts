@@ -5,7 +5,7 @@ import deliverQueue from '../../deliverQueue.js';
 import logger from '../../logger.js';
 
 export default async function OutCreate(localUserId, object) {
-	var grabbedUser = await db.getRepository('users').findOne({
+	var grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
 		}
@@ -19,7 +19,7 @@ export default async function OutCreate(localUserId, object) {
 		});
 
 		grabbedUser.followers.forEach(async (e) => {
-			let grabbedFollower = await db.getRepository('users').findOne({
+			let grabbedFollower = await db.getRepository('user').findOne({
 				where: {
 					ap_id: e
 				}

@@ -13,6 +13,7 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import { read } from 'fs';
+import { compileFunction } from 'vm';
 
 process.title = 'Aster CLI';
 
@@ -118,7 +119,7 @@ readlineSync.promptCLLoop({
 			}
 		}
 	},
-	createuser: function (
+	createuser: async function (
 		username,
 		displayname,
 		locked,
@@ -174,13 +175,21 @@ readlineSync.promptCLLoop({
 			console.log(value);
 		}
 
+		console.log('');
+
 		let userPrivate = {
 			id: userId,
 			password: password,
 			private_key: privateKey
 		};
 
-		console.log('');
+		bcrypt.hash(password, 12, (e, result) => {
+			if (e) {
+				console.log(e);
+			} else {
+				console.log(result);
+			}
+		});
 
 		for (const [key, value] of Object.entries(userPrivate)) {
 			console.log(

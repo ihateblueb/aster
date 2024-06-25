@@ -45,13 +45,13 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 				});
 
 			if (grabbedFollowrequest) {
-				var grabbedToUser = await db.getRepository('users').findOne({
+				var grabbedToUser = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedFollowrequest.to
 					}
 				});
 
-				var grabbedFromUser = await db.getRepository('users').findOne({
+				var grabbedFromUser = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedFollowrequest.from
 					}
@@ -68,7 +68,7 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 				);
 
 				await db
-					.getRepository('users')
+					.getRepository('user')
 					.query(
 						`UPDATE "users" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
 					);
@@ -113,13 +113,13 @@ router.post('/api/v1/followrequest/deny', async (req, res) => {
 					}
 				});
 
-			var grabbedToUser = await db.getRepository('users').findOne({
+			var grabbedToUser = await db.getRepository('user').findOne({
 				where: {
 					id: grabbedFollowrequest.to
 				}
 			});
 
-			var grabbedFromUser = await db.getRepository('users').findOne({
+			var grabbedFromUser = await db.getRepository('user').findOne({
 				where: {
 					id: grabbedFollowrequest.from
 				}

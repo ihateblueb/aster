@@ -17,7 +17,7 @@ router.get('/api/v1/search', async (req, res) => {
 		});
 	} else {
 		if (isValidUrl(req.query.q)) {
-			var grabbedUser = await db.getRepository('users').findOne({
+			var grabbedUser = await db.getRepository('user').findOne({
 				where: {
 					ap_id: req.query.q
 				}
@@ -30,7 +30,7 @@ router.get('/api/v1/search', async (req, res) => {
 					id: grabbedUser.id
 				});
 			} else {
-				var grabbedNote = await db.getRepository('users').findOne({
+				var grabbedNote = await db.getRepository('note').findOne({
 					where: {
 						ap_id: req.query.q
 					}

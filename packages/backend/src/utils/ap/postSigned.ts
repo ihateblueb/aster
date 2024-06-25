@@ -7,7 +7,7 @@ import db from '../database.js';
 import logger from '../logger.js';
 
 export default async function postSigned(inbox, localUserId, body) {
-	let grabbedLocalUser = await db.getRepository('users').findOne({
+	let grabbedLocalUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
 		}

@@ -18,41 +18,32 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			message: 'Note ID parameter required'
 		});
 	} else {
-		var grabbedNote = await db.getRepository('notes').findOne({
-			where: {
-				id: req.params.noteid
-			}
-		});
+		var grabbedNote = await db
+			.getRepository('note')
+			.createQueryBuilder()
+			.select('note')
+			.where({ id: req.params.noteid })
+			.innerJoinAndSelect('note.replying_to', 'note')
+			.innerJoinAndSelect('note.author', 'user')
+			.innerJoinAndSelect('note.edits', 'note_edit')
+			.innerJoinAndSelect('note.replies', 'note')
+			.innerJoinAndSelect('note.reactions', 'note_react')
+			.getOne();
 
 		if (grabbedNote) {
-			var grabbedAuthor = await db.getRepository('users').findOne({
-				where: {
-					id: grabbedNote.author
-				}
-			});
-
-			if (grabbedAuthor) {
-				if (grabbedAuthor.suspended) {
+			if (grabbedNote.author) {
+				if (grabbedNote.author.suspended) {
 					return res.status(400).json({
 						message: 'Note author suspended'
 					});
-				} else if (grabbedAuthor.deactivated) {
+				} else if (grabbedNote.author.deactivated) {
 					return res.status(400).json({
 						message: 'Note author deactivated'
 					});
 				} else {
-					var grabbedReactions = await db
-						.getRepository('notes_react')
-						.createQueryBuilder('notes_react')
-						.leftJoinAndSelect('notes_react.emoji', 'emoji')
-						.where('notes_react.note = :note', {
-							note: grabbedNote.id
-						})
-						.getMany();
-
 					var sortedReactions = [];
 
-					grabbedReactions.forEach(async (reaction) => {
+					grabbedNote.reactions.forEach(async (reaction) => {
 						if (
 							sortedReactions.find(
 								(e) => e.id === reaction.emoji.id
@@ -76,6 +67,8 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 							});
 						}
 					});
+
+					grabbedNote.reactions = sortedReactions;
 
 					res.status(200).json(grabbedNote);
 				}
@@ -298,7 +291,7 @@ router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
 			logger('debug', 'note', 'note pin requested');
 
 			await db
-				.getRepository('users')
+				.getRepository('user')
 				.query(
 					`UPDATE "users" SET "pinned_notes" = array_append("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
 				);
@@ -327,7 +320,7 @@ router.post(`/api/v1/note/:noteid/unpin`, async (req, res) => {
 			logger('debug', 'note', 'note pin requested');
 
 			await db
-				.getRepository('users')
+				.getRepository('user')
 				.query(
 					`UPDATE "users" SET "pinned_notes" = array_remove("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
 				);

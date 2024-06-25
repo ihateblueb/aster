@@ -10,11 +10,11 @@ export default async function IPBite(body) {
 	if (body.target && body.actor) {
 		if (new URL(body.target).pathname.startsWith('/notes')) {
 			var grabbedNote = await db
-				.getRepository('users')
+				.getRepository('user')
 				.findOne({ where: { ap_id: body.target } });
 
 			var grabbedLocalUser = await db
-				.getRepository('users')
+				.getRepository('user')
 				.findOne({ where: { id: grabbedNote.author } });
 
 			var grabbedRemoteUser = await getRemoteActor(body.actor);
@@ -27,7 +27,7 @@ export default async function IPBite(body) {
 			);
 		} else if (new URL(body.target).pathname.startsWith('/users')) {
 			var grabbedLocalUser = await db
-				.getRepository('users')
+				.getRepository('user')
 				.findOne({ where: { ap_id: body.target } });
 
 			var grabbedRemoteUser = await getRemoteActor(body.actor);

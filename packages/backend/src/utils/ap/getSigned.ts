@@ -8,7 +8,7 @@ import logger from '../logger.js';
 
 export default async function getSigned(url, localUserId?) {
 	if (localUserId) {
-		var grabbedLocalUser = await db.getRepository('users').findOne({
+		var grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {
 				id: localUserId
 			}
@@ -23,7 +23,7 @@ export default async function getSigned(url, localUserId?) {
 			});
 	} else {
 		// instance actor!! woooooooOOOOOOOOOOO! YEAH!!!!!!!
-		var grabbedLocalUser = await db.getRepository('users').findOne({
+		var grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {
 				username: 'instanceactor'
 			}

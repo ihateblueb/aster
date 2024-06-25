@@ -6,7 +6,7 @@ import getRemoteActor from '../getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPFollow(body) {
-	let grabbedLocalUser = await db.getRepository('users').findOne({
+	let grabbedLocalUser = await db.getRepository('user').findOne({
 		where: {
 			ap_id: body.object
 		}
@@ -53,7 +53,7 @@ export default async function IPFollow(body) {
 		};
 	} else {
 		await db
-			.getRepository('users')
+			.getRepository('user')
 			.query(
 				`UPDATE "users" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
