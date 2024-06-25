@@ -71,7 +71,7 @@ export default async function processNewNote(body) {
 				not doing this rn but i will later
 				this should have to filter out the author and the authors followers
 				rn this will crash when this sees a follower id and tries
-				fetching it like a regualr actor. 
+				fetching it like a regualr actor.
 			*/
 			let getReplyingTo = await getRemoteActor(body.to[1]);
 			let replyingToNote = await getRemoteNote(
@@ -99,7 +99,7 @@ export default async function processNewNote(body) {
 			noteToInsert['content'] = sanitize(body.content);
 		}
 
-		await db.getRepository('notes').insert(noteToInsert);
+		await db.getRepository('note').insert(noteToInsert);
 
 		logger('info', 'ap', 'created remote note ' + body.id);
 

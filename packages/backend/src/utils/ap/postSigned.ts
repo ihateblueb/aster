@@ -13,7 +13,7 @@ export default async function postSigned(inbox, localUserId, body) {
 		}
 	});
 
-	let grabbedLocalUserPriv = await db.getRepository('users_priv').findOne({
+	let grabbedLocalUserPriv = await db.getRepository('user_priv').findOne({
 		where: {
 			id: localUserId
 		}

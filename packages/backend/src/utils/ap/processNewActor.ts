@@ -8,7 +8,8 @@ export default async function processNewActor(body) {
 		body.type === 'Person' &&
 		body.preferredUsername &&
 		body.id &&
-		body.url
+		body.url &&
+		body.outbox
 	) {
 		let actorToInsert = {
 			id: ''
@@ -28,6 +29,8 @@ export default async function processNewActor(body) {
 		} else {
 			actorToInsert['inbox'] = body.endpoints.sharedInbox;
 		}
+
+		actorToInsert['outbox'] = body.outbox;
 
 		actorToInsert['url'] = body.url;
 

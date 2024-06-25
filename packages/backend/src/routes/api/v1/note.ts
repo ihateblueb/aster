@@ -8,6 +8,10 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 import ApNote from '../../../constructors/ApNote.js';
+import { Note } from '../../../entities/Note.js';
+import { User } from '../../../entities/User.js';
+import { NoteEdit } from '../../../entities/NoteEdit.js';
+import { NoteReact } from '../../../entities/NoteReact.js';
 
 const router = express.Router();
 
@@ -21,14 +25,17 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 		var grabbedNote = await db
 			.getRepository('note')
 			.createQueryBuilder()
-			.select('note')
 			.where({ id: req.params.noteid })
-			.innerJoinAndSelect('note.replying_to', 'note')
-			.innerJoinAndSelect('note.author', 'user')
-			.innerJoinAndSelect('note.edits', 'note_edit')
-			.innerJoinAndSelect('note.replies', 'note')
-			.innerJoinAndSelect('note.reactions', 'note_react')
+			/*.innerJoinAndMapOne(
+				'note.author',
+				User,
+				'user',
+				'user.id = note.author'
+			)*/
+			.innerJoinAndSelect('note.author', 'author = user')
 			.getOne();
+
+		console.log(grabbedNote);
 
 		if (grabbedNote) {
 			if (grabbedNote.author) {
@@ -118,9 +125,8 @@ router.post(`/api/v1/note`, async (req, res) => {
 			noteToInsert['visibility'] = 'public';
 		}
 
-		let insertedNote = (
-			await db.getRepository('notes').insert(noteToInsert)
-		).raw;
+		let insertedNote = (await db.getRepository('note').insert(noteToInsert))
+			.raw;
 
 		await OutCreate(authRes.grabbedUserAuth.user, new ApNote(insertedNote));
 
@@ -156,7 +162,7 @@ router.delete(`/api/v1/note`, async (req, res) => {
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
-			let noteFromDb = await db.getRepository('notes').findOne({
+			let noteFromDb = await db.getRepository('note').findOne({
 				where: {
 					id: JSON.parse(req.body).id
 				}
@@ -164,7 +170,7 @@ router.delete(`/api/v1/note`, async (req, res) => {
 
 			if (noteFromDb) {
 				if (noteFromDb.author === authRes.grabbedUserAuth.user) {
-					await db.getRepository('notes').delete(noteFromDb.id);
+					await db.getRepository('note').delete(noteFromDb.id);
 					return res.status(200).json({
 						message: 'Note deleted.'
 					});

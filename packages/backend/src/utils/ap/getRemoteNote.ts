@@ -4,7 +4,7 @@ import getSigned from './getSigned.js';
 import processNewNote from './processNewNote.js';
 
 export default async function getRemoteNote(apId, localUserId?) {
-	var grabbedRemoteNote = await db.getRepository('notes').findOne({
+	var grabbedRemoteNote = await db.getRepository('note').findOne({
 		where: {
 			ap_id: apId
 		}

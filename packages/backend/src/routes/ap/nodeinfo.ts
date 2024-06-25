@@ -14,7 +14,7 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 		}
 	});
 
-	var noteCount = await db.getRepository('notes').count({
+	var noteCount = await db.getRepository('note').count({
 		where: {
 			local: true
 		}

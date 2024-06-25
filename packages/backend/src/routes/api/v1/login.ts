@@ -54,7 +54,7 @@ router.post('/api/v1/login', async (req, res) => {
 						});
 					} else {
 						var grabbedUserPriv = await db
-							.getRepository('users_priv')
+							.getRepository('user_priv')
 							.findOne({
 								where: {
 									id: grabbedUser.id

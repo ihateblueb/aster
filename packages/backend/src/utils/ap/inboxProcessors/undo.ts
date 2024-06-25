@@ -46,7 +46,7 @@ export default async function IPUndo(body) {
 		};
 	} else if (body.object.type === 'Like') {
 		if (new URL(body.object.object).pathname.startsWith('/notes')) {
-			var grabbedNote = await db.getRepository('notes').findOne({
+			var grabbedNote = await db.getRepository('note').findOne({
 				where: {
 					id: new URL(body.object.object).pathname.replace(
 						'/notes/',

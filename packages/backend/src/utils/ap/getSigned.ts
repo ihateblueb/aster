@@ -14,13 +14,11 @@ export default async function getSigned(url, localUserId?) {
 			}
 		});
 
-		var grabbedLocalUserPriv = await db
-			.getRepository('users_priv')
-			.findOne({
-				where: {
-					id: localUserId
-				}
-			});
+		var grabbedLocalUserPriv = await db.getRepository('user_priv').findOne({
+			where: {
+				id: localUserId
+			}
+		});
 	} else {
 		// instance actor!! woooooooOOOOOOOOOOO! YEAH!!!!!!!
 		var grabbedLocalUser = await db.getRepository('user').findOne({
@@ -29,13 +27,11 @@ export default async function getSigned(url, localUserId?) {
 			}
 		});
 
-		var grabbedLocalUserPriv = await db
-			.getRepository('users_priv')
-			.findOne({
-				where: {
-					id: grabbedLocalUser.id
-				}
-			});
+		var grabbedLocalUserPriv = await db.getRepository('user_priv').findOne({
+			where: {
+				id: grabbedLocalUser.id
+			}
+		});
 	}
 
 	logger(

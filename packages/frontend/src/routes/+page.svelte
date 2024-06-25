@@ -37,7 +37,7 @@
 					</div>
 					<div class="stat">
 						{data.local_note_count}
-						{locale('notes')}
+						{locale('note')}
 					</div>
 					<div class="stat">
 						{data.instance_count}
