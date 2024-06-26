@@ -12,7 +12,7 @@ If you see something that is a bad practice, slow, very stupid, or a security vu
 
 The frontend is written with Svelte and Sass using mfm.js to parse MFM.
 The backend is written with TypeScript using Express, BullMQ, TypeORM, and other important libraries.
-The library used in the frontend to interact with the API is written in C, and compiled to WebAssembly by emcc.
+The library used in the frontend to interact with the API is written in C, and compiled to WebAssembly by emcc. Maybe it will stay, and maybe not :3
 
 Aster extends ActivityPub to make determining note visibility easier. See `docs/extensions.md` for more information.
 
