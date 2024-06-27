@@ -18,18 +18,6 @@ const app = express();
 
 process.title = 'Aster';
 
-console.log('                                        ');
-console.log('            _____ _______ ______ _____  ');
-console.log('     /\\    / ____|__   __|  ____|  __ \\ ');
-console.log('    /  \\  | (___    | |  | |__  | |__) |');
-console.log('   / /\\ \\  \\___ \\   | |  |  __| |  _  / ');
-console.log('  / ____ \\ ____) |  | |  | |____| | \\ \\ ');
-console.log(' /_/    \\_\\_____/   |_|  |______|_|  \\_\\');
-console.log('                                        ');
-
-console.log(`starting ${pkg.name} v${pkg.version} by ${pkg.author}...`);
-console.log(' ');
-
 inboxWorker.on('progress', async (job, progress) => {
 	logger('info', 'inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
 });
