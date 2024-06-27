@@ -11,6 +11,11 @@
 	import noteGet from '$lib/api/note/get';
 
 	export let data;
+
+	if (!data.banner) {
+		data.banner =
+			'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg==';
+	}
 </script>
 
 <template>
@@ -48,6 +53,7 @@
 												name="lock"
 												size="18px"
 												color="var(--txt-tertiary)"
+												title={locale('locked_long')}
 											/>
 										{/if}
 										{#if data.automated}
@@ -55,6 +61,7 @@
 												name="robot"
 												size="18px"
 												color="var(--txt-tertiary)"
+												title={locale('automated_long')}
 											/>
 										{/if}
 									</div>

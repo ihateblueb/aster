@@ -1,6 +1,10 @@
 <script lang="ts">
 	export let data;
 	export let size = '55px';
+
+	if (!data.avatar) {
+		data.avatar = '/notfound.png';
+	}
 </script>
 
 <template>

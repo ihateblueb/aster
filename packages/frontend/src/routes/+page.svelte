@@ -7,6 +7,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import Ad from '$lib/components/Ad.svelte';
 	import Store from '$lib/utils/Store';
+	import pkg from '../../../../package.json';
 
 	export let data;
 </script>
@@ -28,7 +29,7 @@
 			<div class="paddedPage welcomePage">
 				<h1>{data.name}</h1>
 				<span class="version"
-					>{locale('running')} {locale('aster')} v{version}</span
+					>{locale('running')} {locale('aster')} v{pkg.version}</span
 				>
 				<div class="statsCtn">
 					<div class="stat">
