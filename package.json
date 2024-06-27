@@ -1,13 +1,12 @@
 {
 	"name": "aster",
-	"version": "2024.06.16",
+	"version": "2024.06.27",
 	"module": "true",
 	"repository": {
 		"type": "git",
 		"url": "https://git.gay/blueb/aster.git"
 	},
 	"workspaces": [
-		"packages/aster-wasm",
 		"packages/frontend",
 		"packages/backend"
 	],

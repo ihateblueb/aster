@@ -1,8 +1,0 @@
-{
-	"name": "aster-wasm",
-	"version": "0.0.1",
-	"private": true,
-	"scripts": {
-		"build": "./build.sh"
-	}
-}

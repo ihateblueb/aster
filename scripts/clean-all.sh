@@ -1,5 +1,4 @@
 echo "removing all build files and node modules"
-rm -Rf packages/aster-wasm/built
 rm -Rf packages/backend/built
 rm -Rf packages/backend/node_modules
 rm -Rf packages/frontend/.svelte-kit
