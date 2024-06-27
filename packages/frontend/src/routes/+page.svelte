@@ -28,16 +28,16 @@
 			<div class="paddedPage welcomePage">
 				<h1>{data.name}</h1>
 				<span class="version"
-					>{locale('running')} {data.software} v{data.version}</span
+					>{locale('running')} {locale('aster')} v{version}</span
 				>
 				<div class="statsCtn">
 					<div class="stat">
 						{data.local_user_count}
-						{locale('user')}
+						{locale('users')}
 					</div>
 					<div class="stat">
 						{data.local_note_count}
-						{locale('note')}
+						{locale('notes')}
 					</div>
 					<div class="stat">
 						{data.instance_count}

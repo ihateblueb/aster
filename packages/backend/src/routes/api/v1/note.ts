@@ -22,19 +22,14 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			message: 'Note ID parameter required'
 		});
 	} else {
+		// im LOSING MY MIND
+		// https://orkhan.gitbook.io/typeorm/docs/select-query-builder#inner-and-left-joins
 		var grabbedNote = await db
 			.getRepository('note')
-			.createQueryBuilder()
-			.where({ id: req.params.noteid })
-			/*.innerJoinAndMapOne(
-				'note.author',
-				User,
-				'user',
-				'user.id = note.author'
-			)*/
-			.innerJoinAndSelect('note.author', 'author = user')
+			.createQueryBuilder('note')
+			.where({ id: req.params.nodeid })
+			.innerJoin('note.author', 'user')
 			.getOne();
-
 		console.log(grabbedNote);
 
 		if (grabbedNote) {
