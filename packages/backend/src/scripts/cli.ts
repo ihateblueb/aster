@@ -14,6 +14,7 @@ import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import { read } from 'fs';
 import { compileFunction } from 'vm';
+import getSigned from '../utils/ap/getSigned.js';
 
 process.title = 'Aster CLI';
 
@@ -197,6 +198,9 @@ readlineSync.promptCLLoop({
 			);
 			console.log(value);
 		}
+	},
+	getsigned: async function (url) {
+		console.log(await getSigned(url));
 	},
 	init: function () {
 		console.log('[init] ');

@@ -100,8 +100,8 @@ export class User {
 	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
-	@ManyToOne(() => Note, (note) => note)
-	pinned_notes: Relation<Note[]> | null;
+	@ManyToOne((type) => Note, (note) => note)
+	pinned_notes: Note[] | null;
 
 	@ManyToOne(() => UserMetadata, (metadata) => metadata)
 	metadata: Relation<UserMetadata[]> | null;
