@@ -1,5 +1,6 @@
 <script>
 	import * as mfm from 'mfm-js';
+	import Sparkle from './Sparkle.svelte';
 
 	export let content;
 	export let simple = false;
@@ -240,7 +241,7 @@
 				return `<span style="display: inline-block; animation: mfm-rainbow ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'sparkle') {
 				// deal with this later
-				return renderEachChild(object.children, scale);
+				return `sparkle`;
 			} else if (object.props.name === 'rotate') {
 				let degrees = '90';
 				if (object.props.args.deg) {

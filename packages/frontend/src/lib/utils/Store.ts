@@ -14,5 +14,11 @@ export default {
 	},
 	del: (key: string) => {
 		return localStorage.removeItem(key);
+	},
+	default: (key: string) => {
+		return defaultStore[key];
+	},
+	defaultAll: () => {
+		return defaultStore;
 	}
 };
