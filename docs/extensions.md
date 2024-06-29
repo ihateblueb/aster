@@ -32,7 +32,7 @@ Example from Aster
 }
 ```
 
-## `aster:CorrectAnswer`
+## `aster:CorrectAnswer` and `aster:HasCorrectAnswer`
 
 Extends `Question`
 
@@ -53,6 +53,7 @@ Not yet implemented, example is from Lockpick.
 	"sensitive": false,
 	"tag": [],
 	"endTime": null,
+	"hasCorrectAnswer": true,
 	"oneOf": [
 		{
 			"type": "Note",
