@@ -11,8 +11,8 @@ export class NoteReact {
 	@Column()
 	ap_id: string;
 
-	@OneToOne(() => Note, (note) => note)
-	note: Relation<Note>;
+	@Column()
+	note: string;
 
 	@Column()
 	created_at: string;
@@ -21,6 +21,6 @@ export class NoteReact {
 	@OneToOne(() => Emoji, (emoji) => emoji)
 	emoji: Relation<Emoji> | null;
 
-	@OneToOne(() => User, (user) => user)
-	user: Relation<User>;
+	@Column()
+	user: string;
 }

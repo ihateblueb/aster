@@ -6,16 +6,16 @@ export class UserAuth {
 	@PrimaryColumn()
 	id: string;
 
-	@OneToOne(() => User, (user) => user)
-	user: Relation<User> | null;
+	@Column()
+	user: string;
 
-	@Column({ nullable: true })
+	@Column()
 	created_at: string;
 
 	@Column('text', { array: true, nullable: true })
 	used_at: string[];
 
-	@Column({ nullable: true })
+	@Column()
 	token: string;
 
 	@Column('text', { array: true, nullable: true })

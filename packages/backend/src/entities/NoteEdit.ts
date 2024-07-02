@@ -5,15 +5,15 @@ export class NoteEdit {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	note: string;
 
-	@Column({ nullable: true })
+	@Column()
 	created_at: string;
 
-	@Column('text', { array: true, nullable: true })
-	cw: string[];
-
 	@Column({ nullable: true })
+	cw: string;
+
+	@Column()
 	content: string;
 }

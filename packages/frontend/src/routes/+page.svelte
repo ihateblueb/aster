@@ -45,12 +45,18 @@
 						{locale('instances')}
 					</div>
 				</div>
-				<p><Mfm content={data.description} /></p>
+				<p>
+					{#if data.description}
+						<Mfm content={data.description} />
+					{/if}
+				</p>
 				<h2>{locale('instance_rules')}</h2>
 				<ol>
-					{#each data.rules as rule}
-						<li>{rule}</li>
-					{/each}
+					{#if data.rules}
+						{#each data.rules as rule}
+							<li>{rule}</li>
+						{/each}
+					{/if}
 				</ol>
 				<h2>{locale('advertisement')}</h2>
 				<Ad />

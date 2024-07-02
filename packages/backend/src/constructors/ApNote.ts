@@ -1,4 +1,5 @@
 import { Note } from '../entities/Note.js';
+import { User } from '../entities/User.js';
 
 export default class ApNote {
 	id: string;
@@ -32,13 +33,13 @@ export default class ApNote {
 	attachment?: object[];
 	tag?: object[];
 
-	constructor(grabbedNote: Note) {
+	constructor(grabbedNote: Note, author: User, replying_to?: Note) {
 		this.id = grabbedNote.ap_id;
-		this.attributedTo = grabbedNote.author.ap_id;
-		this.actor = grabbedNote.author.ap_id;
+		this.attributedTo = author.ap_id;
+		this.actor = author.ap_id;
 
 		if (grabbedNote.replying_to) {
-			this.inReplyTo = grabbedNote.replying_to.ap_id;
+			this.inReplyTo = replying_to.ap_id;
 		}
 
 		this.subject = grabbedNote.cw;
@@ -58,13 +59,13 @@ export default class ApNote {
 			this.directMessage = false;
 			this.visibility = 'unlisted';
 
-			this.to = [grabbedNote.author.followers_url];
+			this.to = [author.followers_url];
 			this.cc = ['https://www.w3.org/ns/activitystreams#Public'];
 		} else if (grabbedNote.visibility === 'followers') {
 			this.directMessage = false;
 			this.visibility = 'followers';
 
-			this.to = [grabbedNote.author.followers_url];
+			this.to = [author.followers_url];
 		} else if (grabbedNote.visibility === 'direct') {
 			this.directMessage = true;
 			this.visibility = 'direct';

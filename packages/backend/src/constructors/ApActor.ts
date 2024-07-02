@@ -97,15 +97,15 @@ export default class ApActor {
 		this.followers = grabbedUser.followers_url;
 		this.following = grabbedUser.following_url;
 
-		grabbedUser.metadata
-			.sort((a, b) => b.order - a.order)
-			.forEach((metadata) => {
-				this.attatchment.push({
-					type: 'PropertyValue',
-					name: metadata.key,
-					value: metadata.value
-				});
+		/*
+		Array.from(grabbedUser.metadata).forEach((metadata) => {
+			this.attatchment.push({
+				type: 'PropertyValue',
+				name: metadata.key,
+				value: metadata.value
 			});
+		});
+		*/
 	}
 
 	build() {

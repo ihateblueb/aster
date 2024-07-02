@@ -149,6 +149,7 @@ readlineSync.promptCLLoop({
 			id: userId,
 			ap_id: `${config.url}users/${userId}`,
 			inbox: `${config.url}users/${userId}/inbox`,
+			outbox: `${config.url}users/${userId}/outbox`,
 			username: username,
 			host: new URL(config.url).host,
 			displayname: displayname,

@@ -6,13 +6,13 @@ export class UserNotification {
 	@PrimaryColumn()
 	id: string;
 
-	@OneToOne(() => User, (user) => user)
-	to: Relation<User> | null;
+	@Column()
+	to: string;
 
-	@OneToOne(() => User, (user) => user)
-	from: Relation<User> | null;
+	@Column()
+	from: string;
 
-	@Column({ nullable: true })
+	@Column()
 	type: string;
 
 	@Column({ nullable: true })

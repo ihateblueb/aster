@@ -1,14 +1,4 @@
-import { NoteEdit } from './NoteEdit.js';
-import { NoteReact } from './NoteReact.js';
-import { User } from './User.js';
-import {
-	Column,
-	Entity,
-	OneToOne,
-	ManyToOne,
-	PrimaryColumn,
-	Relation
-} from 'typeorm';
+import { Column, Entity, OneToOne, ManyToOne, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Note {
@@ -24,11 +14,11 @@ export class Note {
 	@Column({ default: 'public' })
 	visibility: string;
 
-	@OneToOne(() => Note, (note) => note)
-	replying_to: Relation<Note> | null;
+	@Column({ nullable: true })
+	replying_to: string;
 
-	@OneToOne(() => User, (user) => user)
-	author: Relation<User> | null;
+	@Column()
+	author: string;
 
 	@Column({ default: false })
 	local: boolean;
@@ -39,15 +29,15 @@ export class Note {
 	@Column()
 	content: string;
 
-	@ManyToOne(() => NoteEdit, (edit) => edit)
-	edits: Relation<NoteEdit[]> | null;
+	@Column({ nullable: true })
+	edits: string;
 
-	@ManyToOne(() => Note, (note) => note.replying_to)
-	replies: Relation<Note[]> | null;
+	@Column({ nullable: true })
+	replies: string;
 
-	@ManyToOne(() => NoteReact, (react) => react)
-	reactions: Relation<NoteReact[]> | null;
+	@Column({ nullable: true })
+	reactions: string;
 
-	@OneToOne(() => Note, (note) => note)
-	original_note: Relation<Note>;
+	@Column({ nullable: true })
+	original_note: string;
 }

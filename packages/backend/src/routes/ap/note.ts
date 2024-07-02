@@ -17,16 +17,18 @@ router.get('/notes/:noteid', async (req, res, next) => {
 				.createQueryBuilder()
 				.select('note')
 				.where({ id: req.params.noteid })
-				.innerJoinAndSelect('note.replying_to', 'note')
-				.innerJoinAndSelect('note.author', 'user')
-				.innerJoinAndSelect('note.edits', 'note_edit')
-				.innerJoinAndSelect('note.replies', 'note')
-				.innerJoinAndSelect('note.reactions', 'note_react')
+				.getRawOne();
+
+			var grabbedAuthor = await db
+				.getRepository('note')
+				.createQueryBuilder()
+				.select('note')
+				.where({ id: req.params.noteid })
 				.getRawOne();
 
 			if (grabbedNote && grabbedNote.local) {
 				res.setHeader('Content-Type', 'application/activity+json');
-				res.json(new ApNote(grabbedNote));
+				res.json(new ApNote(grabbedNote, grabbedAuthor));
 			} else {
 				return res.status(404).json({ message: 'Not found' });
 			}

@@ -1,4 +1,5 @@
 import { NoteReact } from '../../entities/NoteReact.js';
+import { User } from '../../entities/User.js';
 import config from '../../utils/config.js';
 import ApEmoji from '../ApEmoji.js';
 
@@ -14,10 +15,10 @@ export default class ActLike {
 	_misskey_reaction?: string;
 	tag?: object[];
 
-	constructor(reaction: NoteReact) {
+	constructor(reaction: NoteReact, user: User, author: User) {
 		this.id = config.url + 'activities/' + reaction.id;
-		this.actor = reaction.user.ap_id;
-		this.object = reaction.note.author.ap_id;
+		this.actor = user.ap_id;
+		this.object = author.ap_id;
 
 		if (reaction.emoji) {
 			this.content = reaction.emoji.name;

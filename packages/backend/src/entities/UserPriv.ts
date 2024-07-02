@@ -5,7 +5,7 @@ export class UserPriv {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column()
 	private_key: string;
 
 	@Column({ nullable: true })

@@ -5,6 +5,6 @@ export class UserPref {
 	@PrimaryColumn()
 	id: string;
 
-	@Column('text', { array: true, nullable: true })
-	prefs: string[];
+	@Column('jsonb', { nullable: true })
+	prefs: string;
 }

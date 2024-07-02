@@ -6,13 +6,13 @@ export class UserFollowrequest {
 	@PrimaryColumn()
 	id: string;
 
-	@OneToOne(() => User, (user) => user)
-	to: Relation<User> | null;
+	@Column()
+	to: string;
 
-	@OneToOne(() => User, (user) => user)
-	from: Relation<User> | null;
+	@Column()
+	from: string;
 
-	@Column({ nullable: true })
+	@Column()
 	time: string;
 
 	@Column({ nullable: true })

@@ -18,8 +18,8 @@ export class Role {
 	@Column()
 	hidden: boolean;
 
-	@ManyToOne(() => User, (user) => user)
-	users: Relation<User[]>;
+	@Column('text', { array: true, nullable: true })
+	users: string[];
 
 	@Column('text', { array: true, nullable: true })
 	permissions: string[];

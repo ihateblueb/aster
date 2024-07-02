@@ -8,7 +8,7 @@ export default async function verifyToken(authHeader) {
 		};
 	} else {
 		if (authHeader.startsWith('Bearer ')) {
-			var grabbedUserAuth = await db.getRepository('users_auth').findOne({
+			var grabbedUserAuth = await db.getRepository('user_auth').findOne({
 				where: {
 					token: authHeader.replace('Bearer ', '')
 				}

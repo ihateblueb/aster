@@ -8,10 +8,6 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 import ApNote from '../../../constructors/ApNote.js';
-import { Note } from '../../../entities/Note.js';
-import { User } from '../../../entities/User.js';
-import { NoteEdit } from '../../../entities/NoteEdit.js';
-import { NoteReact } from '../../../entities/NoteReact.js';
 
 const router = express.Router();
 
@@ -22,30 +18,44 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			message: 'Note ID parameter required'
 		});
 	} else {
-		// im LOSING MY MIND
-		// https://orkhan.gitbook.io/typeorm/docs/select-query-builder#inner-and-left-joins
 		var grabbedNote = await db
 			.getRepository('note')
-			.createQueryBuilder('note')
+			.createQueryBuilder()
 			.where({ id: req.params.nodeid })
-			.innerJoin('note.author', 'user')
 			.getOne();
 		console.log(grabbedNote);
 
+		var grabbedAuthor = await db
+			.getRepository('user')
+			.createQueryBuilder()
+			.where({ id: grabbedNote.author })
+			.getOne();
+		console.log(grabbedAuthor);
+
 		if (grabbedNote) {
-			if (grabbedNote.author) {
-				if (grabbedNote.author.suspended) {
+			if (grabbedAuthor) {
+				if (grabbedAuthor.suspended) {
 					return res.status(400).json({
 						message: 'Note author suspended'
 					});
-				} else if (grabbedNote.author.deactivated) {
+				} else if (grabbedAuthor.deactivated) {
 					return res.status(400).json({
 						message: 'Note author deactivated'
 					});
 				} else {
 					var sortedReactions = [];
 
-					grabbedNote.reactions.forEach(async (reaction) => {
+					var grabbedReactions = await db
+						.getRepository('notes_react')
+						.createQueryBuilder('notes_react')
+						.leftJoinAndSelect('notes_react.emoji', 'emoji')
+						.where('notes_react.note = :note', {
+							note: grabbedNote.id
+						})
+						.getMany();
+					console.log(grabbedReactions);
+
+					grabbedReactions.forEach(async (reaction) => {
 						if (
 							sortedReactions.find(
 								(e) => e.id === reaction.emoji.id
@@ -123,7 +133,10 @@ router.post(`/api/v1/note`, async (req, res) => {
 		let insertedNote = (await db.getRepository('note').insert(noteToInsert))
 			.raw;
 
-		await OutCreate(authRes.grabbedUserAuth.user, new ApNote(insertedNote));
+		await OutCreate(
+			authRes.grabbedUserAuth.user,
+			new ApNote(insertedNote, authRes.grabbedUserAuth.user)
+		);
 
 		return res.status(200).json({
 			message: 'Note created',

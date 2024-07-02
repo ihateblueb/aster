@@ -1,6 +1,4 @@
-import { Note } from './Note.js';
-import { UserMetadata } from './UserMetadata.js';
-import { Column, Entity, ManyToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -73,6 +71,9 @@ export class User {
 	@Column({ nullable: true })
 	location: string;
 
+	@Column({ nullable: true })
+	birthday: string;
+
 	@Column({ default: false })
 	is_cat: boolean;
 
@@ -100,21 +101,21 @@ export class User {
 	@Column('text', { array: true, nullable: true })
 	roles: string[];
 
-	@ManyToOne((type) => Note, (note) => note)
-	pinned_notes: Note[] | null;
+	@Column('text', { array: true, nullable: true })
+	pinned_notes: string[];
 
-	@ManyToOne(() => UserMetadata, (metadata) => metadata)
-	metadata: Relation<UserMetadata[]> | null;
+	@Column('jsonb', { nullable: true })
+	metadata: string;
 
 	// counts
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: 0 })
 	total_notes: number;
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: 0 })
 	total_followers: number;
 
-	@Column({ nullable: true })
+	@Column({ nullable: true, default: 0 })
 	total_following: number;
 
 	@Column()
