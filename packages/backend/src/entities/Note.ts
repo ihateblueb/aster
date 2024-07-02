@@ -1,4 +1,12 @@
-import { Column, Entity, OneToOne, ManyToOne, PrimaryColumn } from 'typeorm';
+import { User } from './User.js';
+import {
+	Column,
+	Entity,
+	PrimaryColumn,
+	OneToOne,
+	JoinColumn,
+	Relation
+} from 'typeorm';
 
 @Entity()
 export class Note {

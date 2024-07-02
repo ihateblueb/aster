@@ -1,5 +1,4 @@
-import { User } from './User.js';
-import { Column, Entity, OneToOne, PrimaryColumn, Relation } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class UserAuth {

@@ -16,8 +16,6 @@ router.get('/users/:userid', async (req, res, next) => {
 				.createQueryBuilder()
 				.select('user')
 				.where({ id: req.params.userid })
-				.innerJoinAndSelect('user.pinned_note', 'user')
-				.innerJoinAndSelect('user.metadata', 'user')
 				.getRawOne();
 
 			if (grabbedUser && grabbedUser.local) {
@@ -32,8 +30,6 @@ router.get('/users/:userid', async (req, res, next) => {
 				.createQueryBuilder()
 				.select('user')
 				.where({ id: req.params.userid })
-				.innerJoinAndSelect('user.pinned_note', 'user')
-				.innerJoinAndSelect('user.metadata', 'user')
 				.getRawOne();
 
 			if (!grabbedUser.local) {

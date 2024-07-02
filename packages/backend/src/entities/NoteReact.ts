@@ -1,7 +1,12 @@
 import { Emoji } from './Emoji.js';
-import { Note } from './Note.js';
-import { User } from './User.js';
-import { Column, Entity, Relation, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+	Column,
+	Entity,
+	Relation,
+	OneToOne,
+	PrimaryColumn,
+	JoinColumn
+} from 'typeorm';
 
 @Entity()
 export class NoteReact {
@@ -19,6 +24,7 @@ export class NoteReact {
 
 	// empty if like
 	@OneToOne(() => Emoji, (emoji) => emoji)
+	@JoinColumn()
 	emoji: Relation<Emoji> | null;
 
 	@Column()

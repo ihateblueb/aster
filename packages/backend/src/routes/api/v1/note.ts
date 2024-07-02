@@ -21,7 +21,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 		var grabbedNote = await db
 			.getRepository('note')
 			.createQueryBuilder()
-			.where({ id: req.params.nodeid })
+			.where({ id: req.params.noteid })
 			.getOne();
 		console.log(grabbedNote);
 
@@ -31,6 +31,8 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			.where({ id: grabbedNote.author })
 			.getOne();
 		console.log(grabbedAuthor);
+
+		grabbedNote.author = grabbedAuthor;
 
 		if (grabbedNote) {
 			if (grabbedAuthor) {
@@ -46,39 +48,42 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 					var sortedReactions = [];
 
 					var grabbedReactions = await db
-						.getRepository('notes_react')
-						.createQueryBuilder('notes_react')
-						.leftJoinAndSelect('notes_react.emoji', 'emoji')
-						.where('notes_react.note = :note', {
+						.getRepository('note_react')
+						.createQueryBuilder('note_react')
+						.leftJoinAndSelect('note_react.emoji', 'emoji')
+						.where('note_react.note = :note', {
 							note: grabbedNote.id
 						})
 						.getMany();
+
 					console.log(grabbedReactions);
 
-					grabbedReactions.forEach(async (reaction) => {
-						if (
-							sortedReactions.find(
-								(e) => e.id === reaction.emoji.id
-							)
-						) {
-							sortedReactions.find(
-								(e) => e.id === reaction.emoji.id
-							).count += 1;
-							sortedReactions
-								.find((e) => e.id === reaction.emoji.id)
-								.from.push(reaction.user);
-						} else {
-							sortedReactions.push({
-								id: reaction.emoji.id,
-								url: reaction.emoji.url,
-								name: reaction.emoji.name,
-								host: reaction.emoji.host,
-								local: reaction.emoji.local,
-								count: 1,
-								from: [reaction.user]
-							});
-						}
-					});
+					if (grabbedReactions) {
+						grabbedReactions.forEach(async (reaction) => {
+							if (
+								sortedReactions.find(
+									(e) => e.id === reaction.emoji.id
+								)
+							) {
+								sortedReactions.find(
+									(e) => e.id === reaction.emoji.id
+								).count += 1;
+								sortedReactions
+									.find((e) => e.id === reaction.emoji.id)
+									.from.push(reaction.user);
+							} else {
+								sortedReactions.push({
+									id: reaction.emoji.id,
+									url: reaction.emoji.url,
+									name: reaction.emoji.name,
+									host: reaction.emoji.host,
+									local: reaction.emoji.local,
+									count: 1,
+									from: [reaction.user]
+								});
+							}
+						});
+					}
 
 					grabbedNote.reactions = sortedReactions;
 
