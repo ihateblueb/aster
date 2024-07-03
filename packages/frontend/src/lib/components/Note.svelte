@@ -90,6 +90,7 @@
 				</div>
 			</div>
 			<div class="right">
+				<span title={data.created_at}>t</span>
 				{#if data.visibility === 'public'}
 					<Icon
 						name="planet"

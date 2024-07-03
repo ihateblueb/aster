@@ -60,11 +60,11 @@ export default async function IPUndo(body) {
 						(e) => e.name === body.object.content
 					);
 					await db
-						.getRepository('notes_react')
+						.getRepository('note_react')
 						.delete({ ap_id: emojiReaction.id });
 				} else {
 					await db
-						.getRepository('notes_like')
+						.getRepository('note_like')
 						.delete({ ap_id: body.object.id });
 				}
 				return {

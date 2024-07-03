@@ -24,7 +24,7 @@ export default async function IPLike(body) {
 
 					var grabbedEmoji = await getRemoteEmoji(reactionEmoji.id);
 
-					await db.getRepository('notes_react').insert({
+					await db.getRepository('note_react').insert({
 						id: uuidv4(),
 						ap_id: grabbedEmoji.ap_id,
 						note: new URL(body.object).pathname.replace(
@@ -44,7 +44,7 @@ export default async function IPLike(body) {
 						grabbedEmoji.id
 					);
 				} else {
-					await db.getRepository('notes_like').insert({
+					await db.getRepository('note_like').insert({
 						id: uuidv4(),
 						ap_id: body.id,
 						note: new URL(body.object).pathname.replace(

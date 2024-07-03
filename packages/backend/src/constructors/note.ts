@@ -1,5 +1,3 @@
-import { Note } from '../entities/Note.js';
-import { NoteReact } from '../entities/NoteReact.js';
 import { User } from '../entities/User.js';
 
 export default class ApiNote {
@@ -9,23 +7,32 @@ export default class ApiNote {
 	visibility: string;
 
 	replying_to?: ApiNote;
-	author: User;
+	author: object;
 
 	local: boolean;
 	cw?: string;
 	content: string;
 
-	reactions: {
-		
-	}
+	reactions: {};
 
 	constructor(
-		grabbedNote: Note,
-		grabbedAuthor: User,
-		grabbedReactions?: NoteReact,
-		grabbedReplyingTo?: Note,
-		grabbedReplyingToAuthor?: User
-	) {}
+		grabbedNote,
+		grabbedAuthor,
+		sortedReactions?,
+		grabbedReplyingTo?: User,
+		grabbedReplyingToAuthor?
+	) {
+		this.id = grabbedNote.id;
+		this.ap_id = grabbedNote.ap_id;
+		this.created_at = grabbedNote.created_at;
+		this.visibility = grabbedNote.visibility;
+		this.replying_to = grabbedNote.replying_to;
+		this.author = grabbedAuthor;
+		this.local = grabbedNote.local;
+		this.cw = grabbedNote.cw;
+		this.content = grabbedNote.content;
+		this.reactions = sortedReactions;
+	}
 
 	build() {
 		return this;

@@ -4,7 +4,7 @@ import getSigned from './getSigned.js';
 import processNewEmoji from './processNewEmoji.js';
 
 export default async function getRemoteEmoji(apId, localUserId?) {
-	var grabbedRemoteEmoji = await db.getRepository('emojis').findOne({
+	var grabbedRemoteEmoji = await db.getRepository('emoji').findOne({
 		where: {
 			ap_id: apId
 		}

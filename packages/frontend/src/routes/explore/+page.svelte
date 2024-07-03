@@ -1,21 +1,20 @@
-<script>
+<script lang="ts">
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Note from '$lib/components/Note.svelte';
-
-	export let data;
+	import timelineGet from '$lib/api/timeline/get';
 </script>
 
 <template>
 	<PageHeader title={locale('explore')} />
 	<div class="pageContent">
 		<div class="paddedPage">
-			{#if data}
-				{#each data as note}
+			{#await timelineGet('public') then notes}
+				{#each notes as note}
 					<Note data={note} />
 				{/each}
-			{/if}
+			{/await}
 		</div>
 	</div>
 </template>
