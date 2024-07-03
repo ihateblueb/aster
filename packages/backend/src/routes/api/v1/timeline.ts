@@ -20,7 +20,7 @@ router.get('/api/v1/timeline/public', async (req, res) => {
 			.where({ id: note.author })
 			.getOne();
 
-		console.log(i);
+		grabbedNotes[i].author = grabbedAuthor;
 
 		var sortedReactions = [];
 
@@ -32,6 +32,31 @@ router.get('/api/v1/timeline/public', async (req, res) => {
 				note: note.id
 			})
 			.getMany();
+
+		if (grabbedReactions) {
+			grabbedReactions.forEach(async (reaction) => {
+				if (sortedReactions.find((e) => e.id === reaction.emoji.id)) {
+					sortedReactions.find(
+						(e) => e.id === reaction.emoji.id
+					).count += 1;
+					sortedReactions
+						.find((e) => e.id === reaction.emoji.id)
+						.from.push(reaction.user);
+				} else {
+					sortedReactions.push({
+						id: reaction.emoji.id,
+						url: reaction.emoji.url,
+						name: reaction.emoji.name,
+						host: reaction.emoji.host,
+						local: reaction.emoji.local,
+						count: 1,
+						from: [reaction.user]
+					});
+				}
+			});
+		}
+
+		grabbedNotes[i].reactions = sortedReactions;
 	});
 
 	res.status(200).json(grabbedNotes);

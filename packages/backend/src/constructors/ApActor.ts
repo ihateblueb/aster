@@ -41,11 +41,11 @@ export default class ApActor {
 
 	constructor(grabbedUser) {
 		this.id = grabbedUser.ap_id;
+		this.preferredUsername = grabbedUser.username;
 		this.name = grabbedUser.displayname;
 
 		this.type = !grabbedUser.automated ? 'Person' : 'Service';
 
-		this.preferredUsername = grabbedUser.username;
 		this.summary = grabbedUser.bio;
 		this._misskey_summary = grabbedUser.bio;
 
