@@ -33,9 +33,10 @@ This may be flexible, but hasn't been tested or looked further into.
     -   Speaking as cat
     -   Emoji reactions
     -   Quote posts
--   Mia's biting extension
+-   mis's biting extension
 -   Sharkey profile backgrounds
--   Federated user statuses (see `docs/planned-extensions.md`)
+-   Federated user statuses? (see `docs/planned-extensions.md`)
+- Correct/incorrect poll answers?
 
 ## Project Status
 
@@ -45,10 +46,12 @@ Things that work!
 
 -   Users can be fetched from other instances
 -   Notes can be fetched from other instances
--   You can follow users on Aster from other instances if they do not have follow requests enabled
+-   You can follow users on Aster from other instances
 -   Nodeinfo 2.0 is there
 -   Well-known stuff works, too
 -   When a note is posted it is announced to followers with Create activity
+- Apply Like and Like with reaction contents
+- Fetch reaction emojis
 
 ### Internal API
 
@@ -57,9 +60,12 @@ Things that work!
 -   Fetch notes
 -   Fetch users
 -   Post notes
+- Fetch reactions
 
 ### Frontend
 
 -   Advanced MFM rendering
 -   View notes
 -   View profiles
+- Search page 
+- Explore page is a work in progress
