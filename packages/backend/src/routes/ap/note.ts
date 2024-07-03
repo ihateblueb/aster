@@ -15,20 +15,22 @@ router.get('/notes/:noteid', async (req, res, next) => {
 			var grabbedNote = await db
 				.getRepository('note')
 				.createQueryBuilder()
-				.select('note')
 				.where({ id: req.params.noteid })
-				.getRawOne();
+				.getOne();
 
-			var grabbedAuthor = await db
-				.getRepository('note')
-				.createQueryBuilder()
-				.select('note')
-				.where({ id: req.params.noteid })
-				.getRawOne();
+			console.log(grabbedNote);
 
 			if (grabbedNote && grabbedNote.local) {
-				res.setHeader('Content-Type', 'application/activity+json');
-				res.json(new ApNote(grabbedNote, grabbedAuthor));
+				var grabbedAuthor = await db
+					.getRepository('user')
+					.createQueryBuilder()
+					.where({ id: grabbedNote.author })
+					.getOne();
+
+				if (grabbedAuthor) {
+					res.setHeader('Content-Type', 'application/activity+json');
+					res.json(new ApNote(grabbedNote, grabbedAuthor));
+				}
 			} else {
 				return res.status(404).json({ message: 'Not found' });
 			}

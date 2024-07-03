@@ -1,12 +1,14 @@
-import { User } from '../entities/User.js';
 import config from '../utils/config.js';
+import ApImage from './ApImage.js';
+import ApActorPublicKey from './ApActorPublicKey.js';
+import ApEndpoints from './ApEndpoints.js';
 
 export default class ApActor {
 	id: string;
 
 	type: 'Person' | 'Service';
 
-	name: string;
+	name?: string;
 
 	manuallyApprovesFollowers: boolean;
 	discoverable: boolean;
@@ -14,35 +16,15 @@ export default class ApActor {
 	isCat: boolean;
 	speakAsCat: boolean;
 
-	publicKey: {
-		id: string;
-		readonly type: 'Key';
-		owner: string;
-		publicKeyPem: string;
-	};
+	publicKey: ApActorPublicKey;
 
-	icon?: {
-		readonly type: 'Image';
-		url?: string;
-		description?: string;
-		sensitive: false;
-	};
+	icon?: ApImage;
 
-	image?: {
-		readonly type: 'Image';
-		url?: string;
-		description?: string;
-		sensitive: false;
-	};
+	image?: ApImage;
 
-	backgroundUrl?: {
-		readonly type: 'Image';
-		url?: string;
-		description?: string;
-		sensitive: false;
-	};
+	backgroundUrl?: ApImage;
 
-	preferredUsername?: string;
+	preferredUsername: string;
 	summary?: string;
 	_misskey_summary?: string;
 
@@ -50,22 +32,20 @@ export default class ApActor {
 	sharedInbox: string;
 	outbox: string;
 
-	endpoints: {
-		sharedInbox: string;
-	};
+	endpoints: ApEndpoints;
 
 	following: string;
 	followers: string;
 
 	attatchment?: Object[];
 
-	constructor(grabbedUser: User) {
+	constructor(grabbedUser) {
 		this.id = grabbedUser.ap_id;
-		this.name = grabbedUser.username;
+		this.name = grabbedUser.displayname;
 
 		this.type = !grabbedUser.automated ? 'Person' : 'Service';
 
-		this.preferredUsername = grabbedUser.displayname;
+		this.preferredUsername = grabbedUser.username;
 		this.summary = grabbedUser.bio;
 		this._misskey_summary = grabbedUser.bio;
 
@@ -75,23 +55,33 @@ export default class ApActor {
 		this.isCat = grabbedUser.is_cat;
 		this.speakAsCat = grabbedUser.speak_as_cat;
 
-		this.publicKey.id = grabbedUser.ap_id + '#main-key';
-		this.publicKey.owner = grabbedUser.ap_id;
-		this.publicKey.publicKeyPem = grabbedUser.public_key;
+		this.publicKey = new ApActorPublicKey(
+			grabbedUser.ap_id + '#main-key',
+			grabbedUser.ap_id,
+			grabbedUser.public_key
+		);
 
-		this.icon.url = grabbedUser.avatar;
-		this.icon.description = grabbedUser.avatar_alt;
+		this.icon = new ApImage(
+			grabbedUser.avatar,
+			grabbedUser.avatar_alt,
+			false
+		);
 
-		this.image.url = grabbedUser.banner;
-		this.image.description = grabbedUser.banner_alt;
+		this.image = new ApImage(
+			grabbedUser.banner,
+			grabbedUser.banner_alt,
+			false
+		);
 
-		this.backgroundUrl.url = grabbedUser.background;
-		this.backgroundUrl.description = grabbedUser.background_alt;
+		this.backgroundUrl = new ApImage(
+			grabbedUser.background,
+			grabbedUser.background_alt,
+			false
+		);
 
 		this.inbox = grabbedUser.inbox;
 		this.sharedInbox = 'https://' + new URL(config.url).host + '/inbox';
-		this.endpoints.sharedInbox =
-			'https://' + new URL(config.url).host + '/inbox';
+		this.endpoints = new ApEndpoints();
 		this.outbox = grabbedUser.outbox;
 
 		this.followers = grabbedUser.followers_url;

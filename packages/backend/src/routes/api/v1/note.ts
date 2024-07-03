@@ -23,18 +23,19 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 			.createQueryBuilder()
 			.where({ id: req.params.noteid })
 			.getOne();
+
 		console.log(grabbedNote);
 
-		var grabbedAuthor = await db
-			.getRepository('user')
-			.createQueryBuilder()
-			.where({ id: grabbedNote.author })
-			.getOne();
-		console.log(grabbedAuthor);
-
-		grabbedNote.author = grabbedAuthor;
-
 		if (grabbedNote) {
+			var grabbedAuthor = await db
+				.getRepository('user')
+				.createQueryBuilder()
+				.where({ id: grabbedNote.author })
+				.getOne();
+
+			console.log(grabbedAuthor);
+
+			grabbedNote.author = grabbedAuthor;
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {
 					return res.status(400).json({
@@ -55,8 +56,6 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 							note: grabbedNote.id
 						})
 						.getMany();
-
-					console.log(grabbedReactions);
 
 					if (grabbedReactions) {
 						grabbedReactions.forEach(async (reaction) => {

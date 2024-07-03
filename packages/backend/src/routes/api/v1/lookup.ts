@@ -33,6 +33,17 @@ router.get('/api/v1/lookup/@:username', async (req, res) => {
 			}
 		});
 
+		console.log('[lookup] ' + splitUsername);
+
+		if (
+			splitUsername[0] === 'undefined' ||
+			splitUsername[1] === 'undefined'
+		) {
+			return res.status(404).json({
+				message: 'User does not exist'
+			});
+		}
+
 		if (grabbedUser) {
 			if (grabbedUser.suspended) {
 				return res.status(410).json({

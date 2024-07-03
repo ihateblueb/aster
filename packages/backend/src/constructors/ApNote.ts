@@ -15,10 +15,6 @@ export default class ApNote {
 	subject: string;
 	content: string;
 	contentMap: object;
-	source: {
-		content: string;
-		mediaType: string;
-	};
 
 	published: string;
 	sensitive: boolean;
@@ -33,7 +29,7 @@ export default class ApNote {
 	attachment?: object[];
 	tag?: object[];
 
-	constructor(grabbedNote: Note, author: User, replying_to?: Note) {
+	constructor(grabbedNote, author, replying_to?) {
 		this.id = grabbedNote.ap_id;
 		this.attributedTo = author.ap_id;
 		this.actor = author.ap_id;
@@ -44,8 +40,6 @@ export default class ApNote {
 
 		this.subject = grabbedNote.cw;
 		this.content = grabbedNote.content;
-		this.source.content = grabbedNote.content;
-		this.source.mediaType = 'text/x.misskeymarkdown';
 
 		this.published = grabbedNote.created_at;
 		this.sensitive = grabbedNote.cw ? true : false;

@@ -73,16 +73,14 @@ router.post('/api/v1/login', async (req, res) => {
 										.randomBytes(64)
 										.toString('hex');
 
-									await db
-										.getRepository('users_auth')
-										.insert({
-											id: uuidv4(),
-											user: grabbedUser.id,
-											created_at: new Date(
-												Date.now()
-											).toISOString(),
-											token: token
-										});
+									await db.getRepository('user_auth').insert({
+										id: uuidv4(),
+										user: grabbedUser.id,
+										created_at: new Date(
+											Date.now()
+										).toISOString(),
+										token: token
+									});
 
 									res.status(200).json({
 										id: grabbedUser.id,

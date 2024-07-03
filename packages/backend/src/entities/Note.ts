@@ -13,7 +13,7 @@ export class Note {
 	@PrimaryColumn()
 	id: string;
 
-	@Column({ nullable: true })
+	@Column({ unique: true })
 	ap_id: string;
 
 	@Column()

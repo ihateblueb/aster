@@ -135,7 +135,7 @@ readlineSync.promptCLLoop({
 
 		const { publicKey, privateKey } = generateKeyPairSync('rsa', {
 			modulusLength: 2048,
-			publicKeyEncoding: {
+			publicKeyEncoding: {//Z7z53$L]SYE_
 				type: 'spki',
 				format: 'pem'
 			},
@@ -189,6 +189,8 @@ readlineSync.promptCLLoop({
 			if (e) {
 				console.log(e);
 			} else {
+				console.log(result);
+				console.log(result);
 				console.log(result);
 			}
 		});

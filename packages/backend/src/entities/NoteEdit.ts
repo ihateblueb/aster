@@ -5,6 +5,9 @@ export class NoteEdit {
 	@PrimaryColumn()
 	id: string;
 
+	@Column({ unique: true })
+	ap_id: string;
+
 	@Column()
 	note: string;
 

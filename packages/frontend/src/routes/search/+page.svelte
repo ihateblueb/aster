@@ -6,6 +6,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import searchGet from '$lib/api/search/get';
 	import { goto } from '$app/navigation';
+	import userLookup from '$lib/api/user/lookup';
 
 	let query;
 
@@ -15,6 +16,8 @@
 			goto(`users/${searchRes.id}`);
 		} else if (searchRes.type === 'note') {
 			goto(`notes/${searchRes.id}`);
+		} else if (searchRes.type === 'lookup') {
+			goto(query);
 		}
 	}
 </script>

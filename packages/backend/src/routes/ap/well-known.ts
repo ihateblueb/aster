@@ -37,15 +37,12 @@ router.get('/.well-known/webfinger', async (req, res) => {
 			var grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
-				.select('user')
 				.where({
 					username: req.query.resource
 						.replace('acct:', '')
 						.split('@')[0],
 					local: true
 				})
-				.innerJoinAndSelect('user.pinned_note', 'user')
-				.innerJoinAndSelect('user.metadata', 'user')
 				.getRawOne();
 
 			if (grabbedUser) {

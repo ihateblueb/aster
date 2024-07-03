@@ -5,7 +5,7 @@ export class Emoji {
 	@PrimaryColumn()
 	id: string;
 
-	@Column()
+	@Column({ unique: true })
 	ap_id: string;
 
 	@Column()

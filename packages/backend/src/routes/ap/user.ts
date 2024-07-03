@@ -14,9 +14,8 @@ router.get('/users/:userid', async (req, res, next) => {
 			var grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
-				.select('user')
 				.where({ id: req.params.userid })
-				.getRawOne();
+				.getOne();
 
 			if (grabbedUser && grabbedUser.local) {
 				res.setHeader('Content-Type', 'application/activity+json');
@@ -28,9 +27,8 @@ router.get('/users/:userid', async (req, res, next) => {
 			var grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
-				.select('user')
 				.where({ id: req.params.userid })
-				.getRawOne();
+				.getOne();
 
 			if (!grabbedUser.local) {
 				res.redirect(`/@${grabbedUser.username}@${grabbedUser.host}`);
