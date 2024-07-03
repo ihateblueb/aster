@@ -37,7 +37,7 @@ export default async function IPFollow(body) {
 		followrequestToInsert['object'] = JSON.stringify(body);
 
 		await db
-			.getRepository('users_followrequest')
+			.getRepository('user_followrequest')
 			.insert(followrequestToInsert);
 
 		await createNotification(
@@ -55,7 +55,7 @@ export default async function IPFollow(body) {
 		await db
 			.getRepository('user')
 			.query(
-				`UPDATE "users" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
+				`UPDATE "user" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
 		await createNotification(

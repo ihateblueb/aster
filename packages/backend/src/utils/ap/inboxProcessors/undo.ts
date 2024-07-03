@@ -31,7 +31,7 @@ export default async function IPUndo(body) {
 		await db
 			.getRepository('user')
 			.query(
-				`UPDATE "users" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
+				`UPDATE "user" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
 		await signAndAccept(

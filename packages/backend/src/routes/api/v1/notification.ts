@@ -11,7 +11,7 @@ router.get('/api/v1/notifications', async (req, res) => {
 
 	if (authRes.status === 200) {
 		var grabbedNotifications = await db
-			.getRepository('users_notification')
+			.getRepository('user_notification')
 			.find({
 				where: {
 					to: authRes.grabbedUserAuth.user

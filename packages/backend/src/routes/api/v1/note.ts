@@ -311,7 +311,7 @@ router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
 			await db
 				.getRepository('user')
 				.query(
-					`UPDATE "users" SET "pinned_notes" = array_append("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
+					`UPDATE "user" SET "pinned_notes" = array_append("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
 				);
 
 			return res.status(200).json({
@@ -340,7 +340,7 @@ router.post(`/api/v1/note/:noteid/unpin`, async (req, res) => {
 			await db
 				.getRepository('user')
 				.query(
-					`UPDATE "users" SET "pinned_notes" = array_remove("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
+					`UPDATE "user" SET "pinned_notes" = array_remove("pinned_notes", '${req.params.noteid}') WHERE "id" = '${authRes.grabbedUserAuth.user}'`
 				);
 
 			return res.status(200).json({

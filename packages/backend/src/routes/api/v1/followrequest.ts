@@ -15,12 +15,11 @@ router.get('/api/v1/followrequests', async (req, res) => {
 	if (authRes.status === 200) {
 		var grabbedFollowrequests = await db
 			.getRepository('user_followrequest')
-			.createQueryBuilder()
-			.select('user')
-			.where({ toId: authRes.grabbedUserAuth })
-			.innerJoinAndSelect('user.to', 'user')
-			.innerJoinAndSelect('user.from', 'user')
-			.getOne();
+			.find({
+				where: {
+					to: authRes.grabbedUserAuth.user
+				}
+			});
 
 		return res.status(200).json(grabbedFollowrequests);
 	} else {
@@ -37,7 +36,7 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
 			var grabbedFollowrequest = await db
-				.getRepository('users_followrequest')
+				.getRepository('user_followrequest')
 				.findOne({
 					where: {
 						id: JSON.parse(req.body).id
@@ -57,7 +56,7 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 					}
 				});
 
-				await db.getRepository('users_followrequest').delete({
+				await db.getRepository('user_followrequest').delete({
 					id: JSON.parse(req.body).id
 				});
 
@@ -70,7 +69,7 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 				await db
 					.getRepository('user')
 					.query(
-						`UPDATE "users" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
+						`UPDATE "user" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
 					);
 
 				createNotification(
@@ -106,7 +105,7 @@ router.post('/api/v1/followrequest/deny', async (req, res) => {
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
 			var grabbedFollowrequest = await db
-				.getRepository('users_followrequest')
+				.getRepository('user_followrequest')
 				.findOne({
 					where: {
 						id: JSON.parse(req.body).id
@@ -125,7 +124,7 @@ router.post('/api/v1/followrequest/deny', async (req, res) => {
 				}
 			});
 
-			await db.getRepository('users_followrequest').delete({
+			await db.getRepository('user_followrequest').delete({
 				id: JSON.parse(req.body).id
 			});
 

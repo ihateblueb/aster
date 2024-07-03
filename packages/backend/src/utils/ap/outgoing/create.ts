@@ -18,26 +18,28 @@ export default async function OutCreate(localUserId, object) {
 			object: object
 		});
 
-		grabbedUser.followers.forEach(async (e) => {
-			let grabbedFollower = await db.getRepository('user').findOne({
-				where: {
-					ap_id: e
-				}
+		if (grabbedUser.followers) {
+			grabbedUser.followers.forEach(async (e) => {
+				let grabbedFollower = await db.getRepository('user').findOne({
+					where: {
+						ap_id: e
+					}
+				});
+				await deliverQueue.add('deliver', {
+					inbox: grabbedFollower.inbox,
+					localUserId: grabbedUser.id,
+					body: createJson
+				});
+				logger(
+					'debug',
+					'ap',
+					'sent deliver to ' +
+						grabbedFollower.inbox +
+						' from ' +
+						grabbedUser.ap_id
+				);
 			});
-			await deliverQueue.add('deliver', {
-				inbox: grabbedFollower.inbox,
-				localUserId: grabbedUser.id,
-				body: createJson
-			});
-			logger(
-				'debug',
-				'ap',
-				'sent deliver to ' +
-					grabbedFollower.inbox +
-					' from ' +
-					grabbedUser.ap_id
-			);
-		});
+		}
 	} else {
 		logger(
 			'error',

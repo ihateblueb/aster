@@ -36,13 +36,7 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 		},
 		openRegistrations: false,
 		metadata: {
-			nodeName: `${meta.name}`,
-			nodeDescription: `${meta.description_long}`,
-			themeColor: `${meta.color}`,
-			maintainer: {
-				name: `${meta.maintainer}`,
-				email: `${meta.maintainer_email}`
-			}
+			maintainer: {}
 		},
 		usage: {
 			users: {
@@ -51,6 +45,19 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 			localPosts: `${noteCount}`
 		}
 	};
+
+	if (meta) {
+		nodeinfoJson.metadata['nodeName'] = meta.name ? meta.name : 'Aster';
+		nodeinfoJson.metadata['nodeDescription'] = meta.description_long
+			? meta.description_long
+			: 'A fediverse instance running Aster';
+		nodeinfoJson.metadata['themeColor'] = meta.color
+			? meta.color
+			: '#9c8cff';
+
+		nodeinfoJson.metadata.maintainer['name'] = meta.maintainer;
+		nodeinfoJson.metadata.maintainer['email'] = meta.maintainer;
+	}
 
 	res.status(200).json(nodeinfoJson);
 });

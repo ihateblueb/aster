@@ -27,5 +27,5 @@ export default async function createNotification(
 	notificationToInsert['object'] = object;
 	notificationToInsert['reaction'] = reaction;
 
-	await db.getRepository('users_notification').insert(notificationToInsert);
+	await db.getRepository('user_notification').insert(notificationToInsert);
 }
