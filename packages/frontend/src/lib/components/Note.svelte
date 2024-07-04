@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
 
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -217,16 +218,27 @@
 			</DropdownItem>
 			<hr />
 		{/if}
-		<DropdownItem>
+		<DropdownItem
+			on:click={() =>
+				navigator.clipboard.writeText(
+					$page.url.protocol +
+						'//' +
+						$page.url.host +
+						'/notes/' +
+						data.id
+				)}
+		>
 			<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
 			<span>{locale('copy_link')}</span>
 		</DropdownItem>
 		{#if !data.local}
-			<DropdownItem>
+			<DropdownItem
+				on:click={() => navigator.clipboard.writeText(data.ap_id)}
+			>
 				<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
 				<span>{locale('copy_link_origin')}</span>
 			</DropdownItem>
-			<DropdownItem>
+			<DropdownItem on:click={() => (window.location.href = data.ap_id)}>
 				<Icon
 					size="18px"
 					name="external-link"
@@ -236,11 +248,13 @@
 			</DropdownItem>
 			<hr />
 		{/if}
-		<DropdownItem>
+		<DropdownItem on:click={() => navigator.clipboard.writeText(data.id)}>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 			<span>{locale('copy_note_id')}</span>
 		</DropdownItem>
-		<DropdownItem>
+		<DropdownItem
+			on:click={() => navigator.clipboard.writeText(data.author.id)}
+		>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 			<span>{locale('copy_user_id')}</span>
 		</DropdownItem>

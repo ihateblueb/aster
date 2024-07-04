@@ -34,6 +34,7 @@
 		&.wide {
 			width: 100%;
 			box-sizing: border-box;
+			justify-content: center;
 		}
 
 		&.nav {
