@@ -76,6 +76,10 @@ router.get('/api/v1/timeline/public', async (req, res) => {
 			if (i === a.length - 1) resolve(i);
 		});
 	}).then(() => {
+		collectedNotes.sort((x, y) => {
+			return new Date(x.created_at) < new Date(y.created_at) ? 1 : -1;
+		});
+
 		res.status(200).json(collectedNotes);
 	});
 });
