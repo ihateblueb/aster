@@ -28,6 +28,7 @@
 		"mfm-js": "^0.24.0",
 		"node-sass": "^9.0.0",
 		"sass": "^1.77.1",
-		"svelte-preprocess": "^5.1.4"
+		"svelte-preprocess": "^5.1.4",
+		"ws": "^8.18.0"
 	}
 }

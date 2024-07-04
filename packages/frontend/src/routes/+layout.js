@@ -4,7 +4,7 @@ import Store from '$lib/utils/Store';
 
 export const ssr = false;
 
-export async function load() {
+export async function load({ url }) {
 	// get meta
 	const response = await fetch(`/api/v1/meta`);
 	const data = await response.json();
@@ -48,6 +48,17 @@ export async function load() {
 			Store.set('account', JSON.stringify(accountRes));
 		}
 	}
+
+	const socket = new WebSocket(`wss://${url.host}/`);
+
+	socket.addEventListener('open', function (event) {
+		console.log(event);
+		console.log('websocket open');
+	});
+
+	socket.addEventListener('message', function (event) {
+		console.log(event);
+	});
 
 	// return meta
 	return data;
