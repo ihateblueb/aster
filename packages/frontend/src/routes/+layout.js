@@ -1,6 +1,7 @@
 import { getLocaleFile } from '$lib/locale';
 
 import Store from '$lib/utils/Store';
+import { io } from 'socket.io-client';
 
 export const ssr = false;
 
@@ -49,16 +50,15 @@ export async function load({ url }) {
 		}
 	}
 
-	const socket = new WebSocket(`wss://${url.host}/`);
+	// websocket
+	var socket = io('/');
 
-	socket.addEventListener('open', function (event) {
-		console.log(event);
-		console.log('websocket open');
-	});
-
-	socket.addEventListener('message', function (event) {
-		console.log(event);
-	});
+	socket.send(
+		'hi. my name is ' +
+			(Store.get('account')
+				? JSON.parse(Store.get('account')).username
+				: 'unknown')
+	);
 
 	// return meta
 	return data;

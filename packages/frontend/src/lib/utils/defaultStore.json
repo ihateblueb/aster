@@ -7,7 +7,7 @@
 		"btm": ["account"]
 	},
 	"widgets_right": {
-		"top": ["hardwaremetrics"],
+		"top": ["onlineusers"],
 		"mid": ["postform", "notifications"]
 	}
 }

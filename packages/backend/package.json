@@ -43,6 +43,7 @@
 		"reflect-metadata": "^0.2.2",
 		"rollup": "^4.17.2",
 		"rotating-file-stream": "^1.4.6",
+		"socket.io": "^4.7.5",
 		"systeminformation": "^5.22.11",
 		"ts-yaml": "^1.0.0",
 		"typeorm": "^0.3.20",

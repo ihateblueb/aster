@@ -2,7 +2,6 @@ import express from 'express';
 
 import db from '../../../utils/database.js';
 import ApiNote from '../../../constructors/note.js';
-import config from '../../../utils/config.js';
 import logger from '../../../utils/logger.js';
 
 const router = express.Router();

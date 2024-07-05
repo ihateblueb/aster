@@ -1,4 +1,3 @@
 packages:
-    - 'packages/aster-wasm'
     - 'packages/frontend'
     - 'packages/backend'

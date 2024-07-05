@@ -1,6 +1,8 @@
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
+import { createServer } from 'node:http';
+import { Server } from 'socket.io';
 import process from 'node:process';
 
 import pkg from '../../../package.json' with { type: 'json' };
@@ -61,6 +63,25 @@ app.use((req, res, next) => {
 	next();
 });
 
+const server = createServer(app);
+const io = new Server(server);
+
+io.on('connection', (socket) => {
+	logger('debug', 'ws', 'client connected. total: ' + io.engine.clientsCount);
+	socket.broadcast.emit('guests', io.engine.clientsCount);
+	socket.on('disconnect', () => {
+		logger(
+			'debug',
+			'ws',
+			'client disconnected. total: ' + io.engine.clientsCount
+		);
+		socket.broadcast.emit('guests', io.engine.clientsCount);
+	});
+	socket.on('message', (message) => {
+		logger('debug', 'ws', 'received message: ' + message);
+	});
+});
+
 app.use('/', router);
 
 if (config.frontend.enable) {
@@ -69,7 +90,7 @@ if (config.frontend.enable) {
 	logger('info', 'core', `frontend disabled`);
 }
 
-app.listen(config.port, () =>
+server.listen(config.port, () =>
 	logger(
 		'info',
 		'core',
