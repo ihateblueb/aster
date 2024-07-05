@@ -11,13 +11,11 @@ async function renderTimeline(grabbedNotes) {
 	var collectedNotes = [];
 	var sortedReactions = [];
 
-	console.log('!!!!!! grabbedNotes.length !!!!!! ' + grabbedNotes.length);
-
-	grabbedNotes.forEach(async (note, i, a) => {
+	for (const i of grabbedNotes.keys()) {
 		var grabbedAuthor = await db
 			.getRepository('user')
 			.createQueryBuilder()
-			.where({ id: note.author })
+			.where({ id: grabbedNotes[i].author })
 			.getOne();
 
 		if (grabbedAuthor) {
@@ -26,7 +24,7 @@ async function renderTimeline(grabbedNotes) {
 				.createQueryBuilder('note_react')
 				.leftJoinAndSelect('note_react.emoji', 'emoji')
 				.where('note_react.note = :note', {
-					note: note.id
+					note: grabbedNotes[i].id
 				})
 				.getMany();
 
@@ -53,28 +51,29 @@ async function renderTimeline(grabbedNotes) {
 						});
 					}
 				});
-				console.log('[tl] rendered note ' + (i + 1) + '/' + a.length);
+				logger(
+					'debug',
+					'timeline',
+					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
+				);
 				collectedNotes.push(
-					new ApiNote(note, grabbedAuthor, sortedReactions)
+					new ApiNote(grabbedNotes[i], grabbedAuthor, sortedReactions)
 				);
 			} else {
-				console.log('[tl] rendered note ' + (i + 1) + '/' + a.length);
-				collectedNotes.push(new ApiNote(note, grabbedAuthor));
+				logger(
+					'debug',
+					'timeline',
+					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
+				);
+				collectedNotes.push(
+					new ApiNote(grabbedNotes[i], grabbedAuthor)
+				);
 			}
 		}
-	});
-
-	console.log(
-		'!!!!!! collectedNotes.length (unsorted) !!!!!! ' +
-			collectedNotes.length
-	);
+	}
 
 	collectedNotes.sort(
 		(x, y) => +new Date(y.created_at) - +new Date(x.created_at)
-	);
-
-	console.log(
-		'!!!!!! collectedNotes.length (sorted) !!!!!! ' + collectedNotes.length
 	);
 
 	return collectedNotes;
