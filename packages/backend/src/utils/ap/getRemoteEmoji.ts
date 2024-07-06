@@ -27,7 +27,7 @@ export default async function getRemoteEmoji(apId, localUserId?) {
 		} else {
 			logger('debug', 'ap', 'fetched emoji sucessfully');
 
-			response = await processNewEmoji(grabbedEmoji);
+			response = await processNewEmoji(grabbedEmoji.data);
 		}
 
 		return await response;

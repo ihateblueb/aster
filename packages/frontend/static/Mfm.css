@@ -37,6 +37,17 @@
 	font-size: var(--font-s);
 }
 
+.mfm-customEmoji {
+	display: inline;
+	vertical-align: middle;
+	height: 2em;
+	transition: 0.1s;
+}
+
+.mfm-customEmoji:hover {
+	transform: scale(1.2);
+}
+
 .mfm-blockCode {
 	display: block;
 	overflow-wrap: anywhere;

@@ -147,10 +147,10 @@
 					</div>
 				</div>
 				{#if cwOpen}
-					<Mfm content={data.content} />
+					<Mfm content={data.content} emojis={data.emojis} />
 				{/if}
 			{:else}
-				<Mfm content={data.content} />
+				<Mfm content={data.content} emojis={data.emojis} />
 			{/if}
 			{#if data.attachments}
 				<div class="attachments">

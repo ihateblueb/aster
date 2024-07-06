@@ -19,7 +19,7 @@ export default class ApEmoji {
 		this.name = grabbedEmoji.name;
 		this.updated = grabbedEmoji.updated_at;
 
-		this.icon.mediaType = grabbedEmoji.mime;
+		this.icon.mediaType = grabbedEmoji.type;
 		this.icon.url = grabbedEmoji.url;
 	}
 

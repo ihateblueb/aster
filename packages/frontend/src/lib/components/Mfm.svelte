@@ -3,6 +3,7 @@
 	import Sparkle from './Sparkle.svelte';
 
 	export let content;
+	export let emojis = [];
 	export let simple = false;
 
 	let mfmTree = [];
@@ -12,6 +13,8 @@
 	} else {
 		mfmTree = mfm.parse(content);
 	}
+
+	console.log(emojis);
 
 	function renderEachChild(objChild, scale) {
 		let collectedChildren = '';
@@ -38,7 +41,7 @@
 		} else if (object.type === 'small') {
 			return `<small style="opacity: 75%;">${renderEachChild(object.children, scale)}</small>`;
 		} else if (object.type === 'center') {
-			return `<span style="display: block; text-align: center;">${renderEachChild(object.children, scale)}</span>`;
+			return `<div style="text-align: center;">${renderEachChild(object.children, scale)}</div>`;
 		} else if (object.type === 'url') {
 			return `<a href="${object.props.url}" rel="nofollow noopener">${object.props.url}</a>`;
 		} else if (object.type === 'link') {
@@ -46,7 +49,14 @@
 		} else if (object.type === 'quote') {
 			return `<blockquote class="mfm-quote">${renderEachChild(object.children, scale)}</blockquote>`;
 		} else if (object.type === 'emojiCode') {
-			return `<span class="mfm-emoji">:${object.props.name}:</span>`;
+			if (emojis.length > 0) {
+				let foundEmoji = emojis.find(
+					(e) => e.name === ':' + object.props.name + ':'
+				);
+				return `<img class="mfm-customEmoji" src="${foundEmoji.url}" title=":${foundEmoji.name.replaceAll(':', '') + '@' + foundEmoji.host}:" />`;
+			} else {
+				return `<span class="mfm-emoji">:${object.props.name}:</span>`;
+			}
 		} else if (object.type === 'unicodeEmoji') {
 			return `<span class="mfm-emoji">${object.props.emoji}</span>`;
 		} else if (object.type === 'mention') {
@@ -310,7 +320,7 @@
 			} else if (object.props.name === 'small') {
 				return `<small style="opacity: 75%;">${renderEachChild(object.children, scale)}</small>`;
 			} else if (object.props.name === 'center') {
-				return `<span style="display: block; text-align: center;">${renderEachChild(object.children, scale)}</span>`;
+				return `<div style="text-align: center;">${renderEachChild(object.children, scale)}</div>`;
 			} else {
 				// if the element is unknown
 				return `<span style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;

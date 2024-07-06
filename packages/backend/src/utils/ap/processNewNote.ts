@@ -3,6 +3,7 @@ import logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import getRemoteActor from './getRemoteActor.js';
 import getRemoteNote from './getRemoteNote.js';
+import processNewEmoji from './processNewEmoji.js';
 import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,7 +12,8 @@ export default async function processNewNote(body) {
 		let grabbedRemoteActor = await getRemoteActor(body.attributedTo);
 
 		let noteToInsert = {
-			id: ''
+			id: '',
+			emojis: []
 		};
 
 		const noteId = uuidv4();
@@ -101,18 +103,38 @@ export default async function processNewNote(body) {
 		}
 
 		if (body.attachment) {
+			// media: https://eepy.zone/notes/9vdrkue9efha00mz
 			for (const i in body.attachment) {
 				await processNewFile(
 					body.attachment[i],
 					noteToInsert,
 					grabbedRemoteActor
 				);
-			} //https://eepy.zone/notes/9vdrkue9efha00mz
+			}
+		}
+
+		if (body.tag) {
+			// emoji: https://eepy.zone/notes/9v98jdptk2cl00cp
+			console.log(body.tag);
+			for (const i in body.tag) {
+				if (body.tag[i].type === 'Emoji') {
+					let grabbedEmoji = await processNewEmoji(body.tag[i]);
+					noteToInsert.emojis.push(grabbedEmoji.id);
+				} else {
+					logger(
+						'warn',
+						'ap',
+						'unknown tag type ' + body.tag[i].type
+					);
+				}
+			}
 		}
 
 		await db.getRepository('note').insert(noteToInsert);
 
 		logger('info', 'ap', 'created remote note ' + body.id);
+
+		console.log(noteToInsert);
 
 		return noteToInsert;
 	}

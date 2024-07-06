@@ -27,5 +27,5 @@ export class Emoji {
 	url: string;
 
 	@Column()
-	mime: string;
+	type: string;
 }

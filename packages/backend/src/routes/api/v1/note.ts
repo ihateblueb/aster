@@ -54,6 +54,20 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						})
 						.getMany();
 
+					var grabbedEmojis = [];
+
+					grabbedNote.emojis.forEach(async (emoji) => {
+						let grabbedEmoji = await db
+							.getRepository('emoji')
+							.createQueryBuilder()
+							.where({
+								id: emoji
+							})
+							.getOne();
+
+						grabbedEmojis.push(grabbedEmoji);
+					});
+
 					var sortedReactions = [];
 
 					var grabbedReactions = await db
@@ -94,7 +108,9 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 					grabbedNote.reactions = sortedReactions;
 
-					grabbedNote['attachments'] = grabbedAttachments;
+					grabbedNote.attachments = grabbedAttachments;
+
+					grabbedNote['emojis'] = grabbedEmojis;
 
 					res.status(200).json(grabbedNote);
 				}

@@ -4,7 +4,7 @@ import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewEmoji(body) {
-	if (body.data.type === 'Emoji') {
+	if (body.type === 'Emoji') {
 		let emojiToInsert = {
 			id: ''
 		};
@@ -12,17 +12,18 @@ export default async function processNewEmoji(body) {
 		const emojiId = uuidv4();
 
 		emojiToInsert['id'] = emojiId;
-		emojiToInsert['ap_id'] = body.data.id;
-		emojiToInsert['created_at'] = body.data.updated;
-		emojiToInsert['updated_at'] = body.data.updated;
+		emojiToInsert['ap_id'] = body.id;
+		emojiToInsert['created_at'] = body.updated;
+		emojiToInsert['updated_at'] = body.updated;
 		emojiToInsert['local'] = false;
-		emojiToInsert['host'] = new URL(body.data.id).host;
-		emojiToInsert['name'] = body.data.name;
-		emojiToInsert['url'] = body.data.icon.url;
+		emojiToInsert['host'] = new URL(body.id).host;
+		emojiToInsert['name'] = body.name;
+		emojiToInsert['url'] = body.icon.url;
+		emojiToInsert['type'] = body.icon.mediaType;
 
 		await db.getRepository('emoji').insert(emojiToInsert);
 
-		logger('info', 'ap', 'created remote emoji ' + body.data.id);
+		logger('info', 'ap', 'created remote emoji ' + body.id);
 
 		return emojiToInsert;
 	}
