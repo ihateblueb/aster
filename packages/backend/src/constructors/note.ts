@@ -13,11 +13,15 @@ export default class ApiNote {
 	cw?: string;
 	content: string;
 
-	reactions: {};
+	attachments?: [];
+	emojis?: [];
+	reactions?: [];
 
 	constructor(
 		grabbedNote,
 		grabbedAuthor,
+		grabbedAttachments?,
+		grabbedEmojis?,
 		sortedReactions?,
 		grabbedReplyingTo?: User,
 		grabbedReplyingToAuthor?
@@ -31,7 +35,10 @@ export default class ApiNote {
 		this.local = grabbedNote.local;
 		this.cw = grabbedNote.cw;
 		this.content = grabbedNote.content;
-		this.reactions = sortedReactions;
+		this.attachments =
+			grabbedAttachments.length > 0 ? grabbedAttachments : null;
+		this.emojis = grabbedEmojis.length > 0 ? grabbedEmojis : null;
+		this.reactions = sortedReactions.length > 0 ? sortedReactions : null;
 	}
 
 	build() {

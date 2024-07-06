@@ -49,7 +49,7 @@
 		} else if (object.type === 'quote') {
 			return `<blockquote class="mfm-quote">${renderEachChild(object.children, scale)}</blockquote>`;
 		} else if (object.type === 'emojiCode') {
-			if (emojis.length > 0) {
+			if (emojis && emojis.length > 0) {
 				let foundEmoji = emojis.find(
 					(e) => e.name === ':' + object.props.name + ':'
 				);

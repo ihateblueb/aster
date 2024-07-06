@@ -18,6 +18,30 @@ async function renderTimeline(grabbedNotes) {
 			.getOne();
 
 		if (grabbedAuthor) {
+			let grabbedAttachments = await db
+				.getRepository('drive_file')
+				.createQueryBuilder()
+				.where({
+					note: grabbedNotes[i].id
+				})
+				.getMany();
+
+			let grabbedEmojis = [];
+
+			if (grabbedNotes[i].emojis) {
+				grabbedNotes[i].emojis.forEach(async (emoji) => {
+					let grabbedEmoji = await db
+						.getRepository('emoji')
+						.createQueryBuilder()
+						.where({
+							id: emoji
+						})
+						.getOne();
+
+					grabbedEmojis.push(grabbedEmoji);
+				});
+			}
+
 			var grabbedReactions = await db
 				.getRepository('note_react')
 				.createQueryBuilder('note_react')
@@ -56,7 +80,13 @@ async function renderTimeline(grabbedNotes) {
 					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
 				);
 				collectedNotes.push(
-					new ApiNote(grabbedNotes[i], grabbedAuthor, sortedReactions)
+					new ApiNote(
+						grabbedNotes[i],
+						grabbedAuthor,
+						grabbedAttachments,
+						grabbedEmojis,
+						sortedReactions
+					)
 				);
 			} else {
 				logger(

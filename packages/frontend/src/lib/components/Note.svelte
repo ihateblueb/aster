@@ -26,6 +26,7 @@
 	export let detailed: boolean = false;
 
 	let cwOpen = false;
+	let timer = 0;
 
 	function toggleCw() {
 		if (cwOpen) {
@@ -34,6 +35,52 @@
 			cwOpen = true;
 		}
 	}
+
+	function timeAgo(time) {
+		// TODO: rewrite this. it sucks. its stolen from masto-aster
+
+		switch (typeof time) {
+			case 'number':
+				break;
+			case 'string':
+				time = +new Date(time);
+				break;
+			case 'object':
+				if (time.constructor === Date) time = time.getTime();
+				break;
+			default:
+				time = +new Date();
+		}
+		var time_formats = [
+			[60, 's', 1],
+			[120, '1m', '1m'],
+			[3600, 'm', 60],
+			[7200, '1h', '1h'],
+			[86400, 'h', 3600],
+			[604800, 'd', 86400],
+			[2419200, 'w', 604800],
+			[29030400, 'mo', 2419200],
+			[2903040000, 'y', 29030400],
+			[58060800000, 'c', 2903040000]
+		];
+		var seconds = (+new Date() - time) / 1000,
+			list_choice = 1;
+		if (seconds === 0) {
+			return 'now';
+		}
+		var i = 0,
+			format;
+		while ((format = time_formats[i++]))
+			if (seconds < format[0]) {
+				if (typeof format[2] == 'string') return format[list_choice];
+				else return Math.floor(seconds / format[2]) + format[1];
+			}
+		return time;
+	}
+
+	timer = setInterval(() => {
+		timer += 1;
+	}, 5000);
 
 	let more: Dropdown;
 </script>
@@ -91,7 +138,13 @@
 				</div>
 			</div>
 			<div class="right">
-				<span title={data.created_at}>t</span>
+				{#key timer}
+					<span
+						class="time"
+						title={new Date(data.created_at).toLocaleString()}
+						>{timeAgo(data.created_at)}</span
+					>
+				{/key}
 				{#if data.visibility === 'public'}
 					<Icon
 						name="planet"
@@ -362,6 +415,9 @@
 			> * {
 				width: 100%;
 				border-radius: var(--border-s);
+				background-color: var(--bg-tertiary);
+				max-height: 250px;
+				object-fit: contain;
 			}
 		}
 	}
@@ -370,6 +426,7 @@
 		padding: 20px;
 		border-radius: var(--border-xl);
 		background-color: var(--bg-secondary);
+		overflow: clip;
 	}
 	.details {
 		color: var(--txt-tertiary);
@@ -406,6 +463,10 @@
 		.right {
 			display: flex;
 			gap: 4px;
+
+			.time {
+				font-size: 14px;
+			}
 		}
 	}
 	.reactions {
