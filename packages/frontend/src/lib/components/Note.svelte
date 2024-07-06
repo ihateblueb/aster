@@ -153,15 +153,25 @@
 				<Mfm content={data.content} />
 			{/if}
 			{#if data.attachments}
-				{#each data.attachments as attachment}
-					{#if attachment.type.startsWith('image')}
-						<img src={attachment.src} />
-					{:else if attachment.type.startsWith('video')}
-						<video src={attachment.src} />
-					{:else}
-						{attachment.src}
-					{/if}
-				{/each}
+				<div class="attachments">
+					{#each data.attachments as attachment}
+						{#if attachment.type.startsWith('image')}
+							<img
+								src={attachment.src}
+								alt={attachment.alt}
+								title={attachment.alt}
+							/>
+						{:else if attachment.type.startsWith('video')}
+							<video
+								src={attachment.src}
+								title={attachment.alt}
+								controls
+							/>
+						{:else}
+							{attachment.src}
+						{/if}
+					{/each}
+				</div>
 			{/if}
 			{#if detailed}
 				<div class="details">
@@ -340,6 +350,20 @@
 	.noteContent {
 		margin-top: 10px;
 		margin-bottom: 10px;
+
+		.attachments {
+			display: grid;
+			grid-auto-flow: column;
+			margin-top: 10px;
+			grid-gap: 8px;
+			height: 100%;
+			width: 100%;
+
+			> * {
+				width: 100%;
+				border-radius: var(--border-s);
+			}
+		}
 	}
 	.note {
 		margin: 10px;
