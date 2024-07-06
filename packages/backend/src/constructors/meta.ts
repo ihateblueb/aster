@@ -7,19 +7,26 @@ export default class ApiMeta {
 
 	maintainer?: string;
 	maintainer_email?: string;
-	registration: string = 'closed';
+	registration: string = 'open';
 	rules?: object;
 
 	description: string = 'A fediverse instance running Aster';
 	description_long: string = 'A fediverse instance running Aster';
 
-	local_user_count: number = 0;
-	total_user_count: number = 0;
-	local_note_count: number = 0;
-	total_note_count: number = 0;
-	instance_count: number = 0;
+	local_user_count: number;
+	total_user_count: number;
+	local_note_count: number;
+	total_note_count: number;
+	instance_count: number;
 
-	constructor(grabbedMeta?: Meta) {
+	constructor(
+		grabbedMeta?: Meta,
+		grabbedLocalUserCount?,
+		grabbedTotalUserCount?,
+		grabbedLocalNoteCount?,
+		grabbedTotalNoteCount?,
+		grabbedInstanceCount?
+	) {
 		if (grabbedMeta) {
 			this.name = grabbedMeta.name;
 			this.created_at = grabbedMeta.created_at;
@@ -32,13 +39,21 @@ export default class ApiMeta {
 
 			this.description = grabbedMeta.description;
 			this.description_long = grabbedMeta.description_long;
-
-			this.local_user_count = grabbedMeta.local_user_count;
-			this.total_user_count = grabbedMeta.total_user_count;
-			this.local_note_count = grabbedMeta.local_note_count;
-			this.total_note_count = grabbedMeta.total_note_count;
-			this.instance_count = grabbedMeta.instance_count;
 		}
+
+		this.local_user_count = grabbedLocalUserCount
+			? grabbedLocalUserCount
+			: 0;
+		this.total_user_count = grabbedTotalUserCount
+			? grabbedTotalUserCount
+			: 0;
+		this.local_note_count = grabbedLocalNoteCount
+			? grabbedLocalNoteCount
+			: 0;
+		this.total_note_count = grabbedTotalNoteCount
+			? grabbedTotalNoteCount
+			: 0;
+		this.instance_count = grabbedInstanceCount ? grabbedInstanceCount : 0;
 	}
 
 	build() {

@@ -13,7 +13,48 @@ router.get('/api/v1/meta', async (req, res) => {
 		.createQueryBuilder()
 		.getRawOne();
 
-	res.status(200).json(new ApiMeta(grabbedMeta));
+	const grabbedLocalUserCount = await db
+		.getRepository('user')
+		.createQueryBuilder()
+		.select('user')
+		.where({ local: true })
+		.getCount();
+
+	const grabbedTotalUserCount = await db
+		.getRepository('user')
+		.createQueryBuilder()
+		.select('user')
+		.getCount();
+
+	const grabbedLocalNoteCount = await db
+		.getRepository('note')
+		.createQueryBuilder()
+		.select('note')
+		.where({ local: true })
+		.getCount();
+
+	const grabbedTotalNoteCount = await db
+		.getRepository('note')
+		.createQueryBuilder()
+		.select('note')
+		.getCount();
+
+	const grabbedInstanceCount = await db
+		.getRepository('instance')
+		.createQueryBuilder()
+		.select('instance')
+		.getCount();
+
+	res.status(200).json(
+		new ApiMeta(
+			grabbedMeta,
+			grabbedLocalUserCount,
+			grabbedTotalUserCount,
+			grabbedLocalNoteCount,
+			grabbedTotalNoteCount,
+			grabbedInstanceCount
+		)
+	);
 });
 
 export default router;

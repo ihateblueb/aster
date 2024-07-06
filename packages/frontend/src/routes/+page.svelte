@@ -17,6 +17,20 @@
 		<PageHeader title={locale('home')} />
 		<div class="pageContent">
 			<div class="paddedPage">
+				<div class="statsCtn">
+					<div class="stat">
+						{data.local_user_count}
+						{locale('users')}
+					</div>
+					<div class="stat">
+						{data.local_note_count}
+						{locale('notes')}
+					</div>
+					<div class="stat">
+						{data.instance_count}
+						{locale('instances')}
+					</div>
+				</div>
 				<p>
 					This is filler content. Soon, a timeline of sorts will be
 					here.

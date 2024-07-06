@@ -783,3 +783,127 @@ undo
 	]
 }
 ```
+
+# nodeinfo
+
+```json
+{
+  metadata: {
+    accountActivationRequired: false,
+    features: [
+      'pleroma_api',
+      'akkoma_api',
+      'mastodon_api',
+      'mastodon_api_streaming',
+      'polls',
+      'v2_suggestions',
+      'pleroma_explicit_addressing',
+      'shareable_emoji_packs',
+      'multifetch',
+      'pleroma:api/v1/notifications:include_types_filter',
+      'quote_posting',
+      'editing',
+      'bubble_timeline',
+      'relay',
+      'pleroma_emoji_reactions',
+      'exposable_reactions',
+      'profile_directory',
+      'custom_emoji_reactions',
+      'pleroma:get:main/ostatus'
+    ],
+    federatedTimelineAvailable: true,
+    federation: {
+      enabled: true,
+      exclusions: false,
+      mrf_hashtag: [Object],
+      mrf_policies: [Array],
+      mrf_simple: [Object],
+      mrf_simple_info: [Object],
+      quarantined_instances: [],
+      quarantined_instances_info: [Object]
+    },
+    fieldsLimits: {
+      maxFields: 20,
+      maxRemoteFields: 30,
+      nameLength: 512,
+      valueLength: 2048
+    },
+    invitesEnabled: false,
+    localBubbleInstances: [
+      'eepy.zone',           'grimgreenfo.rest',
+      'brain.d.on-t.work',   'lea.pet',
+      'wetdry.world',        'lethallava.land',
+      'labyrinth.zone',      'social.besties.house',
+      'cats.city',           'shrimple.aagaming.me',
+      'fedi.notfire.cc',     'soc.noob.quest',
+      'mk.noob.quest',       'koko.micenest.xyz',
+      'chadthundercock.com', 'village.elrant.team',
+      'oomfie.city'
+    ],
+    mailerEnabled: false,
+    nodeDescription: 'akkoma instance run by eepy.zone',
+    nodeName: 'eepy.zone akkoma',
+    pollLimits: {
+      max_expiration: 31536000,
+      max_option_chars: 200,
+      max_options: 25,
+      min_expiration: 0
+    },
+    postFormats: [
+      'text/plain',
+      'text/html',
+      'text/markdown',
+      'text/bbcode',
+      'text/x.misskeymarkdown'
+    ],
+    private: false,
+    privilegedStaff: false,
+    publicTimelineVisibility: { bubble: true, federated: false, local: true },
+    restrictedNicknames: [
+      '.well-known',         '~',
+      'about',               'activities',
+      'api',                 'auth',
+      'check_password',      'dev',
+      'friend-requests',     'inbox',
+      'internal',            'main',
+      'media',               'nodeinfo',
+      'notice',              'oauth',
+      'objects',             'ostatus_subscribe',
+      'pleroma',             'proxy',
+      'push',                'registration',
+      'relay',               'settings',
+      'status',              'tag',
+      'user-search',         'user_exists',
+      'users',               'web',
+      'verify_credentials',  'update_credentials',
+      'relationships',       'search',
+      'confirmation_resend', 'mfa'
+    ],
+    skipThreadContainment: true,
+    staffAccounts: [
+      'https://akko.eepy.zone/users/wep',
+      'https://akko.eepy.zone/users/critter',
+      'https://akko.eepy.zone/users/admin',
+      'https://akko.eepy.zone/users/harper',
+      'https://akko.eepy.zone/users/sneexy',
+      'https://akko.eepy.zone/users/notfire'
+    ],
+    suggestions: { enabled: false },
+    uploadLimits: {
+      avatar: 2000000,
+      background: 4000000,
+      banner: 4000000,
+      general: 16000000
+    }
+  },
+  openRegistrations: true,
+  protocols: [ 'activitypub' ],
+  services: { inbound: [], outbound: [] },
+  software: { name: 'akkoma', version: '3.13.1' },
+  usage: {
+    localPosts: 5222,
+    users: { activeHalfyear: 24, activeMonth: 21, total: 23 }
+  },
+  version: '2.0'
+}
+```

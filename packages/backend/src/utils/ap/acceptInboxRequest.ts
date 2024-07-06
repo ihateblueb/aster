@@ -1,4 +1,6 @@
 import logger from '../logger.js';
+import getRemoteInstance from './getRemoteInstance.js';
+
 import IPAccept from './inboxProcessors/accept.js';
 import IPAdd from './inboxProcessors/add.js';
 import IPAnnounce from './inboxProcessors/announce.js';
@@ -44,6 +46,8 @@ import IPUpdate from './inboxProcessors/update.js';
 
 export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
+
+	await getRemoteInstance(new URL(parsedBody.id).host);
 
 	if (parsedBody.type === 'Accept') {
 		await IPAccept(parsedBody);
