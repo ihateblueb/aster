@@ -3,6 +3,7 @@ import logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import getRemoteActor from './getRemoteActor.js';
 import getRemoteNote from './getRemoteNote.js';
+import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewNote(body) {
@@ -97,6 +98,16 @@ export default async function processNewNote(body) {
 			noteToInsert['content'] = sanitize(body.source.content);
 		} else {
 			noteToInsert['content'] = sanitize(body.content);
+		}
+
+		if (body.attachment) {
+			for (const i in body.attachment) {
+				await processNewFile(
+					body.attachment[i],
+					noteToInsert,
+					grabbedRemoteActor
+				);
+			} //https://eepy.zone/notes/9vdrkue9efha00mz
 		}
 
 		await db.getRepository('note').insert(noteToInsert);

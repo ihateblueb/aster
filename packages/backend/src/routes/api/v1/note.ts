@@ -46,6 +46,14 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
+					var grabbedAttachments = await db
+						.getRepository('drive_file')
+						.createQueryBuilder()
+						.where({
+							note: grabbedNote.id
+						})
+						.getMany();
+
 					var sortedReactions = [];
 
 					var grabbedReactions = await db
@@ -85,6 +93,8 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 					}
 
 					grabbedNote.reactions = sortedReactions;
+
+					grabbedNote['attachments'] = grabbedAttachments;
 
 					res.status(200).json(grabbedNote);
 				}

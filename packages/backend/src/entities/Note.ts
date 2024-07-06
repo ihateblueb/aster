@@ -38,14 +38,5 @@ export class Note {
 	content: string;
 
 	@Column({ nullable: true })
-	edits: string;
-
-	@Column({ nullable: true })
-	replies: string;
-
-	@Column({ nullable: true })
-	reactions: string;
-
-	@Column({ nullable: true })
 	original_note: string;
 }

@@ -1,11 +1,12 @@
+import process from 'node:process';
+import pkg from '../../../package.json' with { type: 'json' };
+process.title = `Aster v${pkg.version}`;
+
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import express from 'express';
 import { createServer } from 'node:http';
 import { Server } from 'socket.io';
-import process from 'node:process';
-
-import pkg from '../../../package.json' with { type: 'json' };
 
 import config from './utils/config.js';
 import logger from './utils/logger.js';
@@ -13,12 +14,13 @@ import requestLogger from './utils/requestLogger.js';
 import { deliverWorker, inboxWorker } from './utils/workers.js';
 
 import router from './routes/router.js';
-/* an error here can be ignored */
+/*
+	an error here can be ignored.
+	it may not exist yet, but upon build it will.
+*/
 import { handler } from 'frontend/build/handler.js';
 
 const app = express();
-
-process.title = 'Aster';
 
 inboxWorker.on('progress', async (job, progress) => {
 	logger('info', 'inbox', `job ${job.id} says ${JSON.stringify(progress)}`);

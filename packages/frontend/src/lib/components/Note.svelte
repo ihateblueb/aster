@@ -152,6 +152,17 @@
 			{:else}
 				<Mfm content={data.content} />
 			{/if}
+			{#if data.attachments}
+				{#each data.attachments as attachment}
+					{#if attachment.type.startsWith('image')}
+						<img src={attachment.src} />
+					{:else if attachment.type.startsWith('video')}
+						<video src={attachment.src} />
+					{:else}
+						{attachment.src}
+					{/if}
+				{/each}
+			{/if}
 			{#if detailed}
 				<div class="details">
 					{locale('posted_at')}

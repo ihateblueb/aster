@@ -72,6 +72,12 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Move') {
 		await IPMove(parsedBody);
 	} else {
-		console.log('oh god oh fuck new activity type ' + parsedBody.type);
+		logger(
+			'warn',
+			'ap',
+			'new activity of type ' +
+				parsedBody.type +
+				" received that isn't known to aster."
+		);
 	}
 }
