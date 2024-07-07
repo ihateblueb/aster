@@ -83,10 +83,10 @@
 			<div class="visibilityItem">
 				<div class="top">
 					<Icon size="18px" name="planet" margin="0px 8px 0px 0px" />
-					<span>Public</span>
+					<span>{locale('public')}</span>
 				</div>
 				<div class="bottom">
-					<small> Visible on the global and local timelines.</small>
+					<small>{locale('public_desc')}</small>
 				</div>
 			</div>
 		</DropdownItem>
@@ -94,13 +94,10 @@
 			<div class="visibilityItem">
 				<div class="top">
 					<Icon size="18px" name="home" margin="0px 8px 0px 0px" />
-					<span>Unlisted</span>
+					<span>{locale('unlisted')}</span>
 				</div>
 				<div class="bottom">
-					<small
-						>Public, but not visible on the global or local
-						timelines.</small
-					>
+					<small>{locale('unlisted_desc')}</small>
 				</div>
 			</div>
 		</DropdownItem>
@@ -108,10 +105,10 @@
 			<div class="visibilityItem">
 				<div class="top">
 					<Icon size="18px" name="lock" margin="0px 8px 0px 0px" />
-					<span>Followers Only</span>
+					<span>{locale('followers_only')}</span>
 				</div>
 				<div class="bottom">
-					<small> Only visible to your followers.</small>
+					<small>{locale('followers_only_desc')}</small>
 				</div>
 			</div>
 		</DropdownItem>
@@ -119,10 +116,10 @@
 			<div class="visibilityItem">
 				<div class="top">
 					<Icon size="18px" name="mail" margin="0px 8px 0px 0px" />
-					<span>Direct Message</span>
+					<span>{locale('direct_note')}</span>
 				</div>
 				<div class="bottom">
-					<small> Only visible to people you mention.</small>
+					<small>{locale('direct_note_desc')}</small>
 				</div>
 			</div>
 		</DropdownItem>

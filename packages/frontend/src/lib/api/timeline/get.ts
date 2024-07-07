@@ -1,16 +1,19 @@
 import Store from '$lib/utils/Store';
 
-export default async function timelineGet(timeline: string) {
+export default async function timelineGet(timeline: string, tag?: string) {
 	let timelineRes = {};
 
-	var timelineReq = await fetch(`/api/v1/timeline/${timeline}`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+	var timelineReq = await fetch(
+		`/api/v1/timeline/${timeline}${tag ? '/' + tag : ''}`,
+		{
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${Store.get('a_token')}`
+			}
 		}
-	});
+	);
 
 	timelineRes = await timelineReq.json();
 

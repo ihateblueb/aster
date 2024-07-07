@@ -40,6 +40,9 @@ export class Note {
 	@Column('jsonb', { nullable: true })
 	emojis: string;
 
+	@Column('jsonb', { nullable: true })
+	tags: string;
+
 	@Column({ nullable: true })
 	original_note: string;
 }

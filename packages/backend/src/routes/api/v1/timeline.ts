@@ -3,6 +3,7 @@ import express from 'express';
 import db from '../../../utils/database.js';
 import ApiNote from '../../../constructors/note.js';
 import logger from '../../../utils/logger.js';
+import { In } from 'typeorm';
 
 const router = express.Router();
 
@@ -126,7 +127,20 @@ router.get('/api/v1/timeline/local', async (req, res) => {
 	var grabbedNotes = await db
 		.getRepository('note')
 		.createQueryBuilder()
-		.where({ local: true, visibility: 'public' })
+		.where({ visibility: 'public', local: true })
+		.getMany();
+
+	res.status(200).json(await renderTimeline(grabbedNotes));
+});
+
+router.get('/api/v1/timeline/tag/:tag', async (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+
+	var grabbedNotes = await db
+		.getRepository('note')
+		.createQueryBuilder()
+		// uuuuughh this query is gonna be fucked
+		.where({ visibility: 'public' })
 		.getMany();
 
 	res.status(200).json(await renderTimeline(grabbedNotes));

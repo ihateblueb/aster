@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "12",
+	"__version__": "14",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -49,6 +49,7 @@
 	"more": "More",
 	"copy_link": "Copy link",
 	"copy_link_origin": "Copy link (origin)",
+	"copy_content": "Copy content",
 	"copy_note_id": "Copy note id",
 	"copy_user_id": "Copy user id",
 	"view_on_remote": "View on remote instances",
@@ -56,6 +57,10 @@
 	"unlisted": "Unlisted",
 	"followers_only": "Followers Only",
 	"direct_note": "Direct Note",
+	"public_desc": "Visible on the global and local timelines.",
+	"unlisted_desc": "Public, but not visible on the global or local timelines.",
+	"followers_only_desc": "Only visible to your followers.",
+	"direct_note_desc": "Only visible to people you mention.",
 	"open": "Open",
 	"close": "Close",
 	"accept": "Accept",

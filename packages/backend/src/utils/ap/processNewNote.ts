@@ -13,7 +13,8 @@ export default async function processNewNote(body) {
 
 		let noteToInsert = {
 			id: '',
-			emojis: []
+			emojis: [],
+			tags: []
 		};
 
 		const noteId = uuidv4();
@@ -120,6 +121,8 @@ export default async function processNewNote(body) {
 				if (body.tag[i].type === 'Emoji') {
 					let grabbedEmoji = await processNewEmoji(body.tag[i]);
 					noteToInsert.emojis.push(grabbedEmoji.id);
+				} else if (body.tag[i].type === 'Hashtag') {
+					noteToInsert.tags.push(body.tag[i].name.replace('#', ''));
 				} else {
 					logger(
 						'warn',

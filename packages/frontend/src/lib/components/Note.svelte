@@ -338,6 +338,12 @@
 			</DropdownItem>
 			<hr />
 		{/if}
+		<DropdownItem
+			on:click={() => navigator.clipboard.writeText(data.content)}
+		>
+			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+			<span>{locale('copy_content')}</span>
+		</DropdownItem>
 		<DropdownItem on:click={() => navigator.clipboard.writeText(data.id)}>
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 			<span>{locale('copy_note_id')}</span>
