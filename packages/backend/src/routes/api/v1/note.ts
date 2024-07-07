@@ -56,17 +56,19 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 
 					var grabbedEmojis = [];
 
-					grabbedNote.emojis.forEach(async (emoji) => {
-						let grabbedEmoji = await db
-							.getRepository('emoji')
-							.createQueryBuilder()
-							.where({
-								id: emoji
-							})
-							.getOne();
+					if (grabbedNote.emojis) {
+						grabbedNote.emojis.forEach(async (emoji) => {
+							let grabbedEmoji = await db
+								.getRepository('emoji')
+								.createQueryBuilder()
+								.where({
+									id: emoji
+								})
+								.getOne();
 
-						grabbedEmojis.push(grabbedEmoji);
-					});
+							grabbedEmojis.push(grabbedEmoji);
+						});
+					}
 
 					var sortedReactions = [];
 

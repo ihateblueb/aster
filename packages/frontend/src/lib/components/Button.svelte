@@ -44,9 +44,13 @@
 			padding: 8px 12px;
 			background-color: transparent;
 
-			&:hover {
+			&.accent {
 				color: var(--accent);
 				background-color: var(--accent-20);
+			}
+
+			&:hover {
+				color: var(--accent);
 			}
 		}
 

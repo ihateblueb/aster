@@ -14,7 +14,12 @@
 
 <template>
 	{#if big}
-		<textarea class={'ipt ' + type} use:formType {placeholder} bind:value />
+		<textarea
+			class={'ipt big ' + type}
+			use:formType
+			{placeholder}
+			bind:value
+		/>
 	{:else}
 		<input class={'ipt ' + type} use:formType {placeholder} bind:value />
 	{/if}
@@ -35,6 +40,11 @@
 		&.wide {
 			width: 100%;
 			box-sizing: border-box;
+		}
+
+		&.big {
+			resize: vertical;
+			height: 125px;
 		}
 
 		&:not(.wide) {

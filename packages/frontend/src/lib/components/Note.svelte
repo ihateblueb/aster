@@ -200,12 +200,28 @@
 					</div>
 				</div>
 				{#if cwOpen}
-					<Mfm content={data.content} emojis={data.emojis} />
+					<div style={detailed ? null : 'cursor: pointer;'}>
+						<Mfm
+							content={data.content}
+							emojis={data.emojis}
+							on:click={() => {
+								if (!detailed) goto('/notes/' + data.id);
+							}}
+						/>
+					</div>
 				{/if}
 			{:else}
-				<Mfm content={data.content} emojis={data.emojis} />
+				<div style={detailed ? null : 'cursor: pointer;'}>
+					<Mfm
+						content={data.content}
+						emojis={data.emojis}
+						on:click={() => {
+							if (!detailed) goto('/notes/' + data.id);
+						}}
+					/>
+				</div>
 			{/if}
-			{#if data.attachments}
+			{#if data.attachments && data.attachments.length > 0}
 				<div class="attachments">
 					{#each data.attachments as attachment}
 						{#if attachment.type.startsWith('image')}

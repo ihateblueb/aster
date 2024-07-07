@@ -1,6 +1,10 @@
 import Store from '$lib/utils/Store';
 
-export default async function noteCreate(noteCw: String, noteContent: String) {
+export default async function noteCreate(
+	noteCw: string,
+	noteContent: string,
+	visibility: string
+) {
 	let noteRes = {};
 
 	var noteReq = await fetch(`/api/v1/note`, {
@@ -12,7 +16,8 @@ export default async function noteCreate(noteCw: String, noteContent: String) {
 		},
 		body: JSON.stringify({
 			cw: noteCw,
-			content: noteContent
+			content: noteContent,
+			visibility: visibility
 		})
 	});
 

@@ -12,33 +12,31 @@
 <template>
 	<PageHeader title={locale('explore')} />
 	<div class="pageContent">
-		<div class="paddedPage">
-			<div class="timelineSelect">
-				<Button type="wide" on:click={() => (timeline = 'global')}
-					>Global</Button
-				>
-				<Button type="wide" on:click={() => (timeline = 'local')}
-					>Local</Button
-				>
-			</div>
-			{#if timeline === 'global'}
-				{#await timelineGet('public') then notes}
-					<span>tl length {notes.length}</span>
-					{#each notes as note}
-						<Note data={note} />
-					{/each}
-				{/await}
-			{:else if timeline === 'local'}
-				{#await timelineGet('local') then notes}
-					<span>tl length {notes.length}</span>
-					{#each notes as note}
-						<Note data={note} />
-					{/each}
-				{/await}
-			{:else}
-				no timeline selected
-			{/if}
+		<div class="timelineSelect">
+			<Button type="wide" on:click={() => (timeline = 'global')}
+				>Global</Button
+			>
+			<Button type="wide" on:click={() => (timeline = 'local')}
+				>Local</Button
+			>
 		</div>
+		{#if timeline === 'global'}
+			{#await timelineGet('public') then notes}
+				<span>tl length {notes.length}</span>
+				{#each notes as note}
+					<Note data={note} />
+				{/each}
+			{/await}
+		{:else if timeline === 'local'}
+			{#await timelineGet('local') then notes}
+				<span>tl length {notes.length}</span>
+				{#each notes as note}
+					<Note data={note} />
+				{/each}
+			{/await}
+		{:else}
+			no timeline selected
+		{/if}
 	</div>
 </template>
 
