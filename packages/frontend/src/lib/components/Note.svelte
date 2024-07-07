@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
@@ -83,6 +84,79 @@
 	}, 5000);
 
 	let more: Dropdown;
+
+	import Lightbox from '../../../node_modules/photoswipe/dist/photoswipe-lightbox.esm.js';
+	import PhotoSwipe from '../../../node_modules/photoswipe/dist/photoswipe.esm.js';
+
+	onMount(() => {
+		let options = {
+			gallery: '#gallery',
+			children: 'a',
+			showHideAnimationType: 'zoom',
+			closeOnVerticalDrag: true,
+			escKey: true,
+			arrowKeys: true,
+			errorMsg: locale('media_broken'),
+			imageClickAction: 'zoom',
+			tapAction: 'zoom',
+			initialZoomLevel: 'fill',
+			secondaryZoomLevel: 1,
+			maxZoomLevel: 2,
+			pswpModule: () => PhotoSwipe
+		};
+		let lightbox = new Lightbox(options);
+		lightbox.on('uiRegister', function () {
+			lightbox.pswp.ui.registerElement({
+				name: 'custom-caption',
+				order: 9,
+				isButton: false,
+				appendTo: 'root',
+				html: 'Caption text',
+				onInit: (el, pswp) => {
+					lightbox.pswp.on('change', () => {
+						const currSlideElement =
+							lightbox.pswp.currSlide.data.element;
+						let captionHTML = '';
+						if (currSlideElement) {
+							const hiddenCaption =
+								currSlideElement.querySelector(
+									'.hidden-caption-content'
+								);
+							if (hiddenCaption) {
+								// get caption from element with class hidden-caption-content
+								captionHTML = hiddenCaption.innerHTML;
+							} else {
+								// get caption from alt attribute
+								captionHTML = currSlideElement
+									.querySelector('img')
+									.getAttribute('alt');
+							}
+						}
+						el.innerHTML = captionHTML || '';
+					});
+				}
+			});
+		});
+		lightbox.init();
+	});
+
+	function getHeight(src) {
+		let img = new Image();
+		img.src = src;
+		img.onload = () => {
+			console.log(src + ' ' + img.naturalHeight);
+			return img.naturalHeight;
+		};
+	}
+
+	function getWidth(src) {
+		let img = new Image();
+		img.src = src;
+		img.onload = () => {
+			console.log(src + ' ' + img.naturalWidth);
+			return img.naturalWidth;
+		};
+	}
 </script>
 
 <template>
@@ -222,14 +296,24 @@
 				</div>
 			{/if}
 			{#if data.attachments && data.attachments.length > 0}
-				<div class="attachments">
+				<div id="gallery" class="pswp-gallery attachments">
 					{#each data.attachments as attachment}
 						{#if attachment.type.startsWith('image')}
-							<img
-								src={attachment.src}
-								alt={attachment.alt}
-								title={attachment.alt}
-							/>
+							<a
+								href={attachment.src}
+								data-pswp-width={getWidth(attachment.src)}
+								data-pswp-height={getHeight(attachment.src)}
+								data-cropped="true"
+								target="_blank"
+								rel="noreferrer"
+							>
+								<img
+									src={attachment.src}
+									alt={attachment.alt}
+									title={attachment.alt}
+									class="attachmentImg"
+								/>
+							</a>
 						{:else if attachment.type.startsWith('video')}
 							<video
 								src={attachment.src}
@@ -415,6 +499,8 @@
 </template>
 
 <style lang="scss">
+	@import '../../../node_modules/photoswipe/dist/photoswipe.css';
+
 	hr {
 		width: calc(100% - 16px);
 		margin-left: 8px;
@@ -434,12 +520,19 @@
 			height: 100%;
 			width: 100%;
 
-			> * {
+			> a,
+			video,
+			audio {
 				width: 100%;
 				border-radius: var(--border-s);
 				background-color: var(--bg-tertiary);
 				max-height: 250px;
-				object-fit: contain;
+
+				.attachmentImg {
+					width: 100%;
+					height: 100%;
+					object-fit: contain;
+				}
 			}
 		}
 	}

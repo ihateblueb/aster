@@ -27,6 +27,7 @@
 		"@tabler/icons-webfont": "^3.4.0",
 		"mfm-js": "^0.24.0",
 		"node-sass": "^9.0.0",
+		"photoswipe": "^5.4.4",
 		"sass": "^1.77.1",
 		"socket.io-client": "^4.7.5",
 		"svelte-preprocess": "^5.1.4"

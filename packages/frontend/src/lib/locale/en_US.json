@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "14",
+	"__version__": "15",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -82,6 +82,7 @@
 	"locked_long": "This user manually accepts follow requests.",
 	"cw": "Content warning",
 	"whats_on_your_mind": "What's on your mind?",
+	"media_broken": "This media cannot be loaded",
 	"home": "Home",
 	"notifications": "Notifications",
 	"follow_requests": "Follow Requests",
@@ -96,7 +97,5 @@
 	"s_appearance": "Appearance",
 	"s_appearance_theme": "Theme",
 	"s_behavior": "Behavior",
-	"s_account": "Account",
-	"registry": "Registry",
-	"registry_warn": "Sensitive information is viewable and editable from within this page. You may leak credentials or break your client."
+	"s_account": "Account"
 }
