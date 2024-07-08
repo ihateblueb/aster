@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { locale } from '$lib/locale';
 
+	import Icon from './Icon.svelte';
+
 	export let title = 'Page';
+	export let icon = '';
 </script>
 
 <svelte:head>
@@ -10,6 +13,14 @@
 
 <template>
 	<div class="pageHeader">
+		{#if icon}
+			<Icon
+				name={icon}
+				size="16px"
+				color="inherit"
+				margin="0px 8px 0px 0px"
+			/>
+		{/if}
 		<p>{title}</p>
 	</div>
 </template>
@@ -18,7 +29,8 @@
 	.pageHeader {
 		display: flex;
 		align-items: center;
-		padding: 12px 16px;
+		padding: 14px 16px;
+		color: var(--txt-primary);
 		background-color: var(--bg-primary-50);
 		backdrop-filter: blur(16px);
 		position: sticky;

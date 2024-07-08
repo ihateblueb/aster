@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('announcements')} />
+	<PageHeader title={locale('announcements')} icon="speakerphone" />
 	<div class="pageContent">
 		<div class="paddedPage"></div>
 	</div>

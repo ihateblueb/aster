@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('bookmarks')} />
+	<PageHeader title={locale('bookmarks')} icon="bookmarks" />
 	<div class="pageContent">
 		<div class="paddedPage"></div>
 	</div>

@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('drafts')} />
+	<PageHeader title={locale('drafts')} icon="pencil-minus" />
 	<div class="pageContent">
 		<div class="paddedPage"></div>
 	</div>

@@ -7,7 +7,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('notifications')} />
+	<PageHeader title={locale('notifications')} icon="bell" />
 	<div class="pageContent">
 		<div class="paddedPage">
 			{#await notificationsGet() then notifications}

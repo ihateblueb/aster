@@ -23,7 +23,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('search')} />
+	<PageHeader title={locale('search')} icon="search" />
 	<div class="pageContent">
 		<div class="paddedPage">
 			<Input

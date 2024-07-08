@@ -14,7 +14,7 @@
 
 <template>
 	{#if Store.get('a_token')}
-		<PageHeader title={locale('home')} />
+		<PageHeader title={locale('home')} icon="home" />
 		<div class="pageContent">
 			<div class="paddedPage">
 				<p>
@@ -24,7 +24,7 @@
 			</div>
 		</div>
 	{:else}
-		<PageHeader title={locale('welcome')} />
+		<PageHeader title={locale('welcome')} icon="mood-smile-beam" />
 		<div class="pageContent">
 			<div class="paddedPage welcomePage">
 				<h1>{data.name}</h1>

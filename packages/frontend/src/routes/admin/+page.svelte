@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('admin_panel')} />
+	<PageHeader title={locale('admin_panel')} icon="dashboard" />
 	<div class="pageContent">
 		<div class="paddedPage"></div>
 	</div>

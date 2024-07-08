@@ -5,7 +5,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('drive')} />
+	<PageHeader title={locale('drive')} icon="folder" />
 	<div class="pageContent">
 		<div class="paddedPage"></div>
 	</div>

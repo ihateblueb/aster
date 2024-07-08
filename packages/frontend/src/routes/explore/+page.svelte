@@ -10,7 +10,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('explore')} />
+	<PageHeader title={locale('explore')} icon="compass" />
 	<div class="pageContent">
 		<div class="timelineSelect">
 			<Button type="wide" on:click={() => (timeline = 'global')}

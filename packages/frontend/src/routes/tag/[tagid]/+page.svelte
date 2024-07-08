@@ -11,7 +11,7 @@
 </script>
 
 <template>
-	<PageHeader title={'#' + $page.params.tagid} />
+	<PageHeader title={$page.params.tagid} icon="hash" />
 	<div class="pageContent">
 		<span>tl length {data.length}</span>
 		{#key data}

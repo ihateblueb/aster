@@ -8,7 +8,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('ohno')} />
+	<PageHeader title={locale('ohno')} icon="alert-triangle" />
 	<div class="pageContent">
 		<div class="paddedPage">
 			<h1>{$page.status}</h1>

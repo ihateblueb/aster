@@ -13,7 +13,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('follow_requests')} />
+	<PageHeader title={locale('follow_requests')} icon="user-plus" />
 	<div class="pageContent">
 		<div class="paddedPage">
 			{#await followrequestGet() then requests}

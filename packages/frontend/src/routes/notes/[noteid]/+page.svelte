@@ -10,7 +10,10 @@
 </script>
 
 <template>
-	<PageHeader title="{locale('note_by')} {data.author.displayname}" />
+	<PageHeader
+		title="{locale('note_by')} {data.author.displayname}"
+		icon="message"
+	/>
 	<div class="pageContent">
 		<Note {data} detailed={true} />
 	</div>

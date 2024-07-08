@@ -11,10 +11,10 @@
 </script>
 
 <template>
-	<PageHeader title={locale('mfm_playground')} />
+	<PageHeader title={locale('mfm_playground')} icon="box" />
 	<div class="pageContent paddedPage">
 		<strong>{locale('input')}:</strong><br />
-		<Input big bind:value={mfmContent} />
+		<Input type="wide" big bind:value={mfmContent} />
 		<br /><br />
 		<strong>{locale('output')}:</strong><br />
 

@@ -22,16 +22,23 @@
 	{#key data}
 		{#if data}
 			{#if data.message}
-				<PageHeader title={data.message} />
+				<PageHeader title={data.message} icon="user" />
 			{:else if data.local}
-				<PageHeader title="{data.displayname} (@{data.username})" />
+				<PageHeader
+					title="{data.displayname} (@{data.username})"
+					icon="user"
+				/>
 			{:else if !data.local}
 				<PageHeader
 					title="{data.displayname} (@{data.username}@{data.host})"
+					icon="user"
 				/>
 			{/if}
 		{:else}
-			<PageHeader title={locale('user_not_found')} />
+			<PageHeader
+				title={locale('user_not_found')}
+				icon="alert-triangle"
+			/>
 		{/if}
 		<div class="pageContent">
 			{#if data}

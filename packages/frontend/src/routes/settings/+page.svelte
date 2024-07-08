@@ -10,7 +10,7 @@
 </script>
 
 <template>
-	<PageHeader title={locale('settings')} />
+	<PageHeader title={locale('settings')} icon="settings" />
 	<div class="pageContent">
 		<div class="paddedPage">
 			<h1>{locale('s_appearance')}</h1>
