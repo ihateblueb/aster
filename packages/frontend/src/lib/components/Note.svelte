@@ -316,6 +316,7 @@
 									alt={attachment.alt}
 									title={attachment.alt}
 									class="attachmentImg"
+									loading="eager"
 								/>
 							</a>
 						{:else if attachment.type.startsWith('video')}

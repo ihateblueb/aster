@@ -7,15 +7,18 @@
 	import timelineGet from '$lib/api/timeline/get';
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Loading from '$lib/components/Loading.svelte';
 
 	let timeline = 'public';
 	let notes;
 
 	onMount(async () => {
+		notes = undefined;
 		notes = await timelineGet(timeline);
 	});
 
 	async function refresh() {
+		notes = undefined;
 		notes = await timelineGet(timeline);
 	}
 </script>
@@ -45,12 +48,16 @@
 				>
 			</div>
 			<div class="timeline">
-				{#if notes}
+				{#if notes && notes.length > 0}
 					{#key notes}
 						{#each notes as note}
 							<Note data={note} margin={false} />
 						{/each}
 					{/key}
+				{:else}
+					<div class="loading">
+						<Loading />
+					</div>
 				{/if}
 			</div>
 		</div>
@@ -58,6 +65,15 @@
 </template>
 
 <style lang="scss">
+	.loading {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		align-items: center;
+		justify-content: center;
+		padding: 25px;
+	}
 	.timelineSelect {
 		display: flex;
 		align-items: center;
