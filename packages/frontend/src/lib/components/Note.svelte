@@ -25,6 +25,7 @@
 	export let repeated: boolean = false;
 	export let repeatedBy: string = '';
 	export let detailed: boolean = false;
+	export let margin: boolean = true;
 
 	let cwOpen = false;
 	let timer = 0;
@@ -163,7 +164,7 @@
 </script>
 
 <template>
-	<article class="note">
+	<article class={'note' + (margin ? ' margin' : '')}>
 		{#if pinned}
 			<div class="notePreheader">
 				<Icon
@@ -540,11 +541,13 @@
 		}
 	}
 	.note {
-		margin: 10px;
 		padding: 20px;
 		border-radius: var(--border-xl);
 		background-color: var(--bg-secondary);
 		overflow: clip;
+	}
+	.margin {
+		margin: 10px;
 	}
 	.details {
 		color: var(--txt-tertiary);
@@ -573,7 +576,7 @@
 						font-weight: 600;
 					}
 					&.username {
-						font-size: var(--font-m);
+						font-size: var(--font-s);
 						color: var(--txt-tertiary);
 
 						.host {
