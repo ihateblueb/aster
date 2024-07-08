@@ -82,7 +82,7 @@
 						font-weight: 600;
 					}
 					&.username {
-						font-size: var(--font-m);
+						font-size: var(--font-s);
 					}
 				}
 			}

@@ -1,6 +1,9 @@
 @import './static/themes/purpura.scss';
 @import './static/themes/iceshrimp.scss';
 @import './static/themes/rosepine.scss';
+@import './static/themes/misskey.scss';
+@import './static/themes/mi-botanical.scss';
+@import './static/themes/mastodon.scss';
 
 // fonts
 @import './static/fonts/figtree.scss';
@@ -13,6 +16,7 @@
 	background-color: var(--bg-primary);
 	color: var(--txt-secondary);
 	font-family: var(--font);
+	font-size: var(--font-m);
 }
 
 :global(h1) {

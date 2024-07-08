@@ -1,12 +1,26 @@
-{
-	"purpura": {
-		"name": "Purpura",
-		"author": "blueb"
+[
+	{
+		"id": "purpura",
+		"name": "Purpura"
 	},
-	"rosepine": {
-		"name": "Rose Pine"
+	{
+		"id": "rosepine",
+		"name": "Rosé Pine"
 	},
-	"iceshrimp": {
+	{
+		"id": "mi-botanical",
+		"name": "Mi Botanical"
+	},
+	{
+		"id": "misskey",
+		"name": "Misskey"
+	},
+	{
+		"id": "iceshrimp",
 		"name": "Iceshrimp"
+	},
+	{
+		"id": "mastodon",
+		"name": "Mastodon"
 	}
-}
+]

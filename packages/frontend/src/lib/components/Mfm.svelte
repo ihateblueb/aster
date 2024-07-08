@@ -335,7 +335,7 @@
 </script>
 
 <template>
-	<span class="mfmCtn" on:click>
+	<span class="mfmCtn" dir="auto" on:click>
 		{#each mfmTree as object}
 			{@html render(object)}
 		{/each}

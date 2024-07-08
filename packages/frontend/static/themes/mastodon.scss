@@ -1,0 +1,77 @@
+@media (prefers-color-scheme: dark) {
+	.mastodon {
+		--bg-primary: #1f232b;
+		--bg-secondary: #282c37;
+		--bg-tertiary: #313543;
+		--bg-accent: #313543;
+
+		--bg-primary-50: #1f232b50;
+		--bg-secondary-50: #282c3750;
+		--bg-tertiary-50: #31354350;
+		--bg-accent-50: #31354350;
+
+		--txt-primary: #ffffff;
+		--txt-secondary: #9baec8;
+		--txt-tertiary: #606984;
+
+		--accent: #8c8dff;
+		--accent-20: #8c8dff20;
+	}
+}
+
+@media (prefers-color-scheme: light) {
+	.mastodon {
+		--bg-primary: #f9f9f9;
+		--bg-secondary: #e1e7f0;
+		--bg-tertiary: #d0d9e6;
+		--bg-accent: #c5cedb;
+
+		--bg-primary-50: #f9f9f950;
+		--bg-secondary-50: #e1e7f050;
+		--bg-tertiary-50: #d0d9e650;
+		--bg-accent-50: #c5cedb50;
+
+		--txt-primary: #000000;
+		--txt-secondary: #282c37;
+		--txt-tertiary: #444b5d;
+
+		--accent: #6364ff;
+		--accent-20: #6364ff20;
+	}
+}
+
+.mastodon {
+	--font: 'Figtree', Arial, system-ui, -apple-system, BlinkMacSystemFont,
+		'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+		'Helvetica Neue', sans-serif;
+
+	--font-xxl: 20px;
+	--font-xl: 18px;
+	--font-l: 16px;
+	--font-m: 15px;
+	--font-s: 14px;
+	--font-xs: 12px;
+	--font-xxs: 10px;
+
+	--border-xxl: 12px;
+	--border-xl: 10px;
+	--border-l: 8px;
+	--border-m: 6px;
+	--border-s: 4px;
+	--border-xs: 2px;
+	--border-xxs: 0px;
+
+	--border-width-xs: 0.5px;
+	--border-width-s: 1px;
+	--border-width-m: 2px;
+	--border-width-l: 2.5px;
+	--border-width-xl: 5px;
+
+	--success: #79bd9a;
+	--warn: #ca8f04;
+	--danger: #df405b;
+
+	--success-20: #79bd9a20;
+	--warn-20: #ca8f0420;
+	--danger-20: #df405b20;
+}

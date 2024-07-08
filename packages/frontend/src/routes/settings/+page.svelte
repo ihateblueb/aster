@@ -9,6 +9,8 @@
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Store from '$lib/utils/Store';
 
+	import themes from '../../../static/themes/themes.json';
+
 	function refreshTheme(oldTheme, newTheme) {
 		document.body.classList.replace(oldTheme, newTheme);
 	}
@@ -21,33 +23,19 @@
 			<h1>{locale('s_appearance')}</h1>
 			<h2>{locale('s_appearance_theme')}</h2>
 			<Select>
-				<SelectItem
-					value="purpura"
-					name="Purpura"
-					on:click={() => {
-						refreshTheme(Store.get('theme'), 'purpura');
-						Store.set('theme', 'purpura');
-					}}
-					selected={Store.get('theme') === 'purpura' ? true : false}
-				/>
-				<SelectItem
-					value="rosepine"
-					name="Rose Pine"
-					on:click={() => {
-						refreshTheme(Store.get('theme'), 'rosepine');
-						Store.set('theme', 'rosepine');
-					}}
-					selected={Store.get('theme') === 'rosepine' ? true : false}
-				/>
-				<SelectItem
-					value="iceshrimp"
-					name="Iceshrimp"
-					on:click={() => {
-						refreshTheme(Store.get('theme'), 'iceshrimp');
-						Store.set('theme', 'iceshrimp');
-					}}
-					selected={Store.get('theme') === 'iceshrimp' ? true : false}
-				/>
+				{#each themes as theme}
+					<SelectItem
+						value={theme.id}
+						name={theme.name}
+						on:click={() => {
+							refreshTheme(Store.get('theme'), theme.id);
+							Store.set('theme', theme.id);
+						}}
+						selected={Store.get('theme') === theme.id
+							? true
+							: false}
+					/>
+				{/each}
 			</Select>
 			<h1>{locale('s_behavior')}</h1>
 			<h1>{locale('s_account')}</h1>
