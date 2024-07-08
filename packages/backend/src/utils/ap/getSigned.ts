@@ -6,6 +6,7 @@ import config from '../config.js';
 import db from '../database.js';
 import logger from '../logger.js';
 import httpSignature from '@peertube/http-signature';
+import getRemoteInstance from './getRemoteInstance.js';
 
 export default async function getSigned(url, localUserId?) {
 	if (localUserId) {

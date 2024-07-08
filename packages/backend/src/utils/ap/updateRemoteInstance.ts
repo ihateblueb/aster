@@ -7,76 +7,66 @@ export default async function updateRemoteInstance(host, body) {
 
 	grabbedInstance = await db
 		.getRepository('instance')
-		.createQueryBuilder()
-		.select('instance')
-		.where({ host: host })
-		.update({
-			updated_at: new Date(Date.now()).toISOString()
-		});
-
-	if (body.nodeName) {
-		grabbedInstance = await db
-			.getRepository('instance')
-			.createQueryBuilder()
-			.select('instance')
-			.where({ host: host })
-			.update({
-				name: body.nodeName
-			});
-	}
-	if (body.nodeDescription) {
-		grabbedInstance = await db
-			.getRepository('instance')
-			.createQueryBuilder()
-			.select('instance')
-			.where({ host: host })
-			.update({
-				description: body.nodeDescription
-			});
-	}
+		.update(
+			{ host: host },
+			{ updated_at: new Date(Date.now()).toISOString() }
+		);
 
 	if (body.software) {
 		if (body.software.name) {
 			grabbedInstance = await db
 				.getRepository('instance')
-				.createQueryBuilder()
-				.select('instance')
-				.where({ host: host })
-				.update({
-					name: body.software.name
-				});
+				.update({ host: host }, { software: body.software.name });
 		}
 		if (body.software.version) {
 			grabbedInstance = await db
 				.getRepository('instance')
-				.createQueryBuilder()
-				.select('instance')
-				.where({ host: host })
-				.update({
-					version: body.software.version.toString()
-				});
+				.update(
+					{ host: host },
+					{ version: body.software.version.toString() }
+				);
 		}
 	}
 
 	if (body.metadata) {
 		if (body.metadata.maintainer) {
 			if (body.metadata.maintainer.name) {
-				grabbedInstance = await db
+				await db
 					.getRepository('instance')
-					.createQueryBuilder()
-					.select('instance')
-					.where({ host: host })
-					.update({ maintainer: body.metadata.maintainer.name });
+					.update(
+						{ host: host },
+						{ maintainer: body.metadata.maintainer.name }
+					);
 			}
 			if (body.metadata.maintainer.email) {
+				await db
+					.getRepository('instance')
+					.update(
+						{ host: host },
+						{ maintainer_email: body.metadata.maintainer.email }
+					);
+			}
+			if (body.metadata.nodeName) {
 				grabbedInstance = await db
 					.getRepository('instance')
-					.createQueryBuilder()
-					.select('instance')
-					.where({ host: host })
-					.update({
-						maintainer_email: body.metadata.maintainer.email
-					});
+					.update({ host: host }, { name: body.metadata.nodeName });
+			}
+			if (body.metadata.nodeDescription) {
+				grabbedInstance = await db
+					.getRepository('instance')
+					.update(
+						{ host: host },
+						{ description: body.metadata.nodeDescription }
+					);
+			}
+
+			if (body.metadata.themeColor) {
+				grabbedInstance = await db
+					.getRepository('instance')
+					.update(
+						{ host: host },
+						{ color: body.metadata.themeColor }
+					);
 			}
 		}
 	}
@@ -86,19 +76,16 @@ export default async function updateRemoteInstance(host, body) {
 			if (body.usage.users.total) {
 				grabbedInstance = await db
 					.getRepository('instance')
-					.createQueryBuilder()
-					.select('instance')
-					.where({ host: host })
-					.update({ user_count: body.usage.users.total });
+					.update(
+						{ host: host },
+						{ user_count: body.usage.users.total }
+					);
 			}
 		}
 		if (body.usage.localPosts) {
 			grabbedInstance = await db
 				.getRepository('instance')
-				.createQueryBuilder()
-				.select('instance')
-				.where({ host: host })
-				.update({ note_count: body.usage.localPosts });
+				.update({ host: host }, { note_count: body.usage.localPosts });
 		}
 	}
 

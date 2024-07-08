@@ -16,7 +16,6 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 		var grabbedInstance = await db
 			.getRepository('instance')
 			.createQueryBuilder()
-			.select('instance')
 			.where({ host: req.params.host })
 			.getOne();
 
@@ -24,7 +23,7 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 			res.status(200).json(grabbedInstance);
 		} else {
 			return res.status(404).json({
-				message: 'Note does not exist'
+				message: 'Instance does not exist'
 			});
 		}
 	}

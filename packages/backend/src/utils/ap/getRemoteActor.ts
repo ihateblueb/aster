@@ -1,9 +1,12 @@
 import db from '../database.js';
 import logger from '../logger.js';
+import getRemoteInstance from './getRemoteInstance.js';
 import getSigned from './getSigned.js';
 import processNewActor from './processNewActor.js';
 
 export default async function getRemoteActor(apId) {
+	getRemoteInstance(new URL(apId).host);
+
 	logger('debug', 'ap', 'getting remote actor with id ' + apId);
 
 	var grabbedRemoteActor = await db.getRepository('user').findOne({

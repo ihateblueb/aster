@@ -42,6 +42,9 @@ export default async function processNewInstance(host, body) {
 				instanceToInsert['maintainer_email'] =
 					body.metadata.maintainer.email;
 			}
+			if (body.metadata.themeColor) {
+				instanceToInsert['color'] = body.metadata.themeColor;
+			}
 		}
 	}
 

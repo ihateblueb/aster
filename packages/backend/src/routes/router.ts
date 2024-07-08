@@ -15,6 +15,7 @@ import api_v1_notification from './api/v1/notification.js';
 import api_v1_users from './api/v1/user.js';
 import api_v1_search from './api/v1/search.js';
 import api_v1_timeline from './api/v1/timeline.js';
+import api_v1_instance from './api/v1/instance.js';
 
 import express from 'express';
 
@@ -38,6 +39,7 @@ router.use('/', api_v1_notification);
 router.use('/', api_v1_followrequests);
 router.use('/', api_v1_search);
 router.use('/', api_v1_timeline);
+router.use('/', api_v1_instance);
 
 // metrics
 router.use('/', api_v1_metrics_queue);
