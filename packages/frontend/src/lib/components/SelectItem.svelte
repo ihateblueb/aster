@@ -3,10 +3,11 @@
 
 	export let value: string = '';
 	export let name: string = '';
+	export let selected: boolean = false;
 </script>
 
 <template>
-	<option {value}>{name}</option>
+	<option {value} {selected} on:click>{name}</option>
 </template>
 
 <style lang="scss">

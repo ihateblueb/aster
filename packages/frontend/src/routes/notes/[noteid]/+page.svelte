@@ -12,7 +12,7 @@
 <template>
 	<PageHeader
 		title="{locale('note_by')} {data.author.displayname}"
-		icon="message"
+		icon="note"
 	/>
 	<div class="pageContent">
 		<Note {data} detailed={true} />

@@ -209,7 +209,7 @@
 							data.author.host}
 						class="username subtle"
 						>@{data.author.username}{#if !data.author.local}
-							@{data.author.host}
+							<span class="host">@{data.author.host}</span>
 						{/if}</a
 					>
 				</div>
@@ -574,6 +574,11 @@
 					}
 					&.username {
 						font-size: var(--font-m);
+						color: var(--txt-tertiary);
+
+						.host {
+							opacity: 75%;
+						}
 					}
 				}
 			}

@@ -103,9 +103,9 @@
 		display: flex;
 		flex-direction: column;
 		height: 100vh;
-		max-width: 375px;
+		max-width: 300px;
 		width: 300px;
-		min-width: 200px;
+		min-width: 275px;
 		overflow-y: hidden;
 		.top {
 			height: fit-content;
