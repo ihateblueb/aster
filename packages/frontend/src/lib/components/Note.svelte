@@ -104,7 +104,9 @@
 			maxZoomLevel: 2,
 			pswpModule: () => PhotoSwipe
 		};
+
 		let lightbox = new Lightbox(options);
+
 		lightbox.on('uiRegister', function () {
 			lightbox.pswp.ui.registerElement({
 				name: 'custom-caption',
@@ -137,6 +139,7 @@
 				}
 			});
 		});
+
 		lightbox.init();
 	});
 

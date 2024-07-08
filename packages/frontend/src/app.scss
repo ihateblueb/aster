@@ -8,6 +8,8 @@
 
 :global(body) {
 	margin: 0px;
+	scrollbar-color: var(--bg-accent) transparent;
+	scrollbar-width: thin;
 	background-color: var(--bg-primary);
 	color: var(--txt-secondary);
 	font-family: var(--font);
@@ -56,6 +58,7 @@ main {
 	width: 550px;
 	min-width: 250px;
 
+	overflow-y: scroll;
 	height: 100vh;
 
 	border-left: var(--border-width-s) solid var(--bg-tertiary);
@@ -70,9 +73,6 @@ main {
 }
 
 :global(.pageContent) {
-	overflow-y: scroll;
-	// 43px is header height
-	height: calc(100vh - 43px);
 }
 
 :global(.paddedPage) {
