@@ -5,13 +5,13 @@
 <template>
 	<div
 		class="instanceTicker"
-		style={'background-color: ' +
-			(data.color ? data.color : 'var(--bg-accent)') +
-			';'}
-		title={data.software + ' ' + data.version}
+		title={(data.name ? data.name : data.host) +
+			' running ' +
+			data.software +
+			' ' +
+			data.version}
 	>
 		<img src={data.icon} height="14px" />
-		{data.name ? data.name : data.host}
 	</div>
 </template>
 
@@ -20,28 +20,16 @@
 		display: flex;
 		align-items: center;
 		gap: 4px;
-		font-size: var(--font-xs);
 		user-select: none;
-		border-radius: var(--border-xxl);
-		padding: 1px 4px;
+		padding: 1px 0px;
 		font-weight: 700;
+		margin-top: 4px;
 
 		max-width: 135px;
 
 		overflow: hidden;
 		white-space: nowrap;
 		text-overflow: ellipsis;
-
-		text-shadow:
-			#000 0px 0px 0px,
-			#000 0px 1px 0px,
-			#000 0px -1px 0px,
-			#000 1px 0px 0px,
-			#000 1px 1px 0px,
-			#000 1px -1px 0px,
-			#000 -1px 0px 0px,
-			#000 -1px 1px 0px,
-			#000 -1px -1px 0px;
 
 		img {
 			min-width: 16px;

@@ -138,41 +138,46 @@
 										isCat={data.is_cat}
 										size="75px"
 									/>
+
+									<div class="name">
+										<span class="displayname">
+											<Mfm
+												content={data.displayname
+													? data.displayname
+													: data.username}
+												simple
+											/>
+											<div class="indicators">
+												{#if data.locked}
+													<Icon
+														name="lock"
+														size="18px"
+														color="var(--txt-tertiary)"
+														title={locale(
+															'locked_long'
+														)}
+													/>
+												{/if}
+												{#if data.automated}
+													<Icon
+														name="robot"
+														size="18px"
+														color="var(--txt-tertiary)"
+														title={locale(
+															'automated_long'
+														)}
+													/>
+												{/if}
+											</div>
+										</span>
+										<span class="username"
+											>@{data.username}{#if !data.local}@{data.host}{/if}</span
+										>
+									</div>
 								</div>
 								<div class="right">
 									<Button>Follow</Button>
 								</div>
-							</div>
-							<div class="name">
-								<span class="displayname">
-									<Mfm
-										content={data.displayname
-											? data.displayname
-											: data.username}
-										simple
-									/>
-									<div class="indicators">
-										{#if data.locked}
-											<Icon
-												name="lock"
-												size="18px"
-												color="var(--txt-tertiary)"
-												title={locale('locked_long')}
-											/>
-										{/if}
-										{#if data.automated}
-											<Icon
-												name="robot"
-												size="18px"
-												color="var(--txt-tertiary)"
-												title={locale('automated_long')}
-											/>
-										{/if}
-									</div>
-								</span>
-								<span class="username"
-									>@{data.username}{#if !data.local}@{data.host}{/if}</span
-								>
 							</div>
 							<p class="bio">
 								{#if data.bio}
@@ -233,7 +238,7 @@
 <style lang="scss">
 	.userHeader {
 		.banner {
-			height: 200px;
+			height: 250px;
 			width: 100%;
 			object-fit: cover;
 			background-color: var(--bg-secondary);
@@ -241,7 +246,7 @@
 		}
 		.innerHeader {
 			padding: 12px 16px;
-			margin-top: -45px;
+			margin-top: -105px;
 			border-bottom: var(--border-width-s) solid var(--bg-tertiary);
 
 			.top {
@@ -250,18 +255,25 @@
 
 				.left {
 					display: flex;
+					align-items: center;
 					flex-grow: 2;
 				}
 
 				.right {
 					display: flex;
-					align-items: center;
+					align-items: end;
 					padding-top: 40px;
 					gap: 10px;
 				}
 			}
 			.name {
-				margin-bottom: 10px;
+				margin-left: 15px;
+				text-shadow:
+					black 0 0 2px,
+					black 0 0 4px,
+					black 0 0 10px,
+					black 0 0 50px;
+
 				> span {
 					display: block;
 					margin: 2.5px 0px 2.5px 0px;
@@ -277,12 +289,12 @@
 				}
 			}
 
-			.bio,
 			.joined {
 				margin: 5px 0px 5px 0px;
 			}
 
 			.bio {
+				margin: 35px 0 0px 0px;
 				line-height: var(--font-xxl);
 
 				.nobio {
