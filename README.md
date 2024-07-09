@@ -36,7 +36,7 @@ This may be flexible, but hasn't been tested or looked further into.
 -   mis's biting extension
 -   Sharkey profile backgrounds
 -   Federated user statuses? (see `docs/planned-extensions.md`)
-- Correct/incorrect poll answers?
+-   Correct/incorrect poll answers?
 
 ## Project Status
 
@@ -50,8 +50,8 @@ Things that work!
 -   Nodeinfo 2.0 is there
 -   Well-known stuff works, too
 -   When a note is posted it is announced to followers with Create activity
-- Apply Like and Like with reaction contents
-- Fetch reaction emojis
+-   Apply Like and Like with reaction contents
+-   Fetch reaction emojis
 
 ### Internal API
 
@@ -60,12 +60,12 @@ Things that work!
 -   Fetch notes
 -   Fetch users
 -   Post notes
-- Fetch reactions
+-   Fetch reactions
 
 ### Frontend
 
 -   Advanced MFM rendering
 -   View notes
 -   View profiles
-- Search page 
-- Explore page is a work in progress
+-   Search page
+-   Explore page is a work in progress

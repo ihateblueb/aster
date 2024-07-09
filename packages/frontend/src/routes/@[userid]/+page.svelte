@@ -283,6 +283,8 @@
 			}
 
 			.bio {
+				line-height: var(--font-xxl);
+
 				.nobio {
 					color: var(--txt-tertiary);
 					opacity: 75%;
