@@ -89,8 +89,8 @@ export default async function processNewNote(body) {
 		noteToInsert['author'] = grabbedRemoteActor.id;
 		noteToInsert['local'] = false;
 
-		if (body.subject) {
-			noteToInsert['cw'] = sanitize(body.subject);
+		if (body.summary) {
+			noteToInsert['cw'] = sanitize(body.summary);
 		}
 
 		if (

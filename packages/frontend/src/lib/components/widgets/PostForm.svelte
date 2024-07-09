@@ -8,6 +8,8 @@
 
 	import noteCreate from '$lib/api/note/create';
 	import Icon from '../Icon.svelte';
+	import Avatar from '../Avatar.svelte';
+	import Store from '$lib/utils/Store';
 
 	let noteCw = '';
 	let noteContent = '';
@@ -15,22 +17,22 @@
 	let selectedVisibility = 'public';
 	let showCw = false;
 
+	var account = Store.get('account');
+
 	let visibility: Dropdown;
 </script>
 
 <template>
-	{#if showCw}
-		<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}
-		></Input>
-	{/if}
-	<Input
-		type="wide"
-		big
-		placeholder={locale('whats_on_your_mind')}
-		bind:value={noteContent}
-	></Input>
-	<div class="formFooter">
+	<div class="formHeader">
 		<div class="left">
+			<Avatar
+				src={account.avatar}
+				alt={account.avatar_alt}
+				isCat={account.is_cat}
+				size="34px"
+			/>
+		</div>
+		<div class="right">
 			<Button on:click={(e) => visibility.open(e)}>
 				{#key selectedVisibility}
 					{#if selectedVisibility === 'public'}
@@ -60,6 +62,20 @@
 					{/if}
 				{/key}
 			</Button>
+		</div>
+	</div>
+	{#if showCw}
+		<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}
+		></Input>
+	{/if}
+	<Input
+		type="wide"
+		big
+		placeholder={locale('whats_on_your_mind')}
+		bind:value={noteContent}
+	></Input>
+	<div class="formFooter">
+		<div class="left">
 			<Button on:click={() => (showCw = !showCw)}>
 				<Icon
 					name="alert-triangle"
@@ -77,57 +93,11 @@
 			</Button>
 		</div>
 	</div>
-
-	<Dropdown bind:this={visibility}>
-		<DropdownItem on:click={() => (selectedVisibility = 'public')}>
-			<div class="visibilityItem">
-				<div class="top">
-					<Icon size="18px" name="planet" margin="0px 8px 0px 0px" />
-					<span>{locale('public')}</span>
-				</div>
-				<div class="bottom">
-					<small>{locale('public_desc')}</small>
-				</div>
-			</div>
-		</DropdownItem>
-		<DropdownItem on:click={() => (selectedVisibility = 'unlisted')}>
-			<div class="visibilityItem">
-				<div class="top">
-					<Icon size="18px" name="home" margin="0px 8px 0px 0px" />
-					<span>{locale('unlisted')}</span>
-				</div>
-				<div class="bottom">
-					<small>{locale('unlisted_desc')}</small>
-				</div>
-			</div>
-		</DropdownItem>
-		<DropdownItem on:click={() => (selectedVisibility = 'followers')}>
-			<div class="visibilityItem">
-				<div class="top">
-					<Icon size="18px" name="lock" margin="0px 8px 0px 0px" />
-					<span>{locale('followers_only')}</span>
-				</div>
-				<div class="bottom">
-					<small>{locale('followers_only_desc')}</small>
-				</div>
-			</div>
-		</DropdownItem>
-		<DropdownItem on:click={() => (selectedVisibility = 'direct')}>
-			<div class="visibilityItem">
-				<div class="top">
-					<Icon size="18px" name="mail" margin="0px 8px 0px 0px" />
-					<span>{locale('direct_note')}</span>
-				</div>
-				<div class="bottom">
-					<small>{locale('direct_note_desc')}</small>
-				</div>
-			</div>
-		</DropdownItem>
-	</Dropdown>
 </template>
 
 <style lang="scss">
-	.formFooter {
+	.formFooter,
+	.formHeader {
 		display: flex;
 		width: 100%;
 

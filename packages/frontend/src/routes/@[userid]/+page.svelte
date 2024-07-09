@@ -244,6 +244,7 @@
 			background-color: var(--bg-secondary);
 			user-select: none;
 		}
+
 		.innerHeader {
 			padding: 12px 16px;
 			margin-top: -105px;
@@ -257,6 +258,12 @@
 					display: flex;
 					align-items: center;
 					flex-grow: 2;
+
+					.avatarCtn {
+						.avatar {
+							box-shadow: 1px 0px 10px #00000085;
+						}
+					}
 				}
 
 				.right {

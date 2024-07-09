@@ -86,6 +86,7 @@ main {
 :global(::selection) {
 	background-color: var(--accent);
 	color: var(--bg-primary);
+	text-shadow: none;
 }
 
 :global(a.subtle) {

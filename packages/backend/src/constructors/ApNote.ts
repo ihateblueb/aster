@@ -12,7 +12,7 @@ export default class ApNote {
 	context: string;
 	conversation: string;
 
-	subject: string;
+	summary: string;
 	content: string;
 	contentMap: object;
 
@@ -38,7 +38,7 @@ export default class ApNote {
 			this.inReplyTo = replying_to.ap_id;
 		}
 
-		this.subject = grabbedNote.cw;
+		this.summary = grabbedNote.cw;
 		this.content = grabbedNote.content;
 
 		this.published = grabbedNote.created_at;
