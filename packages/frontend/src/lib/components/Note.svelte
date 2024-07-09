@@ -88,6 +88,7 @@
 
 	import Lightbox from '../../../node_modules/photoswipe/dist/photoswipe-lightbox.esm.js';
 	import PhotoSwipe from '../../../node_modules/photoswipe/dist/photoswipe.esm.js';
+	import InstanceTicker from './InstanceTicker.svelte';
 
 	onMount(() => {
 		let options = {
@@ -216,41 +217,46 @@
 				</div>
 			</div>
 			<div class="right">
-				{#key timer}
-					<span
-						class="time"
-						title={new Date(data.created_at).toLocaleString()}
-						>{timeAgo(data.created_at)}</span
-					>
-				{/key}
-				{#if data.visibility === 'public'}
-					<Icon
-						name="planet"
-						size="18px"
-						color="var(--txt-primary)"
-						title={locale('public')}
-					/>
-				{:else if data.visibility === 'unlisted'}
-					<Icon
-						name="home"
-						size="18px"
-						color="var(--txt-primary)"
-						title={locale('unlisted')}
-					/>
-				{:else if data.visibility === 'followers'}
-					<Icon
-						name="lock"
-						size="18px"
-						color="var(--txt-primary)"
-						title={locale('followers_only')}
-					/>
-				{:else if data.visibility === 'direct'}
-					<Icon
-						name="mail"
-						size="18px"
-						color="var(--txt-primary)"
-						title={locale('direct_note')}
-					/>
+				<div class="top">
+					{#key timer}
+						<span
+							class="time"
+							title={new Date(data.created_at).toLocaleString()}
+							>{timeAgo(data.created_at)}</span
+						>
+					{/key}
+					{#if data.visibility === 'public'}
+						<Icon
+							name="planet"
+							size="18px"
+							color="var(--txt-primary)"
+							title={locale('public')}
+						/>
+					{:else if data.visibility === 'unlisted'}
+						<Icon
+							name="home"
+							size="18px"
+							color="var(--txt-primary)"
+							title={locale('unlisted')}
+						/>
+					{:else if data.visibility === 'followers'}
+						<Icon
+							name="lock"
+							size="18px"
+							color="var(--txt-primary)"
+							title={locale('followers_only')}
+						/>
+					{:else if data.visibility === 'direct'}
+						<Icon
+							name="mail"
+							size="18px"
+							color="var(--txt-primary)"
+							title={locale('direct_note')}
+						/>
+					{/if}
+				</div>
+				{#if data.instance}
+					<InstanceTicker data={data.instance} />
 				{/if}
 			</div>
 		</div>
@@ -565,7 +571,6 @@
 		display: flex;
 		.left {
 			display: flex;
-			flex-grow: 2;
 			> .names {
 				display: inline-flex;
 				justify-content: center;
@@ -589,10 +594,18 @@
 		}
 		.right {
 			display: flex;
-			gap: 4px;
+			flex-direction: column;
+			align-items: end;
+			flex-grow: 2;
 
 			.time {
 				font-size: 14px;
+			}
+
+			.top {
+				display: flex;
+				align-items: center;
+				gap: 4px;
 			}
 		}
 	}

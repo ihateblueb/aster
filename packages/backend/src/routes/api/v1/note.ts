@@ -33,9 +33,8 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 				.where({ id: grabbedNote.author })
 				.getOne();
 
-			console.log(grabbedAuthor);
-
 			grabbedNote.author = grabbedAuthor;
+
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {
 					return res.status(400).json({
@@ -46,6 +45,14 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						message: 'Note author deactivated'
 					});
 				} else {
+					var grabbedInstance = await db
+						.getRepository('instance')
+						.createQueryBuilder()
+						.where({ host: grabbedAuthor.host })
+						.getOne();
+
+					grabbedNote.instance = grabbedInstance;
+
 					var grabbedAttachments = await db
 						.getRepository('drive_file')
 						.createQueryBuilder()

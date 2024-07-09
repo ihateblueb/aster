@@ -8,6 +8,7 @@ export default class ApiNote {
 
 	replying_to?: ApiNote;
 	author: object;
+	instance: object;
 
 	local: boolean;
 	cw?: string;
@@ -20,6 +21,7 @@ export default class ApiNote {
 	constructor(
 		grabbedNote,
 		grabbedAuthor,
+		grabbedInstance?,
 		grabbedAttachments?,
 		grabbedEmojis?,
 		sortedReactions?,
@@ -32,6 +34,7 @@ export default class ApiNote {
 		this.visibility = grabbedNote.visibility;
 		this.replying_to = grabbedNote.replying_to;
 		this.author = grabbedAuthor;
+		this.instance = grabbedInstance;
 		this.local = grabbedNote.local;
 		this.cw = grabbedNote.cw;
 		this.content = grabbedNote.content;

@@ -19,6 +19,12 @@ async function renderTimeline(grabbedNotes) {
 			.getOne();
 
 		if (grabbedAuthor) {
+			var grabbedInstance = await db
+				.getRepository('instance')
+				.createQueryBuilder()
+				.where({ host: grabbedAuthor.host })
+				.getOne();
+
 			let grabbedAttachments = await db
 				.getRepository('drive_file')
 				.createQueryBuilder()
@@ -84,6 +90,7 @@ async function renderTimeline(grabbedNotes) {
 					new ApiNote(
 						grabbedNotes[i],
 						grabbedAuthor,
+						grabbedInstance,
 						grabbedAttachments,
 						grabbedEmojis,
 						sortedReactions
@@ -96,7 +103,7 @@ async function renderTimeline(grabbedNotes) {
 					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
 				);
 				collectedNotes.push(
-					new ApiNote(grabbedNotes[i], grabbedAuthor)
+					new ApiNote(grabbedNotes[i], grabbedAuthor, grabbedInstance)
 				);
 			}
 		}
