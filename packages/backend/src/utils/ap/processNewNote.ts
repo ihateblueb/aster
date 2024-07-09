@@ -2,6 +2,7 @@ import db from '../database.js';
 import logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import getRemoteActor from './getRemoteActor.js';
+import getRemoteEmoji from './getRemoteEmoji.js';
 import getRemoteNote from './getRemoteNote.js';
 import processNewEmoji from './processNewEmoji.js';
 import processNewFile from './processNewFile.js';
@@ -119,16 +120,12 @@ export default async function processNewNote(body) {
 			console.log(body.tag);
 			for (const i in body.tag) {
 				if (body.tag[i].type === 'Emoji') {
-					let grabbedEmoji = await processNewEmoji(body.tag[i]);
+					let grabbedEmoji = await getRemoteEmoji(body.tag[i].id);
 					noteToInsert.emojis.push(grabbedEmoji.id);
 				} else if (body.tag[i].type === 'Hashtag') {
 					noteToInsert.tags.push(body.tag[i].name.replace('#', ''));
 				} else {
-					logger(
-						'warn',
-						'ap',
-						'unknown tag type ' + body.tag[i].type
-					);
+					logger('warn', 'ap', 'unused tag type ' + body.tag[i].type);
 				}
 			}
 		}

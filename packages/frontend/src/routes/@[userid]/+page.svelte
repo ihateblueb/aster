@@ -1,14 +1,17 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Note from '$lib/components/Note.svelte';
 
 	import noteGet from '$lib/api/note/get';
+	import Button from '$lib/components/Button.svelte';
 
 	export let data;
 
@@ -16,6 +19,8 @@
 		data.banner =
 			'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg==';
 	}
+
+	let more: Dropdown;
 </script>
 
 <template>
@@ -25,14 +30,44 @@
 				<PageHeader title={data.message} icon="user" />
 			{:else if data.local}
 				<PageHeader
-					title="{data.displayname} (@{data.username})"
+					title="{data.displayname
+						? data.displayname
+						: data.username} (@{data.username})"
 					icon="user"
-				/>
+				>
+					<Avatar
+						slot="icon"
+						src={data.avatar}
+						alt={data.avatar_alt}
+						isCat={data.is_cat}
+						size="18px"
+						small
+					/>
+
+					<Button type="header" on:click={(e) => more.open(e)}>
+						<Icon name="dots" size="18px" />
+					</Button>
+				</PageHeader>
 			{:else if !data.local}
 				<PageHeader
-					title="{data.displayname} (@{data.username}@{data.host})"
+					title="{data.displayname
+						? data.displayname
+						: data.username} (@{data.username}@{data.host})"
 					icon="user"
-				/>
+				>
+					<Avatar
+						slot="icon"
+						src={data.avatar}
+						alt={data.avatar_alt}
+						isCat={data.is_cat}
+						size="18px"
+						small
+					/>
+
+					<Button type="header" on:click={(e) => more.open(e)}>
+						<Icon name="dots" size="18px" />
+					</Button>
+				</PageHeader>
 			{/if}
 		{:else}
 			<PageHeader
@@ -40,6 +75,51 @@
 				icon="alert-triangle"
 			/>
 		{/if}
+
+		<Dropdown bind:this={more}>
+			<DropdownItem>
+				<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+				<span>{locale('copy_username')}</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+				<span>{locale('copy_user_id')}</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon
+					size="18px"
+					name="external-link"
+					margin="0px 8px 0px 0px"
+				/>
+				<span>{locale('view_on_remote')}</span>
+			</DropdownItem>
+			<hr />
+			<DropdownItem>
+				<Icon
+					size="18px"
+					name="exclamation-circle"
+					margin="0px 8px 0px 0px"
+				/>
+				<span>{locale('report_user')}</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon size="18px" name="eye-off" margin="0px 8px 0px 0px" />
+				<span>{locale('mute_user')}</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon size="18px" name="repeat-off" margin="0px 8px 0px 0px" />
+				<span>{locale('mute_repeats')}</span>
+			</DropdownItem>
+			<DropdownItem>
+				<Icon size="18px" name="ban" margin="0px 8px 0px 0px" />
+				<span>{locale('block_user')}</span>
+			</DropdownItem>
+			<hr />
+			<DropdownItem>
+				<Icon size="18px" name="refresh" margin="0px 8px 0px 0px" />
+				<span>{locale('remote_refresh_user')}</span>
+			</DropdownItem>
+		</Dropdown>
 		<div class="pageContent">
 			{#if data}
 				{#if data.message}
@@ -50,10 +130,27 @@
 					<div class="userHeader">
 						<img class="banner" src={data.banner} />
 						<div class="innerHeader">
-							<Avatar {data} size="75px" />
+							<div class="top">
+								<div class="left">
+									<Avatar
+										src={data.avatar}
+										alt={data.avatar_alt}
+										isCat={data.is_cat}
+										size="75px"
+									/>
+								</div>
+								<div class="right">
+									<Button>Follow</Button>
+								</div>
+							</div>
 							<div class="name">
 								<span class="displayname">
-									<Mfm content={data.displayname} simple />
+									<Mfm
+										content={data.displayname
+											? data.displayname
+											: data.username}
+										simple
+									/>
 									<div class="indicators">
 										{#if data.locked}
 											<Icon
@@ -78,7 +175,11 @@
 								>
 							</div>
 							<p class="bio">
-								<Mfm content={data.bio} />
+								{#if data.bio}
+									<Mfm content={data.bio} />
+								{:else}
+									<p class="nobio">{locale('no_bio')}</p>
+								{/if}
 							</p>
 							<p class="joined">
 								{locale('joined_on')}
@@ -143,6 +244,22 @@
 			margin-top: -45px;
 			border-bottom: var(--border-width-s) solid var(--bg-tertiary);
 
+			.top {
+				width: 100%;
+				display: flex;
+
+				.left {
+					display: flex;
+					flex-grow: 2;
+				}
+
+				.right {
+					display: flex;
+					align-items: center;
+					padding-top: 40px;
+					gap: 10px;
+				}
+			}
 			.name {
 				margin-bottom: 10px;
 				> span {
@@ -163,6 +280,13 @@
 			.bio,
 			.joined {
 				margin: 5px 0px 5px 0px;
+			}
+
+			.bio {
+				.nobio {
+					color: var(--txt-tertiary);
+					opacity: 75%;
+				}
 			}
 
 			.joined {

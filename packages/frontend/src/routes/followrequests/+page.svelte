@@ -24,7 +24,13 @@
 								<a
 									href={'/@' + from.username}
 									class="displayname subtle"
-									><Avatar data={from} size="45px" /></a
+								>
+									<Avatar
+										src={from.avatar}
+										alt={from.avatar_alt}
+										isCat={from.is_cat}
+										size="45px"
+									/></a
 								>
 								<div class="names">
 									<a

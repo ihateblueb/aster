@@ -193,7 +193,13 @@
 				<a
 					href={'/@' + data.author.username + '@' + data.author.host}
 					class="displayname subtle"
-					><Avatar data={data.author} size="45px" /></a
+				>
+					<Avatar
+						src={data.author.avatar}
+						alt={data.author.avatar_alt}
+						isCat={data.author.is_cat}
+						size="45px"
+					/></a
 				>
 				<div class="names">
 					<a
@@ -512,13 +518,6 @@
 <style lang="scss">
 	@import '../../../node_modules/photoswipe/dist/photoswipe.css';
 
-	hr {
-		width: calc(100% - 16px);
-		margin-left: 8px;
-		margin-right: 8px;
-		border: 0px solid;
-		border-top: var(--border-width-s) solid var(--bg-accent);
-	}
 	.noteContent {
 		margin-top: 10px;
 		margin-bottom: 10px;
@@ -569,18 +568,24 @@
 	}
 	.noteHeader {
 		display: flex;
+
 		.left {
 			display: flex;
+			flex-grow: 2;
+
 			> .names {
 				display: inline-flex;
 				justify-content: center;
 				flex-direction: column;
 				margin-left: 10px;
+
 				> a {
 					display: block;
+
 					&.displayname {
 						font-weight: 600;
 					}
+
 					&.username {
 						font-size: var(--font-s);
 						color: var(--txt-tertiary);

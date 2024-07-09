@@ -65,6 +65,14 @@
 
 		min-width: 175px;
 
+		> hr {
+			width: calc(100% - 16px);
+			margin-left: 8px;
+			margin-right: 8px;
+			border: 0px solid;
+			border-top: var(--border-width-s) solid var(--bg-accent);
+		}
+
 		&::backdrop {
 			background-color: transparent;
 		}

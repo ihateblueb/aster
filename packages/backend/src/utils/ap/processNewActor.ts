@@ -4,13 +4,7 @@ import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewActor(body) {
-	if (
-		body.type === 'Person' &&
-		body.preferredUsername &&
-		body.id &&
-		body.url &&
-		body.outbox
-	) {
+	if (body.preferredUsername && body.id && body.url && body.outbox) {
 		let actorToInsert = {
 			id: ''
 		};
@@ -31,6 +25,10 @@ export default async function processNewActor(body) {
 		}
 
 		actorToInsert['outbox'] = body.outbox;
+
+		if (body.type === 'Service') {
+			actorToInsert['automated'] = true;
+		}
 
 		actorToInsert['url'] = body.url;
 
@@ -68,10 +66,6 @@ export default async function processNewActor(body) {
 
 		if (body.discoverable) {
 			actorToInsert['discoverable'] = body.discoverable;
-		}
-
-		if (body.automated) {
-			actorToInsert['automated'] = body.automated;
 		}
 
 		if (body.isCat) {

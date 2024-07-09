@@ -13,6 +13,8 @@ export default async function getRemoteInstance(host) {
 		}
 	});
 
+	console.log(host);
+
 	if (grabbedRemoteInstance) {
 		logger('debug', 'ap', 'remote instance present in database. updating.');
 
@@ -20,8 +22,6 @@ export default async function getRemoteInstance(host) {
 
 		var grabbedNodeinfoUrl = await getNodeinfo(host);
 		var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
-
-		// 404 or 401 should NOT be treated as 'gone'. small config errors onm the other server's end can cause these to be returned
 
 		if (grabbedNodeinfo.status === 401) {
 			logger(
@@ -45,8 +45,6 @@ export default async function getRemoteInstance(host) {
 
 		var grabbedNodeinfoUrl = await getNodeinfo(host);
 		var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
-
-		// 404 or 401 should NOT be treated as 'gone'. small config errors onm the other server's end can cause these to be returned
 
 		if (grabbedNodeinfo.status === 401) {
 			logger(

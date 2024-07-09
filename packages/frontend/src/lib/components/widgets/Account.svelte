@@ -8,8 +8,13 @@
 
 <template>
 	<div class="account">
-		<a href={'/@' + account.username} class="displayname subtle"
-			><Avatar data={account} size="40px" /></a
+		<a href={'/@' + account.username} class="displayname subtle">
+			<Avatar
+				src={account.avatar}
+				alt={account.avatar_alt}
+				isCat={account.is_cat}
+				size="40px"
+			/></a
 		>
 		<div class="usernames">
 			<a href={'/@' + account.username} class="displayname subtle"

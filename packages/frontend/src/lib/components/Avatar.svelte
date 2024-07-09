@@ -1,16 +1,25 @@
 <script lang="ts">
-	export let data;
+	export let src;
+	export let alt;
+	export let isCat: boolean = false;
+	export let small: boolean = false;
 	export let size = '55px';
 
-	if (!data.avatar) {
-		data.avatar = '/notfound.png';
+	if (!src) {
+		src = '/notfound.png';
 	}
 </script>
 
 <template>
-	<div class:cat={data.is_cat}>
-		<img class="avatar" src={data.avatar} height={size} width={size} />
-		{#if data.is_cat}
+	<div class={'avatarCtn' + (isCat ? ' cat' : '')}>
+		<img
+			class={'avatar' + (small ? ' small' : '')}
+			{src}
+			height={size}
+			width={size}
+			{alt}
+		/>
+		{#if isCat}
 			<div class="ears">
 				<div class="earLeft"></div>
 				<div class="earRight"></div>
@@ -82,16 +91,26 @@
 		}
 	}
 
+	.avatarCtn {
+		display: flex;
+		align-items: center;
+	}
+
 	.avatar {
 		position: relative;
 		z-index: 100;
 		border-radius: var(--border-l);
 		user-select: none;
+
+		&.small {
+			border-radius: var(--border-s);
+		}
 	}
 
 	.cat {
 		position: relative;
-		display: inline-block;
+		display: flex;
+		align-items: center;
 		.ears {
 			contain: strict;
 			position: absolute;

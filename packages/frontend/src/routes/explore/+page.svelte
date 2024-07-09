@@ -82,6 +82,7 @@
 	}
 	.timeline {
 		display: grid;
+		grid-template-columns: 100%;
 		gap: 10px;
 		margin-top: 10px;
 	}

@@ -3,6 +3,8 @@ import express from 'express';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
+import { host } from 'frontend/build/index.js';
+import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
 const router = express.Router();
 
@@ -18,6 +20,8 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 			.createQueryBuilder()
 			.where({ host: req.params.host })
 			.getOne();
+
+		getRemoteInstance(req.params.host);
 
 		if (grabbedInstance) {
 			res.status(200).json(grabbedInstance);

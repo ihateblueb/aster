@@ -1,5 +1,6 @@
 import db from '../database.js';
 import logger from '../logger.js';
+import { JSDOM } from 'jsdom';
 import sanitize from '../sanitize.js';
 
 export default async function updateRemoteInstance(host, body) {
@@ -88,6 +89,17 @@ export default async function updateRemoteInstance(host, body) {
 				.update({ host: host }, { note_count: body.usage.localPosts });
 		}
 	}
+
+	// to get instance color if not set in nodeinfo, and favicon
+
+	let req = await fetch('https://' + host);
+	const html = req.text();
+
+	const { window } = new JSDOM(html);
+	let doc = window.document;
+
+	console.log(doc);
+	console.log(await doc.getElementsByTagName('link'));
 
 	logger('info', 'ap', 'updated remote instance ' + host);
 

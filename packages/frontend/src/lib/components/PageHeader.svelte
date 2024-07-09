@@ -14,14 +14,13 @@
 <template>
 	<div class="pageHeader">
 		<div class="left">
-			{#if icon}
-				<Icon
-					name={icon}
-					size="16px"
-					color="inherit"
-					margin="0px 8px 0px 0px"
-				/>
-			{/if}
+			<div class="icon">
+				<slot name="icon">
+					{#if icon}
+						<Icon name={icon} size="16px" color="inherit" />
+					{/if}
+				</slot>
+			</div>
 			<p>{title}</p>
 		</div>
 		<div class="right">
@@ -46,6 +45,12 @@
 			display: flex;
 			align-items: center;
 			flex-grow: 10;
+
+			.icon {
+				display: flex;
+				align-items: center;
+				margin: 0px 8px 0px 0px;
+			}
 		}
 		.right {
 			display: flex;

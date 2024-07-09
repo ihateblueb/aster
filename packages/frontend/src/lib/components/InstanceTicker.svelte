@@ -32,6 +32,17 @@
 		white-space: nowrap;
 		text-overflow: ellipsis;
 
+		text-shadow:
+			#000 0px 0px 0px,
+			#000 0px 1px 0px,
+			#000 0px -1px 0px,
+			#000 1px 0px 0px,
+			#000 1px 1px 0px,
+			#000 1px -1px 0px,
+			#000 -1px 0px 0px,
+			#000 -1px 1px 0px,
+			#000 -1px -1px 0px;
+
 		img {
 			min-width: 16px;
 			min-height: 16px;
