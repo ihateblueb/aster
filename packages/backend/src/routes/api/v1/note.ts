@@ -8,6 +8,7 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 import ApNote from '../../../constructors/ApNote.js';
+import ApiNote from '../../../constructors/note.js';
 
 const router = express.Router();
 
@@ -33,8 +34,6 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 				.where({ id: grabbedNote.author })
 				.getOne();
 
-			grabbedNote.author = grabbedAuthor;
-
 			if (grabbedAuthor) {
 				if (grabbedAuthor.suspended) {
 					return res.status(400).json({
@@ -50,8 +49,6 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						.createQueryBuilder()
 						.where({ host: grabbedAuthor.host })
 						.getOne();
-
-					grabbedNote.instance = grabbedInstance;
 
 					var grabbedAttachments = await db
 						.getRepository('drive_file')
@@ -115,13 +112,16 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						});
 					}
 
-					grabbedNote.reactions = sortedReactions;
-
-					grabbedNote.attachments = grabbedAttachments;
-
-					grabbedNote['emojis'] = grabbedEmojis;
-
-					res.status(200).json(grabbedNote);
+					res.status(200).json(
+						new ApiNote(
+							grabbedNote,
+							grabbedAuthor,
+							grabbedInstance,
+							grabbedAttachments,
+							grabbedEmojis,
+							sortedReactions
+						)
+					);
 				}
 			} else {
 				return res.status(500).json({
