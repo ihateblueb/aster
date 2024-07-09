@@ -17,7 +17,10 @@
 	let selectedVisibility = 'public';
 	let showCw = false;
 
-	var account = Store.get('account');
+	let account = Store.get('account');
+	if (account) {
+		account = JSON.parse(account);
+	}
 
 	let visibility: Dropdown;
 </script>
@@ -25,12 +28,14 @@
 <template>
 	<div class="formHeader">
 		<div class="left">
-			<Avatar
-				src={account.avatar}
-				alt={account.avatar_alt}
-				isCat={account.is_cat}
-				size="34px"
-			/>
+			<div>
+				<Avatar
+					src={account.avatar}
+					alt={account.avatar_alt}
+					isCat={account.is_cat}
+					size="34px"
+				/>
+			</div>
 		</div>
 		<div class="right">
 			<Button on:click={(e) => visibility.open(e)}>
@@ -93,12 +98,60 @@
 			</Button>
 		</div>
 	</div>
+
+	<Dropdown bind:this={visibility}>
+		<DropdownItem on:click={() => (selectedVisibility = 'public')}>
+			<div class="visibilityItem">
+				<div class="top">
+					<Icon size="18px" name="planet" margin="0px 8px 0px 0px" />
+					<span>{locale('public')}</span>
+				</div>
+				<div class="bottom">
+					<small>{locale('public_desc')}</small>
+				</div>
+			</div>
+		</DropdownItem>
+		<DropdownItem on:click={() => (selectedVisibility = 'unlisted')}>
+			<div class="visibilityItem">
+				<div class="top">
+					<Icon size="18px" name="home" margin="0px 8px 0px 0px" />
+					<span>{locale('unlisted')}</span>
+				</div>
+				<div class="bottom">
+					<small>{locale('unlisted_desc')}</small>
+				</div>
+			</div>
+		</DropdownItem>
+		<DropdownItem on:click={() => (selectedVisibility = 'followers')}>
+			<div class="visibilityItem">
+				<div class="top">
+					<Icon size="18px" name="lock" margin="0px 8px 0px 0px" />
+					<span>{locale('followers_only')}</span>
+				</div>
+				<div class="bottom">
+					<small>{locale('followers_only_desc')}</small>
+				</div>
+			</div>
+		</DropdownItem>
+		<DropdownItem on:click={() => (selectedVisibility = 'direct')}>
+			<div class="visibilityItem">
+				<div class="top">
+					<Icon size="18px" name="mail" margin="0px 8px 0px 0px" />
+					<span>{locale('direct_note')}</span>
+				</div>
+				<div class="bottom">
+					<small>{locale('direct_note_desc')}</small>
+				</div>
+			</div>
+		</DropdownItem>
+	</Dropdown>
 </template>
 
 <style lang="scss">
 	.formFooter,
 	.formHeader {
 		display: flex;
+		align-items: center;
 		width: 100%;
 
 		.left {

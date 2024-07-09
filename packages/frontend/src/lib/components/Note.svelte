@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
@@ -29,14 +28,6 @@
 
 	let cwOpen = false;
 	let timer = 0;
-
-	function toggleCw() {
-		if (cwOpen) {
-			cwOpen = false;
-		} else if (!cwOpen) {
-			cwOpen = true;
-		}
-	}
 
 	function timeAgo(time) {
 		// TODO: rewrite this. it sucks. its stolen from masto-aster
@@ -86,82 +77,8 @@
 
 	let more: Dropdown;
 
-	import Lightbox from '../../../node_modules/photoswipe/dist/photoswipe-lightbox.esm.js';
-	import PhotoSwipe from '../../../node_modules/photoswipe/dist/photoswipe.esm.js';
 	import InstanceTicker from './InstanceTicker.svelte';
-
-	onMount(() => {
-		let options = {
-			gallery: '#gallery',
-			children: 'a',
-			showHideAnimationType: 'zoom',
-			closeOnVerticalDrag: true,
-			escKey: true,
-			arrowKeys: true,
-			errorMsg: locale('media_broken'),
-			imageClickAction: 'zoom',
-			tapAction: 'zoom',
-			initialZoomLevel: 'fill',
-			secondaryZoomLevel: 1,
-			maxZoomLevel: 2,
-			pswpModule: () => PhotoSwipe
-		};
-
-		let lightbox = new Lightbox(options);
-
-		lightbox.on('uiRegister', function () {
-			lightbox.pswp.ui.registerElement({
-				name: 'custom-caption',
-				order: 9,
-				isButton: false,
-				appendTo: 'root',
-				html: 'Caption text',
-				onInit: (el, pswp) => {
-					lightbox.pswp.on('change', () => {
-						const currSlideElement =
-							lightbox.pswp.currSlide.data.element;
-						let captionHTML = '';
-						if (currSlideElement) {
-							const hiddenCaption =
-								currSlideElement.querySelector(
-									'.hidden-caption-content'
-								);
-							if (hiddenCaption) {
-								// get caption from element with class hidden-caption-content
-								captionHTML = hiddenCaption.innerHTML;
-							} else {
-								// get caption from alt attribute
-								captionHTML = currSlideElement
-									.querySelector('img')
-									.getAttribute('alt');
-							}
-						}
-						el.innerHTML = captionHTML || '';
-					});
-				}
-			});
-		});
-
-		lightbox.init();
-	});
-
-	function getHeight(src) {
-		let img = new Image();
-		img.src = src;
-		img.onload = () => {
-			console.log(src + ' ' + img.naturalHeight);
-			return img.naturalHeight;
-		};
-	}
-
-	function getWidth(src) {
-		let img = new Image();
-		img.src = src;
-		img.onload = () => {
-			console.log(src + ' ' + img.naturalWidth);
-			return img.naturalWidth;
-		};
-	}
+	import NoteMedia from './NoteMedia.svelte';
 </script>
 
 <template>
@@ -280,7 +197,7 @@
 						<span>{data.cw}</span>
 					</div>
 					<div class="right">
-						<button on:click={toggleCw}>
+						<button on:click={() => (cwOpen = !cwOpen)}>
 							{#if cwOpen}
 								{locale('close')}
 							{:else}
@@ -298,6 +215,7 @@
 								if (!detailed) goto('/notes/' + data.id);
 							}}
 						/>
+						<NoteMedia attachments={data.attachments} />
 					</div>
 				{/if}
 			{:else}
@@ -309,38 +227,8 @@
 							if (!detailed) goto('/notes/' + data.id);
 						}}
 					/>
-				</div>
-			{/if}
-			{#if data.attachments && data.attachments.length > 0}
-				<div id="gallery" class="pswp-gallery attachments">
-					{#each data.attachments as attachment}
-						{#if attachment.type.startsWith('image')}
-							<a
-								href={attachment.src}
-								data-pswp-width={getWidth(attachment.src)}
-								data-pswp-height={getHeight(attachment.src)}
-								data-cropped="true"
-								target="_blank"
-								rel="noreferrer"
-							>
-								<img
-									src={attachment.src}
-									alt={attachment.alt}
-									title={attachment.alt}
-									class="attachmentImg"
-									loading="eager"
-								/>
-							</a>
-						{:else if attachment.type.startsWith('video')}
-							<video
-								src={attachment.src}
-								title={attachment.alt}
-								controls
-							/>
-						{:else}
-							{attachment.src}
-						{/if}
-					{/each}
+
+					<NoteMedia attachments={data.attachments} />
 				</div>
 			{/if}
 			{#if detailed}
@@ -521,30 +409,6 @@
 	.noteContent {
 		margin-top: 10px;
 		margin-bottom: 10px;
-
-		.attachments {
-			display: grid;
-			grid-auto-flow: column;
-			margin-top: 10px;
-			grid-gap: 8px;
-			height: 100%;
-			width: 100%;
-
-			> a,
-			video,
-			audio {
-				width: 100%;
-				border-radius: var(--border-s);
-				background-color: var(--bg-tertiary);
-				max-height: 250px;
-
-				.attachmentImg {
-					width: 100%;
-					height: 100%;
-					object-fit: contain;
-				}
-			}
-		}
 	}
 	.note {
 		padding: 20px;

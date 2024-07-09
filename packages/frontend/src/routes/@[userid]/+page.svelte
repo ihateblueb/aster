@@ -276,10 +276,10 @@
 			.name {
 				margin-left: 15px;
 				text-shadow:
-					black 0 0 2px,
-					black 0 0 4px,
-					black 0 0 10px,
-					black 0 0 50px;
+					var(--bg-tertiary) 0 0 2px,
+					var(--bg-tertiary) 0 0 4px,
+					var(--bg-tertiary) 0 0 10px,
+					var(--bg-tertiary) 0 0 50px;
 
 				> span {
 					display: block;
@@ -301,7 +301,7 @@
 			}
 
 			.bio {
-				margin: 35px 0 0px 0px;
+				margin: 25px 0 0 0;
 				line-height: var(--font-xxl);
 
 				.nobio {
