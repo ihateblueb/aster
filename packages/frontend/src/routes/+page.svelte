@@ -86,6 +86,10 @@
 			>
 				<Icon name="planet" size="16px" />
 			</Button>
+			<hr class="vertical" />
+			<Button type="header" on:click={async () => refresh()}>
+				<Icon name="refresh" size="16px" />
+			</Button>
 		</PageHeader>
 		<div class="pageContent">
 			<div class="paddedPage">

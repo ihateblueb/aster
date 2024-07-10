@@ -51,6 +51,13 @@
 	margin: 0px;
 }
 
+:global(hr.vertical) {
+	margin: 0px;
+	border: 0px solid;
+	border-left: var(--border-width-s) solid var(--bg-accent);
+	height: 12px;
+}
+
 .page {
 	display: flex;
 	align-items: center;
