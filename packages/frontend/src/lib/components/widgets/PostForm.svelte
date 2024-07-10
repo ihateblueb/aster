@@ -17,7 +17,6 @@
 
 	let selectedVisibility = 'public';
 	let showPreview = false;
-	let showCw = false;
 
 	let account = Store.get('account');
 	if (account) {
@@ -71,10 +70,7 @@
 			</Button>
 		</div>
 	</div>
-	{#if showCw}
-		<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}
-		></Input>
-	{/if}
+	<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}></Input>
 	<Input
 		type="wide"
 		big
@@ -97,12 +93,15 @@
 					title={locale('show_preview')}
 				/>
 			</Button>
-			<Button on:click={() => (showCw = !showCw)}>
+			<Button>
 				<Icon
-					name="alert-triangle"
+					name="mood-smile"
 					size="18px"
-					title={locale('direct_note')}
+					title={locale('add_emoji')}
 				/>
+			</Button>
+			<Button>
+				<Icon name="chart-bar" size="18px" title={locale('add_poll')} />
 			</Button>
 		</div>
 		<div class="right">

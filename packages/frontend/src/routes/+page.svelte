@@ -53,7 +53,7 @@
 					refresh();
 				}}
 			>
-				<Icon name="home" size="18px" />
+				<Icon name="home" size="16px" />
 			</Button>
 			<Button
 				type={'header' + (timeline === 'local' ? ' selected' : '')}
@@ -62,7 +62,7 @@
 					refresh();
 				}}
 			>
-				<Icon name="users" size="18px" />
+				<Icon name="users" size="16px" />
 			</Button>
 			<Button
 				type={'header' + (timeline === 'bubble' ? ' selected' : '')}
@@ -71,7 +71,7 @@
 					refresh();
 				}}
 			>
-				<Icon name="chart-bubble" size="18px" />
+				<Icon name="chart-bubble" size="16px" />
 			</Button>
 			<Button
 				type={'header' + (timeline === 'public' ? ' selected' : '')}
@@ -80,7 +80,7 @@
 					refresh();
 				}}
 			>
-				<Icon name="planet" size="18px" />
+				<Icon name="planet" size="16px" />
 			</Button>
 		</PageHeader>
 		<div class="pageContent">
@@ -137,6 +137,7 @@
 				</ol>
 				<h2>{locale('advertisement')}</h2>
 				<Ad />
+				<Button to="/login">{locale('login')}</Button>
 			</div>
 		</div>
 	{/if}

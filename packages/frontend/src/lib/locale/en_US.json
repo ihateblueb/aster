@@ -89,6 +89,8 @@
 	"media_broken": "This media cannot be loaded",
 	"no_bio": "This user hasn't written a bio yet.",
 	"remote_refresh_user": "Update user from remote",
+	"add_emoji": "Add emoji",
+	"add_poll": "Add poll",
 	"show_preview": "Show preview",
 	"home": "Home",
 	"notifications": "Notifications",
