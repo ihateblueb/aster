@@ -1,6 +1,0 @@
-{
-	"C_Cpp.errorSquiggles": "enabled",
-	"files.associations": {
-		"string.h": "c"
-	}
-}
