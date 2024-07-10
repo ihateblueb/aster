@@ -10,11 +10,13 @@
 	import Icon from '../Icon.svelte';
 	import Avatar from '../Avatar.svelte';
 	import Store from '$lib/utils/Store';
+	import Mfm from '../Mfm.svelte';
 
 	let noteCw = '';
 	let noteContent = '';
 
 	let selectedVisibility = 'public';
+	let showPreview = false;
 	let showCw = false;
 
 	let account = Store.get('account');
@@ -79,8 +81,22 @@
 		placeholder={locale('whats_on_your_mind')}
 		bind:value={noteContent}
 	></Input>
+	{#if showPreview}
+		<div class="notePreview">
+			{#key noteContent}
+				<Mfm content={noteContent} />
+			{/key}
+		</div>
+	{/if}
 	<div class="formFooter">
 		<div class="left">
+			<Button on:click={() => (showPreview = !showPreview)}>
+				<Icon
+					name={showPreview ? 'eye-off' : 'eye'}
+					size="18px"
+					title={locale('show_preview')}
+				/>
+			</Button>
 			<Button on:click={() => (showCw = !showCw)}>
 				<Icon
 					name="alert-triangle"
@@ -164,6 +180,18 @@
 			flex-grow: 0;
 			gap: 10px;
 		}
+	}
+
+	.notePreview {
+		display: block;
+		background-color: var(--bg-accent-50);
+		color: var(--txt-secondary);
+		font-size: var(--font-m);
+		padding: 8px 12px;
+		margin: 5px 0;
+		border-radius: var(--border-m);
+		border: none;
+		font-family: inherit;
 	}
 
 	.visibilityItem {
