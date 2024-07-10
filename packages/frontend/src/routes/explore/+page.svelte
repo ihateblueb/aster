@@ -74,16 +74,16 @@
 		justify-content: center;
 		padding: 25px;
 	}
-	.timelineSelect {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
-	}
 	.timeline {
 		display: grid;
 		grid-template-columns: 100%;
 		gap: 10px;
 		margin-top: 10px;
+	}
+	.timelineSelect {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
 	}
 </style>

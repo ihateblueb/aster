@@ -136,7 +136,7 @@
 										src={data.avatar}
 										alt={data.avatar_alt}
 										isCat={data.is_cat}
-										size="75px"
+										size="65px"
 									/>
 
 									<div class="name">

@@ -56,6 +56,7 @@
 			display: flex;
 			align-items: center;
 			flex-grow: 0;
+			gap: 8px;
 		}
 		p {
 			font-weight: 600;

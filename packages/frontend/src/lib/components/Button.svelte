@@ -64,6 +64,12 @@
 			padding: 0px;
 			margin: 0px;
 			margin-right: 5px;
+			transition: 0.1s;
+
+			&.selected {
+				color: var(--accent);
+				background-color: transparent;
+			}
 		}
 
 		&.accent {

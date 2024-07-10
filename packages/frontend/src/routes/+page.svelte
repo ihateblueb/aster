@@ -1,26 +1,103 @@
 <script>
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import { onMount } from 'svelte';
 	import { locale } from '$lib/locale';
+
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Ad from '$lib/components/Ad.svelte';
 	import Store from '$lib/utils/Store';
 	import pkg from '../../../../package.json';
+	import Icon from '$lib/components/Icon.svelte';
+
+	import timelineGet from '$lib/api/timeline/get';
+	import Note from '$lib/components/Note.svelte';
+	import Loading from '$lib/components/Loading.svelte';
+
+	let timeline = 'home';
+	let notes;
+
+	onMount(async () => {
+		notes = undefined;
+		notes = await timelineGet(timeline);
+	});
+
+	async function refresh() {
+		notes = undefined;
+		notes = await timelineGet(timeline);
+	}
 
 	export let data;
 </script>
 
 <template>
 	{#if Store.get('a_token')}
-		<PageHeader title={locale('home')} icon="home" />
+		<PageHeader
+			title={locale('home')}
+			icon={timeline === 'home'
+				? 'home'
+				: timeline === 'local'
+					? 'users'
+					: timeline === 'bubble'
+						? 'chart-bubble'
+						: timeline === 'public'
+							? 'planet'
+							: ''}
+		>
+			<Button
+				type={'header' + (timeline === 'home' ? ' selected' : '')}
+				on:click={async () => {
+					timeline = 'home';
+					refresh();
+				}}
+			>
+				<Icon name="home" size="18px" />
+			</Button>
+			<Button
+				type={'header' + (timeline === 'local' ? ' selected' : '')}
+				on:click={async () => {
+					timeline = 'local';
+					refresh();
+				}}
+			>
+				<Icon name="users" size="18px" />
+			</Button>
+			<Button
+				type={'header' + (timeline === 'bubble' ? ' selected' : '')}
+				on:click={async () => {
+					timeline = 'bubble';
+					refresh();
+				}}
+			>
+				<Icon name="chart-bubble" size="18px" />
+			</Button>
+			<Button
+				type={'header' + (timeline === 'public' ? ' selected' : '')}
+				on:click={async () => {
+					timeline = 'public';
+					refresh();
+				}}
+			>
+				<Icon name="planet" size="18px" />
+			</Button>
+		</PageHeader>
 		<div class="pageContent">
 			<div class="paddedPage">
-				<p>
-					This is filler content. Soon, a timeline of sorts will be
-					here.
-				</p>
+				<div class="timeline">
+					{#if notes && notes.length > 0}
+						{#key notes}
+							{#each notes as note}
+								<Note data={note} margin={false} />
+							{/each}
+						{/key}
+					{:else}
+						<div class="loading">
+							<Loading />
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	{:else}
@@ -105,5 +182,20 @@
 				border-radius: var(--border-m);
 			}
 		}
+	}
+	.loading {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		align-items: center;
+		justify-content: center;
+		padding: 25px;
+	}
+	.timeline {
+		display: grid;
+		grid-template-columns: 100%;
+		gap: 10px;
+		margin-top: 10px;
 	}
 </style>
