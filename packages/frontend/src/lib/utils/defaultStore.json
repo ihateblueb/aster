@@ -9,5 +9,6 @@
 	"widgets_right": {
 		"top": ["onlineusers"],
 		"mid": ["postform", "notifications"]
-	}
+	},
+	"home_timeline": "home"
 }

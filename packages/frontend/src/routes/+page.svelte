@@ -16,7 +16,7 @@
 	import Note from '$lib/components/Note.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 
-	let timeline = 'home';
+	let timeline = Store.get('home_timeline');
 	let notes;
 
 	onMount(async () => {
@@ -50,6 +50,7 @@
 				type={'header' + (timeline === 'home' ? ' selected' : '')}
 				on:click={async () => {
 					timeline = 'home';
+					Store.set('home_timeline', 'home');
 					refresh();
 				}}
 			>
@@ -59,6 +60,7 @@
 				type={'header' + (timeline === 'local' ? ' selected' : '')}
 				on:click={async () => {
 					timeline = 'local';
+					Store.set('home_timeline', 'local');
 					refresh();
 				}}
 			>
@@ -68,6 +70,7 @@
 				type={'header' + (timeline === 'bubble' ? ' selected' : '')}
 				on:click={async () => {
 					timeline = 'bubble';
+					Store.set('home_timeline', 'bubble');
 					refresh();
 				}}
 			>
@@ -77,6 +80,7 @@
 				type={'header' + (timeline === 'public' ? ' selected' : '')}
 				on:click={async () => {
 					timeline = 'public';
+					Store.set('home_timeline', 'public');
 					refresh();
 				}}
 			>
