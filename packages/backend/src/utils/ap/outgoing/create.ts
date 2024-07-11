@@ -12,6 +12,7 @@ export default async function OutCreate(localUserId, object) {
 	});
 
 	if (grabbedUser.local) {
+		console.log(object);
 		var createJson = new ActCreate({
 			id: uuidv4(),
 			actor: grabbedUser,
@@ -33,7 +34,7 @@ export default async function OutCreate(localUserId, object) {
 				logger(
 					'debug',
 					'ap',
-					'sent deliver to ' +
+					'queued deliver to ' +
 						grabbedFollower.inbox +
 						' from ' +
 						grabbedUser.ap_id

@@ -169,12 +169,13 @@ router.post(`/api/v1/note`, async (req, res) => {
 			noteToInsert['visibility'] = 'public';
 		}
 
-		let insertedNote = (await db.getRepository('note').insert(noteToInsert))
-			.raw;
+		await db.getRepository('note').insert(noteToInsert);
+
+		console.log(noteToInsert);
 
 		await OutCreate(
 			authRes.grabbedUserAuth.user,
-			new ApNote(insertedNote, authRes.grabbedUserAuth.user)
+			new ApNote(noteToInsert, authRes.grabbedUserAuth.user)
 		);
 
 		return res.status(200).json({

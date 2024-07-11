@@ -2,8 +2,15 @@ import { NoteReact } from '../../entities/NoteReact.js';
 import { User } from '../../entities/User.js';
 import config from '../../utils/config.js';
 import ApEmoji from '../ApEmoji.js';
+import contexts from '../../../static/contexts.json' with { type: 'json' };
 
 export default class ActLike {
+	'@context': object = [
+		'https://www.w3.org/ns/activitystreams',
+		'https://w3id.org/security/v1',
+		contexts
+	];
+
 	id: string;
 
 	readonly type: 'Like';

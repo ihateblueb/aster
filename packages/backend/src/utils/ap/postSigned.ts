@@ -37,6 +37,23 @@ export default async function postSigned(inbox, localUserId, body) {
 
 	const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
 
+	console.log('!!OUTGOING POST!!');
+	console.log(inbox);
+	console.log(JSON.stringify(body));
+	console.log({
+		headers: {
+			'Content-Type': 'application/activity+json',
+			'User-Agent': `Aster/${pkg.version}`,
+			Accept: 'application/activity+json',
+			Algorithm: 'rsa-sha256',
+			Host: inboxUrl.host,
+			Date: sendDate,
+			Digest: `SHA-256=${digest}`,
+			Signature: signatureHeader
+		}
+	});
+	console.log('!!OUTGOING POST!!');
+
 	return await axios
 		.post(inbox, body, {
 			headers: {
