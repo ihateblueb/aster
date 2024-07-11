@@ -3,7 +3,6 @@ import isValidUrl from '../isValidUrl.js';
 import logger from '../logger.js';
 import getNodeinfo from './getNodeinfo.js';
 import getSigned from './getSigned.js';
-import processNewEmoji from './processNewEmoji.js';
 import processNewInstance from './processNewInstance.js';
 import updateRemoteInstance from './updateRemoteInstance.js';
 
@@ -23,17 +22,11 @@ export default async function getRemoteInstance(host) {
 
 		var grabbedNodeinfoUrl = await getNodeinfo(host);
 
-		if (isValidUrl(grabbedNodeinfoUrl)) {
+		if (grabbedNodeinfoUrl) {
 			var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
 
-			if (grabbedNodeinfo.status === 401) {
-				logger(
-					'error',
-					'ap',
-					'fetched instance unsuccessfully with 401. ignoring.'
-				);
-			} else if (grabbedNodeinfo.status === 410) {
-				response = 'gone';
+			if (grabbedNodeinfo.error) {
+				return;
 			} else {
 				logger('debug', 'ap', 'fetched instance sucessfully');
 
@@ -53,22 +46,24 @@ export default async function getRemoteInstance(host) {
 		let response;
 
 		var grabbedNodeinfoUrl = await getNodeinfo(host);
-		var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
 
-		if (grabbedNodeinfo.status === 401) {
-			logger(
-				'error',
-				'ap',
-				'fetched instance unsuccessfully with 401. ignoring.'
-			);
-		} else if (grabbedNodeinfo.status === 410) {
-			response = 'gone';
+		if (grabbedNodeinfoUrl) {
+			var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
+
+			if (grabbedNodeinfo.error) {
+				return;
+			} else {
+				logger('debug', 'ap', 'fetched instance sucessfully');
+
+				response = await updateRemoteInstance(
+					host,
+					grabbedNodeinfo.data
+				);
+			}
+
+			return await response;
 		} else {
-			logger('debug', 'ap', 'fetched instance sucessfully');
-
-			response = await processNewInstance(host, grabbedNodeinfo.data);
+			return;
 		}
-
-		return await response;
 	}
 }

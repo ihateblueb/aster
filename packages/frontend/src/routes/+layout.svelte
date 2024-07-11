@@ -1,6 +1,7 @@
 <script>
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import PageFooter from '$lib/components/PageFooter.svelte';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import Store from '$lib/utils/Store';
@@ -24,6 +25,7 @@
 		{/if}
 		<main>
 			<slot></slot>
+			<PageFooter />
 		</main>
 		{#if Store.get('a_token')}
 			<Sidebar widgets={Store.get('widgets_right')} />
