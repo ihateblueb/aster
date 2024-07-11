@@ -45,6 +45,10 @@ export default async function IPUndo(body) {
 			message: 'Undo follow accepted'
 		};
 	} else if (body.object.type === 'Like') {
+		return {
+			status: 501,
+			message: 'Not implemented'
+		};
 		if (new URL(body.object.object).pathname.startsWith('/notes')) {
 			var grabbedNote = await db.getRepository('note').findOne({
 				where: {

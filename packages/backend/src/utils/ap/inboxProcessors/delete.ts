@@ -1,4 +1,8 @@
 export default async function IPDelete(body) {
+	return {
+		status: 501,
+		message: 'Not implemented'
+	};
 	console.log(body);
 	// disabled because this deletes actor no matter what even though it could be a deleted note
 	/*

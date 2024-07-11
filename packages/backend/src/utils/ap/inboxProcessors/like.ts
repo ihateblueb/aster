@@ -5,6 +5,10 @@ import getRemoteEmoji from '../getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPLike(body) {
+	return {
+		status: 501,
+		message: 'Not implemented'
+	};
 	if (body.object) {
 		if (new URL(body.object).pathname.startsWith('/notes')) {
 			var grabbedNote = await db.getRepository('note').findOne({

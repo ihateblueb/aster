@@ -5,6 +5,10 @@ import { create } from 'domain';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPBite(body) {
+	return {
+		status: 501,
+		message: 'Not implemented'
+	};
 	// YEEEOWWWCH!
 	// https://ns.mia.jetzt/as/#Bite
 	if (body.target && body.actor) {
