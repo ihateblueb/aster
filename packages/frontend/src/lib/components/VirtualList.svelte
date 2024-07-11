@@ -179,7 +179,6 @@
 		&.timeline {
 			display: grid;
 			grid-template-columns: 100%;
-			gap: 10px;
 		}
 
 		svelte-virtual-list-row {

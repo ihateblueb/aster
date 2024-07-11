@@ -24,7 +24,7 @@
 	export let repeated: boolean = false;
 	export let repeatedBy: string = '';
 	export let detailed: boolean = false;
-	export let margin: boolean = true;
+	export let inTimeline: boolean = false;
 
 	let cwOpen = false;
 
@@ -36,7 +36,7 @@
 </script>
 
 <template>
-	<article class={'note' + (margin ? ' margin' : '')}>
+	<article class={'note' + (inTimeline ? ' inTimeline' : '')}>
 		{#if pinned}
 			<div class="notePreheader">
 				<Icon
@@ -363,9 +363,10 @@
 		border-radius: var(--border-xl);
 		background-color: var(--bg-secondary);
 		overflow: clip;
-	}
-	.margin {
 		margin: 10px;
+	}
+	.inTimeline {
+		margin: 0 0 10px 0;
 	}
 	.details {
 		color: var(--txt-tertiary);

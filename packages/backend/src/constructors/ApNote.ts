@@ -1,7 +1,14 @@
 import { Note } from '../entities/Note.js';
 import { User } from '../entities/User.js';
+import contexts from '../../static/contexts.json' with { type: 'json' };
 
 export default class ApNote {
+	'@context': object = [
+		'https://www.w3.org/ns/activitystreams',
+		'https://w3id.org/security/v1',
+		contexts
+	];
+
 	id: string;
 
 	readonly type: 'Note';

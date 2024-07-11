@@ -20,19 +20,16 @@
 	import SelectItem from '$lib/components/SelectItem.svelte';
 
 	let timeline = Store.get('home_timeline');
-	let items;
-
-	let start;
-	let end;
+	let notes;
 
 	onMount(async () => {
-		items = undefined;
-		items = await timelineGet(timeline);
+		notes = undefined;
+		notes = await timelineGet(timeline);
 	});
 
 	async function refresh() {
-		items = undefined;
-		items = await timelineGet(timeline);
+		notes = undefined;
+		notes = await timelineGet(timeline);
 	}
 
 	export let data;
@@ -97,18 +94,16 @@
 				<Icon name="refresh" size="16px" />
 			</Button>
 		</PageHeader>
-		<div class="pageContent">
-			{#if items && items.length > 0}
-				{#key items}
+		<div class="pageContent hasTimeline">
+			{#if notes && notes.length > 0}
+				{#key notes}
 					<VirtualList
 						height="calc(100vh - 45px)"
 						timeline
-						{items}
+						items={notes}
 						let:item
-						bind:start
-						bind:end
 					>
-						<Note data={item} margin={false} />
+						<Note data={item} inTimeline />
 					</VirtualList>
 				{/key}
 			{:else}

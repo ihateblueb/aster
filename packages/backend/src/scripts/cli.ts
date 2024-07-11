@@ -3,17 +3,12 @@ import pkgFe from '../../../frontend/package.json' with { type: 'json' };
 import pkgBe from '../../package.json' with { type: 'json' };
 
 import readlineSync from 'readline-sync';
-import { spawnSync } from 'child_process';
 import { generateKeyPairSync } from 'crypto';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 import chalk from 'chalk';
 
 import config from '../utils/config.js';
-import db from '../utils/database.js';
-import logger from '../utils/logger.js';
-import { read } from 'fs';
-import { compileFunction } from 'vm';
 import getSigned from '../utils/ap/getSigned.js';
 
 process.title = 'Aster CLI';
@@ -202,6 +197,10 @@ readlineSync.promptCLLoop({
 			);
 			console.log(value);
 		}
+
+		console.log(
+			`INSERT INTO "user" (id, ap_id, inbox, outbox, username, host, displayname, local, url, locked, suspended, deactivated, discoverable, automated, bio, is_cat, speak_as_cat, created_at, updated_at, following_url, followers_url, public_key) VALUES ('${user.id}', '${user.ap_id}', '${user.inbox}', '${user.outbox}', '${user.username}', '${user.host}', '${user.displayname}', ${user.local}, '${user.url}', ${user.locked}, ${user.suspended}, ${user.deactivated}, ${user.discoverable}, ${user.automated}, '${user.bio}', ${user.is_cat}, ${user.speak_as_cat}, '${user.created_at}', '${user.updated_at}', '${user.following_url}', '${user.followers_url}', '${user.public_key}')`
+		);
 	},
 	getsigned: async function (url) {
 		console.log(await getSigned(url));

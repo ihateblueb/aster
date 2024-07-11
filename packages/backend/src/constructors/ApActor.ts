@@ -2,8 +2,15 @@ import config from '../utils/config.js';
 import ApImage from './ApImage.js';
 import ApActorPublicKey from './ApActorPublicKey.js';
 import ApEndpoints from './ApEndpoints.js';
+import contexts from '../../static/contexts.json' with { type: 'json' };
 
 export default class ApActor {
+	'@context': object = [
+		'https://www.w3.org/ns/activitystreams',
+		'https://w3id.org/security/v1',
+		contexts
+	];
+
 	id: string;
 
 	type: 'Person' | 'Service';
@@ -22,7 +29,7 @@ export default class ApActor {
 
 	image?: ApImage;
 
-	backgroundUrl?: ApImage;
+	backgroundUrl?: object;
 
 	preferredUsername: string;
 	summary?: string;
@@ -73,11 +80,7 @@ export default class ApActor {
 			false
 		);
 
-		this.backgroundUrl = new ApImage(
-			grabbedUser.background,
-			grabbedUser.background_alt,
-			false
-		);
+		this.backgroundUrl = grabbedUser.background;
 
 		this.inbox = grabbedUser.inbox;
 		this.sharedInbox = 'https://' + new URL(config.url).host + '/inbox';

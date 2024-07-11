@@ -8,8 +8,9 @@
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Loading from '$lib/components/Loading.svelte';
+	import VirtualList from '$lib/components/VirtualList.svelte';
 
-	let timeline = 'public';
+	let timeline = 'local';
 	let notes;
 
 	onMount(async () => {
@@ -25,42 +26,46 @@
 
 <template>
 	<PageHeader title={locale('explore')} icon="compass">
+		<Button
+			type={'header' + (timeline === 'local' ? ' selected' : '')}
+			on:click={async () => {
+				timeline = 'local';
+				refresh();
+			}}
+		>
+			<Icon name="users" size="16px" />
+		</Button>
+		<Button
+			type={'header' + (timeline === 'public' ? ' selected' : '')}
+			on:click={async () => {
+				timeline = 'public';
+				refresh();
+			}}
+		>
+			<Icon name="planet" size="16px" />
+		</Button>
+		<hr class="vertical" />
 		<Button type="header" on:click={async () => refresh()}>
-			<Icon name="refresh" size="18px" />
+			<Icon name="refresh" size="16px" />
 		</Button>
 	</PageHeader>
-	<div class="pageContent">
-		<div class="paddedPage">
-			<div class="timelineSelect">
-				<Button
-					type="wide"
-					on:click={async () => {
-						timeline = 'public';
-						refresh();
-					}}>Global</Button
+	<div class="pageContent hasTimeline">
+		{#if notes && notes.length > 0}
+			{#key notes}
+				<VirtualList
+					height="calc(100vh - 45px)"
+					timeline
+					items={notes}
+					let:item
 				>
-				<Button
-					type="wide"
-					on:click={async () => {
-						timeline = 'local';
-						refresh();
-					}}>Local</Button
-				>
+					<Note data={item} inTimeline />
+				</VirtualList>
+			{/key}
+		{:else}
+			<div class="loading">
+				<Loading />
 			</div>
-			<div class="timeline">
-				{#if notes && notes.length > 0}
-					{#key notes}
-						{#each notes as note}
-							<Note data={note} margin={false} />
-						{/each}
-					{/key}
-				{:else}
-					<div class="loading">
-						<Loading />
-					</div>
-				{/if}
-			</div>
-		</div>
+		{/if}
 	</div>
 </template>
 
@@ -73,17 +78,5 @@
 		align-items: center;
 		justify-content: center;
 		padding: 25px;
-	}
-	.timeline {
-		display: grid;
-		grid-template-columns: 100%;
-		gap: 10px;
-		margin-top: 10px;
-	}
-	.timelineSelect {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 10px;
 	}
 </style>

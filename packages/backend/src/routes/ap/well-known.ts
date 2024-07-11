@@ -43,9 +43,19 @@ router.get('/.well-known/webfinger', async (req, res) => {
 						.split('@')[0],
 					local: true
 				})
-				.getRawOne();
+				.getOne();
 
 			if (grabbedUser) {
+				console.log({
+					subject: `acct:${grabbedUser.username}@${new URL(config.url).host}`,
+					links: [
+						{
+							rel: 'self',
+							type: 'application/activity+json',
+							href: `${config.url}users/${grabbedUser.id}`
+						}
+					]
+				});
 				res.json({
 					subject: `acct:${grabbedUser.username}@${new URL(config.url).host}`,
 					links: [

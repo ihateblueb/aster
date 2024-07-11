@@ -38,7 +38,8 @@ router.post('/api/v1/login', async (req, res) => {
 		} else {
 			var grabbedUser = await db.getRepository('user').findOne({
 				where: {
-					username: user
+					username: user,
+					local: true
 				}
 			});
 
