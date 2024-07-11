@@ -21,9 +21,12 @@ export default function isValidUrl(url: string) {
 	}
 
 	try {
-		newUrl = new URL(url);
+		newUrl = new URL('https://' + url);
+		logger('debug', 'validation', 'allowed request to ' + url);
 		return true;
 	} catch (e) {
+		logger('error', 'validation', 'stopped request to ' + url);
+		console.log(e);
 		return false;
 	}
 }
