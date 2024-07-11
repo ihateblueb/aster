@@ -11,7 +11,7 @@ export default class ApNote {
 
 	id: string;
 
-	readonly type: 'Note';
+	type: string = 'Note';
 
 	attributedTo: string;
 	actor: string;

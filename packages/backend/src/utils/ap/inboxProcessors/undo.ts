@@ -55,18 +55,7 @@ export default async function IPUndo(body) {
 				}
 			});
 			if (grabbedNote) {
-				if (body.object.content) {
-					var emojiReaction = body.object.tag.find(
-						(e) => e.name === body.object.content
-					);
-					await db
-						.getRepository('note_react')
-						.delete({ ap_id: emojiReaction.id });
-				} else {
-					await db
-						.getRepository('note_like')
-						.delete({ ap_id: body.object.id });
-				}
+				// this sucks.
 				return {
 					status: 200,
 					message: 'Undo like accepted'

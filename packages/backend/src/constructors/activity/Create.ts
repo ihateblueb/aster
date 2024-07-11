@@ -10,7 +10,7 @@ export default class ActCreate {
 
 	id: string;
 
-	readonly type: 'Create';
+	type: string = 'Create';
 
 	actor: string;
 	object: object;

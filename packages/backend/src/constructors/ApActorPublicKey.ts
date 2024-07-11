@@ -1,6 +1,6 @@
 export default class ApActorPublicKey {
 	id: string;
-	readonly type: 'Key';
+	type: string = 'Key';
 	owner: string;
 	publicKeyPem: string;
 

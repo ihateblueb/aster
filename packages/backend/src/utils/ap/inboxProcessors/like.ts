@@ -18,11 +18,15 @@ export default async function IPLike(body) {
 				if (body.content) {
 					// this is a reaction, not a like
 
-					var reactionEmoji = body.tag.find(
-						(e) => e.name === body.content
-					);
+					if (body.tag) {
+						var reactionEmoji = body.tag.find(
+							(e) => e.name === body.content
+						);
+					}
 
-					var grabbedEmoji = await getRemoteEmoji(reactionEmoji.id);
+					var grabbedEmoji = await getRemoteEmoji(
+						reactionEmoji ? reactionEmoji.id : body.content
+					);
 
 					await db.getRepository('note_react').insert({
 						id: uuidv4(),
@@ -44,7 +48,7 @@ export default async function IPLike(body) {
 						grabbedEmoji.id
 					);
 				} else {
-					await db.getRepository('note_like').insert({
+					await db.getRepository('note_react').insert({
 						id: uuidv4(),
 						ap_id: body.id,
 						note: new URL(body.object).pathname.replace(
@@ -54,6 +58,7 @@ export default async function IPLike(body) {
 						created_at: new Date(Date.now()).toISOString(),
 						user: grabbedRemoteUser.id
 					});
+
 					await createNotification(
 						grabbedNote.author,
 						grabbedRemoteUser.id,

@@ -1,5 +1,5 @@
 export default class ApImage {
-	readonly type: 'Image';
+	type: string = 'Image';
 	url?: string;
 	description?: string;
 	sensitive?: boolean = false;

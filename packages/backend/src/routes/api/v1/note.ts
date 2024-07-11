@@ -171,12 +171,16 @@ router.post(`/api/v1/note`, async (req, res) => {
 
 		await db.getRepository('note').insert(noteToInsert);
 
-		console.log(noteToInsert);
+		let grabbedUser = await db
+			.getRepository('user')
+			.findOne({ where: { id: authRes.grabbedUserAuth.user } });
 
-		await OutCreate(
-			authRes.grabbedUserAuth.user,
-			new ApNote(noteToInsert, authRes.grabbedUserAuth.user)
-		);
+		if (grabbedUser) {
+			await OutCreate(
+				authRes.grabbedUserAuth.user,
+				new ApNote(noteToInsert, grabbedUser)
+			);
+		}
 
 		return res.status(200).json({
 			message: 'Note created',

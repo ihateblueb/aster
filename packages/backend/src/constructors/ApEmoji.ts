@@ -3,7 +3,7 @@ import { Emoji } from '../entities/Emoji.js';
 export default class ApEmoji {
 	id: string;
 
-	readonly type: 'Emoji';
+	type: string = 'Emoji';
 
 	name: string;
 	updated: string;
