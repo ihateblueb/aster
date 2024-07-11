@@ -13,8 +13,6 @@ export default async function getRemoteInstance(host) {
 		}
 	});
 
-	console.log(host);
-
 	if (grabbedRemoteInstance) {
 		logger('debug', 'ap', 'remote instance present in database. updating.');
 
