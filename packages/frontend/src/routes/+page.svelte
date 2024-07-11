@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	import { locale } from '$lib/locale';
 
+	import VirtualList from '$lib/components/VirtualList.svelte';
+
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Button from '$lib/components/Button.svelte';
@@ -15,18 +17,22 @@
 	import timelineGet from '$lib/api/timeline/get';
 	import Note from '$lib/components/Note.svelte';
 	import Loading from '$lib/components/Loading.svelte';
+	import SelectItem from '$lib/components/SelectItem.svelte';
 
 	let timeline = Store.get('home_timeline');
-	let notes;
+	let items;
+
+	let start;
+	let end;
 
 	onMount(async () => {
-		notes = undefined;
-		notes = await timelineGet(timeline);
+		items = undefined;
+		items = await timelineGet(timeline);
 	});
 
 	async function refresh() {
-		notes = undefined;
-		notes = await timelineGet(timeline);
+		items = undefined;
+		items = await timelineGet(timeline);
 	}
 
 	export let data;
@@ -92,21 +98,26 @@
 			</Button>
 		</PageHeader>
 		<div class="pageContent">
-			<div class="paddedPage">
-				<div class="timeline">
-					{#if notes && notes.length > 0}
-						{#key notes}
-							{#each notes as note}
-								<Note data={note} margin={false} />
-							{/each}
-						{/key}
-					{:else}
-						<div class="loading">
-							<Loading />
-						</div>
-					{/if}
+			{#if items && items.length > 0}
+				{#key items}
+					<VirtualList
+						height="calc(100vh - 45px)"
+						timeline
+						{items}
+						let:item
+						bind:start
+						bind:end
+					>
+						<Note data={item} margin={false} />
+					</VirtualList>
+				{/key}
+			{:else}
+				<div class="paddedPage">
+					<div class="loading">
+						<Loading />
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 	{:else}
 		<PageHeader title={locale('welcome')} icon="mood-smile-beam" />
@@ -200,10 +211,5 @@
 		align-items: center;
 		justify-content: center;
 		padding: 25px;
-	}
-	.timeline {
-		display: grid;
-		grid-template-columns: 100%;
-		gap: 10px;
 	}
 </style>
