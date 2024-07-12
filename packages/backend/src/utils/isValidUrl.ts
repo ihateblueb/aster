@@ -6,6 +6,9 @@ export default function isValidUrl(url: string) {
 	if (url === 'localhost') {
 		logger('error', 'validation', 'stopped request to localhost');
 		return false;
+	} else if (url.startsWith('localhost')) {
+		logger('error', 'validation', 'stopped request to localhost:*');
+		return false;
 	} else if (url === '0.0.0.0') {
 		logger('error', 'validation', 'stopped request to 0.0.0.0');
 		return false;
@@ -16,7 +19,7 @@ export default function isValidUrl(url: string) {
 		logger('error', 'validation', 'stopped request to 127.0.0.1');
 		return false;
 	} else if (url.startsWith('192.168')) {
-		logger('error', 'validation', 'stopped request to 192.168.x.x');
+		logger('error', 'validation', 'stopped request to 192.168.*.*');
 		return false;
 	}
 
