@@ -5,10 +5,6 @@ import getRemoteEmoji from '../getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IPLike(body) {
-	return {
-		status: 501,
-		message: 'Not implemented'
-	};
 	if (body.object) {
 		if (new URL(body.object).pathname.startsWith('/notes')) {
 			var grabbedNote = await db.getRepository('note').findOne({
@@ -26,33 +22,50 @@ export default async function IPLike(body) {
 						var reactionEmoji = body.tag.find(
 							(e) => e.name === body.content
 						);
+						var grabbedEmoji = await getRemoteEmoji(
+							reactionEmoji ? reactionEmoji.id : body.content
+						);
+
+						await db.getRepository('note_react').insert({
+							id: uuidv4(),
+							ap_id: grabbedEmoji.ap_id,
+							note: new URL(body.object).pathname.replace(
+								'/notes/',
+								''
+							),
+							created_at: new Date(Date.now()).toISOString(),
+							emoji: grabbedEmoji.id,
+							user: grabbedRemoteUser.id
+						});
+
+						await createNotification(
+							grabbedNote.author,
+							grabbedRemoteUser.id,
+							'react',
+							grabbedNote.id,
+							grabbedEmoji.id
+						);
+					} else {
+						await db.getRepository('note_like').insert({
+							id: uuidv4(),
+							ap_id: body.id,
+							note: new URL(body.object).pathname.replace(
+								'/notes/',
+								''
+							),
+							created_at: new Date(Date.now()).toISOString(),
+							user: grabbedRemoteUser.id
+						});
+
+						await createNotification(
+							grabbedNote.author,
+							grabbedRemoteUser.id,
+							'like',
+							grabbedNote.id
+						);
 					}
-
-					var grabbedEmoji = await getRemoteEmoji(
-						reactionEmoji ? reactionEmoji.id : body.content
-					);
-
-					await db.getRepository('note_react').insert({
-						id: uuidv4(),
-						ap_id: grabbedEmoji.ap_id,
-						note: new URL(body.object).pathname.replace(
-							'/notes/',
-							''
-						),
-						created_at: new Date(Date.now()).toISOString(),
-						emoji: grabbedEmoji.id,
-						user: grabbedRemoteUser.id
-					});
-
-					await createNotification(
-						grabbedNote.author,
-						grabbedRemoteUser.id,
-						'react',
-						grabbedNote.id,
-						grabbedEmoji.id
-					);
 				} else {
-					await db.getRepository('note_react').insert({
+					await db.getRepository('note_like').insert({
 						id: uuidv4(),
 						ap_id: body.id,
 						note: new URL(body.object).pathname.replace(

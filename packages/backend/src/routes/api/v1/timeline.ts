@@ -58,54 +58,28 @@ async function renderTimeline(grabbedNotes) {
 				})
 				.getMany();
 
-			if (grabbedReactions) {
-				grabbedReactions.forEach(async (reaction) => {
-					if (
-						sortedReactions.find((e) => e.id === reaction.emoji.id)
-					) {
-						sortedReactions.find(
-							(e) => e.id === reaction.emoji.id
-						).count += 1;
-						sortedReactions
-							.find((e) => e.id === reaction.emoji.id)
-							.from.push(reaction.user);
-					} else {
-						sortedReactions.push({
-							id: reaction.emoji.id,
-							url: reaction.emoji.url,
-							name: reaction.emoji.name,
-							host: reaction.emoji.host,
-							local: reaction.emoji.local,
-							count: 1,
-							from: [reaction.user]
-						});
-					}
-				});
-				logger(
-					'debug',
-					'timeline',
-					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
-				);
-				collectedNotes.push(
-					new ApiNote(
-						grabbedNotes[i],
-						grabbedAuthor,
-						grabbedInstance,
-						grabbedAttachments,
-						grabbedEmojis,
-						sortedReactions
-					)
-				);
-			} else {
-				logger(
-					'debug',
-					'timeline',
-					'rendered note ' + (i + 1) + '/' + grabbedNotes.length
-				);
-				collectedNotes.push(
-					new ApiNote(grabbedNotes[i], grabbedAuthor, grabbedInstance)
-				);
-			}
+			var grabbedLikes = await db.getRepository('note_like').find({
+				where: {
+					note: grabbedNotes[i].id
+				}
+			});
+
+			collectedNotes.push(
+				new ApiNote(
+					grabbedNotes[i],
+					grabbedAuthor,
+					grabbedInstance,
+					grabbedAttachments,
+					grabbedEmojis,
+					grabbedReactions,
+					grabbedLikes
+				)
+			);
+			logger(
+				'debug',
+				'timeline',
+				'rendered note ' + (i + 1) + '/' + grabbedNotes.length
+			);
 		}
 	}
 

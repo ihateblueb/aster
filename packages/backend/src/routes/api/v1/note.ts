@@ -74,8 +74,6 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						});
 					}
 
-					var sortedReactions = [];
-
 					var grabbedReactions = await db
 						.getRepository('note_react')
 						.createQueryBuilder('note_react')
@@ -85,32 +83,13 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 						})
 						.getMany();
 
-					if (grabbedReactions) {
-						grabbedReactions.forEach(async (reaction) => {
-							if (
-								sortedReactions.find(
-									(e) => e.id === reaction.emoji.id
-								)
-							) {
-								sortedReactions.find(
-									(e) => e.id === reaction.emoji.id
-								).count += 1;
-								sortedReactions
-									.find((e) => e.id === reaction.emoji.id)
-									.from.push(reaction.user);
-							} else {
-								sortedReactions.push({
-									id: reaction.emoji.id,
-									url: reaction.emoji.url,
-									name: reaction.emoji.name,
-									host: reaction.emoji.host,
-									local: reaction.emoji.local,
-									count: 1,
-									from: [reaction.user]
-								});
+					var grabbedLikes = await db
+						.getRepository('note_like')
+						.find({
+							where: {
+								note: grabbedNote.id
 							}
 						});
-					}
 
 					res.status(200).json(
 						new ApiNote(
@@ -119,7 +98,8 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 							grabbedInstance,
 							grabbedAttachments,
 							grabbedEmojis,
-							sortedReactions
+							grabbedReactions,
+							grabbedLikes
 						)
 					);
 				}

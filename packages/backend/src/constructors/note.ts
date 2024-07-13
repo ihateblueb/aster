@@ -14,9 +14,11 @@ export default class ApiNote {
 	cw?: string;
 	content: string;
 
-	attachments?: [];
-	emojis?: [];
-	reactions?: [];
+	attachments?: any[];
+	emojis?: any[];
+	reactions?: any[];
+
+	likes?: {};
 
 	constructor(
 		grabbedNote,
@@ -24,7 +26,8 @@ export default class ApiNote {
 		grabbedInstance?,
 		grabbedAttachments?,
 		grabbedEmojis?,
-		sortedReactions?,
+		grabbedReactions?,
+		grabbedLikes?,
 		grabbedReplyingTo?: User,
 		grabbedReplyingToAuthor?
 	) {
@@ -39,9 +42,55 @@ export default class ApiNote {
 		this.cw = grabbedNote.cw;
 		this.content = grabbedNote.content;
 		this.attachments =
-			grabbedAttachments.length > 0 ? grabbedAttachments : null;
-		this.emojis = grabbedEmojis.length > 0 ? grabbedEmojis : null;
-		this.reactions = sortedReactions.length > 0 ? sortedReactions : null;
+			grabbedAttachments && grabbedAttachments.length > 0
+				? grabbedAttachments
+				: null;
+		this.emojis =
+			grabbedEmojis && grabbedEmojis.length > 0 ? grabbedEmojis : null;
+
+		var sortedReactions = [];
+
+		if (grabbedReactions) {
+			grabbedReactions.forEach(async (reaction) => {
+				if (sortedReactions.find((e) => e.id === reaction.emoji.id)) {
+					sortedReactions.find(
+						(e) => e.id === reaction.emoji.id
+					).count += 1;
+					sortedReactions
+						.find((e) => e.id === reaction.emoji.id)
+						.from.push(reaction.user);
+				} else {
+					sortedReactions.push({
+						id: reaction.emoji.id,
+						url: reaction.emoji.url,
+						name: reaction.emoji.name,
+						host: reaction.emoji.host,
+						local: reaction.emoji.local,
+						count: 1,
+						from: [reaction.user]
+					});
+				}
+			});
+		}
+
+		this.reactions =
+			sortedReactions && sortedReactions.length > 0
+				? sortedReactions
+				: null;
+
+		var sortedLikes = {
+			count: 0,
+			from: []
+		};
+
+		if (grabbedLikes) {
+			for (const like of grabbedLikes) {
+				sortedLikes.count++;
+				sortedLikes.from.push(like.user);
+			}
+		}
+
+		this.likes = sortedLikes ? sortedLikes : null;
 	}
 
 	build() {

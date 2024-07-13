@@ -219,6 +219,7 @@
 				</button>
 				<button on:click={() => noteReact(data.id)}>
 					<Icon name="star" size="20px" color="inherit" />
+					<span>{data.likes.count}</span>
 				</button>
 				<button>
 					<Icon name="plus" size="20px" color="inherit" />
