@@ -45,30 +45,46 @@ export default async function IPUndo(body) {
 			message: 'Undo follow accepted'
 		};
 	} else if (body.object.type === 'Like') {
-		return {
-			status: 501,
-			message: 'Not implemented'
-		};
 		if (new URL(body.object.object).pathname.startsWith('/notes')) {
-			var grabbedNote = await db.getRepository('note').findOne({
+			var grabbedLike = await db.getRepository('note_like').findOne({
 				where: {
-					id: new URL(body.object.object).pathname.replace(
-						'/notes/',
-						''
-					)
+					ap_id: body.object.id
 				}
 			});
-			if (grabbedNote) {
-				// this sucks.
+
+			if (grabbedLike) {
+				await db.getRepository('note_like').delete({
+					ap_id: body.object.id
+				});
+
 				return {
 					status: 200,
 					message: 'Undo like accepted'
 				};
 			} else {
-				return {
-					status: 404,
-					message: "Note doesn't exist"
-				};
+				var grabbedReact = await db
+					.getRepository('note_react')
+					.findOne({
+						where: {
+							ap_id: body.object.id
+						}
+					});
+
+				if (grabbedReact) {
+					await db.getRepository('note_react').delete({
+						ap_id: body.object.id
+					});
+
+					return {
+						status: 200,
+						message: 'Undo like accepted'
+					};
+				} else {
+					return {
+						status: 400,
+						message: "Like doesn't exist"
+					};
+				}
 			}
 		} else {
 			return {
