@@ -15,35 +15,6 @@ import IPMove from './inboxProcessors/move.js';
 import IPUndo from './inboxProcessors/undo.js';
 import IPUpdate from './inboxProcessors/update.js';
 
-/*
-	Done activity types:
-
-	Follow
-	- without approval
-	Undo
-	- follow
-
-	Todo activity types:
-
-	Accept
-	Announce
-	Create
-	Follow
-	- with approval
-	Update
-	Undo
-	Like
-	EmojiReact
-	Add
-	Block
-	Move
-
-	Activities to ignore:
-
-	CacheFile
-	View
-*/
-
 export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
 
