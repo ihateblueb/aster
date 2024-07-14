@@ -4,10 +4,13 @@
 	"type": "module",
 	"scripts": {
 		"build": "tsc",
+		"build-dev": "tsc --watch",
+		"dev": "npm-run-all --parallel build-dev start-dev",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"revert": "pnpm exec typeorm migration:revert -d ./built/utils/database.js",
 		"cli": "node built/scripts/cli.js",
-		"start": "node built/server.js"
+		"start": "node built/server.js",
+		"start-dev": "node --watch built/server.js"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {

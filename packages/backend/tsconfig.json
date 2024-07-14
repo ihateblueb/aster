@@ -16,6 +16,13 @@
 		"noImplicitAny": false,
 		"strictPropertyInitialization": false
 	},
+	"watchOptions": {
+		"watchFile": "useFsEvents",
+		"watchDirectory": "useFsEvents",
+		"fallbackPolling": "dynamicPriority",
+		"synchronousWatchDirectory": true,
+		"excludeDirectories": ["node_modules", "build"]
+	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "build"]
 }

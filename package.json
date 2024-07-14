@@ -16,6 +16,9 @@
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
 		"build-be": "pnpm clean-be && pnpm --filter=backend build",
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
+		"dev": "npm-run-all --parallel dev-be dev-fe",
+		"dev-be": "pnpm --filter=backend dev",
+		"dev-fe": "pnpm --filter=frontend dev",
 		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
 		"migrate": "pnpm build-be && pnpm --filter=backend migrate",
 		"revert": "pnpm build-be && pnpm --filter=backend revert",
@@ -35,6 +38,7 @@
 		"typescript-eslint": "^7.8.0"
 	},
 	"devDependencies": {
+		"npm-run-all": "^4.1.5",
 		"prettier": "^3.2.5",
 		"prettier-plugin-ini": "^1.2.0",
 		"prettier-plugin-sh": "^0.14.0",
