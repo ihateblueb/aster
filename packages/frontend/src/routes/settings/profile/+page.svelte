@@ -8,37 +8,52 @@
 	import Select from '$lib/components/Select.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Store from '$lib/utils/Store';
+	import { goto } from '$app/navigation';
 
-	import themes from '../../../static/themes/themes.json';
+	let account = Store.get('account');
 
-	function refreshTheme(oldTheme, newTheme) {
-		document.body.classList.replace(oldTheme, newTheme);
+	if (account) {
+		account = JSON.parse(account);
+	} else {
+		goto('/');
 	}
 </script>
 
 <template>
-	<PageHeader title={locale('settings')} icon="settings" />
+	<PageHeader title={locale('s_account')} icon="settings" />
 	<div class="pageContent">
 		<div class="paddedPage">
-			<h1>{locale('s_appearance')}</h1>
-			<h2>{locale('s_appearance_theme')}</h2>
-			<Select>
-				{#each themes as theme}
-					<SelectItem
-						value={theme.id}
-						name={theme.name}
-						on:click={() => {
-							refreshTheme(Store.get('theme'), theme.id);
-							Store.set('theme', theme.id);
-						}}
-						selected={Store.get('theme') === theme.id
-							? true
-							: false}
-					/>
-				{/each}
-			</Select>
-			<h1>{locale('s_behavior')}</h1>
-			<h1>{locale('s_account')}</h1>
+			<h1>Profile</h1>
+			<Input
+				type="wide mb"
+				label={locale('displayname')}
+				value={account.displayname}
+			/>
+			<Input
+				type="wide mb"
+				big
+				label={locale('bio')}
+				value={account.bio}
+			/>
+			<Input
+				type="wide mb"
+				label={locale('location')}
+				value={account.location}
+			/>
+			<Input
+				type="wide mb"
+				label={locale('birthday')}
+				value={account.birthday}
+			/>
+			<Button>Update</Button>
+
+			<br />
+
+			<h1>ActivityPub</h1>
+			<h2>Public Key</h2>
+			<pre><code>{account.public_key}</code></pre>
+			<h2>Private Key</h2>
+			<Button>Request</Button>
 		</div>
 	</div>
 </template>

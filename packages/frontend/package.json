@@ -30,6 +30,7 @@
 		"photoswipe": "^5.4.4",
 		"sass": "^1.77.1",
 		"socket.io-client": "^4.7.5",
-		"svelte-preprocess": "^5.1.4"
+		"svelte-preprocess": "^5.1.4",
+		"uuid": "^9.0.1"
 	}
 }
