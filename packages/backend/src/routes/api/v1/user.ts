@@ -56,76 +56,100 @@ router.patch(`/api/v1/user`, async (req, res) => {
 		let updatedUser = [];
 
 		if (req.body) {
-			if (req.body.displayname) {
-				updatedUser['displayname'] = sanitize(req.body.displayname);
-			}
-			if (req.body.locked) {
-				updatedUser['locked'] = sanitize(req.body.locked);
-			}
-			if (req.body.discoverable) {
-				updatedUser['discoverable'] = sanitize(req.body.discoverable);
-			}
-			if (req.body.indexable) {
-				updatedUser['indexable'] = sanitize(req.body.indexable);
-			}
-			if (req.body.automated) {
-				updatedUser['automated'] = sanitize(req.body.automated);
-			}
-			if (req.body.avatar) {
-				updatedUser['avatar'] = sanitize(req.body.avatar);
-			}
-			if (req.body.avatar_alt) {
-				updatedUser['avatar_alt'] = sanitize(req.body.avatar_alt);
-			}
-			if (req.body.banner) {
-				updatedUser['banner'] = sanitize(req.body.banner);
-			}
-			if (req.body.banner_alt) {
-				updatedUser['banner_alt'] = sanitize(req.body.banner_alt);
-			}
-			if (req.body.background) {
-				updatedUser['background'] = sanitize(req.body.background);
-			}
-			if (req.body.background_alt) {
-				updatedUser['background_alt'] = sanitize(
-					req.body.background_alt
+			if (JSON.parse(req.body).displayname) {
+				updatedUser['displayname'] = sanitize(
+					JSON.parse(req.body).displayname
 				);
 			}
-			if (req.body.bio) {
-				updatedUser['bio'] = sanitize(req.body.bio);
+			if (JSON.parse(req.body).locked) {
+				updatedUser['locked'] = sanitize(JSON.parse(req.body).locked);
 			}
-			if (req.body.location) {
-				updatedUser['location'] = sanitize(req.body.location);
+			if (JSON.parse(req.body).discoverable) {
+				updatedUser['discoverable'] = sanitize(
+					JSON.parse(req.body).discoverable
+				);
 			}
-			if (req.body.birthday) {
-				updatedUser['birthday'] = sanitize(req.body.birthday);
+			if (JSON.parse(req.body).indexable) {
+				updatedUser['indexable'] = sanitize(
+					JSON.parse(req.body).indexable
+				);
 			}
-			if (req.body.is_cat) {
-				updatedUser['is_cat'] = sanitize(req.body.is_cat);
+			if (JSON.parse(req.body).automated) {
+				updatedUser['automated'] = sanitize(
+					JSON.parse(req.body).automated
+				);
 			}
-			if (req.body.speak_as_cat) {
-				updatedUser['speak_as_cat'] = sanitize(req.body.speak_as_cat);
+			if (JSON.parse(req.body).avatar) {
+				updatedUser['avatar'] = sanitize(JSON.parse(req.body).avatar);
 			}
-			if (req.body.pinned_notes) {
-				updatedUser['pinned_notes'] = sanitize(req.body.pinned_notes);
+			if (JSON.parse(req.body).avatar_alt) {
+				updatedUser['avatar_alt'] = sanitize(
+					JSON.parse(req.body).avatar_alt
+				);
 			}
-			if (req.body.metadata) {
-				updatedUser['metadata'] = sanitize(req.body.metadata);
+			if (JSON.parse(req.body).banner) {
+				updatedUser['banner'] = sanitize(JSON.parse(req.body).banner);
+			}
+			if (JSON.parse(req.body).banner_alt) {
+				updatedUser['banner_alt'] = sanitize(
+					JSON.parse(req.body).banner_alt
+				);
+			}
+			if (JSON.parse(req.body).background) {
+				updatedUser['background'] = sanitize(
+					JSON.parse(req.body).background
+				);
+			}
+			if (JSON.parse(req.body).background_alt) {
+				updatedUser['background_alt'] = sanitize(
+					JSON.parse(req.body).background_alt
+				);
+			}
+			if (JSON.parse(req.body).bio) {
+				updatedUser['bio'] = sanitize(JSON.parse(req.body).bio);
+			}
+			if (JSON.parse(req.body).location) {
+				updatedUser['location'] = sanitize(
+					JSON.parse(req.body).location
+				);
+			}
+			if (JSON.parse(req.body).birthday) {
+				updatedUser['birthday'] = sanitize(
+					JSON.parse(req.body).birthday
+				);
+			}
+			if (JSON.parse(req.body).is_cat) {
+				updatedUser['is_cat'] = sanitize(JSON.parse(req.body).is_cat);
+			}
+			if (JSON.parse(req.body).speak_as_cat) {
+				updatedUser['speak_as_cat'] = sanitize(
+					JSON.parse(req.body).speak_as_cat
+				);
+			}
+			if (JSON.parse(req.body).pinned_notes) {
+				updatedUser['pinned_notes'] = sanitize(
+					JSON.parse(req.body).pinned_notes
+				);
+			}
+			if (JSON.parse(req.body).metadata) {
+				updatedUser['metadata'] = sanitize(
+					JSON.parse(req.body).metadata
+				);
 			}
 
 			await db
 				.getRepository('user')
-				.update({ id: authRes.grabbedUserAuth }, updatedUser);
+				.update({ id: authRes.grabbedUserAuth.user }, updatedUser);
 
-			let grabbedUpdateduser = await db.getRepository('user').findOne({
+			let grabbedUpdatedUser = await db.getRepository('user').findOne({
 				where: {
-					id: authRes.grabbedUserAuth
+					id: authRes.grabbedUserAuth.user
 				}
 			});
 
 			return res.status(200).json({
 				message: 'Updated user',
-				user: grabbedUpdateduser
+				user: grabbedUpdatedUser
 			});
 		}
 		return res.status(400).json({

@@ -1,5 +1,6 @@
 <script>
 	import { page } from '$app/stores';
+	import { goto } from '$app/navigation';
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -8,14 +9,29 @@
 	import Select from '$lib/components/Select.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Store from '$lib/utils/Store';
-	import { goto } from '$app/navigation';
+	import updateAccount from '$lib/api/user/update';
 
 	let account = Store.get('account');
+	let updatedAccount = {};
+
+	// TODO: update only modified values
 
 	if (account) {
 		account = JSON.parse(account);
+		updatedAccount = account;
 	} else {
 		goto('/');
+	}
+
+	async function update() {
+		console.log(updatedAccount);
+		let res = await updateAccount(updatedAccount);
+
+		if (res.message === 'Updated user') {
+			account = res.user;
+			updatedAccount = res.user;
+			Store.set('account', JSON.stringify(res.user));
+		}
 	}
 </script>
 
@@ -27,25 +43,29 @@
 			<Input
 				type="wide mb"
 				label={locale('displayname')}
-				value={account.displayname}
+				placeholder={account.displayname}
+				bind:value={updatedAccount.displayname}
 			/>
 			<Input
 				type="wide mb"
 				big
 				label={locale('bio')}
-				value={account.bio}
+				placeholder={account.bio}
+				bind:value={updatedAccount.bio}
 			/>
 			<Input
 				type="wide mb"
 				label={locale('location')}
-				value={account.location}
+				placeholder={account.location}
+				bind:value={updatedAccount.location}
 			/>
 			<Input
 				type="wide mb"
 				label={locale('birthday')}
-				value={account.birthday}
+				placeholder={account.birthday}
+				bind:value={updatedAccount.birthday}
 			/>
-			<Button>Update</Button>
+			<Button on:click={update}>Update</Button>
 
 			<br />
 
