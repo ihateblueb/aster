@@ -17,7 +17,6 @@
 	// TODO: update only modified values
 
 	if (account) {
-		account = JSON.parse(account);
 		updatedAccount = account;
 	} else {
 		goto('/');
