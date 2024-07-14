@@ -10,11 +10,11 @@ export default defineConfig({
 	server: {
 		proxy: {
 			'/api': {
-				target: `http://localhost:${config.port}/`,
+				target: `http://localhost:${config.port ? config.port : 9971}/`,
 				changeOrigin: true
 			},
 			'/socket.io': {
-				target: `ws://localhost:${config.port}/`,
+				target: `ws://localhost:${config.port ? config.port : 9971}/`,
 				changeOrigin: true,
 				ws: true
 			}
