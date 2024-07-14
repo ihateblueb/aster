@@ -186,6 +186,16 @@
 									<p class="nobio">{locale('no_bio')}</p>
 								{/if}
 							</p>
+							{#if data.location}
+								<p class="location">
+									<Icon
+										name="map-pin"
+										size="16px"
+										title={locale('location')}
+									/>
+									{data.location}
+								</p>
+							{/if}
 							<p class="joined">
 								{locale('joined_on')}
 								{new Date(data.created_at).toLocaleTimeString(
@@ -296,8 +306,14 @@
 				}
 			}
 
+			.location,
 			.joined {
 				margin: 5px 0px 5px 0px;
+			}
+
+			.location {
+				display: flex;
+				gap: 5px;
 			}
 
 			.bio {
