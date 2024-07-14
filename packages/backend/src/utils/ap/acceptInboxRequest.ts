@@ -1,19 +1,19 @@
 import logger from '../logger.js';
 import getRemoteInstance from './getRemoteInstance.js';
 
-import IPAccept from './inboxProcessors/accept.js';
-import IPAdd from './inboxProcessors/add.js';
-import IPAnnounce from './inboxProcessors/announce.js';
-import IPBite from './inboxProcessors/bite.js';
-import IPBlock from './inboxProcessors/block.js';
-import IPCreate from './inboxProcessors/create.js';
-import IPDelete from './inboxProcessors/delete.js';
-import IPEmojiReact from './inboxProcessors/emojireact.js';
-import IPFollow from './inboxProcessors/follow.js';
-import IPLike from './inboxProcessors/like.js';
-import IPMove from './inboxProcessors/move.js';
-import IPUndo from './inboxProcessors/undo.js';
-import IPUpdate from './inboxProcessors/update.js';
+import IAccept from '../../incoming/accept.js';
+import IAdd from '../../incoming/add.js';
+import IAnnounce from '../../incoming/announce.js';
+import IBite from '../../incoming/bite.js';
+import IBlock from '../../incoming/block.js';
+import ICreate from '../../incoming/create.js';
+import IDelete from '../../incoming/delete.js';
+import IEmojiReact from '../../incoming/emojireact.js';
+import IFollow from '../../incoming/follow.js';
+import ILike from '../../incoming/like.js';
+import IMove from '../../incoming/move.js';
+import IUndo from '../../incoming/undo.js';
+import IUpdate from '../../incoming/update.js';
 
 export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
@@ -21,31 +21,31 @@ export default async function acceptInboxRequest(parsedBody) {
 	await getRemoteInstance(new URL(parsedBody.id).host);
 
 	if (parsedBody.type === 'Accept') {
-		await IPAccept(parsedBody);
+		await IAccept(parsedBody);
 	} else if (parsedBody.type === 'Announce') {
-		await IPAnnounce(parsedBody);
+		await IAnnounce(parsedBody);
 	} else if (parsedBody.type === 'Bite') {
-		await IPBite(parsedBody);
+		await IBite(parsedBody);
 	} else if (parsedBody.type === 'Create') {
-		await IPCreate(parsedBody);
+		await ICreate(parsedBody);
 	} else if (parsedBody.type === 'Delete') {
-		await IPDelete(parsedBody);
+		await IDelete(parsedBody);
 	} else if (parsedBody.type === 'Follow') {
-		await IPFollow(parsedBody);
+		await IFollow(parsedBody);
 	} else if (parsedBody.type === 'Update') {
-		await IPUpdate(parsedBody);
+		await IUpdate(parsedBody);
 	} else if (parsedBody.type === 'Undo') {
-		await IPUndo(parsedBody);
+		await IUndo(parsedBody);
 	} else if (parsedBody.type === 'Like') {
-		await IPLike(parsedBody);
+		await ILike(parsedBody);
 	} else if (parsedBody.type === 'EmojiReact') {
-		await IPEmojiReact(parsedBody);
+		await IEmojiReact(parsedBody);
 	} else if (parsedBody.type === 'Add') {
-		await IPAdd(parsedBody);
+		await IAdd(parsedBody);
 	} else if (parsedBody.type === 'Block') {
-		await IPBlock(parsedBody);
+		await IBlock(parsedBody);
 	} else if (parsedBody.type === 'Move') {
-		await IPMove(parsedBody);
+		await IMove(parsedBody);
 	} else {
 		logger(
 			'warn',

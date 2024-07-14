@@ -1,4 +1,4 @@
-export default async function IPBlock(body) {
+export default async function IBlock(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'

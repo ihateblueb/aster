@@ -1,4 +1,4 @@
-export default async function IPDelete(body) {
+export default async function IDelete(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'

@@ -4,7 +4,7 @@ import db from '../../database.js';
 import deliverQueue from '../../deliverQueue.js';
 import logger from '../../logger.js';
 
-export default async function OutCreate(localUserId, object) {
+export default async function OCreate(localUserId, object) {
 	var grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId

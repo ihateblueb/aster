@@ -4,7 +4,7 @@ import getRemoteActor from '../getRemoteActor.js';
 import { create } from 'domain';
 import { v4 as uuidv4 } from 'uuid';
 
-export default async function IPBite(body) {
+export default async function IBite(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'

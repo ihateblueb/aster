@@ -1,4 +1,4 @@
-export default async function IPAccept(body) {
+export default async function IAccept(body) {
 	// accept(body.id, body.inbox, body);
 	return {
 		status: 501,

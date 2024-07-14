@@ -2,7 +2,7 @@ import logger from '../../logger.js';
 import processNewActor from '../processNewActor.js';
 import processNewNote from '../processNewNote.js';
 
-export default async function IPCreate(body) {
+export default async function ICreate(body) {
 	if (body.object.type === 'Note') {
 		await processNewNote(body.object);
 	} else if (body.object.type === 'Actor') {

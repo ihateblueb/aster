@@ -25,7 +25,7 @@ router.get('/api/v1/notifications', async (req, res) => {
 
 			return res.status(200).json(grabbedNotifications);
 		} else {
-			return res.status(404).json({
+			return res.status(204).json({
 				message: 'No notifications'
 			});
 		}

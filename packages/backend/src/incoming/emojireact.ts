@@ -1,4 +1,4 @@
-export default async function IPAdd(body) {
+export default async function IEmojiReact(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'

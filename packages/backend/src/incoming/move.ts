@@ -1,4 +1,4 @@
-export default async function IPEmojiReact(body) {
+export default async function IMove(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'

@@ -3,7 +3,7 @@ import db from '../../database.js';
 import logger from '../../logger.js';
 import getRemoteActor from '../getRemoteActor.js';
 
-export default async function IPUndo(body) {
+export default async function IUndo(body) {
 	if (body.object.type === 'Follow') {
 		let grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {

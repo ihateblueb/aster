@@ -5,7 +5,7 @@ import logger from '../../logger.js';
 import getRemoteActor from '../getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
 
-export default async function IPFollow(body) {
+export default async function IFollow(body) {
 	let grabbedLocalUser = await db.getRepository('user').findOne({
 		where: {
 			ap_id: body.object

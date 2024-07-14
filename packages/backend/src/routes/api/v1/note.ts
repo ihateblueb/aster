@@ -1,7 +1,7 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import OutCreate from '../../../utils/ap/outgoing/create.js';
+import OCreate from '../../../outgoing/create';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';
@@ -156,7 +156,7 @@ router.post(`/api/v1/note`, async (req, res) => {
 			.findOne({ where: { id: authRes.grabbedUserAuth.user } });
 
 		if (grabbedUser) {
-			await OutCreate(
+			await OCreate(
 				authRes.grabbedUserAuth.user,
 				new ApNote(noteToInsert, grabbedUser)
 			);

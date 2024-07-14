@@ -4,7 +4,7 @@ import getRemoteActor from '../getRemoteActor.js';
 import getRemoteEmoji from '../getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
 
-export default async function IPLike(body) {
+export default async function ILike(body) {
 	// TODO: add duplicate checking
 	if (body.object) {
 		if (new URL(body.object).pathname.startsWith('/notes')) {

@@ -1,4 +1,4 @@
-export default async function IPAnnounce(body) {
+export default async function IUpdate(body) {
 	return {
 		status: 501,
 		message: 'Not implemented'
