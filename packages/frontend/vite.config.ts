@@ -12,7 +12,15 @@ export default defineConfig({
 			'/api': {
 				target: `http://localhost:${config.port}/`,
 				changeOrigin: true
+			},
+			'/socket.io': {
+				target: `ws://localhost:${config.port}/`,
+				changeOrigin: true,
+				ws: true
 			}
+		},
+		fs: {
+			allow: ['/home/blueb/Documents/aster/packages/frontend/static']
 		}
 	}
 });
