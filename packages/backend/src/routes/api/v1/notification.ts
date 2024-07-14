@@ -17,7 +17,18 @@ router.get('/api/v1/notifications', async (req, res) => {
 					to: authRes.grabbedUserAuth.user
 				}
 			});
-		return res.status(200).json(grabbedNotifications);
+
+		if (grabbedNotifications) {
+			grabbedNotifications.sort(
+				(x, y) => +new Date(x.created_at) - +new Date(y.created_at)
+			);
+
+			return res.status(200).json(grabbedNotifications);
+		} else {
+			return res.status(404).json({
+				message: 'No notifications'
+			});
+		}
 	} else {
 		return res.status(authRes.status).json({
 			message: authRes.message
