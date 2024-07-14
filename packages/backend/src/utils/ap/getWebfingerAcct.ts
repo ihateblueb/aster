@@ -31,6 +31,7 @@ export default async function getWebfingerAcct(user, host) {
 			})
 			.catch((e) => {
 				logger('error', 'webfinger', e);
+				return false;
 			});
 	}
 }
