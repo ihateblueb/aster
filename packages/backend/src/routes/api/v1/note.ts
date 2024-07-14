@@ -1,7 +1,7 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
-import OCreate from '../../../outgoing/create';
+import OCreate from '../../../outgoing/create.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import config from '../../../utils/config.js';
 import db from '../../../utils/database.js';

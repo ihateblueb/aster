@@ -1,7 +1,7 @@
-import createNotification from '../../createNotification.js';
-import db from '../../database.js';
-import getRemoteActor from '../getRemoteActor.js';
-import getRemoteEmoji from '../getRemoteEmoji.js';
+import createNotification from '../utils/createNotification.js';
+import db from '../utils/database.js';
+import getRemoteActor from '../utils/ap/getRemoteActor.js';
+import getRemoteEmoji from '../utils/ap/getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function ILike(body) {

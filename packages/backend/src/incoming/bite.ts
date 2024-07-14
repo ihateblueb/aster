@@ -1,6 +1,6 @@
-import createNotification from '../../createNotification.js';
-import db from '../../database.js';
-import getRemoteActor from '../getRemoteActor.js';
+import createNotification from '../utils/createNotification.js';
+import db from '../utils/database.js';
+import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import { create } from 'domain';
 import { v4 as uuidv4 } from 'uuid';
 

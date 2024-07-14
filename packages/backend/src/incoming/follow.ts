@@ -1,8 +1,8 @@
-import signAndAccept from '../../ap/accept.js';
-import createNotification from '../../createNotification.js';
-import db from '../../database.js';
-import logger from '../../logger.js';
-import getRemoteActor from '../getRemoteActor.js';
+import signAndAccept from '../utils/ap/accept.js';
+import createNotification from '../utils/createNotification.js';
+import db from '../utils/database.js';
+import logger from '../utils/logger.js';
+import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function IFollow(body) {

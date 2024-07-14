@@ -1,6 +1,6 @@
-import logger from '../../logger.js';
-import processNewActor from '../processNewActor.js';
-import processNewNote from '../processNewNote.js';
+import logger from '../utils/logger.js';
+import processNewActor from '../utils/ap/processNewActor.js';
+import processNewNote from '../utils/ap/processNewNote.js';
 
 export default async function ICreate(body) {
 	if (body.object.type === 'Note') {
