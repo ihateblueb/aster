@@ -1,26 +1,47 @@
 [
 	{
 		"id": "purpura",
-		"name": "Purpura"
+		"name": "Purpura",
+		"scheme": ["dark"]
+	},
+	{
+		"id": "wisteria",
+		"name": "Wisteria",
+		"scheme": ["light"]
 	},
 	{
 		"id": "rosepine",
-		"name": "Rosé Pine"
+		"name": "Rosé Pine",
+		"scheme": ["dark"]
+	},
+	{
+		"id": "rosepine-moon",
+		"name": "Rosé Pine Moon",
+		"scheme": ["dark"]
+	},
+	{
+		"id": "rosepine-dawn",
+		"name": "Rosé Pine Dawn",
+		"scheme": ["light"]
 	},
 	{
 		"id": "mi-botanical",
-		"name": "Mi Botanical"
+		"name": "Mi Botanical",
+		"scheme": ["light", "dark"]
 	},
 	{
 		"id": "misskey",
-		"name": "Misskey"
+		"name": "Misskey",
+		"scheme": ["light", "dark"]
 	},
 	{
 		"id": "iceshrimp",
-		"name": "Iceshrimp"
+		"name": "Iceshrimp",
+		"scheme": ["light", "dark"]
 	},
 	{
 		"id": "mastodon",
-		"name": "Mastodon"
+		"name": "Mastodon",
+		"scheme": ["light", "dark"]
 	}
 ]

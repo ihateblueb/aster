@@ -1,0 +1,25 @@
+.rosepine {
+	--bg-primary: #191724;
+	--bg-secondary: #15131d;
+	--bg-tertiary: #100e16;
+	--bg-accent: #2a2836;
+
+	--bg-primary-50: #19172450;
+	--bg-secondary-50: #15131d50;
+	--bg-tertiary-50: #100e1650;
+	--bg-accent-50: #2a283650;
+
+	--txt-primary: #e0def4;
+	--txt-secondary: #cbcadf;
+	--txt-tertiary: #bebcd3;
+
+	--accent: #c4a7e7;
+	--success: #99c5a3;
+	--warn: #f6c177;
+	--danger: #eb6f92;
+
+	--accent-20: #c4a7e720;
+	--success-20: #99c5a320;
+	--warn-20: #f6c17720;
+	--danger-20: #eb6f9220;
+}

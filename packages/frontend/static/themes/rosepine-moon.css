@@ -1,0 +1,25 @@
+.rosepine-moon {
+	--bg-primary: #232136;
+	--bg-secondary: #2a273f;
+	--bg-tertiary: #393552;
+	--bg-accent: #44415a;
+
+	--bg-primary-50: #23213650;
+	--bg-secondary-50: #2a273f50;
+	--bg-tertiary-50: #39355250;
+	--bg-accent-50: #44415a50;
+
+	--txt-primary: #e0def4;
+	--txt-secondary: #cbcadf;
+	--txt-tertiary: #bebcd3;
+
+	--accent: #c4a7e7;
+	--success: #9ccfd8;
+	--warn: #f6c177;
+	--danger: #eb6f92;
+
+	--accent-20: #c4a7e720;
+	--success-20: #9ccfd820;
+	--warn-20: #f6c17720;
+	--danger-20: #eb6f9220;
+}
