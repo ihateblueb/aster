@@ -236,6 +236,11 @@ importers:
       vite-plugin-dynamic-import:
         specifier: ^1.5.0
         version: 1.5.0
+      vite-plugin-svelte-auto-import-style:
+        specifier: workspace:vite-plugin-svelte-auto-import-style
+        version: link:../vite-plugin-svelte-auto-import-style
+
+  packages/vite-plugin-svelte-auto-import-style: {}
 
 packages:
 

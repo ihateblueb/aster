@@ -8,7 +8,8 @@
 	},
 	"workspaces": [
 		"packages/frontend",
-		"packages/backend"
+		"packages/backend",
+		"packages/vite-plugin-svelte-auto-import-style"
 	],
 	"private": true,
 	"scripts": {

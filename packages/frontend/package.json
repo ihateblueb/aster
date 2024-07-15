@@ -20,7 +20,8 @@
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
 		"vite": "^5.0.3",
-		"vite-plugin-dynamic-import": "^1.5.0"
+		"vite-plugin-dynamic-import": "^1.5.0",
+		"vite-plugin-svelte-auto-import-style": "workspace:vite-plugin-svelte-auto-import-style"
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.0.1",
