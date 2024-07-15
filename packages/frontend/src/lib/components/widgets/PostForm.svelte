@@ -27,90 +27,97 @@
 </script>
 
 <template>
-	<div class="formHeader">
-		<div class="left">
-			<div>
-				<Avatar
-					src={account.avatar}
-					alt={account.avatar_alt}
-					isCat={account.is_cat}
-					size="34px"
-				/>
+	<div class="_J1lB329">
+		<div class="formHeader">
+			<div class="left">
+				<div>
+					<Avatar
+						src={account.avatar}
+						alt={account.avatar_alt}
+						isCat={account.is_cat}
+						size="34px"
+					/>
+				</div>
+			</div>
+			<div class="right">
+				<Button on:click={(e) => visibility.open(e)}>
+					{#key selectedVisibility}
+						{#if selectedVisibility === 'public'}
+							<Icon
+								name="planet"
+								size="18px"
+								title={locale('public')}
+							/>
+						{:else if selectedVisibility === 'unlisted'}
+							<Icon
+								name="home"
+								size="18px"
+								title={locale('unlisted')}
+							/>
+						{:else if selectedVisibility === 'followers'}
+							<Icon
+								name="lock"
+								size="18px"
+								title={locale('followers_only')}
+							/>
+						{:else if selectedVisibility === 'direct'}
+							<Icon
+								name="mail"
+								size="18px"
+								title={locale('direct_note')}
+							/>
+						{/if}
+					{/key}
+				</Button>
 			</div>
 		</div>
-		<div class="right">
-			<Button on:click={(e) => visibility.open(e)}>
-				{#key selectedVisibility}
-					{#if selectedVisibility === 'public'}
-						<Icon
-							name="planet"
-							size="18px"
-							title={locale('public')}
-						/>
-					{:else if selectedVisibility === 'unlisted'}
-						<Icon
-							name="home"
-							size="18px"
-							title={locale('unlisted')}
-						/>
-					{:else if selectedVisibility === 'followers'}
-						<Icon
-							name="lock"
-							size="18px"
-							title={locale('followers_only')}
-						/>
-					{:else if selectedVisibility === 'direct'}
-						<Icon
-							name="mail"
-							size="18px"
-							title={locale('direct_note')}
-						/>
-					{/if}
+		<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}
+		></Input>
+		<Input
+			type="wide"
+			big
+			placeholder={locale('whats_on_your_mind')}
+			bind:value={noteContent}
+		></Input>
+		{#if showPreview}
+			<div class="notePreview">
+				{#key noteContent}
+					<Mfm content={noteContent} />
 				{/key}
-			</Button>
-		</div>
-	</div>
-	<Input type="wide" placeholder={locale('cw')} bind:value={noteCw}></Input>
-	<Input
-		type="wide"
-		big
-		placeholder={locale('whats_on_your_mind')}
-		bind:value={noteContent}
-	></Input>
-	{#if showPreview}
-		<div class="notePreview">
-			{#key noteContent}
-				<Mfm content={noteContent} />
-			{/key}
-		</div>
-	{/if}
-	<div class="formFooter">
-		<div class="left">
-			<Button on:click={() => (showPreview = !showPreview)}>
-				<Icon
-					name={showPreview ? 'eye-off' : 'eye'}
-					size="18px"
-					title={locale('show_preview')}
-				/>
-			</Button>
-			<Button>
-				<Icon
-					name="mood-smile"
-					size="18px"
-					title={locale('add_emoji')}
-				/>
-			</Button>
-			<Button>
-				<Icon name="chart-bar" size="18px" title={locale('add_poll')} />
-			</Button>
-		</div>
-		<div class="right">
-			<Button
-				on:click={() =>
-					noteCreate(noteCw, noteContent, selectedVisibility)}
-			>
-				{locale('note')}
-			</Button>
+			</div>
+		{/if}
+		<div class="formFooter">
+			<div class="left">
+				<Button on:click={() => (showPreview = !showPreview)}>
+					<Icon
+						name={showPreview ? 'eye-off' : 'eye'}
+						size="18px"
+						title={locale('show_preview')}
+					/>
+				</Button>
+				<Button>
+					<Icon
+						name="mood-smile"
+						size="18px"
+						title={locale('add_emoji')}
+					/>
+				</Button>
+				<Button>
+					<Icon
+						name="chart-bar"
+						size="18px"
+						title={locale('add_poll')}
+					/>
+				</Button>
+			</div>
+			<div class="right">
+				<Button
+					on:click={() =>
+						noteCreate(noteCw, noteContent, selectedVisibility)}
+				>
+					{locale('note')}
+				</Button>
+			</div>
 		</div>
 	</div>
 
@@ -161,51 +168,3 @@
 		</DropdownItem>
 	</Dropdown>
 </template>
-
-<style lang="scss">
-	.formFooter,
-	.formHeader {
-		display: flex;
-		align-items: center;
-		width: 100%;
-
-		.left {
-			display: flex;
-			flex-grow: 10;
-			gap: 10px;
-		}
-		.right {
-			display: flex;
-			flex-grow: 0;
-			gap: 10px;
-		}
-	}
-
-	.notePreview {
-		display: block;
-		background-color: var(--bg-accent-50);
-		color: var(--txt-secondary);
-		font-size: var(--font-m);
-		padding: 8px 12px;
-		margin: 5px 0;
-		border-radius: var(--border-m);
-		border: none;
-		font-family: inherit;
-	}
-
-	.visibilityItem {
-		display: block;
-		text-align: left;
-		max-width: 250px;
-
-		.top {
-			display: flex;
-			align-items: center;
-		}
-		.bottom {
-			display: block;
-			opacity: 75%;
-			padding-left: 28px;
-		}
-	}
-</style>

@@ -1,0 +1,47 @@
+._J1lB329 {
+	.formFooter,
+	.formHeader {
+		display: flex;
+		align-items: center;
+		width: 100%;
+
+		.left {
+			display: flex;
+			flex-grow: 10;
+			gap: 10px;
+		}
+		.right {
+			display: flex;
+			flex-grow: 0;
+			gap: 10px;
+		}
+	}
+
+	.notePreview {
+		display: block;
+		background-color: var(--bg-accent-50);
+		color: var(--txt-secondary);
+		font-size: var(--font-m);
+		padding: 8px 12px;
+		margin: 5px 0;
+		border-radius: var(--border-m);
+		border: none;
+		font-family: inherit;
+	}
+
+	.visibilityItem {
+		display: block;
+		text-align: left;
+		max-width: 250px;
+
+		.top {
+			display: flex;
+			align-items: center;
+		}
+		.bottom {
+			display: block;
+			opacity: 75%;
+			padding-left: 28px;
+		}
+	}
+}
