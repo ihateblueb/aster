@@ -7,44 +7,12 @@
 
 <template>
 	{#if to}
-		<button class="dropdownItem" on:click={() => goto(to)}>
+		<button class="dropdownItem _H482b0n" on:click={() => goto(to)}>
 			<slot></slot>
 		</button>
 	{:else}
-		<button class={'dropdownItem ' + type} on:click>
+		<button class={'dropdownItem _H482b0n ' + type} on:click>
 			<slot></slot>
 		</button>
 	{/if}
 </template>
-
-<style lang="scss">
-	.dropdownItem {
-		display: flex;
-		align-items: center;
-		padding: 6px 8px;
-		width: 100%;
-
-		background-color: transparent;
-		color: inherit;
-		font-family: inherit;
-		font-size: inherit;
-		border-radius: var(--border-s);
-		border: none;
-
-		cursor: pointer;
-
-		&.danger {
-			color: var(--danger);
-
-			&:hover {
-				color: var(--danger);
-				background-color: var(--danger-20);
-			}
-		}
-
-		&:hover {
-			color: var(--accent);
-			background-color: var(--accent-20);
-		}
-	}
-</style>

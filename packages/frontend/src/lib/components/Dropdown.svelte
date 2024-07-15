@@ -37,44 +37,8 @@
 		bind:this={dialog}
 		on:click={close}
 		on:close={() => (show = false)}
-		class:show
+		class={'_91qW7WV' + (show ? ' show' : '')}
 	>
 		<slot></slot>
 	</dialog>
 </template>
-
-<style lang="scss">
-	.show {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	dialog {
-		position: absolute;
-
-		margin: 0px;
-		padding: 6px;
-
-		box-shadow: 0px 0px 15px #00000025;
-		background-color: var(--bg-secondary);
-		color: var(--txt-secondary);
-		font-size: var(--font-s);
-
-		border-radius: var(--border-m);
-		border: none;
-
-		min-width: 175px;
-
-		> hr {
-			width: calc(100% - 16px);
-			margin-left: 8px;
-			margin-right: 8px;
-			border: 0px solid;
-			border-top: var(--border-width-s) solid var(--bg-accent);
-		}
-
-		&::backdrop {
-			background-color: transparent;
-		}
-	}
-</style>

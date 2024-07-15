@@ -9,5 +9,6 @@
 <style lang="scss">
 	.emoji {
 		height: 25px;
+		max-width: 250px;
 	}
 </style>

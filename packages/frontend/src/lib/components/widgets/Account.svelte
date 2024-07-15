@@ -7,7 +7,7 @@
 </script>
 
 <template>
-	<div class="account">
+	<div class="account _66pAv1X">
 		<a href={'/@' + account.username} class="displayname subtle">
 			<Avatar
 				src={account.avatar}
@@ -26,23 +26,3 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss">
-	.account {
-		display: flex;
-		align-items: center;
-		.usernames {
-			display: flex;
-			justify-content: center;
-			flex-direction: column;
-			padding-left: 10px;
-			padding-right: 10px;
-			.displayname {
-				font-weight: 600;
-			}
-			.username {
-				font-size: var(--font-s);
-			}
-		}
-	}
-</style>

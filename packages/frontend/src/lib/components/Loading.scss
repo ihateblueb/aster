@@ -1,0 +1,15 @@
+@keyframes spin {
+	0% {
+		rotate: 0deg;
+	}
+	100% {
+		rotate: 360deg;
+	}
+}
+
+.spin._9Gb36Cp {
+	display: flex;
+	animation: spin;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}

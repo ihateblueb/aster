@@ -83,7 +83,7 @@
 
 <template>
 	{#if attachments && attachments.length > 0}
-		<div id="gallery" class="pswp-gallery attachments">
+		<div id="gallery" class="pswp-gallery attachments _9H50yED">
 			{#each attachments as attachment}
 				{#if attachment.type.startsWith('image')}
 					<a
@@ -125,32 +125,3 @@
 		</div>
 	{/if}
 </template>
-
-<style lang="scss">
-	@import '../../../node_modules/photoswipe/dist/photoswipe.css';
-
-	.attachments {
-		display: grid;
-		grid-auto-flow: column;
-		margin-top: 10px;
-		grid-gap: 8px;
-		height: 100%;
-		width: 100%;
-
-		a,
-		img,
-		video,
-		audio {
-			width: 100%;
-			border-radius: var(--border-s);
-			background-color: var(--bg-tertiary);
-			max-height: 250px;
-
-			.attachmentImg {
-				width: 100%;
-				height: 100%;
-				object-fit: contain;
-			}
-		}
-	}
-</style>
