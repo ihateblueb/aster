@@ -5,90 +5,12 @@
 
 <template>
 	{#if to}
-		<a class="btn {type}" href={to} on:click>
+		<a class="btn _oD12hh4 {type}" href={to} on:click>
 			<slot></slot>
 		</a>
 	{:else}
-		<button class="btn {type}" on:click>
+		<button class="btn _oD12hh4 {type}" on:click>
 			<slot></slot>
 		</button>
 	{/if}
 </template>
-
-<style lang="scss">
-	.btn {
-		cursor: pointer;
-		user-select: none;
-		display: inline-flex;
-		align-items: center;
-		background-color: var(--bg-tertiary);
-		color: var(--txt-secondary);
-		font-size: var(--font-m);
-		text-decoration: none;
-		padding: 8px 12px;
-		margin: 5px 0px;
-		border-radius: var(--border-m);
-		border: none;
-		font-family: inherit;
-
-		&.wide {
-			width: 100%;
-			box-sizing: border-box;
-			justify-content: center;
-		}
-
-		&.nav {
-			width: 100%;
-			box-sizing: border-box;
-			margin: 2.5px 0px;
-			padding: 8px 12px;
-			background-color: transparent;
-
-			&.accent {
-				color: var(--accent);
-				background-color: var(--accent-20);
-			}
-
-			&:hover {
-				color: var(--accent);
-			}
-		}
-
-		&:not(.wide, .nav) {
-			width: fit-content;
-		}
-
-		&.header {
-			border: none;
-			background-color: transparent;
-			padding: 0px;
-			margin: 0px;
-			margin-right: 5px;
-			transition: 0.1s;
-
-			&.selected {
-				color: var(--accent);
-				background-color: transparent;
-			}
-		}
-
-		&.accent {
-			background-color: var(--accent);
-		}
-
-		&.success {
-			background-color: var(--success);
-		}
-
-		&.warn {
-			background-color: var(--warn);
-		}
-
-		&.danger {
-			background-color: var(--danger);
-		}
-
-		outline: 2px var(--accent);
-		outline-offset: 1px;
-	}
-</style>

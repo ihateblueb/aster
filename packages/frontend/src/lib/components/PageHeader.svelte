@@ -12,7 +12,7 @@
 </svelte:head>
 
 <template>
-	<div class="pageHeader">
+	<div class="pageHeader _NFt7o37">
 		<div class="left">
 			<div class="icon">
 				<slot name="icon">
@@ -28,38 +28,3 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss">
-	.pageHeader {
-		display: flex;
-		align-items: center;
-		padding: 14px 16px;
-		color: var(--txt-primary);
-		background-color: var(--bg-primary-50);
-		backdrop-filter: blur(16px);
-		position: sticky;
-		top: 0;
-		z-index: 1000;
-
-		.left {
-			display: flex;
-			align-items: center;
-			flex-grow: 10;
-
-			.icon {
-				display: flex;
-				align-items: center;
-				margin: 0px 8px 0px 0px;
-			}
-		}
-		.right {
-			display: flex;
-			align-items: center;
-			flex-grow: 0;
-			gap: 8px;
-		}
-		p {
-			font-weight: 600;
-		}
-	}
-</style>

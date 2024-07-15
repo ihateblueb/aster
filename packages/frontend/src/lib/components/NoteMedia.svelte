@@ -127,6 +127,8 @@
 </template>
 
 <style lang="scss">
+	@import '../../../node_modules/photoswipe/dist/photoswipe.css';
+
 	.attachments {
 		display: grid;
 		grid-auto-flow: column;

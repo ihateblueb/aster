@@ -73,7 +73,7 @@
 </script>
 
 <template>
-	<div class="sidebar">
+	<div class="sidebar _39bP9NA">
 		<div class="top">
 			{#each convertedWidgets.top as widget}
 				<div class="widget">
@@ -97,42 +97,3 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss">
-	.sidebar {
-		display: flex;
-		flex-direction: column;
-		height: 100vh;
-		max-width: 300px;
-		width: 300px;
-		min-width: 275px;
-		overflow-y: hidden;
-		.top {
-			height: fit-content;
-			.widget {
-				margin: 8px;
-			}
-		}
-		.mid {
-			margin-bottom: auto;
-			height: fit-content;
-			overflow-y: scroll;
-			.widget {
-				margin: 8px;
-			}
-		}
-		.btm {
-			margin-top: auto;
-			height: fit-content;
-			.widget {
-				margin: 8px;
-			}
-		}
-	}
-
-	@media screen and (max-width: 1060px) {
-		.sidebar {
-			display: none;
-		}
-	}
-</style>

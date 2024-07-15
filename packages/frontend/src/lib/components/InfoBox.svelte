@@ -4,45 +4,20 @@
 
 <template>
 	{#if type === 'success'}
-		<div class="infoBox success">
+		<div class="infoBox _1bF30yb success">
 			<slot></slot>
 		</div>
 	{:else if type === 'info'}
-		<div class="infoBox info">
+		<div class="infoBox _1bF30yb info">
 			<slot></slot>
 		</div>
 	{:else if type === 'warn'}
-		<div class="infoBox warn">
+		<div class="infoBox _1bF30yb warn">
 			<slot></slot>
 		</div>
 	{:else if type === 'danger'}
-		<div class="infoBox danger">
+		<div class="infoBox _1bF30yb danger">
 			<slot></slot>
 		</div>
 	{/if}
 </template>
-
-<style lang="scss">
-	.infoBox {
-		border-radius: var(--border-m);
-		padding: 6px 12px;
-		margin: 10px 0px 10px 0px;
-
-		&.success {
-			background-color: var(--success-20);
-			color: var(--success);
-		}
-		&.info {
-			background-color: var(--accent-20);
-			color: var(--accent);
-		}
-		&.warn {
-			background-color: var(--warn-20);
-			color: var(--warn);
-		}
-		&.danger {
-			background-color: var(--danger-20);
-			color: var(--danger);
-		}
-	}
-</style>

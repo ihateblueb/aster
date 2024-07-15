@@ -162,31 +162,3 @@
 		{/each}
 	</svelte-virtual-list-contents>
 </svelte-virtual-list-viewport>
-
-<style lang="scss">
-	svelte-virtual-list-viewport {
-		display: block;
-		position: relative;
-		overflow-y: auto;
-		-webkit-overflow-scrolling: touch;
-		height: 100%;
-		box-sizing: border-box;
-	}
-
-	svelte-virtual-list-contents {
-		display: block;
-
-		&.timeline {
-			display: grid;
-			grid-template-columns: 100%;
-		}
-
-		svelte-virtual-list-row {
-			display: block;
-		}
-	}
-
-	svelte-virtual-list-row {
-		overflow: hidden;
-	}
-</style>

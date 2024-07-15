@@ -18,8 +18,8 @@
 
 <template>
 	<PageHeader title={locale('settings')} icon="settings" />
-	<div class="pageContent">
-		<div class="paddedPage">
+	<div class="pageContent _sVC9i48">
+		<div class="paddedPage settingsPage">
 			<h1>{locale('s_appearance')}</h1>
 			<h2>{locale('s_appearance_theme')}</h2>
 			<Select>
@@ -42,29 +42,3 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss">
-	h1 {
-		font-size: var(--font-xxl);
-		margin-bottom: 12px;
-
-		&:not(:first-child) {
-			margin-top: 14px;
-		}
-	}
-
-	h2 {
-		font-size: var(--font-xl);
-		margin-bottom: 10px;
-
-		&:not(:first-child) {
-			margin-top: 12px;
-		}
-	}
-
-	pre {
-		code {
-			font-size: var(--font-xs);
-		}
-	}
-</style>

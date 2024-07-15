@@ -1,0 +1,25 @@
+._sVC9i48 {
+	h1 {
+		font-size: var(--font-xxl);
+		margin-bottom: 12px;
+
+		&:not(:first-child) {
+			margin-top: 14px;
+		}
+	}
+
+	h2 {
+		font-size: var(--font-xl);
+		margin-bottom: 10px;
+
+		&:not(:first-child) {
+			margin-top: 12px;
+		}
+	}
+
+	pre {
+		code {
+			font-size: var(--font-xs);
+		}
+	}
+}

@@ -68,15 +68,3 @@
 		{/if}
 	</div>
 </template>
-
-<style lang="scss">
-	.loading {
-		display: flex;
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		align-items: center;
-		justify-content: center;
-		padding: 25px;
-	}
-</style>

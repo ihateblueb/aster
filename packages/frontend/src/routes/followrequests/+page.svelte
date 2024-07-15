@@ -64,38 +64,3 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss">
-	.followRequest {
-		display: flex;
-		margin-bottom: 15px;
-		padding: 15px;
-		border-radius: var(--border-xl);
-		background-color: var(--bg-secondary);
-
-		.left {
-			display: flex;
-			flex-grow: 2;
-
-			> .names {
-				display: inline-flex;
-				justify-content: center;
-				flex-direction: column;
-				margin-left: 10px;
-				> a {
-					display: block;
-					&.displayname {
-						font-weight: 600;
-					}
-					&.username {
-						font-size: var(--font-s);
-					}
-				}
-			}
-		}
-		.right {
-			display: flex;
-			gap: 5px;
-		}
-	}
-</style>

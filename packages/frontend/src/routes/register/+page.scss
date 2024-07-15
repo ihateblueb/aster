@@ -1,0 +1,35 @@
+.paddedPage {
+	display: flex;
+	justify-content: center;
+	align-content: center;
+
+	.authCtn {
+		display: block;
+		width: min-content;
+		margin: 35px 0px 35px 0px;
+
+		.ipt {
+			margin: 5px 0px 5px 0;
+		}
+		h1 {
+			font-size: var(--font-xxl);
+			margin-bottom: 6px;
+		}
+		p {
+			font-size: var(--font-l);
+			margin-bottom: 10px;
+			color: var(--txt-tertiary);
+		}
+		b {
+			display: block;
+			padding-top: 10px;
+		}
+		ol {
+			margin: 6px 0px 6px 0;
+			padding-left: 30px;
+		}
+		li {
+			padding: 2px 0px 2px 0;
+		}
+	}
+}
