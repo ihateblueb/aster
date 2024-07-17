@@ -3,82 +3,41 @@ import express from 'express';
 import db from '../../../utils/database.js';
 import ApiNote from '../../../constructors/note.js';
 import logger from '../../../utils/logger.js';
-import { In } from 'typeorm';
+import generateNote from '../../../generators/note.js';
 
 const router = express.Router();
 
 async function renderTimeline(grabbedNotes) {
 	var collectedNotes = [];
-	var sortedReactions = [];
 
 	for (const i of grabbedNotes.keys()) {
-		var grabbedAuthor = await db
-			.getRepository('user')
+		var grabbedNote = await db
+			.getRepository('note')
 			.createQueryBuilder()
-			.where({ id: grabbedNotes[i].author })
+			.where({ id: grabbedNotes[i].id })
 			.getOne();
 
-		if (grabbedAuthor) {
-			var grabbedInstance = await db
-				.getRepository('instance')
-				.createQueryBuilder()
-				.where({ host: grabbedAuthor.host })
-				.getOne();
+		let generatedNote = await generateNote(grabbedNote);
 
-			let grabbedAttachments = await db
-				.getRepository('drive_file')
-				.createQueryBuilder()
-				.where({
-					note: grabbedNotes[i].id
-				})
-				.getMany();
-
-			let grabbedEmojis = [];
-
-			if (grabbedNotes[i].emojis) {
-				grabbedNotes[i].emojis.forEach(async (emoji) => {
-					let grabbedEmoji = await db
-						.getRepository('emoji')
-						.createQueryBuilder()
-						.where({
-							id: emoji
-						})
-						.getOne();
-
-					grabbedEmojis.push(grabbedEmoji);
-				});
-			}
-
-			var grabbedReactions = await db
-				.getRepository('note_react')
-				.createQueryBuilder('note_react')
-				.leftJoinAndSelect('note_react.emoji', 'emoji')
-				.where('note_react.note = :note', {
-					note: grabbedNotes[i].id
-				})
-				.getMany();
-
-			var grabbedLikes = await db.getRepository('note_like').find({
-				where: {
-					note: grabbedNotes[i].id
-				}
-			});
-
-			collectedNotes.push(
-				new ApiNote(
-					grabbedNotes[i],
-					grabbedAuthor,
-					grabbedInstance,
-					grabbedAttachments,
-					grabbedEmojis,
-					grabbedReactions,
-					grabbedLikes
-				)
-			);
+		if (generatedNote && generatedNote.status === 200) {
+			collectedNotes.push(generatedNote.note);
 			logger(
 				'debug',
 				'timeline',
 				'rendered note ' + (i + 1) + '/' + grabbedNotes.length
+			);
+		} else {
+			logger(
+				'debug',
+				'timeline',
+				'failed to render note ' +
+					(i + 1) +
+					'/' +
+					grabbedNotes.length +
+					' error: ' +
+					generatedNote.status +
+					' ' +
+					generatedNote.message
 			);
 		}
 	}

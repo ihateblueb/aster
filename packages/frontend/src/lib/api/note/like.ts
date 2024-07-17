@@ -1,18 +1,15 @@
 import Store from '$lib/utils/Store';
 
-export default async function noteReact(noteId: string, reaction: string) {
+export default async function noteLike(noteId: string) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v2/note/${noteId}/react`, {
+	var noteReq = await fetch(`/api/v2/note/${noteId}/like`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 			Authorization: `Bearer ${Store.get('a_token')}`
-		},
-		body: JSON.stringify({
-			reaction: reaction
-		})
+		}
 	});
 
 	noteRes = await noteReq.json();

@@ -13,6 +13,7 @@
 	import noteBookmark from '$lib/api/note/bookmark';
 	import noteDelete from '$lib/api/note/delete';
 	import noteReact from '$lib/api/note/react';
+	import noteLike from '$lib/api/note/like';
 	import noteRepeat from '$lib/api/note/repeat';
 	import notePin from '$lib/api/note/pin';
 	import noteUnpin from '$lib/api/note/unpin';
@@ -217,7 +218,7 @@
 				<button on:click={() => noteRepeat(data.id)}>
 					<Icon name="repeat" size="20px" color="inherit" />
 				</button>
-				<button on:click={() => noteReact(data.id)}>
+				<button on:click={() => noteLike(data.id)}>
 					<Icon name="star" size="20px" color="inherit" />
 					<span>{data.likes.count}</span>
 				</button>

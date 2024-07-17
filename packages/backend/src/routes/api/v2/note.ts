@@ -9,6 +9,8 @@ import logger from '../../../utils/logger.js';
 import sanitize from '../../../utils/sanitize.js';
 import ApNote from '../../../constructors/ApNote.js';
 import ApiNote from '../../../constructors/note.js';
+import createNotification from '../../../utils/createNotification.js';
+import generateNote from '../../../generators/note.js';
 
 const router = express.Router();
 
@@ -25,92 +27,13 @@ router.get('/api/v2/note/:noteid', async (req, res) => {
 			.where({ id: req.params.noteid })
 			.getOne();
 
-		console.log(grabbedNote);
+		let generatedNote = await generateNote(grabbedNote);
 
-		if (grabbedNote) {
-			var grabbedAuthor = await db
-				.getRepository('user')
-				.createQueryBuilder()
-				.where({ id: grabbedNote.author })
-				.getOne();
-
-			if (grabbedAuthor) {
-				if (grabbedAuthor.suspended) {
-					return res.status(400).json({
-						message: 'Note author suspended'
-					});
-				} else if (grabbedAuthor.deactivated) {
-					return res.status(400).json({
-						message: 'Note author deactivated'
-					});
-				} else {
-					var grabbedInstance = await db
-						.getRepository('instance')
-						.createQueryBuilder()
-						.where({ host: grabbedAuthor.host })
-						.getOne();
-
-					var grabbedAttachments = await db
-						.getRepository('drive_file')
-						.createQueryBuilder()
-						.where({
-							note: grabbedNote.id
-						})
-						.getMany();
-
-					var grabbedEmojis = [];
-
-					if (grabbedNote.emojis) {
-						grabbedNote.emojis.forEach(async (emoji) => {
-							let grabbedEmoji = await db
-								.getRepository('emoji')
-								.createQueryBuilder()
-								.where({
-									id: emoji
-								})
-								.getOne();
-
-							grabbedEmojis.push(grabbedEmoji);
-						});
-					}
-
-					var grabbedReactions = await db
-						.getRepository('note_react')
-						.createQueryBuilder('note_react')
-						.leftJoinAndSelect('note_react.emoji', 'emoji')
-						.where('note_react.note = :note', {
-							note: grabbedNote.id
-						})
-						.getMany();
-
-					var grabbedLikes = await db
-						.getRepository('note_like')
-						.find({
-							where: {
-								note: grabbedNote.id
-							}
-						});
-
-					res.status(200).json(
-						new ApiNote(
-							grabbedNote,
-							grabbedAuthor,
-							grabbedInstance,
-							grabbedAttachments,
-							grabbedEmojis,
-							grabbedReactions,
-							grabbedLikes
-						)
-					);
-				}
-			} else {
-				return res.status(500).json({
-					message: 'Author of note invalid'
-				});
-			}
+		if (generatedNote.status === 200) {
+			return res.status(200).json(generatedNote.note);
 		} else {
-			return res.status(404).json({
-				message: 'Note does not exist'
+			return res.status(generatedNote.status).json({
+				message: generatedNote.message
 			});
 		}
 	}
@@ -231,6 +154,68 @@ router.delete(`/api/v2/note`, async (req, res) => {
 /*
 	Note Interactions
 */
+
+// like note
+router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
+	var authRes = await verifyToken(req.headers.authorization);
+
+	if (req.params.noteid) {
+		if (authRes.status === 200) {
+			logger('debug', 'note', 'note like requested');
+
+			var grabbedNote = await db.getRepository('note').findOne({
+				where: {
+					id: req.params.noteid
+				}
+			});
+
+			if (grabbedNote) {
+				const likeId = uuidv4();
+
+				await db.getRepository('note_like').insert({
+					id: likeId,
+					ap_id: 'https://as.blueb.me/activities/' + likeId,
+					note: req.params.noteid,
+					created_at: new Date(Date.now()).toISOString(),
+					user: authRes.grabbedUserAuth.user
+				});
+
+				var grabbedAuthor = await db.getRepository('note').findOne({
+					where: {
+						id: grabbedNote.user
+					}
+				});
+
+				if (grabbedAuthor) {
+					if (grabbedAuthor.local) {
+						await createNotification(
+							grabbedNote.author,
+							authRes.grabbedUserAuth.user,
+							'like',
+							grabbedNote.id
+						);
+					}
+				}
+
+				return res.status(200).json({
+					message: 'Note liked'
+				});
+			} else {
+				return res.status(404).json({
+					message: 'Note not found'
+				});
+			}
+		} else {
+			return res.status(authRes.status).json({
+				message: authRes.message
+			});
+		}
+	} else {
+		return res.status(400).json({
+			message: 'Note ID parameter required'
+		});
+	}
+});
 
 // react to note
 router.post(`/api/v2/note/:noteid/react`, async (req, res) => {
