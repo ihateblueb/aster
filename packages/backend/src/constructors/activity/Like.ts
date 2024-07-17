@@ -22,6 +22,8 @@ export default class ActLike {
 	_misskey_reaction?: string;
 	tag?: object[];
 
+	// TODO: reaction? uuhg
+
 	constructor(reaction: NoteReact, user: User, author: User) {
 		this.id = config.url + 'activities/' + reaction.id;
 		this.actor = user.ap_id;

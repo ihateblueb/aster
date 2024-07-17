@@ -28,7 +28,7 @@ export default class ApiNote {
 		grabbedEmojis?,
 		grabbedReactions?,
 		grabbedLikes?,
-		grabbedReplyingTo?: User,
+		grabbedReplyingTo?,
 		grabbedReplyingToAuthor?
 	) {
 		this.id = grabbedNote.id;
