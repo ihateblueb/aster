@@ -5,7 +5,7 @@ import db from '../../../utils/database.js';
 
 const router = express.Router();
 
-router.get('/api/v1/notifications', async (req, res) => {
+router.get('/api/v2/notifications', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	var authRes = await verifyToken(req.headers.authorization);
 

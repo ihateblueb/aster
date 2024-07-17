@@ -8,7 +8,7 @@ import db from '../../../utils/database.js';
 
 const router = express.Router();
 
-router.get('/api/v1/followrequests', async (req, res) => {
+router.get('/api/v2/followrequests', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	var authRes = await verifyToken(req.headers.authorization);
 
@@ -29,7 +29,7 @@ router.get('/api/v1/followrequests', async (req, res) => {
 	}
 });
 
-router.post('/api/v1/followrequest/accept', async (req, res) => {
+router.post('/api/v2/followrequest/accept', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	var authRes = await verifyToken(req.headers.authorization);
 
@@ -98,7 +98,7 @@ router.post('/api/v1/followrequest/accept', async (req, res) => {
 	}
 });
 
-router.post('/api/v1/followrequest/deny', async (req, res) => {
+router.post('/api/v2/followrequest/deny', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	var authRes = await verifyToken(req.headers.authorization);
 

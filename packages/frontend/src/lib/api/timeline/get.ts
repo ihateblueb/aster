@@ -4,7 +4,7 @@ export default async function timelineGet(timeline: string, tag?: string) {
 	let timelineRes = {};
 
 	var timelineReq = await fetch(
-		`/api/v1/timeline/${timeline}${tag ? '/' + tag : ''}`,
+		`/api/v2/timeline/${timeline}${tag ? '/' + tag : ''}`,
 		{
 			method: 'GET',
 			headers: {

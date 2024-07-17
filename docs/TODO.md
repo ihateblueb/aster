@@ -1,6 +1,6 @@
 # todo
 
-## /api/v1/meta
+## /api/v2/meta
 
 yeah. that endpoint runs 6 sql queries. how about a worker that updates those counts in the meta table hourly so its just the one? that would be cool. also include a "stats_last_updated" or something to show in the frontend because i think thats important.
 

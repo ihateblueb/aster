@@ -90,7 +90,7 @@ async function renderTimeline(grabbedNotes) {
 	return collectedNotes;
 }
 
-router.get('/api/v1/timeline/public', async (req, res) => {
+router.get('/api/v2/timeline/public', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	var grabbedNotes = await db
@@ -102,7 +102,7 @@ router.get('/api/v1/timeline/public', async (req, res) => {
 	res.status(200).json(await renderTimeline(grabbedNotes));
 });
 
-router.get('/api/v1/timeline/local', async (req, res) => {
+router.get('/api/v2/timeline/local', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	var grabbedNotes = await db
@@ -114,7 +114,7 @@ router.get('/api/v1/timeline/local', async (req, res) => {
 	res.status(200).json(await renderTimeline(grabbedNotes));
 });
 
-router.get('/api/v1/timeline/tag/:tag', async (req, res) => {
+router.get('/api/v2/timeline/tag/:tag', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	var grabbedNotes = await db

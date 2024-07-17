@@ -12,7 +12,7 @@
 	async function startLogin() {
 		var credentialsToSend = btoa(`${username}:${password}`);
 
-		await fetch(`/api/v1/register`, {
+		await fetch(`/api/v2/register`, {
 			method: 'POST',
 			body: credentialsToSend
 		});

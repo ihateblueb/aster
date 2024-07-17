@@ -5,7 +5,7 @@ import inboxQueue from '../../../../utils/inboxQueue.js';
 
 const router = express.Router();
 
-router.get('/api/v1/metrics/queue', async (req, res) => {
+router.get('/api/v2/metrics/queue', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	const inboxCompleted = await inboxQueue.getMetrics('completed');

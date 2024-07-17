@@ -17,7 +17,7 @@
 	async function startLogin() {
 		var credentialsToSend = btoa(`${username}:${password}`);
 
-		var loginReq = await fetch(`/api/v1/login`, {
+		var loginReq = await fetch(`/api/v2/login`, {
 			method: 'POST',
 			body: credentialsToSend
 		});
@@ -27,7 +27,7 @@
 		if (loginReq.status === 200) {
 			Store.set('a_token', loginRes.token);
 
-			var accountReq = await fetch(`/api/v1/user/${loginRes.id}`);
+			var accountReq = await fetch(`/api/v2/user/${loginRes.id}`);
 			accountRes = await accountReq.json();
 
 			if (accountReq.status === 200) {

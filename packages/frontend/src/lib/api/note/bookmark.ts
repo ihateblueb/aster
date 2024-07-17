@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function noteBookmark(noteId: string) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v1/note/${noteId}/bookmark`, {
+	var noteReq = await fetch(`/api/v2/note/${noteId}/bookmark`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

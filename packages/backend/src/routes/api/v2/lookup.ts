@@ -8,7 +8,7 @@ import db from '../../../utils/database.js';
 const router = express.Router();
 
 // lookup by username
-router.get('/api/v1/lookup/@:username', async (req, res) => {
+router.get('/api/v2/lookup/@:username', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.username) {
 		return res.status(400).json({

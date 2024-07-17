@@ -9,7 +9,7 @@ import isValidUrl from '../../../utils/isValidUrl.js';
 const router = express.Router();
 
 // get ad by id or random
-router.get('/api/v1/search', async (req, res) => {
+router.get('/api/v2/search', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.query.q) {
 		return res.status(400).json({

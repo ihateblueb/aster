@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function notificationsGet(noteId: string) {
 	let notificationsRes = {};
 
-	var notificationsReq = await fetch(`/api/v1/notifications`, {
+	var notificationsReq = await fetch(`/api/v2/notifications`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',

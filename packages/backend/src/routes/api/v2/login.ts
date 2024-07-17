@@ -8,7 +8,7 @@ import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
-router.post('/api/v1/login', async (req, res) => {
+router.post('/api/v2/login', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.body) {
 		return res.status(400).json({

@@ -8,7 +8,7 @@ import sanitize from '../../../utils/sanitize.js';
 const router = express.Router();
 
 // lookup by id
-router.get('/api/v1/user/:userid', async (req, res) => {
+router.get('/api/v2/user/:userid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
 		return res.status(400).json({
@@ -42,14 +42,14 @@ router.get('/api/v1/user/:userid', async (req, res) => {
 });
 
 // create user
-router.post(`/api/v1/user`, async (req, res) => {
+router.post(`/api/v2/user`, async (req, res) => {
 	return res.status(501).json({
 		message: 'Not implemented'
 	});
 });
 
 // edit user
-router.patch(`/api/v1/user`, async (req, res) => {
+router.patch(`/api/v2/user`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
@@ -163,7 +163,7 @@ router.patch(`/api/v1/user`, async (req, res) => {
 });
 
 // delete user
-router.delete(`/api/v1/user`, async (req, res) => {
+router.delete(`/api/v2/user`, async (req, res) => {
 	return res.status(501).json({
 		message: 'Not implemented'
 	});
@@ -174,7 +174,7 @@ router.delete(`/api/v1/user`, async (req, res) => {
 */
 
 // follow user
-router.post(`/api/v1/user/:userid/follow`, async (req, res) => {
+router.post(`/api/v2/user/:userid/follow`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.userid) {
@@ -196,7 +196,7 @@ router.post(`/api/v1/user/:userid/follow`, async (req, res) => {
 });
 
 // report user
-router.post(`/api/v1/user/:userid/report`, async (req, res) => {
+router.post(`/api/v2/user/:userid/report`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.userid) {
@@ -218,7 +218,7 @@ router.post(`/api/v1/user/:userid/report`, async (req, res) => {
 });
 
 // bite user
-router.post(`/api/v1/user/:userid/bite`, async (req, res) => {
+router.post(`/api/v2/user/:userid/bite`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.userid) {

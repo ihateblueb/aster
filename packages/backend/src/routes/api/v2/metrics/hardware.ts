@@ -7,7 +7,7 @@ import db from '../../../../utils/database.js';
 
 const router = express.Router();
 
-router.get('/api/v1/metrics/hardware', async (req, res) => {
+router.get('/api/v2/metrics/hardware', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let hardwareJson = {};

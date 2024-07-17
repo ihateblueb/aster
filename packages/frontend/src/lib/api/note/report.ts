@@ -6,7 +6,7 @@ export default async function noteReport(
 ) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v1/note/${noteId}/report`, {
+	var noteReq = await fetch(`/api/v2/note/${noteId}/report`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

@@ -800,7 +800,7 @@ undo
       'pleroma_explicit_addressing',
       'shareable_emoji_packs',
       'multifetch',
-      'pleroma:api/v1/notifications:include_types_filter',
+      'pleroma:api/v2/notifications:include_types_filter',
       'quote_posting',
       'editing',
       'bubble_timeline',

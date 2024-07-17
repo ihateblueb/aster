@@ -8,7 +8,7 @@ import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
 const router = express.Router();
 
-router.get('/api/v1/instance/:host', async (req, res) => {
+router.get('/api/v2/instance/:host', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.host) {
 		return res.status(400).json({
@@ -38,7 +38,7 @@ router.get('/api/v1/instance/:host', async (req, res) => {
 */
 
 // report instance
-router.post(`/api/v1/intance/:host/report`, async (req, res) => {
+router.post(`/api/v2/intance/:host/report`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.host) {

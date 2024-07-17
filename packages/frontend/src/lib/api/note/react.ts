@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function noteReact(noteId: string, reaction?: string) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v1/note/${noteId}/react`, {
+	var noteReq = await fetch(`/api/v2/note/${noteId}/react`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

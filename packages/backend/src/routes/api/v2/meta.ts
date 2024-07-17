@@ -5,7 +5,7 @@ import ApiMeta from '../../../constructors/meta.js';
 
 const router = express.Router();
 
-router.get('/api/v1/meta', async (req, res) => {
+router.get('/api/v2/meta', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	const grabbedMeta = await db

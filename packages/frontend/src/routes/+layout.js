@@ -7,7 +7,7 @@ export const ssr = false;
 
 export async function load({ url }) {
 	// get meta
-	const response = await fetch(`/api/v1/meta`);
+	const response = await fetch(`/api/v2/meta`);
 	const data = await response.json();
 
 	// locale stuff
@@ -42,7 +42,7 @@ export async function load({ url }) {
 	// update account
 	var account = Store.get('account');
 	if (account && JSON.parse(account).id) {
-		var accountReq = await fetch(`/api/v1/user/${JSON.parse(account).id}`);
+		var accountReq = await fetch(`/api/v2/user/${JSON.parse(account).id}`);
 		var accountRes = await accountReq.json();
 
 		if (accountReq.status === 200) {

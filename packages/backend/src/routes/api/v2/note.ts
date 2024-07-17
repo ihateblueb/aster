@@ -12,7 +12,7 @@ import ApiNote from '../../../constructors/note.js';
 
 const router = express.Router();
 
-router.get('/api/v1/note/:noteid', async (req, res) => {
+router.get('/api/v2/note/:noteid', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.noteid) {
 		return res.status(400).json({
@@ -117,7 +117,7 @@ router.get('/api/v1/note/:noteid', async (req, res) => {
 });
 
 // create note
-router.post(`/api/v1/note`, async (req, res) => {
+router.post(`/api/v2/note`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
@@ -174,7 +174,7 @@ router.post(`/api/v1/note`, async (req, res) => {
 });
 
 // edit note
-router.patch(`/api/v1/note`, async (req, res) => {
+router.patch(`/api/v2/note`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
@@ -189,7 +189,7 @@ router.patch(`/api/v1/note`, async (req, res) => {
 });
 
 // delete note
-router.delete(`/api/v1/note`, async (req, res) => {
+router.delete(`/api/v2/note`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (authRes.status === 200) {
@@ -233,7 +233,7 @@ router.delete(`/api/v1/note`, async (req, res) => {
 */
 
 // react to note
-router.post(`/api/v1/note/:noteid/react`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/react`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -255,7 +255,7 @@ router.post(`/api/v1/note/:noteid/react`, async (req, res) => {
 });
 
 // repeat note
-router.post(`/api/v1/note/:noteid/repeat`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -277,7 +277,7 @@ router.post(`/api/v1/note/:noteid/repeat`, async (req, res) => {
 });
 
 // quote note
-router.post(`/api/v1/note/:noteid/quote`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/quote`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -299,7 +299,7 @@ router.post(`/api/v1/note/:noteid/quote`, async (req, res) => {
 });
 
 // bookmark note
-router.post(`/api/v1/note/:noteid/bookmark`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/bookmark`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -321,7 +321,7 @@ router.post(`/api/v1/note/:noteid/bookmark`, async (req, res) => {
 });
 
 // pin note
-router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/pin`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -350,7 +350,7 @@ router.post(`/api/v1/note/:noteid/pin`, async (req, res) => {
 });
 
 // unpin note
-router.post(`/api/v1/note/:noteid/unpin`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/unpin`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {
@@ -379,7 +379,7 @@ router.post(`/api/v1/note/:noteid/unpin`, async (req, res) => {
 });
 
 // report note
-router.post(`/api/v1/note/:noteid/report`, async (req, res) => {
+router.post(`/api/v2/note/:noteid/report`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
 
 	if (req.params.noteid) {

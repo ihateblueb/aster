@@ -5,7 +5,7 @@ import db from '../../../utils/database.js';
 const router = express.Router();
 
 // get ad by id or random
-router.get('/api/v1/ad/:adId', async (req, res) => {
+router.get('/api/v2/ad/:adId', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.adId) {
 		return res.status(400).json({
