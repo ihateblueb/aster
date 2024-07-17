@@ -336,8 +336,12 @@
 
 <template>
 	<span class="mfmCtn" dir="auto" on:click>
-		{#each mfmTree as object}
-			{@html render(object)}
-		{/each}
+		{#if content}
+			{#each mfmTree as object}
+				{@html render(object)}
+			{/each}
+		{:else}
+			<p></p>
+		{/if}
 	</span>
 </template>

@@ -11,7 +11,9 @@
 
 <template>
 	<PageHeader
-		title="{locale('note_by')} {data.author.displayname}"
+		title="{locale('note_by')} {data.author.displayname
+			? data.author.displayname
+			: data.author.username}"
 		icon="note"
 	/>
 	<div class="pageContent">

@@ -80,7 +80,12 @@
 							'@' +
 							data.author.host}
 						class="displayname subtle"
-						><Mfm content={data.author.displayname} simple /></a
+						><Mfm
+							content={data.author.displayname
+								? data.author.displayname
+								: data.author.username}
+							simple
+						/></a
 					>
 					<a
 						href={'/@' +

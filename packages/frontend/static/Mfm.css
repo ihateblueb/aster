@@ -5,6 +5,10 @@
 	white-space: preserve;
 }
 
+.mfmCtn p {
+	display: inline;
+}
+
 .mfm-quote {
 	margin: 8px 12px;
 	color: var(--txt-tertiary);
