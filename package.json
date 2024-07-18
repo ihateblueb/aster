@@ -22,8 +22,8 @@
 		"dev-fe": "pnpm --filter=frontend dev",
 		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
 		"migrate": "pnpm build-be && pnpm --filter=backend migrate",
-		"revert": "pnpm build-be && pnpm --filter=backend revert",
-		"pull": "git pull && git submodule update --init --recursive",
+		"revert": "pnpm build-be && pnpm -filter=backend revert",
+		"pull": "git pull && git submodule update --init --recursive ",
 		"cli": "pnpm run --filter=backend cli",
 		"clean-be": "./scripts/clean-be.sh",
 		"clean-fe": "./scripts/clean-fe.sh",
@@ -34,19 +34,19 @@
 	"author": "blueb",
 	"license": "AGPL-3.0",
 	"dependencies": {
-		"@eslint/js": "^9.7.0",
-		"eslint": "^9.7.0",
-		"globals": "^15.8.0",
-		"typescript-eslint": "^7.16.1"
+		"@eslint/js": "^9.2.0",
+		"eslint": "^9.2.0",
+		"globals": "^15.1.0",
+		"typescript-eslint": "^7.8.0"
 	},
 	"devDependencies": {
 		"npm-run-all": "^4.1.5",
-		"prettier": "^3.3.3",
+		"prettier": "^3.2.5",
 		"prettier-plugin-ini": "^1.2.0",
 		"prettier-plugin-sh": "^0.14.0",
-		"prettier-plugin-svelte": "^3.2.6",
+		"prettier-plugin-svelte": "^3.2.3",
 		"ts-node": "^10.9.2",
-		"typescript": "^5.5.3"
+		"typescript": "^5.4.5"
 	},
 	"packageManager": "pnpm@9.3.0+sha512.ee7b93e0c2bd11409c6424f92b866f31d3ea1bef5fbe47d3c7500cdc3c9668833d2e55681ad66df5b640c61fa9dc25d546efa54d76d7f8bf54b13614ac293631"
 }
