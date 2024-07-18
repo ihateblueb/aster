@@ -52,6 +52,7 @@ Things that work!
 -   When a note is posted it is announced to followers with Create activity
 -   Apply Like and Like with reaction contents
 -   Fetch reaction emojis
+-   Fetch note emojis
 
 ### Internal API
 
@@ -61,6 +62,8 @@ Things that work!
 -   Fetch users
 -   Post notes
 -   Fetch reactions
+-   Fetch emojis in notes
+-   Fetch local and global timelines
 
 ### Frontend
 
@@ -68,4 +71,6 @@ Things that work!
 -   View notes
 -   View profiles
 -   Search page
--   Explore page is a work in progress
+-   Explore page
+-   Timelines
+-   Virtual scrolling!!
