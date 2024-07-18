@@ -14,7 +14,8 @@
 		"sourceMap": false,
 		"moduleResolution": "bundler",
 		"noImplicitAny": false,
-		"strictPropertyInitialization": false
+		"strictPropertyInitialization": false,
+		"removeComments": true
 	},
 	"watchOptions": {
 		"watchFile": "useFsEvents",

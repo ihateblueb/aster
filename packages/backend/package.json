@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"build": "tsc",
-		"build-dev": "tsc --watch",
+		"build": "swc src -d built --strip-leading-paths",
+		"build-dev": "swc src -d built --strip-leading-paths --watch",
 		"dev": "npm-run-all --parallel build-dev start-dev",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"revert": "pnpm exec typeorm migration:revert -d ./built/utils/database.js",
@@ -56,6 +56,8 @@
 	},
 	"devDependencies": {
 		"@eslint/js": "^9.2.0",
+		"@swc/cli": "^0.4.0",
+		"@swc/core": "^1.7.0",
 		"eslint": "^9.2.0",
 		"globals": "^15.1.0",
 		"typescript-eslint": "^7.8.0"
