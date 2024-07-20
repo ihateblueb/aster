@@ -335,6 +335,8 @@
 </script>
 
 <template>
+	<!-- svelte-ignore a11y-no-static-element-interactions -->
+	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<span class="mfmCtn" dir="auto" on:click>
 		{#if content}
 			{#each mfmTree as object}
