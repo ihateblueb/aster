@@ -1,13 +1,15 @@
 import express from 'express';
 
-import getRemoteActor from '../../../utils/ap/getRemoteActor.js';
-import getWebfingerAcct from '../../../utils/ap/getWebfingerAcct.js';
-import config from '../../../utils/config.js';
-import db from '../../../utils/database.js';
+import verifyToken from '../../../../utils/auth/verifyToken.js';
+import logger from '../../../../utils/logger.js';
+import sanitize from '../../../../utils/sanitize.js';
+import getRemoteActor from '../../../../utils/ap/getRemoteActor.js';
+import getWebfingerAcct from '../../../../utils/ap/getWebfingerAcct.js';
+import config from '../../../../utils/config.js';
+import db from '../../../../utils/database.js';
 
 const router = express.Router();
 
-// lookup by username
 router.get('/api/v2/lookup/@:username', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.username) {
