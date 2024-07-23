@@ -34,6 +34,13 @@
 	import InstanceTicker from './InstanceTicker.svelte';
 	import NoteMedia from './NoteMedia.svelte';
 	import Time from './Time.svelte';
+	import Store from '$lib/utils/Store';
+
+	let self = {};
+
+	if (Store.get('account')) {
+		self = JSON.parse(Store.get('account'));
+	}
 </script>
 
 <template>
@@ -224,7 +231,15 @@
 					<Icon name="repeat" size="20px" color="inherit" />
 				</button>
 				<button on:click={() => noteLike(data.id)}>
-					<Icon name="star" size="20px" color="inherit" />
+					{#if data.likes && data.likes.from && data.likes.from.includes(self.id)}
+						<Icon
+							name="star-filled"
+							size="20px"
+							color="var(--like)"
+						/>
+					{:else}
+						<Icon name="star" size="20px" color="inherit" />
+					{/if}
 					<span>{data.likes.count}</span>
 				</button>
 				<button>
