@@ -96,13 +96,13 @@ if (config.plugins.boot) {
 	config.plugins.boot.forEach((e) => {
 		logger('info', 'plugin', `registered boot plugin ${e}`);
 	});
-}
 
-config.plugins.boot.forEach(async (e) => {
-	await import(`./plugins/boot/${e}.js`).then((plugin) => {
-		plugin.default();
+	config.plugins.boot.forEach(async (e) => {
+		await import(`./plugins/boot/${e}.js`).then((plugin) => {
+			plugin.default();
+		});
 	});
-});
+}
 
 if (config.plugins.incoming) {
 	config.plugins.incoming.forEach((e) => {

@@ -54,11 +54,13 @@ export default async function postSigned(inbox, localUserId, body) {
 	});
 	console.log('!!OUTGOING POST!!');
 
-	config.plugins.outgoing.forEach(async (e) => {
-		await import(`../../plugins/outgoing/${e}.js`).then((plugin) => {
-			plugin.default();
+	if (config.plugins.outgoing) {
+		config.plugins.outgoing.forEach(async (e) => {
+			await import(`../../plugins/outgoing/${e}.js`).then((plugin) => {
+				plugin.default();
+			});
 		});
-	});
+	}
 
 	return await axios
 		.post(inbox, body, {

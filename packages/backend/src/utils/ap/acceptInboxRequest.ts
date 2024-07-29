@@ -21,11 +21,13 @@ export default async function acceptInboxRequest(parsedBody) {
 
 	await getRemoteInstance(new URL(parsedBody.id).host);
 
-	config.plugins.incoming.forEach(async (e) => {
-		await import(`../../plugins/incoming/${e}.js`).then((plugin) => {
-			plugin.default();
+	if (config.plugins.incoming) {
+		config.plugins.incoming.forEach(async (e) => {
+			await import(`../../plugins/incoming/${e}.js`).then((plugin) => {
+				plugin.default();
+			});
 		});
-	});
+	}
 
 	if (parsedBody.type === 'Accept') {
 		await IAccept(parsedBody);
