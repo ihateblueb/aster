@@ -92,15 +92,27 @@ if (config.frontend.enable) {
 	logger('info', 'core', `frontend disabled`);
 }
 
-if (config.inbox.plugins) {
-	config.inbox.plugins.forEach((e) => {
-		logger('info', 'plugin', `registered inbox plugin ${e}`);
+if (config.plugins.boot) {
+	config.plugins.boot.forEach((e) => {
+		logger('info', 'plugin', `registered boot plugin ${e}`);
 	});
 }
 
-if (config.deliver.plugins) {
-	config.deliver.plugins.forEach((e) => {
-		logger('info', 'plugin', `registered deliver plugin ${e}`);
+config.plugins.boot.forEach(async (e) => {
+	await import(`./plugins/boot/${e}.js`).then((plugin) => {
+		plugin.default();
+	});
+});
+
+if (config.plugins.incoming) {
+	config.plugins.incoming.forEach((e) => {
+		logger('info', 'plugin', `registered incoming plugin ${e}`);
+	});
+}
+
+if (config.plugins.outgoing) {
+	config.plugins.outgoing.forEach((e) => {
+		logger('info', 'plugin', `registered outgoing plugin ${e}`);
 	});
 }
 
