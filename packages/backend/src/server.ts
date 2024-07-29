@@ -92,6 +92,18 @@ if (config.frontend.enable) {
 	logger('info', 'core', `frontend disabled`);
 }
 
+if (config.inbox.preprocessors) {
+	config.inbox.preprocessors.forEach((e) => {
+		logger('info', 'plugin', `registered inbox preprocessor plugin ${e}`);
+	});
+}
+
+if (config.deliver.preprocessors) {
+	config.deliver.preprocessors.forEach((e) => {
+		logger('info', 'plugin', `registered deliver preprocessor plugin ${e}`);
+	});
+}
+
 server.listen(config.port, () =>
 	logger(
 		'info',

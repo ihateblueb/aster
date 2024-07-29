@@ -54,6 +54,12 @@ export default async function postSigned(inbox, localUserId, body) {
 	});
 	console.log('!!OUTGOING POST!!');
 
+	config.deliver.preprocessors.forEach(async (e) => {
+		await import(`../../outgoing/preprocessors/${e}.js`).then((plugin) => {
+			plugin.default();
+		});
+	});
+
 	return await axios
 		.post(inbox, body, {
 			headers: {

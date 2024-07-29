@@ -1,4 +1,5 @@
 import logger from '../logger.js';
+import config from '../config.js';
 import getRemoteInstance from './getRemoteInstance.js';
 
 import IAccept from '../../incoming/accept.js';
@@ -19,6 +20,12 @@ export default async function acceptInboxRequest(parsedBody) {
 	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
 
 	await getRemoteInstance(new URL(parsedBody.id).host);
+
+	config.inbox.preprocessors.forEach(async (e) => {
+		await import(`../../incoming/preprocessors/${e}.js`).then((plugin) => {
+			plugin.default();
+		});
+	});
 
 	if (parsedBody.type === 'Accept') {
 		await IAccept(parsedBody);
