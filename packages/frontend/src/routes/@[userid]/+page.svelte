@@ -12,6 +12,7 @@
 
 	import noteGet from '$lib/api/note/get';
 	import Button from '$lib/components/Button.svelte';
+	import userFollow from '$lib/api/user/follow.js';
 
 	export let data;
 
@@ -176,7 +177,9 @@
 									</div>
 								</div>
 								<div class="right">
-									<Button>Follow</Button>
+									<Button on:click={() => userFollow(data.id)}
+										>Follow</Button
+									>
 								</div>
 							</div>
 							<p class="bio">
