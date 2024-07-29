@@ -54,8 +54,8 @@ export default async function postSigned(inbox, localUserId, body) {
 	});
 	console.log('!!OUTGOING POST!!');
 
-	config.deliver.preprocessors.forEach(async (e) => {
-		await import(`../../outgoing/preprocessors/${e}.js`).then((plugin) => {
+	config.deliver.plugins.forEach(async (e) => {
+		await import(`../../plugins/outgoing/${e}.js`).then((plugin) => {
 			plugin.default();
 		});
 	});

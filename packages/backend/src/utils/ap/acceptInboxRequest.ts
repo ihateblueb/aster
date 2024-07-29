@@ -21,8 +21,8 @@ export default async function acceptInboxRequest(parsedBody) {
 
 	await getRemoteInstance(new URL(parsedBody.id).host);
 
-	config.inbox.preprocessors.forEach(async (e) => {
-		await import(`../../incoming/preprocessors/${e}.js`).then((plugin) => {
+	config.inbox.plugins.forEach(async (e) => {
+		await import(`../../plugins/incoming/${e}.js`).then((plugin) => {
 			plugin.default();
 		});
 	});
