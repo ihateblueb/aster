@@ -1076,3 +1076,51 @@ undo
 	"published": "2024-07-11T18:26:14.908Z"
 }
 ```
+
+## misskey delete
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#"
+		}
+	],
+	"type": "Delete",
+	"actor": "https://grimgreenfo.rest/users/9sgt2c6wtxwi00xi",
+	"object": {
+		"id": "https://grimgreenfo.rest/notes/9wf90521y83w00p8",
+		"type": "Tombstone"
+	},
+	"published": "2024-08-01T19:44:23.982Z",
+	"id": "https://grimgreenfo.rest/05774529-a6e6-4756-804f-9aec18c7a357"
+}
+```

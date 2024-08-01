@@ -57,7 +57,7 @@ deliverWorker.on('failed', (job, failedReason) => {
 });
 
 app.use(requestLogger.dev, requestLogger.combined);
-app.use(bodyParser.raw({ type: '*/*' }));
+app.use(bodyParser.raw({ type: '*/*', limit: '50mb' }));
 app.use(cors());
 
 app.use((req, res, next) => {

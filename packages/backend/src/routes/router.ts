@@ -31,6 +31,13 @@ import api_note_react from './api/v2/note/react.js';
 import api_note_repeat from './api/v2/note/repeat.js';
 import api_note_report from './api/v2/note/report.js';
 
+import api_drive_get from './api/v2/drive/get.js';
+
+import api_drive_file_add from './api/v2/drive/file/add.js';
+import api_drive_file_edit from './api/v2/drive/file/edit.js';
+import api_drive_file_delete from './api/v2/drive/file/delete.js';
+import api_drive_file_get from './api/v2/drive/file/get.js';
+
 import api_ad from './api/v2/ad.js';
 import api_followrequest from './api/v2/followrequest.js';
 import api_instance from './api/v2/instance.js';
@@ -77,6 +84,13 @@ router.use('/', api_note_raw);
 router.use('/', api_note_react);
 router.use('/', api_note_repeat);
 router.use('/', api_note_report);
+
+router.use('/', api_drive_get);
+
+router.use('/', api_drive_file_add);
+router.use('/', api_drive_file_edit);
+router.use('/', api_drive_file_delete);
+router.use('/', api_drive_file_get);
 
 router.use('/', api_ad);
 router.use('/', api_followrequest);
