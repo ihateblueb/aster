@@ -62,7 +62,7 @@
 		} else if (object.type === 'mention') {
 			return `<a class="mfm-mention" href='/${object.props.acct}'>${object.props.acct}</a>`;
 		} else if (object.type === 'hashtag') {
-			return `<a class="mfm-hashtag" href='/tag/${object.props.hashtag}'>#${object.props.hashtag}</a>`;
+			return `${object.props.hashtag}`;
 		} else if (object.type === 'inlineCode') {
 			return `<code class="mfm-inlineCode">${object.props.code}</code>`;
 		} else if (object.type === 'blockCode') {

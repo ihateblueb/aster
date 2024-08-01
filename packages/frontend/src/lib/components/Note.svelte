@@ -196,14 +196,14 @@
 			{#if data.tags}
 				<div class="tags">
 					{#each data.tags as tag}
-						<div class="tag">
+						<a class="tag subtle" href={'/tag/' + tag}>
 							<Icon
 								name="hash"
 								size="12px"
 								color="var(--txt-tertiary)"
 							/>
 							{tag}
-						</div>
+						</a>
 					{/each}
 				</div>
 			{/if}

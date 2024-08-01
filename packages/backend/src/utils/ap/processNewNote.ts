@@ -167,6 +167,11 @@ export default async function processNewNote(body) {
 						1
 					);
 					noteToInsert.tags.push(sanitize(body.tag[i].name));
+
+					noteToInsert.content = noteToInsert.content.replace(
+						'#' + wafrnCamelize(body.tag[i].name),
+						''
+					);
 				} else {
 					logger('warn', 'ap', 'unused tag type ' + body.tag[i].type);
 				}
