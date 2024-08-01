@@ -23,8 +23,6 @@ export default class ApActor {
 	isCat: boolean;
 	speakAsCat: boolean;
 
-	publicKey: ApActorPublicKey;
-
 	icon?: ApImage;
 
 	image?: ApImage;
@@ -46,6 +44,8 @@ export default class ApActor {
 
 	attatchment?: Object[];
 
+	publicKey: ApActorPublicKey;
+
 	constructor(grabbedUser) {
 		this.id = grabbedUser.ap_id;
 		this.preferredUsername = grabbedUser.username;
@@ -62,12 +62,6 @@ export default class ApActor {
 		this.isCat = grabbedUser.is_cat;
 		this.speakAsCat = grabbedUser.speak_as_cat;
 
-		this.publicKey = new ApActorPublicKey(
-			grabbedUser.ap_id + '#main-key',
-			grabbedUser.ap_id,
-			grabbedUser.public_key
-		);
-
 		this.icon = new ApImage(
 			grabbedUser.avatar,
 			grabbedUser.avatar_alt,
@@ -82,6 +76,9 @@ export default class ApActor {
 
 		this.backgroundUrl = grabbedUser.background;
 
+		this['vcard:bday'] = grabbedUser.birthday;
+		this['vcard:Address'] = grabbedUser.location;
+
 		this.inbox = grabbedUser.inbox;
 		this.sharedInbox = 'https://' + new URL(config.url).host + '/inbox';
 		this.endpoints = new ApEndpoints();
@@ -89,6 +86,12 @@ export default class ApActor {
 
 		this.followers = grabbedUser.followers_url;
 		this.following = grabbedUser.following_url;
+
+		this.publicKey = new ApActorPublicKey(
+			grabbedUser.ap_id + '#main-key',
+			grabbedUser.ap_id,
+			grabbedUser.public_key
+		);
 
 		/*
 		Array.from(grabbedUser.metadata).forEach((metadata) => {
