@@ -1,0 +1,15 @@
+.raw {
+	font-family: var(--font-mono);
+	padding: 0px 10px 10px 10px;
+	overflow-x: hidden;
+
+	--jsonPaddingLeft: 20px;
+	--jsonBorderLeft: 1px dotted var(--txt-tertiary);
+	--jsonKeyColor: var(--txt-primary);
+	--jsonValColor: var(--accent);
+	--jsonValStringColor: var(--code-string);
+	--jsonValNumberColor: var(--code-int);
+	--jsonValBooleanColor: var(--code-bool);
+	--jsonSeparatorColor: var(--txt-tertiary);
+	--jsonBracketHoverBackground: var(--bg-tertiary);
+}

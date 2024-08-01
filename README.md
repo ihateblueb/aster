@@ -24,6 +24,10 @@ Aster is developed with the following:
 
 This may be flexible, but hasn't been tested or looked further into.
 
+## Setup
+
+-   an account named "instanceactor" is required
+
 ## Planned Features
 
 -   Misskey-like features
@@ -51,6 +55,8 @@ Things that work!
 -   Apply Like and Like with reaction contents
 -   Fetch reaction emojis
 -   Fetch note emojis
+-   Accept and send likes
+-   Process incoming hashtags and wafrn hashtags
 
 ### Internal API
 
@@ -62,6 +68,7 @@ Things that work!
 -   Fetch reactions
 -   Fetch emojis in notes
 -   Fetch local and global timelines
+-   fetch reactions and likes
 
 ### Frontend
 
