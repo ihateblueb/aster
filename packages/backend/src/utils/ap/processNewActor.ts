@@ -83,6 +83,14 @@ export default async function processNewActor(body) {
 		actorToInsert['following_url'] = sanitize(body.following);
 		actorToInsert['followers_url'] = sanitize(body.followers);
 
+		if (body['vcard:bday']) {
+			actorToInsert['birthday'] = sanitize(body['vcard:bday']);
+		}
+
+		if (body['vcard:Address']) {
+			actorToInsert['location'] = sanitize(body['vcard:Address']);
+		}
+
 		if (body.publicKey.publicKeyPem) {
 			actorToInsert['public_key'] = sanitize(
 				body.publicKey.publicKeyPem.toString()

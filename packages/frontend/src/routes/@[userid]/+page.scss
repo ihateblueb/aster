@@ -59,11 +59,13 @@
 		}
 
 		.location,
+		.birthday,
 		.joined {
 			margin: 5px 0px 5px 0px;
 		}
 
-		.location {
+		.location,
+		.birthday {
 			display: flex;
 			gap: 5px;
 		}

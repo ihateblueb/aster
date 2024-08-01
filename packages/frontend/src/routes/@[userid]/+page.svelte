@@ -13,6 +13,7 @@
 	import noteGet from '$lib/api/note/get';
 	import Button from '$lib/components/Button.svelte';
 	import userFollow from '$lib/api/user/follow.js';
+	import Time from '$lib/components/Time.svelte';
 
 	export let data;
 
@@ -197,6 +198,24 @@
 										title={locale('location')}
 									/>
 									{data.location}
+								</p>
+							{/if}
+							{#if data.birthday}
+								<p class="birthday">
+									<Icon
+										name="cake"
+										size="16px"
+										title={locale('birthday')}
+									/>
+									{new Date(data.birthday).toLocaleDateString(
+										undefined,
+										{
+											weekday: 'long',
+											month: 'long',
+											day: 'numeric',
+											year: 'numeric'
+										}
+									)}
 								</p>
 							{/if}
 							<p class="joined">

@@ -93,7 +93,7 @@ export default class ApiNote {
 
 		this.likes = sortedLikes ? sortedLikes : null;
 
-		if (grabbedNote.tags) {
+		if (grabbedNote.tags && grabbedNote.tags.length > 0) {
 			this.tags = grabbedNote.tags;
 		}
 	}
