@@ -23,7 +23,7 @@
 
 <template>
 	<div class="pageContent">
-		<div class="paddedPage">
+		<div class="paddedPage _75tRk4l">
 			<div class="authCtn">
 				<h1>{locale('register_to')} {data.name}</h1>
 				<p>{data.description}</p>
