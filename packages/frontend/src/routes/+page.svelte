@@ -115,7 +115,7 @@
 			{/if}
 		</div>
 	{:else}
-		<PageHeader title={locale('welcome')} icon="mood-smile-beam" />
+		<PageHeader title={locale('welcome')} icon="heart" />
 		<div class="pageContent">
 			<div class="paddedPage welcomePage">
 				<h1>{data.name}</h1>
@@ -151,7 +151,6 @@
 				</ol>
 				<h2>{locale('advertisement')}</h2>
 				<Ad />
-				<Button to="/login">{locale('login')}</Button>
 			</div>
 		</div>
 	{/if}

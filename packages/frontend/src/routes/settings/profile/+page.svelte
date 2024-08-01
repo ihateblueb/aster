@@ -11,7 +11,7 @@
 	import Store from '$lib/utils/Store';
 	import updateAccount from '$lib/api/user/update';
 
-	let account = Store.get('account');
+	let account = JSON.parse(Store.get('account'));
 	let updatedAccount = {};
 
 	// TODO: update only modified values
@@ -35,44 +35,54 @@
 </script>
 
 <template>
-	<PageHeader title={locale('s_account')} icon="settings" />
+	<PageHeader
+		title={locale('s_account') + ' / ' + locale('profile')}
+		icon="settings"
+	/>
 	<div class="pageContent _sVC9i48">
-		<div class="paddedPage">
-			<h1>Profile</h1>
-			<Input
-				type="wide mb"
-				label={locale('displayname')}
-				placeholder={account.displayname}
-				bind:value={updatedAccount.displayname}
-			/>
-			<Input
-				type="wide mb"
-				big
-				label={locale('bio')}
-				placeholder={account.bio}
-				bind:value={updatedAccount.bio}
-			/>
-			<Input
-				type="wide mb"
-				label={locale('location')}
-				placeholder={account.location}
-				bind:value={updatedAccount.location}
-			/>
-			<Input
-				type="wide mb"
-				label={locale('birthday')}
-				placeholder={account.birthday}
-				bind:value={updatedAccount.birthday}
-			/>
-			<Button on:click={update}>Update</Button>
+		{#key account}
+			<div class="paddedPage">
+				<h1>Profile</h1>
+				<Input
+					type="wide mb"
+					label={locale('displayname')}
+					placeholder={account.displayname}
+					bind:value={updatedAccount.displayname}
+				/>
+				<Input
+					type="wide mb"
+					big
+					label={locale('bio')}
+					placeholder={account.bio}
+					bind:value={updatedAccount.bio}
+				/>
 
-			<br />
+				<Input
+					type="wide mb"
+					label={locale('location')}
+					placeholder={account.location}
+					bind:value={updatedAccount.location}
+				/>
 
-			<h1>ActivityPub</h1>
-			<h2>Public Key</h2>
-			<pre><code>{account.public_key}</code></pre>
-			<h2>Private Key</h2>
-			<Button>Request</Button>
-		</div>
+				<Input
+					type="wide mb"
+					label={locale('birthday')}
+					placeholder={account.birthday}
+					bind:value={updatedAccount.birthday}
+				/>
+
+				{#if account.birthday}{/if}
+
+				<Button on:click={update}>Update</Button>
+
+				<br />
+
+				<h1>ActivityPub</h1>
+				<h2>Public Key</h2>
+				<pre><code>{account.public_key}</code></pre>
+				<h2>Private Key</h2>
+				<Button>Request</Button>
+			</div>
+		{/key}
 	</div>
 </template>
