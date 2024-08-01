@@ -14,12 +14,12 @@ export default async function processNewEmoji(body) {
 		emojiToInsert['id'] = emojiId;
 		emojiToInsert['ap_id'] = sanitize(body.id);
 		emojiToInsert['created_at'] = sanitize(body.updated);
-		emojiToInsert['updated_at'] = body.updated;
+		emojiToInsert['updated_at'] = sanitize(body.updated);
 		emojiToInsert['local'] = false;
-		emojiToInsert['host'] = new URL(body.id).host;
-		emojiToInsert['name'] = body.name;
-		emojiToInsert['url'] = body.icon.url;
-		emojiToInsert['type'] = body.icon.mediaType;
+		emojiToInsert['host'] = new URL(sanitize(body.id)).host;
+		emojiToInsert['name'] = sanitize(body.name);
+		emojiToInsert['url'] = sanitize(body.icon.url);
+		emojiToInsert['type'] = sanitize(body.icon.mediaType);
 
 		await db.getRepository('emoji').insert(emojiToInsert);
 

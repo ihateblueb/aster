@@ -17,14 +17,17 @@ export default async function updateRemoteInstance(host, body) {
 		if (body.software.name) {
 			grabbedInstance = await db
 				.getRepository('instance')
-				.update({ host: host }, { software: body.software.name });
+				.update(
+					{ host: host },
+					{ software: sanitize(body.software.name) }
+				);
 		}
 		if (body.software.version) {
 			grabbedInstance = await db
 				.getRepository('instance')
 				.update(
 					{ host: host },
-					{ version: body.software.version.toString() }
+					{ version: sanitize(body.software.version.toString()) }
 				);
 		}
 	}
@@ -36,28 +39,33 @@ export default async function updateRemoteInstance(host, body) {
 					.getRepository('instance')
 					.update(
 						{ host: host },
-						{ maintainer: body.metadata.maintainer.name }
+						{ maintainer: sanitize(body.metadata.maintainer.name) }
 					);
 			}
 			if (body.metadata.maintainer.email) {
-				await db
-					.getRepository('instance')
-					.update(
-						{ host: host },
-						{ maintainer_email: body.metadata.maintainer.email }
-					);
+				await db.getRepository('instance').update(
+					{ host: host },
+					{
+						maintainer_email: sanitize(
+							body.metadata.maintainer.email
+						)
+					}
+				);
 			}
 			if (body.metadata.nodeName) {
 				grabbedInstance = await db
 					.getRepository('instance')
-					.update({ host: host }, { name: body.metadata.nodeName });
+					.update(
+						{ host: host },
+						{ name: sanitize(body.metadata.nodeName) }
+					);
 			}
 			if (body.metadata.nodeDescription) {
 				grabbedInstance = await db
 					.getRepository('instance')
 					.update(
 						{ host: host },
-						{ description: body.metadata.nodeDescription }
+						{ description: sanitize(body.metadata.nodeDescription) }
 					);
 			}
 
@@ -66,7 +74,7 @@ export default async function updateRemoteInstance(host, body) {
 					.getRepository('instance')
 					.update(
 						{ host: host },
-						{ color: body.metadata.themeColor }
+						{ color: sanitize(body.metadata.themeColor) }
 					);
 			}
 		}
@@ -79,27 +87,30 @@ export default async function updateRemoteInstance(host, body) {
 					.getRepository('instance')
 					.update(
 						{ host: host },
-						{ user_count: body.usage.users.total }
+						{ user_count: sanitize(body.usage.users.total) }
 					);
 			}
 		}
 		if (body.usage.localPosts) {
 			grabbedInstance = await db
 				.getRepository('instance')
-				.update({ host: host }, { note_count: body.usage.localPosts });
+				.update(
+					{ host: host },
+					{ note_count: sanitize(body.usage.localPosts) }
+				);
 		}
 	}
 
 	// to get instance color if not set in nodeinfo, and favicon
 
-	let req = await fetch('https://' + host);
-	const html = req.text();
+	//let req = await fetch('https://' + host);
+	//const html = req.text();
 
-	const { window } = new JSDOM(html);
-	let doc = window.document;
+	//const { window } = new JSDOM(html);
+	//let doc = window.document;
 
-	console.log(doc);
-	console.log(await doc.getElementsByTagName('link'));
+	//console.log(doc);
+	//console.log(await doc.getElementsByTagName('link'));
 
 	logger('info', 'ap', 'updated remote instance ' + host);
 

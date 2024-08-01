@@ -18,32 +18,37 @@ export default async function processNewInstance(host, body) {
 	instanceToInsert['last_communicated'] = new Date(Date.now()).toISOString();
 
 	if (body.nodeName) {
-		instanceToInsert['name'] = body.nodeName;
+		instanceToInsert['name'] = sanitize(body.nodeName);
 	}
 	if (body.nodeDescription) {
-		instanceToInsert['description'] = body.nodeDescription;
+		instanceToInsert['description'] = sanitize(body.nodeDescription);
 	}
 
 	if (body.software) {
 		if (body.software.name) {
-			instanceToInsert['software'] = body.software.name;
+			instanceToInsert['software'] = sanitize(body.software.name);
 		}
 		if (body.software.version) {
-			instanceToInsert['version'] = body.software.version.toString();
+			instanceToInsert['version'] = sanitize(
+				body.software.version.toString()
+			);
 		}
 	}
 
 	if (body.metadata) {
 		if (body.metadata.maintainer) {
 			if (body.metadata.maintainer.name) {
-				instanceToInsert['maintainer'] = body.metadata.maintainer.name;
+				instanceToInsert['maintainer'] = sanitize(
+					body.metadata.maintainer.name
+				);
 			}
 			if (body.metadata.maintainer.email) {
-				instanceToInsert['maintainer_email'] =
-					body.metadata.maintainer.email;
+				instanceToInsert['maintainer_email'] = sanitize(
+					body.metadata.maintainer.email
+				);
 			}
 			if (body.metadata.themeColor) {
-				instanceToInsert['color'] = body.metadata.themeColor;
+				instanceToInsert['color'] = sanitize(body.metadata.themeColor);
 			}
 		}
 	}
@@ -51,11 +56,13 @@ export default async function processNewInstance(host, body) {
 	if (body.usage) {
 		if (body.usage.users) {
 			if (body.usage.users.total) {
-				instanceToInsert['user_count'] = body.usage.users.total;
+				instanceToInsert['user_count'] = sanitize(
+					body.usage.users.total
+				);
 			}
 		}
 		if (body.usage.localPosts) {
-			instanceToInsert['note_count'] = body.usage.localPosts;
+			instanceToInsert['note_count'] = sanitize(body.usage.localPosts);
 		}
 	}
 
