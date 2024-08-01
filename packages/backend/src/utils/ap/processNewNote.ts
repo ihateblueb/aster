@@ -9,11 +9,14 @@ import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function processNewNote(body) {
+	console.log(body);
+
 	if (body.type === 'Note') {
 		let grabbedRemoteActor = await getRemoteActor(body.attributedTo);
 
 		let noteToInsert = {
 			id: '',
+			content: '',
 			emojis: [],
 			tags: []
 		};
@@ -21,8 +24,8 @@ export default async function processNewNote(body) {
 		const noteId = uuidv4();
 
 		noteToInsert['id'] = noteId;
-		noteToInsert['ap_id'] = body.id;
-		noteToInsert['created_at'] = body.published;
+		noteToInsert['ap_id'] = sanitize(body.id);
+		noteToInsert['created_at'] = sanitize(body.published);
 
 		// default to direct to not leak dms
 		let visibility;
@@ -77,13 +80,29 @@ export default async function processNewNote(body) {
 				this should have to filter out the author and the authors followers
 				rn this will crash when this sees a follower id and tries
 				fetching it like a regualr actor.
-			*/
-			let getReplyingTo = await getRemoteActor(body.to[1]);
-			let replyingToNote = await getRemoteNote(
+
+				let getReplyingTo = await getRemoteActor(body.to[1]);
+				let replyingToNote = await getRemoteNote(
 				body.inReplyTo,
 				getReplyingTo.id
+				);
+				noteToInsert['replying_to'] = replyingToNote.id;
+			*/
+
+			console.log('to');
+			console.log(
+				body.to.splice(
+					body.to.indexOf(
+						'https://www.w3.org/ns/activitystreams#Public'
+					),
+					1
+				)
 			);
-			noteToInsert['replying_to'] = replyingToNote.id;
+			console.log('cc');
+			console.log(body.cc);
+
+			console.log('inReplyTo');
+			console.log(body.inReplyTo);
 		}
 
 		noteToInsert['author'] = grabbedRemoteActor.id;
@@ -115,6 +134,20 @@ export default async function processNewNote(body) {
 			}
 		}
 
+		// from https://github.com/gabboman/wafrn/blob/c34fbd1bd5872d0161db265cbfc91c4f34eb23a3/packages/backend/utils/activitypub/postToJSONLD.ts#L97
+
+		function wafrnCamelize(str: string): string {
+			return str.replace(
+				/(?:^\w|[A-Z]|\b\w|\s+)/g,
+				function (match, index) {
+					if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
+					return index === 0
+						? match.toLowerCase()
+						: match.toUpperCase();
+				}
+			);
+		}
+
 		if (body.tag) {
 			// emoji: https://eepy.zone/notes/9v98jdptk2cl00cp
 			console.log(body.tag);
@@ -123,7 +156,17 @@ export default async function processNewNote(body) {
 					let grabbedEmoji = await getRemoteEmoji(body.tag[i].id);
 					noteToInsert.emojis.push(grabbedEmoji.id);
 				} else if (body.tag[i].type === 'Hashtag') {
-					noteToInsert.tags.push(body.tag[i].name.replace('#', ''));
+					noteToInsert.tags.push(
+						sanitize(body.tag[i].name.replace('#', ''))
+					);
+				} else if (body.tag[i].type === 'WafrnHashtag') {
+					noteToInsert.tags.splice(
+						noteToInsert.tags.indexOf(
+							'#' + wafrnCamelize(body.tag[i].name)
+						),
+						1
+					);
+					noteToInsert.tags.push(sanitize(body.tag[i].name));
 				} else {
 					logger('warn', 'ap', 'unused tag type ' + body.tag[i].type);
 				}

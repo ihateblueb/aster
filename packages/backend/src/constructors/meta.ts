@@ -1,17 +1,17 @@
 import { Meta } from '../entities/Meta.js';
 
 export default class ApiMeta {
-	name: string = 'Aster';
-	created_at?: string;
-	color: string = '#9c8cff';
+	name: string;
+	created_at: string;
+	color: string;
 
 	maintainer?: string;
 	maintainer_email?: string;
 	registration: string = 'open';
 	rules?: object;
 
-	description: string = 'A fediverse instance running Aster';
-	description_long: string = 'A fediverse instance running Aster';
+	description: string;
+	description_long: string;
 
 	local_user_count: number;
 	total_user_count: number;
@@ -20,7 +20,7 @@ export default class ApiMeta {
 	instance_count: number;
 
 	constructor(
-		grabbedMeta?: Meta,
+		grabbedMeta?,
 		grabbedLocalUserCount?,
 		grabbedTotalUserCount?,
 		grabbedLocalNoteCount?,
@@ -28,17 +28,21 @@ export default class ApiMeta {
 		grabbedInstanceCount?
 	) {
 		if (grabbedMeta) {
-			this.name = grabbedMeta.name;
+			this.name = grabbedMeta.name ? grabbedMeta.name : 'Aster';
 			this.created_at = grabbedMeta.created_at;
-			this.color = grabbedMeta.color;
+			this.color = grabbedMeta.color ? grabbedMeta.color : '#9c8cff';
 
 			this.maintainer = grabbedMeta.maintainer;
 			this.maintainer_email = grabbedMeta.maintainer_email;
 			this.registration = grabbedMeta.registration;
 			this.rules = grabbedMeta.rules;
 
-			this.description = grabbedMeta.description;
-			this.description_long = grabbedMeta.description_long;
+			this.description = grabbedMeta.description
+				? grabbedMeta.description
+				: 'A fediverse instance running Aster';
+			this.description_long = grabbedMeta.description_long
+				? grabbedMeta.description_long
+				: 'A fediverse instance running Aster';
 		}
 
 		this.local_user_count = grabbedLocalUserCount

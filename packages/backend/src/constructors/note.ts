@@ -17,6 +17,7 @@ export default class ApiNote {
 	attachments?: any[];
 	emojis?: any[];
 	reactions?: any[];
+	tags?: any[];
 
 	likes?: {};
 
@@ -91,6 +92,10 @@ export default class ApiNote {
 		}
 
 		this.likes = sortedLikes ? sortedLikes : null;
+
+		if (grabbedNote.tags) {
+			this.tags = grabbedNote.tags;
+		}
 	}
 
 	build() {

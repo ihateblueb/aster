@@ -192,6 +192,22 @@
 					<NoteMedia attachments={data.attachments} />
 				</div>
 			{/if}
+
+			{#if data.tags}
+				<div class="tags">
+					{#each data.tags as tag}
+						<div class="tag">
+							<Icon
+								name="hash"
+								size="12px"
+								color="var(--txt-tertiary)"
+							/>
+							{tag}
+						</div>
+					{/each}
+				</div>
+			{/if}
+
 			{#if detailed}
 				<div class="details">
 					{locale('posted_at')}
@@ -222,34 +238,34 @@
 		<div class="noteFooter">
 			<div class="postButtons">
 				<button>
-					<Icon name="arrow-back-up" size="20px" color="inherit" />
+					<Icon name="arrow-back-up" size="18px" color="inherit" />
 				</button>
 				<button>
-					<Icon name="quote" size="20px" color="inherit" />
+					<Icon name="quote" size="18px" color="inherit" />
 				</button>
 				<button on:click={() => noteRepeat(data.id)}>
-					<Icon name="repeat" size="20px" color="inherit" />
+					<Icon name="repeat" size="18px" color="inherit" />
 				</button>
 				<button on:click={() => noteLike(data.id)}>
 					{#if data.likes && data.likes.from && data.likes.from.includes(self.id)}
 						<Icon
 							name="star-filled"
-							size="20px"
+							size="18px"
 							color="var(--like)"
 						/>
 					{:else}
-						<Icon name="star" size="20px" color="inherit" />
+						<Icon name="star" size="18px" color="inherit" />
 					{/if}
-					<span>{data.likes.count}</span>
+					<span class="counter">{data.likes.count}</span>
 				</button>
 				<button>
-					<Icon name="plus" size="20px" color="inherit" />
+					<Icon name="plus" size="18px" color="inherit" />
 				</button>
 				<button on:click={() => noteBookmark(data.id)}>
-					<Icon name="bookmark" size="20px" color="inherit" />
+					<Icon name="bookmark" size="18px" color="inherit" />
 				</button>
 				<button on:click={(e) => more.open(e)}>
-					<Icon name="dots" size="20px" color="inherit" />
+					<Icon name="dots" size="18px" color="inherit" />
 				</button>
 			</div>
 		</div>

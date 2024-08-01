@@ -13,24 +13,24 @@ export default async function processNewActor(body) {
 		actorToInsert['id'] = uuidv4();
 
 		actorToInsert['username'] = sanitize(body.preferredUsername);
-		actorToInsert['host'] = new URL(body.url).host;
-		actorToInsert['ap_id'] = body.id;
+		actorToInsert['host'] = new URL(sanitize(body.url)).host;
+		actorToInsert['ap_id'] = sanitize(body.id);
 
 		if (body.inbox) {
-			actorToInsert['inbox'] = body.inbox;
+			actorToInsert['inbox'] = sanitize(body.inbox);
 		} else if (body.sharedInbox) {
-			actorToInsert['inbox'] = body.sharedInbox;
+			actorToInsert['inbox'] = sanitize(body.sharedInbox);
 		} else {
-			actorToInsert['inbox'] = body.endpoints.sharedInbox;
+			actorToInsert['inbox'] = sanitize(body.endpoints.sharedInbox);
 		}
 
-		actorToInsert['outbox'] = body.outbox;
+		actorToInsert['outbox'] = sanitize(body.outbox);
 
 		if (body.type === 'Service') {
 			actorToInsert['automated'] = true;
 		}
 
-		actorToInsert['url'] = body.url;
+		actorToInsert['url'] = sanitize(body.url);
 
 		actorToInsert['local'] = false;
 
@@ -45,47 +45,48 @@ export default async function processNewActor(body) {
 		}
 
 		if (body.icon) {
-			actorToInsert['avatar'] = body.icon.url;
+			actorToInsert['avatar'] = sanitize(body.icon.url);
 		}
 
 		if (body.image) {
-			actorToInsert['banner'] = body.image.url;
+			actorToInsert['banner'] = sanitize(body.image.url);
 		}
 
 		if (body.backgroundUrl) {
-			actorToInsert['background'] = body.backgroundUrl;
+			actorToInsert['background'] = sanitize(body.backgroundUrl);
 		}
 
 		if (body.manuallyApprovesFollowers) {
-			actorToInsert['locked'] = body.manuallyApprovesFollowers;
+			actorToInsert['locked'] = sanitize(body.manuallyApprovesFollowers);
 		}
 
 		if (body.suspended) {
-			actorToInsert['suspended'] = body.suspended;
+			actorToInsert['suspended'] = sanitize(body.suspended);
 		}
 
 		if (body.discoverable) {
-			actorToInsert['discoverable'] = body.discoverable;
+			actorToInsert['discoverable'] = sanitize(body.discoverable);
 		}
 
 		if (body.isCat) {
-			actorToInsert['is_cat'] = body.isCat;
+			actorToInsert['is_cat'] = sanitize(body.isCat);
 		}
 
 		if (body.speakAsCat) {
-			actorToInsert['speak_as_cat'] = body.speakAsCat;
+			actorToInsert['speak_as_cat'] = sanitize(body.speakAsCat);
 		}
 
 		actorToInsert['created_at'] = new Date(Date.now()).toISOString();
 
 		actorToInsert['updated_at'] = new Date(Date.now()).toISOString();
 
-		actorToInsert['following_url'] = body.following;
-		actorToInsert['followers_url'] = body.followers;
+		actorToInsert['following_url'] = sanitize(body.following);
+		actorToInsert['followers_url'] = sanitize(body.followers);
 
 		if (body.publicKey.publicKeyPem) {
-			actorToInsert['public_key'] =
-				body.publicKey.publicKeyPem.toString();
+			actorToInsert['public_key'] = sanitize(
+				body.publicKey.publicKeyPem.toString()
+			);
 		}
 
 		await db.getRepository('user').insert(actorToInsert);

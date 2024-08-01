@@ -12,8 +12,8 @@ export default async function processNewEmoji(body) {
 		const emojiId = uuidv4();
 
 		emojiToInsert['id'] = emojiId;
-		emojiToInsert['ap_id'] = body.id;
-		emojiToInsert['created_at'] = body.updated;
+		emojiToInsert['ap_id'] = sanitize(body.id);
+		emojiToInsert['created_at'] = sanitize(body.updated);
 		emojiToInsert['updated_at'] = body.updated;
 		emojiToInsert['local'] = false;
 		emojiToInsert['host'] = new URL(body.id).host;

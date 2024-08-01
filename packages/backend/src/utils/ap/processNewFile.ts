@@ -7,18 +7,18 @@ export default async function processNewFile(attachment, note, author) {
 	let driveFileToInsert = {};
 
 	driveFileToInsert['id'] = uuidv4();
-	driveFileToInsert['ap_id'] = attachment.url;
-	driveFileToInsert['user'] = author.id;
-	driveFileToInsert['note'] = note.id;
-	driveFileToInsert['created_at'] = note.created_at;
-	driveFileToInsert['updated_at'] = note.created_at;
-	driveFileToInsert['type'] = attachment.mediaType;
-	driveFileToInsert['src'] = attachment.url;
-	driveFileToInsert['alt'] = attachment.summary;
+	driveFileToInsert['ap_id'] = sanitize(attachment.url);
+	driveFileToInsert['user'] = sanitize(author.id);
+	driveFileToInsert['note'] = sanitize(note.id);
+	driveFileToInsert['created_at'] = sanitize(note.created_at);
+	driveFileToInsert['updated_at'] = sanitize(note.created_at);
+	driveFileToInsert['type'] = sanitize(attachment.mediaType);
+	driveFileToInsert['src'] = sanitize(attachment.url);
+	driveFileToInsert['alt'] = sanitize(attachment.summary);
 
 	await db.getRepository('drive_file').insert(driveFileToInsert);
 
-	logger('info', 'drive', 'created attachment ' + attachment.url);
+	logger('info', 'drive', 'created attachment ' + sanitize(attachment.url));
 
 	return driveFileToInsert;
 }
