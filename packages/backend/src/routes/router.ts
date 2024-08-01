@@ -1,5 +1,7 @@
 import express from 'express';
 
+import uploads from './uploads.js';
+
 import ap_wellknown from './ap/well-known.js';
 import ap_nodeinfo from './ap/nodeinfo.js';
 import ap_inbox from './ap/inbox.js';
@@ -42,6 +44,8 @@ import api_metrics_hardware from './api/v2/metrics/hardware.js';
 import api_metrics_queue from './api/v2/metrics/queue.js';
 
 const router = express.Router();
+
+router.use('/', uploads);
 
 // ap
 router.use('/', ap_wellknown);
