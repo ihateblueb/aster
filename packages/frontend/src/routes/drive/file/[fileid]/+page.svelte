@@ -2,12 +2,14 @@
 	import { page } from '$app/stores';
 	import driveFileEdit from '$lib/api/drive/file/edit';
 	import driveFileGet from '$lib/api/drive/file/get';
+	import updateAccount from '$lib/api/user/update';
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Time from '$lib/components/Time.svelte';
 	import { locale } from '$lib/locale';
+	import Store from '$lib/utils/Store';
 	import { onMount } from 'svelte';
 
 	let data = {};
@@ -193,7 +195,20 @@
 					<hr />
 					<div class="actions">
 						<div class="left">
-							<Button>
+							<Button
+								on:click={() => {
+									updateAccount({
+										avatar: data.src
+									}).then((e) => {
+										if (e.user) {
+											Store.set(
+												'account',
+												JSON.stringify(e.user)
+											);
+										}
+									});
+								}}
+							>
 								<Icon
 									name="user-circle"
 									size="18px"
@@ -201,7 +216,20 @@
 								/>
 								{locale('set_avatar')}
 							</Button>
-							<Button>
+							<Button
+								on:click={() => {
+									updateAccount({
+										banner: data.src
+									}).then((e) => {
+										if (e.user) {
+											Store.set(
+												'account',
+												JSON.stringify(e.user)
+											);
+										}
+									});
+								}}
+							>
 								<Icon
 									name="photo"
 									size="18px"
@@ -209,7 +237,20 @@
 								/>
 								{locale('set_banner')}
 							</Button>
-							<Button>
+							<Button
+								on:click={() => {
+									updateAccount({
+										background: data.src
+									}).then((e) => {
+										if (e.user) {
+											Store.set(
+												'account',
+												JSON.stringify(e.user)
+											);
+										}
+									});
+								}}
+							>
 								<Icon
 									name="background"
 									size="18px"
