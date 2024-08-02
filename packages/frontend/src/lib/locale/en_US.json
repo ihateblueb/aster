@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "28",
+	"__version__": "29",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -125,5 +125,6 @@
 	"displayname": "Display name",
 	"bio": "Bio",
 	"location": "Location",
-	"birthday": "Birthday"
+	"birthday": "Birthday",
+	"profile_image_notice": "You can update your avatar, banner, and background from you drive by selecting an uploaded file."
 }

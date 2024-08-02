@@ -10,6 +10,7 @@
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Store from '$lib/utils/Store';
 	import updateAccount from '$lib/api/user/update';
+	import InfoBox from '$lib/components/InfoBox.svelte';
 
 	let account = JSON.parse(Store.get('account'));
 	let updatedAccount = {};
@@ -43,6 +44,11 @@
 		{#key account}
 			<div class="paddedPage">
 				<h1>Profile</h1>
+
+				<InfoBox>
+					{locale('profile_image_notice')}
+				</InfoBox>
+
 				<Input
 					type="wide mb"
 					label={locale('displayname')}
@@ -70,8 +76,6 @@
 					placeholder={account.birthday}
 					bind:value={updatedAccount.birthday}
 				/>
-
-				{#if account.birthday}{/if}
 
 				<Button on:click={update}>Update</Button>
 
