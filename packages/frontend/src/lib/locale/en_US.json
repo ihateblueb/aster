@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "23",
+	"__version__": "24",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -94,6 +94,13 @@
 	"add_poll": "Add poll",
 	"show_preview": "Show preview",
 	"profile": "Profile",
+	"preview": "Preview",
+	"name": "Name",
+	"type": "Type",
+	"created_at": "Created at",
+	"updated_at": "Updated at",
+	"empty_drive": "No items in drive",
+	"has_alt": "Has alt text?",
 	"home": "Home",
 	"notifications": "Notifications",
 	"follow_requests": "Follow Requests",

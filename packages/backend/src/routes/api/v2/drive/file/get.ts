@@ -26,15 +26,29 @@ router.get(`/api/v2/drive/file/:id`, async (req, res) => {
 						message: 'Account deactivated'
 					});
 				} else {
-					var grabbedFiles = await db
+					var grabbedFile = await db
 						.getRepository('drive_file')
-						.find({
+						.findOne({
 							where: {
-								id: grabbedUser.id
+								id: req.params.id
 							}
 						});
 
-					res.status(200).json(grabbedFiles);
+					if (grabbedFile) {
+						if (grabbedFile.user === grabbedUser.id) {
+							res.status(200).json(grabbedFile);
+						} else {
+							// as to not reveal the file exists.
+							// it doesnt matter that much but like. just to be safe. yk.
+							return res.status(404).json({
+								message: 'File not found'
+							});
+						}
+					} else {
+						return res.status(404).json({
+							message: 'File not found'
+						});
+					}
 				}
 			} else {
 				return res.status(404).json({

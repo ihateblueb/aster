@@ -22,7 +22,9 @@
 		Store.set('drive_layout', layout);
 	}
 
-	async function fileSelected(e) {
+	let drive = [];
+
+	async function inputChanged(e) {
 		console.log(e.target.files);
 
 		Array.from(e.target.files).forEach(async (file) => {
@@ -30,7 +32,10 @@
 		});
 	}
 
-	let drive = [];
+	async function refresh() {
+		drive = [];
+		drive = await driveGet();
+	}
 
 	onMount(async () => {
 		drive = await driveGet();
@@ -40,7 +45,7 @@
 <template>
 	<PageHeader title={locale('drive')} icon="folder">
 		<Button
-			type="header"
+			type={'header' + (driveLayout === 'list' ? ' selected' : '')}
 			on:click={() => {
 				setLayout('list');
 			}}
@@ -48,7 +53,7 @@
 			<Icon name="layout-list" size="16px" />
 		</Button>
 		<Button
-			type="header"
+			type={'header' + (driveLayout === 'grid' ? ' selected' : '')}
 			on:click={() => {
 				setLayout('grid');
 			}}
@@ -56,11 +61,20 @@
 			<Icon name="layout-grid" size="16px" />
 		</Button>
 		<hr class="vertical" />
+		<Button
+			type="header"
+			on:click={() => {
+				refresh();
+			}}
+		>
+			<Icon name="refresh" size="16px" />
+		</Button>
+		<hr class="vertical" />
 		<input
 			style="display: none;"
 			type="file"
 			multiple
-			on:change={(e) => fileSelected(e)}
+			on:change={(e) => inputChanged(e)}
 			bind:this={fileinput}
 		/>
 		<Button
@@ -81,7 +95,7 @@
 						<div class="driveItemsGrid">
 							{#each drive as item}
 								<a
-									href={'/drive/' + item.id}
+									href={'/drive/file/' + item.id}
 									class="item subtle"
 								>
 									<img
@@ -100,12 +114,12 @@
 						<div class="driveItemsList">
 							<table>
 								<tr>
-									<th>Preview</th>
-									<th>Name</th>
-									<th>Type</th>
-									<th>Created at</th>
-									<th>Updated at</th>
-									<th>Has alt text?</th>
+									<th>{locale('preview')}</th>
+									<th>{locale('name')}</th>
+									<th>{locale('type')}</th>
+									<th>{locale('created_at')}</th>
+									<th>{locale('updated_at')}</th>
+									<th>{locale('has_alt')}</th>
 								</tr>
 								{#each drive as item}
 									<tr>
@@ -118,7 +132,7 @@
 										</td>
 										<td
 											><a
-												href={'/drive/' + item.id}
+												href={'/drive/file/' + item.id}
 												class="subtle">{item.name}</a
 											></td
 										>
@@ -132,7 +146,7 @@
 						</div>
 					{/if}
 				{:else}
-					<p>No items in drive</p>
+					<p>{locale('empty_drive')}</p>
 				{/if}
 			{/key}
 		</div>
@@ -164,12 +178,6 @@
 			td {
 				padding: 2px 5px;
 				border-bottom: 1px solid var(--bg-secondary);
-
-				&:first-child {
-					display: flex;
-					align-items: center;
-					justify-content: center;
-				}
 
 				&:not(:last-child) {
 					border-right: 1px solid var(--bg-secondary);
