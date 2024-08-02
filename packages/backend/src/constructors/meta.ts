@@ -1,5 +1,3 @@
-import { Meta } from '../entities/Meta.js';
-
 export default class ApiMeta {
 	name: string;
 	created_at: string;

@@ -98,11 +98,21 @@
 									href={'/drive/file/' + item.id}
 									class="item subtle"
 								>
-									<img
-										src={item.src}
-										alt={item.alt}
-										title={item.alt}
-									/>
+									{#if item.type.startsWith('image')}
+										<img
+											src={item.src}
+											alt={item.alt}
+											title={item.alt}
+										/>
+									{:else if item.type.startsWith('video')}
+										<div class="fakeThumbnail">
+											<Icon name="video" size="64px" />
+										</div>
+									{:else if item.type.startsWith('audio')}
+										<div class="fakeThumbnail">
+											<Icon name="music" size="64px" />
+										</div>
+									{/if}
 									<div class="label">
 										<p>{item.name}</p>
 										<small>{item.type}</small>
@@ -124,11 +134,34 @@
 								{#each drive as item}
 									<tr>
 										<td>
-											<img
-												src={item.src}
-												alt={item.alt}
-												title={item.alt}
-											/>
+											{#if item.type.startsWith('image')}
+												<img
+													src={item.src}
+													alt={item.alt}
+													title={item.alt}
+												/>
+											{:else if item.type.startsWith('video')}
+												<div class="fakeThumbnail">
+													<Icon
+														name="video"
+														size="18px"
+													/>
+												</div>
+											{:else if item.type.startsWith('audio')}
+												<div class="fakeThumbnail">
+													<Icon
+														name="music"
+														size="18px"
+													/>
+												</div>
+											{:else}
+												<div class="fakeThumbnail">
+													<Icon
+														name="question-mark"
+														size="18px"
+													/>
+												</div>
+											{/if}
 										</td>
 										<td
 											><a
@@ -155,22 +188,27 @@
 
 <style lang="scss">
 	.driveItemsList {
+		display: block;
 		overflow-x: scroll;
+		border: 1px solid var(--bg-tertiary);
+		border-radius: var(--border-s);
+		box-sizing: border-box;
+		height: 100%;
 
 		table {
-			border: 1px solid var(--bg-tertiary);
-			border-radius: var(--border-s);
 			border-spacing: 0px;
 			padding-bottom: auto;
-			height: 100%;
 
 			th {
 				text-align: left;
-				padding: 3px 6px;
+				padding: 5px 8px;
+				background-color: var(--bg-secondary);
 				border-bottom: 1px solid var(--bg-tertiary);
+				font-size: var(--font-xs);
+				font-weight: 500;
 
 				&:not(:first-child) {
-					min-width: 100px;
+					min-width: 75px;
 				}
 
 				&:not(:last-child) {
@@ -179,17 +217,37 @@
 			}
 
 			td {
-				padding: 2px 5px;
+				padding: 5px;
 				border-bottom: 1px solid var(--bg-tertiary);
 
 				&:not(:last-child) {
 					border-right: 1px solid var(--bg-tertiary);
 				}
 
+				&:first-child {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				&:not(:first-child) {
+					padding: 5px;
+				}
+
 				img {
-					width: 35px;
-					height: 35px;
+					width: 45px;
+					height: 45px;
 					object-fit: cover;
+					border-radius: var(--border-s);
+				}
+
+				.fakeThumbnail {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					width: 45px;
+					height: 45px;
+					border-radius: var(--border-s);
 				}
 			}
 		}
@@ -211,6 +269,17 @@
 			padding: 10px;
 			overflow: hidden;
 			word-break: break-all;
+
+			.fakeThumbnail {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				background-color: var(--bg-tertiary);
+				border-radius: var(--border-m);
+				color: var(--bg-accent);
+				width: 100%;
+				height: 145px;
+			}
 
 			img {
 				border-radius: var(--border-m);

@@ -12,10 +12,15 @@
 	import Store from '$lib/utils/Store';
 	import { onMount } from 'svelte';
 
-	let data = {};
+	let data = {
+		type: 'image'
+	};
 
 	let nameValue = '';
 	let altValue = '';
+
+	let editingName = false;
+	let editingAlt = false;
 
 	async function refresh() {
 		data = {};
@@ -25,15 +30,26 @@
 		altValue = data.alt;
 	}
 
+	function getWidth(src) {
+		let img = new Image();
+		img.src = src;
+		console.log(src + ' ' + img.naturalWidth);
+		return img.naturalWidth;
+	}
+
+	function getHeight(src) {
+		let img = new Image();
+		img.src = src;
+		console.log(src + ' ' + img.naturalHeight);
+		return img.naturalHeight;
+	}
+
 	onMount(async () => {
 		data = await driveFileGet($page.params.fileid);
 
 		nameValue = data.name;
 		altValue = data.alt;
 	});
-
-	let editingName = false;
-	let editingAlt = false;
 </script>
 
 <template>
@@ -55,7 +71,31 @@
 		<div class="paddedPage">
 			{#key data}
 				<div class="file">
-					<img src={data.src} alt={data.alt} title={data.alt} />
+					{#if data.type.startsWith('image')}
+						<img src={data.src} alt={data.alt} title={data.alt} />
+					{:else if data.type.startsWith('video')}
+						<!-- svelte-ignore a11y-media-has-caption -->
+						<video
+							src={data.src}
+							title={data.alt}
+							aria-label={data.alt}
+							preload="metadata"
+							controls
+						/>
+					{:else if data.type.startsWith('audio')}
+						<audio
+							src={data.src}
+							title={data.alt}
+							aria-label={data.alt}
+							preload="metadata"
+							controls
+						/>
+					{:else}
+						<p>{locale('media_broken')}</p>
+					{/if}
+					<div class="resolution">
+						{getWidth(data.src)}×{getHeight(data.src)}
+					</div>
 					<div class="info">
 						{#if !editingName}
 							<div class="left">
@@ -110,6 +150,12 @@
 								</Button>
 							</div>
 						{/if}
+					</div>
+					<div class="info">
+						<div class="left">
+							<b>ID</b>
+							<span>{data.id}</span>
+						</div>
 					</div>
 					<div class="info">
 						<div class="left">
@@ -283,6 +329,15 @@
 		background-color: var(--bg-secondary);
 		overflow: clip;
 
+		.resolution {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 6px 0px 6px 0px;
+			color: var(--txt-tertiary);
+			font-size: var(--font-xs);
+		}
+
 		.info {
 			display: flex;
 			align-items: center;
@@ -299,7 +354,9 @@
 			}
 		}
 
-		img {
+		img,
+		video,
+		audio {
 			width: 100%;
 			max-height: 350px;
 			object-fit: contain;

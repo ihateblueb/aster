@@ -18,9 +18,7 @@
 			errorMsg: locale('media_broken'),
 			imageClickAction: 'zoom',
 			tapAction: 'zoom',
-			initialZoomLevel: 'fill',
-			secondaryZoomLevel: 1,
-			maxZoomLevel: 2,
+			wheelToZoom: true,
 			pswpModule: () => PhotoSwipe
 		};
 
@@ -44,7 +42,6 @@
 									'.hidden-caption-content'
 								);
 							if (hiddenCaption) {
-								// get caption from element with class hidden-caption-content
 								captionHTML = hiddenCaption.innerHTML;
 							} else {
 								// get caption from alt attribute
@@ -62,22 +59,18 @@
 		lightbox.init();
 	});
 
-	function getHeight(src) {
-		let img = new Image();
-		img.src = src;
-		img.onload = () => {
-			console.log(src + ' ' + img.naturalHeight);
-			return img.naturalHeight;
-		};
-	}
-
 	function getWidth(src) {
 		let img = new Image();
 		img.src = src;
-		img.onload = () => {
-			console.log(src + ' ' + img.naturalWidth);
-			return img.naturalWidth;
-		};
+		console.log(src + ' ' + img.naturalWidth);
+		return img.naturalWidth;
+	}
+
+	function getHeight(src) {
+		let img = new Image();
+		img.src = src;
+		console.log(src + ' ' + img.naturalHeight);
+		return img.naturalHeight;
 	}
 </script>
 
@@ -103,6 +96,7 @@
 						/>
 					</a>
 				{:else if attachment.type.startsWith('video')}
+					<!-- svelte-ignore a11y-media-has-caption -->
 					<video
 						src={attachment.src}
 						title={attachment.alt}
@@ -117,7 +111,7 @@
 						aria-label={attachment.alt}
 						preload="metadata"
 						controls
-					></audio>
+					/>
 				{:else}
 					{attachment.src}
 				{/if}

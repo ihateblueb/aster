@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function driveFileAdd(file: File) {
 	let driveFileRes = {};
 
-	var driveFileReq = await fetch(`/api/v2/drive/file`, {
+	var driveFileReq = await fetch(`/api/v2/drive/file/${file.name}`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': file.type,

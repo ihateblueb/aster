@@ -24,3 +24,20 @@
 		}
 	}
 }
+
+.pswp__custom-caption {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 25px;
+	position: fixed;
+	bottom: 0;
+	text-shadow:
+		1px 0px 5px #000,
+		-1px 0px 5px #000,
+		0px 1px 5px #000,
+		0px -1px 5px #000,
+		0px 0px 10px #000,
+		0px 0px 15px #000;
+}
