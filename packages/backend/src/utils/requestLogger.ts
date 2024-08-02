@@ -15,7 +15,7 @@ const accessLogStream = rfs('requests.log', {
 
 export default {
 	dev: morgan(function (tokens, req, res) {
-		// ignore the svelte stuff
+		// ignore sveltekit files
 		if (!tokens.url(req, res).startsWith('/_app/')) {
 			logger(
 				'http',

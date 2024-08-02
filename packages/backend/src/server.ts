@@ -62,6 +62,12 @@ app.use(cors());
 
 app.use((req, res, next) => {
 	res.setHeader('TDM-Reservation', '1');
+
+	if (req.path.startsWith('/uploads')) {
+		// media has 1 day cache
+		res.setHeader('Cache-Control', 'public, max-age=86400');
+	}
+
 	next();
 });
 
