@@ -1,11 +1,19 @@
 import express from 'express';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import { v4 as uuidv4 } from 'uuid';
 
 import verifyToken from '../../../../../utils/auth/verifyToken.js';
 import db from '../../../../../utils/database.js';
+import config from '../../../../../utils/config.js';
 
 const router = express.Router();
 
-const safeForUpload = ['image/png', 'image/jpeg'];
+const safeForUpload = ['image/png', 'image/jpeg', 'image/webp'];
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 router.post(`/api/v2/drive/file`, async (req, res) => {
 	var authRes = await verifyToken(req.headers.authorization);
@@ -32,23 +40,106 @@ router.post(`/api/v2/drive/file`, async (req, res) => {
 					console.log(req.body);
 
 					if (safeForUpload.includes(req.headers['content-type'])) {
-						/*
-							driveFileToInsert['id'] = uuidv4();
-					driveFileToInsert['ap_id'] = sanitize(attachment.url);
-					driveFileToInsert['user'] = sanitize(author.id);
-					driveFileToInsert['note'] = sanitize(note.id);
-					driveFileToInsert['created_at'] = sanitize(note.created_at);
-					driveFileToInsert['updated_at'] = sanitize(note.created_at);
-					driveFileToInsert['type'] = sanitize(attachment.mediaType);
-					driveFileToInsert['src'] = sanitize(attachment.url);
-					driveFileToInsert['alt'] = sanitize(attachment.summary);
+						const fileId = uuidv4();
 
-					await db.getRepository('drive_file').insert(driveFileToInsert);
-						*/
+						if (
+							!fs.existsSync(
+								path.resolve(
+									__dirname,
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'uploads',
+									grabbedUser.id
+								)
+							)
+						) {
+							fs.mkdirSync(
+								path.resolve(
+									__dirname,
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'..',
+									'uploads',
+									grabbedUser.id
+								),
+								{ recursive: true }
+							);
+						}
+
+						fs.writeFileSync(
+							path.resolve(
+								__dirname,
+								'..',
+								'..',
+								'..',
+								'..',
+								'..',
+								'..',
+								'..',
+								'..',
+								'uploads',
+								grabbedUser.id,
+								`${fileId}.${req.headers['content-type'].split('/')[1]}`
+							),
+							req.body
+						);
+
+						let driveFileToInsert = {};
+
+						driveFileToInsert['id'] = fileId;
+						driveFileToInsert['ap_id'] =
+							new URL(config.url).href +
+							'uploads/' +
+							grabbedUser.id +
+							'/' +
+							fileId +
+							'.' +
+							req.headers['content-type'].split('/')[1];
+						driveFileToInsert['name'] =
+							fileId +
+							'.' +
+							req.headers['content-type'].split('/')[1];
+						driveFileToInsert['user'] = grabbedUser.id;
+						driveFileToInsert['created_at'] = new Date(
+							Date.now()
+						).toISOString();
+						driveFileToInsert['updated_at'] = new Date(
+							Date.now()
+						).toISOString();
+						driveFileToInsert['type'] = req.headers['content-type'];
+						driveFileToInsert['src'] =
+							new URL(config.url).href +
+							'uploads/' +
+							grabbedUser.id +
+							'/' +
+							fileId +
+							'.' +
+							req.headers['content-type'].split('/')[1];
+						driveFileToInsert['alt'] = '';
+
+						console.log(driveFileToInsert);
+
+						await db
+							.getRepository('drive_file')
+							.insert(driveFileToInsert);
+
 						res.status(200).json({
 							message: 'File uploaded'
 						});
 					} else {
+						console.log(req.headers['content-type']);
+
 						res.status(400).json({
 							message: 'Unsafe file type.'
 						});

@@ -10,5 +10,6 @@
 		"top": ["onlineusers"],
 		"mid": ["postform", "notifications"]
 	},
-	"home_timeline": "home"
+	"home_timeline": "home",
+	"drive_layout": "grid"
 }

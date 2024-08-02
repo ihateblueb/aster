@@ -7,8 +7,20 @@
 	import driveGet from '$lib/api/drive/get';
 	import { onMount } from 'svelte';
 	import driveFileAdd from '$lib/api/drive/file/add';
+	import Store from '$lib/utils/Store';
 
 	let fileinput;
+
+	let driveLayout = 'grid';
+
+	if (Store.get('drive_layout')) {
+		driveLayout = Store.get('drive_layout');
+	}
+
+	function setLayout(layout) {
+		driveLayout = layout;
+		Store.set('drive_layout', layout);
+	}
 
 	async function fileSelected(e) {
 		console.log(e.target.files);
@@ -27,6 +39,23 @@
 
 <template>
 	<PageHeader title={locale('drive')} icon="folder">
+		<Button
+			type="header"
+			on:click={() => {
+				setLayout('list');
+			}}
+		>
+			<Icon name="layout-list" size="16px" />
+		</Button>
+		<Button
+			type="header"
+			on:click={() => {
+				setLayout('grid');
+			}}
+		>
+			<Icon name="layout-grid" size="16px" />
+		</Button>
+		<hr class="vertical" />
 		<input
 			style="display: none;"
 			type="file"
@@ -48,9 +77,60 @@
 		<div class="paddedPage">
 			{#key drive}
 				{#if drive.length > 0}
-					{#each drive as item}
-						{JSON.stringify(item)}
-					{/each}
+					{#if driveLayout === 'grid'}
+						<div class="driveItemsGrid">
+							{#each drive as item}
+								<a
+									href={'/drive/' + item.id}
+									class="item subtle"
+								>
+									<img
+										src={item.src}
+										alt={item.alt}
+										title={item.alt}
+									/>
+									<div class="label">
+										<p>{item.name}</p>
+										<small>{item.type}</small>
+									</div>
+								</a>
+							{/each}
+						</div>
+					{:else if driveLayout === 'list'}
+						<div class="driveItemsList">
+							<table>
+								<tr>
+									<th>Preview</th>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Created at</th>
+									<th>Updated at</th>
+									<th>Has alt text?</th>
+								</tr>
+								{#each drive as item}
+									<tr>
+										<td>
+											<img
+												src={item.src}
+												alt={item.alt}
+												title={item.alt}
+											/>
+										</td>
+										<td
+											><a
+												href={'/drive/' + item.id}
+												class="subtle">{item.name}</a
+											></td
+										>
+										<td>{item.type}</td>
+										<td>{item.created_at}</td>
+										<td>{item.updated_at}</td>
+										<td>{item.alt ? 'true' : 'false'}</td>
+									</tr>
+								{/each}
+							</table>
+						</div>
+					{/if}
 				{:else}
 					<p>No items in drive</p>
 				{/if}
@@ -58,3 +138,85 @@
 		</div>
 	</div>
 </template>
+
+<style lang="scss">
+	.driveItemsList {
+		overflow-x: scroll;
+
+		table {
+			border: 1px solid var(--bg-secondary);
+			border-radius: var(--border-s);
+
+			th {
+				text-align: left;
+				padding: 2px 5px;
+				border-bottom: 1px solid var(--bg-secondary);
+
+				&:not(:first-child) {
+					min-width: 100px;
+				}
+
+				&:not(:last-child) {
+					border-right: 1px solid var(--bg-secondary);
+				}
+			}
+
+			td {
+				padding: 2px 5px;
+				border-bottom: 1px solid var(--bg-secondary);
+
+				&:first-child {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				&:not(:last-child) {
+					border-right: 1px solid var(--bg-secondary);
+				}
+
+				img {
+					width: 35px;
+					height: 35px;
+					object-fit: cover;
+				}
+			}
+		}
+	}
+	.driveItemsGrid {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 10px;
+
+		.item {
+			display: flex;
+			flex-grow: 1;
+			flex-shrink: 1;
+			background-color: var(--bg-secondary);
+			flex-direction: column;
+			width: 200px;
+			min-width: 145px;
+			border-radius: var(--border-m);
+			padding: 10px;
+			overflow: hidden;
+			word-break: break-all;
+
+			img {
+				border-radius: var(--border-m);
+				object-fit: cover;
+				height: 145px;
+				width: 100%;
+			}
+
+			.label {
+				margin-top: 10px;
+				font-size: var(--font-s);
+
+				small {
+					font-size: var(--font-xs);
+					color: var(--txt-tertiary);
+				}
+			}
+		}
+	}
+</style>
