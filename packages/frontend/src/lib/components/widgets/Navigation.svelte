@@ -14,14 +14,18 @@
 		{locale('home')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/notifications' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/notifications')
+			? 'accent'
+			: ''}"
 		to="/notifications"
 	>
 		<Icon name="bell" size="18px" margin="0px 6px 0px 0px" />
 		{locale('notifications')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/followrequests' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/followrequests')
+			? 'accent'
+			: ''}"
 		to="/followrequests"
 	>
 		<Icon name="user-plus" size="18px" margin="0px 6px 0px 0px" />
@@ -29,21 +33,23 @@
 	</Button>
 	<hr />
 	<Button
-		type="nav {$page.url.pathname === '/explore' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/explore') ? 'accent' : ''}"
 		to="/explore"
 	>
 		<Icon name="compass" size="18px" margin="0px 6px 0px 0px" />
 		{locale('explore')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/announcements' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/announcements')
+			? 'accent'
+			: ''}"
 		to="/announcements"
 	>
 		<Icon name="speakerphone" size="18px" margin="0px 6px 0px 0px" />
 		{locale('announcements')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/search' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/search') ? 'accent' : ''}"
 		to="/search"
 	>
 		<Icon name="search" size="18px" margin="0px 6px 0px 0px" />
@@ -51,14 +57,14 @@
 	</Button>
 	<hr />
 	<Button
-		type="nav {$page.url.pathname === '/bookmarks' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/bookmarks') ? 'accent' : ''}"
 		to="/bookmarks"
 	>
 		<Icon name="bookmarks" size="18px" margin="0px 6px 0px 0px" />
 		{locale('bookmarks')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/drive' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/drive') ? 'accent' : ''}"
 		to="/drive"
 	>
 		<Icon name="folder" size="18px" margin="0px 6px 0px 0px" />
@@ -73,14 +79,14 @@
 	</Button>
 	<hr />
 	<Button
-		type="nav {$page.url.pathname === '/admin' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/admin') ? 'accent' : ''}"
 		to="/admin"
 	>
 		<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
 		{locale('admin_panel')}
 	</Button>
 	<Button
-		type="nav {$page.url.pathname === '/settings' ? 'accent' : ''}"
+		type="nav {$page.url.pathname.startsWith('/settings') ? 'accent' : ''}"
 		to="/settings"
 	>
 		<Icon name="settings" size="18px" margin="0px 6px 0px 0px" />

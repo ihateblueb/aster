@@ -158,29 +158,32 @@
 		overflow-x: scroll;
 
 		table {
-			border: 1px solid var(--bg-secondary);
+			border: 1px solid var(--bg-tertiary);
 			border-radius: var(--border-s);
+			border-spacing: 0px;
+			padding-bottom: auto;
+			height: 100%;
 
 			th {
 				text-align: left;
-				padding: 2px 5px;
-				border-bottom: 1px solid var(--bg-secondary);
+				padding: 3px 6px;
+				border-bottom: 1px solid var(--bg-tertiary);
 
 				&:not(:first-child) {
 					min-width: 100px;
 				}
 
 				&:not(:last-child) {
-					border-right: 1px solid var(--bg-secondary);
+					border-right: 1px solid var(--bg-tertiary);
 				}
 			}
 
 			td {
 				padding: 2px 5px;
-				border-bottom: 1px solid var(--bg-secondary);
+				border-bottom: 1px solid var(--bg-tertiary);
 
 				&:not(:last-child) {
-					border-right: 1px solid var(--bg-secondary);
+					border-right: 1px solid var(--bg-tertiary);
 				}
 
 				img {

@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "27",
+	"__version__": "28",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -101,6 +101,7 @@
 	"updated_at": "Updated at",
 	"empty_drive": "No items in drive",
 	"has_alt": "Has alt text?",
+	"alt_text": "Alt text",
 	"not_provided": "Not provided",
 	"set_avatar": "Set avatar",
 	"set_banner": "Set banner",
