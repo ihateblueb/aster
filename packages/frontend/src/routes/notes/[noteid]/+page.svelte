@@ -17,6 +17,12 @@
 		icon="note"
 	/>
 	<div class="pageContent">
-		<Note {data} detailed={true} />
+		{#key data}
+			{#if data.replying_to}
+				<Note data={data.replying_to} />
+			{/if}
+
+			<Note {data} detailed={true} />
+		{/key}
 	</div>
 </template>

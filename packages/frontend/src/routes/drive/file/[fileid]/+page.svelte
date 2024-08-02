@@ -222,7 +222,7 @@
 								<Button
 									on:click={() => {
 										driveFileEdit(data.id, {
-											alt_text: altValue
+											alt: altValue
 										}).then((e) => {
 											data = e.file;
 										});

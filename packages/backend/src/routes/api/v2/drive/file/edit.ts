@@ -38,9 +38,9 @@ router.patch(`/api/v2/drive/file/:id`, async (req, res) => {
 								);
 							}
 
-							if (JSON.parse(req.body).alt_text) {
+							if (JSON.parse(req.body).alt) {
 								updatedFile['alt'] = sanitize(
-									JSON.parse(req.body).alt_text
+									JSON.parse(req.body).alt
 								);
 							}
 

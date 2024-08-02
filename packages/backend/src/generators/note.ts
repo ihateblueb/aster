@@ -31,6 +31,14 @@ export default async function generateNote(grabbedNote): Promise<{
 					.where({ host: grabbedAuthor.host })
 					.getOne();
 
+				if (grabbedNote.replying_to) {
+					var grabbedReplyingNote = await db
+						.getRepository('note')
+						.createQueryBuilder()
+						.where({ id: grabbedNote.replying_to })
+						.getOne();
+				}
+
 				var grabbedAttachments = await db
 					.getRepository('drive_file')
 					.createQueryBuilder()
@@ -76,6 +84,7 @@ export default async function generateNote(grabbedNote): Promise<{
 						grabbedNote,
 						grabbedAuthor,
 						grabbedInstance,
+						(await generateNote(grabbedReplyingNote)).note,
 						grabbedAttachments,
 						grabbedEmojis,
 						grabbedReactions,

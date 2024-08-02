@@ -1,4 +1,5 @@
 import { User } from '../entities/User.js';
+import generateNote from '../generators/note.js';
 
 export default class ApiNote {
 	id: string;
@@ -6,7 +7,7 @@ export default class ApiNote {
 	created_at: string;
 	visibility: string;
 
-	replying_to?: ApiNote;
+	replying_to?: object;
 	author: object;
 	instance: object;
 
@@ -25,6 +26,7 @@ export default class ApiNote {
 		grabbedNote,
 		grabbedAuthor,
 		grabbedInstance?,
+		grabbedReplyingNote?,
 		grabbedAttachments?,
 		grabbedEmojis?,
 		grabbedReactions?,
@@ -36,7 +38,7 @@ export default class ApiNote {
 		this.ap_id = grabbedNote.ap_id;
 		this.created_at = grabbedNote.created_at;
 		this.visibility = grabbedNote.visibility;
-		this.replying_to = grabbedNote.replying_to;
+		this.replying_to = grabbedReplyingNote;
 		this.author = grabbedAuthor;
 		this.instance = grabbedInstance;
 		this.local = grabbedNote.local;

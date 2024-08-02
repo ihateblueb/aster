@@ -89,6 +89,12 @@ export default async function processNewNote(body) {
 				noteToInsert['replying_to'] = replyingToNote.id;
 			*/
 
+			let replyingToNote = await getRemoteNote(body.inReplyTo);
+
+			if (replyingToNote) {
+				noteToInsert['replying_to'] = replyingToNote.id;
+			}
+
 			console.log('to');
 			console.log(
 				body.to.splice(
