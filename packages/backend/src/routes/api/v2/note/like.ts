@@ -5,6 +5,8 @@ import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
 import createNotification from '../../../../utils/createNotification.js';
+import OLike from '../../../../outgoing/like.js';
+import config from '../../../../utils/config.js';
 
 const router = express.Router();
 
@@ -26,17 +28,24 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 
 				await db.getRepository('note_like').insert({
 					id: likeId,
-					ap_id: 'https://as.blueb.me/activities/' + likeId,
+					ap_id: new URL(config.url).href + 'activities/' + likeId,
 					note: req.params.noteid,
 					created_at: new Date(Date.now()).toISOString(),
 					user: authRes.grabbedUserAuth.user
 				});
 
-				var grabbedAuthor = await db.getRepository('note').findOne({
+				var grabbedAuthor = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedNote.user
 					}
 				});
+
+				OLike(
+					likeId,
+					authRes.grabbedUserAuth.user,
+					grabbedAuthor,
+					grabbedNote
+				);
 
 				if (grabbedAuthor) {
 					if (grabbedAuthor.local) {

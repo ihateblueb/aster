@@ -13,23 +13,31 @@ export default class ActLike {
 
 	id: string;
 
-	readonly type: 'Like';
+	type: string;
 
 	actor: string;
 	object: string;
+	context: string;
+
+	to?: string[];
 
 	content?: string;
 	_misskey_reaction?: string;
+
 	tag?: object[];
 
-	// TODO: reaction? uuhg
+	constructor(id, actor, author, note, reaction?) {
+		this.id = config.url + 'activities/' + id;
 
-	constructor(reaction: NoteReact, user: User, author: User) {
-		this.id = config.url + 'activities/' + reaction.id;
-		this.actor = user.ap_id;
-		this.object = author.ap_id;
+		this.type = 'Like';
 
-		if (reaction.emoji) {
+		this.actor = actor.ap_id;
+		this.object = note.ap_id;
+		this.context = note.ap_id;
+
+		this.to = [actor.followers_url, author.ap_id];
+
+		if (reaction) {
 			this.content = reaction.emoji.name;
 
 			this.tag = [new ApEmoji(reaction.emoji)];
