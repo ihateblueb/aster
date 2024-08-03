@@ -9,8 +9,11 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import VirtualList from '$lib/components/VirtualList.svelte';
+	import Store from '$lib/utils/Store';
 
-	let timeline = 'local';
+	let timeline = Store.get('explore_timeline')
+		? Store.get('explore_timeline')
+		: 'local';
 	let notes;
 
 	onMount(async () => {
@@ -30,6 +33,7 @@
 			type={'header' + (timeline === 'local' ? ' selected' : '')}
 			on:click={async () => {
 				timeline = 'local';
+				Store.set('explore_timeline', 'local');
 				refresh();
 			}}
 		>
@@ -39,6 +43,7 @@
 			type={'header' + (timeline === 'public' ? ' selected' : '')}
 			on:click={async () => {
 				timeline = 'public';
+				Store.set('explore_timeline', 'public');
 				refresh();
 			}}
 		>

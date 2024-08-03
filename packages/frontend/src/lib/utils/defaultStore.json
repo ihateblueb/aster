@@ -1,6 +1,6 @@
 {
 	"lang": "en_US",
-	"theme": "purpura",
+	"theme": "rosepine-moon",
 	"widgets_left": {
 		"top": ["instancelogo"],
 		"mid": ["navigation"],
@@ -11,5 +11,6 @@
 		"mid": ["postform", "notifications"]
 	},
 	"home_timeline": "home",
+	"explore_timeline": "local",
 	"drive_layout": "grid"
 }
