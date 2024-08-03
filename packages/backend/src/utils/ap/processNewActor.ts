@@ -68,6 +68,8 @@ export default async function processNewActor(body) {
 			actorToInsert['discoverable'] = sanitize(body.discoverable);
 		}
 
+		// todo: make sanitizer not make this be false
+
 		if (body.isCat) {
 			actorToInsert['is_cat'] = sanitize(body.isCat);
 		}

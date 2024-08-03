@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "29",
+	"__version__": "31",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -107,6 +107,9 @@
 	"set_banner": "Set banner",
 	"set_background": "Set background",
 	"delete": "Delete",
+	"followed_you": "followed you",
+	"liked_your_note": "liked your note",
+	"unknown_notification": "Unknown notification from",
 	"home": "Home",
 	"notifications": "Notifications",
 	"follow_requests": "Follow Requests",
