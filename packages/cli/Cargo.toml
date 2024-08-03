@@ -1,0 +1,8 @@
+[package]
+name = "aster-cli"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# bcrypt
+clap = "4.3.21"
