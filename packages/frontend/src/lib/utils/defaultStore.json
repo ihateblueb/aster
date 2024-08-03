@@ -12,5 +12,13 @@
 	},
 	"home_timeline": "home",
 	"explore_timeline": "local",
-	"drive_layout": "grid"
+	"drive_layout": "grid",
+	"drafts": [
+		{
+			"cw": "",
+			"content": "",
+			"visibility": "public",
+			"attachments": []
+		}
+	]
 }
