@@ -25,7 +25,7 @@
 	}
 }
 
-.pswp__custom-caption {
+.pswp__caption {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -33,11 +33,16 @@
 	padding: 25px;
 	position: fixed;
 	bottom: 0;
-	text-shadow:
-		1px 0px 5px #000,
-		-1px 0px 5px #000,
-		0px 1px 5px #000,
-		0px -1px 5px #000,
-		0px 0px 10px #000,
-		0px 0px 15px #000;
+
+	.pswp__caption-content {
+		border-radius: var(--border-m);
+		color: var(--txt-primary);
+		text-shadow:
+			0px 0px 5px #000,
+			0px 0px 25px #000;
+		background-color: var(--bg-accent-50);
+		backdrop-filter: blur(16px);
+		padding: 8px 12px;
+		white-space: pre-line;
+	}
 }

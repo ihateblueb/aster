@@ -39,8 +39,6 @@ export default async function generateMeta(grabbedMeta): Promise<{
 			.select('instance')
 			.getCount();
 
-		console.log(grabbedMeta);
-
 		return {
 			status: 200,
 			meta: new ApiMeta(

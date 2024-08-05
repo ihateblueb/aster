@@ -51,19 +51,23 @@ export default async function OLike(
 								ap_id: e
 							}
 						});
-					await deliverQueue.add('deliver', {
-						inbox: grabbedFollower.inbox,
-						localUserId: grabbedUser.id,
-						body: likeJson
-					});
-					logger(
-						'debug',
-						'ap',
-						'queued deliver to ' +
-							grabbedFollower.inbox +
-							' from ' +
-							grabbedUser.ap_id
-					);
+
+					if (!grabbedFollower.local) {
+						await deliverQueue.add('deliver', {
+							inbox: grabbedFollower.inbox,
+							localUserId: grabbedUser.id,
+							body: likeJson
+						});
+
+						logger(
+							'debug',
+							'ap',
+							'queued deliver to ' +
+								grabbedFollower.inbox +
+								' from ' +
+								grabbedUser.ap_id
+						);
+					}
 				});
 			}
 		} else {

@@ -63,10 +63,24 @@ app.use(cors());
 app.use((req, res, next) => {
 	res.setHeader('TDM-Reservation', '1');
 
+	// media has 1 day cache
 	if (req.path.startsWith('/uploads')) {
-		// media has 1 day cache
 		res.setHeader('Cache-Control', 'public, max-age=86400');
 	}
+
+	config.security.blockedUserAgents.forEach((e) => {
+		if (req.headers['user-agent'].includes(e)) {
+			logger(
+				'debug',
+				'router',
+				'blocked request from useragent matching ' + e
+			);
+
+			res.status(403).end();
+
+			next(403);
+		}
+	});
 
 	next();
 });

@@ -19,6 +19,16 @@
 			imageClickAction: 'zoom',
 			tapAction: 'zoom',
 			wheelToZoom: true,
+
+			arrowPrevSVG:
+				'<i class="ti ti-chevron-left" style="font-size: 32px; color: var(--txt-secondary);"></i>',
+			arrowNextSVG:
+				'<i class="ti ti-chevron-right" style="font-size: 32px; color: var(--txt-secondary);"></i>',
+			closeSVG:
+				'<i class="ti ti-x" style="font-size: 20px; color: var(--txt-secondary);"></i>',
+			zoomSVG:
+				'<i class="ti ti-zoom-in" style="font-size: 20px; color: var(--txt-secondary);"></i>',
+
 			pswpModule: () => PhotoSwipe
 		};
 
@@ -26,7 +36,7 @@
 
 		lightbox.on('uiRegister', function () {
 			lightbox.pswp.ui.registerElement({
-				name: 'custom-caption',
+				name: 'caption',
 				order: 9,
 				isButton: false,
 				appendTo: 'root',
@@ -44,10 +54,9 @@
 							if (hiddenCaption) {
 								captionHTML = hiddenCaption.innerHTML;
 							} else {
-								// get caption from alt attribute
-								captionHTML = currSlideElement
+								captionHTML = `<div class="pswp__caption-content">${currSlideElement
 									.querySelector('img')
-									.getAttribute('alt');
+									.getAttribute('alt')}</div>`;
 							}
 						}
 						el.innerHTML = captionHTML || '';
@@ -55,7 +64,6 @@
 				}
 			});
 		});
-
 		lightbox.init();
 	});
 
