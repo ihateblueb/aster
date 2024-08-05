@@ -258,14 +258,7 @@ importers:
         specifier: workspace:vite-plugin-svelte-auto-import-style
         version: link:../vite-plugin-svelte-auto-import-style
 
-  packages/vite-plugin-svelte-auto-import-style:
-    dependencies:
-      Nonsense:
-        specifier: ^0.1.2
-        version: 0.1.2
-      backend:
-        specifier: ^0.0.0
-        version: 0.0.0
+  packages/vite-plugin-svelte-auto-import-style: {}
 
 packages:
 
