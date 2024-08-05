@@ -44,5 +44,5 @@ export class Note {
 	tags: string;
 
 	@Column({ nullable: true })
-	original_note: string;
+	quoted: string;
 }
