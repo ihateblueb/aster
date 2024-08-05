@@ -12,10 +12,20 @@ router.post(`/api/v2/user/:userid/follow`, async (req, res) => {
 
 	if (req.params.userid) {
 		if (authRes.status === 200) {
-			logger('debug', 'user', 'user follow requested');
-			return res.status(501).json({
-				message: 'Not implemented'
+			var grabbedUser = await db.getRepository('user').findOne({
+				where: {
+					id: req.params.userid
+				}
 			});
+
+			if (grabbedUser) {
+				if (!grabbedUser.local) {
+				}
+			} else {
+				return res.status(404).json({
+					message: 'User not found'
+				});
+			}
 		} else {
 			return res.status(authRes.status).json({
 				message: authRes.message
