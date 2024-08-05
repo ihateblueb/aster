@@ -18,19 +18,28 @@
 		<br /><br />
 		<strong>{locale('output')}:</strong><br />
 
-		{#key mfmContent}
-			<Note
-				data={{
-					id: '0',
-					author: {
+		<div class="mfmContent">
+			{#key mfmContent}
+				<Note
+					data={{
 						id: '0',
-						displayname: 'Dr. Wallace Breen',
-						username: 'breen',
-						host: 'cityseventeen.local'
-					},
-					content: mfmContent
-				}}
-			/>
-		{/key}
+						author: {
+							id: '0',
+							displayname: 'Dr. Wallace Breen',
+							username: 'breen',
+							host: 'cityseventeen.local'
+						},
+						content: mfmContent
+					}}
+					inTimeline
+				/>
+			{/key}
+		</div>
 	</div>
 </template>
+
+<style lang="scss">
+	.mfmContent {
+		margin-top: 20px;
+	}
+</style>

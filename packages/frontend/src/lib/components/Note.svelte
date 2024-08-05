@@ -253,10 +253,11 @@
 							size="18px"
 							color="var(--like)"
 						/>
+						<span class="counter">{data.likes.count}</span>
 					{:else}
 						<Icon name="star" size="18px" color="inherit" />
+						<span class="counter">0</span>
 					{/if}
-					<span class="counter">{data.likes.count}</span>
 				</button>
 				<button>
 					<Icon name="plus" size="18px" color="inherit" />

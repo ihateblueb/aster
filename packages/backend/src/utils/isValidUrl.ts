@@ -15,8 +15,8 @@ export default function isValidUrl(url: string) {
 	} else if (url === '::1') {
 		logger('error', 'validation', 'stopped request to ::1');
 		return false;
-	} else if (url === '127.0.0.1') {
-		logger('error', 'validation', 'stopped request to 127.0.0.1');
+	} else if (url.startsWith('127')) {
+		logger('error', 'validation', 'stopped request to 127.*.*.*');
 		return false;
 	} else if (url.startsWith('192.168')) {
 		logger('error', 'validation', 'stopped request to 192.168.*.*');
@@ -29,7 +29,6 @@ export default function isValidUrl(url: string) {
 		return true;
 	} catch (e) {
 		logger('error', 'validation', 'stopped request to ' + url);
-		console.log(e);
 		return false;
 	}
 }
