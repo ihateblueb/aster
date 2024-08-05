@@ -19,7 +19,13 @@ router.post(`/api/v2/user/:userid/follow`, async (req, res) => {
 			});
 
 			if (grabbedUser) {
-				if (!grabbedUser.local) {
+				if (grabbedUser.id === authRes.grabbedUserAuth.user) {
+					return res.status(400).json({
+						message: 'You cannot follow yourself'
+					});
+				} else {
+					if (!grabbedUser.local) {
+					}
 				}
 			} else {
 				return res.status(404).json({

@@ -24,6 +24,7 @@
 		"vite-plugin-svelte-auto-import-style": "workspace:vite-plugin-svelte-auto-import-style"
 	},
 	"dependencies": {
+		"@floating-ui/dom": "^1.6.9",
 		"@sveltejs/adapter-node": "^5.0.1",
 		"@tabler/icons-webfont": "^3.4.0",
 		"@zerodevx/svelte-json-view": "^1.0.9",
