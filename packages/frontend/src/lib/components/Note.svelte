@@ -304,7 +304,7 @@
 				<Icon size="18px" name="link" margin="0px 8px 0px 0px" />
 				<span>{locale('copy_link_origin')}</span>
 			</DropdownItem>
-			<DropdownItem on:click={() => (window.location.href = data.ap_id)}>
+			<DropdownItem on:click={() => window.open(data.ap_id, '_blank')}>
 				<Icon
 					size="18px"
 					name="external-link"
@@ -324,12 +324,6 @@
 			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 			<span>{locale('copy_note_id')}</span>
 		</DropdownItem>
-		<DropdownItem
-			on:click={() => navigator.clipboard.writeText(data.author.id)}
-		>
-			<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
-			<span>{locale('copy_user_id')}</span>
-		</DropdownItem>
 		<hr />
 		<DropdownItem>
 			<Icon
@@ -338,19 +332,6 @@
 				margin="0px 8px 0px 0px"
 			/>
 			<span>{locale('report_note')}</span>
-		</DropdownItem>
-		<DropdownItem>
-			<Icon
-				size="18px"
-				name="exclamation-circle"
-				margin="0px 8px 0px 0px"
-			/>
-			<span>{locale('report_user')}</span>
-		</DropdownItem>
-		<hr />
-		<DropdownItem on:click={() => userBite(data.author.id)}>
-			<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
-			<span>{locale('bite_user')}</span>
 		</DropdownItem>
 		<hr />
 		{#if !pinned}
@@ -364,7 +345,6 @@
 				<span>{locale('unpin_note')}</span>
 			</DropdownItem>
 		{/if}
-		<hr />
 		<DropdownItem>
 			<Icon size="18px" name="pencil" margin="0px 8px 0px 0px" />
 			<span>{locale('edit_note')}</span>

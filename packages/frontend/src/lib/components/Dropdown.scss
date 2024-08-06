@@ -34,3 +34,23 @@ dialog._91qW7WV {
 		align-items: center;
 	}
 }
+
+@media screen and (max-width: 650px) {
+	dialog._91qW7WV {
+		position: sticky;
+		top: auto !important;
+		left: auto !important;
+		bottom: 0 !important;
+		width: 100%;
+		box-sizing: border-box;
+
+		padding: 8px !important;
+		border-radius: var(--border-l) var(--border-l) 0px 0px !important;
+
+		margin-bottom: env(safe-area-inset-bottom, 20px) !important;
+
+		&::backdrop {
+			background-color: #00000050 !important;
+		}
+	}
+}

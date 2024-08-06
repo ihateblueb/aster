@@ -6,7 +6,13 @@
 
 	import { tick } from 'svelte';
 
-	import { computePosition, offset, shift } from '@floating-ui/dom';
+	import {
+		computePosition,
+		offset,
+		shift,
+		flip,
+		size
+	} from '@floating-ui/dom';
 
 	let dialog: HTMLDialogElement;
 	let target;
@@ -14,10 +20,12 @@
 	let top: Number;
 	let left: Number;
 
+	let maxWidth: Number;
+	let maxHeight: Number;
+
 	let show = false;
 
 	export async function open(e: MouseEvent) {
-		console.log(e);
 		if (!show) {
 			show = true;
 			target = e.target;
@@ -32,7 +40,17 @@
 
 	function updatePosition() {
 		computePosition(target, dialog, {
-			middleware: [shift(), offset(10)]
+			middleware: [
+				shift(),
+				offset(10),
+				flip(),
+				size({
+					apply({ availableWidth, availableHeight }) {
+						maxWidth = availableWidth;
+						maxHeight = availableHeight - 22; // 10px off of bottom
+					}
+				})
+			]
 		}).then(({ x, y }) => {
 			left = x;
 			top = y;
@@ -44,11 +62,19 @@
 	}
 </script>
 
-<svelte:window on:resize={(e) => updatePosition(e)} />
+<svelte:window on:resize={updatePosition} />
 
 <template>
 	<dialog
-		style={'top: ' + top + 'px; left: ' + left + 'px'}
+		style={'top: ' +
+			top +
+			'px; left: ' +
+			left +
+			'px; max-width: ' +
+			maxWidth +
+			'px; max-height: ' +
+			maxHeight +
+			'px;'}
 		bind:this={dialog}
 		on:click={close}
 		on:close={() => (show = false)}

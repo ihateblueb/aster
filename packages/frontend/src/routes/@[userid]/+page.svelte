@@ -14,6 +14,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import userFollow from '$lib/api/user/follow.js';
 	import Time from '$lib/components/Time.svelte';
+	import userBite from '$lib/api/user/bite.js';
 
 	export let data;
 
@@ -79,21 +80,37 @@
 		{/if}
 
 		<Dropdown bind:this={more}>
-			<DropdownItem>
-				<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
+			<DropdownItem
+				on:click={() =>
+					navigator.clipboard.writeText(
+						'@' + data.username + '@' + data.host
+					)}
+			>
+				<Icon size="18px" name="at" margin="0px 8px 0px 0px" />
 				<span>{locale('copy_username')}</span>
 			</DropdownItem>
-			<DropdownItem>
+			<DropdownItem
+				on:click={() => navigator.clipboard.writeText(data.id)}
+			>
 				<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 				<span>{locale('copy_user_id')}</span>
 			</DropdownItem>
-			<DropdownItem>
-				<Icon
-					size="18px"
-					name="external-link"
-					margin="0px 8px 0px 0px"
-				/>
-				<span>{locale('view_on_remote')}</span>
+			{#if !data.local}
+				<DropdownItem
+					on:click={() => window.open(data.ap_id, '_blank')}
+				>
+					<Icon
+						size="18px"
+						name="external-link"
+						margin="0px 8px 0px 0px"
+					/>
+					<span>{locale('view_on_remote')}</span>
+				</DropdownItem>
+			{/if}
+			<hr />
+			<DropdownItem on:click={() => userBite(data.id)}>
+				<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
+				<span>{locale('bite_user')}</span>
 			</DropdownItem>
 			<hr />
 			<DropdownItem>
@@ -122,6 +139,7 @@
 				<span>{locale('remote_refresh_user')}</span>
 			</DropdownItem>
 		</Dropdown>
+
 		<div class="pageContent">
 			{#if data}
 				{#if data.message}
