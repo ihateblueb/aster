@@ -44,10 +44,8 @@ dialog._91qW7WV {
 		width: 100%;
 		box-sizing: border-box;
 
-		padding: 8px !important;
-		border-radius: var(--border-l) var(--border-l) 0px 0px !important;
-
-		margin-bottom: env(safe-area-inset-bottom, 20px) !important;
+		padding: 10px 10px max(10px, env(safe-area-inset-bottom)) 10px !important;
+		border-radius: var(--border-xl) var(--border-xl) 0px 0px !important;
 
 		&::backdrop {
 			background-color: #00000050 !important;

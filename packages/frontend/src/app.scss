@@ -22,6 +22,7 @@
 	color: var(--txt-secondary);
 	font-family: var(--font);
 	font-size: var(--font-m);
+	overflow-x: hidden;
 }
 
 :global(h1) {

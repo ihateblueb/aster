@@ -55,6 +55,25 @@
 		}
 	}
 
+	&.footer {
+		border: none;
+		background-color: transparent;
+		padding: 0px;
+		margin: 0px;
+		margin-left: 2.5px;
+		margin-right: 2.5px;
+		transition: 0.1s;
+
+		&:hover {
+			color: var(--accent);
+		}
+
+		&.selected {
+			color: var(--accent);
+			background-color: transparent;
+		}
+	}
+
 	&.accent {
 		background-color: var(--accent);
 	}
