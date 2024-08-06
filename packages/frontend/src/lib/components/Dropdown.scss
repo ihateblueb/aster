@@ -5,12 +5,13 @@ dialog._91qW7WV {
 	padding: 6px;
 
 	box-shadow: 0px 0px 15px #00000025;
-	background-color: var(--bg-secondary);
+	background-color: var(--bg-secondary-50);
 	color: var(--txt-secondary);
+	backdrop-filter: blur(32px);
 	font-size: var(--font-s);
 
 	border-radius: var(--border-m);
-	border: none;
+	border: 1px solid var(--bg-tertiary-50);
 
 	text-align: left;
 

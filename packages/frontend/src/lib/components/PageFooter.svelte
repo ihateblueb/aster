@@ -5,7 +5,7 @@
 
 <template>
 	<div class="pageFooter">
-		<Button type="footer" to="/explore">
+		<Button type="footer" to="#">
 			<Icon name="layout-sidebar-left-expand" /></Button
 		>
 		<Button type="footer" to="/">
@@ -17,7 +17,7 @@
 		<Button type="footer" to="/explore">
 			<Icon name="compass" /></Button
 		>
-		<Button type="footer" to="/">
+		<Button type="footer" to="#">
 			<Icon name="layout-sidebar-right-expand" /></Button
 		>
 	</div>

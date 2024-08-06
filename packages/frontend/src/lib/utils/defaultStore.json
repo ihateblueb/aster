@@ -1,6 +1,7 @@
 {
 	"lang": "en_US",
 	"theme": "rosepine-moon",
+	"font": "figtree",
 	"widgets_left": {
 		"top": ["instancelogo"],
 		"mid": ["navigation"],
@@ -20,5 +21,6 @@
 			"visibility": "public",
 			"attachments": []
 		}
-	]
+	],
+	"use_blur_effects": true
 }

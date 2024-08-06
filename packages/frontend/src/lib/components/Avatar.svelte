@@ -6,7 +6,7 @@
 	export let size = '55px';
 
 	if (!src) {
-		src = '/notfound.png';
+		src = '/avatar.png';
 	}
 </script>
 

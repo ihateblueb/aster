@@ -37,7 +37,9 @@ export async function load({ url }) {
 		}
 	}
 
-	document.body.classList.add(Store.get('theme'));
+	document.body.classList.add('theme-' + Store.get('theme'));
+
+	document.body.classList.add('font-' + Store.get('font'));
 
 	// update account
 	var account = Store.get('account');

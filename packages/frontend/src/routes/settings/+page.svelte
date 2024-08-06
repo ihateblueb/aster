@@ -12,7 +12,16 @@
 	import themes from '../../../static/themes/themes.json';
 
 	function refreshTheme(oldTheme, newTheme) {
-		document.body.classList.replace(oldTheme, newTheme);
+		document.body.classList.replace(
+			'theme-' + oldTheme,
+			'theme-' + newTheme
+		);
+	}
+
+	import fonts from '../../../static/fonts/fonts.json';
+
+	function refreshFont(oldFont, newFont) {
+		document.body.classList.replace('font-' + oldFont, 'font-' + newFont);
 	}
 </script>
 
@@ -37,6 +46,24 @@
 					/>
 				{/each}
 			</Select>
+			<h2>{locale('s_appearance_font')}</h2>
+			<Select>
+				{#each fonts as font}
+					<SelectItem
+						value={font.id}
+						name={font.name}
+						on:click={() => {
+							refreshFont(Store.get('font'), font.id);
+							Store.set('font', font.id);
+						}}
+						selected={Store.get('font') === font.id ? true : false}
+					/>
+				{/each}
+			</Select>
+
+			<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
+			<label for="vehicle1">Use blur effects</label><br />
+
 			<h1>{locale('s_behavior')}</h1>
 			<h1>{locale('s_account')}</h1>
 		</div>

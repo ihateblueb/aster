@@ -10,9 +10,9 @@
 @import './static/themes/mi-botanical.scss';
 @import './static/themes/mastodon.scss';
 
-// fonts
-@import './static/fonts/figtree.css';
-@import './static/fonts/inclusivesans.css';
+@import './static/fonts/figtree.scss';
+@import './static/fonts/inclusive-sans.scss';
+@import './static/fonts/system-ui.scss';
 
 :global(body) {
 	margin: 0px;

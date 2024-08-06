@@ -73,6 +73,9 @@
 				<div class="file">
 					{#if data.type.startsWith('image')}
 						<img src={data.src} alt={data.alt} title={data.alt} />
+						<div class="resolution">
+							{getWidth(data.src)}×{getHeight(data.src)}
+						</div>
 					{:else if data.type.startsWith('video')}
 						<!-- svelte-ignore a11y-media-has-caption -->
 						<video
@@ -93,9 +96,6 @@
 					{:else}
 						<p>{locale('media_broken')}</p>
 					{/if}
-					<div class="resolution">
-						{getWidth(data.src)}×{getHeight(data.src)}
-					</div>
 					<div class="info">
 						{#if !editingName}
 							<div class="left">
@@ -242,6 +242,7 @@
 					<div class="actions">
 						<div class="left">
 							<Button
+								type="noMargin"
 								on:click={() => {
 									updateAccount({
 										avatar: data.src
@@ -263,6 +264,7 @@
 								{locale('set_avatar')}
 							</Button>
 							<Button
+								type="noMargin"
 								on:click={() => {
 									updateAccount({
 										banner: data.src
@@ -284,6 +286,7 @@
 								{locale('set_banner')}
 							</Button>
 							<Button
+								type="noMargin"
 								on:click={() => {
 									updateAccount({
 										background: data.src
@@ -306,7 +309,7 @@
 							</Button>
 						</div>
 						<div class="right">
-							<Button type="danger">
+							<Button type="noMargin danger">
 								<Icon
 									name="trash"
 									size="18px"
@@ -377,6 +380,9 @@
 			gap: 5px;
 
 			.left {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
 				flex-grow: 2;
 			}
 
