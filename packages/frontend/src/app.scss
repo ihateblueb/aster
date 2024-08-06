@@ -8,6 +8,7 @@
 @import './static/themes/rosepine-dawn.scss';
 @import './static/themes/misskey.scss';
 @import './static/themes/mi-botanical.scss';
+@import './static/themes/mi-green.scss';
 @import './static/themes/mastodon.scss';
 
 @import './static/fonts/figtree.scss';
@@ -18,7 +19,7 @@
 	margin: 0px;
 	scrollbar-color: var(--bg-accent) transparent;
 	scrollbar-width: thin;
-	background-color: var(--bg-primary);
+	background: var(--bg-img, var(--bg-primary));
 	color: var(--txt-secondary);
 	font-family: var(--font);
 	font-size: var(--font-m);

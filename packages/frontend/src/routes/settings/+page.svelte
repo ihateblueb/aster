@@ -31,15 +31,16 @@
 		<div class="paddedPage settingsPage">
 			<h1>{locale('s_appearance')}</h1>
 			<h2>{locale('s_appearance_theme')}</h2>
-			<Select>
+			<Select
+				on:change={(e) => {
+					refreshTheme(Store.get('theme'), e.target.value);
+					Store.set('theme', e.target.value);
+				}}
+			>
 				{#each themes as theme}
 					<SelectItem
 						value={theme.id}
 						name={theme.name}
-						on:click={() => {
-							refreshTheme(Store.get('theme'), theme.id);
-							Store.set('theme', theme.id);
-						}}
 						selected={Store.get('theme') === theme.id
 							? true
 							: false}
@@ -47,15 +48,16 @@
 				{/each}
 			</Select>
 			<h2>{locale('s_appearance_font')}</h2>
-			<Select>
+			<Select
+				on:change={(e) => {
+					refreshFont(Store.get('font'), e.target.value);
+					Store.set('font', e.target.value);
+				}}
+			>
 				{#each fonts as font}
 					<SelectItem
 						value={font.id}
 						name={font.name}
-						on:click={() => {
-							refreshFont(Store.get('font'), font.id);
-							Store.set('font', font.id);
-						}}
 						selected={Store.get('font') === font.id ? true : false}
 					/>
 				{/each}

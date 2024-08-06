@@ -1,15 +1,5 @@
 [
 	{
-		"id": "purpura",
-		"name": "Purpura",
-		"scheme": ["dark"]
-	},
-	{
-		"id": "wisteria",
-		"name": "Wisteria",
-		"scheme": ["light"]
-	},
-	{
 		"id": "rosepine",
 		"name": "Rosé Pine",
 		"scheme": ["dark"]
@@ -25,14 +15,29 @@
 		"scheme": ["light"]
 	},
 	{
-		"id": "mi-botanical",
-		"name": "Mi Botanical",
-		"scheme": ["light", "dark"]
+		"id": "purpura",
+		"name": "Purpura",
+		"scheme": ["dark"]
+	},
+	{
+		"id": "wisteria",
+		"name": "Wisteria",
+		"scheme": ["light"]
 	},
 	{
 		"id": "misskey",
 		"name": "Misskey",
 		"scheme": ["light", "dark"]
+	},
+	{
+		"id": "mi-botanical",
+		"name": "Misskey Botanical",
+		"scheme": ["light", "dark"]
+	},
+	{
+		"id": "mi-green",
+		"name": "Misskey Green",
+		"scheme": ["dark", "green", "lime"]
 	},
 	{
 		"id": "iceshrimp",

@@ -1,9 +1,5 @@
-<script lang="ts">
-	export let setting = '';
-</script>
-
 <template>
-	<select>
+	<select on:change>
 		<slot></slot>
 	</select>
 </template>
