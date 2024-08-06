@@ -312,6 +312,10 @@
 				/>
 				<span>{locale('view_on_remote')}</span>
 			</DropdownItem>
+			<DropdownItem on:click={() => goto('/notes/' + data.id + '/raw')}>
+				<Icon size="18px" name="code" margin="0px 8px 0px 0px" />
+				<span>{locale('view_raw')}</span>
+			</DropdownItem>
 			<hr />
 		{/if}
 		<DropdownItem

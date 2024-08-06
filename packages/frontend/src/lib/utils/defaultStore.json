@@ -14,13 +14,6 @@
 	"home_timeline": "home",
 	"explore_timeline": "local",
 	"drive_layout": "grid",
-	"drafts": [
-		{
-			"cw": "",
-			"content": "",
-			"visibility": "public",
-			"attachments": []
-		}
-	],
+	"drafts": {},
 	"use_blur_effects": true
 }

@@ -23,6 +23,16 @@
 	font-family: var(--font);
 	font-size: var(--font-m);
 	overflow-x: hidden;
+
+	--jsonPaddingLeft: 20px;
+	--jsonBorderLeft: 1px dotted var(--txt-tertiary);
+	--jsonKeyColor: var(--txt-primary);
+	--jsonValColor: var(--accent);
+	--jsonValStringColor: var(--code-string);
+	--jsonValNumberColor: var(--code-int);
+	--jsonValBooleanColor: var(--code-bool);
+	--jsonSeparatorColor: var(--txt-tertiary);
+	--jsonBracketHoverBackground: var(--bg-tertiary);
 }
 
 :global(h1) {

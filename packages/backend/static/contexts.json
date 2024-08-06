@@ -24,7 +24,7 @@
 	"sharkey": "https://joinsharkey.org/ns#",
 	"backgroundUrl": "sharkey:backgroundUrl",
 	"vcard": "http://www.w3.org/2006/vcard/ns#",
-	"aster": "https://blueb.me/ns#",
+	"aster": "https://harper.eepy.zone/ns#",
 	"visibility": "aster:visibility",
 	"hasCorrectAnswer": "aster:hasCorrectAnswer",
 	"correct": "aster:correct"

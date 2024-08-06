@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { locale } from '$lib/locale';
 
+	import { v4 as uuidv4 } from 'uuid';
+
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
@@ -11,6 +13,7 @@
 	import Avatar from '../Avatar.svelte';
 	import Store from '$lib/utils/Store';
 	import Mfm from '../Mfm.svelte';
+	import Account from './Account.svelte';
 
 	let noteCw = '';
 	let noteContent = '';
@@ -24,6 +27,46 @@
 	}
 
 	let visibility: Dropdown;
+
+	const draftId = uuidv4();
+
+	let draft = {};
+
+	function storeDraft(draft) {
+		let grabbedDrafts = Store.get('drafts');
+
+		if (draft.content && draft.content !== ' ') {
+			if (Object.keys(grabbedDrafts).length > 0) {
+				let parsedDrafts = JSON.parse(grabbedDrafts);
+				parsedDrafts[draft.id] = draft;
+				Store.set('drafts', JSON.stringify(parsedDrafts));
+			} else {
+				grabbedDrafts[draft.id] = draft;
+				Store.set('drafts', JSON.stringify(grabbedDrafts));
+			}
+		} else {
+			if (Object.keys(grabbedDrafts).length > 0) {
+				let parsedDrafts = JSON.parse(grabbedDrafts);
+				delete parsedDrafts[draft.id];
+				Store.set('drafts', JSON.stringify(parsedDrafts));
+			} else {
+				delete grabbedDrafts[draft.id];
+				Store.set('drafts', JSON.stringify(grabbedDrafts));
+			}
+		}
+	}
+
+	// TODO: this is not very preformant!
+
+	$: (draft = {
+		id: draftId,
+		type: 'note',
+		updated_at: new Date(Date.now()).toISOString(),
+		cw: noteCw,
+		content: noteContent,
+		visibility: selectedVisibility
+	}),
+		storeDraft(draft);
 </script>
 
 <template>
@@ -40,6 +83,13 @@
 				</div>
 			</div>
 			<div class="right">
+				<Button>
+					<Icon
+						name="pencil-minus"
+						size="18px"
+						title={locale('drafts')}
+					/>
+				</Button>
 				<Button on:click={(e) => visibility.open(e)}>
 					{#key selectedVisibility}
 						{#if selectedVisibility === 'public'}

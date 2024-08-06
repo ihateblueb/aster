@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "32",
+	"__version__": "33",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -20,7 +20,6 @@
 	"password": "Password",
 	"note": "Note",
 	"note_by": "Note by",
-	"raw_note": "Raw note",
 	"note_pinned": "Pinned note",
 	"posted_at": "Posted at",
 	"expand_note": "Expand note",
@@ -58,6 +57,7 @@
 	"copy_user_id": "Copy user ID",
 	"copy_username": "Copy username",
 	"view_on_remote": "View on remote instance",
+	"view_raw": "View raw object",
 	"public": "Public",
 	"unlisted": "Unlisted",
 	"followers_only": "Followers Only",

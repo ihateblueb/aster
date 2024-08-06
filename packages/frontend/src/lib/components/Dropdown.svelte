@@ -62,6 +62,14 @@
 	}
 </script>
 
+<!--
+	TODO: this is not very preformant!
+ its worse than drafts!
+ this is also causing a lot of element is undefined errors.
+ if the dropdown is in drawer mode it shouldnt
+ even be updating at all
+ -->
+
 <svelte:window on:resize={updatePosition} />
 
 <template>

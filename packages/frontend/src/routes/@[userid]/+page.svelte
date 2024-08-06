@@ -15,6 +15,7 @@
 	import userFollow from '$lib/api/user/follow.js';
 	import Time from '$lib/components/Time.svelte';
 	import userBite from '$lib/api/user/bite.js';
+	import { goto } from '$app/navigation';
 
 	export let data;
 
@@ -95,18 +96,6 @@
 				<Icon size="18px" name="copy" margin="0px 8px 0px 0px" />
 				<span>{locale('copy_user_id')}</span>
 			</DropdownItem>
-			{#if !data.local}
-				<DropdownItem
-					on:click={() => window.open(data.ap_id, '_blank')}
-				>
-					<Icon
-						size="18px"
-						name="external-link"
-						margin="0px 8px 0px 0px"
-					/>
-					<span>{locale('view_on_remote')}</span>
-				</DropdownItem>
-			{/if}
 			<hr />
 			<DropdownItem on:click={() => userBite(data.id)}>
 				<Icon size="18px" name="dental" margin="0px 8px 0px 0px" />
@@ -132,6 +121,26 @@
 			<DropdownItem>
 				<Icon size="18px" name="ban" margin="0px 8px 0px 0px" />
 				<span>{locale('block_user')}</span>
+			</DropdownItem>
+			<hr />
+			{#if !data.local}
+				<DropdownItem
+					on:click={() => window.open(data.ap_id, '_blank')}
+				>
+					<Icon
+						size="18px"
+						name="external-link"
+						margin="0px 8px 0px 0px"
+					/>
+					<span>{locale('view_on_remote')}</span>
+				</DropdownItem>
+			{/if}
+			<DropdownItem
+				on:click={() =>
+					goto('@' + data.username + '@' + data.host + '/raw')}
+			>
+				<Icon size="18px" name="code" margin="0px 8px 0px 0px" />
+				<span>{locale('view_raw')}</span>
 			</DropdownItem>
 			<hr />
 			<DropdownItem>
