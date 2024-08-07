@@ -8,6 +8,9 @@ export class DriveFile {
 	@Column({ unique: true })
 	ap_id: string;
 
+	@Column()
+	local: boolean;
+
 	@Column({ nullable: true })
 	name: string;
 
@@ -30,7 +33,19 @@ export class DriveFile {
 	src: string;
 
 	@Column()
+	width: string;
+
+	@Column()
+	height: string;
+
+	@Column()
 	thumbnail: string;
+
+	@Column()
+	thumbnail_width: string;
+
+	@Column()
+	thumbnail_height: string;
 
 	@Column()
 	blurhash: string;

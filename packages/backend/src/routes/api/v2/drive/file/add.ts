@@ -175,6 +175,9 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								fileId +
 								'.' +
 								req.params.name.match(/(.*)\.(.*)/)[2];
+
+							driveFileToInsert['local'] = true;
+
 							driveFileToInsert['name'] =
 								fileId +
 								'.' +
