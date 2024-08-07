@@ -29,6 +29,12 @@ export class DriveFile {
 	@Column()
 	src: string;
 
+	@Column()
+	thumbnail: string;
+
+	@Column()
+	blurhash: string;
+
 	@Column({ nullable: true })
 	alt: string;
 }

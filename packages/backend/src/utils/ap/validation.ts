@@ -18,6 +18,13 @@ export default async function validateRequest(req, res) {
 		logger('debug', 'ap', 'host header matches configuration');
 	}
 
+	if (!req.body) {
+		logger('error', 'ap', 'body not present');
+		return res.status(400).json({ message: 'Body not present' });
+	} else {
+		logger('debug', 'ap', 'body present');
+	}
+
 	if (!req.headers.digest) {
 		logger('error', 'ap', 'digest not present');
 		return res.status(400).json({ message: 'Digest not present' });
@@ -32,13 +39,6 @@ export default async function validateRequest(req, res) {
 			.json({ message: 'Digest did not start with SHA-256=' });
 	} else {
 		logger('debug', 'ap', 'digest started with SHA-256=');
-	}
-
-	if (!req.body) {
-		logger('error', 'ap', 'body not present');
-		return res.status(400).json({ message: 'Body not present' });
-	} else {
-		logger('debug', 'ap', 'body present');
 	}
 
 	if (!req.headers.signature) {

@@ -72,6 +72,9 @@ importers:
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
+      blurhash:
+        specifier: ^2.0.5
+        version: 2.0.5
       body-parser:
         specifier: ^1.20.2
         version: 1.20.2
@@ -144,6 +147,9 @@ importers:
       rotating-file-stream:
         specifier: ^1.4.6
         version: 1.4.6
+      sharp:
+        specifier: ^0.33.4
+        version: 0.33.4
       socket.io:
         specifier: ^4.7.5
         version: 4.7.5
@@ -1319,6 +1325,9 @@ packages:
   binary-extensions@2.3.0:
     resolution: {integrity: sha512-Ceh+7ox5qe7LJuLHoY0feh3pHuUDHAcRUeyL2VYghZwfpkNIy/+8Ocg0a3UuSoYzavmylwuLWQOf3hl0jjMMIw==}
     engines: {node: '>=8'}
+
+  blurhash@2.0.5:
+    resolution: {integrity: sha512-cRygWd7kGBQO3VEhPiTgq4Wc43ctsM+o46urrmPOiuAe+07fzlSB9OJVdpgDL0jPqXUVQ9ht7aq7kxOeJHRK+w==}
 
   body-parser@1.20.2:
     resolution: {integrity: sha512-ml9pReCu3M61kGlqoTm2umSXTlRTuGTx0bfYj+uIUKKYycG5NtSbeetV3faSU6R7ajOPw0g/J1PvK4qNy7s5bA==}
@@ -5039,6 +5048,8 @@ snapshots:
       find-versions: 5.1.0
 
   binary-extensions@2.3.0: {}
+
+  blurhash@2.0.5: {}
 
   body-parser@1.20.2:
     dependencies:

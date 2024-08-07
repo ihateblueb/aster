@@ -8,6 +8,9 @@ import verifyToken from '../../../../../utils/auth/verifyToken.js';
 import db from '../../../../../utils/database.js';
 import config from '../../../../../utils/config.js';
 
+import calculateDimensions from '../../../../../utils/media/calculateDimensions.js';
+import generateThumbnail from '../../../../../utils/media/generateThumbnail.js';
+
 const router = express.Router();
 
 const safeForUpload = [
@@ -134,6 +137,28 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								req.body
 							);
 
+							/*
+							let dimensions = calculateDimensions(
+								new URL(config.url).href +
+									'uploads/' +
+									grabbedUser.id +
+									'/' +
+									fileId +
+									'.' +
+									req.params.name.match(/(.*)\.(.*)/)[2],
+								req.headers['content-type']
+							);
+							*/
+
+							let thumbnail = await generateThumbnail(
+								req.body,
+								req.headers['content-type'],
+								grabbedUser.id,
+								fileId
+							);
+
+							console.log(thumbnail);
+
 							let driveFileToInsert = {};
 
 							driveFileToInsert['id'] = fileId;
@@ -166,13 +191,18 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								fileId +
 								'.' +
 								req.params.name.match(/(.*)\.(.*)/)[2];
+							driveFileToInsert['thumbnail'] =
+								new URL(config.url).href + thumbnail.url;
+							driveFileToInsert['blurhash'] = thumbnail.blurhash;
 							driveFileToInsert['alt'] = '';
 
 							console.log(driveFileToInsert);
 
+							/*
 							await db
 								.getRepository('drive_file')
 								.insert(driveFileToInsert);
+							*/
 
 							res.status(200).json({
 								message: 'File uploaded'
