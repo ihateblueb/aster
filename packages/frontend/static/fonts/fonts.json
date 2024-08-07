@@ -8,6 +8,18 @@
 		"name": "Inclusive Sans"
 	},
 	{
+		"id": "atkinson-hyperlegible",
+		"name": "Atkinson Hyperlegible"
+	},
+	{
+		"id": "roboto",
+		"name": "Roboto"
+	},
+	{
+		"id": "inter",
+		"name": "Inter"
+	},
+	{
 		"id": "system-ui",
 		"name": "System UI"
 	}

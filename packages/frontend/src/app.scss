@@ -6,13 +6,22 @@
 @import './static/themes/rosepine.scss';
 @import './static/themes/rosepine-moon.scss';
 @import './static/themes/rosepine-dawn.scss';
+@import './static/themes/material.scss';
 @import './static/themes/misskey.scss';
 @import './static/themes/mi-botanical.scss';
 @import './static/themes/mi-green.scss';
 @import './static/themes/mastodon.scss';
+@import './static/themes/catppuccin-frappe.scss';
+@import './static/themes/catppuccin-latte.scss';
+@import './static/themes/catppuccin-macchiato.scss';
+@import './static/themes/catppuccin-mocha.scss';
+@import './static/themes/mi-cherry.scss';
 
 @import './static/fonts/figtree.scss';
 @import './static/fonts/inclusive-sans.scss';
+@import './static/fonts/atkinson-hyperlegible.scss';
+@import './static/fonts/inter.scss';
+@import './static/fonts/roboto.scss';
 @import './static/fonts/system-ui.scss';
 
 :global(body) {

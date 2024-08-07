@@ -25,9 +25,19 @@
 		"scheme": ["light"]
 	},
 	{
+		"id": "m3",
+		"name": "Material 3",
+		"scheme": ["light", "dark"]
+	},
+	{
 		"id": "misskey",
 		"name": "Misskey",
 		"scheme": ["light", "dark"]
+	},
+	{
+		"id": "mi-cherry",
+		"name": "Misskey Cherry",
+		"scheme": ["light", "dark", "cherry"]
 	},
 	{
 		"id": "mi-botanical",
