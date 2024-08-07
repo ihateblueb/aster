@@ -157,6 +157,11 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								fileId
 							);
 
+							let dimensions = await calculateDimensions(
+								req.body,
+								req.headers['content-type']
+							);
+
 							console.log(thumbnail);
 
 							let driveFileToInsert = {};
@@ -174,13 +179,16 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								fileId +
 								'.' +
 								req.params.name.match(/(.*)\.(.*)/)[2];
+
 							driveFileToInsert['user'] = grabbedUser.id;
+
 							driveFileToInsert['created_at'] = new Date(
 								Date.now()
 							).toISOString();
 							driveFileToInsert['updated_at'] = new Date(
 								Date.now()
 							).toISOString();
+
 							driveFileToInsert['type'] =
 								req.headers['content-type'];
 							driveFileToInsert['src'] =
@@ -191,9 +199,18 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								fileId +
 								'.' +
 								req.params.name.match(/(.*)\.(.*)/)[2];
+
+							driveFileToInsert['width'] = dimensions[0];
+							driveFileToInsert['height'] = dimensions[1];
+
 							driveFileToInsert['thumbnail'] =
 								new URL(config.url).href + thumbnail.url;
+							driveFileToInsert['thumbnail_width'] =
+								thumbnail.width;
+							driveFileToInsert['thumbnail_height'] =
+								thumbnail.height;
 							driveFileToInsert['blurhash'] = thumbnail.blurhash;
+
 							driveFileToInsert['alt'] = '';
 
 							console.log(driveFileToInsert);

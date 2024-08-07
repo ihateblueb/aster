@@ -6,7 +6,6 @@ export default async function calculateDimensions(file, type) {
 		try {
 			let image = sharp(file);
 			let metadata = await image.metadata();
-
 			return [metadata.width, metadata.height];
 		} catch (e) {
 			logger(
