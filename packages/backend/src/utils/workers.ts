@@ -4,7 +4,6 @@ import logger from './logger.js';
 import redis from './redis.js';
 import { Worker } from 'bullmq';
 
-logger('info', 'core', 'starting workers');
 const inboxWorker = new Worker(
 	'inbox',
 	async (job) => {

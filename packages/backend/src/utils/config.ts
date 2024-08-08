@@ -10,15 +10,4 @@ let configText = await readFile(`../../config/production.ini`, {
 
 var config = parse(configText);
 
-console.log(
-	chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-		' [' +
-		chalk.bgBlue('info') +
-		' ' +
-		chalk.blue('core') +
-		']' +
-		' ' +
-		'configuration loaded'
-);
-
 export default config;

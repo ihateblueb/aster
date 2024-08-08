@@ -1,12 +1,23 @@
-import config from './config.js';
+import process from 'node:process';
+import cluster from 'cluster';
 import chalk from 'chalk';
+import config from './config.js';
 import { Logger, QueryRunner } from 'typeorm';
 
 export default function logger(level: String, section: String, message?: any) {
+	let processId = cluster.isPrimary
+		? '00'
+		: cluster.worker.id.toLocaleString('en-US', {
+				minimumIntegerDigits: 2,
+				useGrouping: false
+			});
+
 	if (config.logging.type === 'fancy') {
 		if (level === 'debug' && config.logging.debug) {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgCyan('debug') +
 					' ' +
@@ -17,7 +28,9 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'info') {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgBlue('info') +
 					' ' +
@@ -28,7 +41,9 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'http') {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgMagenta('http') +
 					' ' +
@@ -39,18 +54,22 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'sql' && config.logging.sql) {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgGreen('sql') +
 					' ' +
-					chalk.green(section.toLowerCase()) +
+					chalk.dim(section.toLowerCase()) +
 					']' +
 					' ' +
 					message
 			);
 		} else if (level === 'warn') {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgYellow('warn') +
 					' ' +
@@ -61,7 +80,9 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'error') {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgRed('error') +
 					' ' +
@@ -72,7 +93,9 @@ export default function logger(level: String, section: String, message?: any) {
 			);
 		} else if (level === 'fatal') {
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgRedBright('fatal') +
 					' ' +
@@ -82,7 +105,9 @@ export default function logger(level: String, section: String, message?: any) {
 					message
 			);
 			console.log(
-				chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
+				chalk.bold(processId) +
+					' ' +
+					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
 					' [' +
 					chalk.bgRedBright('fatal') +
 					' ' +
@@ -136,10 +161,14 @@ export class TypeormLogger implements Logger {
 		message: any,
 		queryRunner?: QueryRunner
 	) {
-		if (level === 'log') {
-			logger('info', 'db', message);
-		} else {
-			logger(level, 'db', message);
+		if (
+			!message.startsWith('All classes found using provided glob pattern')
+		) {
+			if (level === 'log') {
+				logger('info', 'db', message);
+			} else {
+				logger(level, 'db', message);
+			}
 		}
 	}
 }

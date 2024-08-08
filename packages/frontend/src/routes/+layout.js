@@ -53,6 +53,7 @@ export async function load({ url }) {
 	}
 
 	// websocket
+	/*
 	var socket = io('/');
 
 	socket.send(
@@ -61,6 +62,7 @@ export async function load({ url }) {
 				? JSON.parse(Store.get('account')).username
 				: 'unknown')
 	);
+	*/
 
 	// return meta
 	return data;

@@ -14,12 +14,8 @@ const AppDataSource = new DataSource({
 	logger: new TypeormLogger()
 });
 
-AppDataSource.initialize()
-	.then(() => {
-		logger('info', 'db', 'database connected successfully');
-	})
-	.catch((e) => {
-		logger('fatal', 'db', e);
-	});
+AppDataSource.initialize().catch((e) => {
+	logger('fatal', 'db', e);
+});
 
 export default AppDataSource;

@@ -1,6 +1,9 @@
 import process from 'node:process';
+import cluster from 'cluster';
 import pkg from '../../../package.json' with { type: 'json' };
-process.title = `Aster v${pkg.version}`;
+
+let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
+process.title = `Aster v${pkg.version} (${processId})`;
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
@@ -86,6 +89,7 @@ app.use((req, res, next) => {
 });
 
 const server = createServer(app);
+/*
 const io = new Server(server);
 
 io.on('connection', (socket) => {
@@ -103,6 +107,7 @@ io.on('connection', (socket) => {
 		logger('debug', 'ws', 'received message: ' + message);
 	});
 });
+*/
 
 app.use('/', router);
 
@@ -112,37 +117,11 @@ if (config.frontend.enable) {
 	logger('info', 'core', `frontend disabled`);
 }
 
-if (config.plugins.boot) {
-	config.plugins.boot.forEach((e) => {
-		logger('info', 'plugin', `registered boot plugin ${e}`);
+server.listen(config.port, () => {
+	process.send({
+		msgFromWorker: 'worker ' + cluster.worker.id + ' listening'
 	});
-
-	config.plugins.boot.forEach(async (e) => {
-		await import(`./plugins/boot/${e}.js`).then((plugin) => {
-			plugin.default();
-		});
-	});
-}
-
-if (config.plugins.incoming) {
-	config.plugins.incoming.forEach((e) => {
-		logger('info', 'plugin', `registered incoming plugin ${e}`);
-	});
-}
-
-if (config.plugins.outgoing) {
-	config.plugins.outgoing.forEach((e) => {
-		logger('info', 'plugin', `registered outgoing plugin ${e}`);
-	});
-}
-
-server.listen(config.port, () =>
-	logger(
-		'info',
-		'core',
-		`started instance as ${config.url} on port ${config.port}`
-	)
-);
+});
 
 /*
 const statsQueue = new Queue('stats', {
