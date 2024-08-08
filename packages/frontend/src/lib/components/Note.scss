@@ -124,6 +124,8 @@
 
 				> .counter {
 					color: var(--txt-tertiary);
+					font-family: var(--font);
+					font-size: var(--font-s);
 				}
 
 				&:hover {

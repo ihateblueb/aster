@@ -1,11 +1,16 @@
 <script>
 	import Button from './Button.svelte';
 	import Icon from './Icon.svelte';
+
+	function open(side) {
+		document.getElementById('sidebar-' + side).classList.add('open');
+		document.getElementById('sidebar-out-' + side).classList.add('open');
+	}
 </script>
 
 <template>
 	<div class="pageFooter">
-		<Button type="footer" to="#">
+		<Button type="footer" to="#" on:click={() => open('left')}>
 			<Icon name="layout-sidebar-left-expand" /></Button
 		>
 		<Button type="footer" to="/">
@@ -17,7 +22,7 @@
 		<Button type="footer" to="/explore">
 			<Icon name="compass" /></Button
 		>
-		<Button type="footer" to="#">
+		<Button type="footer" to="#" on:click={() => open('right')}>
 			<Icon name="layout-sidebar-right-expand" /></Button
 		>
 	</div>
@@ -35,12 +40,13 @@
 		align-items: center;
 		justify-content: space-around;
 
-		position: absolute;
+		position: fixed;
 		width: calc(100% - 32px);
 		bottom: 0;
 		z-index: 1000;
 
 		padding: 14px 16px;
+		padding-bottom: max(14px, env(safe-area-inset-bottom));
 		color: var(--txt-primary);
 		background-color: var(--bg-primary-50);
 		backdrop-filter: blur(16px);

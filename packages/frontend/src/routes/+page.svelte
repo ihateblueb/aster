@@ -97,12 +97,7 @@
 		<div class="pageContent hasTimeline">
 			{#if notes && notes.length > 0}
 				{#key notes}
-					<VirtualList
-						height="calc(100vh - 45px)"
-						timeline
-						items={notes}
-						let:item
-					>
+					<VirtualList height="100%" timeline items={notes} let:item>
 						<Note data={item} inTimeline />
 					</VirtualList>
 				{/key}

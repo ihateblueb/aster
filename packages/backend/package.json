@@ -10,7 +10,7 @@
 		"revert": "pnpm exec typeorm migration:revert -d ./built/utils/database.js",
 		"cli": "node built/scripts/cli.js",
 		"start": "node --no-warnings built/boot.js",
-		"start-dev": "node --no-warnings --watch built/boot.js"
+		"start-dev": "node --no-warnings --watch built/server.js"
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {

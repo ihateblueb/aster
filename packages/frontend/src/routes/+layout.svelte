@@ -19,18 +19,18 @@
 <template>
 	<div class="page">
 		{#if Store.get('a_token')}
-			<Sidebar widgets={Store.get('widgets_left')} />
+			<Sidebar side="left" widgets={Store.get('widgets_left')} />
 		{:else}
-			<Sidebar widgets={defaultLeftWidgets} />
+			<Sidebar side="left" widgets={defaultLeftWidgets} />
 		{/if}
 		<main>
 			<slot></slot>
 			<PageFooter />
 		</main>
 		{#if Store.get('a_token')}
-			<Sidebar widgets={Store.get('widgets_right')} />
+			<Sidebar side="right" widgets={Store.get('widgets_right')} />
 		{:else}
-			<Sidebar widgets={defaultRightWidgets} />
+			<Sidebar side="right" widgets={defaultRightWidgets} />
 		{/if}
 	</div>
 </template>

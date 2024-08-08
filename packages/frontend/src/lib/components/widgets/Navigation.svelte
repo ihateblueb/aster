@@ -6,10 +6,21 @@
 	import Icon from '$lib/components/Icon.svelte';
 
 	console.log('pathname ' + $page.url.pathname);
+
+	function close() {
+		document.getElementById('sidebar-left').classList.remove('open');
+		document.getElementById('sidebar-right').classList.remove('open');
+		document.getElementById('sidebar-out-left').classList.remove('open');
+		document.getElementById('sidebar-out-right').classList.remove('open');
+	}
 </script>
 
 <template>
-	<Button type="nav {$page.url.pathname === '/' ? 'accent' : ''}" to="/">
+	<Button
+		type="nav {$page.url.pathname === '/' ? 'accent' : ''}"
+		to="/"
+		on:click={() => close()}
+	>
 		<Icon name="home" size="18px" margin="0px 6px 0px 0px" />
 		{locale('home')}
 	</Button>
@@ -18,6 +29,7 @@
 			? 'accent'
 			: ''}"
 		to="/notifications"
+		on:click={() => close()}
 	>
 		<Icon name="bell" size="18px" margin="0px 6px 0px 0px" />
 		{locale('notifications')}
@@ -27,6 +39,7 @@
 			? 'accent'
 			: ''}"
 		to="/followrequests"
+		on:click={() => close()}
 	>
 		<Icon name="user-plus" size="18px" margin="0px 6px 0px 0px" />
 		{locale('follow_requests')}
@@ -35,6 +48,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/explore') ? 'accent' : ''}"
 		to="/explore"
+		on:click={() => close()}
 	>
 		<Icon name="compass" size="18px" margin="0px 6px 0px 0px" />
 		{locale('explore')}
@@ -44,6 +58,7 @@
 			? 'accent'
 			: ''}"
 		to="/announcements"
+		on:click={() => close()}
 	>
 		<Icon name="speakerphone" size="18px" margin="0px 6px 0px 0px" />
 		{locale('announcements')}
@@ -51,6 +66,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/search') ? 'accent' : ''}"
 		to="/search"
+		on:click={() => close()}
 	>
 		<Icon name="search" size="18px" margin="0px 6px 0px 0px" />
 		{locale('search')}
@@ -59,6 +75,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/bookmarks') ? 'accent' : ''}"
 		to="/bookmarks"
+		on:click={() => close()}
 	>
 		<Icon name="bookmarks" size="18px" margin="0px 6px 0px 0px" />
 		{locale('bookmarks')}
@@ -66,6 +83,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/drive') ? 'accent' : ''}"
 		to="/drive"
+		on:click={() => close()}
 	>
 		<Icon name="folder" size="18px" margin="0px 6px 0px 0px" />
 		{locale('drive')}
@@ -73,6 +91,7 @@
 	<Button
 		type="nav {$page.url.pathname === '/drafts' ? 'accent' : ''}"
 		to="/drafts"
+		on:click={() => close()}
 	>
 		<Icon name="pencil-minus" size="18px" margin="0px 6px 0px 0px" />
 		{locale('drafts')}
@@ -81,6 +100,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/admin') ? 'accent' : ''}"
 		to="/admin"
+		on:click={() => close()}
 	>
 		<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
 		{locale('admin_panel')}
@@ -88,6 +108,7 @@
 	<Button
 		type="nav {$page.url.pathname.startsWith('/settings') ? 'accent' : ''}"
 		to="/settings"
+		on:click={() => close()}
 	>
 		<Icon name="settings" size="18px" margin="0px 6px 0px 0px" />
 		{locale('settings')}

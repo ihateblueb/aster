@@ -18,6 +18,7 @@
 	import GuestNavigation from './widgets/unauthenticated/Navigation.svelte';
 
 	export let widgets;
+	export let side;
 
 	let convertedWidgets = {
 		top: [],
@@ -70,10 +71,20 @@
 			convertWidgets(e, 'btm');
 		});
 	}
+
+	function close() {
+		document.getElementById('sidebar-' + side).classList.remove('open');
+		document.getElementById('sidebar-out-' + side).classList.remove('open');
+	}
 </script>
 
 <template>
-	<div class="sidebar _39bP9NA">
+	<div
+		id={'sidebar-out-' + side}
+		class="sidebar _39bP9NA out"
+		on:click={() => close()}
+	></div>
+	<div id={'sidebar-' + side} class="sidebar _39bP9NA">
 		<div class="top">
 			{#each convertedWidgets.top as widget}
 				<div class="widget">

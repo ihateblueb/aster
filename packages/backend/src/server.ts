@@ -119,7 +119,7 @@ if (config.frontend.enable) {
 
 server.listen(config.port, () => {
 	process.send({
-		msgFromWorker: 'worker ' + cluster.worker.id + ' listening'
+		msgFromWorker: 'worker ' + processId + ' listening'
 	});
 });
 

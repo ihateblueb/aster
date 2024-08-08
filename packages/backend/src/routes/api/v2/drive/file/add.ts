@@ -204,7 +204,7 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 							console.log(driveFileToInsert);
 
 							if (
-								req.headers['content-type'].startsWith('image')
+								!req.headers['content-type'].startsWith('video')
 							) {
 								await db
 									.getRepository('drive_file')

@@ -20,7 +20,7 @@
 @import './static/fonts/roboto.scss';
 @import './static/fonts/system-ui.scss';
 
-:global(body) {
+body {
 	margin: 0px;
 	scrollbar-color: var(--bg-accent) transparent;
 	scrollbar-width: thin;
@@ -41,39 +41,47 @@
 	--jsonBracketHoverBackground: var(--bg-tertiary);
 }
 
-:global(h1) {
+h1 {
 	margin: 0px;
 }
 
-:global(h2) {
+h2 {
 	margin: 0px;
 }
 
-:global(h3) {
+h3 {
 	margin: 0px;
 }
 
-:global(h4) {
+h4 {
 	margin: 0px;
 }
 
-:global(h5) {
+h5 {
 	margin: 0px;
 }
 
-:global(h6) {
+h6 {
 	margin: 0px;
 }
 
-:global(a) {
+a {
 	color: var(--accent);
+
+	&.subtle {
+		display: inherit;
+		text-decoration: none;
+		color: inherit;
+		font-weight: inherit;
+		font-size: inherit;
+	}
 }
 
-:global(p) {
+p {
 	margin: 0px;
 }
 
-:global(hr.vertical) {
+hr.vertical {
 	margin: 0px;
 	border: 0px solid;
 	border-left: var(--border-width-s) solid var(--bg-accent);
@@ -98,6 +106,10 @@ main {
 	border-right: var(--border-width-s) solid var(--bg-tertiary);
 }
 
+.paddedPage {
+	padding: 12px 16px;
+}
+
 @media screen and (max-width: 650px) {
 	main {
 		width: 100%;
@@ -106,22 +118,19 @@ main {
 		border-left: none;
 		border-right: none;
 	}
+
+	.paddedPage {
+		padding: 12px 16px;
+		padding-bottom: calc(50px + env(safe-area-inset-bottom));
+	}
 }
 
-:global(.paddedPage) {
-	padding: 12px 16px;
-}
-
-:global(::selection) {
+::selection {
 	background-color: var(--accent);
 	color: var(--bg-primary);
 	text-shadow: none;
 }
 
-:global(a.subtle) {
-	display: inherit;
-	text-decoration: none;
-	color: inherit;
-	font-weight: inherit;
-	font-size: inherit;
+::-webkit-scrollbar {
+	z-index: 100000;
 }
