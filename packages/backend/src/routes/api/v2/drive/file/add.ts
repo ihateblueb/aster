@@ -137,21 +137,9 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								req.body
 							);
 
-							/*
-							let dimensions = calculateDimensions(
-								new URL(config.url).href +
-									'uploads/' +
-									grabbedUser.id +
-									'/' +
-									fileId +
-									'.' +
-									req.params.name.match(/(.*)\.(.*)/)[2],
-								req.headers['content-type']
-							);
-							*/
-
 							let thumbnail = await generateThumbnail(
 								req.body,
+								req.params.name.match(/(.*)\.(.*)/)[2],
 								req.headers['content-type'],
 								grabbedUser.id,
 								fileId
@@ -161,8 +149,6 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 								req.body,
 								req.headers['content-type']
 							);
-
-							console.log(thumbnail);
 
 							let driveFileToInsert = {};
 
@@ -206,8 +192,7 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 							driveFileToInsert['width'] = dimensions[0];
 							driveFileToInsert['height'] = dimensions[1];
 
-							driveFileToInsert['thumbnail'] =
-								new URL(config.url).href + thumbnail.url;
+							driveFileToInsert['thumbnail'] = thumbnail.url;
 							driveFileToInsert['thumbnail_width'] =
 								thumbnail.width;
 							driveFileToInsert['thumbnail_height'] =

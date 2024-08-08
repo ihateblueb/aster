@@ -15,5 +15,7 @@ export default async function calculateDimensions(file, type) {
 			);
 			console.log(e);
 		}
+	} else {
+		return ['', ''];
 	}
 }
