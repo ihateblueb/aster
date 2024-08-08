@@ -100,7 +100,7 @@
 								>
 									{#if item.type.startsWith('image')}
 										<img
-											src={item.src}
+											src={item.thumbnail}
 											alt={item.alt}
 											title={item.alt}
 										/>
@@ -136,7 +136,7 @@
 										<td>
 											{#if item.type.startsWith('image')}
 												<img
-													src={item.src}
+													src={item.thumbnail}
 													alt={item.alt}
 													title={item.alt}
 												/>

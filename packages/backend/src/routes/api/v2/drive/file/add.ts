@@ -203,11 +203,13 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 
 							console.log(driveFileToInsert);
 
-							/*
-							await db
-								.getRepository('drive_file')
-								.insert(driveFileToInsert);
-							*/
+							if (
+								req.headers['content-type'].startsWith('image')
+							) {
+								await db
+									.getRepository('drive_file')
+									.insert(driveFileToInsert);
+							}
 
 							res.status(200).json({
 								message: 'File uploaded'

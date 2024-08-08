@@ -29,21 +29,6 @@
 		nameValue = data.name;
 		altValue = data.alt;
 	}
-
-	function getWidth(src) {
-		let img = new Image();
-		img.src = src;
-		console.log(src + ' ' + img.naturalWidth);
-		return img.naturalWidth;
-	}
-
-	function getHeight(src) {
-		let img = new Image();
-		img.src = src;
-		console.log(src + ' ' + img.naturalHeight);
-		return img.naturalHeight;
-	}
-
 	onMount(async () => {
 		data = await driveFileGet($page.params.fileid);
 
@@ -74,7 +59,7 @@
 					{#if data.type.startsWith('image')}
 						<img src={data.src} alt={data.alt} title={data.alt} />
 						<div class="resolution">
-							{getWidth(data.src)}×{getHeight(data.src)}
+							{data.width}×{data.height}
 						</div>
 					{:else if data.type.startsWith('video')}
 						<!-- svelte-ignore a11y-media-has-caption -->
@@ -159,14 +144,20 @@
 					</div>
 					<div class="info">
 						<div class="left">
+							<b>{locale('type')}</b>
+							<span>{data.type}</span>
+						</div>
+					</div>
+					<div class="info">
+						<div class="left">
 							<b>Link</b>
 							<a href={data.src}>{data.src}</a>
 						</div>
 					</div>
 					<div class="info">
 						<div class="left">
-							<b>{locale('type')}</b>
-							<span>{data.type}</span>
+							<b>Thumbnail</b>
+							<a href={data.thumbnail}>{data.thumbnail}</a>
 						</div>
 					</div>
 					<div class="info">
