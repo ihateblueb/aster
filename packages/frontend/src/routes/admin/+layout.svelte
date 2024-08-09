@@ -8,6 +8,9 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 
 	let adminNavigation: Dropdown;
+	let subpath;
+
+	$: subpath;
 </script>
 
 <template>
@@ -24,49 +27,49 @@
 	<Dropdown bind:this={adminNavigation}>
 		<DropdownItem to="/admin">
 			<Icon name="home" size="18px" margin="0px 8px 0px 0px" />
-			<span> Home </span>
+			<span> {locale('home')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/users">
 			<Icon name="users" size="18px" margin="0px 8px 0px 0px" />
-			<span> Users </span>
+			<span> {locale('users')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/roles">
 			<Icon name="rosette" size="18px" margin="0px 8px 0px 0px" />
-			<span> Roles </span>
+			<span> {locale('roles')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/emojis">
 			<Icon name="mood-happy" size="18px" margin="0px 8px 0px 0px" />
-			<span> Emojis </span>
+			<span> {locale('emojis')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/logs">
 			<Icon name="clipboard-text" size="18px" margin="0px 8px 0px 0px" />
-			<span> Audit Log </span>
+			<span> {locale('audit_log')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/queue">
 			<Icon name="target-arrow" size="18px" margin="0px 8px 0px 0px" />
-			<span> Queue </span>
+			<span> {locale('queue')} </span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem to="/admin/moderated-instances">
 			<Icon name="gavel" size="18px" margin="0px 8px 0px 0px" />
-			<span> Moderated Instances </span>
+			<span> {locale('moderated_instances')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/federation">
 			<Icon name="planet" size="18px" margin="0px 8px 0px 0px" />
-			<span> Federation </span>
+			<span> {locale('federation')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/relays">
 			<Icon name="replace" size="18px" margin="0px 8px 0px 0px" />
-			<span> Relays </span>
+			<span> {locale('relays')} </span>
 		</DropdownItem>
 		<hr />
 		<DropdownItem to="/admin/identity">
 			<Icon name="user-scan" size="18px" margin="0px 8px 0px 0px" />
-			<span> Identity </span>
+			<span> {locale('instance_identity')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/drive">
 			<Icon name="folder" size="18px" margin="0px 8px 0px 0px" />
-			<span> Drive </span>
+			<span> {locale('drive')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/reports">
 			<Icon
@@ -74,23 +77,23 @@
 				size="18px"
 				margin="0px 8px 0px 0px"
 			/>
-			<span> Reports </span>
+			<span> {locale('reports')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/ads">
 			<Icon name="ad" size="18px" margin="0px 8px 0px 0px" />
-			<span> Ads </span>
+			<span> {locale('ads')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/announcements">
 			<Icon name="speakerphone" size="18px" margin="0px 8px 0px 0px" />
-			<span> Announcements </span>
+			<span> {locale('announcements')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/database">
 			<Icon name="database" size="18px" margin="0px 8px 0px 0px" />
-			<span> Database </span>
+			<span> {locale('database')} </span>
 		</DropdownItem>
 		<DropdownItem to="/admin/external">
 			<Icon name="external-link" size="18px" margin="0px 8px 0px 0px" />
-			<span> External Services </span>
+			<span> {locale('external_services')} </span>
 		</DropdownItem>
 	</Dropdown>
 

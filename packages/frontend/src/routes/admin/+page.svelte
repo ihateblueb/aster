@@ -8,7 +8,8 @@
 
 <template>
 	<div class="pageContent">
-		<div class="paddedPage _0VO5sC1">
+		<div class="paddedPage textMargins _0VO5sC1">
+			<h2>{locale('home')}</h2>
 			<div class="stats">
 				<div class="stat">
 					<div class="left first">
