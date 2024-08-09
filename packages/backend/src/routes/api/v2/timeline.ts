@@ -11,13 +11,7 @@ async function renderTimeline(grabbedNotes) {
 	var collectedNotes = [];
 
 	for (const i of grabbedNotes.keys()) {
-		var grabbedNote = await db
-			.getRepository('note')
-			.createQueryBuilder()
-			.where({ id: grabbedNotes[i].id })
-			.getOne();
-
-		let generatedNote = await generateNote(grabbedNote);
+		let generatedNote = await generateNote(grabbedNotes[i]);
 
 		if (generatedNote && generatedNote.status === 200) {
 			collectedNotes.push(generatedNote.note);
