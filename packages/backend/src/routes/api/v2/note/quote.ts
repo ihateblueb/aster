@@ -7,7 +7,7 @@ import logger from '../../../../utils/logger.js';
 const router = express.Router();
 
 router.post(`/api/v2/note/:noteid/quote`, async (req, res) => {
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {

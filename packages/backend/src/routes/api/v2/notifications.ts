@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/api/v2/notifications', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		var grabbedNotifications = await db

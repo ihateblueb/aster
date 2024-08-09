@@ -39,7 +39,7 @@ router.get('/api/v2/instance/:host', async (req, res) => {
 
 // report instance
 router.post(`/api/v2/intance/:host/report`, async (req, res) => {
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (req.params.host) {
 		if (authRes.status === 200) {

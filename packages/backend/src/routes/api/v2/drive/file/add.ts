@@ -55,7 +55,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 router.post(`/api/v2/drive/file/:name`, async (req, res) => {
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (authRes.grabbedUserAuth.user) {

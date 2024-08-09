@@ -9,7 +9,7 @@ const router = express.Router();
 
 router.patch(`/api/v2/drive/file/:id`, async (req, res) => {
 	if (req.params.id) {
-		var authRes = await verifyToken(req.headers.authorization);
+		var authRes = await verifyToken(req);
 
 		if (authRes.status === 200) {
 			if (authRes.grabbedUserAuth.user) {

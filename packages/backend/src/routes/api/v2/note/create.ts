@@ -11,7 +11,7 @@ import OCreate from '../../../../outgoing/create.js';
 const router = express.Router();
 
 router.post(`/api/v2/note`, async (req, res) => {
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		const noteId = uuidv4();

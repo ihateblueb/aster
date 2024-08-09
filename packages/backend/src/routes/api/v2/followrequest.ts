@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/api/v2/followrequests', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		var grabbedFollowrequests = await db
@@ -31,7 +31,7 @@ router.get('/api/v2/followrequests', async (req, res) => {
 
 router.post('/api/v2/followrequest/accept', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
@@ -100,7 +100,7 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 
 router.post('/api/v2/followrequest/deny', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {

@@ -6,7 +6,7 @@ import db from '../../../../utils/database.js';
 const router = express.Router();
 
 router.delete(`/api/v2/note`, async (req, res) => {
-	var authRes = await verifyToken(req.headers.authorization);
+	var authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
