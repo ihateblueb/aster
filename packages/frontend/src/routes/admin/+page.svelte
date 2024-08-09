@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Button from '$lib/components/Button.svelte';
 </script>
 
 <template>
-	<PageHeader title={locale('admin_panel')} icon="dashboard" />
 	<div class="pageContent">
 		<div class="paddedPage _0VO5sC1">
 			<div class="stats">

@@ -1,8 +1,7 @@
 import express from 'express';
 
-import db from '../../../utils/database.js';
-import ApiMeta from '../../../constructors/meta.js';
-import generateMeta from '../../../generators/meta.js';
+import db from '../../../../utils/database.js';
+import generateMeta from '../../../../generators/meta.js';
 
 const router = express.Router();
 

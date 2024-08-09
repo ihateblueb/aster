@@ -1,7 +1,7 @@
 node_modules
 
 config/production.ini
-logs
+/logs
 
 build
 built

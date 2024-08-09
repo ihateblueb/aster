@@ -22,6 +22,9 @@
 				</slot>
 			</div>
 			<p>{title}</p>
+			<div class="navigation">
+				<slot name="navigation"></slot>
+			</div>
 		</div>
 		<div class="right">
 			<slot></slot>

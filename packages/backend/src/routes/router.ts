@@ -43,10 +43,12 @@ import api_drive_file_edit from './api/v2/drive/file/edit.js';
 import api_drive_file_delete from './api/v2/drive/file/delete.js';
 import api_drive_file_get from './api/v2/drive/file/get.js';
 
+import api_meta_get from './api/v2/meta/get.js';
+import api_meta_edit from './api/v2/meta/edit.js';
+
 import api_ad from './api/v2/ad.js';
 import api_followrequest from './api/v2/followrequest.js';
 import api_instance from './api/v2/instance.js';
-import api_meta from './api/v2/meta.js';
 import api_login from './api/v2/login.js';
 import api_notifications from './api/v2/notifications.js';
 import api_search from './api/v2/search.js';
@@ -106,11 +108,13 @@ router.use('/', api_drive_file_edit);
 router.use('/', api_drive_file_delete);
 router.use('/', api_drive_file_get);
 
+router.use('/', api_meta_get);
+router.use('/', api_meta_edit);
+
 router.use('/', api_ad);
 router.use('/', api_followrequest);
 router.use('/', api_instance);
 router.use('/', api_login);
-router.use('/', api_meta);
 router.use('/', api_notifications);
 router.use('/', api_search);
 router.use('/', api_timeline);
