@@ -7,15 +7,20 @@
 	import searchGet from '$lib/api/search/get';
 	import { goto } from '$app/navigation';
 	import userLookup from '$lib/api/user/lookup';
+	import { JsonView } from '@zerodevx/svelte-json-view';
+	import userGet from '$lib/api/user/get';
+	import noteGet from '$lib/api/note/get';
 
 	let query;
+	let user;
+	let note;
 
 	async function search() {
 		let searchRes = await searchGet(query);
 		if (searchRes.type === 'user') {
-			goto(`users/${searchRes.id}`);
+			user = await userGet('searchRes.id');
 		} else if (searchRes.type === 'note') {
-			goto(`notes/${searchRes.id}`);
+			user = await noteGet('searchRes.id');
 		} else if (searchRes.type === 'lookup') {
 			goto(query);
 		}
@@ -32,6 +37,16 @@
 				bind:value={query}
 			/>
 			<Button on:click={search}>Search</Button>
+			{#key user}
+				{#if user}
+					<JsonView json={user} />
+				{/if}
+			{/key}
+			{#key note}
+				{#if note}
+					<JsonView json={note} />
+				{/if}
+			{/key}
 		</div>
 	</div>
 </template>

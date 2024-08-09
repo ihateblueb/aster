@@ -4,6 +4,7 @@
 
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Store from '$lib/utils/Store';
 
 	console.log('pathname ' + $page.url.pathname);
 
@@ -12,6 +13,12 @@
 		document.getElementById('sidebar-right').classList.remove('open');
 		document.getElementById('sidebar-out-left').classList.remove('open');
 		document.getElementById('sidebar-out-right').classList.remove('open');
+	}
+
+	let account = Store.get('account');
+
+	if (account) {
+		account = JSON.parse(account);
 	}
 </script>
 
@@ -97,14 +104,17 @@
 		{locale('drafts')}
 	</Button>
 	<hr />
-	<Button
-		type="nav {$page.url.pathname.startsWith('/admin') ? 'accent' : ''}"
-		to="/admin"
-		on:click={() => close()}
-	>
-		<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
-		{locale('admin_panel')}
-	</Button>
+	{#if account.admin}
+		<Button
+			type="nav {$page.url.pathname.startsWith('/admin') ? 'accent' : ''}"
+			to="/admin"
+			on:click={() => close()}
+		>
+			<Icon name="dashboard" size="18px" margin="0px 6px 0px 0px" />
+			{locale('admin_panel')}
+		</Button>
+	{/if}
+
 	<Button
 		type="nav {$page.url.pathname.startsWith('/settings') ? 'accent' : ''}"
 		to="/settings"

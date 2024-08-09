@@ -121,7 +121,7 @@ main {
 
 	.paddedPage {
 		padding: 12px 16px;
-		padding-bottom: calc(50px + env(safe-area-inset-bottom));
+		padding-bottom: calc(16px + 50px + env(safe-area-inset-bottom));
 	}
 }
 

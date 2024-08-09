@@ -12,7 +12,7 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 		'application/ld+json'
 	]);
 
-	logger('debug', 'ap', JSON.stringify(JSON.parse(req.body)));
+	logger('debug', 'inbox', JSON.stringify(JSON.parse(req.body)));
 
 	// this will return before the following can run if it's invalid
 	await validateRequest(req, res);

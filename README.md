@@ -71,6 +71,8 @@ Things that work!
 -   Fetch emojis in notes
 -   Fetch local and global timelines
 -   fetch reactions and likes
+-   /mod endpoints require authentication and mod status
+-   /admin endpoints require authentication and admin status
 
 ### Frontend
 

@@ -21,6 +21,10 @@ export default defineConfig({
 				target: `http://localhost:9971/`,
 				changeOrigin: true
 			},
+			'/admin/queue/dashboard': {
+				target: `http://localhost:9971/`,
+				changeOrigin: true
+			},
 			'/socket.io': {
 				target: `ws://localhost:9971/`,
 				changeOrigin: true,

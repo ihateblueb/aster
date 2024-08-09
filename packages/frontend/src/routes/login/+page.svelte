@@ -27,6 +27,8 @@
 		if (loginReq.status === 200) {
 			Store.set('a_token', loginRes.token);
 
+			document.cookie = 'a_token=' + loginRes.token;
+
 			var accountReq = await fetch(`/api/v2/user/${loginRes.id}`);
 			accountRes = await accountReq.json();
 

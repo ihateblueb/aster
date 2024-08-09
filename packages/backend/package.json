@@ -29,7 +29,7 @@
 		"bullMQAdapter": "link:@bull-board/api/bullMQAdapter",
 		"bullmq": "^5.7.9",
 		"chalk": "^4.1.2",
-		"cookie-parser": "^1.4.4",
+		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"dompurify": "^3.1.5",
 		"express": "^4.17.1",

@@ -2,6 +2,11 @@ import express from 'express';
 
 import uploads from './uploads.js';
 
+import bullboard from './bullboard.js';
+
+import admin from './admin.js';
+import mod from './mod.js';
+
 import ap_wellknown from './ap/well-known.js';
 import ap_nodeinfo from './ap/nodeinfo.js';
 import ap_inbox from './ap/inbox.js';
@@ -49,10 +54,19 @@ import api_timeline from './api/v2/timeline.js';
 
 import api_metrics_hardware from './api/v2/metrics/hardware.js';
 import api_metrics_queue from './api/v2/metrics/queue.js';
+import config from '../utils/config.js';
 
 const router = express.Router();
 
 router.use('/', uploads);
+
+if (config.frontend.bullboard) {
+	router.use('/', bullboard);
+}
+
+// these just pass it to sveltekit after verifying
+router.use('/', admin);
+router.use('/', mod);
 
 // ap
 router.use('/', ap_wellknown);

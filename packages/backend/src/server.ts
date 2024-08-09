@@ -7,9 +7,10 @@ process.title = `Aster v${pkg.version} (${processId})`;
 
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import express from 'express';
 import { createServer } from 'node:http';
-import { Server } from 'socket.io';
+//import { Server } from 'socket.io';
 
 import config from './utils/config.js';
 import logger from './utils/logger.js';
@@ -61,6 +62,7 @@ deliverWorker.on('failed', (job, failedReason) => {
 
 app.use(requestLogger.dev, requestLogger.combined);
 app.use(bodyParser.raw({ type: '*/*', limit: '500mb' }));
+app.use(cookieParser());
 app.use(cors());
 
 app.use((req, res, next) => {

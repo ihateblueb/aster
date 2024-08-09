@@ -87,9 +87,13 @@
 		}
 
 		&#sidebar-left {
+			border-top-right-radius: var(--border-l);
+			border-bottom-right-radius: var(--border-l);
 			animation: slide-left 0.25s forwards;
 		}
 		&#sidebar-right {
+			border-top-left-radius: var(--border-l);
+			border-bottom-left-radius: var(--border-l);
 			animation: slide-right 0.25s forwards;
 		}
 	}

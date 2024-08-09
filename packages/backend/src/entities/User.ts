@@ -99,10 +99,16 @@ export class User {
 	followers: string[];
 
 	@Column('text', { array: true, nullable: true })
-	roles: string[];
-
-	@Column('text', { array: true, nullable: true })
 	pinned_notes: string[];
+
+	@Column({ default: false })
+	admin: boolean;
+
+	@Column({ default: false })
+	mod: boolean;
+
+	@Column('jsonb', { nullable: true })
+	roles: string;
 
 	@Column('jsonb', { nullable: true })
 	metadata: string;
