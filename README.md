@@ -6,7 +6,7 @@ Aster is a work-in-progress federated social media software. So far, development
 I don't fully know what I'm doing when it comes to ActivityPub, a lot of this is learning as I go.
 I do not expect this software to be extra special, performant, or even stable. If it ends up being somewhat finished, maybe I'll polish it up to be usable.
 
-If you see something that is a bad practice, slow, very stupid, or a security vulnerability, please let me know! You can create an issue in this repo, or contact me directly (see https://blueb.me/) if it's serious.
+If you see something that is a bad practice, slow, very stupid, or a security vulnerability, please let me know! You can create an issue in this repo, or contact me directly (see https://harper.eepy.zone/) if it's serious.
 
 The frontend is written with Svelte and Sass using mfm.js to parse MFM.
 The backend is written with TypeScript using Express, BullMQ, TypeORM, and other important libraries.
