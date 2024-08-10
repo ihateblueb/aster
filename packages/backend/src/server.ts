@@ -31,11 +31,7 @@ inboxWorker.on('progress', async (job, progress) => {
 });
 
 inboxWorker.on('completed', (job) => {
-	logger(
-		'info',
-		'inbox',
-		`job ${job.id} completed. ${JSON.stringify(job.returnvalue)}`
-	);
+	logger('info', 'inbox', `job ${job.id} completed.`);
 });
 
 inboxWorker.on('failed', (job, failedReason) => {
@@ -48,11 +44,7 @@ deliverWorker.on('progress', async (job, progress) => {
 });
 
 deliverWorker.on('completed', (job) => {
-	logger(
-		'info',
-		'deliver',
-		`job ${job.id} completed. ${JSON.stringify(job.returnvalue)}`
-	);
+	logger('info', 'deliver', `job ${job.id} completed.`);
 });
 
 deliverWorker.on('failed', (job, failedReason) => {
@@ -73,19 +65,21 @@ app.use((req, res, next) => {
 		res.setHeader('Cache-Control', 'public, max-age=86400');
 	}
 
-	config.security.blockedUserAgents.forEach((e) => {
-		if (req.headers['user-agent'].includes(e)) {
-			logger(
-				'debug',
-				'router',
-				'blocked request from useragent matching ' + e
-			);
+	if (
+		req.headers['user-agent'].match(
+			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
+		)
+	) {
+		logger(
+			'debug',
+			'router',
+			'blocked request from useragent ' + req.headers['user-agent']
+		);
 
-			res.status(403).end();
+		res.status(403).end();
 
-			next(403);
-		}
-	});
+		next(403);
+	}
 
 	next();
 });

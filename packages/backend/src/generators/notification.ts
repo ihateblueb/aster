@@ -18,14 +18,9 @@ export default async function generateNotification(
 			.getRepository('user')
 			.findOne({ where: { id: grabbedNotifications.from } });
 
-		const grabbedReactions = await db
-			.getRepository('note_react')
-			.createQueryBuilder('note_react')
-			.leftJoinAndSelect('note_react.emoji', 'emoji')
-			.where('note_react.note = :note', {
-				note: grabbedNotifications.reaction
-			})
-			.getMany();
+		const grabbedReaction = await db
+			.getRepository('emoji')
+			.findOne({ where: { id: grabbedNotifications.reaction } });
 
 		return {
 			status: 200,
@@ -33,7 +28,7 @@ export default async function generateNotification(
 				grabbedNotifications,
 				grabbedTo,
 				grabbedFrom,
-				grabbedReactions
+				grabbedReaction
 			)
 		};
 	} else {

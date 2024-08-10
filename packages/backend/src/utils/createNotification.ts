@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import db from '../utils/database.js';
+import logger from './logger.js';
 
 export default async function createNotification(
 	to,
@@ -23,9 +24,13 @@ export default async function createNotification(
 		react
 	*/
 
-	notificationToInsert['time'] = new Date(Date.now()).toISOString();
+	notificationToInsert['created_at'] = new Date(Date.now()).toISOString();
 	notificationToInsert['object'] = object;
 	notificationToInsert['reaction'] = reaction;
 
-	await db.getRepository('user_notification').insert(notificationToInsert);
+	if (to !== from) {
+		await db
+			.getRepository('user_notification')
+			.insert(notificationToInsert);
+	}
 }

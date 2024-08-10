@@ -5,7 +5,8 @@ import { Queue } from 'bullmq';
 const inboxQueue = new Queue('inbox', {
 	connection: redis,
 	defaultJobOptions: {
-		removeOnComplete: true,
+		removeOnComplete: false,
+		removeOnFail: false,
 		attempts: config.inbox.attempts,
 		backoff: {
 			type: 'exponential',

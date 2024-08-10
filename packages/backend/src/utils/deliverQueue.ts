@@ -5,7 +5,8 @@ import { Queue } from 'bullmq';
 const deliverQueue = new Queue('deliver', {
 	connection: redis,
 	defaultJobOptions: {
-		removeOnComplete: true,
+		removeOnComplete: false,
+		removeOnFail: false,
 		attempts: config.deliver.attempts,
 		backoff: {
 			type: 'exponential',

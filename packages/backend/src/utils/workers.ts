@@ -9,7 +9,7 @@ const inboxWorker = new Worker(
 	async (job) => {
 		return await acceptInboxRequest(await job.data.body);
 	},
-	{ connection: redis, concurrency: 100 }
+	{ connection: redis, concurrency: 1 }
 );
 
 const deliverWorker = new Worker(
@@ -21,7 +21,7 @@ const deliverWorker = new Worker(
 			await job.data.body
 		);
 	},
-	{ connection: redis, concurrency: 50 }
+	{ connection: redis, concurrency: 1 }
 );
 
 const statsWorker = new Worker(

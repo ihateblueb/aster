@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "38",
+	"__version__": "39",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -110,6 +110,7 @@
 	"delete": "Delete",
 	"followed_you": "followed you",
 	"liked_your_note": "liked your note",
+	"reacted_to_your_note": "reacted to your note",
 	"unknown_notification": "Unknown notification from",
 	"home": "Home",
 	"notifications": "Notifications",

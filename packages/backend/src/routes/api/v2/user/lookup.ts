@@ -35,8 +35,6 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 			}
 		});
 
-		console.log('[lookup] ' + splitUsername);
-
 		if (
 			splitUsername[0] === 'undefined' ||
 			splitUsername[1] === 'undefined'
