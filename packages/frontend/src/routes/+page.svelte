@@ -94,13 +94,15 @@
 				<Icon name="refresh" size="16px" />
 			</Button>
 		</PageHeader>
-		<div class="pageContent hasTimeline">
+		<div class="pageContent">
 			{#if notes && notes.length > 0}
-				{#key notes}
-					<VirtualList height="100%" timeline items={notes} let:item>
-						<Note data={item} inTimeline />
-					</VirtualList>
-				{/key}
+				<div class="paddedPage">
+					{#key notes}
+						{#each notes as note}
+							<Note data={note} inTimeline />
+						{/each}
+					{/key}
+				</div>
 			{:else}
 				<div class="paddedPage">
 					<div class="loading">

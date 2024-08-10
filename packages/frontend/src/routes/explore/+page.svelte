@@ -56,11 +56,13 @@
 	</PageHeader>
 	<div class="pageContent hasTimeline">
 		{#if notes && notes.length > 0}
-			{#key notes}
-				<VirtualList height="100%" timeline items={notes} let:item>
-					<Note data={item} inTimeline />
-				</VirtualList>
-			{/key}
+			<div class="timeline">
+				{#key notes}
+					{#each notes as note}
+						<Note data={note} inTimeline />
+					{/each}
+				{/key}
+			</div>
 		{:else}
 			<div class="loading">
 				<Loading />

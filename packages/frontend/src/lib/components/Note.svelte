@@ -35,6 +35,10 @@
 	import NoteMedia from './NoteMedia.svelte';
 	import Time from './Time.svelte';
 	import Store from '$lib/utils/Store';
+	import UserCard from './UserCard.svelte';
+	import { fly, slide } from 'svelte/transition';
+
+	let userCard: UserCard;
 
 	let self = {};
 
@@ -81,6 +85,11 @@
 					/></a
 				>
 				<div class="names">
+					<!--
+					on:mouseenter={(e) => userCard.open(e)}
+				aria-describedby="usercard"
+				role="tooltip"
+				-->
 					<a
 						href={'/@' +
 							data.author.username +
@@ -372,4 +381,6 @@
 			<span>{locale('delete_note')}</span>
 		</DropdownItem>
 	</Dropdown>
+
+	<UserCard bind:this={userCard} />
 </template>

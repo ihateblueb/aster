@@ -47,8 +47,11 @@ if (config.plugins.outgoing) {
 
 for (let i = 0; i < config.workers.count; i++) {
 	cluster.fork();
-	logger('info', 'boot', 'started worker ' + (i + 1));
 }
+
+cluster.on('online', (worker) => {
+	logger('info', 'boot', 'worker ' + worker.id + ' is now online');
+});
 
 cluster.on('exit', (worker, code, signal) => {
 	logger(
@@ -56,9 +59,11 @@ cluster.on('exit', (worker, code, signal) => {
 		'main',
 		'worker ' +
 			worker.id +
-			' exited with code ' +
+			' exited (' +
 			code +
-			'. starting another.'
+			'/' +
+			signal +
+			'). starting another.'
 	);
 	cluster.fork();
 });
@@ -69,9 +74,11 @@ cluster.on('died', (worker, code, signal) => {
 		'main',
 		'worker ' +
 			worker.id +
-			' died with code ' +
+			' died (' +
 			code +
-			'. starting another.'
+			'/' +
+			signal +
+			'). starting another.'
 	);
 	cluster.fork();
 });
@@ -87,5 +94,12 @@ cluster.on('message', (msg) => {
 			'main',
 			'server started as ' + config.url + ' on port ' + config.port
 		);
+	}
+});
+
+process.on('SIGTERM', function () {
+	logger('info', 'main', 'kill requested');
+	for (const id in cluster.workers) {
+		cluster.workers[id].destroy();
 	}
 });
