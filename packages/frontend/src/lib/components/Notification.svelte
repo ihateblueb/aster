@@ -3,6 +3,7 @@
 	import { locale } from '$lib/locale';
 	import Icon from './Icon.svelte';
 	import Note from './Note.svelte';
+	import NoteSimple from './NoteSimple.svelte';
 	import Time from './Time.svelte';
 
 	export let data;
@@ -50,7 +51,7 @@
 					{/if}
 				</div>
 				{#await noteGet(data.object) then note}
-					<Note data={note} inTimeline />
+					<NoteSimple data={note} />
 				{/await}
 			</div>
 		{:else if data.type === 'react'}
@@ -73,7 +74,7 @@
 					{/if}
 				</div>
 				{#await noteGet(data.object) then note}
-					<Note data={note} inTimeline />
+					<NoteSimple data={note} />
 				{/await}
 			</div>
 		{:else}

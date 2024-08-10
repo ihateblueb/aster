@@ -1124,3 +1124,76 @@ undo
 	"id": "https://grimgreenfo.rest/05774529-a6e6-4756-804f-9aec18c7a357"
 }
 ```
+
+# wafrn note
+
+```json
+{
+	"id": "https://app.wafrn.net/fediverse/post/10720cb3-f4e2-4c88-ab1b-d995003c5106",
+	"actor": "https://app.wafrn.net/fediverse/blog/blueb",
+	"type": "Note",
+	"published": "2024-08-10T14:31:30.000Z",
+	"url": "https://app.wafrn.net/fediverse/post/10720cb3-f4e2-4c88-ab1b-d995003c5106",
+	"attributedTo": "https://app.wafrn.net/fediverse/blog/blueb",
+	"to": [
+		"https://www.w3.org/ns/activitystreams#Public",
+		"https://app.wafrn.net/fediverse/blog/blueb/followers"
+	],
+	"cc": [],
+	"atomUri": "https://app.wafrn.net/fediverse/post/10720cb3-f4e2-4c88-ab1b-d995003c5106",
+	"content": "<p>im not testing (im not)</p><p>this account has more purposes than testing</p>  <a class=\"hashtag\" data-tag=\"post\" href=\"https://app.wafrn.net/dashboard/search/im%20not%20lying\" rel=\"tag ugc\">#imNotLying</a>  <a class=\"hashtag\" data-tag=\"post\" href=\"https://app.wafrn.net/dashboard/search/i%20swear\" rel=\"tag ugc\">#iSwear</a>  <a class=\"hashtag\" data-tag=\"post\" href=\"https://app.wafrn.net/dashboard/search/i%20am%20not\" rel=\"tag ugc\">#iAmNot</a>",
+	"attachment": [],
+	"tag": [
+		{
+			"type": "Hashtag",
+			"name": "#imNotLying",
+			"href": "https://app.wafrn.net/dashboard/search/im%20not%20lying"
+		},
+		{ "type": "WafrnHashtag", "name": "im not lying" },
+		{
+			"type": "Hashtag",
+			"name": "#iSwear",
+			"href": "https://app.wafrn.net/dashboard/search/i%20swear"
+		},
+		{ "type": "WafrnHashtag", "name": "i swear" },
+		{
+			"type": "Hashtag",
+			"name": "#iAmNot",
+			"href": "https://app.wafrn.net/dashboard/search/i%20am%20not"
+		},
+		{ "type": "WafrnHashtag", "name": "i am not" }
+	],
+	"replies": {
+		"id": "https://app.wafrn.net/fediverse/post/10720cb3-f4e2-4c88-ab1b-d995003c5106/replies",
+		"type": "Collection",
+		"first": {
+			"type": "CollectionPage",
+			"partOf": "https://app.wafrn.net/fediverse/post/10720cb3-f4e2-4c88-ab1b-d995003c5106/replies",
+			"items": []
+		}
+	},
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://app.wafrn.net/contexts/litepub-0.1.jsonld"
+	]
+}
+```
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		{
+			"ostatus": "http://ostatus.org#",
+			"atomUri": "ostatus:atomUri",
+			"inReplyToAtomUri": "ostatus:inReplyToAtomUri",
+			"conversation": "ostatus:conversation",
+			"sensitive": "as:sensitive",
+			"toot": "http://joinmastodon.org/ns#",
+			"votersCount": "toot:votersCount",
+			"blurhash": "toot:blurhash",
+			"focalPoint": { "@container": "@list", "@id": "toot:focalPoint" }
+		}
+	]
+}
+```

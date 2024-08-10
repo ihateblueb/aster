@@ -19,7 +19,6 @@ export default class ApiNotification {
 	) {
 		this.id = grabbedNotification.id;
 		this.type = grabbedNotification.type;
-
 		this.created_at = grabbedNotification.created_at;
 
 		this.to = grabbedTo;

@@ -1,0 +1,48 @@
+.noteSimple._kN27K8S {
+	display: flex;
+	flex-direction: column;
+	margin-top: 5px;
+	border: 1px solid var(--bg-accent);
+	border-radius: var(--border-m);
+	padding: 8px;
+
+	.header {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		box-sizing: border-box;
+		gap: 5px;
+		margin-bottom: 5px;
+
+		.left {
+			display: flex;
+			align-items: center;
+			flex-grow: 2;
+			gap: 5px;
+
+			a {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+
+				.displayname {
+					font-weight: 700;
+					font-size: var(--font-m);
+				}
+
+				.username {
+					font-size: var(--font-m);
+					color: var(--txt-tertiary);
+				}
+			}
+		}
+
+		.right {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+	}
+	.content {
+	}
+}
