@@ -15,7 +15,7 @@ export class UserNotification {
 	type: string;
 
 	@Column({ nullable: true })
-	time: string;
+	created_at: string;
 
 	@Column({ nullable: true })
 	object: string;
