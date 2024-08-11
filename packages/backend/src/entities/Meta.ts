@@ -45,4 +45,9 @@ export class Meta {
 
 	@Column({ default: 0 })
 	instance_count: number;
+
+	// for setup
+
+	@Column({ default: false })
+	init: boolean;
 }

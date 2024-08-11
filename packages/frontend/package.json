@@ -29,7 +29,6 @@
 		"@tabler/icons-webfont": "^3.4.0",
 		"@zerodevx/svelte-json-view": "^1.0.9",
 		"Nonsense": "^0.1.2",
-		"backend": "^0.0.0",
 		"mfm-js": "^0.24.0",
 		"node-sass": "^9.0.0",
 		"photoswipe": "^5.4.4",
