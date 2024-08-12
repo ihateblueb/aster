@@ -74,6 +74,6 @@ export default async function userCreate(options: {
 	logger('debug', 'user', 'to insert into user_priv');
 	logger('debug', 'user', JSON.stringify(userPrivToInsert));
 
-	//await db.getRepository('user').insert(instanceActorToInsert);
-	//await db.getRepository('user_priv').insert(instanceActorPrivToInsert);
+	await db.getRepository('user').insert(userToInsert);
+	await db.getRepository('user_priv').insert(userPrivToInsert);
 }
