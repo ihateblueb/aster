@@ -80,4 +80,12 @@ program.addCommand(
 	)
 );
 
+program.addCommand(
+	new Command('note').description('commands to manage notes').addCommand(
+		new Command('create').description('create a note').action((options) => {
+			console.log(options);
+		})
+	)
+);
+
 program.parse();
