@@ -59,7 +59,11 @@
 			<div class="timeline">
 				{#key notes}
 					{#each notes as note}
-						<Note data={note} inTimeline />
+						{#if note.type === 'note'}
+							<Note data={note.object} inTimeline />
+						{:else if note.type === 'repeat'}
+							<Note data={note.object} repeat inTimeline />
+						{/if}
 					{/each}
 				{/key}
 			</div>

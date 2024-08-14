@@ -1,6 +1,5 @@
 import deleteNote from '../utils/actions/delete/note.js';
 import deleteUser from '../utils/actions/delete/user.js';
-import getRemoteNote from '../utils/ap/getRemoteNote.js';
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 

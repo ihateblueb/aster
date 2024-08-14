@@ -20,7 +20,7 @@ router.get('/notes/:noteid', async (req, res, next) => {
 
 			console.log(grabbedNote);
 
-			if (grabbedNote && grabbedNote.local) {
+			if (grabbedNote && grabbedNote.local && !grabbedNote.repeated) {
 				let grabbedAuthor = await db
 					.getRepository('user')
 					.createQueryBuilder()

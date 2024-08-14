@@ -1,7 +1,7 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
-export class Note {
+export class Repeat {
 	@PrimaryColumn()
 	id: string;
 
@@ -14,27 +14,12 @@ export class Note {
 	@Column({ default: 'public' })
 	visibility: string;
 
-	@Column({ nullable: true })
-	replying_to: string;
-
 	@Column()
 	author: string;
 
 	@Column({ default: false })
 	local: boolean;
 
-	@Column({ nullable: true })
-	cw: string;
-
 	@Column()
-	content: string;
-
-	@Column('jsonb', { nullable: true })
-	emojis: string;
-
-	@Column('jsonb', { nullable: true })
-	tags: string;
-
-	@Column({ nullable: true })
-	quoted: string;
+	note: string;
 }

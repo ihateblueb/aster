@@ -22,10 +22,16 @@
 
 	export let data;
 	export let pinned: boolean = false;
-	export let repeated: boolean = false;
-	export let repeatedBy: string = '';
+	export let repeat: boolean = false;
 	export let detailed: boolean = false;
 	export let inTimeline: boolean = false;
+
+	let repeatData;
+
+	if (repeat) {
+		repeatData = data;
+		data = data.note;
+	}
 
 	let cwOpen = false;
 
@@ -60,7 +66,7 @@
 				<span> {locale('note_pinned')} </span>
 			</div>
 		{/if}
-		{#if repeated}
+		{#if repeat}
 			<div class="notePreheader">
 				<Icon
 					name="repeat"
@@ -68,7 +74,7 @@
 					color="var(--txt-tertiary)"
 					margin="0px 5px 0px 0px"
 				/>
-				<span> {repeatedBy} {locale('repeated')} </span>
+				<span> {repeatData.author.id} {locale('repeated')} </span>
 			</div>
 		{/if}
 		<div class="noteHeader">

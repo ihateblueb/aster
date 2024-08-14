@@ -31,8 +31,10 @@ export default async function generateNote(grabbedNote): Promise<{
 					.where({ host: grabbedAuthor.host })
 					.getOne();
 
+				let grabbedReplyingNote;
+
 				if (grabbedNote.replying_to) {
-					let grabbedReplyingNote = await db
+					grabbedReplyingNote = await db
 						.getRepository('note')
 						.createQueryBuilder()
 						.where({ id: grabbedNote.replying_to })

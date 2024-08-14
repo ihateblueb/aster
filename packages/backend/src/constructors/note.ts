@@ -1,6 +1,3 @@
-import { User } from '../entities/User.js';
-import generateNote from '../generators/note.js';
-
 export default class ApiNote {
 	id: string;
 	ap_id: string;
