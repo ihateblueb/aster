@@ -102,7 +102,7 @@ export default class ApiNote {
 		if (grabbedRepeats) {
 			for (const repeat of grabbedRepeats) {
 				sortedRepeats.count++;
-				sortedRepeats.from.push(repeat.user);
+				sortedRepeats.from.push(repeat.author);
 			}
 		}
 
