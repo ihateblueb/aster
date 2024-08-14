@@ -17,9 +17,25 @@ router.delete(`/api/v2/note`, async (req, res) => {
 				}
 			});
 
+			let grabbedDeleter = await db.getRepository('user').findOne({
+				where: {
+					id: authRes.grabbedUserAuth.user
+				}
+			});
+
 			if (grabbedNote) {
-				if (grabbedNote.author === authRes.grabbedUserAuth.user) {
+				if (
+					grabbedNote.author === authRes.grabbedUserAuth.user ||
+					grabbedDeleter.admin ||
+					grabbedDeleter.mod
+				) {
 					await deleteNote(grabbedNote.ap_id);
+
+					/*
+					if (grabbedNote.local) {
+						ODelete(grabbedNote.ap_id, grabbedNote.author)
+					}
+					*/
 
 					return res.status(200).json({
 						message: 'Note deleted.'
