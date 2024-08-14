@@ -66,6 +66,7 @@
 		"@swc/cli": "^0.4.0",
 		"@swc/core": "^1.7.0",
 		"eslint": "^9.2.0",
+		"eslint-plugin-only-warn": "^1.1.0",
 		"globals": "^15.1.0",
 		"typescript-eslint": "^7.8.0"
 	}
