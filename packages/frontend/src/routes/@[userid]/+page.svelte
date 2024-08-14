@@ -16,6 +16,7 @@
 	import Time from '$lib/components/Time.svelte';
 	import userBite from '$lib/api/user/bite.js';
 	import { goto } from '$app/navigation';
+	import timelineUserGet from '$lib/api/timeline/user/get.js';
 
 	export let data;
 
@@ -274,7 +275,7 @@
 						</div>
 					</div>
 					<div>
-						{#if data.pinned_notes}
+						{#if data.pinned_notes && data.pinned_notes.length > 0}
 							{#each data.pinned_notes as noteId}
 								{#await noteGet(noteId) then note}
 									<Note
@@ -284,7 +285,21 @@
 									/>
 								{/await}
 							{/each}
+							<hr />
 						{/if}
+						{#await timelineUserGet(data.id) then notes}
+							{#each notes as note}
+								{#if note.type === 'note'}
+									<Note data={note.object} />
+								{:else if note.type === 'repeat'}
+									<Note
+										data={note.object.note}
+										repeat
+										repeatData={note.object}
+									/>
+								{/if}
+							{/each}
+						{/await}
 					</div>
 				{/if}
 			{:else}

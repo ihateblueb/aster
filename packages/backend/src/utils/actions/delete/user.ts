@@ -14,7 +14,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' + grabbedNotes.length + ' notes by ' + apId
 		);
 	}
