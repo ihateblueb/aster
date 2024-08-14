@@ -20,3 +20,5 @@ packages/frontend/static/logo.png
 
 # rust
 target
+
+vite.config.**,**,js
