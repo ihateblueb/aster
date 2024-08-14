@@ -12,6 +12,7 @@ export default async function processNewFile(attachment, note, author) {
 
 	driveFileToInsert['id'] = fileId;
 	driveFileToInsert['ap_id'] = sanitize(attachment.url);
+	driveFileToInsert['local'] = false;
 	driveFileToInsert['user'] = sanitize(author.id);
 	driveFileToInsert['note'] = sanitize(note.id);
 	driveFileToInsert['created_at'] = sanitize(note.created_at);
@@ -20,26 +21,13 @@ export default async function processNewFile(attachment, note, author) {
 	driveFileToInsert['src'] = sanitize(attachment.url);
 	driveFileToInsert['alt'] = sanitize(attachment.summary);
 
-	let thumbnail = await generateThumbnail(
-		attachment.url,
-		'',
-		attachment.mediaType,
-		author.id,
-		fileId
-	);
+	driveFileToInsert['width'] = 0;
+	driveFileToInsert['height'] = 0;
 
-	let dimensions = await calculateDimensions(
-		attachment.url,
-		attachment.mediaType
-	);
-
-	driveFileToInsert['width'] = dimensions[0];
-	driveFileToInsert['height'] = dimensions[1];
-
-	driveFileToInsert['thumbnail'] = thumbnail.url;
-	driveFileToInsert['thumbnail_width'] = thumbnail.width;
-	driveFileToInsert['thumbnail_height'] = thumbnail.height;
-	driveFileToInsert['blurhash'] = thumbnail.blurhash;
+	driveFileToInsert['thumbnail'] = '';
+	driveFileToInsert['thumbnail_width'] = '';
+	driveFileToInsert['thumbnail_height'] = '';
+	driveFileToInsert['blurhash'] = '';
 
 	await db.getRepository('drive_file').insert(driveFileToInsert);
 
