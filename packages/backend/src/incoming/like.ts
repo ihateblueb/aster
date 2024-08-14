@@ -1,4 +1,4 @@
-import createNotification from '../utils/createNotification.js';
+import createNotification from '../utils/actions/createNotification.js';
 import db from '../utils/database.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import getRemoteEmoji from '../utils/ap/getRemoteEmoji.js';

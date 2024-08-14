@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import db from '../utils/database.js';
-import logger from './logger.js';
+import db from '../../utils/database.js';
 
 export default async function createNotification(
 	to,
@@ -17,12 +16,6 @@ export default async function createNotification(
 	notificationToInsert['from'] = from;
 
 	notificationToInsert['type'] = type;
-	/*
-		followrequest
-		follow
-		like
-		react
-	*/
 
 	notificationToInsert['created_at'] = new Date(Date.now()).toISOString();
 	notificationToInsert['object'] = object;

@@ -3,7 +3,7 @@ import express from 'express';
 import signAndAccept from '../../../utils/ap/accept.js';
 import signAndReject from '../../../utils/ap/reject.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
-import createNotification from '../../../utils/createNotification.js';
+import createNotification from '../../../utils/actions/createNotification.js';
 import db from '../../../utils/database.js';
 
 const router = express.Router();

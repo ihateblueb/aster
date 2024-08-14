@@ -1,5 +1,5 @@
 import signAndAccept from '../utils/ap/accept.js';
-import createNotification from '../utils/createNotification.js';
+import createNotification from '../utils/actions/createNotification.js';
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';

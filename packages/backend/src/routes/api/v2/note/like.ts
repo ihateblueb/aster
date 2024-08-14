@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
-import createNotification from '../../../../utils/createNotification.js';
+import createNotification from '../../../../utils/actions/createNotification.js';
 import OLike from '../../../../outgoing/like.js';
 import config from '../../../../utils/config.js';
 

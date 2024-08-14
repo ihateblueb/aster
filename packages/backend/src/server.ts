@@ -76,8 +76,8 @@ app.use((req, res, next) => {
 		)
 	) {
 		logger(
-			'debug',
-			'router',
+			'info',
+			'security',
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
 
