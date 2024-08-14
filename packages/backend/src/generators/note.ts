@@ -80,6 +80,12 @@ export default async function generateNote(grabbedNote): Promise<{
 					}
 				});
 
+				let grabbedRepeats = await db.getRepository('repeat').find({
+					where: {
+						note: grabbedNote.id
+					}
+				});
+
 				return {
 					status: 200,
 					note: new ApiNote(
@@ -90,7 +96,8 @@ export default async function generateNote(grabbedNote): Promise<{
 						grabbedAttachments,
 						grabbedEmojis,
 						grabbedReactions,
-						grabbedLikes
+						grabbedLikes,
+						grabbedRepeats
 					)
 				};
 			}

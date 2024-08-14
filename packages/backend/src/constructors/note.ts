@@ -18,6 +18,7 @@ export default class ApiNote {
 	tags?: any[];
 
 	likes?: {};
+	repeats?: {};
 
 	constructor(
 		grabbedNote,
@@ -28,6 +29,7 @@ export default class ApiNote {
 		grabbedEmojis?,
 		grabbedReactions?,
 		grabbedLikes?,
+		grabbedRepeats?,
 		grabbedReplyingTo?,
 		grabbedReplyingToAuthor?
 	) {
@@ -91,6 +93,20 @@ export default class ApiNote {
 		}
 
 		this.likes = sortedLikes ? sortedLikes : null;
+
+		let sortedRepeats = {
+			count: 0,
+			from: []
+		};
+
+		if (grabbedRepeats) {
+			for (const repeat of grabbedRepeats) {
+				sortedRepeats.count++;
+				sortedRepeats.from.push(repeat.user);
+			}
+		}
+
+		this.repeats = sortedRepeats ? sortedRepeats : null;
 
 		if (grabbedNote.tags && grabbedNote.tags.length > 0) {
 			this.tags = grabbedNote.tags;

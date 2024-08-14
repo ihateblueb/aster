@@ -90,11 +90,6 @@
 					/></a
 				>
 				<div class="names">
-					<!--
-					on:mouseenter={(e) => userCard.open(e)}
-				aria-describedby="usercard"
-				role="tooltip"
-				-->
 					<a
 						href={'/@' +
 							data.author.username +
@@ -254,20 +249,37 @@
 				<button>
 					<Icon name="arrow-back-up" size="18px" color="inherit" />
 				</button>
-				<button>
-					<Icon name="quote" size="18px" color="inherit" />
-				</button>
 				<button on:click={() => noteRepeat(data.id)}>
-					<Icon name="repeat" size="18px" color="inherit" />
+					{#if data.repeats}
+						{#if data.repeats.from && data.repeats.from.includes(self.id)}
+							<Icon
+								name="repeat"
+								size="18px"
+								color="var(--success)"
+							/>
+							<span class="counter">{data.repeats.count}</span>
+						{:else}
+							<Icon name="repeat" size="18px" color="inherit" />
+							<span class="counter">{data.repeats.count}</span>
+						{/if}
+					{:else}
+						<Icon name="repeat" size="18px" color="inherit" />
+						<span class="counter">0</span>
+					{/if}
 				</button>
 				<button on:click={() => noteLike(data.id)}>
-					{#if data.likes && data.likes.from && data.likes.from.includes(self.id)}
-						<Icon
-							name="star-filled"
-							size="18px"
-							color="var(--like)"
-						/>
-						<span class="counter">{data.likes.count}</span>
+					{#if data.likes}
+						{#if data.likes.from && data.likes.from.includes(self.id)}
+							<Icon
+								name="star-filled"
+								size="18px"
+								color="var(--like)"
+							/>
+							<span class="counter">{data.likes.count}</span>
+						{:else}
+							<Icon name="star" size="18px" color="inherit" />
+							<span class="counter">{data.likes.count}</span>
+						{/if}
 					{:else}
 						<Icon name="star" size="18px" color="inherit" />
 						<span class="counter">0</span>
