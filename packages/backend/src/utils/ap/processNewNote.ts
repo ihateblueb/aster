@@ -111,6 +111,26 @@ export default async function processNewNote(body) {
 			console.log(body.inReplyTo);
 		}
 
+		if (body._misskey_quote) {
+			let quotedNote = await getRemoteNote(body._misskey_quote);
+
+			if (quotedNote) {
+				noteToInsert['quoted'] = quotedNote.id;
+			}
+		} else if (body.quoteUrl) {
+			let quotedNote = await getRemoteNote(body.quoteUrl);
+
+			if (quotedNote) {
+				noteToInsert['quoted'] = quotedNote.id;
+			}
+		} else if (body.quoteUri) {
+			let quotedNote = await getRemoteNote(body.quoteUri);
+
+			if (quotedNote) {
+				noteToInsert['quoted'] = quotedNote.id;
+			}
+		}
+
 		noteToInsert['author'] = grabbedRemoteActor.id;
 		noteToInsert['local'] = false;
 

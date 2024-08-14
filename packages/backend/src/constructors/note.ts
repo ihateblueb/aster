@@ -17,6 +17,8 @@ export default class ApiNote {
 	reactions?: any[];
 	tags?: any[];
 
+	quoted?: {};
+
 	likes?: {};
 	repeats?: {};
 
@@ -30,6 +32,7 @@ export default class ApiNote {
 		grabbedReactions?,
 		grabbedLikes?,
 		grabbedRepeats?,
+		quotedNote?,
 		grabbedReplyingTo?,
 		grabbedReplyingToAuthor?
 	) {
@@ -79,6 +82,8 @@ export default class ApiNote {
 			sortedReactions && sortedReactions.length > 0
 				? sortedReactions
 				: null;
+
+		this.quoted = quotedNote;
 
 		let sortedLikes = {
 			count: 0,

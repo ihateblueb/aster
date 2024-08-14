@@ -1288,3 +1288,67 @@ undo
 	}
 }
 ```
+
+# quote note
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"aster": "https://blueb.me/ns#",
+			"visibility": "aster:visibility",
+			"hasCorrectAnswer": "aster:hasCorrectAnswer",
+			"correct": "aster:correct"
+		}
+	],
+	"id": "https://eepy.zone/notes/9wxz43nb3ctk01ha",
+	"type": "Note",
+	"attributedTo": "https://eepy.zone/users/9tinc25vpg4n004w",
+	"content": "<p><span>Wait have you guys seen this<br><br>RE: </span><a href=\"https://eepy.zone/notes/0ojy918h4jw300g8\">https://eepy.zone/notes/0ojy918h4jw300g8</a></p>",
+	"_misskey_content": "Wait have you guys seen this",
+	"source": {
+		"content": "Wait have you guys seen this",
+		"mediaType": "text/x.misskeymarkdown"
+	},
+	"_misskey_quote": "https://eepy.zone/notes/0ojy918h4jw300g8",
+	"quoteUrl": "https://eepy.zone/notes/0ojy918h4jw300g8",
+	"quoteUri": "https://eepy.zone/notes/0ojy918h4jw300g8",
+	"published": "2024-08-14T22:14:33.335Z",
+	"visibility": "public",
+	"to": ["https://www.w3.org/ns/activitystreams#Public"],
+	"cc": ["https://eepy.zone/users/9tinc25vpg4n004w/followers"],
+	"inReplyTo": null,
+	"attachment": [],
+	"sensitive": false,
+	"tag": []
+}
+```

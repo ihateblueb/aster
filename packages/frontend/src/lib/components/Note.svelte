@@ -37,6 +37,7 @@
 	import Store from '$lib/utils/Store';
 	import UserCard from './UserCard.svelte';
 	import { fly, slide } from 'svelte/transition';
+	import NoteSimple from './NoteSimple.svelte';
 
 	let userCard: UserCard;
 
@@ -224,6 +225,10 @@
 						</a>
 					{/each}
 				</div>
+			{/if}
+
+			{#if data.quoted}
+				<NoteSimple data={data.quoted} />
 			{/if}
 
 			{#if detailed}

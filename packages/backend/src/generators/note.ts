@@ -86,6 +86,18 @@ export default async function generateNote(grabbedNote): Promise<{
 					}
 				});
 
+				let quotedNote;
+
+				if (grabbedNote.quoted) {
+					let grabbedQuotedNote = await db
+						.getRepository('note')
+						.createQueryBuilder()
+						.where({ id: grabbedNote.quoted })
+						.getOne();
+
+					quotedNote = (await generateNote(grabbedQuotedNote)).note;
+				}
+
 				return {
 					status: 200,
 					note: new ApiNote(
@@ -97,7 +109,8 @@ export default async function generateNote(grabbedNote): Promise<{
 						grabbedEmojis,
 						grabbedReactions,
 						grabbedLikes,
-						grabbedRepeats
+						grabbedRepeats,
+						quotedNote
 					)
 				};
 			}

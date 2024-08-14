@@ -28,10 +28,8 @@
 						<p class="displayname">{data.author.displayname}</p>
 					{/if}
 					<p class="username">
-						@{data.author.username}
-						{#if !data.author.local}
-							@{data.author.host}
-						{/if}
+						@{data.author.username}{#if !data.author.local}@{data
+								.author.host}{/if}
 					</p>
 				</a>
 			</div>
