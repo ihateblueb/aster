@@ -51,6 +51,29 @@ export default async function deleteNote(apId) {
 				grabbedNote.ap_id
 		);
 
+		let grabbedNotificationsAbout = await db
+			.getRepository('user_notification')
+			.find({
+				where: {
+					object: grabbedNote.id
+				}
+			});
+
+		if (grabbedNotificationsAbout) {
+			await grabbedNotificationsAbout.forEach(async (e) => {
+				await db.getRepository('user_notification').delete(e.id);
+			});
+		}
+
+		logger(
+			'debug',
+			'util',
+			'deleting ' +
+				grabbedRepeats.length +
+				' notifications about note ' +
+				grabbedNote.ap_id
+		);
+
 		await db.getRepository('note').delete(grabbedNote.id);
 
 		logger('debug', 'util', 'deleted note ' + grabbedNote.ap_id);
