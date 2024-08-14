@@ -8,7 +8,7 @@ import sanitize from '../../../../utils/sanitize.js';
 const router = express.Router();
 
 router.patch(`/api/v2/user`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		let updatedUser = [];

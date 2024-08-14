@@ -11,12 +11,12 @@ import OCreate from '../../../../outgoing/create.js';
 const router = express.Router();
 
 router.post(`/api/v2/note`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		const noteId = uuidv4();
 
-		var noteToInsert = { author: {} };
+		let noteToInsert = { author: {} };
 
 		noteToInsert['id'] = noteId;
 		noteToInsert['ap_id'] = `${config.url}notes/${noteId}`;

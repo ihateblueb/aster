@@ -8,22 +8,22 @@ export default async function ILike(body) {
 	// TODO: add duplicate checking
 	if (body.object) {
 		if (new URL(body.object).pathname.startsWith('/notes')) {
-			var grabbedNote = await db.getRepository('note').findOne({
+			let grabbedNote = await db.getRepository('note').findOne({
 				where: {
 					id: new URL(body.object).pathname.replace('/notes/', '')
 				}
 			});
 			if (grabbedNote) {
-				var grabbedRemoteUser = await getRemoteActor(body.actor);
+				let grabbedRemoteUser = await getRemoteActor(body.actor);
 
 				if (body.content) {
 					// this is a reaction, not a like
 
 					if (body.tag) {
-						var reactionEmoji = body.tag.find(
+						let reactionEmoji = body.tag.find(
 							(e) => e.name === body.content
 						);
-						var grabbedEmoji = await getRemoteEmoji(
+						let grabbedEmoji = await getRemoteEmoji(
 							reactionEmoji ? reactionEmoji.id : body.content
 						);
 

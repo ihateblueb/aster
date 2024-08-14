@@ -6,11 +6,11 @@ import db from '../../../../../utils/database.js';
 const router = express.Router();
 
 router.get(`/api/v2/drive/file/:id`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (authRes.grabbedUserAuth.user) {
-			var grabbedUser = await db.getRepository('user').findOne({
+			let grabbedUser = await db.getRepository('user').findOne({
 				where: {
 					id: authRes.grabbedUserAuth.user
 				}
@@ -26,7 +26,7 @@ router.get(`/api/v2/drive/file/:id`, async (req, res) => {
 						message: 'Account deactivated'
 					});
 				} else {
-					var grabbedFile = await db
+					let grabbedFile = await db
 						.getRepository('drive_file')
 						.findOne({
 							where: {

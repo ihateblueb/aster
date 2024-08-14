@@ -1,7 +1,7 @@
 export default async function queueGet() {
 	let queueRes = {};
 
-	var queueReq = await fetch(`/admin/queue/dashboard/api/queues`, {
+	let queueReq = await fetch(`/admin/queue/dashboard/api/queues`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',

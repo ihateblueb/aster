@@ -15,7 +15,7 @@ router.get('/api/v2/instance/:host', async (req, res) => {
 			message: 'Host parameter required'
 		});
 	} else {
-		var grabbedInstance = await db
+		let grabbedInstance = await db
 			.getRepository('instance')
 			.createQueryBuilder()
 			.where({ host: req.params.host })
@@ -39,7 +39,7 @@ router.get('/api/v2/instance/:host', async (req, res) => {
 
 // report instance
 router.post(`/api/v2/intance/:host/report`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (req.params.host) {
 		if (authRes.status === 200) {

@@ -34,7 +34,7 @@ router.get('/.well-known/webfinger', async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (req.query.resource.startsWith('acct:')) {
-			var grabbedUser = await db
+			let grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
 				.where({

@@ -6,7 +6,7 @@ import Store from '$lib/utils/Store';
 export default async function searchGet(query: string) {
 	let searchRes = {};
 
-	var searchReq = await fetch(`/api/v2/search?q=${query}`, {
+	let searchReq = await fetch(`/api/v2/search?q=${query}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',

@@ -4,7 +4,7 @@ import getRemoteActor from './getRemoteActor.js';
 import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
 
-export default async function validateRequest(req, res) {
+export default async function validateRequest(req) {
 	if (!req.headers.host) {
 		return { status: 400, message: 'missing host' };
 	}
@@ -44,7 +44,7 @@ export default async function validateRequest(req, res) {
 		logger('debug', 'ap', 'signature header present');
 	}
 
-	var digestValid = validateDigest(
+	let digestValid = validateDigest(
 		req,
 		req.headers.digest.replace('SHA-256=', '')
 	);
@@ -56,7 +56,7 @@ export default async function validateRequest(req, res) {
 		logger('debug', 'ap', 'digest valid');
 	}
 
-	var grabbedActor = await getRemoteActor(JSON.parse(req.body).actor);
+	let grabbedActor = await getRemoteActor(JSON.parse(req.body).actor);
 
 	if (!grabbedActor) {
 		logger('error', 'ap', 'actor not properly grabbed');
@@ -71,7 +71,7 @@ export default async function validateRequest(req, res) {
 	} else if (grabbedActor.suspended) {
 		return { status: 200, message: 'actor suspended, ignoring' };
 	} else {
-		var parsedRequest = httpSignature.parseRequest(req, {
+		let parsedRequest = httpSignature.parseRequest(req, {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
 		httpSignature.verifySignature(parsedRequest, grabbedActor.public_key);

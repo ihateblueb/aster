@@ -1,5 +1,5 @@
 import config from './config.js';
-import logger, { TypeormLogger } from './logger.js';
+import { TypeormLogger } from './logger.js';
 import { DataSource } from 'typeorm';
 
 const db = new DataSource({

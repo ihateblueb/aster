@@ -18,7 +18,7 @@
 			default:
 				time = +new Date();
 		}
-		var time_formats = [
+		let time_formats = [
 			[60, 's', 1],
 			[120, '1m', '1m'],
 			[3600, 'm', 60],
@@ -29,12 +29,12 @@
 			[29030400, 'mo', 2419200],
 			[2903040000, 'y', 29030400]
 		];
-		var seconds = (+new Date() - time) / 1000,
+		let seconds = (+new Date() - time) / 1000,
 			list_choice = 1;
 		if (seconds === 0) {
 			return 'now';
 		}
-		var i = 0,
+		let i = 0,
 			format;
 		while ((format = time_formats[i++]))
 			if (seconds < format[0]) {

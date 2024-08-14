@@ -7,7 +7,7 @@ export default async function noteEdit(
 ) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v2/note/${noteId}`, {
+	let noteReq = await fetch(`/api/v2/note/${noteId}`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',

@@ -12,7 +12,7 @@ export default async function OLike(
 	note,
 	reaction?
 ) {
-	var grabbedUser = await db.getRepository('user').findOne({
+	let grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
 		}
@@ -20,7 +20,7 @@ export default async function OLike(
 
 	if (grabbedUser) {
 		if (grabbedUser.local) {
-			var likeJson = new ActLike(
+			let likeJson = new ActLike(
 				likeId,
 				grabbedUser,
 				author,

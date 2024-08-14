@@ -17,7 +17,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 	} else {
 		if (isValidUrl(req.query.q)) {
-			var grabbedUser = await db.getRepository('user').findOne({
+			let grabbedUser = await db.getRepository('user').findOne({
 				where: {
 					ap_id: req.query.q
 				}
@@ -30,7 +30,7 @@ router.get('/api/v2/search', async (req, res) => {
 					id: grabbedUser.id
 				});
 			} else {
-				var grabbedNote = await db.getRepository('note').findOne({
+				let grabbedNote = await db.getRepository('note').findOne({
 					where: {
 						ap_id: req.query.q
 					}
@@ -45,11 +45,11 @@ router.get('/api/v2/search', async (req, res) => {
 				} else {
 					// not a user or note already stored
 
-					var grabbedEntity = await getSigned(req.query.q);
+					let grabbedEntity = await getSigned(req.query.q);
 
 					if (grabbedEntity && !grabbedEntity.error) {
 						if (grabbedEntity.data.type === 'Person') {
-							var grabbedUserAgain = await db
+							let grabbedUserAgain = await db
 								.getRepository('note')
 								.findOne({
 									where: {
@@ -64,7 +64,7 @@ router.get('/api/v2/search', async (req, res) => {
 									id: grabbedUserAgain.id
 								});
 							} else {
-								var newUser = await processNewActor(
+								let newUser = await processNewActor(
 									grabbedEntity.data
 								);
 								return res.status(200).json({
@@ -74,7 +74,7 @@ router.get('/api/v2/search', async (req, res) => {
 								});
 							}
 						} else if (grabbedEntity.data.type === 'Note') {
-							var grabbedNoteAgain = await db
+							let grabbedNoteAgain = await db
 								.getRepository('note')
 								.findOne({
 									where: {
@@ -89,7 +89,7 @@ router.get('/api/v2/search', async (req, res) => {
 									id: grabbedNoteAgain.id
 								});
 							} else {
-								var newNote = await processNewNote(
+								let newNote = await processNewNote(
 									grabbedEntity.data
 								);
 								return res.status(200).json({

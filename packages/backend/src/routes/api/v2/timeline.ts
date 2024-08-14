@@ -8,7 +8,7 @@ import generateNote from '../../../generators/note.js';
 const router = express.Router();
 
 async function renderTimeline(grabbedNotes) {
-	var collectedNotes = [];
+	let collectedNotes = [];
 
 	for (const i of grabbedNotes.keys()) {
 		let generatedNote = await generateNote(grabbedNotes[i]);
@@ -46,7 +46,7 @@ async function renderTimeline(grabbedNotes) {
 router.get('/api/v2/timeline/public', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	var grabbedNotes = await db
+	let grabbedNotes = await db
 		.getRepository('note')
 		.createQueryBuilder()
 		.where({ visibility: 'public' })
@@ -58,7 +58,7 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 router.get('/api/v2/timeline/local', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	var grabbedNotes = await db
+	let grabbedNotes = await db
 		.getRepository('note')
 		.createQueryBuilder()
 		.where({ visibility: 'public', local: true })
@@ -70,7 +70,7 @@ router.get('/api/v2/timeline/local', async (req, res) => {
 router.get('/api/v2/timeline/tag/:tag', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	var grabbedNotes = await db
+	let grabbedNotes = await db
 		.getRepository('note')
 		.createQueryBuilder()
 		// uuuuughh this query is gonna be fucked

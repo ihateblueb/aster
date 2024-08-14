@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function driveFileGet(id: string) {
 	let driveFileRes = {};
 
-	var driveFileReq = await fetch(`/api/v2/drive/file/${id}`, {
+	let driveFileReq = await fetch(`/api/v2/drive/file/${id}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',

@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function driveFileEdit(id: string, body: object) {
 	let driveFileRes = {};
 
-	var driveFileReq = await fetch(`/api/v2/drive/file/${id}`, {
+	let driveFileReq = await fetch(`/api/v2/drive/file/${id}`, {
 		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',

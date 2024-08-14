@@ -10,7 +10,7 @@
 	let invite = '';
 
 	async function startLogin() {
-		var credentialsToSend = btoa(`${username}:${password}`);
+		let credentialsToSend = btoa(`${username}:${password}`);
 
 		await fetch(`/api/v2/register`, {
 			method: 'POST',

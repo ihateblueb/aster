@@ -1,6 +1,5 @@
 import db from '../database.js';
 import logger from '../logger.js';
-import { JSDOM } from 'jsdom';
 import sanitize from '../sanitize.js';
 
 export default async function updateRemoteInstance(host, body) {

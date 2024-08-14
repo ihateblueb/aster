@@ -10,10 +10,10 @@ const router = express.Router();
 
 router.get('/api/v2/followrequests', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
-		var grabbedFollowrequests = await db
+		let grabbedFollowrequests = await db
 			.getRepository('user_followrequest')
 			.find({
 				where: {
@@ -31,11 +31,11 @@ router.get('/api/v2/followrequests', async (req, res) => {
 
 router.post('/api/v2/followrequest/accept', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
-			var grabbedFollowrequest = await db
+			let grabbedFollowrequest = await db
 				.getRepository('user_followrequest')
 				.findOne({
 					where: {
@@ -44,13 +44,13 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 				});
 
 			if (grabbedFollowrequest) {
-				var grabbedToUser = await db.getRepository('user').findOne({
+				let grabbedToUser = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedFollowrequest.to
 					}
 				});
 
-				var grabbedFromUser = await db.getRepository('user').findOne({
+				let grabbedFromUser = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedFollowrequest.from
 					}
@@ -100,11 +100,11 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 
 router.post('/api/v2/followrequest/deny', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
-			var grabbedFollowrequest = await db
+			let grabbedFollowrequest = await db
 				.getRepository('user_followrequest')
 				.findOne({
 					where: {
@@ -112,13 +112,13 @@ router.post('/api/v2/followrequest/deny', async (req, res) => {
 					}
 				});
 
-			var grabbedToUser = await db.getRepository('user').findOne({
+			let grabbedToUser = await db.getRepository('user').findOne({
 				where: {
 					id: grabbedFollowrequest.to
 				}
 			});
 
-			var grabbedFromUser = await db.getRepository('user').findOne({
+			let grabbedFromUser = await db.getRepository('user').findOne({
 				where: {
 					id: grabbedFollowrequest.from
 				}

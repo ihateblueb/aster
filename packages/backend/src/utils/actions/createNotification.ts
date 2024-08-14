@@ -9,7 +9,7 @@ export default async function createNotification(
 	object?,
 	reaction?
 ) {
-	var notificationToInsert = {};
+	let notificationToInsert = {};
 
 	notificationToInsert['id'] = uuidv4();
 	notificationToInsert['to'] = to;

@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function noteDelete(noteId: string) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v2/note`, {
+	let noteReq = await fetch(`/api/v2/note`, {
 		method: 'DELETE',
 		headers: {
 			'Content-Type': 'application/json',

@@ -51,7 +51,7 @@ export default class ApiNote {
 		this.emojis =
 			grabbedEmojis && grabbedEmojis.length > 0 ? grabbedEmojis : null;
 
-		var sortedReactions = [];
+		let sortedReactions = [];
 
 		if (grabbedReactions) {
 			grabbedReactions.forEach(async (reaction) => {
@@ -81,7 +81,7 @@ export default class ApiNote {
 				? sortedReactions
 				: null;
 
-		var sortedLikes = {
+		let sortedLikes = {
 			count: 0,
 			from: []
 		};

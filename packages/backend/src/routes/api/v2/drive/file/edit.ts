@@ -9,11 +9,11 @@ const router = express.Router();
 
 router.patch(`/api/v2/drive/file/:id`, async (req, res) => {
 	if (req.params.id) {
-		var authRes = await verifyToken(req);
+		let authRes = await verifyToken(req);
 
 		if (authRes.status === 200) {
 			if (authRes.grabbedUserAuth.user) {
-				var grabbedUser = await db.getRepository('user').findOne({
+				let grabbedUser = await db.getRepository('user').findOne({
 					where: {
 						id: authRes.grabbedUserAuth.user
 					}

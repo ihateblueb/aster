@@ -12,14 +12,14 @@ router.get('/api/v2/ad/:adId', async (req, res) => {
 			message: 'Ad ID parameter required'
 		});
 	} else if (req.params.adId === 'random') {
-		var grabbedRandomAd = await db
+		let grabbedRandomAd = await db
 			.getRepository('ad')
 			.createQueryBuilder()
 			.orderBy('RANDOM()')
 			.getOne();
 		return res.status(200).json(grabbedRandomAd);
 	} else {
-		var grabbedAd = await db.getRepository('ads').findOne({
+		let grabbedAd = await db.getRepository('ads').findOne({
 			where: {
 				id: req.params.adId
 			}

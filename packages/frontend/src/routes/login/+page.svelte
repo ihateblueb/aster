@@ -15,9 +15,9 @@
 	let accountRes = {};
 
 	async function startLogin() {
-		var credentialsToSend = btoa(`${username}:${password}`);
+		let credentialsToSend = btoa(`${username}:${password}`);
 
-		var loginReq = await fetch(`/api/v2/login`, {
+		let loginReq = await fetch(`/api/v2/login`, {
 			method: 'POST',
 			body: credentialsToSend
 		});
@@ -29,7 +29,7 @@
 
 			document.cookie = 'a_token=' + loginRes.token;
 
-			var accountReq = await fetch(`/api/v2/user/${loginRes.id}`);
+			let accountReq = await fetch(`/api/v2/user/${loginRes.id}`);
 			accountRes = await accountReq.json();
 
 			if (accountReq.status === 200) {

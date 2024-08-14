@@ -11,7 +11,7 @@ router.get('/users/:userid', async (req, res, next) => {
 		return res.status(400).json({ message: 'User ID parameter required' });
 	} else {
 		if (!req.accepts('html')) {
-			var grabbedUser = await db
+			let grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
 				.where({ id: req.params.userid })
@@ -24,7 +24,7 @@ router.get('/users/:userid', async (req, res, next) => {
 				return res.status(404).json({ message: 'Not found' });
 			}
 		} else {
-			var grabbedUser = await db
+			let grabbedUser = await db
 				.getRepository('user')
 				.createQueryBuilder()
 				.where({ id: req.params.userid })

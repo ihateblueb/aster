@@ -28,7 +28,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 			splitUsername[1] = new URL(config.url).host;
 		}
 
-		var grabbedUser = await db.getRepository('user').findOne({
+		let grabbedUser = await db.getRepository('user').findOne({
 			where: {
 				username: splitUsername[0],
 				host: splitUsername[1]

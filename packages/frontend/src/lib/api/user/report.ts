@@ -6,7 +6,7 @@ export default async function userReport(
 ) {
 	let userRes = {};
 
-	var userReq = await fetch(`/api/v2/user/${userId}/report`, {
+	let userReq = await fetch(`/api/v2/user/${userId}/report`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

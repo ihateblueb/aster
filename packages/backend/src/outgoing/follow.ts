@@ -5,7 +5,7 @@ import deliverQueue from '../utils/deliverQueue.js';
 import logger from '../utils/logger.js';
 
 export default async function OFollow(localUserId, object) {
-	var grabbedUser = await db.getRepository('user').findOne({
+	let grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
 		}
@@ -13,13 +13,13 @@ export default async function OFollow(localUserId, object) {
 
 	if (grabbedUser.local) {
 		console.log(object);
-		var followJson = new ActFollow({
+		let followJson = new ActFollow({
 			id: uuidv4(),
 			actor: grabbedUser,
 			object: object
 		});
 
-		var grabbedFollowing = await db.getRepository('user').findOne({
+		let grabbedFollowing = await db.getRepository('user').findOne({
 			where: {
 				ap_id: object
 			}

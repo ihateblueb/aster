@@ -8,7 +8,7 @@ import generateNotification from '../../../generators/notification.js';
 const router = express.Router();
 
 async function renderTimeline(grabbedNotifications) {
-	var collectedNotification = [];
+	let collectedNotification = [];
 
 	for (const i of grabbedNotifications.keys()) {
 		let generatedNotification = await generateNotification(
@@ -50,10 +50,10 @@ async function renderTimeline(grabbedNotifications) {
 
 router.get('/api/v2/notifications', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
-		var grabbedNotifications = await db
+		let grabbedNotifications = await db
 			.getRepository('user_notification')
 			.find({
 				where: {

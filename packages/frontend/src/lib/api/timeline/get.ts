@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function timelineGet(timeline: string, tag?: string) {
 	let timelineRes = {};
 
-	var timelineReq = await fetch(
+	let timelineReq = await fetch(
 		`/api/v2/timeline/${timeline}${tag ? '/' + tag : ''}`,
 		{
 			method: 'GET',

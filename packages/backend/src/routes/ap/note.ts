@@ -12,7 +12,7 @@ router.get('/notes/:noteid', async (req, res, next) => {
 		return res.status(400).json({ message: 'Note ID parameter required' });
 	} else {
 		if (!req.accepts('html')) {
-			var grabbedNote = await db
+			let grabbedNote = await db
 				.getRepository('note')
 				.createQueryBuilder()
 				.where({ id: req.params.noteid })
@@ -21,7 +21,7 @@ router.get('/notes/:noteid', async (req, res, next) => {
 			console.log(grabbedNote);
 
 			if (grabbedNote && grabbedNote.local) {
-				var grabbedAuthor = await db
+				let grabbedAuthor = await db
 					.getRepository('user')
 					.createQueryBuilder()
 					.where({ id: grabbedNote.author })

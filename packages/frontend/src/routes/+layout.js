@@ -11,8 +11,8 @@ export async function load({ url }) {
 	const data = await response.json();
 
 	// locale stuff
-	var grabbedLocale = Store.get('locale');
-	var grabbedNewLocale = await getLocaleFile(Store.get('lang'));
+	let grabbedLocale = Store.get('locale');
+	let grabbedNewLocale = await getLocaleFile(Store.get('lang'));
 	if (grabbedLocale) {
 		if (
 			grabbedNewLocale.__version__ > JSON.parse(grabbedLocale).__version__
@@ -42,10 +42,10 @@ export async function load({ url }) {
 	document.body.classList.add('font-' + Store.get('font'));
 
 	// update account
-	var account = Store.get('account');
+	let account = Store.get('account');
 	if (account && JSON.parse(account).id) {
-		var accountReq = await fetch(`/api/v2/user/${JSON.parse(account).id}`);
-		var accountRes = await accountReq.json();
+		let accountReq = await fetch(`/api/v2/user/${JSON.parse(account).id}`);
+		let accountRes = await accountReq.json();
 
 		if (accountReq.status === 200) {
 			Store.set('account', JSON.stringify(accountRes));
@@ -54,7 +54,7 @@ export async function load({ url }) {
 
 	// websocket
 	/*
-	var socket = io('/');
+	let socket = io('/');
 
 	socket.send(
 		'hi. my name is ' +

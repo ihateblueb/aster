@@ -5,7 +5,7 @@ import deliverQueue from '../utils/deliverQueue.js';
 import logger from '../utils/logger.js';
 
 export default async function OCreate(localUserId, object) {
-	var grabbedUser = await db.getRepository('user').findOne({
+	let grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
 		}
@@ -13,7 +13,7 @@ export default async function OCreate(localUserId, object) {
 
 	if (grabbedUser.local) {
 		console.log(object);
-		var createJson = new ActCreate({
+		let createJson = new ActCreate({
 			id: uuidv4(),
 			actor: grabbedUser,
 			object: object

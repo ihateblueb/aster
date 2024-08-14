@@ -6,10 +6,10 @@ import db from '../utils/database.js';
 const router = express.Router();
 
 router.get('/mod*', async (req, res, next) => {
-	var authRes = await verifyToken(req, true);
+	let authRes = await verifyToken(req, true);
 
 	if (authRes.status === 200) {
-		var grabbedUser = await db.getRepository('user').findOne({
+		let grabbedUser = await db.getRepository('user').findOne({
 			where: {
 				id: authRes.grabbedUserAuth.user
 			}

@@ -12,7 +12,7 @@ router.get('/api/v2/note/:noteid', async (req, res) => {
 			message: 'Note ID parameter required'
 		});
 	} else {
-		var grabbedNote = await db
+		let grabbedNote = await db
 			.getRepository('note')
 			.createQueryBuilder()
 			.where({ id: req.params.noteid })

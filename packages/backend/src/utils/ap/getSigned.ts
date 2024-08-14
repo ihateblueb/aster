@@ -12,13 +12,13 @@ import isValidUrl from '../isValidUrl.js';
 export default async function getSigned(url, localUserId?) {
 	if (isValidUrl(url)) {
 		if (localUserId) {
-			var grabbedLocalUser = await db.getRepository('user').findOne({
+			let grabbedLocalUser = await db.getRepository('user').findOne({
 				where: {
 					id: localUserId
 				}
 			});
 
-			var grabbedLocalUserPriv = await db
+			let grabbedLocalUserPriv = await db
 				.getRepository('user_priv')
 				.findOne({
 					where: {
@@ -27,13 +27,13 @@ export default async function getSigned(url, localUserId?) {
 				});
 		} else {
 			// instance actor!! woooooooOOOOOOOOOOO! YEAH!!!!!!!
-			var grabbedLocalUser = await db.getRepository('user').findOne({
+			let grabbedLocalUser = await db.getRepository('user').findOne({
 				where: {
 					username: 'instanceactor'
 				}
 			});
 
-			var grabbedLocalUserPriv = await db
+			let grabbedLocalUserPriv = await db
 				.getRepository('user_priv')
 				.findOne({
 					where: {

@@ -3,7 +3,7 @@ import db from '../database.js';
 export default async function verifyToken(req, cookie?) {
 	if (cookie) {
 		if (req.cookies.a_token) {
-			var grabbedUserAuth = await db.getRepository('user_auth').findOne({
+			let grabbedUserAuth = await db.getRepository('user_auth').findOne({
 				where: {
 					token: req.cookies.a_token
 				}
@@ -39,7 +39,7 @@ export default async function verifyToken(req, cookie?) {
 			};
 		} else {
 			if (req.headers.authorization.startsWith('Bearer ')) {
-				var grabbedUserAuth = await db
+				let grabbedUserAuth = await db
 					.getRepository('user_auth')
 					.findOne({
 						where: {

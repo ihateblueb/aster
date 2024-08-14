@@ -8,7 +8,7 @@ import sanitize from '../../../../utils/sanitize.js';
 const router = express.Router();
 
 router.post(`/api/v2/user/:userid/bite`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (req.params.userid) {
 		if (authRes.status === 200) {

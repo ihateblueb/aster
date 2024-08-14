@@ -7,7 +7,7 @@ export default async function generateNote(grabbedNote): Promise<{
 	message?: string;
 }> {
 	if (grabbedNote) {
-		var grabbedAuthor = await db
+		let grabbedAuthor = await db
 			.getRepository('user')
 			.createQueryBuilder()
 			.where({ id: grabbedNote.author })
@@ -25,21 +25,21 @@ export default async function generateNote(grabbedNote): Promise<{
 					message: 'Note author deactivated'
 				};
 			} else {
-				var grabbedInstance = await db
+				let grabbedInstance = await db
 					.getRepository('instance')
 					.createQueryBuilder()
 					.where({ host: grabbedAuthor.host })
 					.getOne();
 
 				if (grabbedNote.replying_to) {
-					var grabbedReplyingNote = await db
+					let grabbedReplyingNote = await db
 						.getRepository('note')
 						.createQueryBuilder()
 						.where({ id: grabbedNote.replying_to })
 						.getOne();
 				}
 
-				var grabbedAttachments = await db
+				let grabbedAttachments = await db
 					.getRepository('drive_file')
 					.createQueryBuilder()
 					.where({
@@ -47,7 +47,7 @@ export default async function generateNote(grabbedNote): Promise<{
 					})
 					.getMany();
 
-				var grabbedEmojis = [];
+				let grabbedEmojis = [];
 
 				if (grabbedNote.emojis) {
 					grabbedNote.emojis.forEach(async (emoji) => {
@@ -63,7 +63,7 @@ export default async function generateNote(grabbedNote): Promise<{
 					});
 				}
 
-				var grabbedReactions = await db
+				let grabbedReactions = await db
 					.getRepository('note_react')
 					.createQueryBuilder('note_react')
 					.leftJoinAndSelect('note_react.emoji', 'emoji')
@@ -72,7 +72,7 @@ export default async function generateNote(grabbedNote): Promise<{
 					})
 					.getMany();
 
-				var grabbedLikes = await db.getRepository('note_like').find({
+				let grabbedLikes = await db.getRepository('note_like').find({
 					where: {
 						note: grabbedNote.id
 					}

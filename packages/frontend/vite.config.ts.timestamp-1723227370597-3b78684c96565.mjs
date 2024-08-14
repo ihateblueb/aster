@@ -4,7 +4,7 @@ import { sveltekit } from 'file:///home/blueb/Documents/aster/node_modules/.pnpm
 import { defineConfig } from 'file:///home/blueb/Documents/aster/node_modules/.pnpm/vite@5.2.11_@types+node@20.12.11_sass@1.77.1/node_modules/vite/dist/node/index.js';
 import dynamicImport from 'file:///home/blueb/Documents/aster/node_modules/.pnpm/vite-plugin-dynamic-import@1.5.0/node_modules/vite-plugin-dynamic-import/dist/index.mjs';
 import { autoImportStyle } from 'file:///home/blueb/Documents/aster/packages/vite-plugin-svelte-auto-import-style/index.js';
-var vite_config_default = defineConfig({
+let vite_config_default = defineConfig({
 	plugins: [
 		autoImportStyle(),
 		sveltekit(),

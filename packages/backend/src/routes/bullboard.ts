@@ -38,10 +38,10 @@ createBullBoard({
 });
 
 router.get('/admin/queue/dashboard*', async (req, res, next) => {
-	var authRes = await verifyToken(req, true);
+	let authRes = await verifyToken(req, true);
 
 	if (authRes.status === 200) {
-		var grabbedUser = await db.getRepository('user').findOne({
+		let grabbedUser = await db.getRepository('user').findOne({
 			where: {
 				id: authRes.grabbedUserAuth.user
 			}

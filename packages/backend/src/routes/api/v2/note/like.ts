@@ -11,13 +11,13 @@ import config from '../../../../utils/config.js';
 const router = express.Router();
 
 router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
-	var authRes = await verifyToken(req);
+	let authRes = await verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
 			logger('debug', 'note', 'note like requested');
 
-			var grabbedNote = await db.getRepository('note').findOne({
+			let grabbedNote = await db.getRepository('note').findOne({
 				where: {
 					id: req.params.noteid
 				}
@@ -34,7 +34,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 					user: authRes.grabbedUserAuth.user
 				});
 
-				var grabbedAuthor = await db.getRepository('user').findOne({
+				let grabbedAuthor = await db.getRepository('user').findOne({
 					where: {
 						id: grabbedNote.user
 					}

@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function followrequestGet() {
 	let followrequestsRes = {};
 
-	var followrequestsReq = await fetch(`/api/v2/followrequests`, {
+	let followrequestsReq = await fetch(`/api/v2/followrequests`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',

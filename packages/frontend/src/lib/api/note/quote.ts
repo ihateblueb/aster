@@ -7,7 +7,7 @@ export default async function noteQuote(
 ) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v2/note/${noteId}/quote`, {
+	let noteReq = await fetch(`/api/v2/note/${noteId}/quote`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

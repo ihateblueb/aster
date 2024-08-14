@@ -9,7 +9,7 @@ export default async function getRemoteActor(apId) {
 
 	logger('debug', 'ap', 'getting remote actor with id ' + apId);
 
-	var grabbedRemoteActor = await db.getRepository('user').findOne({
+	let grabbedRemoteActor = await db.getRepository('user').findOne({
 		where: {
 			ap_id: apId
 		}

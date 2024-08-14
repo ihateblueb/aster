@@ -4,7 +4,7 @@ import getSigned from './getSigned.js';
 import processNewEmoji from './processNewEmoji.js';
 
 export default async function getRemoteEmoji(apId, localUserId?) {
-	var grabbedRemoteEmoji = await db.getRepository('emoji').findOne({
+	let grabbedRemoteEmoji = await db.getRepository('emoji').findOne({
 		where: {
 			ap_id: apId
 		}
@@ -18,7 +18,7 @@ export default async function getRemoteEmoji(apId, localUserId?) {
 
 		let response;
 
-		var grabbedEmoji = await getSigned(apId, localUserId);
+		let grabbedEmoji = await getSigned(apId, localUserId);
 
 		if (grabbedEmoji.status === 401) {
 			response = 'gone';

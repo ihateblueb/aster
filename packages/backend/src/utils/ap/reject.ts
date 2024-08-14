@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 export default async function signAndReject(userId, remoteInbox, body) {
 	const activityId = uuidv4();
 
-	var rejectMessage = {
+	let rejectMessage = {
 		'@context': 'https://www.w3.org/ns/activitystreams',
 		id: `${config.url}reject/${activityId}`,
 		type: 'Reject',

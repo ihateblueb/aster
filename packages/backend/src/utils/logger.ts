@@ -4,7 +4,7 @@ import chalk from 'chalk';
 import config from './config.js';
 import { Logger, QueryRunner } from 'typeorm';
 
-export default function logger(level: String, section: String, message?: any) {
+export default function logger(level: string, section: string, message?: any) {
 	let processId = cluster.isPrimary
 		? '00'
 		: cluster.worker.id.toLocaleString('en-US', {

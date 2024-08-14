@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function notePin(noteId: string) {
 	let noteRes = {};
 
-	var noteReq = await fetch(`/api/v2/note/${noteId}/pin`, {
+	let noteReq = await fetch(`/api/v2/note/${noteId}/pin`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

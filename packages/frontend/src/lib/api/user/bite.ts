@@ -3,7 +3,7 @@ import Store from '$lib/utils/Store';
 export default async function userBite(userId: string) {
 	let userRes = {};
 
-	var userReq = await fetch(`/api/v2/user/${userId}/bite`, {
+	let userReq = await fetch(`/api/v2/user/${userId}/bite`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json',

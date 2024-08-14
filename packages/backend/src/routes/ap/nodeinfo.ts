@@ -8,13 +8,13 @@ const router = express.Router();
 router.get('/nodeinfo/2.0', async (req, res) => {
 	res.setHeader('Content-Type', 'application/activity+json');
 
-	var userCount = await db.getRepository('user').count({
+	let userCount = await db.getRepository('user').count({
 		where: {
 			local: true
 		}
 	});
 
-	var noteCount = await db.getRepository('note').count({
+	let noteCount = await db.getRepository('note').count({
 		where: {
 			local: true
 		}
@@ -23,7 +23,7 @@ router.get('/nodeinfo/2.0', async (req, res) => {
 	const metaDb = await db.getRepository('meta').find();
 	const meta = metaDb[0];
 
-	var nodeinfoJson = {
+	let nodeinfoJson = {
 		version: '2.0',
 		software: {
 			name: `${pkg.name}`,

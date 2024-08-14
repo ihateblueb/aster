@@ -36,7 +36,7 @@ router.post('/api/v2/login', async (req, res) => {
 				message: 'Password required'
 			});
 		} else {
-			var grabbedUser = await db.getRepository('user').findOne({
+			let grabbedUser = await db.getRepository('user').findOne({
 				where: {
 					username: user,
 					local: true
@@ -54,7 +54,7 @@ router.post('/api/v2/login', async (req, res) => {
 							message: 'Account deactivated'
 						});
 					} else {
-						var grabbedUserPriv = await db
+						let grabbedUserPriv = await db
 							.getRepository('user_priv')
 							.findOne({
 								where: {

@@ -8,7 +8,7 @@ import updateRemoteInstance from './updateRemoteInstance.js';
 
 export default async function getRemoteInstance(host) {
 	if (host !== new URL(config.url).host) {
-		var grabbedRemoteInstance = await db.getRepository('instance').findOne({
+		let grabbedRemoteInstance = await db.getRepository('instance').findOne({
 			where: {
 				host: host
 			}
@@ -23,10 +23,10 @@ export default async function getRemoteInstance(host) {
 
 			let response;
 
-			var grabbedNodeinfoUrl = await getNodeinfo(host);
+			let grabbedNodeinfoUrl = await getNodeinfo(host);
 
 			if (grabbedNodeinfoUrl) {
-				var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
+				let grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
 
 				if (grabbedNodeinfo.error) {
 					return false;
@@ -48,10 +48,10 @@ export default async function getRemoteInstance(host) {
 
 			let response;
 
-			var grabbedNodeinfoUrl = await getNodeinfo(host);
+			let grabbedNodeinfoUrl = await getNodeinfo(host);
 
 			if (grabbedNodeinfoUrl) {
-				var grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
+				let grabbedNodeinfo = await getSigned(grabbedNodeinfoUrl);
 
 				if (grabbedNodeinfo.error) {
 					return false;
