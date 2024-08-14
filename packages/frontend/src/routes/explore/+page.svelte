@@ -62,7 +62,12 @@
 						{#if note.type === 'note'}
 							<Note data={note.object} inTimeline />
 						{:else if note.type === 'repeat'}
-							<Note data={note.object} repeat inTimeline />
+							<Note
+								data={note.object.note}
+								repeat
+								repeatData={note.object}
+								inTimeline
+							/>
 						{/if}
 					{/each}
 				{/key}

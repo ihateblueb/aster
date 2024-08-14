@@ -26,11 +26,11 @@ export default async function generateRepeat(grabbedRepeat): Promise<{
 					message: 'Repeat author deactivated'
 				};
 			} else {
-				let grabbedNote = await db.getRepository('note').find({
-					where: {
-						id: grabbedRepeat.note
-					}
-				});
+				let grabbedNote = await db
+					.getRepository('note')
+					.createQueryBuilder()
+					.where({ id: grabbedRepeat.note })
+					.getOne();
 
 				let generatedNote = await generateNote(grabbedNote);
 

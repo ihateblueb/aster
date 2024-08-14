@@ -23,15 +23,9 @@
 	export let data;
 	export let pinned: boolean = false;
 	export let repeat: boolean = false;
+	export let repeatData: object = {};
 	export let detailed: boolean = false;
 	export let inTimeline: boolean = false;
-
-	let repeatData;
-
-	if (repeat) {
-		repeatData = data;
-		data = data.note;
-	}
 
 	let cwOpen = false;
 
@@ -74,7 +68,12 @@
 					color="var(--txt-tertiary)"
 					margin="0px 5px 0px 0px"
 				/>
-				<span> {repeatData.author.id} {locale('repeated')} </span>
+				<span>
+					{repeatData.author.displayname
+						? repeatData.author.displayname
+						: repeatData.author.username}
+					{locale('repeated')}
+				</span>
 			</div>
 		{/if}
 		<div class="noteHeader">
