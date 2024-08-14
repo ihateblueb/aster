@@ -1197,3 +1197,94 @@ undo
 	]
 }
 ```
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"aster": "https://blueb.me/ns#",
+			"visibility": "aster:visibility",
+			"hasCorrectAnswer": "aster:hasCorrectAnswer",
+			"correct": "aster:correct"
+		}
+	],
+	"type": "Delete",
+	"actor": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+	"object": {
+		"id": "https://eepy.zone/notes/9wwr6ccv0pvb03dr",
+		"type": "Tombstone"
+	},
+	"published": "2024-08-14T01:45:53.340Z",
+	"id": "https://eepy.zone/29022189-4198-4a80-aba7-1935bdbdd588"
+}
+```
+
+```json
+{
+	"@context": "https://www.w3.org/ns/activitystreams",
+	"id": "https://mastodon.social/users/duckhoi#delete",
+	"type": "Delete",
+	"actor": "https://mastodon.social/users/duckhoi",
+	"to": ["https://www.w3.org/ns/activitystreams#Public"],
+	"object": "https://mastodon.social/users/duckhoi",
+	"signature": {
+		"type": "RsaSignature2017",
+		"creator": "https://mastodon.social/users/duckhoi#main-key",
+		"created": "2024-08-14T01:46:42Z",
+		"signatureValue": "murPnkuAS2LYivxBRbMZf9rQsDggCE+wMQ+a1qNh/kLIabDWg+Jbhsqb8OUDrE15osLc2Z7xapTHEZ94fqHsJInEa26meUpjtf3DfmQ87FVv8CVn5COkiaTZCgDDfDz0U3E/Aam0LpYY2NqPbpdmp9l4qXYQAtaNq1i9/9WU4VrilkF5eGzAYNFVO4y30lYspUBwC+r0vPGEHWqdzb1UBmHqLT87TZcnlBVXrNa2biP9Zr5MoQ4f30/oRE+LL+CCXJpq0kPK5w8agggk7BX0L3+gmrLkXLz0U+yVwCbkwDefYfEWBALu12AxJErUEEr1EWkZUPclBvIniaxoDqVlfg=="
+	}
+}
+```
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		{ "ostatus": "http://ostatus.org#", "atomUri": "ostatus:atomUri" }
+	],
+	"id": "https://mastodon.social/users/ihateblueb/statuses/112957916271489657#delete",
+	"type": "Delete",
+	"actor": "https://mastodon.social/users/ihateblueb",
+	"to": ["https://www.w3.org/ns/activitystreams#Public"],
+	"object": {
+		"id": "https://mastodon.social/users/ihateblueb/statuses/112957916271489657",
+		"type": "Tombstone",
+		"atomUri": "https://mastodon.social/users/ihateblueb/statuses/112957916271489657"
+	},
+	"signature": {
+		"type": "RsaSignature2017",
+		"creator": "https://mastodon.social/users/ihateblueb#main-key",
+		"created": "2024-08-14T02:04:04Z",
+		"signatureValue": "XK5OGwXOBadVaLF0E5GgGR44l0Zw6O+I1vwd0bomOVcWf4VMLoqBAQ57qwKyDoELluRdVbgRKzekYKSbFuoXMANpVsO0DR073FsWtr2NEATEva6oHLVun9qDaG/Sjv7h6JcOtbLIFEwVy/D+3C5AI2YobC2rSk6Ss5DUgxoEiffSISTrXko/GkqCBFLGXcoZ+tU55GxBmSfesZ/o7kr8isnhoclGEahQs9buSkxdjuNv0kJLbKW8Zzn0mVbEj99C8uYGQzBWIiY/M/r1eJAD7PqzwW2qgGX+1bGj2VfcJxzNBGF/i4ZC0cHoT/abViEdH2BxGr/nQSSGr98KKrP6VA=="
+	}
+}
+```

@@ -14,6 +14,7 @@ import { createServer } from 'node:http';
 
 import config from './utils/config.js';
 import logger from './utils/logger.js';
+import db from './utils/database.js';
 import requestLogger from './utils/requestLogger.js';
 import { deliverWorker, inboxWorker } from './utils/workers.js';
 
@@ -23,6 +24,10 @@ import router from './routes/router.js';
 	it may not exist yet, but upon build it will.
 */
 import { handler } from 'frontend/build/handler.js';
+
+await db.initialize().catch((e) => {
+	logger('fatal', 'db', e);
+});
 
 const app = express();
 

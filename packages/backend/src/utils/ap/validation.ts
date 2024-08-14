@@ -6,46 +6,40 @@ import crypto from 'crypto';
 
 export default async function validateRequest(req, res) {
 	if (!req.headers.host) {
-		return res.status(400).json({ message: 'Missing host' });
+		return { status: 400, message: 'missing host' };
 	}
 
 	if (req.headers.host !== new URL(config.url).host) {
 		logger('error', 'ap', 'host header did not match configuration');
-		return res
-			.status(400)
-			.json({ message: 'Host doesnt match instance config' });
+		return { status: 400, message: 'host doesnt match instance config' };
 	} else {
 		logger('debug', 'ap', 'host header matches configuration');
 	}
 
 	if (!req.body) {
 		logger('error', 'ap', 'body not present');
-		return res.status(400).json({ message: 'Body not present' });
+		return { status: 400, message: 'body not present' };
 	} else {
 		logger('debug', 'ap', 'body present');
 	}
 
 	if (!req.headers.digest) {
 		logger('error', 'ap', 'digest not present');
-		return res.status(400).json({ message: 'Digest not present' });
+		return { status: 400, message: 'digest not present' };
 	} else {
 		logger('debug', 'ap', 'digest present');
 	}
 
 	if (!req.headers.digest.startsWith('SHA-256=')) {
 		logger('error', 'ap', 'digest did not start with SHA-256=');
-		return res
-			.status(400)
-			.json({ message: 'Digest did not start with SHA-256=' });
+		return { status: 400, message: 'digest did not start with SHA-256=' };
 	} else {
 		logger('debug', 'ap', 'digest started with SHA-256=');
 	}
 
 	if (!req.headers.signature) {
 		logger('error', 'ap', 'signature header not present');
-		return res
-			.status(400)
-			.json({ message: 'Signature header not present' });
+		return { status: 400, message: 'signature header not present' };
 	} else {
 		logger('debug', 'ap', 'signature header present');
 	}
@@ -57,7 +51,7 @@ export default async function validateRequest(req, res) {
 
 	if (!digestValid) {
 		logger('error', 'ap', 'digest invalid');
-		return res.status(400).json({ message: 'Digest invalid' });
+		return { status: 400, message: 'digest invalid' };
 	} else {
 		logger('debug', 'ap', 'digest valid');
 	}
@@ -66,17 +60,22 @@ export default async function validateRequest(req, res) {
 
 	if (!grabbedActor) {
 		logger('error', 'ap', 'actor not properly grabbed');
-		return res.status(500).send();
+
+		return { status: 500, message: 'actor not properly grabbed' };
 	} else if (grabbedActor === 'gone') {
 		// they aren't in the database and cannot be fetched, accept activity and just pretend something happened
-		return res.status(200).send();
+		return {
+			status: 200,
+			message: 'actor gone, pretending i did something'
+		};
 	} else if (grabbedActor.suspended) {
-		return res.status(200).send();
+		return { status: 200, message: 'actor suspended, ignoring' };
 	} else {
 		var parsedRequest = httpSignature.parseRequest(req, {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
 		httpSignature.verifySignature(parsedRequest, grabbedActor.public_key);
+		return { status: 202, message: 'all good' };
 	}
 }
 

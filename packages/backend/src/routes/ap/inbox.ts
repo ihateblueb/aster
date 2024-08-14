@@ -15,13 +15,19 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 	logger('debug', 'inbox', JSON.stringify(JSON.parse(req.body)));
 
 	// this will return before the following can run if it's invalid
-	await validateRequest(req, res);
+	let validation = await validateRequest(req, res);
 
-	await inboxQueue.add('inbox', {
-		body: JSON.parse(req.body)
-	});
+	if (validation.status === 200 || validation.status === 202) {
+		if (validation.status === 202) {
+			await inboxQueue.add('inbox', {
+				body: JSON.parse(req.body)
+			});
+		}
 
-	res.status(200).send();
+		res.status(200).send();
+	} else {
+		res.status(validation.status).send();
+	}
 });
 
 export default router;

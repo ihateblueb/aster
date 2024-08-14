@@ -2,7 +2,7 @@ import config from './config.js';
 import logger, { TypeormLogger } from './logger.js';
 import { DataSource } from 'typeorm';
 
-const AppDataSource = new DataSource({
+const db = new DataSource({
 	type: 'postgres',
 	host: config.database.host,
 	port: config.database.port,
@@ -14,8 +14,4 @@ const AppDataSource = new DataSource({
 	logger: new TypeormLogger()
 });
 
-AppDataSource.initialize().catch((e) => {
-	logger('fatal', 'db', e);
-});
-
-export default AppDataSource;
+export default db;
