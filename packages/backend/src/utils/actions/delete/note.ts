@@ -24,7 +24,10 @@ export default async function deleteNote(apId) {
 		logger(
 			'debug',
 			'util',
-			'deleting all replies to note ' + grabbedNote.ap_id
+			'deleting ' +
+				grabbedReplies.length +
+				' replies to note ' +
+				grabbedNote.ap_id
 		);
 
 		let grabbedRepeats = await db.getRepository('repeat').find({
@@ -42,7 +45,10 @@ export default async function deleteNote(apId) {
 		logger(
 			'debug',
 			'util',
-			'deleting all repeats of note ' + grabbedNote.ap_id
+			'deleting ' +
+				grabbedRepeats.length +
+				' repeats of note ' +
+				grabbedNote.ap_id
 		);
 
 		await db.getRepository('note').delete(grabbedNote.id);
