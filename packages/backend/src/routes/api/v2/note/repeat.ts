@@ -5,6 +5,7 @@ import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
 import config from '../../../../utils/config.js';
+import OAnnounce from '../../../../outgoing/announce.js';
 
 const router = express.Router();
 
@@ -31,8 +32,10 @@ router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
 
 			await db.getRepository('repeat').insert(repeatToInsert);
 
-			return res.status(501).json({
-				message: 'Not implemented'
+			OAnnounce(authRes.grabbedUserAuth.user, repeatToInsert);
+
+			return res.status(200).json({
+				message: 'Repeated note'
 			});
 		} else {
 			return res.status(authRes.status).json({

@@ -2,6 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
+import deleteNote from '../../../../utils/actions/delete/note.js';
 
 const router = express.Router();
 
@@ -10,15 +11,16 @@ router.delete(`/api/v2/note`, async (req, res) => {
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
-			let noteFromDb = await db.getRepository('note').findOne({
+			let grabbedNote = await db.getRepository('note').findOne({
 				where: {
 					id: JSON.parse(req.body).id
 				}
 			});
 
-			if (noteFromDb) {
-				if (noteFromDb.author === authRes.grabbedUserAuth.user) {
-					await db.getRepository('note').delete(noteFromDb.id);
+			if (grabbedNote) {
+				if (grabbedNote.author === authRes.grabbedUserAuth.user) {
+					await deleteNote(grabbedNote.ap_id);
+
 					return res.status(200).json({
 						message: 'Note deleted.'
 					});

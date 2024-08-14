@@ -1,7 +1,7 @@
 import db from '../../database.js';
 import logger from '../../logger.js';
 
-export default async function deleteNote(apId, actorApId) {
+export default async function deleteNote(apId) {
 	let grabbedNote = await db.getRepository('note').findOne({
 		where: {
 			ap_id: apId
@@ -9,54 +9,44 @@ export default async function deleteNote(apId, actorApId) {
 	});
 
 	if (grabbedNote) {
-		let grabbedAuthor = await db.getRepository('user').findOne({
+		let grabbedReplies = await db.getRepository('note').find({
 			where: {
-				id: grabbedNote.author
+				replying_to: grabbedNote.id
 			}
 		});
 
-		if (grabbedAuthor) {
-			if (grabbedAuthor.ap_id === actorApId) {
-				let grabbedReplies = await db.getRepository('note').find({
-					where: {
-						replying_to: grabbedNote.id
-					}
-				});
-
-				if (grabbedReplies) {
-					await grabbedReplies.forEach(async (e) => {
-						await db.getRepository('note').delete(e.id);
-					});
-				}
-
-				logger(
-					'debug',
-					'ap',
-					'deleting all replies to note ' + grabbedNote.ap_id
-				);
-
-				await db.getRepository('note').delete(grabbedNote.id);
-
-				logger('debug', 'ap', 'deleted note ' + grabbedNote.ap_id);
-			} else {
-				logger(
-					'debug',
-					'ap',
-					'ignoring actor trying to delete a note not written by them'
-				);
-			}
-		} else {
-			logger(
-				'debug',
-				'ap',
-				'failed to fetch author of note being deleted, ignoring activity'
-			);
+		if (grabbedReplies) {
+			await grabbedReplies.forEach(async (e) => {
+				await db.getRepository('note').delete(e.id);
+			});
 		}
-	} else {
+
 		logger(
 			'debug',
-			'ap',
-			'failed to fetch note being deleted, ignoring activity'
+			'util',
+			'deleting all replies to note ' + grabbedNote.ap_id
 		);
+
+		let grabbedRepeats = await db.getRepository('repeat').find({
+			where: {
+				note: grabbedNote.id
+			}
+		});
+
+		if (grabbedRepeats) {
+			await grabbedRepeats.forEach(async (e) => {
+				await db.getRepository('repeat').delete(e.id);
+			});
+		}
+
+		logger(
+			'debug',
+			'util',
+			'deleting all repeats of note ' + grabbedNote.ap_id
+		);
+
+		await db.getRepository('note').delete(grabbedNote.id);
+
+		logger('debug', 'util', 'deleted note ' + grabbedNote.ap_id);
 	}
 }

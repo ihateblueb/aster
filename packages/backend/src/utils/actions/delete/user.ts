@@ -31,7 +31,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' + grabbedLikes.length + ' likes by ' + apId
 		);
 	}
@@ -48,7 +48,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' + grabbedReactions.length + ' reactions by ' + apId
 		);
 	}
@@ -65,7 +65,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' + grabbedDriveFiles.length + ' drive files by ' + apId
 		);
 	}
@@ -84,7 +84,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' +
 				grabbedNotificationsFrom.length +
 				' notifications from ' +
@@ -106,7 +106,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'ap',
+			'util',
 			'deleted ' +
 				grabbedFollowrequestFrom.length +
 				' follow requests from ' +
@@ -114,7 +114,24 @@ export default async function deleteUser(id, apId) {
 		);
 	}
 
+	let grabbedRepeats = await db.getRepository('repeat').find({
+		where: {
+			author: id
+		}
+	});
+
+	if (grabbedRepeats) {
+		grabbedRepeats.forEach(async (e) => {
+			await db.getRepository('repeat').delete(e.id);
+		});
+		logger(
+			'info',
+			'util',
+			'deleted ' + grabbedRepeats.length + ' repeats from ' + apId
+		);
+	}
+
 	await db.getRepository('user').delete(id);
 
-	logger('info', 'ap', 'deleted actor ' + apId);
+	logger('info', 'util', 'deleted actor ' + apId);
 }

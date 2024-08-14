@@ -255,7 +255,7 @@
 							<Icon
 								name="repeat"
 								size="18px"
-								color="var(--success)"
+								color="var(--repeat)"
 							/>
 							<span class="counter">{data.repeats.count}</span>
 						{:else}

@@ -5,7 +5,43 @@ import logger from '../utils/logger.js';
 
 export default async function IDelete(body) {
 	if (body.object.id) {
-		await deleteNote(body.object.id, body.actor);
+		let grabbedNote = await db.getRepository('note').findOne({
+			where: {
+				ap_id: body.object.id
+			}
+		});
+
+		if (grabbedNote) {
+			let grabbedAuthor = await db.getRepository('user').findOne({
+				where: {
+					id: grabbedNote.author
+				}
+			});
+
+			if (grabbedAuthor) {
+				if (grabbedAuthor.ap_id === body.actor) {
+					await deleteNote(body.object.id, body.actor);
+				} else {
+					logger(
+						'debug',
+						'ap',
+						'ignoring actor trying to delete a note not written by them'
+					);
+				}
+			} else {
+				logger(
+					'debug',
+					'ap',
+					'failed to fetch author of note being deleted, ignoring activity'
+				);
+			}
+		} else {
+			logger(
+				'debug',
+				'ap',
+				'failed to fetch note being deleted, ignoring activity'
+			);
+		}
 	}
 
 	if (body.actor === body.object) {
