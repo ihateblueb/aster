@@ -15,62 +15,83 @@ async function renderTimeline(collectedObjects) {
 	let collectedNotes = [];
 
 	for (const i of collectedObjects.keys()) {
-		if (collectedObjects[i].type === 'note') {
-			let generatedNote = await generateNote(collectedObjects[i].object);
+		if (collectedObjects[i]) {
+			if (collectedObjects[i].type === 'note') {
+				let generatedNote = await generateNote(
+					collectedObjects[i].object
+				);
 
-			if (generatedNote && generatedNote.status === 200) {
-				collectedNotes.push({
-					type: 'note',
-					object: generatedNote.note
-				});
-				logger(
-					'debug',
-					'timeline',
-					'rendered note ' + (i + 1) + '/' + collectedObjects.length
+				if (generatedNote && generatedNote.status === 200) {
+					collectedNotes.push({
+						type: 'note',
+						object: generatedNote.note
+					});
+					logger(
+						'debug',
+						'timeline',
+						'rendered note ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length
+					);
+				} else {
+					logger(
+						'debug',
+						'timeline',
+						'failed to render note ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length +
+							' error: ' +
+							generatedNote.status +
+							' ' +
+							generatedNote.message
+					);
+				}
+			} else if (collectedObjects[i].type === 'repeat') {
+				let generatedRepeat = await generateRepeat(
+					collectedObjects[i].object
 				);
-			} else {
-				logger(
-					'debug',
-					'timeline',
-					'failed to render note ' +
-						(i + 1) +
-						'/' +
-						collectedObjects.length +
-						' error: ' +
-						generatedNote.status +
-						' ' +
-						generatedNote.message
-				);
+
+				if (generatedRepeat && generatedRepeat.status === 200) {
+					collectedNotes.push({
+						type: 'repeat',
+						object: generatedRepeat.repeat
+					});
+					logger(
+						'debug',
+						'timeline',
+						'rendered repeat ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length
+					);
+				} else {
+					logger(
+						'debug',
+						'timeline',
+						'failed to render repeat ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length +
+							' error: ' +
+							generatedRepeat.status +
+							' ' +
+							generatedRepeat.message
+					);
+				}
 			}
-		} else if (collectedObjects[i].type === 'repeat') {
-			let generatedRepeat = await generateRepeat(
-				collectedObjects[i].object
+		} else {
+			console.log(collectedObjects[i]);
+			logger(
+				'debug',
+				'timeline',
+				'failed to render object ' +
+					(i + 1) +
+					'/' +
+					collectedObjects.length +
+					' error: empty!'
 			);
-
-			if (generatedRepeat && generatedRepeat.status === 200) {
-				collectedNotes.push({
-					type: 'repeat',
-					object: generatedRepeat.repeat
-				});
-				logger(
-					'debug',
-					'timeline',
-					'rendered repeat ' + (i + 1) + '/' + collectedObjects.length
-				);
-			} else {
-				logger(
-					'debug',
-					'timeline',
-					'failed to render repeat ' +
-						(i + 1) +
-						'/' +
-						collectedObjects.length +
-						' error: ' +
-						generatedRepeat.status +
-						' ' +
-						generatedRepeat.message
-				);
-			}
 		}
 	}
 
@@ -96,7 +117,10 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 		.getRepository('note')
 		.createQueryBuilder()
 		.where({
-			visibility: 'public'
+			visibility: 'public',
+			created_at: LessThan(
+				req.query.since ? req.query.since : new Date(Date.now())
+			)
 		})
 		.orderBy('created_at', 'DESC')
 		.take(take)
@@ -115,7 +139,10 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 		.getRepository('repeat')
 		.createQueryBuilder()
 		.where({
-			visibility: 'public'
+			visibility: 'public',
+			created_at: LessThan(
+				req.query.since ? req.query.since : new Date(Date.now())
+			)
 		})
 		.orderBy('created_at', 'DESC')
 		.take(take)
@@ -135,7 +162,9 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 			+new Date(y.object.created_at) - +new Date(x.object.created_at)
 	);
 
-	collectedObjects.length = take;
+	if (collectedObjects.length > take) {
+		collectedObjects.length = take;
+	}
 
 	res.status(200).json(await renderTimeline(collectedObjects));
 });

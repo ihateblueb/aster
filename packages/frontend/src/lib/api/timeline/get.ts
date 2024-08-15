@@ -1,10 +1,10 @@
 import Store from '$lib/utils/Store';
 
-export default async function timelineGet(timeline: string, tag?: string) {
+export default async function timelineGet(timeline: string, since?: string) {
 	let timelineRes = {};
 
 	let timelineReq = await fetch(
-		`/api/v2/timeline/${timeline}${tag ? '/' + tag : ''}`,
+		`/api/v2/timeline/${timeline}${since ? '/?since=' + since : ''}`,
 		{
 			method: 'GET',
 			headers: {

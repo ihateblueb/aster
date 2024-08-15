@@ -32,6 +32,22 @@
 		notes = await timelineGet(timeline);
 	}
 
+	async function fetchMore() {
+		console.log(timeline);
+		console.log(notes.at(-1).object.created_at);
+		console.log(notes);
+
+		let newNotes = await timelineGet(
+			timeline,
+			notes.at(-1).object.created_at
+		);
+		newNotes.forEach((e) => {
+			notes = [...notes, e];
+		});
+
+		console.log(notes);
+	}
+
 	export let data;
 </script>
 
@@ -111,6 +127,7 @@
 							{/if}
 						{/each}
 					{/key}
+					<Button on:click={() => fetchMore()}>Load more</Button>
 				</div>
 			{:else}
 				<div class="paddedPage">
