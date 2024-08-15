@@ -63,15 +63,6 @@
 		{/if}
 		{#if repeat}
 			<div class="notePreheader">
-				<div class="repeatAvatar">
-					<Avatar
-						src={repeatData.author.avatar}
-						alt={repeatData.author.avatar_alt}
-						isCat={repeatData.author.is_cat}
-						size="20px"
-						small
-					/>
-				</div>
 				<Icon
 					name="repeat"
 					size="16px"
