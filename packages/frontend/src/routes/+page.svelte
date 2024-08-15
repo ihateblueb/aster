@@ -22,11 +22,6 @@
 	let timeline = Store.get('home_timeline');
 	let notes;
 
-	onMount(async () => {
-		notes = undefined;
-		notes = await timelineGet(timeline);
-	});
-
 	async function refresh() {
 		notes = undefined;
 		notes = await timelineGet(timeline);
@@ -47,6 +42,10 @@
 
 		console.log(notes);
 	}
+
+	onMount(async () => {
+		refresh();
+	});
 
 	export let data;
 </script>
