@@ -27,7 +27,7 @@ export default async function getRemoteActor(apId) {
 
 		if (res.status === 401) {
 			response = 'gone';
-		} else if (res.status === '410') {
+		} else if (res.status === 410) {
 			response = 'gone';
 		} else if (!res.status) {
 			// idk? just trying things
