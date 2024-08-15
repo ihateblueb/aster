@@ -21,6 +21,7 @@
 
 	let timeline = Store.get('home_timeline');
 	let notes;
+	let loadingMore = false;
 
 	async function refresh() {
 		notes = undefined;
@@ -46,6 +47,18 @@
 	onMount(async () => {
 		refresh();
 	});
+
+	function actionWhenInViewport(e) {
+		const observer = new IntersectionObserver(async (entries) => {
+			if (entries[0].isIntersecting) {
+				loadingMore = true;
+				await fetchMore();
+				loadingMore = false;
+			}
+		});
+
+		observer.observe(e);
+	}
 
 	export let data;
 </script>
@@ -126,7 +139,12 @@
 							{/if}
 						{/each}
 					{/key}
-					<Button on:click={() => fetchMore()}>Load more</Button>
+					<div use:actionWhenInViewport />
+					{#if loadingMore}
+						<div class="loading">
+							<Loading />
+						</div>
+					{/if}
 				</div>
 			{:else}
 				<div class="paddedPage">
