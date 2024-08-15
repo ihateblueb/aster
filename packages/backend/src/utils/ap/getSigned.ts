@@ -80,17 +80,25 @@ export default async function getSigned(url, localUserId?) {
 				}
 			})
 			.then((res) => {
-				return {
-					error: false,
-					status: 200,
-					data: res.data
-				};
+				if (res.data) {
+					return {
+						error: false,
+						status: 200,
+						data: res.data
+					};
+				} else {
+					return {
+						error: false,
+						status: 500,
+						data: {}
+					};
+				}
 			})
 			.catch((e) => {
 				logger('error', 'ap', e);
 				return {
 					error: true,
-					status: e.response.status,
+					status: e.response.status ? e.response.status : 500,
 					data: {}
 				};
 			});
