@@ -14,7 +14,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' + grabbedNotes.length + ' notes by ' + apId
 		);
 	}
@@ -31,7 +31,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' + grabbedLikes.length + ' likes by ' + apId
 		);
 	}
@@ -48,7 +48,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' + grabbedReactions.length + ' reactions by ' + apId
 		);
 	}
@@ -65,7 +65,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' + grabbedDriveFiles.length + ' drive files by ' + apId
 		);
 	}
@@ -84,7 +84,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' +
 				grabbedNotificationsFrom.length +
 				' notifications from ' +
@@ -106,7 +106,7 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' +
 				grabbedFollowrequestFrom.length +
 				' follow requests from ' +
@@ -126,12 +126,12 @@ export default async function deleteUser(id, apId) {
 		});
 		logger(
 			'info',
-			'util',
+			'delete',
 			'deleted ' + grabbedRepeats.length + ' repeats from ' + apId
 		);
 	}
 
 	await db.getRepository('user').delete(id);
 
-	logger('info', 'util', 'deleted actor ' + apId);
+	logger('info', 'delete', 'deleted actor ' + apId);
 }

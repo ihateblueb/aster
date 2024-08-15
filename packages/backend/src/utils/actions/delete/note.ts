@@ -23,7 +23,7 @@ export default async function deleteNote(apId) {
 
 		logger(
 			'debug',
-			'util',
+			'delete',
 			'deleting ' +
 				grabbedReplies.length +
 				' replies to note ' +
@@ -44,7 +44,7 @@ export default async function deleteNote(apId) {
 
 		logger(
 			'debug',
-			'util',
+			'delete',
 			'deleting ' +
 				grabbedRepeats.length +
 				' repeats of note ' +
@@ -67,7 +67,7 @@ export default async function deleteNote(apId) {
 
 		logger(
 			'debug',
-			'util',
+			'delete',
 			'deleting ' +
 				grabbedRepeats.length +
 				' notifications about note ' +
@@ -76,6 +76,6 @@ export default async function deleteNote(apId) {
 
 		await db.getRepository('note').delete(grabbedNote.id);
 
-		logger('debug', 'util', 'deleted note ' + grabbedNote.ap_id);
+		logger('debug', 'delete', 'deleted note ' + grabbedNote.ap_id);
 	}
 }

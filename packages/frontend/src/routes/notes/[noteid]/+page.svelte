@@ -23,6 +23,13 @@
 			{/if}
 
 			<Note {data} detailed={true} />
+
+			<div>
+				<Button>Replies</Button>
+				<Button>Repeats</Button>
+				<Button>Likes</Button>
+				<Button>Reactions</Button>
+			</div>
 		{/key}
 	</div>
 </template>
