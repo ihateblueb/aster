@@ -17,6 +17,7 @@
 	import userBite from '$lib/api/user/bite.js';
 	import { goto } from '$app/navigation';
 	import timelineUserGet from '$lib/api/timeline/user/get.js';
+	import updateAccount from '$lib/api/user/update.js';
 
 	export let data;
 
@@ -144,7 +145,7 @@
 				<span>{locale('view_raw')}</span>
 			</DropdownItem>
 			<hr />
-			<DropdownItem>
+			<DropdownItem on:click={() => updateAccount(data.id)}>
 				<Icon size="18px" name="refresh" margin="0px 8px 0px 0px" />
 				<span>{locale('remote_refresh_user')}</span>
 			</DropdownItem>

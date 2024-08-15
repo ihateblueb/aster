@@ -1352,3 +1352,141 @@ undo
 	"tag": []
 }
 ```
+
+# user
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"aster": "https://blueb.me/ns#",
+			"visibility": "aster:visibility",
+			"hasCorrectAnswer": "aster:hasCorrectAnswer",
+			"correct": "aster:correct"
+		}
+	],
+	"type": "Person",
+	"id": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+	"inbox": "https://eepy.zone/users/9kfweg7wmdw7fnnt/inbox",
+	"outbox": "https://eepy.zone/users/9kfweg7wmdw7fnnt/outbox",
+	"followers": "https://eepy.zone/users/9kfweg7wmdw7fnnt/followers",
+	"following": "https://eepy.zone/users/9kfweg7wmdw7fnnt/following",
+	"featured": "https://eepy.zone/users/9kfweg7wmdw7fnnt/collections/featured",
+	"sharedInbox": "https://eepy.zone/inbox",
+	"endpoints": { "sharedInbox": "https://eepy.zone/inbox" },
+	"url": "https://eepy.zone/@blueb",
+	"preferredUsername": "blueb",
+	"name": "sleepy harper",
+	"summary": "<p><div><i><b>hi im harper</b></i> <i>​:waving:​</i><span><br></span><i><small><b>yaaaaawwwnnnn</b></small></i></div><span><br>minor!!!! <br><br>mediocre programmer, silly creature, skyward sword and half life enjoyer, activitpub hater<br><br>i am writing my own fedi software despite my hatred, check that out </span><a href=\"https://git.gay/blueb-aster\">here</a><span> if you like questionable code quality and high quality json-ld<br>my account there is </span><a href=\"https://eepy.zone/@blueb@as.eepy.zone\" class=\"u-url mention\">@blueb@as.eepy.zone</a><span>, you can follow it if you like delayed queue jobs and half cooked activities<br><br>feel free to follow request. i accept most it's just to make sure i dont federate followers only posts with people im not fully aware of :3<br><br>if i do something wrong or bother you, let me know </span>​:happypete:​<span> <br><br>alt </span><a href=\"https://eepy.zone/@blueb@grimgreenfo.rest\" class=\"u-url mention\">@blueb@grimgreenfo.rest</a><span><br>alt if my server is down </span><a href=\"https://eepy.zone/@blueb@labyrinth.zone\" class=\"u-url mention\">@blueb@labyrinth.zone</a><span><br>private </span><a href=\"https://eepy.zone/@critter@akko.eepy.zone\" class=\"u-url mention\">@critter@akko.eepy.zone</a><span><br><br>cute gay cat :3 -> </span><a href=\"https://eepy.zone/@notfire@akko.eepy.zone\" class=\"u-url mention\">@notfire@akko.eepy.zone</a><span> <br><br></span><div><i>⚠️ warning: sometimes i like to get a little silly. ⚠️</i></div><div><i>if you can see this, you should look at my profile on my instance. it'll look cooler..</i></div></p>",
+	"_misskey_summary": "<center>$[x2 **hi im harper**] $[spin :waving:]\n$[position.y=-0.4 <small>**yaaaaawwwnnnn**</small>]</center>\n\nminor!!!! \n\nmediocre programmer, silly creature, skyward sword and half life enjoyer, activitpub hater\n\ni am writing my own fedi software despite my hatred, check that out [here](https://git.gay/blueb-aster) if you like questionable code quality and high quality json-ld\nmy account there is @blueb@as.eepy.zone, you can follow it if you like delayed queue jobs and half cooked activities\n\nfeel free to follow request. i accept most it's just to make sure i dont federate followers only posts with people im not fully aware of :3\n\nif i do something wrong or bother you, let me know :happypete: \n\nalt @blueb@grimgreenfo.rest\nalt if my server is down @blueb@labyrinth.zone\nprivate @critter@akko.eepy.zone\n\ncute gay cat :3 -> @notfire@akko.eepy.zone \n\n\n<center>$[fg.color=e63939 ⚠️ warning: sometimes i like to get a little silly. ⚠️]</center>\n<center>\n$[scale.y=0,x=0 if you can see this, you should look at my profile on my instance. it'll look cooler..]</center>",
+	"icon": {
+		"type": "Image",
+		"url": "https://media.eepy.zone/mkmedia/281976de-098d-48ae-8c00-30f7c4f6cc5d.webp",
+		"sensitive": false,
+		"name": null
+	},
+	"image": {
+		"type": "Image",
+		"url": "https://media.eepy.zone/mkmedia/f4c9698e-a8c2-400e-9761-7ab6303d613c.webp",
+		"sensitive": false,
+		"name": null
+	},
+	"backgroundUrl": null,
+	"tag": [
+		{
+			"id": "https://eepy.zone/emojis/waving",
+			"type": "Emoji",
+			"name": ":waving:",
+			"updated": "2024-02-20T06:36:59.680Z",
+			"icon": {
+				"type": "Image",
+				"mediaType": "image/gif",
+				"url": "https://media.eepy.zone/mkmedia/9b360c62-bf57-41ba-9eeb-03ce9569cb75"
+			}
+		},
+		{
+			"id": "https://eepy.zone/emojis/happypete",
+			"type": "Emoji",
+			"name": ":happypete:",
+			"updated": "2024-04-10T12:52:46.330Z",
+			"icon": {
+				"type": "Image",
+				"mediaType": "image/png",
+				"url": "https://eepy.zone/files/c15096af-626b-4a4c-aabf-1d028a7172d0"
+			}
+		}
+	],
+	"manuallyApprovesFollowers": true,
+	"discoverable": true,
+	"publicKey": {
+		"id": "https://eepy.zone/users/9kfweg7wmdw7fnnt#main-key",
+		"type": "Key",
+		"owner": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+		"publicKeyPem": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEArGcrQRt3bwzCW4FrF7tP\nxLYZtRuK6WtF4A9GZOk2hpb3QQiX24fR80hPFCDBfC7TVHi2swvdixHsuLMweSWT\n8J09NXZNZFTIGZ2BSorlrshrKRocSipqif2oMIL8dQpPldPZj6ks1xeUbAto37HV\nHk8l23zKkQ84764x89eWvG9thTCDtPZLsjC1FLdh+tndb/9XTycVTX1/EfHEHnLm\n60sDTBDfl63V+NNPMiMeXnLTKF1pAjtbXkAddJXdIjbRrSv4VzTisBWjQXK0uPgb\nR2UKMYC4smGaWjWSGS+nnEH49tin93FUDQzeLpUrfwKmhbyhZjtH5h7/8KFKzkt/\nbBIzCO5Co7JhK70ke6BJjs/xn8KwoyaTVh5+tN6RkZasOmiDIH5jb0vMu85PeurU\nG/v2BKF0ds0uwbmZbp+AOCZNe637CueyH5J12QIcLutDkLF1LLDRA+8utdWNOL9R\nIuT3RCFdnWoFPhhvRGqyu1kWauEVF4F+uozANthG0uiqUqlB48NISdsZAQozezZ+\nzrjuK39Zh/JPfXAoJF2wUu7NNrOtKAukWcXx7iK2q2x9iNsx22Jo/WB+G/R59fxJ\nFH5FA6pYj7WZSxeUwuDLRNI0w1lSkQnm/d3P14CY+4dsox4jCy+WZdVwybgwx1cB\npFb2MUzZjXdsVFUwtsmhZesCAwEAAQ==\n-----END PUBLIC KEY-----\n"
+	},
+	"isCat": true,
+	"noindex": false,
+	"speakAsCat": true,
+	"attachment": [
+		{
+			"type": "PropertyValue",
+			"name": "website",
+			"value": "<a href=\"https://harper.eepy.zone/\" rel=\"me nofollow noopener\" target=\"_blank\">https://harper.eepy.zone/</a>"
+		},
+		{
+			"type": "PropertyValue",
+			"name": "email",
+			"value": "ihateblueb@proton.me"
+		},
+		{ "type": "PropertyValue", "name": "discord", "value": "ihateblueb" },
+		{
+			"type": "PropertyValue",
+			"name": "retrospring",
+			"value": "<a href=\"https://retrospring.net/@blueb\" rel=\"me nofollow noopener\" target=\"_blank\">https://retrospring.net/@blueb</a>"
+		},
+		{ "type": "PropertyValue", "name": "age", "value": "16" },
+		{
+			"type": "PropertyValue",
+			"name": "pronouns",
+			"value": "it/she/he :3 (https://prns.cc/bazmp)"
+		},
+		{
+			"type": "PropertyValue",
+			"name": "keyoxide",
+			"value": "[aspe:keyoxide.org:WINULIVTB46JSFWOERVVX3DUWM](https://keyoxide.org/aspe%3Akeyoxide.org%3AWINULIVTB46JSFWOERVVX3DUWM)"
+		}
+	],
+	"alsoKnownAs": ["https://wetdry.world/users/ihateblueb"],
+	"vcard:bday": "1642-03-27",
+	"vcard:Address": "a cozy bed"
+}
+```

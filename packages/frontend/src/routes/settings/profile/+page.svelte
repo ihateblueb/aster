@@ -9,7 +9,7 @@
 	import Select from '$lib/components/Select.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Store from '$lib/utils/Store';
-	import updateAccount from '$lib/api/user/update';
+	import editAccount from '$lib/api/user/edit';
 	import InfoBox from '$lib/components/InfoBox.svelte';
 
 	let account = JSON.parse(Store.get('account'));
@@ -25,7 +25,7 @@
 
 	async function update() {
 		console.log(updatedAccount);
-		let res = await updateAccount(updatedAccount);
+		let res = await editAccount(updatedAccount);
 
 		if (res.message === 'Updated user') {
 			account = res.user;

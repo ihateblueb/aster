@@ -2,7 +2,7 @@
 	import { page } from '$app/stores';
 	import driveFileEdit from '$lib/api/drive/file/edit';
 	import driveFileGet from '$lib/api/drive/file/get';
-	import updateAccount from '$lib/api/user/update';
+	import editAccount from '$lib/api/user/edit';
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -235,7 +235,7 @@
 							<Button
 								type="noMargin"
 								on:click={() => {
-									updateAccount({
+									editAccount({
 										avatar: data.src
 									}).then((e) => {
 										if (e.user) {
@@ -257,7 +257,7 @@
 							<Button
 								type="noMargin"
 								on:click={() => {
-									updateAccount({
+									editAccount({
 										banner: data.src
 									}).then((e) => {
 										if (e.user) {
@@ -279,7 +279,7 @@
 							<Button
 								type="noMargin"
 								on:click={() => {
-									updateAccount({
+									editAccount({
 										background: data.src
 									}).then((e) => {
 										if (e.user) {

@@ -57,25 +57,33 @@ export default async function processNewActor(body) {
 		}
 
 		if (body.manuallyApprovesFollowers) {
-			actorToInsert['locked'] = sanitize(body.manuallyApprovesFollowers);
+			actorToInsert['locked'] = true;
+		} else if (!body.manuallyApprovesFollowers) {
+			actorToInsert['locked'] = false;
 		}
 
 		if (body.suspended) {
-			actorToInsert['suspended'] = sanitize(body.suspended);
+			actorToInsert['suspended'] = true;
+		} else if (!body.suspended) {
+			actorToInsert['suspended'] = false;
 		}
 
 		if (body.discoverable) {
-			actorToInsert['discoverable'] = sanitize(body.discoverable);
+			actorToInsert['discoverable'] = true;
+		} else if (!body.discoverable) {
+			actorToInsert['discoverable'] = false;
 		}
 
-		// todo: make sanitizer not make this be false
-
 		if (body.isCat) {
-			actorToInsert['is_cat'] = sanitize(body.isCat);
+			actorToInsert['is_cat'] = true;
+		} else if (!body.isCat) {
+			actorToInsert['is_cat'] = false;
 		}
 
 		if (body.speakAsCat) {
-			actorToInsert['speak_as_cat'] = sanitize(body.speakAsCat);
+			actorToInsert['speak_as_cat'] = true;
+		} else if (!body.speakAsCat) {
+			actorToInsert['speak_as_cat'] = false;
 		}
 
 		actorToInsert['created_at'] = new Date(Date.now()).toISOString();

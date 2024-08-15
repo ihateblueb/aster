@@ -23,6 +23,7 @@ import api_user_lookup from './api/v2/user/lookup.js';
 import api_user_raw from './api/v2/user/raw.js';
 import api_user_report from './api/v2/user/report.js';
 import api_user_timeline from './api/v2/user/timeline.js';
+import api_user_update from './api/v2/user/update.js';
 
 import api_note_bookmark from './api/v2/note/bookmark.js';
 import api_note_create from './api/v2/note/create.js';
@@ -89,6 +90,7 @@ router.use('/', api_user_lookup);
 router.use('/', api_user_raw);
 router.use('/', api_user_report);
 router.use('/', api_user_timeline);
+router.use('/', api_user_update);
 
 router.use('/', api_note_bookmark);
 router.use('/', api_note_create);

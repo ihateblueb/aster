@@ -16,7 +16,7 @@ export default async function getRemoteActor(apId) {
 	});
 
 	if (grabbedRemoteActor) {
-		logger('debug', 'ap', 'remote actor present in database');
+		logger('debug', 'ap', 'remote actor present in database. updating');
 		return grabbedRemoteActor;
 	} else {
 		logger('debug', 'ap', 'remote actor not present in database');

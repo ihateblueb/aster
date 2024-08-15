@@ -1,15 +1,16 @@
 import Store from '$lib/utils/Store';
 
-export default async function updateAccount(id: object) {
+export default async function editAccount(body: object) {
 	let userRes = {};
 
-	let userReq = await fetch(`/api/v2/user/${id}/update`, {
-		method: 'GET',
+	let userReq = await fetch(`/api/v2/user`, {
+		method: 'PATCH',
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
 			Authorization: `Bearer ${Store.get('a_token')}`
-		}
+		},
+		body: JSON.stringify(body)
 	});
 
 	userRes = await userReq.json();
