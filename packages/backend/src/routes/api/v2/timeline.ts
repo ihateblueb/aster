@@ -4,67 +4,73 @@ import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
 import generateNote from '../../../generators/note.js';
 import generateRepeat from '../../../generators/repeat.js';
+import config from '../../../utils/config.js';
+import { LessThan } from 'typeorm';
 
 const router = express.Router();
 
-async function renderTimeline(grabbedNotes, grabbedRepeats) {
+async function renderTimeline(collectedObjects) {
+	console.log(collectedObjects);
+
 	let collectedNotes = [];
 
-	for (const i of grabbedNotes.keys()) {
-		let generatedNote = await generateNote(grabbedNotes[i]);
+	for (const i of collectedObjects.keys()) {
+		if (collectedObjects[i].type === 'note') {
+			let generatedNote = await generateNote(collectedObjects[i].object);
 
-		if (generatedNote && generatedNote.status === 200) {
-			collectedNotes.push({
-				type: 'note',
-				object: generatedNote.note
-			});
-			logger(
-				'debug',
-				'timeline',
-				'rendered note ' + (i + 1) + '/' + grabbedNotes.length
+			if (generatedNote && generatedNote.status === 200) {
+				collectedNotes.push({
+					type: 'note',
+					object: generatedNote.note
+				});
+				logger(
+					'debug',
+					'timeline',
+					'rendered note ' + (i + 1) + '/' + collectedObjects.length
+				);
+			} else {
+				logger(
+					'debug',
+					'timeline',
+					'failed to render note ' +
+						(i + 1) +
+						'/' +
+						collectedObjects.length +
+						' error: ' +
+						generatedNote.status +
+						' ' +
+						generatedNote.message
+				);
+			}
+		} else if (collectedObjects[i].type === 'repeat') {
+			let generatedRepeat = await generateRepeat(
+				collectedObjects[i].object
 			);
-		} else {
-			logger(
-				'debug',
-				'timeline',
-				'failed to render note ' +
-					(i + 1) +
-					'/' +
-					grabbedNotes.length +
-					' error: ' +
-					generatedNote.status +
-					' ' +
-					generatedNote.message
-			);
-		}
-	}
 
-	for (const i of grabbedRepeats.keys()) {
-		let generatedRepeat = await generateRepeat(grabbedRepeats[i]);
-
-		if (generatedRepeat && generatedRepeat.status === 200) {
-			collectedNotes.push({
-				type: 'repeat',
-				object: generatedRepeat.repeat
-			});
-			logger(
-				'debug',
-				'timeline',
-				'rendered repeat ' + (i + 1) + '/' + grabbedRepeats.length
-			);
-		} else {
-			logger(
-				'debug',
-				'timeline',
-				'failed to render repeat ' +
-					(i + 1) +
-					'/' +
-					grabbedRepeats.length +
-					' error: ' +
-					generatedRepeat.status +
-					' ' +
-					generatedRepeat.message
-			);
+			if (generatedRepeat && generatedRepeat.status === 200) {
+				collectedNotes.push({
+					type: 'repeat',
+					object: generatedRepeat.repeat
+				});
+				logger(
+					'debug',
+					'timeline',
+					'rendered repeat ' + (i + 1) + '/' + collectedObjects.length
+				);
+			} else {
+				logger(
+					'debug',
+					'timeline',
+					'failed to render repeat ' +
+						(i + 1) +
+						'/' +
+						collectedObjects.length +
+						' error: ' +
+						generatedRepeat.status +
+						' ' +
+						generatedRepeat.message
+				);
+			}
 		}
 	}
 
@@ -79,19 +85,59 @@ async function renderTimeline(grabbedNotes, grabbedRepeats) {
 router.get('/api/v2/timeline/public', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
+	let take =
+		req.query.max < config.timeline.maxNotes
+			? req.query.max
+			: config.timeline.maxNotes;
+
+	let collectedObjects = [];
+
 	let grabbedNotes = await db
 		.getRepository('note')
 		.createQueryBuilder()
-		.where({ visibility: 'public' })
+		.where({
+			visibility: 'public'
+		})
+		.orderBy('created_at', 'DESC')
+		.take(take)
 		.getMany();
+
+	if (grabbedNotes) {
+		await grabbedNotes.forEach(async (e) => {
+			collectedObjects.push({
+				type: 'note',
+				object: e
+			});
+		});
+	}
 
 	let grabbedRepeats = await db
 		.getRepository('repeat')
 		.createQueryBuilder()
-		.where({ visibility: 'public' })
+		.where({
+			visibility: 'public'
+		})
+		.orderBy('created_at', 'DESC')
+		.take(take)
 		.getMany();
 
-	res.status(200).json(await renderTimeline(grabbedNotes, grabbedRepeats));
+	if (grabbedRepeats) {
+		await grabbedRepeats.forEach(async (e) => {
+			collectedObjects.push({
+				type: 'repeat',
+				object: e
+			});
+		});
+	}
+
+	collectedObjects.sort(
+		(x, y) =>
+			+new Date(y.object.created_at) - +new Date(x.object.created_at)
+	);
+
+	collectedObjects.length = take;
+
+	res.status(200).json(await renderTimeline(collectedObjects));
 });
 
 router.get('/api/v2/timeline/local', async (req, res) => {
