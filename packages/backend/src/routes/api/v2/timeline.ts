@@ -1,9 +1,12 @@
 import express from 'express';
 
-import db from '../../../utils/database.js';
 import config from '../../../utils/config.js';
-import { LessThan } from 'typeorm';
+
 import renderTimeline from '../../../utils/timeline/render.js';
+import generateTimelinePublic from '../../../generators/timeline/public.js';
+import generateTimelineBubble from '../../../generators/timeline/bubble.js';
+import generateTimelineLocal from '../../../generators/timeline/local.js';
+import generateTimelineHome from '../../../generators/timeline/home.js';
 
 const router = express.Router();
 
@@ -15,86 +18,11 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 			? req.query.max
 			: config.timeline.maxNotes;
 
-	let collectedObjects = [];
-
-	let grabbedNotes;
-
-	if (req.query.since) {
-		grabbedNotes = await db
-			.getRepository('note')
-			.createQueryBuilder()
-			.where({
-				visibility: 'public',
-				created_at: LessThan(req.query.since)
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	} else {
-		grabbedNotes = await db
-			.getRepository('note')
-			.createQueryBuilder()
-			.where({
-				visibility: 'public'
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	}
-
-	if (grabbedNotes) {
-		await grabbedNotes.forEach(async (e) => {
-			collectedObjects.push({
-				type: 'note',
-				object: e
-			});
-		});
-	}
-
-	let grabbedRepeats;
-
-	if (req.query.since) {
-		grabbedRepeats = await db
-			.getRepository('repeat')
-			.createQueryBuilder()
-			.where({
-				visibility: 'public',
-				created_at: LessThan(req.query.since)
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	} else {
-		grabbedRepeats = await db
-			.getRepository('repeat')
-			.createQueryBuilder()
-			.where({
-				visibility: 'public'
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	}
-
-	if (grabbedRepeats) {
-		await grabbedRepeats.forEach(async (e) => {
-			collectedObjects.push({
-				type: 'repeat',
-				object: e
-			});
-		});
-	}
-
-	collectedObjects.sort(
-		(x, y) =>
-			+new Date(y.object.created_at) - +new Date(x.object.created_at)
+	res.status(200).json(
+		await renderTimeline(
+			await generateTimelinePublic(take, req.query.since)
+		)
 	);
-
-	if (collectedObjects.length > take) {
-		collectedObjects.length = take;
-	}
-
-	res.status(200).json(await renderTimeline(collectedObjects));
 });
 
 router.get('/api/v2/timeline/local', async (req, res) => {
@@ -105,103 +33,37 @@ router.get('/api/v2/timeline/local', async (req, res) => {
 			? req.query.max
 			: config.timeline.maxNotes;
 
-	let collectedObjects = [];
-
-	let grabbedNotes;
-
-	if (req.query.since) {
-		grabbedNotes = await db
-			.getRepository('note')
-			.createQueryBuilder()
-			.where({
-				local: true,
-				visibility: 'public',
-				created_at: LessThan(req.query.since)
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	} else {
-		grabbedNotes = await db
-			.getRepository('note')
-			.createQueryBuilder()
-			.where({
-				local: true,
-				visibility: 'public'
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	}
-
-	if (grabbedNotes) {
-		await grabbedNotes.forEach(async (e) => {
-			collectedObjects.push({
-				type: 'note',
-				object: e
-			});
-		});
-	}
-
-	let grabbedRepeats;
-
-	if (req.query.since) {
-		grabbedRepeats = await db
-			.getRepository('repeat')
-			.createQueryBuilder()
-			.where({
-				local: true,
-				visibility: 'public',
-				created_at: LessThan(req.query.since)
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	} else {
-		grabbedRepeats = await db
-			.getRepository('repeat')
-			.createQueryBuilder()
-			.where({
-				local: true,
-				visibility: 'public'
-			})
-			.orderBy('created_at', 'DESC')
-			.take(take)
-			.getMany();
-	}
-
-	if (grabbedRepeats) {
-		await grabbedRepeats.forEach(async (e) => {
-			collectedObjects.push({
-				type: 'repeat',
-				object: e
-			});
-		});
-	}
-
-	collectedObjects.sort(
-		(x, y) =>
-			+new Date(y.object.created_at) - +new Date(x.object.created_at)
+	res.status(200).json(
+		await renderTimeline(await generateTimelineLocal(take, req.query.since))
 	);
-
-	if (collectedObjects.length > take) {
-		collectedObjects.length = take;
-	}
-
-	res.status(200).json(await renderTimeline(collectedObjects));
 });
 
-router.get('/api/v2/timeline/tag/:tag', async (req, res) => {
+router.get('/api/v2/timeline/bubble', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
-	let grabbedNotes = await db
-		.getRepository('note')
-		.createQueryBuilder()
-		// uuuuughh this query is gonna be fucked
-		.where({ visibility: 'public' })
-		.getMany();
+	let take =
+		req.query.max < config.timeline.maxNotes
+			? req.query.max
+			: config.timeline.maxNotes;
 
-	res.status(200).json();
+	res.status(200).json(
+		await renderTimeline(
+			await generateTimelineBubble(take, req.query.since)
+		)
+	);
+});
+
+router.get('/api/v2/timeline/home', async (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+
+	let take =
+		req.query.max < config.timeline.maxNotes
+			? req.query.max
+			: config.timeline.maxNotes;
+
+	res.status(200).json(
+		await renderTimeline(await generateTimelineHome(take, req.query.since))
+	);
 });
 
 export default router;

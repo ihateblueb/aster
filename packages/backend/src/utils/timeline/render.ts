@@ -3,8 +3,6 @@ import generateRepeat from '../../generators/repeat.js';
 import logger from '../logger.js';
 
 export default async function renderTimeline(collectedObjects) {
-	console.log(collectedObjects);
-
 	let collectedNotes = [];
 
 	for (const i of collectedObjects.keys()) {
