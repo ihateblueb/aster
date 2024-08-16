@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import noteGet from '$lib/api/note/get';
 	import { locale } from '$lib/locale';
 	import Icon from './Icon.svelte';
@@ -7,12 +7,13 @@
 	import Time from './Time.svelte';
 
 	export let data;
+	export let small: boolean = false;
 </script>
 
 <template>
 	{#if data && data.to && data.from}
 		{#if data.type === 'follow'}
-			<div class="notification _E6Sc553">
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="user-plus" size="18px" />
 					<b>
@@ -32,7 +33,7 @@
 				</div>
 			</div>
 		{:else if data.type === 'like'}
-			<div class="notification _E6Sc553">
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="star" size="18px" />
 					<b>
@@ -55,7 +56,7 @@
 				{/await}
 			</div>
 		{:else if data.type === 'react'}
-			<div class="notification _E6Sc553">
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<img height="22px" src={data.reaction.url} />
 					<b>
@@ -78,7 +79,7 @@
 				{/await}
 			</div>
 		{:else if data.type === 'repeat'}
-			<div class="notification _E6Sc553">
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="repeat" size="18px" />
 					<b>
@@ -101,7 +102,7 @@
 				{/await}
 			</div>
 		{:else}
-			<div class="notification _E6Sc553">
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="question-mark" size="18px" />
 					<b>

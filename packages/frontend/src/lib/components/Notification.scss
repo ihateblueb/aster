@@ -7,6 +7,11 @@
 	border-radius: var(--border-l);
 	gap: 6px;
 
+	&.small {
+		padding: 10px;
+		margin-bottom: 10px;
+	}
+
 	.header {
 		display: flex;
 		align-items: center;
