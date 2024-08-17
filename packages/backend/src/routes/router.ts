@@ -13,6 +13,8 @@ import ap_inbox from './ap/inbox.js';
 import ap_user from './ap/user.js';
 import ap_note from './ap/note.js';
 
+import api_admin_sonic_index from './api/v2/admin/search/sonic.js';
+
 import api_user_bite from './api/v2/user/bite.js';
 import api_user_create from './api/v2/user/create.js';
 import api_user_delete from './api/v2/user/delete.js';
@@ -80,6 +82,8 @@ router.use('/', ap_user);
 router.use('/', ap_note);
 
 // api
+router.use('/', api_admin_sonic_index);
+
 router.use('/', api_user_bite);
 router.use('/', api_user_create);
 router.use('/', api_user_delete);

@@ -87,6 +87,10 @@
 			<Icon name="speakerphone" size="18px" margin="0px 8px 0px 0px" />
 			<span> {locale('announcements')} </span>
 		</DropdownItem>
+		<DropdownItem to="/admin/search">
+			<Icon name="search" size="18px" margin="0px 8px 0px 0px" />
+			<span> {locale('search')} </span>
+		</DropdownItem>
 		<DropdownItem to="/admin/database">
 			<Icon name="database" size="18px" margin="0px 8px 0px 0px" />
 			<span> {locale('database')} </span>
