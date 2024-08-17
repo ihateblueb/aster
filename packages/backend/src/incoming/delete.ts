@@ -73,6 +73,46 @@ export default async function IDelete(body) {
 		}
 	}
 
+	if (body.object) {
+		let grabbedNote = await db.getRepository('note').findOne({
+			where: {
+				ap_id: body.object
+			}
+		});
+
+		if (grabbedNote) {
+			let grabbedAuthor = await db.getRepository('user').findOne({
+				where: {
+					id: grabbedNote.author
+				}
+			});
+
+			if (grabbedAuthor) {
+				if (grabbedAuthor.ap_id === body.actor) {
+					await deleteNote(body.object);
+				} else {
+					logger(
+						'debug',
+						'ap',
+						'ignoring actor trying to delete a note not written by them'
+					);
+				}
+			} else {
+				logger(
+					'debug',
+					'ap',
+					'failed to fetch author of note being deleted, ignoring activity'
+				);
+			}
+		} else {
+			logger(
+				'debug',
+				'ap',
+				'failed to fetch note being deleted, ignoring activity'
+			);
+		}
+	}
+
 	return {
 		status: 501,
 		message: 'Not implemented'
