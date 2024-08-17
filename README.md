@@ -45,6 +45,11 @@ This may be flexible, but hasn't been tested or looked further into.
 
 Things that work!
 
+### Cli
+
+-   create user
+-   inital setup
+
 ### Federation
 
 -   Users can be fetched from other instances
