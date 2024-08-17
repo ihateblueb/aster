@@ -5,11 +5,30 @@ import getSigned from '../../../utils/ap/getSigned.js';
 import processNewActor from '../../../utils/ap/processNewActor.js';
 import processNewNote from '../../../utils/ap/processNewNote.js';
 import isValidUrl from '../../../utils/isValidUrl.js';
+import search from '../../../utils/sonic/search.js';
+import config from '../../../utils/config.js';
 
 const router = express.Router();
 
 // get ad by id or random
 router.get('/api/v2/search', async (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+	if (!req.query.q) {
+		return res.status(400).json({
+			message: 'Query required'
+		});
+	} else {
+		let query = await search.query(
+			config.sonic.collection,
+			config.sonic.bucket,
+			req.query.q
+		);
+
+		return res.status(200).json(query);
+	}
+});
+
+router.get('/api/v2/fetch', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.query.q) {
 		return res.status(400).json({

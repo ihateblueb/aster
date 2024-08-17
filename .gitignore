@@ -22,3 +22,5 @@ packages/frontend/static/logo.png
 target
 
 vite.config.**,**,js
+
+/sonic

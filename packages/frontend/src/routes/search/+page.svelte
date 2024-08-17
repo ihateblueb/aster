@@ -10,20 +10,35 @@
 	import { JsonView } from '@zerodevx/svelte-json-view';
 	import userGet from '$lib/api/user/get';
 	import noteGet from '$lib/api/note/get';
+	import Store from '$lib/utils/Store';
 
 	let query;
-	let user;
-	let note;
 
 	async function search() {
-		let searchRes = await searchGet(query);
-		if (searchRes.type === 'user') {
-			user = await userGet('searchRes.id');
-		} else if (searchRes.type === 'note') {
-			user = await noteGet('searchRes.id');
-		} else if (searchRes.type === 'lookup') {
-			goto(query);
+		await searchGet(query);
+	}
+
+	async function fetchAp() {
+		let searchRes = {};
+
+		let searchReq = await fetch(`/api/v2/fetch?q=${query}`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${Store.get('a_token')}`
+			}
+		});
+
+		searchRes = await searchReq.json();
+
+		if (searchReq.status === 200) {
+			console.log(searchRes);
+		} else {
+			console.log(searchRes);
 		}
+
+		return searchRes;
 	}
 </script>
 
@@ -37,16 +52,7 @@
 				bind:value={query}
 			/>
 			<Button on:click={search}>Search</Button>
-			{#key user}
-				{#if user}
-					<JsonView json={user} />
-				{/if}
-			{/key}
-			{#key note}
-				{#if note}
-					<JsonView json={note} />
-				{/if}
-			{/key}
+			<Button on:click={fetchAp}>Fetch</Button>
 		</div>
 	</div>
 </template>

@@ -165,6 +165,9 @@ importers:
       socket.io:
         specifier: ^4.7.5
         version: 4.7.5
+      sonic-channel:
+        specifier: ^1.3.1
+        version: 1.3.1
       systeminformation:
         specifier: ^5.22.11
         version: 5.22.11
@@ -3532,6 +3535,10 @@ packages:
   socks@2.8.3:
     resolution: {integrity: sha512-l5x7VUUWbjVFbafGLxPWkYsHIhEvmF85tbIeFZWc8ZPtoMyybuEhL7Jye/ooC4/d48FgOjSJXgsF/AJPYCW8Zw==}
     engines: {node: '>= 10.0.0', npm: '>= 3.0.0'}
+
+  sonic-channel@1.3.1:
+    resolution: {integrity: sha512-+K4IZVFE7Tf2DB4EFZ23xo7a/+gJaiOHhFzXVZpzkX6Rs/rvf4YbSxnEGdYw8mrTcjtpG+jLVQEhP8sNTtN5VA==}
+    engines: {node: '>= 6.0.0'}
 
   sorcery@0.11.0:
     resolution: {integrity: sha512-J69LQ22xrQB1cIFJhPfgtLuI6BpWRiWu1Y3vSsIwK/eAScqJxd/+CJlUuHQRdX2C9NGFamq+KqNywGgaThwfHw==}
@@ -7641,6 +7648,8 @@ snapshots:
     dependencies:
       ip-address: 9.0.5
       smart-buffer: 4.2.0
+
+  sonic-channel@1.3.1: {}
 
   sorcery@0.11.0:
     dependencies:

@@ -15,6 +15,8 @@ import { createServer } from 'node:http';
 import config from './utils/config.js';
 import logger from './utils/logger.js';
 import db from './utils/database.js';
+import search from './utils/sonic/search.js';
+import ingest from './utils/sonic/ingest.js';
 import requestLogger from './utils/requestLogger.js';
 import { deliverWorker, inboxWorker } from './utils/workers.js';
 
@@ -28,6 +30,11 @@ import { handler } from 'frontend/build/handler.js';
 await db.initialize().catch((e) => {
 	logger('fatal', 'db', e);
 });
+
+if (config.sonic.enabled) {
+	await search;
+	await ingest;
+}
 
 const app = express();
 

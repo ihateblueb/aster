@@ -1,6 +1,8 @@
+import config from '../config.js';
 import db from '../database.js';
 import logger from '../logger.js';
 import sanitize from '../sanitize.js';
+import ingest from '../sonic/ingest.js';
 import getRemoteActor from './getRemoteActor.js';
 import getRemoteEmoji from './getRemoteEmoji.js';
 import getRemoteNote from './getRemoteNote.js';
@@ -205,6 +207,19 @@ export default async function processNewNote(body) {
 		}
 
 		await db.getRepository('note').insert(noteToInsert);
+
+		if (noteToInsert['visibility'] === 'public') {
+			await ingest
+				.push(
+					config.sonic.collection,
+					config.sonic.bucket,
+					noteToInsert['id'],
+					noteToInsert['content']
+				)
+				.catch((e) => {
+					logger('error', 'sonic', JSON.stringify(e));
+				});
+		}
 
 		logger('info', 'ap', 'created remote note ' + body.id);
 

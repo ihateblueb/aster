@@ -7,6 +7,8 @@ import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import ApNote from '../../../../constructors/ApNote.js';
 import OCreate from '../../../../outgoing/create.js';
+import ingest from '../../../../utils/sonic/ingest.js';
+import logger from '../../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -47,6 +49,19 @@ router.post(`/api/v2/note`, async (req, res) => {
 		let grabbedUser = await db
 			.getRepository('user')
 			.findOne({ where: { id: authRes.grabbedUserAuth.user } });
+
+		if (noteToInsert['visibility'] === 'public') {
+			await ingest
+				.push(
+					config.sonic.collection,
+					config.sonic.bucket,
+					noteToInsert['id'],
+					noteToInsert['content']
+				)
+				.catch((e) => {
+					logger('error', 'sonic', JSON.stringify(e));
+				});
+		}
 
 		if (grabbedUser) {
 			await OCreate(
