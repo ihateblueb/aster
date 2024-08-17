@@ -1,12 +1,12 @@
-name: Lint Backend
+name: Format
 
-on:
-    push:
-        branches: 'main'
+on: [push]
 
 jobs:
-    lint-backend:
+    format:
         runs-on: docker
+        permissions:
+            contents: write
         steps:
             - name: Checkout repository
               uses: https://code.forgejo.org/actions/checkout@v4
@@ -20,6 +20,8 @@ jobs:
             - name: Install dependencies
               run: pnpm install
 
-            - name: Lint
-              run: |
-                  pnpm lint-be
+            - name: Format
+              run: pnpm format
+
+            - name: Commit
+              uses: https://github.com/stefanzweifel/git-auto-commit-action
