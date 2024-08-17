@@ -58,7 +58,7 @@ Things that work!
 -   Fetch note emojis
 -   Accept and send likes
 -   Process incoming hashtags and wafrn hashtags
-- Process deletes
+-   Process deletes
 
 ### Internal API
 
