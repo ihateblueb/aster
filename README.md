@@ -73,7 +73,7 @@ Things that work!
 -   fetch reactions and likes
 -   /mod endpoints require authentication and mod status
 -   /admin endpoints require authentication and admin status
-- fetch timelines in chunks based on date, changable max/since
+-   fetch timelines in chunks based on date, changable max/since
 
 ### Frontend
 
