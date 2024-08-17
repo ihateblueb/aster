@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ActCreate from '../constructors/activity/Create.js';
 import db from '../utils/database.js';
 import deliverQueue from '../utils/deliverQueue.js';
-import logger from '../utils/logger.js';
+import Logger from '../utils/logger.js';
 import ActLike from '../constructors/activity/Like.js';
 
 export default async function OLike(
@@ -34,8 +34,7 @@ export default async function OLike(
 					localUserId: grabbedUser.id,
 					body: likeJson
 				});
-				logger(
-					'debug',
+				Logger.debug(
 					'ap',
 					'queued deliver to ' +
 						author.inbox +
@@ -59,8 +58,7 @@ export default async function OLike(
 							body: likeJson
 						});
 
-						logger(
-							'debug',
+						Logger.debug(
 							'ap',
 							'queued deliver to ' +
 								grabbedFollower.inbox +
@@ -71,16 +69,14 @@ export default async function OLike(
 				});
 			}
 		} else {
-			logger(
-				'error',
+			Logger.error(
 				'ap',
 				'tried sending Create activity for non-local user ' +
 					grabbedUser.ap_id
 			);
 		}
 	} else {
-		logger(
-			'error',
+		Logger.error(
 			'ap',
 			'tried sending Create activity for non-existant ' + grabbedUser
 		);

@@ -1,4 +1,4 @@
-import logger from '../utils/logger.js';
+import Logger from '../utils/logger.js';
 import processNewActor from '../utils/ap/processNewActor.js';
 import processNewNote from '../utils/ap/processNewNote.js';
 
@@ -10,6 +10,6 @@ export default async function ICreate(body) {
 	} else if (body.object.type === 'Service') {
 		await processNewActor(body.object);
 	} else {
-		logger('warn', 'ap', 'unknown Create type ' + body.object.type);
+		Logger.warn('ap', 'unknown Create type ' + body.object.type);
 	}
 }

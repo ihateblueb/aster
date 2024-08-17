@@ -1,14 +1,14 @@
 import Sonic from 'sonic-channel';
 
 import config from '../config.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 
 let search;
 
 if (!config.sonic.host) {
-	logger('fatal', 'core', 'no sonic host configured');
+	Logger.fatal('core', 'no sonic host configured');
 } else if (!config.sonic.port) {
-	logger('fatal', 'core', 'no sonic port configured');
+	Logger.fatal('core', 'no sonic port configured');
 }
 
 let sonicConnection = {
@@ -24,24 +24,24 @@ search = new Sonic.Search(sonicConnection);
 
 search.connect({
 	connected: function () {
-		logger('debug', 'sonic', 'connected to search');
+		Logger.debug('sonic', 'connected to search');
 	},
 
 	disconnected: function () {
-		logger('debug', 'sonic', 'disconnected from search');
+		Logger.debug('sonic', 'disconnected from search');
 	},
 
 	timeout: function () {
-		logger('debug', 'sonic', 'search connection timed out');
+		Logger.debug('sonic', 'search connection timed out');
 	},
 
 	retrying: function () {
-		logger('debug', 'sonic', 'trying to reconnect to search...');
+		Logger.debug('sonic', 'trying to reconnect to search...');
 	},
 
 	error: function (error) {
-		logger('error', 'sonic', 'failed to connect to search');
-		logger('error', 'sonic', error);
+		Logger.error('sonic', 'failed to connect to search');
+		Logger.error('sonic', error);
 	}
 });
 

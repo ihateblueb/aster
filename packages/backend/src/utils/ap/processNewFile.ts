@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import calculateDimensions from '../media/calculateDimensions.js';
 import generateThumbnail from '../media/generateThumbnail.js';
 import sanitize from '../sanitize.js';
@@ -31,7 +31,7 @@ export default async function processNewFile(attachment, note, author) {
 
 	await db.getRepository('drive_file').insert(driveFileToInsert);
 
-	logger('info', 'drive', 'created attachment ' + sanitize(attachment.url));
+	Logger.info('drive', 'created attachment ' + sanitize(attachment.url));
 
 	return driveFileToInsert;
 }

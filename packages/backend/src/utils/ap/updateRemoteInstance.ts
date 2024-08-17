@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 
 export default async function updateRemoteInstance(host, body) {
@@ -111,7 +111,7 @@ export default async function updateRemoteInstance(host, body) {
 	//console.log(doc);
 	//console.log(await doc.getElementsByTagName('link'));
 
-	logger('info', 'ap', 'updated remote instance ' + host);
+	Logger.info('ap', 'updated remote instance ' + host);
 
 	return grabbedInstance;
 }

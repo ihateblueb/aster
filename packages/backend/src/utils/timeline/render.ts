@@ -1,6 +1,6 @@
 import generateNote from '../../generators/note.js';
 import generateRepeat from '../../generators/repeat.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 
 export default async function renderTimeline(collectedObjects) {
 	let collectedNotes = [];
@@ -17,8 +17,7 @@ export default async function renderTimeline(collectedObjects) {
 						type: 'note',
 						object: generatedNote.note
 					});
-					logger(
-						'debug',
+					Logger.debug(
 						'timeline',
 						'rendered note ' +
 							(i + 1) +
@@ -26,8 +25,7 @@ export default async function renderTimeline(collectedObjects) {
 							collectedObjects.length
 					);
 				} else {
-					logger(
-						'debug',
+					Logger.debug(
 						'timeline',
 						'failed to render note ' +
 							(i + 1) +
@@ -49,8 +47,7 @@ export default async function renderTimeline(collectedObjects) {
 						type: 'repeat',
 						object: generatedRepeat.repeat
 					});
-					logger(
-						'debug',
+					Logger.debug(
 						'timeline',
 						'rendered repeat ' +
 							(i + 1) +
@@ -58,8 +55,7 @@ export default async function renderTimeline(collectedObjects) {
 							collectedObjects.length
 					);
 				} else {
-					logger(
-						'debug',
+					Logger.debug(
 						'timeline',
 						'failed to render repeat ' +
 							(i + 1) +
@@ -74,8 +70,7 @@ export default async function renderTimeline(collectedObjects) {
 			}
 		} else {
 			console.log(collectedObjects[i]);
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'failed to render object ' +
 					(i + 1) +

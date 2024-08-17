@@ -2,7 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 import sanitize from '../../../../utils/sanitize.js';
 import getSigned from '../../../../utils/ap/getSigned.js';
 import updateRemoteActor from '../../../../utils/ap/updateRemoteActor.js';
@@ -33,7 +33,7 @@ router.get('/api/v2/user/:userid/update', async (req, res) => {
 				});
 			} else {
 				if (!grabbedUser.local) {
-					logger('debug', 'ap', 'actor update requested');
+					Logger.debug('ap', 'actor update requested');
 
 					let response;
 
@@ -47,7 +47,7 @@ router.get('/api/v2/user/:userid/update', async (req, res) => {
 						// idk? just trying things
 						response = 'gone';
 					} else {
-						logger('debug', 'ap', 'fetched actor sucessfully');
+						Logger.debug('ap', 'fetched actor sucessfully');
 						response = await updateRemoteActor(newUser.data);
 					}
 

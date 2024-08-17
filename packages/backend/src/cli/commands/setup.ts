@@ -2,22 +2,22 @@ import { v4 as uuidv4 } from 'uuid';
 import { generateKeyPairSync } from 'crypto';
 
 import config from '../../utils/config.js';
-import logger from '../../utils/logger.js';
+import Logger from '../../utils/logger.js';
 import db from '../../utils/database.js';
 
 export default async function setup() {
-	logger('info', 'setup', 'initializing database');
+	Logger.info('setup', 'initializing database');
 	await db.initialize();
 
-	logger('info', 'setup', 'checking if instance is already setup');
+	Logger.info('setup', 'checking if instance is already setup');
 	let meta = await db.getRepository('meta').createQueryBuilder().getOne();
 
 	if (meta.init) {
-		logger('fatal', 'setup', 'instance already setup!');
+		Logger.fatal('setup', 'instance already setup!');
 	}
 
-	logger('info', 'setup', 'instance not yet setup, continuing');
-	logger('info', 'setup', 'creating instance actor');
+	Logger.info('setup', 'instance not yet setup, continuing');
+	Logger.info('setup', 'creating instance actor');
 
 	const iaId = uuidv4();
 
@@ -58,16 +58,16 @@ export default async function setup() {
 		public_key: publicKey
 	};
 
-	logger('debug', 'setup', 'to insert into user');
-	logger('debug', 'setup', JSON.stringify(instanceActorToInsert));
+	Logger.debug('setup', 'to insert into user');
+	Logger.debug('setup', JSON.stringify(instanceActorToInsert));
 
 	let instanceActorPrivToInsert = {
 		id: iaId,
 		private_key: privateKey
 	};
 
-	logger('debug', 'setup', 'to insert into user_priv');
-	logger('debug', 'setup', JSON.stringify(instanceActorPrivToInsert));
+	Logger.debug('setup', 'to insert into user_priv');
+	Logger.debug('setup', JSON.stringify(instanceActorPrivToInsert));
 
 	await db.getRepository('user').insert(instanceActorToInsert);
 	await db.getRepository('user_priv').insert(instanceActorPrivToInsert);

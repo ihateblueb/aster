@@ -1,6 +1,6 @@
 import config from '../config.js';
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import ingest from '../sonic/ingest.js';
 import getRemoteActor from './getRemoteActor.js';
@@ -201,7 +201,7 @@ export default async function processNewNote(body) {
 						''
 					);
 				} else {
-					logger('warn', 'ap', 'unused tag type ' + body.tag[i].type);
+					Logger.warn('ap', 'unused tag type ' + body.tag[i].type);
 				}
 			}
 		}
@@ -218,7 +218,7 @@ export default async function processNewNote(body) {
 						noteToInsert['cw']
 					)
 					.catch((e) => {
-						logger('error', 'sonic', JSON.stringify(e));
+						Logger.error('sonic', JSON.stringify(e));
 					});
 			}
 
@@ -230,11 +230,11 @@ export default async function processNewNote(body) {
 					noteToInsert['content']
 				)
 				.catch((e) => {
-					logger('error', 'sonic', JSON.stringify(e));
+					Logger.error('sonic', JSON.stringify(e));
 				});
 		}
 
-		logger('info', 'ap', 'created remote note ' + body.id);
+		Logger.info('ap', 'created remote note ' + body.id);
 
 		console.log(noteToInsert);
 

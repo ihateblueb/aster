@@ -1,6 +1,6 @@
 import signAndAccept from '../../utils/ap/accept.js';
 import db from '../../utils/database.js';
-import logger from '../../utils/logger.js';
+import Logger from '../../utils/logger.js';
 import getRemoteActor from '../../utils/ap/getRemoteActor.js';
 
 export default async function IUndoFollow(body) {
@@ -11,7 +11,7 @@ export default async function IUndoFollow(body) {
 	});
 
 	if (!grabbedLocalUser) {
-		logger('debug', 'ap', 'local user not here');
+		Logger.debug('ap', 'local user not here');
 		return {
 			status: '400',
 			message: 'User is not here'

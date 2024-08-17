@@ -3,7 +3,7 @@ import express from 'express';
 import config from '../../../../../utils/config.js';
 import db from '../../../../../utils/database.js';
 import ingest from '../../../../../utils/sonic/ingest.js';
-import logger from '../../../../../utils/logger.js';
+import Logger from '../../../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -24,14 +24,10 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 					note.cw
 				)
 				.then(() => {
-					logger(
-						'info',
-						'sonic',
-						'pushed ' + note.id + ' cw to sonic'
-					);
+					Logger.info('sonic', 'pushed ' + note.id + ' cw to sonic');
 				})
 				.catch((e) => {
-					logger('error', 'sonic', JSON.stringify(e));
+					Logger.error('sonic', JSON.stringify(e));
 					res.status(500).json({
 						message: 'Failed to index note cw'
 					});
@@ -46,14 +42,10 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 				note.content
 			)
 			.then(() => {
-				logger(
-					'info',
-					'sonic',
-					'pushed ' + note.id + ' content to sonic'
-				);
+				Logger.info('sonic', 'pushed ' + note.id + ' content to sonic');
 			})
 			.catch((e) => {
-				logger('error', 'sonic', JSON.stringify(e));
+				Logger.error('sonic', JSON.stringify(e));
 				res.status(500).json({
 					message: 'Failed to index note content'
 				});
@@ -76,14 +68,10 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 					user.bio
 				)
 				.then(() => {
-					logger(
-						'info',
-						'sonic',
-						'pushed ' + user.id + ' bio to sonic'
-					);
+					Logger.info('sonic', 'pushed ' + user.id + ' bio to sonic');
 				})
 				.catch((e) => {
-					logger('error', 'sonic', JSON.stringify(e));
+					Logger.error('sonic', JSON.stringify(e));
 					res.status(500).json({
 						message: 'Failed to index user'
 					});
@@ -100,10 +88,10 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.sonic.collectionPrefix + '_cw')
 		.then(() => {
-			logger('info', 'sonic', 'flushed sonic cw collection');
+			Logger.info('sonic', 'flushed sonic cw collection');
 		})
 		.catch((e) => {
-			logger('error', 'sonic', JSON.stringify(e));
+			Logger.error('sonic', JSON.stringify(e));
 			res.status(500).json({
 				message: 'Failed to flush note cw'
 			});
@@ -112,10 +100,10 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.sonic.collectionPrefix + '_content')
 		.then(() => {
-			logger('info', 'sonic', 'flushed sonic content collection');
+			Logger.info('sonic', 'flushed sonic content collection');
 		})
 		.catch((e) => {
-			logger('error', 'sonic', JSON.stringify(e));
+			Logger.error('sonic', JSON.stringify(e));
 			res.status(500).json({
 				message: 'Failed to flush note content'
 			});
@@ -124,10 +112,10 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.sonic.collectionPrefix + '_bio')
 		.then(() => {
-			logger('info', 'sonic', 'flushed sonic bio collection');
+			Logger.info('sonic', 'flushed sonic bio collection');
 		})
 		.catch((e) => {
-			logger('error', 'sonic', JSON.stringify(e));
+			Logger.error('sonic', JSON.stringify(e));
 			res.status(500).json({
 				message: 'Failed to flush user bio'
 			});

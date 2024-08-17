@@ -8,7 +8,7 @@ import db from '../../../../utils/database.js';
 import ApNote from '../../../../constructors/ApNote.js';
 import OCreate from '../../../../outgoing/create.js';
 import ingest from '../../../../utils/sonic/ingest.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -60,7 +60,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 						noteToInsert['cw']
 					)
 					.catch((e) => {
-						logger('error', 'sonic', JSON.stringify(e));
+						Logger.error('sonic', JSON.stringify(e));
 					});
 			}
 
@@ -72,7 +72,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 					noteToInsert['content']
 				)
 				.catch((e) => {
-					logger('error', 'sonic', JSON.stringify(e));
+					Logger.error('sonic', JSON.stringify(e));
 				});
 		}
 

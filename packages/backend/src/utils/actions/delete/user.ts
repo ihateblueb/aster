@@ -1,5 +1,5 @@
 import db from '../../database.js';
-import logger from '../../logger.js';
+import Logger from '../../logger.js';
 
 export default async function deleteUser(id, apId) {
 	let grabbedNotes = await db.getRepository('note').find({
@@ -12,8 +12,7 @@ export default async function deleteUser(id, apId) {
 		grabbedNotes.forEach(async (e) => {
 			await db.getRepository('note').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' + grabbedNotes.length + ' notes by ' + apId
 		);
@@ -29,8 +28,7 @@ export default async function deleteUser(id, apId) {
 		grabbedLikes.forEach(async (e) => {
 			await db.getRepository('note_like').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' + grabbedLikes.length + ' likes by ' + apId
 		);
@@ -46,8 +44,7 @@ export default async function deleteUser(id, apId) {
 		grabbedReactions.forEach(async (e) => {
 			await db.getRepository('note_react').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' + grabbedReactions.length + ' reactions by ' + apId
 		);
@@ -63,8 +60,7 @@ export default async function deleteUser(id, apId) {
 		grabbedDriveFiles.forEach(async (e) => {
 			await db.getRepository('drive_file').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' + grabbedDriveFiles.length + ' drive files by ' + apId
 		);
@@ -82,8 +78,7 @@ export default async function deleteUser(id, apId) {
 		grabbedNotificationsFrom.forEach(async (e) => {
 			await db.getRepository('user_notification').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' +
 				grabbedNotificationsFrom.length +
@@ -104,8 +99,7 @@ export default async function deleteUser(id, apId) {
 		grabbedFollowrequestFrom.forEach(async (e) => {
 			await db.getRepository('user_followrequest').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' +
 				grabbedFollowrequestFrom.length +
@@ -124,8 +118,7 @@ export default async function deleteUser(id, apId) {
 		grabbedRepeats.forEach(async (e) => {
 			await db.getRepository('repeat').delete(e.id);
 		});
-		logger(
-			'info',
+		Logger.info(
 			'delete',
 			'deleted ' + grabbedRepeats.length + ' repeats from ' + apId
 		);
@@ -133,5 +126,5 @@ export default async function deleteUser(id, apId) {
 
 	await db.getRepository('user').delete(id);
 
-	logger('info', 'delete', 'deleted actor ' + apId);
+	Logger.info('delete', 'deleted actor ' + apId);
 }

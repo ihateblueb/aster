@@ -1,7 +1,7 @@
 import express from 'express';
 
 import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 import generateNote from '../../../../generators/note.js';
 import generateRepeat from '../../../../generators/repeat.js';
 
@@ -18,14 +18,12 @@ async function renderTimeline(grabbedNotes, grabbedRepeats) {
 				type: 'note',
 				object: generatedNote.note
 			});
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'rendered note ' + (i + 1) + '/' + grabbedNotes.length
 			);
 		} else {
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'failed to render note ' +
 					(i + 1) +
@@ -47,14 +45,12 @@ async function renderTimeline(grabbedNotes, grabbedRepeats) {
 				type: 'repeat',
 				object: generatedRepeat.repeat
 			});
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'rendered repeat ' + (i + 1) + '/' + grabbedRepeats.length
 			);
 		} else {
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'failed to render repeat ' +
 					(i + 1) +

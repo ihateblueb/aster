@@ -1,7 +1,7 @@
 import express from 'express';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -10,7 +10,7 @@ router.post(`/api/v2/note/:noteid/report`, async (req, res) => {
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
-			logger('debug', 'note', 'note report requested');
+			Logger.debug('note', 'note report requested');
 			return res.status(501).json({
 				message: 'Not implemented'
 			});

@@ -4,11 +4,11 @@ import { createHash, createSign } from 'node:crypto';
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 
 export default async function postSigned(inbox, localUserId, body) {
 	if (new URL(inbox).host === new URL(config.url).host) {
-		logger('debug', 'ap', 'not sending post to myself');
+		Logger.debug('ap', 'not sending post to myself');
 	} else {
 		let grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {
@@ -81,14 +81,10 @@ export default async function postSigned(inbox, localUserId, body) {
 				}
 			})
 			.then(() => {
-				logger(
-					'debug',
-					'ap',
-					'successfully send a post request signed'
-				);
+				Logger.debug('ap', 'successfully send a post request signed');
 			})
 			.catch((e) => {
-				logger('error', 'ap', e);
+				Logger.error('ap', e);
 			});
 	}
 }

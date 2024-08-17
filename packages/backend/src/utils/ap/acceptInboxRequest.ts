@@ -1,4 +1,4 @@
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import config from '../config.js';
 import getRemoteInstance from './getRemoteInstance.js';
 
@@ -17,7 +17,7 @@ import IUndo from '../../incoming/undo.js';
 import IUpdate from '../../incoming/update.js';
 
 export default async function acceptInboxRequest(parsedBody) {
-	logger('debug', 'ap', 'activity of type ' + parsedBody.type + ' received');
+	Logger.debug('ap', 'activity of type ' + parsedBody.type + ' received');
 
 	await getRemoteInstance(new URL(parsedBody.id).host);
 
@@ -58,8 +58,7 @@ export default async function acceptInboxRequest(parsedBody) {
 	} else if (parsedBody.type === 'Move') {
 		await IMove(parsedBody);
 	} else {
-		logger(
-			'warn',
+		Logger.warn(
 			'ap',
 			'new activity of type ' +
 				parsedBody.type +

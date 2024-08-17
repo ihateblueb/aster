@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 import createNotification from '../../../../utils/actions/createNotification.js';
 import OLike from '../../../../outgoing/like.js';
 import config from '../../../../utils/config.js';
@@ -15,7 +15,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
-			logger('debug', 'note', 'note like requested');
+			Logger.debug('note', 'note like requested');
 
 			let grabbedNote = await db.getRepository('note').findOne({
 				where: {

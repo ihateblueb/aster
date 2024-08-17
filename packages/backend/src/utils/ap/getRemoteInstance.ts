@@ -1,6 +1,6 @@
 import config from '../config.js';
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import getNodeinfo from './getNodeinfo.js';
 import getSigned from './getSigned.js';
 import processNewInstance from './processNewInstance.js';
@@ -15,8 +15,7 @@ export default async function getRemoteInstance(host) {
 		});
 
 		if (grabbedRemoteInstance) {
-			logger(
-				'debug',
+			Logger.debug(
 				'ap',
 				'remote instance present in database. updating.'
 			);
@@ -31,7 +30,7 @@ export default async function getRemoteInstance(host) {
 				if (grabbedNodeinfo.error) {
 					return false;
 				} else {
-					logger('debug', 'ap', 'fetched instance sucessfully');
+					Logger.debug('ap', 'fetched instance sucessfully');
 
 					response = await updateRemoteInstance(
 						host,
@@ -44,7 +43,7 @@ export default async function getRemoteInstance(host) {
 				return false;
 			}
 		} else {
-			logger('debug', 'ap', 'remote instance not present in database');
+			Logger.debug('ap', 'remote instance not present in database');
 
 			let response;
 
@@ -56,7 +55,7 @@ export default async function getRemoteInstance(host) {
 				if (grabbedNodeinfo.error) {
 					return false;
 				} else {
-					logger('debug', 'ap', 'fetched instance sucessfully');
+					Logger.debug('ap', 'fetched instance sucessfully');
 
 					response = await processNewInstance(
 						host,

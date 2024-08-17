@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import ActCreate from '../constructors/activity/Create.js';
 import db from '../utils/database.js';
 import deliverQueue from '../utils/deliverQueue.js';
-import logger from '../utils/logger.js';
+import Logger from '../utils/logger.js';
 
 export default async function OCreate(localUserId, object) {
 	let grabbedUser = await db.getRepository('user').findOne({
@@ -34,8 +34,7 @@ export default async function OCreate(localUserId, object) {
 						body: createJson
 					});
 
-					logger(
-						'debug',
+					Logger.debug(
 						'ap',
 						'queued deliver to ' +
 							grabbedFollower.inbox +
@@ -46,8 +45,7 @@ export default async function OCreate(localUserId, object) {
 			});
 		}
 	} else {
-		logger(
-			'error',
+		Logger.error(
 			'ap',
 			'tried sending Create activity for non-local user ' +
 				grabbedUser.ap_id

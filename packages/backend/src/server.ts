@@ -13,7 +13,7 @@ import { createServer } from 'node:http';
 //import { Server } from 'socket.io';
 
 import config from './utils/config.js';
-import logger from './utils/logger.js';
+import Logger from './utils/logger.js';
 import db from './utils/database.js';
 import search from './utils/sonic/search.js';
 import ingest from './utils/sonic/ingest.js';
@@ -28,7 +28,7 @@ import router from './routes/router.js';
 import { handler } from 'frontend/build/handler.js';
 
 await db.initialize().catch((e) => {
-	logger('fatal', 'db', e);
+	Logger.fatal('db', e);
 });
 
 if (config.sonic.enabled) {
@@ -39,29 +39,29 @@ if (config.sonic.enabled) {
 const app = express();
 
 inboxWorker.on('progress', async (job, progress) => {
-	logger('info', 'inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
+	Logger.info('inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
 });
 
 inboxWorker.on('completed', (job) => {
-	logger('info', 'inbox', `job ${job.id} completed.`);
+	Logger.done('inbox', `job ${job.id} completed.`);
 });
 
 inboxWorker.on('failed', (job, failedReason) => {
-	logger('error', 'inbox', `job ${job.id} failed. ${failedReason}`);
-	logger('debug', 'deliver', JSON.stringify(job.stacktrace));
+	Logger.error('inbox', `job ${job.id} failed. ${failedReason}`);
+	Logger.debug('deliver', JSON.stringify(job.stacktrace));
 });
 
 deliverWorker.on('progress', async (job, progress) => {
-	logger('info', 'deliver', `job ${job.id} says ${JSON.stringify(progress)}`);
+	Logger.info('deliver', `job ${job.id} says ${JSON.stringify(progress)}`);
 });
 
 deliverWorker.on('completed', (job) => {
-	logger('info', 'deliver', `job ${job.id} completed.`);
+	Logger.done('deliver', `job ${job.id} completed.`);
 });
 
 deliverWorker.on('failed', (job, failedReason) => {
-	logger('error', 'deliver', `job ${job.id} failed. ${failedReason}`);
-	logger('debug', 'deliver', JSON.stringify(job.stacktrace));
+	Logger.error('deliver', `job ${job.id} failed. ${failedReason}`);
+	Logger.debug('deliver', JSON.stringify(job.stacktrace));
 });
 
 app.use(requestLogger.dev, requestLogger.combined);
@@ -82,8 +82,7 @@ app.use((req, res, next) => {
 			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
-		logger(
-			'info',
+		Logger.info(
 			'security',
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
@@ -101,18 +100,17 @@ const server = createServer(app);
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-	logger('debug', 'ws', 'client connected. total: ' + io.engine.clientsCount);
+	Logger.debug( 'ws', 'client connected. total: ' + io.engine.clientsCount);
 	socket.broadcast.emit('guests', io.engine.clientsCount);
 	socket.on('disconnect', () => {
-		logger(
-			'debug',
+		Logger.debug(
 			'ws',
 			'client disconnected. total: ' + io.engine.clientsCount
 		);
 		socket.broadcast.emit('guests', io.engine.clientsCount);
 	});
 	socket.on('message', (message) => {
-		logger('debug', 'ws', 'received message: ' + message);
+		Logger.debug( 'ws', 'received message: ' + message);
 	});
 });
 */
@@ -122,7 +120,7 @@ app.use('/', router);
 if (config.frontend.enable) {
 	app.use(handler);
 } else {
-	logger('info', 'core', `frontend disabled`);
+	Logger.info('core', `frontend disabled`);
 }
 
 server.listen(config.port, () => {

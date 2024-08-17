@@ -2,7 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
-import logger from '../../../utils/logger.js';
+import Logger from '../../../utils/logger.js';
 import { host } from 'frontend/build/index.js';
 import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
@@ -43,7 +43,7 @@ router.post(`/api/v2/intance/:host/report`, async (req, res) => {
 
 	if (req.params.host) {
 		if (authRes.status === 200) {
-			logger('debug', 'instance', 'instance report requested');
+			Logger.debug('instance', 'instance report requested');
 			return res.status(501).json({
 				message: 'Not implemented'
 			});

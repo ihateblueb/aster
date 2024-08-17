@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -109,7 +109,7 @@ export default async function processNewActor(body) {
 
 		await db.getRepository('user').insert(actorToInsert);
 
-		logger('info', 'ap', 'created remote actor ' + body.id);
+		Logger.info('ap', 'created remote actor ' + body.id);
 
 		return actorToInsert;
 	}

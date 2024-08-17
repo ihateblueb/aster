@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -23,7 +23,7 @@ export default async function processNewEmoji(body) {
 
 		await db.getRepository('emoji').insert(emojiToInsert);
 
-		logger('info', 'ap', 'created remote emoji ' + body.id);
+		Logger.info('ap', 'created remote emoji ' + body.id);
 
 		return emojiToInsert;
 	}

@@ -1,11 +1,11 @@
 import config from './config.js';
-import logger from './logger.js';
+import Logger from './logger.js';
 
 if (!config.redis.host) {
-	logger('fatal', 'core', 'no redis host configured');
+	Logger.fatal('core', 'no redis host configured');
 }
 if (!config.redis.port) {
-	logger('fatal', 'core', 'no redis port configured');
+	Logger.fatal('core', 'no redis port configured');
 }
 
 const redisConnection = {

@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -70,7 +70,7 @@ export default async function processNewInstance(host, body) {
 
 	await db.getRepository('instance').insert(instanceToInsert);
 
-	logger('info', 'ap', 'created remote instance ' + host);
+	Logger.info('ap', 'created remote instance ' + host);
 
 	return instanceToInsert;
 }

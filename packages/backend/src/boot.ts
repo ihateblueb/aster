@@ -7,15 +7,15 @@ import os from 'os';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import logger from './utils/logger.js';
+import Logger from './utils/logger.js';
 import config from './utils/config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const cpuCount = os.cpus().length;
 
-logger('info', 'boot', 'machine has ' + cpuCount + ' cores');
-logger('info', 'boot', 'worker count configured to ' + config.workers.count);
+Logger.info('boot', 'machine has ' + cpuCount + ' cores');
+Logger.info('boot', 'worker count configured to ' + config.workers.count);
 
 cluster.setupPrimary({
 	exec: __dirname + '/server.js'
@@ -23,7 +23,7 @@ cluster.setupPrimary({
 
 if (config.plugins.boot) {
 	config.plugins.boot.forEach((e) => {
-		logger('info', 'plugin', `registered boot plugin ${e}`);
+		Logger.info('plugin', `registered boot plugin ${e}`);
 	});
 
 	config.plugins.boot.forEach(async (e) => {
@@ -35,13 +35,13 @@ if (config.plugins.boot) {
 
 if (config.plugins.incoming) {
 	config.plugins.incoming.forEach((e) => {
-		logger('info', 'plugin', `registered incoming plugin ${e}`);
+		Logger.info('plugin', `registered incoming plugin ${e}`);
 	});
 }
 
 if (config.plugins.outgoing) {
 	config.plugins.outgoing.forEach((e) => {
-		logger('info', 'plugin', `registered outgoing plugin ${e}`);
+		Logger.info('plugin', `registered outgoing plugin ${e}`);
 	});
 }
 
@@ -50,12 +50,11 @@ for (let i = 0; i < config.workers.count; i++) {
 }
 
 cluster.on('online', (worker) => {
-	logger('info', 'boot', 'worker ' + worker.id + ' is now online');
+	Logger.info('boot', 'worker ' + worker.id + ' is now online');
 });
 
 cluster.on('exit', (worker, code, signal) => {
-	logger(
-		'error',
+	Logger.error(
 		'main',
 		'worker ' +
 			worker.id +
@@ -69,8 +68,7 @@ cluster.on('exit', (worker, code, signal) => {
 });
 
 cluster.on('died', (worker, code, signal) => {
-	logger(
-		'error',
+	Logger.error(
 		'main',
 		'worker ' +
 			worker.id +
@@ -89,8 +87,7 @@ cluster.on('message', (msg) => {
 	saysUp++;
 
 	if (saysUp == config.workers.count) {
-		logger(
-			'info',
+		Logger.info(
 			'main',
 			'server started as ' + config.url + ' on port ' + config.port
 		);
@@ -98,7 +95,7 @@ cluster.on('message', (msg) => {
 });
 
 process.on('SIGTERM', function () {
-	logger('info', 'main', 'kill requested');
+	Logger.info('main', 'kill requested');
 	for (const id in cluster.workers) {
 		cluster.workers[id].destroy();
 	}

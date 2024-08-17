@@ -1,5 +1,5 @@
 import config from '../config.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import getRemoteActor from './getRemoteActor.js';
 import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
@@ -10,38 +10,38 @@ export default async function validateRequest(req) {
 	}
 
 	if (req.headers.host !== new URL(config.url).host) {
-		logger('error', 'ap', 'host header did not match configuration');
+		Logger.error('ap', 'host header did not match configuration');
 		return { status: 400, message: 'host doesnt match instance config' };
 	} else {
-		logger('debug', 'ap', 'host header matches configuration');
+		Logger.debug('ap', 'host header matches configuration');
 	}
 
 	if (!req.body) {
-		logger('error', 'ap', 'body not present');
+		Logger.error('ap', 'body not present');
 		return { status: 400, message: 'body not present' };
 	} else {
-		logger('debug', 'ap', 'body present');
+		Logger.debug('ap', 'body present');
 	}
 
 	if (!req.headers.digest) {
-		logger('error', 'ap', 'digest not present');
+		Logger.error('ap', 'digest not present');
 		return { status: 400, message: 'digest not present' };
 	} else {
-		logger('debug', 'ap', 'digest present');
+		Logger.debug('ap', 'digest present');
 	}
 
 	if (!req.headers.digest.startsWith('SHA-256=')) {
-		logger('error', 'ap', 'digest did not start with SHA-256=');
+		Logger.error('ap', 'digest did not start with SHA-256=');
 		return { status: 400, message: 'digest did not start with SHA-256=' };
 	} else {
-		logger('debug', 'ap', 'digest started with SHA-256=');
+		Logger.debug('ap', 'digest started with SHA-256=');
 	}
 
 	if (!req.headers.signature) {
-		logger('error', 'ap', 'signature header not present');
+		Logger.error('ap', 'signature header not present');
 		return { status: 400, message: 'signature header not present' };
 	} else {
-		logger('debug', 'ap', 'signature header present');
+		Logger.debug('ap', 'signature header present');
 	}
 
 	let digestValid = validateDigest(
@@ -50,16 +50,16 @@ export default async function validateRequest(req) {
 	);
 
 	if (!digestValid) {
-		logger('error', 'ap', 'digest invalid');
+		Logger.error('ap', 'digest invalid');
 		return { status: 400, message: 'digest invalid' };
 	} else {
-		logger('debug', 'ap', 'digest valid');
+		Logger.debug('ap', 'digest valid');
 	}
 
 	let grabbedActor = await getRemoteActor(JSON.parse(req.body).actor);
 
 	if (!grabbedActor) {
-		logger('error', 'ap', 'actor not properly grabbed');
+		Logger.error('ap', 'actor not properly grabbed');
 
 		return { status: 500, message: 'actor not properly grabbed' };
 	} else if (grabbedActor === 'gone') {
@@ -86,7 +86,7 @@ function validateDigest(req, digest) {
 			digest
 		);
 	} else {
-		logger('error', 'ap', 'body or digest missing');
+		Logger.error('ap', 'body or digest missing');
 		return false;
 	}
 }

@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
+import Logger from '../../../../utils/logger.js';
 import config from '../../../../utils/config.js';
 import OAnnounce from '../../../../outgoing/announce.js';
 import createNotification from '../../../../utils/actions/createNotification.js';

@@ -1,5 +1,5 @@
 import db from '../database.js';
-import logger from '../logger.js';
+import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 
 export default async function updateRemoteActor(body) {
@@ -154,7 +154,7 @@ export default async function updateRemoteActor(body) {
 
 	console.log(grabbedUser);
 
-	logger('info', 'ap', 'updated remote actor ' + body.id);
+	Logger.info('ap', 'updated remote actor ' + body.id);
 
 	return grabbedUser;
 }

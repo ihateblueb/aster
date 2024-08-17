@@ -1,7 +1,7 @@
 import signAndAccept from '../utils/ap/accept.js';
 import createNotification from '../utils/actions/createNotification.js';
 import db from '../utils/database.js';
-import logger from '../utils/logger.js';
+import Logger from '../utils/logger.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,7 +13,7 @@ export default async function IFollow(body) {
 	});
 
 	if (!grabbedLocalUser) {
-		logger('debug', 'ap', 'local user not here');
+		Logger.debug('ap', 'local user not here');
 	}
 
 	if (!grabbedLocalUser.local) {

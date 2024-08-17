@@ -62,14 +62,14 @@ if (readlineSync.keyInYN('would you like to create an instance actor?')) {
 		public_key: publicKey
 	};
 
-	logger('info', 'init', JSON.stringify(instanceActorToInsert));
+	Logger.info('init', JSON.stringify(instanceActorToInsert));
 
 	let instanceActorPrivToInsert = {
 		id: iaId,
 		private_key: privateKey
 	};
 
-	logger('info', 'init', JSON.stringify(instanceActorPrivToInsert));
+	Logger.info('init', JSON.stringify(instanceActorPrivToInsert));
 	console.log('');
 
 	if (readlineSync.keyInYN('insert instance actor?')) {

@@ -2,7 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
-import logger from '../../../utils/logger.js';
+import Logger from '../../../utils/logger.js';
 import generateNotification from '../../../generators/notification.js';
 
 const router = express.Router();
@@ -17,8 +17,7 @@ async function renderTimeline(grabbedNotifications) {
 
 		if (generatedNotification && generatedNotification.status === 200) {
 			collectedNotification.push(generatedNotification.notification);
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'rendered notification ' +
 					(i + 1) +
@@ -26,8 +25,7 @@ async function renderTimeline(grabbedNotifications) {
 					grabbedNotifications.length
 			);
 		} else {
-			logger(
-				'debug',
+			Logger.debug(
 				'timeline',
 				'failed to render notification ' +
 					(i + 1) +

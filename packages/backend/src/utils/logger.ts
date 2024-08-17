@@ -1,174 +1,95 @@
-import process from 'node:process';
 import cluster from 'cluster';
 import chalk from 'chalk';
 import config from './config.js';
-import { Logger, QueryRunner } from 'typeorm';
 
-export default function logger(level: string, section: string, message?: any) {
-	let processId = cluster.isPrimary
-		? '00'
-		: cluster.worker.id.toLocaleString('en-US', {
-				minimumIntegerDigits: 2,
-				useGrouping: false
+type Level =
+	| 'sql'
+	| 'http'
+	| 'debug'
+	| 'info'
+	| 'warn'
+	| 'done'
+	| 'error'
+	| 'fatal';
+
+type Message = string | number | boolean | JSON | Error;
+
+class Logger {
+	private log(level: Level, context: string, message: Message) {
+		let processId = cluster.isPrimary ? '*' : cluster.worker.id;
+
+		if (config.logging.type === 'json') {
+			console.log({
+				level: level,
+				worker: processId,
+				time: new Date(Date.now()).toLocaleTimeString(),
+				context: context,
+				message: message
 			});
+		} else if (config.logging.type === 'fancy') {
+			let string = chalk.bold(processId);
 
-	if (config.logging.type === 'fancy') {
-		if (level === 'debug' && config.logging.debug) {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgCyan('debug') +
-					' ' +
-					chalk.cyan(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'info') {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgBlue('info') +
-					' ' +
-					chalk.blue(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'http') {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgMagenta('http') +
-					' ' +
-					chalk.magenta(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'sql' && config.logging.sql) {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgGreen('sql') +
-					' ' +
-					chalk.dim(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'warn') {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgYellow('warn') +
-					' ' +
-					chalk.yellow(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'error') {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgRed('error') +
-					' ' +
-					chalk.red(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-		} else if (level === 'fatal') {
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgRedBright('fatal') +
-					' ' +
-					chalk.redBright(section.toLowerCase()) +
-					']' +
-					' ' +
-					message
-			);
-			console.log(
-				chalk.bold(processId) +
-					' ' +
-					chalk.gray(new Date(Date.now()).toLocaleTimeString()) +
-					' [' +
-					chalk.bgRedBright('fatal') +
-					' ' +
-					chalk.redBright(section.toLowerCase()) +
-					']' +
-					' ' +
-					'fatal. now aborting.'
-			);
-			process.exit(1);
+			if (level === 'sql')
+				string += '	' + chalk.bgGreen(chalk.bold(level));
+			if (level === 'http')
+				string += '	' + chalk.bgMagenta(chalk.bold(level));
+			if (level === 'debug')
+				string += '	' + chalk.bgCyan(chalk.bold(level));
+			if (level === 'info')
+				string += '	' + chalk.bgBlue(chalk.bold(level));
+			if (level === 'warn')
+				string += '	' + chalk.bgYellow(chalk.bold(level));
+			if (level === 'done')
+				string += '	' + chalk.bgGreenBright(chalk.bold(level));
+			if (level === 'error')
+				string += '	' + chalk.bgRed(chalk.bold(level));
+			if (level === 'fatal')
+				string += '	' + chalk.bgRedBright(chalk.bold(level));
+
+			string +=
+				'	' + chalk.gray(context.substring(0, 7).toLowerCase()) + '	';
+
+			string += '  ' + message;
+
+			console.log(string);
 		}
-	} else if (config.logging.type === 'json') {
-		console.log({
-			level: level,
-			section: section,
-			time: new Date(Date.now()).toISOString(),
-			message: message
-		});
+	}
+
+	public sql(context: string, message: Message) {
+		if (config.logging.sql) {
+			this.log('sql', context, message);
+		}
+	}
+
+	public http(context: string, message: Message) {
+		this.log('http', context, message);
+	}
+
+	public debug(context: string, message: Message) {
+		if (config.logging.debug) {
+			this.log('debug', context, message);
+		}
+	}
+
+	public info(context: string, message: Message) {
+		this.log('info', context, message);
+	}
+
+	public warn(context: string, message: Message) {
+		this.log('warn', context, message);
+	}
+
+	public done(context: string, message: Message) {
+		this.log('done', context, message);
+	}
+
+	public error(context: string, message: Message) {
+		this.log('error', context, message);
+	}
+
+	public fatal(context: string, message: Message) {
+		this.log('fatal', context, message);
 	}
 }
 
-export class TypeormLogger implements Logger {
-	logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
-		logger('sql', 'query', query);
-	}
-	logQueryError(
-		error: string | Error,
-		query: string,
-		parameters?: any[],
-		queryRunner?: QueryRunner
-	) {
-		logger('error', 'query', error);
-		logger('error', 'query', query);
-	}
-	logQuerySlow(
-		time: number,
-		query: string,
-		parameters?: any[],
-		queryRunner?: QueryRunner
-	) {
-		logger('warn', 'query', time);
-		logger('warn', 'query', query);
-	}
-	logSchemaBuild(message: string, queryRunner?: QueryRunner) {
-		logger('info', 'db', message);
-	}
-	logMigration(message: string, queryRunner?: QueryRunner) {
-		logger('info', 'db', message);
-	}
-	log(
-		level: 'info' | 'warn' | 'log',
-		message: any,
-		queryRunner?: QueryRunner
-	) {
-		if (
-			!message.startsWith('All classes found using provided glob pattern')
-		) {
-			if (level === 'log') {
-				logger('info', 'db', message);
-			} else {
-				logger(level, 'db', message);
-			}
-		}
-	}
-}
+export default new Logger();
