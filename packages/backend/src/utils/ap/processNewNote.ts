@@ -218,7 +218,7 @@ export default async function processNewNote(body) {
 						noteToInsert['cw']
 					)
 					.catch((e) => {
-						Logger.error('sonic', JSON.stringify(e));
+						Logger.error('sonic', e);
 					});
 			}
 
@@ -230,7 +230,7 @@ export default async function processNewNote(body) {
 					noteToInsert['content']
 				)
 				.catch((e) => {
-					Logger.error('sonic', JSON.stringify(e));
+					Logger.error('sonic', e);
 				});
 		}
 

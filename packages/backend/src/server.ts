@@ -39,7 +39,7 @@ if (config.sonic.enabled) {
 const app = express();
 
 inboxWorker.on('progress', async (job, progress) => {
-	Logger.info('inbox', `job ${job.id} says ${JSON.stringify(progress)}`);
+	Logger.info('inbox', `job ${job.id} says ${progress}`);
 });
 
 inboxWorker.on('completed', (job) => {
@@ -48,11 +48,11 @@ inboxWorker.on('completed', (job) => {
 
 inboxWorker.on('failed', (job, failedReason) => {
 	Logger.error('inbox', `job ${job.id} failed. ${failedReason}`);
-	Logger.debug('deliver', JSON.stringify(job.stacktrace));
+	Logger.debug('inbox', job.stacktrace);
 });
 
 deliverWorker.on('progress', async (job, progress) => {
-	Logger.info('deliver', `job ${job.id} says ${JSON.stringify(progress)}`);
+	Logger.info('deliver', `job ${job.id} says ${progress}`);
 });
 
 deliverWorker.on('completed', (job) => {
@@ -61,7 +61,7 @@ deliverWorker.on('completed', (job) => {
 
 deliverWorker.on('failed', (job, failedReason) => {
 	Logger.error('deliver', `job ${job.id} failed. ${failedReason}`);
-	Logger.debug('deliver', JSON.stringify(job.stacktrace));
+	Logger.debug('deliver', job.stacktrace);
 });
 
 app.use(requestLogger.dev, requestLogger.combined);

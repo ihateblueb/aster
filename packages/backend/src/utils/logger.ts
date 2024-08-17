@@ -12,7 +12,15 @@ type Level =
 	| 'error'
 	| 'fatal';
 
-type Message = string | number | boolean | JSON | Error;
+type Message =
+	| string
+	| string[]
+	| number
+	| number[]
+	| boolean
+	| boolean[]
+	| JSON
+	| Error;
 
 class Logger {
 	private log(level: Level, context: string, message: Message) {

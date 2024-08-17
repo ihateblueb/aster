@@ -60,7 +60,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 						noteToInsert['cw']
 					)
 					.catch((e) => {
-						Logger.error('sonic', JSON.stringify(e));
+						Logger.error('sonic', e);
 					});
 			}
 
@@ -72,7 +72,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 					noteToInsert['content']
 				)
 				.catch((e) => {
-					Logger.error('sonic', JSON.stringify(e));
+					Logger.error('sonic', e);
 				});
 		}
 

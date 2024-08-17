@@ -21,6 +21,9 @@ export default function isValidUrl(url: string) {
 	} else if (url.startsWith('192.168')) {
 		Logger.error('validation', 'stopped request to 192.168.*.*');
 		return false;
+	} else if (!url.includes('.')) {
+		Logger.error('validation', 'stopped request to' + url);
+		return false;
 	}
 
 	try {
