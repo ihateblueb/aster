@@ -46,8 +46,9 @@ This may be flexible, but hasn't been tested or looked further into.
 Things that work!
 
 ### Cli
-- create user
-- inital setup
+
+-   create user
+-   inital setup
 
 ### Federation
 
