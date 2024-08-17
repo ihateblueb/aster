@@ -73,6 +73,7 @@ Things that work!
 -   fetch reactions and likes
 -   /mod endpoints require authentication and mod status
 -   /admin endpoints require authentication and admin status
+- fetch timelines in chunks based on date, changable max/since
 
 ### Frontend
 
@@ -82,4 +83,4 @@ Things that work!
 -   Search page
 -   Explore page
 -   Timelines
--   Virtual scrolling!!
+-   ~~Virtual scrolling!!~~
