@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_bull_board_ui=self.webpackChunk_bull_board_ui||[]).push([[99951],{99951:(e,a)=>{Object.defineProperty(a,"__esModule",{value:!0}),a.default=function(e,a,u,d){return t[e]};var t={lastWeek:"'oldingi' eeee p 'da'",yesterday:"'kecha' p 'da'",today:"'bugun' p 'da'",tomorrow:"'ertaga' p 'da'",nextWeek:"eeee p 'da'",other:"P"};e.exports=a.default}}]);

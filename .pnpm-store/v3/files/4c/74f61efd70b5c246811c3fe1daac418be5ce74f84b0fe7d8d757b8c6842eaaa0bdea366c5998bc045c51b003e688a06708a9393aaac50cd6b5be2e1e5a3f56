@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_bull_board_ui=self.webpackChunk_bull_board_ui||[]).push([[62105],{62105:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e,t,r,a){return u[e]};var u={lastWeek:"eeee 'שעבר בשעה' p",yesterday:"'אתמול בשעה' p",today:"'היום בשעה' p",tomorrow:"'מחר בשעה' p",nextWeek:"eeee 'בשעה' p",other:"P"};e.exports=t.default}}]);

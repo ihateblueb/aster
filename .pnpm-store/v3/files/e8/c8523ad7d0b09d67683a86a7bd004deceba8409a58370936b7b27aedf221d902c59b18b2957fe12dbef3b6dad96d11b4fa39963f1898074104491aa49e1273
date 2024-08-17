@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_bull_board_ui=self.webpackChunk_bull_board_ui||[]).push([[31211],{31211:(e,t)=>{Object.defineProperty(t,"__esModule",{value:!0}),t.default=function(e,t,l,r){return a[e]};var a={lastWeek:"eeee 'trecută la' p",yesterday:"'ieri la' p",today:"'astăzi la' p",tomorrow:"'mâine la' p",nextWeek:"eeee 'viitoare la' p",other:"P"};e.exports=t.default}}]);

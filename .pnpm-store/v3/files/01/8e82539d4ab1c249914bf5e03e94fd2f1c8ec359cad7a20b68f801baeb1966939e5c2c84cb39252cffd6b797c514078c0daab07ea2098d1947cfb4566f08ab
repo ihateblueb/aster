@@ -1,1 +1,0 @@
-{"version":3,"file":"promoteAll.js","sourceRoot":"","sources":["../../../src/handlers/promoteAll.ts"],"names":[],"mappings":";;;AACA,8CAAmD;AAGnD,KAAK,UAAU,UAAU,CACvB,IAAsB,EACtB,KAAkB;IAElB,MAAM,KAAK,CAAC,UAAU,EAAE,CAAC;IAEzB,OAAO,EAAE,MAAM,EAAE,GAAG,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC;AACnC,CAAC;AAEY,QAAA,iBAAiB,GAAG,IAAA,qBAAa,EAAC,UAAU,CAAC,CAAC"}

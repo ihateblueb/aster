@@ -1,1 +1,0 @@
-type AcornNode<T = any> = import('acorn').Node & Record<string, T>;
