@@ -22,6 +22,7 @@
 		"dev-be": "pnpm --filter=backend dev",
 		"dev-fe": "pnpm --filter=frontend dev",
 		"format": "prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
+		"lint-be": "pnpm --filter=backend lint",
 		"migrate": "pnpm build-be && pnpm --filter=backend migrate",
 		"revert": "pnpm build-be && pnpm -filter=backend revert",
 		"pull": "git pull && git submodule update --init --recursive ",
