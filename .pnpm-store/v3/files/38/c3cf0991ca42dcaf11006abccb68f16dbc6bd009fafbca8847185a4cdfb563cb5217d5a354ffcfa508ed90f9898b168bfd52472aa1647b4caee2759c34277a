@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_bull_board_ui=self.webpackChunk_bull_board_ui||[]).push([[72174],{38839:(e,o)=>{Object.defineProperty(o,"__esModule",{value:!0}),o.default=function(e,o,t,a){return r[e]};var r={lastWeek:"'vorige' eeee 'om' p",yesterday:"'gisteren om' p",today:"'vandaag om' p",tomorrow:"'morgen om' p",nextWeek:"eeee 'om' p",other:"P"};e.exports=o.default}}]);

@@ -1,0 +1,19 @@
+{
+    "name": "@types/ffmpeg-static",
+    "version": "3.0.3",
+    "description": "TypeScript definitions for ffmpeg-static",
+    "homepage": "https://github.com/DefinitelyTyped/DefinitelyTyped/tree/master/types/ffmpeg-static",
+    "license": "MIT",
+    "contributors": [],
+    "main": "",
+    "types": "index.d.ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DefinitelyTyped/DefinitelyTyped.git",
+        "directory": "types/ffmpeg-static"
+    },
+    "scripts": {},
+    "dependencies": {},
+    "typesPublisherContentHash": "062fc5a35c0ece7d5458d9e990bf8624a8b263c7cfe7a6c699b163591ebeaea6",
+    "typeScriptVersion": "4.5"
+}

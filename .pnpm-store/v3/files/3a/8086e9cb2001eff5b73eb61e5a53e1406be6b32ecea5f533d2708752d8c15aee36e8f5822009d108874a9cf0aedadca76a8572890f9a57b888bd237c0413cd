@@ -1,0 +1,29 @@
+/** @typedef {typeof __propDef.props}  JsonViewProps */
+/** @typedef {typeof __propDef.events}  JsonViewEvents */
+/** @typedef {typeof __propDef.slots}  JsonViewSlots */
+export default class JsonView extends SvelteComponentTyped<{
+    json: any;
+    depth?: number;
+    _cur?: number;
+    _last?: boolean;
+}, {
+    [evt: string]: CustomEvent<any>;
+}, {}> {
+}
+export type JsonViewProps = typeof __propDef.props;
+export type JsonViewEvents = typeof __propDef.events;
+export type JsonViewSlots = typeof __propDef.slots;
+import { SvelteComponentTyped } from "svelte";
+declare const __propDef: {
+    props: {
+        json: any;
+        depth?: number;
+        _cur?: number;
+        _last?: boolean;
+    };
+    events: {
+        [evt: string]: CustomEvent<any>;
+    };
+    slots: {};
+};
+export {};

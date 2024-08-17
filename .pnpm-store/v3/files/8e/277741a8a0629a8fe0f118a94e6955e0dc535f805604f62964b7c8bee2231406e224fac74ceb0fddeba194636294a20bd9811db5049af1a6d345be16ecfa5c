@@ -1,0 +1,41 @@
+{
+  "name": "prettier-plugin-ini",
+  "version": "1.2.0",
+  "description": "prettier plugin for INI files",
+  "type": "module",
+  "main": "src/plugin.js",
+  "scripts": {
+    "lint": "eslint --cache .",
+    "prepare": "node bin/languages.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kddnewton/prettier-plugin-ini.git"
+  },
+  "author": "Kevin Newton",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kddnewton/prettier-plugin-ini/issues"
+  },
+  "homepage": "https://github.com/kddnewton/prettier-plugin-ini#readme",
+  "dependencies": {
+    "prettier": ">=3.0.0-alpha.3"
+  },
+  "devDependencies": {
+    "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "jest": "^29.2.1",
+    "linguist-languages": "^7.21.0"
+  },
+  "jest": {
+    "testRegex": ".test.js$",
+    "transform": {}
+  },
+  "prettier": {
+    "plugins": [
+      "./src/plugin.js"
+    ],
+    "trailingComma": "none"
+  }
+}

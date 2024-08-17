@@ -1,0 +1,1 @@
+{"version":3,"file":"emptyQueue.js","sourceRoot":"","sources":["../../../src/handlers/emptyQueue.ts"],"names":[],"mappings":";;;AACA,8CAAmD;AAGnD,KAAK,UAAU,UAAU,CACvB,IAAsB,EACtB,KAAkB;IAElB,MAAM,KAAK,CAAC,KAAK,EAAE,CAAC;IAEpB,OAAO,EAAE,MAAM,EAAE,GAAG,EAAE,IAAI,EAAE,EAAE,EAAE,CAAC;AACnC,CAAC;AAEY,QAAA,iBAAiB,GAAG,IAAA,qBAAa,EAAC,UAAU,CAAC,CAAC"}

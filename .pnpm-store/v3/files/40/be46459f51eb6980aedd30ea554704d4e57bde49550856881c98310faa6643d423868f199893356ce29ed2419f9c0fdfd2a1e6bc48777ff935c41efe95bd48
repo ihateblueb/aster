@@ -1,0 +1,1 @@
+{"version":3,"file":"promotJob.js","sourceRoot":"","sources":["../../../src/handlers/promotJob.ts"],"names":[],"mappings":";;;AAKA,8CAAmD;AACnD,0CAA+C;AAE/C,KAAK,UAAU,UAAU,CACvB,IAAsB,EACtB,GAAa;IAEb,MAAM,GAAG,CAAC,OAAO,EAAE,CAAC;IAEpB,OAAO;QACL,MAAM,EAAE,GAAG;QACX,IAAI,EAAE,EAAE;KACT,CAAC;AACJ,CAAC;AAEY,QAAA,iBAAiB,GAAG,IAAA,qBAAa,EAAC,IAAA,iBAAW,EAAC,UAAU,CAAC,CAAC,CAAC"}

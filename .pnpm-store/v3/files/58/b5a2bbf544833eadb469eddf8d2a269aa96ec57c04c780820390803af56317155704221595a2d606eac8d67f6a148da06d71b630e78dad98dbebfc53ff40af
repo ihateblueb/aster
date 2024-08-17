@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_bull_board_ui=self.webpackChunk_bull_board_ui||[]).push([[11231],{11231:(e,u)=>{Object.defineProperty(u,"__esModule",{value:!0}),u.default=void 0;var t={};["MMM","MMMM"].forEach((function(e){t["Do "+e]=function(u,t){var a=t.formatters,r=a[1===u.getUTCDate()?"Do":"D"],o=a[e];return r(u,t)+" "+o(u,t)}}));var a=t;u.default=a,e.exports=u.default}}]);

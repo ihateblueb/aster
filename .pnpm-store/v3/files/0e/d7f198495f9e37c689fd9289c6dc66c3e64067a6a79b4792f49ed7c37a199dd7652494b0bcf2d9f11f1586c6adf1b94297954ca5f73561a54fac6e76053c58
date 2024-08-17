@@ -1,0 +1,47 @@
+{
+  "name": "@bull-board/api",
+  "version": "5.18.1",
+  "description": "A Dashboard server API built on top of bull or bullmq.",
+  "keywords": [
+    "bull",
+    "bullmq",
+    "redis",
+    "queue",
+    "monitoring",
+    "dashboard"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/felixmosh/bull-board.git",
+    "directory": "packages/api"
+  },
+  "license": "MIT",
+  "author": "felixmosh",
+  "main": "dist/src/index.js",
+  "files": [
+    "dist",
+    "*Adapter.*"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "jest"
+  },
+  "dependencies": {
+    "redis-info": "^3.0.8"
+  },
+  "devDependencies": {
+    "@types/redis-info": "^3.0.0",
+    "@types/supertest": "^2.0.12",
+    "bull": "^4.10.4",
+    "bullmq": "^4.6.0",
+    "ioredis": "^5.3.2",
+    "supertest": "^6.3.3"
+  },
+  "peerDependencies": {
+    "@bull-board/ui": "5.18.1"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

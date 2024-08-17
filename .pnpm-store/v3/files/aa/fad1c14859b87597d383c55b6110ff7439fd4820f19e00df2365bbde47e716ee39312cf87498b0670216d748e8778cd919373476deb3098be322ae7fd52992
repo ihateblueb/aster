@@ -1,0 +1,39 @@
+{
+  "name": "has-keys",
+  "description": "Returns true if the given object has all of the specified keys.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/jonschlinkert/has-keys",
+  "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
+  "repository": "jonschlinkert/has-keys",
+  "bugs": {
+    "url": "https://github.com/jonschlinkert/has-keys/issues"
+  },
+  "license": "MIT",
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "dependencies": {
+    "is-plain-object": "^2.0.1"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "any",
+    "check",
+    "has",
+    "has-own",
+    "key",
+    "keys",
+    "object",
+    "own"
+  ]
+}

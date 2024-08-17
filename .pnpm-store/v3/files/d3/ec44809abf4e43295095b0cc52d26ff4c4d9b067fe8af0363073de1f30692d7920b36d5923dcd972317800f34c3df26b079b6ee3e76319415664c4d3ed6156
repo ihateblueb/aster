@@ -1,0 +1,18 @@
+{
+  "name": "express-custom-error",
+  "version": "1.9.4",
+  "description": "A nodejs module that hacks into express in order to add custom error handling support",
+  "main": "src/index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChoqueCastroLD/express-custom-error.git"
+  },
+  "keywords": [],
+  "author": "ChoqueCastroLD",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ChoqueCastroLD/express-custom-error/issues"
+  },
+  "homepage": "https://github.com/ChoqueCastroLD/express-custom-error#readme"
+}
