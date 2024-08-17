@@ -24,3 +24,4 @@ target
 vite.config.**,**,js
 
 /sonic
+.pnpm-store
