@@ -122,6 +122,10 @@ main {
 		margin-top: 8px;
 		margin-bottom: 8px;
 	}
+
+	p {
+		margin-bottom: 5px;
+	}
 }
 
 @media screen and (max-width: 650px) {
@@ -153,4 +157,9 @@ main {
 
 .timeline {
 	padding: 12px 16px;
+}
+
+.buttons {
+	display: flex;
+	gap: 10px;
 }

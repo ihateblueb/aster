@@ -209,9 +209,22 @@ export default async function processNewNote(body) {
 		await db.getRepository('note').insert(noteToInsert);
 
 		if (noteToInsert['visibility'] === 'public') {
+			if (noteToInsert['cw']) {
+				await ingest
+					.push(
+						config.sonic.collectionPrefix + '_cw',
+						config.sonic.bucket,
+						noteToInsert['id'],
+						noteToInsert['cw']
+					)
+					.catch((e) => {
+						logger('error', 'sonic', JSON.stringify(e));
+					});
+			}
+
 			await ingest
 				.push(
-					config.sonic.collection,
+					config.sonic.collectionPrefix + '_content',
 					config.sonic.bucket,
 					noteToInsert['id'],
 					noteToInsert['content']

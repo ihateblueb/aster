@@ -13,32 +13,10 @@
 	import Store from '$lib/utils/Store';
 
 	let query;
+	let results = {};
 
 	async function search() {
-		await searchGet(query);
-	}
-
-	async function fetchAp() {
-		let searchRes = {};
-
-		let searchReq = await fetch(`/api/v2/fetch?q=${query}`, {
-			method: 'GET',
-			headers: {
-				'Content-Type': 'application/json',
-				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
-			}
-		});
-
-		searchRes = await searchReq.json();
-
-		if (searchReq.status === 200) {
-			console.log(searchRes);
-		} else {
-			console.log(searchRes);
-		}
-
-		return searchRes;
+		results = await searchGet(query);
 	}
 </script>
 
@@ -52,7 +30,23 @@
 				bind:value={query}
 			/>
 			<Button on:click={search}>Search</Button>
-			<Button on:click={fetchAp}>Fetch</Button>
+			<br />
+			{#key results}
+				{#if results}
+					{#if results.results && results.results.length > 0}
+						{#each results.results as result}
+							<p>Matched by <b>{result.by}</b></p>
+							{#if result.type === 'note'}
+								<JsonView json={result} />
+							{:else if result.type === 'user'}
+								<JsonView json={result} />
+							{:else}
+								<JsonView json={result} />
+							{/if}
+						{/each}
+					{/if}
+				{/if}
+			{/key}
 		</div>
 	</div>
 </template>
