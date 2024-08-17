@@ -1,0 +1,25 @@
+name: Lint Backend
+
+on:
+    push:
+        branches: 'main'
+
+jobs:
+    lint-backend:
+        runs-on: docker
+        steps:
+            - name: Checkout repository
+              uses: https://code.forgejo.org/actions/checkout@v4
+
+            - name: Install pnpm
+              run: npm install -g pnpm
+
+            - name: Update submodules
+              run: pnpm pull
+
+            - name: Install dependencies
+              run: pnpm install
+
+            - name: Lint
+              run: |
+                  pnpm lint-be
