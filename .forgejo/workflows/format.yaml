@@ -27,6 +27,6 @@ jobs:
               uses: https://github.com/stefanzweifel/git-auto-commit-action@v5
               with:
                   commit_message: automatic formatting
-                  commit_author: formatter-bot <ihateblueb@proton.me>
-                  commit_user_name: formatter
-                  commit_user_email: ihateblueb@proton.me
+                  commit_author: formatter-bot <ihateblueb+formatter-bot@proton.me>
+                  commit_user_name: formatter-bot
+                  commit_user_email: ihateblueb+formatter-bot@proton.me
