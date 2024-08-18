@@ -40,13 +40,13 @@ if (readlineSync.keyInYN('would you like to create an instance actor?')) {
 
 	let instanceActorToInsert = {
 		id: iaId,
-		ap_id: `${config.url}users/${iaId}`,
-		inbox: `${config.url}users/${iaId}/inbox`,
+		ap_id: `${config.get().url}users/${iaId}`,
+		inbox: `${config.get().url}users/${iaId}/inbox`,
 		username: 'instanceactor',
-		host: new URL(config.url).host,
+		host: new URL(config.get().url).host,
 		displayname: 'Instance Actor',
 		local: true,
-		url: `${config.url}@instanceactor`,
+		url: `${config.get().url}@instanceactor`,
 		locked: true,
 		suspended: false,
 		deactivated: false,
@@ -57,8 +57,8 @@ if (readlineSync.keyInYN('would you like to create an instance actor?')) {
 		speak_as_cat: false,
 		created_at: new Date(Date.now()).toISOString(),
 		updated_at: new Date(Date.now()).toISOString(),
-		following_url: `${config.url}users/${iaId}/following`,
-		followers_url: `${config.url}users/${iaId}/followers`,
+		following_url: `${config.get().url}users/${iaId}/following`,
+		followers_url: `${config.get().url}users/${iaId}/followers`,
 		public_key: publicKey
 	};
 
@@ -143,14 +143,14 @@ readlineSync.promptCLLoop({
 
 		let user = {
 			id: userId,
-			ap_id: `${config.url}users/${userId}`,
-			inbox: `${config.url}users/${userId}/inbox`,
-			outbox: `${config.url}users/${userId}/outbox`,
+			ap_id: `${config.get().url}users/${userId}`,
+			inbox: `${config.get().url}users/${userId}/inbox`,
+			outbox: `${config.get().url}users/${userId}/outbox`,
 			username: username,
-			host: new URL(config.url).host,
+			host: new URL(config.get().url).host,
 			displayname: displayname,
 			local: true,
-			url: `${config.url}@${username}`,
+			url: `${config.get().url}@${username}`,
 			locked: locked,
 			suspended: false,
 			deactivated: false,
@@ -161,8 +161,8 @@ readlineSync.promptCLLoop({
 			speak_as_cat: speak_as_cat,
 			created_at: new Date(Date.now()).toISOString(),
 			updated_at: new Date(Date.now()).toISOString(),
-			following_url: `${config.url}users/${userId}/following`,
-			followers_url: `${config.url}users/${userId}/followers`,
+			following_url: `${config.get().url}users/${userId}/following`,
+			followers_url: `${config.get().url}users/${userId}/followers`,
 			public_key: publicKey
 		};
 

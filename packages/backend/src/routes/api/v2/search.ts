@@ -180,10 +180,10 @@ router.get('/api/v2/search', async (req, res) => {
 			});
 		}
 
-		if (config.sonic.enabled) {
+		if (config.get().sonic.enabled) {
 			let contentQuery = await search.query(
-				config.sonic.collectionPrefix + '_content',
-				config.sonic.bucket,
+				config.get().sonic.collectionPrefix + '_content',
+				config.get().sonic.bucket,
 				req.query.q
 			);
 
@@ -210,8 +210,8 @@ router.get('/api/v2/search', async (req, res) => {
 			}
 
 			let cwQuery = await search.query(
-				config.sonic.collectionPrefix + '_cw',
-				config.sonic.bucket,
+				config.get().sonic.collectionPrefix + '_cw',
+				config.get().sonic.bucket,
 				req.query.q
 			);
 
@@ -238,8 +238,8 @@ router.get('/api/v2/search', async (req, res) => {
 			}
 
 			let bioQuery = await search.query(
-				config.sonic.collectionPrefix + '_bio',
-				config.sonic.bucket,
+				config.get().sonic.collectionPrefix + '_bio',
+				config.get().sonic.bucket,
 				req.query.q
 			);
 

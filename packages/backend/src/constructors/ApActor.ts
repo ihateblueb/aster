@@ -80,7 +80,8 @@ export default class ApActor {
 		this['vcard:Address'] = grabbedUser.location;
 
 		this.inbox = grabbedUser.inbox;
-		this.sharedInbox = 'https://' + new URL(config.url).host + '/inbox';
+		this.sharedInbox =
+			'https://' + new URL(config.get().url).host + '/inbox';
 		this.endpoints = new ApEndpoints();
 		this.outbox = grabbedUser.outbox;
 

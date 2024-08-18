@@ -66,7 +66,7 @@ const router = express.Router();
 
 router.use('/', uploads);
 
-if (config.frontend.bullboard) {
+if (config.get().frontend.bullboard) {
 	router.use('/', bullboard);
 }
 

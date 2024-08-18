@@ -9,7 +9,7 @@ export default async function validateRequest(req) {
 		return { status: 400, message: 'missing host' };
 	}
 
-	if (req.headers.host !== new URL(config.url).host) {
+	if (req.headers.host !== new URL(config.get().url).host) {
 		Logger.error('ap', 'host header did not match configuration');
 		return { status: 400, message: 'host doesnt match instance config' };
 	} else {

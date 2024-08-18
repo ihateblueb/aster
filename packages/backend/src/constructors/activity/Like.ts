@@ -27,7 +27,7 @@ export default class ActLike {
 	tag?: object[];
 
 	constructor(id, actor, author, note, reaction?) {
-		this.id = config.url + 'activities/' + id;
+		this.id = config.get().url + 'activities/' + id;
 
 		this.type = 'Like';
 

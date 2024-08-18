@@ -154,7 +154,7 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 
 							driveFileToInsert['id'] = fileId;
 							driveFileToInsert['ap_id'] =
-								new URL(config.url).href +
+								new URL(config.get().url).href +
 								'uploads/' +
 								grabbedUser.id +
 								'/' +
@@ -181,7 +181,7 @@ router.post(`/api/v2/drive/file/:name`, async (req, res) => {
 							driveFileToInsert['type'] =
 								req.headers['content-type'];
 							driveFileToInsert['src'] =
-								new URL(config.url).href +
+								new URL(config.get().url).href +
 								'uploads/' +
 								grabbedUser.id +
 								'/' +

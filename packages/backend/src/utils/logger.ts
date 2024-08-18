@@ -16,7 +16,7 @@ type Message = string | string[] | number | boolean | object | Error;
 
 class Logger {
 	private log(level: Level, context: string, message: Message) {
-		if (config.logging.type === 'json') {
+		if (config.get().logging.type === 'json') {
 			console.log({
 				level: level,
 				worker: cluster.isPrimary ? 0 : cluster.worker.id,
@@ -24,7 +24,7 @@ class Logger {
 				context: context.toLowerCase(),
 				message: message
 			});
-		} else if (config.logging.type === 'fancy') {
+		} else if (config.get().logging.type === 'fancy') {
 			let string = chalk.bold(
 				cluster.isPrimary ? '*' : cluster.worker.id
 			);
@@ -58,7 +58,7 @@ class Logger {
 	}
 
 	public sql(context: string, message: Message) {
-		if (config.logging.sql) {
+		if (config.get().logging.sql) {
 			this.log('sql', context, message);
 		}
 	}
@@ -68,7 +68,7 @@ class Logger {
 	}
 
 	public debug(context: string, message: Message) {
-		if (config.logging.debug) {
+		if (config.get().logging.debug) {
 			this.log('debug', context, message);
 		}
 	}

@@ -75,7 +75,7 @@ export default async function generateThumbnail(
 
 				return {
 					url:
-						new URL(config.url).href +
+						new URL(config.get().url).href +
 						'uploads/' +
 						userid +
 						'/thumbnails/' +

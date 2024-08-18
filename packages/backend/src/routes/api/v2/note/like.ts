@@ -28,7 +28,8 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 
 				await db.getRepository('note_like').insert({
 					id: likeId,
-					ap_id: new URL(config.url).href + 'activities/' + likeId,
+					ap_id:
+						new URL(config.get().url).href + 'activities/' + likeId,
 					note: req.params.noteid,
 					created_at: new Date(Date.now()).toISOString(),
 					user: authRes.grabbedUserAuth.user

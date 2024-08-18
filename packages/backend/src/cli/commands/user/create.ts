@@ -39,14 +39,14 @@ export default async function userCreate(options: {
 
 	let userToInsert = {
 		id: userId,
-		ap_id: `${config.url}users/${userId}`,
-		inbox: `${config.url}users/${userId}/inbox`,
-		outbox: `${config.url}users/${userId}/outbox`,
+		ap_id: `${config.get().url}users/${userId}`,
+		inbox: `${config.get().url}users/${userId}/inbox`,
+		outbox: `${config.get().url}users/${userId}/outbox`,
 		username: options.username,
-		host: new URL(config.url).host,
+		host: new URL(config.get().url).host,
 		displayname: options.displayname,
 		local: true,
-		url: `${config.url}@instanceactor`,
+		url: `${config.get().url}@instanceactor`,
 		locked: options.locked,
 		suspended: options.suspended,
 		deactivated: options.deactivated,
@@ -57,8 +57,8 @@ export default async function userCreate(options: {
 		speak_as_cat: options.speak_as_cat,
 		created_at: new Date(Date.now()).toISOString(),
 		updated_at: new Date(Date.now()).toISOString(),
-		following_url: `${config.url}users/${userId}/following`,
-		followers_url: `${config.url}users/${userId}/followers`,
+		following_url: `${config.get().url}users/${userId}/following`,
+		followers_url: `${config.get().url}users/${userId}/followers`,
 		public_key: publicKey
 	};
 

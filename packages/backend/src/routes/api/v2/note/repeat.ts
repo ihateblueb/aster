@@ -27,7 +27,8 @@ router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
 				let repeatToInsert = {};
 
 				repeatToInsert['id'] = repeatId;
-				repeatToInsert['ap_id'] = `${config.url}repeats/${repeatId}`;
+				repeatToInsert['ap_id'] =
+					`${config.get().url}repeats/${repeatId}`;
 				repeatToInsert['created_at'] = new Date(
 					Date.now()
 				).toISOString();

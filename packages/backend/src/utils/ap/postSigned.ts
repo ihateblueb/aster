@@ -7,7 +7,7 @@ import db from '../database.js';
 import Logger from '../logger.js';
 
 export default async function postSigned(inbox, localUserId, body) {
-	if (new URL(inbox).host === new URL(config.url).host) {
+	if (new URL(inbox).host === new URL(config.get().url).host) {
 		Logger.debug('ap', 'not sending post to myself');
 	} else {
 		let grabbedLocalUser = await db.getRepository('user').findOne({
@@ -38,7 +38,7 @@ export default async function postSigned(inbox, localUserId, body) {
 			.sign(grabbedLocalUserPriv.private_key)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
+		const signatureHeader = `keyId="${config.get().url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
 
 		console.log('!!OUTGOING POST!!');
 		console.log(inbox);
@@ -57,8 +57,8 @@ export default async function postSigned(inbox, localUserId, body) {
 		});
 		console.log('!!OUTGOING POST!!');
 
-		if (config.plugins.outgoing) {
-			await config.plugins.outgoing.forEach(async (e) => {
+		if (config.get().plugins.outgoing) {
+			await config.get().plugins.outgoing.forEach(async (e) => {
 				await import(`../../plugins/outgoing/${e}.js`).then(
 					async (plugin) => {
 						await plugin.default();

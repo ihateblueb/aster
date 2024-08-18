@@ -5,19 +5,19 @@ import Logger from '../logger.js';
 
 let ingest;
 
-if (!config.sonic.host) {
+if (!config.get().sonic.host) {
 	Logger.fatal('core', 'no sonic host configured');
-} else if (!config.sonic.port) {
+} else if (!config.get().sonic.port) {
 	Logger.fatal('core', 'no sonic port configured');
 }
 
 let sonicConnection = {
-	host: config.sonic.host,
-	port: Number(config.sonic.port)
+	host: config.get().sonic.host,
+	port: Number(config.get().sonic.port)
 };
 
-if (config.sonic.auth) {
-	sonicConnection['auth'] = config.sonic.auth;
+if (config.get().sonic.auth) {
+	sonicConnection['auth'] = config.get().sonic.auth;
 }
 
 ingest = new Sonic.Ingest(sonicConnection);

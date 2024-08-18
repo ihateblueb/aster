@@ -21,7 +21,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 		let noteToInsert = { author: {} };
 
 		noteToInsert['id'] = noteId;
-		noteToInsert['ap_id'] = `${config.url}notes/${noteId}`;
+		noteToInsert['ap_id'] = `${config.get().url}notes/${noteId}`;
 
 		noteToInsert['local'] = true;
 
@@ -54,8 +54,8 @@ router.post(`/api/v2/note`, async (req, res) => {
 			if (noteToInsert['cw']) {
 				await ingest
 					.push(
-						config.sonic.collectionPrefix + '_cw',
-						config.sonic.bucket,
+						config.get().sonic.collectionPrefix + '_cw',
+						config.get().sonic.bucket,
 						noteToInsert['id'],
 						noteToInsert['cw']
 					)
@@ -66,8 +66,8 @@ router.post(`/api/v2/note`, async (req, res) => {
 
 			await ingest
 				.push(
-					config.sonic.collectionPrefix + '_content',
-					config.sonic.bucket,
+					config.get().sonic.collectionPrefix + '_content',
+					config.get().sonic.bucket,
 					noteToInsert['id'],
 					noteToInsert['content']
 				)

@@ -7,10 +7,10 @@ const inboxQueue = new Queue('inbox', {
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
-		attempts: config.inbox.attempts,
+		attempts: config.get().inbox.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: config.inbox.backoff
+			delay: config.get().inbox.backoff
 		}
 	}
 });

@@ -1,29 +1,29 @@
 import config from './config.js';
 import Logger from './logger.js';
 
-if (!config.redis.host) {
+if (!config.get().redis.host) {
 	Logger.fatal('core', 'no redis host configured');
 }
-if (!config.redis.port) {
+if (!config.get().redis.port) {
 	Logger.fatal('core', 'no redis port configured');
 }
 
 const redisConnection = {
-	host: config.redis.host,
-	port: config.redis.port
+	host: config.get().redis.host,
+	port: config.get().redis.port
 };
 
-if (config.redis.prefix) {
-	redisConnection['keyPrefix'] = config.redis.prefix;
+if (config.get().redis.prefix) {
+	redisConnection['keyPrefix'] = config.get().redis.prefix;
 }
-if (config.redis.database) {
-	redisConnection['db'] = config.redis.database;
+if (config.get().redis.database) {
+	redisConnection['db'] = config.get().redis.database;
 }
-if (config.redis.user) {
-	redisConnection['username'] = config.redis.user;
+if (config.get().redis.user) {
+	redisConnection['username'] = config.get().redis.user;
 }
-if (config.redis.pass) {
-	redisConnection['password'] = config.redis.pass;
+if (config.get().redis.pass) {
+	redisConnection['password'] = config.get().redis.pass;
 }
 
 export default redisConnection;

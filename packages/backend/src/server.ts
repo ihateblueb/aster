@@ -31,7 +31,7 @@ await db.initialize().catch((e) => {
 	Logger.fatal('db', e);
 });
 
-if (config.sonic.enabled) {
+if (config.get().sonic.enabled) {
 	await search;
 	await ingest;
 }
@@ -79,7 +79,7 @@ app.use((req, res, next) => {
 
 	if (
 		req.headers['user-agent'].match(
-			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
+			new RegExp(config.get().security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
 		Logger.info(
@@ -117,13 +117,13 @@ io.on('connection', (socket) => {
 
 app.use('/', router);
 
-if (config.frontend.enable) {
+if (config.get().frontend.enable) {
 	app.use(handler);
 } else {
 	Logger.info('core', `frontend disabled`);
 }
 
-server.listen(config.port, () => {
+server.listen(config.get().port, () => {
 	process.send({
 		msgFromWorker: 'worker ' + processId + ' listening'
 	});

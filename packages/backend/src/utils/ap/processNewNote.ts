@@ -204,7 +204,7 @@ export default async function processNewNote(body) {
 				} else if (body.tag[i].type === 'Mention') {
 					if (
 						body.tag[i].name.split('@')[2] ===
-						new URL(config.url).host
+						new URL(config.get().url).host
 					) {
 						Logger.debug('ap', 'mention for this instance');
 						Logger.debug('ap', body.tag[i].name.split('@'));
@@ -241,8 +241,8 @@ export default async function processNewNote(body) {
 			if (noteToInsert['cw']) {
 				await ingest
 					.push(
-						config.sonic.collectionPrefix + '_cw',
-						config.sonic.bucket,
+						config.get().sonic.collectionPrefix + '_cw',
+						config.get().sonic.bucket,
 						noteToInsert['id'],
 						noteToInsert['cw']
 					)
@@ -253,8 +253,8 @@ export default async function processNewNote(body) {
 
 			await ingest
 				.push(
-					config.sonic.collectionPrefix + '_content',
-					config.sonic.bucket,
+					config.get().sonic.collectionPrefix + '_content',
+					config.get().sonic.bucket,
 					noteToInsert['id'],
 					noteToInsert['content']
 				)

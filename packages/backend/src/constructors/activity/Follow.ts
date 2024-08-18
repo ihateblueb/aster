@@ -16,7 +16,7 @@ export default class ActFollow {
 	object: object;
 
 	constructor(activity) {
-		this.id = config.url + 'activities/' + activity.id;
+		this.id = config.get().url + 'activities/' + activity.id;
 		this.actor = activity.actor.ap_id;
 		this.object = activity.object;
 	}

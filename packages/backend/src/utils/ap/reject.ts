@@ -8,9 +8,9 @@ export default async function signAndReject(userId, remoteInbox, body) {
 
 	let rejectMessage = {
 		'@context': 'https://www.w3.org/ns/activitystreams',
-		id: `${config.url}reject/${activityId}`,
+		id: `${config.get().url}reject/${activityId}`,
 		type: 'Reject',
-		actor: `${config.url}users/${userId}`,
+		actor: `${config.get().url}users/${userId}`,
 		object: body
 	};
 

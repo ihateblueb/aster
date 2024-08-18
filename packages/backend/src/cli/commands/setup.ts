@@ -35,14 +35,14 @@ export default async function setup() {
 
 	let instanceActorToInsert = {
 		id: iaId,
-		ap_id: `${config.url}users/${iaId}`,
-		inbox: `${config.url}users/${iaId}/inbox`,
-		outbox: `${config.url}users/${iaId}/outbox`,
+		ap_id: `${config.get().url}users/${iaId}`,
+		inbox: `${config.get().url}users/${iaId}/inbox`,
+		outbox: `${config.get().url}users/${iaId}/outbox`,
 		username: 'instanceactor',
-		host: new URL(config.url).host,
+		host: new URL(config.get().url).host,
 		displayname: 'Instance Actor',
 		local: true,
-		url: `${config.url}@instanceactor`,
+		url: `${config.get().url}@instanceactor`,
 		locked: true,
 		suspended: false,
 		deactivated: false,
@@ -53,8 +53,8 @@ export default async function setup() {
 		speak_as_cat: false,
 		created_at: new Date(Date.now()).toISOString(),
 		updated_at: new Date(Date.now()).toISOString(),
-		following_url: `${config.url}users/${iaId}/following`,
-		followers_url: `${config.url}users/${iaId}/followers`,
+		following_url: `${config.get().url}users/${iaId}/following`,
+		followers_url: `${config.get().url}users/${iaId}/followers`,
 		public_key: publicKey
 	};
 

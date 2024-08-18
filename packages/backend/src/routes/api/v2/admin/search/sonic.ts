@@ -18,8 +18,8 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 		if (note.cw) {
 			await ingest
 				.push(
-					config.sonic.collectionPrefix + '_cw',
-					config.sonic.bucket,
+					config.get().sonic.collectionPrefix + '_cw',
+					config.get().sonic.bucket,
 					note.id,
 					note.cw
 				)
@@ -36,8 +36,8 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 
 		await ingest
 			.push(
-				config.sonic.collectionPrefix + '_content',
-				config.sonic.bucket,
+				config.get().sonic.collectionPrefix + '_content',
+				config.get().sonic.bucket,
 				note.id,
 				note.content
 			)
@@ -62,8 +62,8 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 		if (user.bio) {
 			await ingest
 				.push(
-					config.sonic.collectionPrefix + '_bio',
-					config.sonic.bucket,
+					config.get().sonic.collectionPrefix + '_bio',
+					config.get().sonic.bucket,
 					user.id,
 					user.bio
 				)
@@ -86,7 +86,7 @@ router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
 
 router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
-		.flushc(config.sonic.collectionPrefix + '_cw')
+		.flushc(config.get().sonic.collectionPrefix + '_cw')
 		.then(() => {
 			Logger.info('sonic', 'flushed sonic cw collection');
 		})
@@ -98,7 +98,7 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 		});
 
 	await ingest
-		.flushc(config.sonic.collectionPrefix + '_content')
+		.flushc(config.get().sonic.collectionPrefix + '_content')
 		.then(() => {
 			Logger.info('sonic', 'flushed sonic content collection');
 		})
@@ -110,7 +110,7 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 		});
 
 	await ingest
-		.flushc(config.sonic.collectionPrefix + '_bio')
+		.flushc(config.get().sonic.collectionPrefix + '_bio')
 		.then(() => {
 			Logger.info('sonic', 'flushed sonic bio collection');
 		})

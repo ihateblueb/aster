@@ -25,7 +25,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 		}
 
 		if (!splitUsername[1]) {
-			splitUsername[1] = new URL(config.url).host;
+			splitUsername[1] = new URL(config.get().url).host;
 		}
 
 		let grabbedUser = await db.getRepository('user').findOne({
@@ -57,7 +57,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 				res.status(200).json(grabbedUser);
 			}
 		} else {
-			if (splitUsername[1] !== new URL(config.url).host) {
+			if (splitUsername[1] !== new URL(config.get().url).host) {
 				let actorApId = await getWebfingerAcct(
 					splitUsername[0],
 					splitUsername[1]

@@ -15,9 +15,9 @@ router.get('/api/v2/timeline/public', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let take =
-		req.query.max < config.timeline.maxNotes
+		req.query.max < config.get().timeline.maxNotes
 			? req.query.max
-			: config.timeline.maxNotes;
+			: config.get().timeline.maxNotes;
 
 	res.status(200).json(
 		await renderTimeline(
@@ -30,9 +30,9 @@ router.get('/api/v2/timeline/local', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let take =
-		req.query.max < config.timeline.maxNotes
+		req.query.max < config.get().timeline.maxNotes
 			? req.query.max
-			: config.timeline.maxNotes;
+			: config.get().timeline.maxNotes;
 
 	res.status(200).json(
 		await renderTimeline(await generateTimelineLocal(take, req.query.since))
@@ -43,9 +43,9 @@ router.get('/api/v2/timeline/bubble', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let take =
-		req.query.max < config.timeline.maxNotes
+		req.query.max < config.get().timeline.maxNotes
 			? req.query.max
-			: config.timeline.maxNotes;
+			: config.get().timeline.maxNotes;
 
 	res.status(200).json(
 		await renderTimeline(
@@ -58,9 +58,9 @@ router.get('/api/v2/timeline/home', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let take =
-		req.query.max < config.timeline.maxNotes
+		req.query.max < config.get().timeline.maxNotes
 			? req.query.max
-			: config.timeline.maxNotes;
+			: config.get().timeline.maxNotes;
 
 	res.status(200).json(
 		await renderTimeline(await generateTimelineHome(take, req.query.since))
@@ -71,9 +71,9 @@ router.get('/api/v2/timeline/tag', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 
 	let take =
-		req.query.max < config.timeline.maxNotes
+		req.query.max < config.get().timeline.maxNotes
 			? req.query.max
-			: config.timeline.maxNotes;
+			: config.get().timeline.maxNotes;
 
 	res.status(200).json(
 		await renderTimeline(

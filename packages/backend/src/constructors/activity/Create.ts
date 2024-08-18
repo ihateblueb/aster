@@ -20,7 +20,7 @@ export default class ActCreate {
 	cc: string[];
 
 	constructor(activity) {
-		this.id = config.url + 'activities/' + activity.id;
+		this.id = config.get().url + 'activities/' + activity.id;
 		this.actor = activity.actor.ap_id;
 		this.object = activity.object;
 		this.published = new Date(Date.now()).toISOString();

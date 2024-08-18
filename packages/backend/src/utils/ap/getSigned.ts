@@ -63,7 +63,7 @@ export default async function getSigned(url, localUserId?) {
 			.sign(grabbedLocalUserPriv.private_key)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signedString}"`;
+		const signatureHeader = `keyId="${config.get().url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signedString}"`;
 
 		return await axios
 			.get(url, {

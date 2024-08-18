@@ -15,37 +15,37 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const cpuCount = os.cpus().length;
 
 Logger.info('boot', 'machine has ' + cpuCount + ' cores');
-Logger.info('boot', 'worker count configured to ' + config.workers.count);
+Logger.info('boot', 'worker count configured to ' + config.get().workers.count);
 
 cluster.setupPrimary({
 	exec: __dirname + '/server.js'
 });
 
-if (config.plugins.boot) {
-	config.plugins.boot.forEach((e) => {
+if (config.get().plugins.boot) {
+	config.get().plugins.boot.forEach((e) => {
 		Logger.info('plugin', `registered boot plugin ${e}`);
 	});
 
-	config.plugins.boot.forEach(async (e) => {
+	config.get().plugins.boot.forEach(async (e) => {
 		await import(`./plugins/boot/${e}.js`).then((plugin) => {
 			plugin.default();
 		});
 	});
 }
 
-if (config.plugins.incoming) {
-	config.plugins.incoming.forEach((e) => {
+if (config.get().plugins.incoming) {
+	config.get().plugins.incoming.forEach((e) => {
 		Logger.info('plugin', `registered incoming plugin ${e}`);
 	});
 }
 
-if (config.plugins.outgoing) {
-	config.plugins.outgoing.forEach((e) => {
+if (config.get().plugins.outgoing) {
+	config.get().plugins.outgoing.forEach((e) => {
 		Logger.info('plugin', `registered outgoing plugin ${e}`);
 	});
 }
 
-for (let i = 0; i < config.workers.count; i++) {
+for (let i = 0; i < config.get().workers.count; i++) {
 	cluster.fork();
 }
 
@@ -88,10 +88,13 @@ let saysUp = 0;
 cluster.on('message', (msg) => {
 	saysUp++;
 
-	if (saysUp == config.workers.count) {
+	if (saysUp == config.get().workers.count) {
 		Logger.info(
 			'main',
-			'server started as ' + config.url + ' on port ' + config.port
+			'server started as ' +
+				config.get().url +
+				' on port ' +
+				config.get().port
 		);
 	}
 });

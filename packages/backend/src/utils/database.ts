@@ -52,11 +52,11 @@ export class Typeormlogger implements Logger {
 
 const db = new DataSource({
 	type: 'postgres',
-	host: config.database.host,
-	port: config.database.port,
-	username: config.database.user,
-	password: config.database.pass,
-	database: config.database.name,
+	host: config.get().database.host,
+	port: config.get().database.port,
+	username: config.get().database.user,
+	password: config.get().database.pass,
+	database: config.get().database.name,
 	entities: ['./built/entities/*.js'],
 	migrations: ['./built/migrations/*.js'],
 	logger: new Typeormlogger()

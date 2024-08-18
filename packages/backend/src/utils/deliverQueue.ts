@@ -7,10 +7,10 @@ const deliverQueue = new Queue('deliver', {
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
-		attempts: config.deliver.attempts,
+		attempts: config.get().deliver.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: config.deliver.backoff
+			delay: config.get().deliver.backoff
 		}
 	}
 });
