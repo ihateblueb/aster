@@ -251,7 +251,7 @@
 				return `<span style="display: inline-block; animation: mfm-rainbow ${speed} linear ${loop}; animation-delay: ${delay};">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'sparkle') {
 				// deal with this later
-				return `sparkle`;
+				return `<span style="display: inline-block;">${renderEachChild(object.children, scale)}</span>`;
 			} else if (object.props.name === 'rotate') {
 				let degrees = '90';
 				if (object.props.args.deg) {
