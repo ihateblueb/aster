@@ -12,47 +12,41 @@ type Level =
 	| 'error'
 	| 'fatal';
 
-type Message =
-	| string
-	| string[]
-	| number
-	| number[]
-	| boolean
-	| boolean[]
-	| JSON
-	| Error;
+type Message = string | string[] | number | boolean | object | Error;
 
 class Logger {
 	private log(level: Level, context: string, message: Message) {
-		let processId = cluster.isPrimary ? '*' : cluster.worker.id;
-
 		if (config.logging.type === 'json') {
 			console.log({
 				level: level,
-				worker: processId,
-				time: new Date(Date.now()).toLocaleTimeString(),
-				context: context,
+				worker: cluster.isPrimary ? 0 : cluster.worker.id,
+				time: new Date(Date.now()).toISOString(),
+				context: context.toLowerCase(),
 				message: message
 			});
 		} else if (config.logging.type === 'fancy') {
-			let string = chalk.bold(processId);
+			let string = chalk.bold(
+				cluster.isPrimary ? '*' : cluster.worker.id
+			);
 
 			if (level === 'sql')
-				string += '	' + chalk.bgGreen(chalk.bold(level));
+				string += '	' + chalk.bgGreen(chalk.bold(chalk.white(level)));
 			if (level === 'http')
-				string += '	' + chalk.bgMagenta(chalk.bold(level));
+				string += '	' + chalk.bgMagenta(chalk.bold(chalk.white(level)));
 			if (level === 'debug')
-				string += '	' + chalk.bgCyan(chalk.bold(level));
+				string += '	' + chalk.bgCyan(chalk.bold(chalk.white(level)));
 			if (level === 'info')
-				string += '	' + chalk.bgBlue(chalk.bold(level));
+				string += '	' + chalk.bgBlue(chalk.bold(chalk.white(level)));
 			if (level === 'warn')
-				string += '	' + chalk.bgYellow(chalk.bold(level));
+				string += '	' + chalk.bgYellow(chalk.bold(chalk.white(level)));
 			if (level === 'done')
-				string += '	' + chalk.bgGreenBright(chalk.bold(level));
+				string +=
+					'	' + chalk.bgGreenBright(chalk.bold(chalk.white(level)));
 			if (level === 'error')
-				string += '	' + chalk.bgRed(chalk.bold(level));
+				string += '	' + chalk.bgRed(chalk.bold(chalk.white(level)));
 			if (level === 'fatal')
-				string += '	' + chalk.bgRedBright(chalk.bold(level));
+				string +=
+					'	' + chalk.bgRedBright(chalk.bold(chalk.white(level)));
 
 			string +=
 				'	' + chalk.gray(context.substring(0, 7).toLowerCase()) + '	';

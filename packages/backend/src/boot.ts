@@ -53,6 +53,7 @@ cluster.on('online', (worker) => {
 	Logger.info('boot', 'worker ' + worker.id + ' is now online');
 });
 
+/*
 cluster.on('exit', (worker, code, signal) => {
 	Logger.error(
 		'main',
@@ -66,6 +67,7 @@ cluster.on('exit', (worker, code, signal) => {
 	);
 	cluster.fork();
 });
+*/
 
 cluster.on('died', (worker, code, signal) => {
 	Logger.error(
@@ -91,12 +93,5 @@ cluster.on('message', (msg) => {
 			'main',
 			'server started as ' + config.url + ' on port ' + config.port
 		);
-	}
-});
-
-process.on('SIGTERM', function () {
-	Logger.info('main', 'kill requested');
-	for (const id in cluster.workers) {
-		cluster.workers[id].destroy();
 	}
 });

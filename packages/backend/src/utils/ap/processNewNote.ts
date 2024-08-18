@@ -1,3 +1,4 @@
+import createNotification from '../actions/createNotification.js';
 import config from '../config.js';
 import db from '../database.js';
 import Logger from '../logger.js';
@@ -200,6 +201,34 @@ export default async function processNewNote(body) {
 						'#' + wafrnCamelize(body.tag[i].name),
 						''
 					);
+				} else if (body.tag[i].type === 'Mention') {
+					if (
+						body.tag[i].name.split('@')[2] ===
+						new URL(config.url).host
+					) {
+						Logger.debug('ap', 'mention for this instance');
+						Logger.debug('ap', body.tag[i].name.split('@'));
+
+						let grabbedMentionedUser = await db
+							.getRepository('user')
+							.findOne({
+								where: {
+									local: true,
+									username: body.tag[i].name.split('@')[1]
+								}
+							});
+
+						if (grabbedMentionedUser) {
+							createNotification(
+								grabbedMentionedUser.id,
+								noteToInsert['author'],
+								'mention',
+								noteId
+							);
+						}
+					} else {
+						Logger.debug('ap', 'mention not for this instance');
+					}
 				} else {
 					Logger.warn('ap', 'unused tag type ' + body.tag[i].type);
 				}

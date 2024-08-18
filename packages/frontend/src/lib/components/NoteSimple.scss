@@ -19,11 +19,17 @@
 			align-items: center;
 			flex-grow: 2;
 			gap: 8px;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 
 			a {
 				display: flex;
 				align-items: center;
 				gap: 5px;
+				text-overflow: inherit;
+				white-space: inherit;
+				overflow: inherit;
 
 				.displayname {
 					font-weight: 700;
@@ -33,6 +39,9 @@
 				.username {
 					font-size: var(--font-m);
 					color: var(--txt-tertiary);
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					overflow: hidden;
 				}
 			}
 		}

@@ -101,6 +101,29 @@
 					<NoteSimple data={note} />
 				{/await}
 			</div>
+		{:else if data.type === 'mention'}
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
+				<div class="header">
+					<Icon name="at" size="18px" />
+					<b>
+						<a
+							class="subtle"
+							href={'/@' +
+								data.from.username +
+								'@' +
+								data.from.host}
+							>{data.from.displayname}
+						</a>
+						{locale('mentioned_you_in_a_note')}
+					</b>
+					{#if data.created_at}
+						<Time time={data.created_at} />
+					{/if}
+				</div>
+				{#await noteGet(data.object) then note}
+					<NoteSimple data={note} />
+				{/await}
+			</div>
 		{:else}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
