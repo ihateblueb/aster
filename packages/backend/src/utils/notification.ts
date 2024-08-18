@@ -16,8 +16,8 @@ type notificationType =
 
 class Notification {
 	public async create(
-		to: userId,
-		from: userId,
+		to: string,
+		from: string,
 		type: notificationType,
 		object?: object,
 		reaction?: object
