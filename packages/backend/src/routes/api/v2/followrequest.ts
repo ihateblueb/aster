@@ -3,8 +3,8 @@ import express from 'express';
 import signAndAccept from '../../../utils/ap/accept.js';
 import signAndReject from '../../../utils/ap/reject.js';
 import verifyToken from '../../../utils/auth/verifyToken.js';
-import createNotification from '../../../utils/actions/createNotification.js';
 import db from '../../../utils/database.js';
+import notification from '../../../utils/notification.js';
 
 const router = express.Router();
 
@@ -72,7 +72,7 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 						`UPDATE "user" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
 					);
 
-				createNotification(
+				await notification.create(
 					grabbedToUser.id,
 					grabbedFromUser.id,
 					'follow'

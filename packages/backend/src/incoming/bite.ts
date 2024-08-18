@@ -1,4 +1,3 @@
-import createNotification from '../utils/actions/createNotification.js';
 import db from '../utils/database.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 
@@ -20,25 +19,12 @@ export default async function IBite(body) {
 				.findOne({ where: { id: grabbedNote.author } });
 
 			let grabbedRemoteUser = await getRemoteActor(body.actor);
-
-			createNotification(
-				grabbedLocalUser.id,
-				grabbedRemoteUser.id,
-				'bite',
-				grabbedNote.id
-			);
 		} else if (new URL(body.target).pathname.startsWith('/users')) {
 			let grabbedLocalUser = await db
 				.getRepository('user')
 				.findOne({ where: { ap_id: body.target } });
 
 			let grabbedRemoteUser = await getRemoteActor(body.actor);
-
-			createNotification(
-				grabbedLocalUser.id,
-				grabbedRemoteUser.id,
-				'bite'
-			);
 		}
 	} else {
 		return {

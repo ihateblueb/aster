@@ -1,9 +1,9 @@
 import signAndAccept from '../utils/ap/accept.js';
-import createNotification from '../utils/actions/createNotification.js';
 import db from '../utils/database.js';
 import Logger from '../utils/logger.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
+import notification from '../utils/notification.js';
 
 export default async function IFollow(body) {
 	let grabbedLocalUser = await db.getRepository('user').findOne({
@@ -40,7 +40,7 @@ export default async function IFollow(body) {
 			.getRepository('user_followrequest')
 			.insert(followrequestToInsert);
 
-		await createNotification(
+		await notification.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'followrequest',
@@ -58,7 +58,7 @@ export default async function IFollow(body) {
 				`UPDATE "user" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
 			);
 
-		await createNotification(
+		await notification.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'follow'

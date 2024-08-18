@@ -1,7 +1,7 @@
-import createNotification from '../actions/createNotification.js';
 import config from '../config.js';
 import db from '../database.js';
 import Logger from '../logger.js';
+import notification from '../notification.js';
 import sanitize from '../sanitize.js';
 import ingest from '../sonic/ingest.js';
 import getRemoteActor from './getRemoteActor.js';
@@ -219,7 +219,7 @@ export default async function processNewNote(body) {
 							});
 
 						if (grabbedMentionedUser) {
-							createNotification(
+							await notification.create(
 								grabbedMentionedUser.id,
 								noteToInsert['author'],
 								'mention',

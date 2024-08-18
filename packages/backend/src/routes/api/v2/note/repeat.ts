@@ -6,7 +6,7 @@ import db from '../../../../utils/database.js';
 import Logger from '../../../../utils/logger.js';
 import config from '../../../../utils/config.js';
 import OAnnounce from '../../../../outgoing/announce.js';
-import createNotification from '../../../../utils/actions/createNotification.js';
+import notification from '../../../../utils/notification.js';
 
 const router = express.Router();
 
@@ -46,7 +46,7 @@ router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
 					grabbedNote.local &&
 					authRes.grabbedUserAuth.user !== grabbedNote.author
 				) {
-					createNotification(
+					await notification.create(
 						grabbedNote.author,
 						authRes.grabbedUserAuth.user,
 						'repeat',

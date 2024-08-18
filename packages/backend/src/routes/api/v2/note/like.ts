@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import Logger from '../../../../utils/logger.js';
-import createNotification from '../../../../utils/actions/createNotification.js';
 import OLike from '../../../../outgoing/like.js';
 import config from '../../../../utils/config.js';
+import notification from '../../../../utils/notification.js';
 
 const router = express.Router();
 
@@ -49,7 +49,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 
 				if (grabbedAuthor) {
 					if (grabbedAuthor.local) {
-						await createNotification(
+						await notification.create(
 							grabbedNote.author,
 							authRes.grabbedUserAuth.user,
 							'like',
