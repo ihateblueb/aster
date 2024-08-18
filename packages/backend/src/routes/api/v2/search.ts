@@ -180,6 +180,79 @@ router.get('/api/v2/search', async (req, res) => {
 			});
 		}
 
+		if (req.query.q.startsWith('@')) {
+			let splitUsername = req.query.q.split('@');
+
+			Logger.debug('search', splitUsername[1]);
+			Logger.debug('search', splitUsername[2]);
+
+			let grabbedUsers;
+
+			if (splitUsername[1] && !splitUsername[2]) {
+				grabbedUsers = await db.getRepository('user').find({
+					where: {
+						username: splitUsername[1]
+					}
+				});
+			} else if (splitUsername[1] && splitUsername[2]) {
+				grabbedUsers = await db.getRepository('user').find({
+					where: {
+						username: splitUsername[1],
+						host: splitUsername[2]
+					}
+				});
+			}
+
+			for (const user in grabbedUsers) {
+				results.push({
+					type: 'user',
+					by: 'handle',
+					object: grabbedUsers[user]
+				});
+			}
+		}
+
+		try {
+			if (isValidUrl(req.query.q)) {
+				let grabbedObject = await getSigned(req.query.q);
+
+				if (!grabbedObject.error) {
+					if (grabbedObject.data.type) {
+						if (grabbedObject.data.type === 'Note') {
+							let newNote = await processNewNote(
+								grabbedObject.data
+							);
+
+							let generatedNote = await generateNote(newNote);
+
+							results.push({
+								type: 'note',
+								by: 'fetched',
+								object: generatedNote.note
+							});
+						} else if (
+							grabbedObject.data.type === 'Person' ||
+							grabbedObject.data.type === 'Service'
+						) {
+							let newActor = await processNewActor(
+								grabbedObject.data
+							);
+
+							results.push({
+								type: 'user',
+								by: 'fetched',
+								object: newActor
+							});
+						}
+					}
+				} else {
+					Logger.error('search', 'failed to fetch url');
+				}
+			}
+		} catch (e) {
+			Logger.error('search', e);
+		}
+
 		if (config.get().sonic.enabled) {
 			let contentQuery = await search.query(
 				config.get().sonic.collectionPrefix + '_content',
