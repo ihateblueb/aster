@@ -15,5 +15,11 @@
 		display: flex;
 		align-items: center;
 		gap: 6px;
+
+		p {
+			.username {
+				font-weight: 700;
+			}
+		}
 	}
 }

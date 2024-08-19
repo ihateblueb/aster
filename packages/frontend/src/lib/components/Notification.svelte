@@ -16,9 +16,9 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="user-plus" size="18px" />
-					<b>
+					<p>
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
@@ -26,7 +26,7 @@
 							>{data.from.displayname}
 						</a>
 						{locale('followed_you')}
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
@@ -36,9 +36,9 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="star" size="18px" />
-					<b>
+					<p>
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
@@ -46,7 +46,7 @@
 							>{data.from.displayname}
 						</a>
 						{locale('liked_your_note')}
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
@@ -59,9 +59,9 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<img height="22px" src={data.reaction.url} />
-					<b>
+					<p>
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
@@ -69,7 +69,7 @@
 							>{data.from.displayname}
 						</a>
 						{locale('reacted_to_your_note')}
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
@@ -82,9 +82,9 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="repeat" size="18px" />
-					<b>
+					<p>
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
@@ -92,7 +92,7 @@
 							>{data.from.displayname}
 						</a>
 						{locale('repeated_your_note')}
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
@@ -105,9 +105,9 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="at" size="18px" />
-					<b>
+					<p>
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
@@ -115,7 +115,7 @@
 							>{data.from.displayname}
 						</a>
 						{locale('mentioned_you_in_a_note')}
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
@@ -128,17 +128,17 @@
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
 					<Icon name="question-mark" size="18px" />
-					<b>
+					<p>
 						{locale('unknown_notification')}
 						<a
-							class="subtle"
+							class="username subtle"
 							href={'/@' +
 								data.from.username +
 								'@' +
 								data.from.host}
 							>{data.from.displayname}
 						</a>
-					</b>
+					</p>
 					{#if data.created_at}
 						<Time time={data.created_at} />
 					{/if}
