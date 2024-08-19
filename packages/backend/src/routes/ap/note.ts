@@ -29,7 +29,17 @@ router.get('/notes/:noteid', async (req, res, next) => {
 
 				if (grabbedAuthor) {
 					res.setHeader('Content-Type', 'application/activity+json');
-					res.json(new ApNote(grabbedNote, grabbedAuthor));
+
+					if (
+						grabbedNote.visibility !== 'public' ||
+						grabbedNote.visibility !== 'unlisted'
+					) {
+						res.json(new ApNote(grabbedNote, grabbedAuthor));
+					} else {
+						return res.status(401).json({
+							message: 'Note not visible to you'
+						});
+					}
 				}
 			} else {
 				return res.status(404).json({ message: 'Not found' });

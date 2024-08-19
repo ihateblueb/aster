@@ -18,13 +18,28 @@ router.get('/api/v2/note/:noteid', async (req, res) => {
 			.where({ id: req.params.noteid })
 			.getOne();
 
-		let generatedNote = await generateNote(grabbedNote);
+		if (grabbedNote) {
+			if (
+				grabbedNote.visibility !== 'public' ||
+				grabbedNote.visibility !== 'unlisted'
+			) {
+				let generatedNote = await generateNote(grabbedNote);
 
-		if (generatedNote.status === 200) {
-			return res.status(200).json(generatedNote.note);
+				if (generatedNote.status === 200) {
+					return res.status(200).json(generatedNote.note);
+				} else {
+					return res.status(generatedNote.status).json({
+						message: generatedNote.message
+					});
+				}
+			} else {
+				return res.status(401).json({
+					message: 'Note not visible to you'
+				});
+			}
 		} else {
-			return res.status(generatedNote.status).json({
-				message: generatedNote.message
+			return res.status(404).json({
+				message: 'Note does not exist'
 			});
 		}
 	}
