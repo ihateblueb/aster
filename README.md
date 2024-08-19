@@ -63,7 +63,9 @@ Things that work!
 -   Fetch note emojis
 -   Accept and send likes
 -   Process incoming hashtags and wafrn hashtags
--   Process deletes
+-   Process deletes of actors and notes
+-   Authorized fetch!
+-   Grabs following/followers counts
 
 ### Internal API
 
@@ -79,6 +81,7 @@ Things that work!
 -   /mod endpoints require authentication and mod status
 -   /admin endpoints require authentication and admin status
 -   fetch timelines in chunks based on date, changable max/since
+-   Search api that supports lookup by username, displayname, ap id, bio, note content, note cw, and even allows fetching raw objects without processing them
 
 ### Frontend
 
