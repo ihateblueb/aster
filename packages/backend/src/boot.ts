@@ -22,7 +22,7 @@ cluster.setupPrimary({
 });
 
 try {
-	if (config.get().plugins.boot) {
+	if (config.get().plugins && config.get().plugins.boot) {
 		config.get().plugins.boot.forEach((e) => {
 			Logger.info('plugin', `registered boot plugin ${e}`);
 		});
@@ -37,13 +37,13 @@ try {
 	Logger.debug('plugin', e);
 }
 
-if (config.get().plugins.incoming) {
+if (config.get().plugins && config.get().plugins.incoming) {
 	config.get().plugins.incoming.forEach((e) => {
 		Logger.info('plugin', `registered incoming plugin ${e}`);
 	});
 }
 
-if (config.get().plugins.outgoing) {
+if (config.get().plugins && config.get().plugins.outgoing) {
 	config.get().plugins.outgoing.forEach((e) => {
 		Logger.info('plugin', `registered outgoing plugin ${e}`);
 	});

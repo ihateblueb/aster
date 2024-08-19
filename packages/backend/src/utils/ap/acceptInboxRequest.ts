@@ -22,7 +22,7 @@ export default async function acceptInboxRequest(parsedBody) {
 	await getRemoteInstance(new URL(parsedBody.id).host);
 
 	try {
-		if (config.get().plugins.incoming) {
+		if (config.get().plugins && config.get().plugins.incoming) {
 			await config.get().plugins.incoming.forEach(async (e) => {
 				await import(`../../plugins/incoming/${e}.js`).then(
 					async (plugin) => {

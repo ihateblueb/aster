@@ -264,13 +264,13 @@
 							</p>
 							<div class="stats">
 								<div>
-									<b>0</b> notes
+									<b>{data.total_notes}</b> notes
 								</div>
 								<div>
-									<b>0</b> following
+									<b>{data.total_following}</b> following
 								</div>
 								<div>
-									<b>0</b> followers
+									<b>{data.total_followers}</b> followers
 								</div>
 							</div>
 						</div>

@@ -1,7 +1,9 @@
 import db from '../database.js';
+import logger from '../logger.js';
 import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
+import getSigned from './getSigned.js';
 
 export default async function processNewActor(body) {
 	if (body.preferredUsername && body.id && body.url && body.outbox) {
@@ -91,7 +93,36 @@ export default async function processNewActor(body) {
 		actorToInsert['updated_at'] = new Date(Date.now()).toISOString();
 
 		actorToInsert['following_url'] = sanitize(body.following);
+
+		try {
+			let grabbedFollowing = await getSigned(body.following);
+
+			if (!grabbedFollowing.error && grabbedFollowing.data) {
+				if (grabbedFollowing.data.totalItems) {
+					actorToInsert['total_following'] = sanitize(
+						grabbedFollowing.data.totalItems
+					);
+				}
+			}
+		} catch (e) {
+			logger.debug('ap', e);
+		}
+
 		actorToInsert['followers_url'] = sanitize(body.followers);
+
+		try {
+			let grabbedFollowers = await getSigned(body.followers);
+
+			if (!grabbedFollowers.error && grabbedFollowers.data) {
+				if (grabbedFollowers.data.totalItems) {
+					actorToInsert['total_followers'] = sanitize(
+						grabbedFollowers.data.totalItems
+					);
+				}
+			}
+		} catch (e) {
+			logger.debug('ap', e);
+		}
 
 		if (body['vcard:bday']) {
 			actorToInsert['birthday'] = sanitize(body['vcard:bday']);

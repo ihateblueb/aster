@@ -1,6 +1,8 @@
 import db from '../database.js';
+import logger from '../logger.js';
 import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
+import getSigned from './getSigned.js';
 
 export default async function updateRemoteActor(body) {
 	let grabbedUser = {};
@@ -128,16 +130,50 @@ export default async function updateRemoteActor(body) {
 			.update({ ap_id: body.id }, { speak_as_cat: false });
 	}
 
-	if (body.following_url) {
+	if (body.following) {
 		grabbedUser = await db
 			.getRepository('user')
-			.update({ ap_id: body.id }, { following: body.following_url });
+			.update({ ap_id: body.id }, { following_url: body.following });
+
+		try {
+			let grabbedFollowing = await getSigned(body.following);
+
+			if (grabbedFollowing.data) {
+				if (grabbedFollowing.data.totalItems) {
+					grabbedUser = await db.getRepository('user').update(
+						{ ap_id: body.id },
+						{
+							total_following: grabbedFollowing.data.totalItems
+						}
+					);
+				}
+			}
+		} catch (e) {
+			logger.debug('ap', e);
+		}
 	}
 
-	if (body.followers_url) {
+	if (body.followers) {
 		grabbedUser = await db
 			.getRepository('user')
-			.update({ ap_id: body.id }, { followers: body.followers_url });
+			.update({ ap_id: body.id }, { followers_url: body.followers });
+
+		try {
+			let grabbedFollowers = await getSigned(body.followers);
+
+			if (grabbedFollowers.data) {
+				if (grabbedFollowers.data.totalItems) {
+					grabbedUser = await db.getRepository('user').update(
+						{ ap_id: body.id },
+						{
+							total_followers: grabbedFollowers.data.totalItems
+						}
+					);
+				}
+			}
+		} catch (e) {
+			logger.debug('ap', e);
+		}
 	}
 
 	if (body['vcard:bday']) {
