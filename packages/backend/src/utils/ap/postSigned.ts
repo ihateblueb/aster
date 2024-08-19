@@ -57,14 +57,18 @@ export default async function postSigned(inbox, localUserId, body) {
 		});
 		console.log('!!OUTGOING POST!!');
 
-		if (config.get().plugins.outgoing) {
-			await config.get().plugins.outgoing.forEach(async (e) => {
-				await import(`../../plugins/outgoing/${e}.js`).then(
-					async (plugin) => {
-						await plugin.default();
-					}
-				);
-			});
+		try {
+			if (config.get().plugins.outgoing) {
+				await config.get().plugins.outgoing.forEach(async (e) => {
+					await import(`../../plugins/outgoing/${e}.js`).then(
+						async (plugin) => {
+							await plugin.default();
+						}
+					);
+				});
+			}
+		} catch (e) {
+			Logger.debug('plugin', e);
 		}
 
 		return await axios

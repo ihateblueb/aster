@@ -21,16 +21,20 @@ cluster.setupPrimary({
 	exec: __dirname + '/server.js'
 });
 
-if (config.get().plugins.boot) {
-	config.get().plugins.boot.forEach((e) => {
-		Logger.info('plugin', `registered boot plugin ${e}`);
-	});
-
-	config.get().plugins.boot.forEach(async (e) => {
-		await import(`./plugins/boot/${e}.js`).then((plugin) => {
-			plugin.default();
+try {
+	if (config.get().plugins.boot) {
+		config.get().plugins.boot.forEach((e) => {
+			Logger.info('plugin', `registered boot plugin ${e}`);
 		});
-	});
+
+		config.get().plugins.boot.forEach(async (e) => {
+			await import(`./plugins/boot/${e}.js`).then((plugin) => {
+				plugin.default();
+			});
+		});
+	}
+} catch (e) {
+	Logger.debug('plugin', e);
 }
 
 if (config.get().plugins.incoming) {

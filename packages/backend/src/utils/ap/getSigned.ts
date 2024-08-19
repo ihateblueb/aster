@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { createHash, createSign } from 'node:crypto';
+import crypto, { createHash, createSign } from 'node:crypto';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
@@ -47,36 +47,32 @@ export default async function getSigned(url, localUserId?) {
 		);
 
 		const getUrl = new URL(url);
-		const sendDate = new Date(Date.now()).toISOString();
+		const sendDate = new Date(Date.now()).toUTCString();
 
-		const stringToSign = `(request-target): get ${getUrl.pathname}\nhost: ${getUrl.host}\ndate: ${sendDate}\naccept: application/activity+json`;
+		let headers = {
+			Accept: 'application/activity+json, application/ld+json',
+			Algorithm: 'rsa-sha256',
+			Date: sendDate
+		};
 
-		const digest = createHash('sha256')
-			.update(JSON.stringify(stringToSign))
-			.digest('base64');
+		const stringToSign = `(request-target): get ${getUrl.pathname}\nhost: ${getUrl.host}\ndate: ${sendDate}\naccept: application/activity+json, application/ld+json`;
 
-		const signer = createSign('sha256');
-		signer.update(stringToSign);
-		signer.end();
-
-		const signedString = signer
-			.sign(grabbedLocalUserPriv.private_key)
+		const signature = crypto
+			.sign(
+				'sha256',
+				Buffer.from(stringToSign),
+				grabbedLocalUserPriv.private_key
+			)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.get().url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signedString}"`;
+		const signatureHeader = `keyId="${config.get().url}users/${grabbedLocalUser.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signature}"`;
+
+		headers['User-Agent'] = `Aster/${pkg.version}`;
+		headers['Signature'] = signatureHeader;
 
 		return await axios
 			.get(url, {
-				headers: {
-					'Content-Type': 'application/activity+json',
-					'User-Agent': `Aster/${pkg.version}`,
-					Accept: 'application/activity+json',
-					Algorithm: 'rsa-sha256',
-					Host: getUrl.host,
-					Date: sendDate,
-					Digest: `SHA-256=${digest}`,
-					Signature: signatureHeader
-				}
+				headers: headers
 			})
 			.then((res) => {
 				if (res.data) {
