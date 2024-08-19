@@ -53,7 +53,11 @@
 				let foundEmoji = emojis.find(
 					(e) => e.name === ':' + object.props.name + ':'
 				);
-				return `<img class="mfm-customEmoji" src="${foundEmoji.url}" title=":${foundEmoji.name.replaceAll(':', '') + '@' + foundEmoji.host}:" />`;
+				if (foundEmoji) {
+					return `<img class="mfm-customEmoji" src="${foundEmoji.url}" title=":${foundEmoji.name.replaceAll(':', '') + '@' + foundEmoji.host}:" />`;
+				} else {
+					return `:${object.props.name}:`;
+				}
 			} else {
 				return `<span class="mfm-emoji">:${object.props.name}:</span>`;
 			}
