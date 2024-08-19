@@ -31,8 +31,8 @@ router.get('/notes/:noteid', async (req, res, next) => {
 					res.setHeader('Content-Type', 'application/activity+json');
 
 					if (
-						grabbedNote.visibility !== 'public' ||
-						grabbedNote.visibility !== 'unlisted'
+						grabbedNote.visibility === 'public' ||
+						grabbedNote.visibility === 'unlisted'
 					) {
 						res.json(new ApNote(grabbedNote, grabbedAuthor));
 					} else {

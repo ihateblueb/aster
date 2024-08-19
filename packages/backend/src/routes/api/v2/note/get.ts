@@ -20,8 +20,8 @@ router.get('/api/v2/note/:noteid', async (req, res) => {
 
 		if (grabbedNote) {
 			if (
-				grabbedNote.visibility !== 'public' ||
-				grabbedNote.visibility !== 'unlisted'
+				grabbedNote.visibility === 'public' ||
+				grabbedNote.visibility === 'unlisted'
 			) {
 				let generatedNote = await generateNote(grabbedNote);
 
