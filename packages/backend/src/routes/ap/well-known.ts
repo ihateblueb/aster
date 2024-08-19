@@ -19,20 +19,28 @@ router.get('/.well-known/nodeinfo', (req, res) => {
 });
 
 // host-meta
-router.get('/.well-known/host-meta', (req, res) => {
-	res.setHeader('Content-Type', 'application/xrd+xml');
-	res.send(
-		'<?xml version="1.0" encoding="UTF-8"?><XRD xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0"><Link rel="lrdd" type="application/xrd+xml" template="' +
-			config.get().url +
-			'.well-known/webfinger?resource={uri}"/></XRD>'
-	);
-});
+router.get(
+	['/.well-known/host-meta', '/.well-known/host-meta.json'],
+	(req, res) => {
+		res.setHeader('Content-Type', 'application/jrd+json');
+		res.status(200).json({
+			links: [
+				{
+					rel: 'lrdd',
+					type: 'application/jrd+json',
+					template:
+						config.get().url +
+						'.well-known/webfinger?resource={uri}'
+				}
+			]
+		});
+	}
+);
 
 // webfinger
 router.get('/.well-known/webfinger', async (req, res) => {
 	if (req.query.resource) {
-		res.setHeader('Content-Type', 'application/activity+json');
-
+		res.setHeader('Content-Type', 'application/jrd+json');
 		if (req.query.resource.startsWith('acct:')) {
 			let grabbedUser = await db
 				.getRepository('user')
@@ -40,13 +48,13 @@ router.get('/.well-known/webfinger', async (req, res) => {
 				.where({
 					username: req.query.resource
 						.replace('acct:', '')
-						.split('@')[0],
+						.split('@')[1],
 					local: true
 				})
 				.getOne();
 
 			if (grabbedUser) {
-				res.json({
+				res.status(200).json({
 					subject: `acct:${grabbedUser.username}@${new URL(config.get().url).host}`,
 					links: [
 						{
@@ -60,7 +68,29 @@ router.get('/.well-known/webfinger', async (req, res) => {
 				res.send();
 			}
 		} else {
-			res.send();
+			let grabbedUser = await db
+				.getRepository('user')
+				.createQueryBuilder()
+				.where({
+					ap_id: req.query.resource,
+					local: true
+				})
+				.getOne();
+
+			if (grabbedUser) {
+				res.status(200).json({
+					subject: `acct:${grabbedUser.username}@${new URL(config.get().url).host}`,
+					links: [
+						{
+							rel: 'self',
+							type: 'application/activity+json',
+							href: `${config.get().url}users/${grabbedUser.id}`
+						}
+					]
+				});
+			} else {
+				res.send();
+			}
 		}
 	} else {
 		res.send();
