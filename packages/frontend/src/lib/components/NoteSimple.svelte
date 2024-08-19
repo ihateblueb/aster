@@ -1,4 +1,5 @@
 <script>
+	import { goto } from '$app/navigation';
 	import { locale } from '$lib/locale';
 	import Avatar from './Avatar.svelte';
 	import Icon from './Icon.svelte';
@@ -67,7 +68,15 @@
 			</div>
 		</div>
 		<div class="content">
-			<Mfm content={data.content} simple />
+			{#if data.content}
+				<Mfm
+					content={data.content}
+					simple
+					on:click={() => {
+						goto('/notes/' + data.id);
+					}}
+				/>
+			{/if}
 		</div>
 	</article>
 </template>
