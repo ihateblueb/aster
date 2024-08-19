@@ -19,13 +19,23 @@
 
 	.header {
 		display: flex;
-		align-items: center;
 		gap: 6px;
 
-		p {
-			.username {
-				font-weight: 700;
+		.center {
+			display: flex;
+			align-items: center;
+			flex-grow: 2;
+			gap: 6px;
+
+			p {
+				.username {
+					font-weight: 700;
+				}
 			}
+		}
+
+		.right {
+			padding-top: calc(var(--font-m) - var(--font-s));
 		}
 	}
 }

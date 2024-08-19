@@ -15,41 +15,53 @@
 		{#if data.type === 'follow'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<Icon name="user-plus" size="18px" />
-					<p>
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-						{locale('followed_you')}
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<Icon name="user-plus" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('followed_you')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 			</div>
 		{:else if data.type === 'like'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<Icon name="star" size="18px" />
-					<p>
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-						{locale('liked_your_note')}
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<Icon name="star" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('liked_your_note')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 				{#await noteGet(data.object) then note}
 					<NoteSimple data={note} />
@@ -58,21 +70,27 @@
 		{:else if data.type === 'react'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<img height="22px" src={data.reaction.url} />
-					<p>
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-						{locale('reacted_to_your_note')}
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<img height="22px" src={data.reaction.url} />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('reacted_to_your_note')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 				{#await noteGet(data.object) then note}
 					<NoteSimple data={note} />
@@ -81,21 +99,27 @@
 		{:else if data.type === 'repeat'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<Icon name="repeat" size="18px" />
-					<p>
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-						{locale('repeated_your_note')}
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<Icon name="repeat" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('repeated_your_note')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 				{#await noteGet(data.object) then note}
 					<NoteSimple data={note} />
@@ -104,21 +128,27 @@
 		{:else if data.type === 'mention'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<Icon name="at" size="18px" />
-					<p>
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-						{locale('mentioned_you_in_a_note')}
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<Icon name="at" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('mentioned_you_in_a_note')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 				{#await noteGet(data.object) then note}
 					<NoteSimple data={note} />
@@ -127,21 +157,27 @@
 		{:else}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
-					<Icon name="question-mark" size="18px" />
-					<p>
-						{locale('unknown_notification')}
-						<a
-							class="username subtle"
-							href={'/@' +
-								data.from.username +
-								'@' +
-								data.from.host}
-							>{data.from.displayname}
-						</a>
-					</p>
-					{#if data.created_at}
-						<Time time={data.created_at} />
-					{/if}
+					<div class="left">
+						<Icon name="question-mark" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							{locale('unknown_notification')}
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
 				</div>
 				<p>{JSON.stringify(data)}</p>
 			</div>
