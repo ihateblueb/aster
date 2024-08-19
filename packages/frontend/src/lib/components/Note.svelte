@@ -70,9 +70,18 @@
 					margin="0px 5px 0px 0px"
 				/>
 				<span>
-					{repeatData.author.displayname
-						? repeatData.author.displayname
-						: repeatData.author.username}
+					<a
+						class="subtle"
+						href={'/@' +
+							repeatData.author.username +
+							(!repeatData.author.local
+								? '@' + repeatData.author.host
+								: '')}
+					>
+						{repeatData.author.displayname
+							? repeatData.author.displayname
+							: repeatData.author.username}
+					</a>
 					{locale('repeated')}
 				</span>
 			</div>
@@ -94,8 +103,7 @@
 					<a
 						href={'/@' +
 							data.author.username +
-							'@' +
-							data.author.host}
+							(!data.author.local ? '@' + data.author.host : '')}
 						class="displayname subtle"
 						><Mfm
 							content={data.author.displayname
@@ -107,8 +115,7 @@
 					<a
 						href={'/@' +
 							data.author.username +
-							'@' +
-							data.author.host}
+							(!data.author.local ? '@' + data.author.host : '')}
 						class="username subtle"
 						>@{data.author.username}{#if !data.author.local}
 							<span class="host">@{data.author.host}</span>
