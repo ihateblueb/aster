@@ -8,12 +8,18 @@ import admin from '../../../../admin.js';
 
 const router = express.Router();
 
-router.post(`/api/v2/admin/emoji`, admin, async (req, res) => {
-	Logger.debug('admin', 'emoji created');
+router.get(`/api/v2/admin/federation`, admin, async (req, res) => {
+	Logger.debug('admin', 'get federation');
 
-	res.status(200).json({
-		message: 'Flushed all content'
-	});
+	let grabbedInstances = await db.getRepository('instance').find();
+
+	if (grabbedInstances) {
+		res.status(200).json(grabbedInstances);
+	} else {
+		res.status(404).json({
+			message: 'No instances found'
+		});
+	}
 });
 
 export default router;

@@ -14,6 +14,7 @@ import ap_user from './ap/user.js';
 import ap_note from './ap/note.js';
 
 import api_admin_sonic_index from './api/v2/admin/search/sonic.js';
+import api_admin_federation_get from './api/v2/admin/federation/get.js';
 
 import api_user_bite from './api/v2/user/bite.js';
 import api_user_create from './api/v2/user/create.js';
@@ -70,10 +71,6 @@ if (config.get().frontend.bullboard) {
 	router.use('/', bullboard);
 }
 
-// these just pass it to sveltekit after verifying
-router.use('/', admin);
-router.use('/', mod);
-
 // ap
 router.use('/', ap_wellknown);
 router.use('/', ap_nodeinfo);
@@ -83,6 +80,7 @@ router.use('/', ap_note);
 
 // api
 router.use('/', api_admin_sonic_index);
+router.use('/', api_admin_federation_get);
 
 router.use('/', api_user_bite);
 router.use('/', api_user_create);

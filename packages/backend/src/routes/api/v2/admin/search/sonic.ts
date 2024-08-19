@@ -4,10 +4,11 @@ import config from '../../../../../utils/config.js';
 import db from '../../../../../utils/database.js';
 import ingest from '../../../../../utils/sonic/ingest.js';
 import Logger from '../../../../../utils/logger.js';
+import admin from '../../../../admin.js';
 
 const router = express.Router();
 
-router.get(`/api/v2/admin/sonic/index`, async (req, res) => {
+router.get(`/api/v2/admin/sonic/index`, admin, async (req, res) => {
 	let grabbedNotes = await db.getRepository('note').find({
 		where: {
 			visibility: 'public'

@@ -32,7 +32,7 @@ export class Instance {
 	@Column({ nullable: true })
 	mod_note: string;
 
-	@Column()
+	@Column({ unique: true })
 	host: string;
 
 	@Column({ nullable: true })
