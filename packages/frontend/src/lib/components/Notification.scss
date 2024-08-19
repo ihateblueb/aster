@@ -8,7 +8,13 @@
 
 	&.small {
 		padding: 10px;
-		margin-bottom: 10px;
+		margin-bottom: 0px;
+		background-color: var(--bg-secondary);
+		border-radius: 0px;
+
+		&:not(:last-child) {
+			border-bottom: 1px solid var(--bg-tertiary);
+		}
 	}
 
 	.header {

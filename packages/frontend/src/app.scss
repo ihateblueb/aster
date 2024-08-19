@@ -163,3 +163,29 @@ main {
 	display: flex;
 	gap: 10px;
 }
+
+.containedWidget {
+	height: 500px;
+	overflow: hidden;
+	border: 1px solid var(--bg-tertiary);
+	border-radius: var(--border-m);
+
+	> .header {
+		display: flex;
+		align-items: center;
+		position: sticky;
+		top: 0;
+		z-index: 200;
+		padding: 8px 10px;
+		gap: 5px;
+		border-bottom: 1px solid var(--bg-tertiary);
+		background-color: var(--bg-tertiary);
+		font-size: var(--font-m);
+	}
+
+	> .content {
+		height: calc(100% - 35px);
+		box-sizing: border-box;
+		overflow-y: scroll;
+	}
+}
