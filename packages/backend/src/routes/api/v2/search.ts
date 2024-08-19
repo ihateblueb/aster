@@ -212,45 +212,59 @@ router.get('/api/v2/search', async (req, res) => {
 			}
 		}
 
-		try {
-			if (isValidUrl(req.query.q)) {
-				let grabbedObject = await getSigned(req.query.q);
+		if (req.query.q.startsWith('fetchOnly:')) {
+			let grabbedObject = await getSigned(
+				req.query.q.replace('fetchOnly:', '')
+			);
 
-				if (!grabbedObject.error) {
-					if (grabbedObject.data.type) {
-						if (grabbedObject.data.type === 'Note') {
-							let newNote = await processNewNote(
-								grabbedObject.data
-							);
-
-							let generatedNote = await generateNote(newNote);
-
-							results.push({
-								type: 'note',
-								by: 'fetched',
-								object: generatedNote.note
-							});
-						} else if (
-							grabbedObject.data.type === 'Person' ||
-							grabbedObject.data.type === 'Service'
-						) {
-							let newActor = await processNewActor(
-								grabbedObject.data
-							);
-
-							results.push({
-								type: 'user',
-								by: 'fetched',
-								object: newActor
-							});
-						}
-					}
-				} else {
-					Logger.error('search', 'failed to fetch url');
-				}
+			if (grabbedObject) {
+				results.push({
+					type: 'object',
+					by: 'fetched',
+					object: grabbedObject
+				});
 			}
-		} catch (e) {
-			Logger.error('search', e);
+		} else if (tryLookup) {
+			try {
+				if (isValidUrl(req.query.q)) {
+					let grabbedObject = await getSigned(req.query.q);
+
+					if (!grabbedObject.error) {
+						if (grabbedObject.data.type) {
+							if (grabbedObject.data.type === 'Note') {
+								let newNote = await processNewNote(
+									grabbedObject.data
+								);
+
+								let generatedNote = await generateNote(newNote);
+
+								results.push({
+									type: 'note',
+									by: 'fetched',
+									object: generatedNote.note
+								});
+							} else if (
+								grabbedObject.data.type === 'Person' ||
+								grabbedObject.data.type === 'Service'
+							) {
+								let newActor = await processNewActor(
+									grabbedObject.data
+								);
+
+								results.push({
+									type: 'user',
+									by: 'fetched',
+									object: newActor
+								});
+							}
+						}
+					} else {
+						Logger.error('search', 'failed to fetch url');
+					}
+				}
+			} catch (e) {
+				Logger.error('search', e);
+			}
 		}
 
 		if (config.get().sonic.enabled) {
