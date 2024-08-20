@@ -56,6 +56,11 @@
 		}
 	}
 
+	function deleteDraft() {
+		noteCw = '';
+		noteContent = '';
+	}
+
 	// TODO: this is not very preformant!
 
 	$: (draft = {
@@ -162,8 +167,16 @@
 			</div>
 			<div class="right">
 				<Button
-					on:click={() =>
-						noteCreate(noteCw, noteContent, selectedVisibility)}
+					on:click={async () => {
+						let response = await noteCreate(
+							noteCw,
+							noteContent,
+							selectedVisibility
+						);
+						if (response.message === 'Note created') {
+							deleteDraft();
+						}
+					}}
 				>
 					{locale('note')}
 				</Button>

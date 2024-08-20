@@ -18,7 +18,11 @@
 						<div class="instance">
 							<div class="left">
 								<img src={instance.icon} class="icon" />
-								<b>{instance.host}</b>
+								<b
+									>{instance.name
+										? instance.name
+										: instance.host}</b
+								>
 								<span>
 									{instance.software}
 									{instance.version}

@@ -11,7 +11,11 @@ const router = express.Router();
 router.get(`/api/v2/admin/federation`, admin, async (req, res) => {
 	Logger.debug('admin', 'get federation');
 
-	let grabbedInstances = await db.getRepository('instance').find();
+	let grabbedInstances = await db
+		.getRepository('instance')
+		.createQueryBuilder()
+		.orderBy('user_count', 'DESC')
+		.getMany();
 
 	if (grabbedInstances) {
 		res.status(200).json(grabbedInstances);

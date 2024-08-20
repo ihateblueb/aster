@@ -49,6 +49,6 @@
 		padding-bottom: max(14px, env(safe-area-inset-bottom));
 		color: var(--txt-primary);
 		background-color: var(--bg-primary-50);
-		backdrop-filter: blur(16px);
+		backdrop-filter: blur(32px);
 	}
 </style>
