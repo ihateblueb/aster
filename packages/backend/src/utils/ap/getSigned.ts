@@ -1,12 +1,10 @@
 import axios from 'axios';
-import crypto, { createHash, createSign } from 'node:crypto';
+import crypto from 'node:crypto';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
 import Logger from '../logger.js';
-import httpSignature from '@peertube/http-signature';
-import getRemoteInstance from './getRemoteInstance.js';
 import isValidUrl from '../isValidUrl.js';
 
 export default async function getSigned(url, localUserId?) {

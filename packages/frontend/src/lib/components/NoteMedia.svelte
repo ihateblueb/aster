@@ -4,6 +4,7 @@
 
 	import Lightbox from '../../../node_modules/photoswipe/dist/photoswipe-lightbox.esm.js';
 	import PhotoSwipe from '../../../node_modules/photoswipe/dist/photoswipe.esm.js';
+	import Icon from './Icon.svelte';
 
 	export let attachments;
 
@@ -95,6 +96,16 @@
 						target="_blank"
 						rel="noreferrer"
 					>
+						<div class="indicatorLayer">
+							{#if attachment.alt}
+								<div class="altIndicator">ALT</div>
+							{:else}
+								<div class="altIndicator missing">
+									<Icon name="alert-triangle" size="12px" /> ALT
+								</div>
+							{/if}
+						</div>
+
 						<img
 							src={attachment.src}
 							alt={attachment.alt}

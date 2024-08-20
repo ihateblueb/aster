@@ -3,6 +3,7 @@
 .attachments._9H50yED {
 	display: grid;
 	grid-auto-flow: column;
+	overflow: hidden;
 	margin-top: 10px;
 	grid-gap: 8px;
 	height: 100%;
@@ -12,10 +13,40 @@
 	img,
 	video,
 	audio {
+		position: relative;
 		width: 100%;
 		border-radius: var(--border-s);
 		background-color: var(--bg-tertiary);
 		max-height: 250px;
+
+		.indicatorLayer {
+			position: absolute;
+			pointer-events: none;
+			z-index: 10;
+			padding: 5px;
+
+			> .altIndicator {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+
+				padding: 4px 6px;
+				border-radius: var(--border-s);
+
+				font-size: var(--font-xs);
+				font-weight: 600;
+				color: var(--accent);
+
+				background-color: var(--accent-20);
+
+				backdrop-filter: blur(12px);
+
+				&.missing {
+					color: var(--warn);
+					background-color: var(--warn-20);
+				}
+			}
+		}
 
 		.attachmentImg {
 			width: 100%;
