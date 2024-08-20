@@ -4,20 +4,60 @@
 		"name": "Figtree"
 	},
 	{
+		"id": "atkinson-hyperlegible",
+		"name": "Atkinson Hyperlegible"
+	},
+	{
+		"id": "balsamiq-sans",
+		"name": "Balsamiq Sans"
+	},
+	{
+		"id": "cantarell",
+		"name": "Cantarell"
+	},
+	{
+		"id": "ibm-plex-sans",
+		"name": "IBM Plex Sans"
+	},
+	{
 		"id": "inclusive-sans",
 		"name": "Inclusive Sans"
 	},
 	{
-		"id": "atkinson-hyperlegible",
-		"name": "Atkinson Hyperlegible"
+		"id": "inter",
+		"name": "Inter"
+	},
+	{
+		"id": "lato",
+		"name": "Lato"
+	},
+	{
+		"id": "lexend",
+		"name": "Lexend"
+	},
+	{
+		"id": "nosey-rodent",
+		"name": "Nosey Rodent"
+	},
+	{
+		"id": "noto-sans",
+		"name": "Noto Sans"
+	},
+	{
+		"id": "open-sans",
+		"name": "Open Sans"
 	},
 	{
 		"id": "roboto",
 		"name": "Roboto"
 	},
 	{
-		"id": "inter",
-		"name": "Inter"
+		"id": "ubuntu",
+		"name": "Ubuntu"
+	},
+	{
+		"id": "work-sans",
+		"name": "Work Sans"
 	},
 	{
 		"id": "system-ui",
