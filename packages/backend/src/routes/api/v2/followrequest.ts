@@ -14,10 +14,11 @@ router.get('/api/v2/followrequests', async (req, res) => {
 
 	if (authRes.status === 200) {
 		let grabbedFollowrequests = await db
-			.getRepository('user_followrequest')
+			.getRepository('relationship')
 			.find({
 				where: {
-					to: authRes.grabbedUserAuth.user
+					to: authRes.grabbedUserAuth.user,
+					pending: true
 				}
 			});
 
@@ -36,7 +37,7 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
 			let grabbedFollowrequest = await db
-				.getRepository('user_followrequest')
+				.getRepository('relationship')
 				.findOne({
 					where: {
 						id: JSON.parse(req.body).id
@@ -56,21 +57,20 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 					}
 				});
 
-				await db.getRepository('user_followrequest').delete({
-					id: JSON.parse(req.body).id
-				});
+				await db.getRepository('relationship').update(
+					{
+						id: JSON.parse(req.body).id
+					},
+					{
+						pending: false
+					}
+				);
 
 				signAndAccept(
 					grabbedToUser.id,
 					grabbedFromUser.inbox,
-					JSON.parse(grabbedFollowrequest.object)
+					grabbedFollowrequest.object
 				);
-
-				await db
-					.getRepository('user')
-					.query(
-						`UPDATE "user" SET "followers" = array_append("followers", '${grabbedFromUser.ap_id}') WHERE "id" = '${grabbedToUser.id}'`
-					);
 
 				await notification.create(
 					grabbedToUser.id,
@@ -105,7 +105,7 @@ router.post('/api/v2/followrequest/deny', async (req, res) => {
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {
 			let grabbedFollowrequest = await db
-				.getRepository('user_followrequest')
+				.getRepository('relationship')
 				.findOne({
 					where: {
 						id: JSON.parse(req.body).id
@@ -124,14 +124,14 @@ router.post('/api/v2/followrequest/deny', async (req, res) => {
 				}
 			});
 
-			await db.getRepository('user_followrequest').delete({
+			await db.getRepository('relationship').delete({
 				id: JSON.parse(req.body).id
 			});
 
 			signAndReject(
 				grabbedToUser.id,
 				grabbedFromUser.inbox,
-				JSON.parse(grabbedFollowrequest.object)
+				grabbedFollowrequest.object
 			);
 
 			return res.status(200).json({

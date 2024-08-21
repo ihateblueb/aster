@@ -25,28 +25,38 @@ export default async function OAnnounce(localUserId, repeat) {
 			visibility: repeat.visibility
 		});
 
-		if (grabbedUser.followers) {
-			grabbedUser.followers.forEach(async (e) => {
+		let grabbedFollowers = await db.getRepository('relationship').find({
+			where: {
+				to: grabbedUser.id
+			}
+		});
+
+		if (grabbedFollowers) {
+			grabbedFollowers.forEach(async (e) => {
 				let grabbedFollower = await db.getRepository('user').findOne({
 					where: {
-						ap_id: e
+						id: e.from
 					}
 				});
 
-				if (!grabbedFollower.local) {
-					await deliverQueue.add('deliver', {
-						inbox: grabbedFollower.inbox,
-						localUserId: grabbedUser.id,
-						body: announceJson
-					});
+				console.log(grabbedFollower);
 
-					Logger.debug(
-						'ap',
-						'queued deliver to ' +
-							grabbedFollower.inbox +
-							' from ' +
-							grabbedUser.ap_id
-					);
+				if (grabbedFollower) {
+					if (!grabbedFollower.local) {
+						await deliverQueue.add('deliver', {
+							inbox: grabbedFollower.inbox,
+							localUserId: grabbedUser.id,
+							body: announceJson
+						});
+
+						Logger.debug(
+							'ap',
+							'queued deliver to ' +
+								grabbedFollower.inbox +
+								' from ' +
+								grabbedUser.ap_id
+						);
+					}
 				}
 			});
 		}

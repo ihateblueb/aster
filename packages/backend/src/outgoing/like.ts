@@ -28,43 +28,40 @@ export default async function OLike(
 				reaction
 			);
 
-			if (grabbedUser.followers) {
-				await deliverQueue.add('deliver', {
-					inbox: author.inbox,
-					localUserId: grabbedUser.id,
-					body: likeJson
-				});
-				Logger.debug(
-					'ap',
-					'queued deliver to ' +
-						author.inbox +
-						' from ' +
-						grabbedUser.ap_id
-				);
+			let grabbedFollowers = await db.getRepository('relationship').find({
+				where: {
+					to: grabbedUser.id
+				}
+			});
 
-				grabbedUser.followers.forEach(async (e) => {
+			if (grabbedFollowers) {
+				grabbedFollowers.forEach(async (e) => {
 					let grabbedFollower = await db
 						.getRepository('user')
 						.findOne({
 							where: {
-								ap_id: e
+								id: e.from
 							}
 						});
 
-					if (!grabbedFollower.local) {
-						await deliverQueue.add('deliver', {
-							inbox: grabbedFollower.inbox,
-							localUserId: grabbedUser.id,
-							body: likeJson
-						});
+					console.log(grabbedFollower);
 
-						Logger.debug(
-							'ap',
-							'queued deliver to ' +
-								grabbedFollower.inbox +
-								' from ' +
-								grabbedUser.ap_id
-						);
+					if (grabbedFollower) {
+						if (!grabbedFollower.local) {
+							await deliverQueue.add('deliver', {
+								inbox: grabbedFollower.inbox,
+								localUserId: grabbedUser.id,
+								body: likeJson
+							});
+
+							Logger.debug(
+								'ap',
+								'queued deliver to ' +
+									grabbedFollower.inbox +
+									' from ' +
+									grabbedUser.ap_id
+							);
+						}
 					}
 				});
 			}

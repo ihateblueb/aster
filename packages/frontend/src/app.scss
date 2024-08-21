@@ -161,6 +161,10 @@ main {
 	text-shadow: none;
 }
 
+::placeholder {
+	color: var(--txt-tertiary);
+}
+
 ::-webkit-scrollbar {
 	z-index: 100000;
 }

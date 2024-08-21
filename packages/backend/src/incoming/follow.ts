@@ -26,25 +26,24 @@ export default async function IFollow(body) {
 	let grabbedRemoteActor = await getRemoteActor(body.actor);
 
 	if (grabbedLocalUser.locked) {
-		const followrequestId = uuidv4();
+		const relationshipId = uuidv4();
 
-		let followrequestToInsert = {};
+		let relationshipToInsert = {};
 
-		followrequestToInsert['id'] = followrequestId;
-		followrequestToInsert['to'] = grabbedLocalUser.id;
-		followrequestToInsert['from'] = grabbedRemoteActor.id;
-		followrequestToInsert['time'] = new Date(Date.now()).toISOString();
-		followrequestToInsert['object'] = JSON.stringify(body);
+		relationshipToInsert['id'] = relationshipId;
+		relationshipToInsert['to'] = grabbedLocalUser.id;
+		relationshipToInsert['from'] = grabbedRemoteActor.id;
+		relationshipToInsert['created_at'] = new Date(Date.now()).toISOString();
+		relationshipToInsert['pending'] = true;
+		relationshipToInsert['object'] = body;
 
-		await db
-			.getRepository('user_followrequest')
-			.insert(followrequestToInsert);
+		await db.getRepository('relationship').insert(relationshipToInsert);
 
 		await notification.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'followrequest',
-			followrequestId
+			relationshipId
 		);
 
 		return {
@@ -52,11 +51,16 @@ export default async function IFollow(body) {
 			message: 'Added pending follower'
 		};
 	} else {
-		await db
-			.getRepository('user')
-			.query(
-				`UPDATE "user" SET "followers" = array_append("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
-			);
+		const relationshipId = uuidv4();
+
+		let relationshipToInsert = {};
+
+		relationshipToInsert['id'] = relationshipId;
+		relationshipToInsert['to'] = grabbedLocalUser.id;
+		relationshipToInsert['from'] = grabbedRemoteActor.id;
+		relationshipToInsert['created_at'] = new Date(Date.now()).toISOString();
+
+		await db.getRepository('relationship').insert(relationshipToInsert);
 
 		await notification.create(
 			grabbedLocalUser.id,

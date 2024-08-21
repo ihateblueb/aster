@@ -27,11 +27,10 @@ export default async function IUndoFollow(body) {
 
 	let grabbedRemoteActor = await getRemoteActor(body.actor);
 
-	await db
-		.getRepository('user')
-		.query(
-			`UPDATE "user" SET "followers" = array_remove("followers", '${grabbedRemoteActor.ap_id}') WHERE "id" = '${grabbedLocalUser.id}'`
-		);
+	await db.getRepository('relationship').delete({
+		to: grabbedLocalUser.id,
+		from: grabbedRemoteActor.id
+	});
 
 	await signAndAccept(grabbedLocalUser.id, grabbedRemoteActor.inbox, body);
 

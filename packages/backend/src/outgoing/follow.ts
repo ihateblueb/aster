@@ -18,28 +18,6 @@ export default async function OFollow(localUserId, object) {
 			actor: grabbedUser,
 			object: object
 		});
-
-		let grabbedFollowing = await db.getRepository('user').findOne({
-			where: {
-				ap_id: object
-			}
-		});
-
-		if (!grabbedFollowing.local) {
-			await deliverQueue.add('deliver', {
-				inbox: grabbedFollowing.inbox,
-				localUserId: grabbedUser.id,
-				body: followJson
-			});
-
-			Logger.debug(
-				'ap',
-				'queued deliver to ' +
-					grabbedFollowing.inbox +
-					' from ' +
-					grabbedUser.ap_id
-			);
-		}
 	} else {
 		Logger.error(
 			'ap',
