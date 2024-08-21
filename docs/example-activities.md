@@ -1490,3 +1490,144 @@ undo
 	"vcard:Address": "a cozy bed"
 }
 ```
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_votes": "misskey:_misskey_votes",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"listenbrainz": "sharkey:listenbrainz",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"aster": "https://harper.eepy.zone/ns#",
+			"visibility": "aster:visibility",
+			"hasCorrectAnswer": "aster:hasCorrectAnswer",
+			"correct": "aster:correct"
+		}
+	],
+	"type": "Undo",
+	"id": "https://eepy.zone/likes/9x6su7jlu8m30004/undo",
+	"actor": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+	"object": {
+		"type": "Like",
+		"id": "https://eepy.zone/likes/9x6su7jlu8m30004",
+		"actor": "https://eepy.zone/users/9kfweg7wmdw7fnnt",
+		"object": "https://as.eepy.zone/notes/c92303ef-048b-462d-9821-01f063f877b0"
+	},
+	"published": "2024-08-21T02:29:06.677Z"
+}
+```
+
+```json
+{
+	"@context": [
+		"https://www.w3.org/ns/activitystreams",
+		"https://w3id.org/security/v1",
+		{
+			"Key": "sec:Key",
+			"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+			"sensitive": "as:sensitive",
+			"Hashtag": "as:Hashtag",
+			"quoteUrl": "as:quoteUrl",
+			"fedibird": "http://fedibird.com/ns#",
+			"quoteUri": "fedibird:quoteUri",
+			"toot": "http://joinmastodon.org/ns#",
+			"Emoji": "toot:Emoji",
+			"featured": "toot:featured",
+			"discoverable": "toot:discoverable",
+			"schema": "http://schema.org#",
+			"PropertyValue": "schema:PropertyValue",
+			"value": "schema:value",
+			"misskey": "https://misskey-hub.net/ns#",
+			"_misskey_content": "misskey:_misskey_content",
+			"_misskey_quote": "misskey:_misskey_quote",
+			"_misskey_reaction": "misskey:_misskey_reaction",
+			"_misskey_summary": "misskey:_misskey_summary",
+			"isCat": "misskey:isCat",
+			"firefish": "https://joinfirefish.org/ns#",
+			"speakAsCat": "firefish:speakAsCat",
+			"sharkey": "https://joinsharkey.org/ns#",
+			"backgroundUrl": "sharkey:backgroundUrl",
+			"vcard": "http://www.w3.org/2006/vcard/ns#",
+			"aster": "https://harper.eepy.zone/ns#",
+			"visibility": "aster:visibility",
+			"hasCorrectAnswer": "aster:hasCorrectAnswer",
+			"correct": "aster:correct"
+		}
+	],
+	"id": "https://as.eepy.zone/activities/35574f92-fbc8-477a-883d-92331a27877f/undo",
+	"type": "Undo",
+	"object": {
+		"@context": [
+			"https://www.w3.org/ns/activitystreams",
+			"https://w3id.org/security/v1",
+			{
+				"Key": "sec:Key",
+				"manuallyApprovesFollowers": "as:manuallyApprovesFollowers",
+				"sensitive": "as:sensitive",
+				"Hashtag": "as:Hashtag",
+				"quoteUrl": "as:quoteUrl",
+				"fedibird": "http://fedibird.com/ns#",
+				"quoteUri": "fedibird:quoteUri",
+				"toot": "http://joinmastodon.org/ns#",
+				"Emoji": "toot:Emoji",
+				"featured": "toot:featured",
+				"discoverable": "toot:discoverable",
+				"schema": "http://schema.org#",
+				"PropertyValue": "schema:PropertyValue",
+				"value": "schema:value",
+				"misskey": "https://misskey-hub.net/ns#",
+				"_misskey_content": "misskey:_misskey_content",
+				"_misskey_quote": "misskey:_misskey_quote",
+				"_misskey_reaction": "misskey:_misskey_reaction",
+				"_misskey_summary": "misskey:_misskey_summary",
+				"isCat": "misskey:isCat",
+				"firefish": "https://joinfirefish.org/ns#",
+				"speakAsCat": "firefish:speakAsCat",
+				"sharkey": "https://joinsharkey.org/ns#",
+				"backgroundUrl": "sharkey:backgroundUrl",
+				"vcard": "http://www.w3.org/2006/vcard/ns#",
+				"aster": "https://harper.eepy.zone/ns#",
+				"visibility": "aster:visibility",
+				"hasCorrectAnswer": "aster:hasCorrectAnswer",
+				"correct": "aster:correct"
+			}
+		],
+		"id": "https://as.eepy.zone/activities/35574f92-fbc8-477a-883d-92331a27877f",
+		"type": "Like",
+		"actor": "https://as.eepy.zone/users/c303c3bb-6c72-4267-a541-01675d53a939",
+		"object": "https://eepy.zone/notes/9x6pvowiryty00ad",
+		"context": "https://eepy.zone/notes/9x6pvowiryty00ad",
+		"to": [
+			"https://as.eepy.zone/users/c303c3bb-6c72-4267-a541-01675d53a939/followers",
+			null
+		]
+	},
+	"published": "2024-08-21T02:40:38.048Z"
+}
+```
