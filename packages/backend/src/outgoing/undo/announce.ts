@@ -1,10 +1,11 @@
 import { v4 as uuidv4 } from 'uuid';
-import db from '../utils/database.js';
-import deliverQueue from '../utils/deliverQueue.js';
-import Logger from '../utils/logger.js';
-import ActAnnounce from '../constructors/activity/Announce.js';
+import db from '../../utils/database.js';
+import deliverQueue from '../../utils/deliverQueue.js';
+import Logger from '../../utils/logger.js';
+import ActAnnounce from '../../constructors/activity/Announce.js';
+import ActUndo from '../../constructors/activity/Undo.js';
 
-export default async function OAnnounce(localUserId, repeat) {
+export default async function OUndoAnnounce(localUserId, repeat) {
 	let grabbedUser = await db.getRepository('user').findOne({
 		where: {
 			id: localUserId
@@ -18,12 +19,14 @@ export default async function OAnnounce(localUserId, repeat) {
 	});
 
 	if (grabbedUser.local) {
-		let announceJson = new ActAnnounce({
-			id: repeat.id,
-			actor: grabbedUser,
-			object: grabbedRepeatedNote.ap_id,
-			visibility: repeat.visibility
-		});
+		let announceJson = new ActUndo(
+			new ActAnnounce({
+				id: repeat.id,
+				actor: grabbedUser,
+				object: grabbedRepeatedNote.ap_id,
+				visibility: repeat.visibility
+			})
+		);
 
 		let grabbedFollowers = await db.getRepository('relationship').find({
 			where: {
