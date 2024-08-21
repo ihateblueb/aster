@@ -51,14 +51,6 @@ export default async function postSigned(inbox, localUserId, body) {
 		headers['User-Agent'] = `Aster/${pkg.version}`;
 		headers['Signature'] = signatureHeader;
 
-		console.log('!!OUTGOING POST!!');
-		console.log(inbox);
-		console.log(JSON.stringify(body));
-		console.log({
-			headers: headers
-		});
-		console.log('!!OUTGOING POST!!');
-
 		try {
 			if (config.get().plugins && config.get().plugins.outgoing) {
 				await config.get().plugins.outgoing.forEach(async (e) => {

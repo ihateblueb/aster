@@ -14,82 +14,153 @@ router.patch(`/api/v2/user`, async (req, res) => {
 		let updatedUser = [];
 
 		if (req.body) {
-			if (JSON.parse(req.body).displayname) {
+			if (
+				'displayname' in JSON.parse(req.body) &&
+				JSON.parse(req.body).displayname.length > 0
+			) {
 				updatedUser['displayname'] = sanitize(
 					JSON.parse(req.body).displayname
 				);
 			}
-			if (JSON.parse(req.body).locked) {
-				updatedUser['locked'] = sanitize(JSON.parse(req.body).locked);
+
+			if (
+				'locked' in JSON.parse(req.body) &&
+				JSON.parse(req.body).locked.length > 0
+			) {
+				updatedUser['locked'] = Boolean(JSON.parse(req.body).locked);
 			}
-			if (JSON.parse(req.body).discoverable) {
-				updatedUser['discoverable'] = sanitize(
+
+			if (
+				'discoverable' in JSON.parse(req.body) &&
+				JSON.parse(req.body).discoverable.length > 0
+			) {
+				updatedUser['discoverable'] = Boolean(
 					JSON.parse(req.body).discoverable
 				);
 			}
-			if (JSON.parse(req.body).indexable) {
-				updatedUser['indexable'] = sanitize(
+
+			if (
+				'indexable' in JSON.parse(req.body) &&
+				JSON.parse(req.body).indexable.length > 0
+			) {
+				updatedUser['indexable'] = Boolean(
 					JSON.parse(req.body).indexable
 				);
 			}
-			if (JSON.parse(req.body).automated) {
-				updatedUser['automated'] = sanitize(
+
+			if (
+				'automated' in JSON.parse(req.body) &&
+				JSON.parse(req.body).automated.length > 0
+			) {
+				updatedUser['automated'] = Boolean(
 					JSON.parse(req.body).automated
 				);
 			}
-			if (JSON.parse(req.body).avatar) {
+
+			if (
+				'avatar' in JSON.parse(req.body) &&
+				JSON.parse(req.body).avatar.length > 0
+			) {
 				updatedUser['avatar'] = sanitize(JSON.parse(req.body).avatar);
 			}
-			if (JSON.parse(req.body).avatar_alt) {
+
+			if (
+				'avatar_alt' in JSON.parse(req.body) &&
+				JSON.parse(req.body).avatar_alt.length > 0
+			) {
 				updatedUser['avatar_alt'] = sanitize(
 					JSON.parse(req.body).avatar_alt
 				);
 			}
-			if (JSON.parse(req.body).banner) {
+
+			if (
+				'banner' in JSON.parse(req.body) &&
+				JSON.parse(req.body).banner.length > 0
+			) {
 				updatedUser['banner'] = sanitize(JSON.parse(req.body).banner);
 			}
-			if (JSON.parse(req.body).banner_alt) {
+
+			if (
+				'banner_alt' in JSON.parse(req.body) &&
+				JSON.parse(req.body).banner_alt.length > 0
+			) {
 				updatedUser['banner_alt'] = sanitize(
 					JSON.parse(req.body).banner_alt
 				);
 			}
-			if (JSON.parse(req.body).background) {
+
+			if (
+				'background' in JSON.parse(req.body) &&
+				JSON.parse(req.body).background.length > 0
+			) {
 				updatedUser['background'] = sanitize(
 					JSON.parse(req.body).background
 				);
 			}
-			if (JSON.parse(req.body).background_alt) {
+
+			if (
+				'background_alt' in JSON.parse(req.body) &&
+				JSON.parse(req.body).background_alt.length > 0
+			) {
 				updatedUser['background_alt'] = sanitize(
 					JSON.parse(req.body).background_alt
 				);
 			}
-			if (JSON.parse(req.body).bio) {
+
+			if (
+				'bio' in JSON.parse(req.body) &&
+				JSON.parse(req.body).bio.length > 0
+			) {
 				updatedUser['bio'] = sanitize(JSON.parse(req.body).bio);
 			}
-			if (JSON.parse(req.body).location) {
+
+			if (
+				'location' in JSON.parse(req.body) &&
+				JSON.parse(req.body).location.length > 0
+			) {
 				updatedUser['location'] = sanitize(
 					JSON.parse(req.body).location
 				);
 			}
-			if (JSON.parse(req.body).birthday) {
+
+			if (
+				'birthday' in JSON.parse(req.body) &&
+				JSON.parse(req.body).birthday.length > 0
+			) {
 				updatedUser['birthday'] = sanitize(
 					JSON.parse(req.body).birthday
 				);
 			}
-			if (JSON.parse(req.body).is_cat) {
-				updatedUser['is_cat'] = sanitize(JSON.parse(req.body).is_cat);
+
+			if (
+				'is_cat' in JSON.parse(req.body) &&
+				JSON.parse(req.body).is_cat.length > 0
+			) {
+				updatedUser['is_cat'] = Boolean(JSON.parse(req.body).is_cat);
 			}
-			if (JSON.parse(req.body).speak_as_cat) {
-				updatedUser['speak_as_cat'] = sanitize(
+
+			if (
+				'speak_as_cat' in JSON.parse(req.body) &&
+				JSON.parse(req.body).speak_as_cat.length > 0
+			) {
+				updatedUser['speak_as_cat'] = Boolean(
 					JSON.parse(req.body).speak_as_cat
 				);
 			}
-			if (JSON.parse(req.body).pinned_notes) {
+
+			if (
+				'pinned_notes' in JSON.parse(req.body) &&
+				JSON.parse(req.body).pinned_notes.length > 0
+			) {
 				updatedUser['pinned_notes'] = sanitize(
 					JSON.parse(req.body).pinned_notes
 				);
 			}
-			if (JSON.parse(req.body).metadata) {
+
+			if (
+				'metadata' in JSON.parse(req.body) &&
+				JSON.parse(req.body).metadata.length > 0
+			) {
 				updatedUser['metadata'] = sanitize(
 					JSON.parse(req.body).metadata
 				);
