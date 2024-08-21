@@ -38,6 +38,35 @@
 					</div>
 				</div>
 			</div>
+		{:else if data.type === 'followrequest'}
+			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
+				<div class="header">
+					<div class="left">
+						<Icon name="user-question" size="18px" />
+					</div>
+					<div class="center">
+						<p>
+							<a
+								class="username subtle"
+								href={'/@' +
+									data.from.username +
+									'@' +
+									data.from.host}
+								>{data.from.displayname}
+							</a>
+							{locale('requested_to_follow_you')}
+						</p>
+					</div>
+					<div class="right">
+						{#if data.created_at}
+							<Time time={data.created_at} />
+						{/if}
+					</div>
+				</div>
+				{#await noteGet(data.object) then note}
+					<NoteSimple data={note} />
+				{/await}
+			</div>
 		{:else if data.type === 'like'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
 				<div class="header">
