@@ -89,11 +89,20 @@ export default async function getSigned(url, localUserId?) {
 			})
 			.catch((e) => {
 				Logger.error('ap', e);
-				return {
-					error: true,
-					status: e.response.status ? e.response.status : 500,
-					data: {}
-				};
+
+				if (e.response) {
+					return {
+						error: true,
+						status: e.response.status ? e.response.status : 500,
+						data: {}
+					};
+				} else {
+					return {
+						error: true,
+						status: 500,
+						data: {}
+					};
+				}
 			});
 	} else {
 		Logger.error('ap', 'failed fetch. url invalid');
