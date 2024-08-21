@@ -65,12 +65,12 @@ Things that work!
 -   Process incoming hashtags and wafrn hashtags
 -   Process deletes of actors and notes
 -   Authorized fetch!
-- signed posts!
+-   signed posts!
 -   Grabs following/followers counts
-- send announce
-- send undo announce
-- send like
-- send undo like
+-   send announce
+-   send undo announce
+-   send like
+-   send undo like
 
 ### Internal API
 
@@ -87,8 +87,8 @@ Things that work!
 -   /admin endpoints require authentication and admin status
 -   fetch timelines in chunks based on date, changable max/since
 -   Search api that supports lookup by username, displayname, ap id, bio, note content, note cw, and even allows fetching raw objects without processing them
-- like note and unlike note
-- repeat and unrepeat note
+-   like note and unlike note
+-   repeat and unrepeat note
 
 ### Frontend
 
