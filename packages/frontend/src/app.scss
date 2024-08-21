@@ -201,5 +201,7 @@ main {
 		height: calc(100% - 35px);
 		box-sizing: border-box;
 		overflow-y: scroll;
+		overflow-x: hidden;
+		background-color: var(--bg-secondary);
 	}
 }
