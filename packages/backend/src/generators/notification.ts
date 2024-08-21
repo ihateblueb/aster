@@ -1,6 +1,7 @@
 import ApiMeta from '../constructors/meta.js';
 import ApiNotification from '../constructors/notification.js';
 import db from '../utils/database.js';
+import generateNote from './note.js';
 
 export default async function generateNotification(
 	grabbedNotification
@@ -21,6 +22,21 @@ export default async function generateNotification(
 		const grabbedReaction = await db
 			.getRepository('emoji')
 			.findOne({ where: { id: grabbedNotification.reaction } });
+
+		if (
+			grabbedNotification.type === 'note' ||
+			grabbedNotification.type === 'mention' ||
+			grabbedNotification.type === 'reply' ||
+			grabbedNotification.type === 'like' ||
+			grabbedNotification.type === 'react' ||
+			grabbedNotification.type === 'repeat'
+		) {
+			let grabbedNote = await db
+				.getRepository('note')
+				.findOne({ where: { id: grabbedNotification.object } });
+
+			grabbedNotification.object = (await generateNote(grabbedNote)).note;
+		}
 
 		return {
 			status: 200,

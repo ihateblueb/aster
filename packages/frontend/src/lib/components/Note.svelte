@@ -300,9 +300,6 @@
 				<button>
 					<Icon name="plus" size="18px" color="inherit" />
 				</button>
-				<button on:click={() => noteBookmark(data.id)}>
-					<Icon name="bookmark" size="18px" color="inherit" />
-				</button>
 				<button on:click={(e) => more.open(e)}>
 					<Icon name="dots" size="18px" color="inherit" />
 				</button>

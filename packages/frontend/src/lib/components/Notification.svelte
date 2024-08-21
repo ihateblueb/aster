@@ -63,9 +63,6 @@
 						{/if}
 					</div>
 				</div>
-				{#await noteGet(data.object) then note}
-					<NoteSimple data={note} />
-				{/await}
 			</div>
 		{:else if data.type === 'like'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
@@ -92,9 +89,9 @@
 						{/if}
 					</div>
 				</div>
-				{#await noteGet(data.object) then note}
-					<NoteSimple data={note} />
-				{/await}
+				{#if data.object}
+					<NoteSimple data={data.object} />
+				{/if}
 			</div>
 		{:else if data.type === 'react'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
@@ -121,9 +118,9 @@
 						{/if}
 					</div>
 				</div>
-				{#await noteGet(data.object) then note}
-					<NoteSimple data={note} />
-				{/await}
+				{#if data.object}
+					<NoteSimple data={data.object} />
+				{/if}
 			</div>
 		{:else if data.type === 'repeat'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
@@ -150,9 +147,9 @@
 						{/if}
 					</div>
 				</div>
-				{#await noteGet(data.object) then note}
-					<NoteSimple data={note} />
-				{/await}
+				{#if data.object}
+					<NoteSimple data={data.object} />
+				{/if}
 			</div>
 		{:else if data.type === 'mention'}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>
@@ -179,9 +176,9 @@
 						{/if}
 					</div>
 				</div>
-				{#await noteGet(data.object) then note}
-					<NoteSimple data={note} />
-				{/await}
+				{#if data.object}
+					<NoteSimple data={data.object} />
+				{/if}
 			</div>
 		{:else}
 			<div class={'notification _E6Sc553 ' + (small ? 'small' : '')}>

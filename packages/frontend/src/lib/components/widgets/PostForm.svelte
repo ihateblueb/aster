@@ -88,6 +88,13 @@
 				</div>
 			</div>
 			<div class="right">
+				<Button on:click={() => (showPreview = !showPreview)}>
+					<Icon
+						name={showPreview ? 'eye-off' : 'eye'}
+						size="18px"
+						title={locale('show_preview')}
+					/>
+				</Button>
 				<Button>
 					<Icon
 						name="pencil-minus"
@@ -143,18 +150,11 @@
 		{/if}
 		<div class="formFooter">
 			<div class="left">
-				<Button on:click={() => (showPreview = !showPreview)}>
-					<Icon
-						name={showPreview ? 'eye-off' : 'eye'}
-						size="18px"
-						title={locale('show_preview')}
-					/>
-				</Button>
 				<Button>
 					<Icon
-						name="mood-smile"
+						name="paperclip"
 						size="18px"
-						title={locale('add_emoji')}
+						title={locale('add_attachment')}
 					/>
 				</Button>
 				<Button>
@@ -162,6 +162,13 @@
 						name="chart-bar"
 						size="18px"
 						title={locale('add_poll')}
+					/>
+				</Button>
+				<Button>
+					<Icon
+						name="mood-smile"
+						size="18px"
+						title={locale('add_emoji')}
 					/>
 				</Button>
 			</div>

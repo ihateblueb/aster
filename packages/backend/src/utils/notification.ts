@@ -5,6 +5,7 @@ import db from '../utils/database.js';
 type notificationType =
 	| 'mention'
 	| 'reply'
+	| 'note'
 	| 'react'
 	| 'like'
 	| 'repeat'
@@ -39,6 +40,12 @@ class Notification {
 				.getRepository('user_notification')
 				.insert(notificationToInsert);
 		}
+	}
+
+	public async delete(id: string) {
+		await db.getRepository('user_notification').delete({
+			id: id
+		});
 	}
 }
 

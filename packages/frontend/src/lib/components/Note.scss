@@ -58,6 +58,7 @@
 				}
 			}
 		}
+
 		.right {
 			display: flex;
 			flex-direction: column;
@@ -146,6 +147,7 @@
 		background-color: var(--warn-20);
 		padding: 4px 6px;
 		border-radius: var(--border-m);
+		font-size: var(--font-m);
 
 		.left {
 			display: inline-flex;
@@ -171,6 +173,7 @@
 			border: none;
 			padding: 5px 8px;
 			border-radius: var(--border-s);
+			font-size: var(--font-m);
 		}
 	}
 
