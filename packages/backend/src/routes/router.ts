@@ -4,9 +4,6 @@ import uploads from './uploads.js';
 
 import bullboard from './bullboard.js';
 
-import admin from './admin.js';
-import mod from './mod.js';
-
 import ap_wellknown from './ap/well-known.js';
 import ap_nodeinfo from './ap/nodeinfo.js';
 import ap_inbox from './ap/inbox.js';
