@@ -89,14 +89,8 @@ export class User {
 	@Column()
 	following_url: string;
 
-	@Column('text', { array: true, nullable: true })
-	following: string[];
-
 	@Column()
 	followers_url: string;
-
-	@Column('text', { array: true, nullable: true })
-	followers: string[];
 
 	@Column('text', { array: true, nullable: true })
 	pinned_notes: string[];
