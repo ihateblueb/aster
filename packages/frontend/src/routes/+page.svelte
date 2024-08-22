@@ -18,6 +18,7 @@
 	import Note from '$lib/components/Note.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
+	import Tab from '$lib/components/Tab.svelte';
 
 	let timeline = Store.get('home_timeline');
 	let notes;
@@ -77,46 +78,46 @@
 							? 'planet'
 							: ''}
 		>
-			<Button
-				type={'header' + (timeline === 'home' ? ' selected' : '')}
+			<Tab
+				icon="home"
+				label={locale('tl_home')}
+				selected={timeline === 'home' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'home';
 					Store.set('home_timeline', 'home');
 					refresh();
 				}}
-			>
-				<Icon name="home" size="16px" />
-			</Button>
-			<Button
-				type={'header' + (timeline === 'local' ? ' selected' : '')}
+			/>
+			<Tab
+				icon="users"
+				label={locale('tl_local')}
+				selected={timeline === 'local' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'local';
 					Store.set('home_timeline', 'local');
 					refresh();
 				}}
-			>
-				<Icon name="users" size="16px" />
-			</Button>
-			<Button
-				type={'header' + (timeline === 'bubble' ? ' selected' : '')}
+			/>
+			<Tab
+				icon="chart-bubble"
+				label={locale('tl_bubble')}
+				selected={timeline === 'bubble' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'bubble';
 					Store.set('home_timeline', 'bubble');
 					refresh();
 				}}
-			>
-				<Icon name="chart-bubble" size="16px" />
-			</Button>
-			<Button
-				type={'header' + (timeline === 'public' ? ' selected' : '')}
+			/>
+			<Tab
+				icon="planet"
+				label={locale('tl_global')}
+				selected={timeline === 'public' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'public';
 					Store.set('home_timeline', 'public');
 					refresh();
 				}}
-			>
-				<Icon name="planet" size="16px" />
-			</Button>
+			/>
 			<hr class="vertical" />
 			<Button type="header" on:click={async () => refresh()}>
 				<Icon name="refresh" size="16px" />

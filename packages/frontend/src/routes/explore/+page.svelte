@@ -10,6 +10,7 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import VirtualList from '$lib/components/VirtualList.svelte';
 	import Store from '$lib/utils/Store';
+	import Tab from '$lib/components/Tab.svelte';
 
 	let timeline = Store.get('explore_timeline')
 		? Store.get('explore_timeline')
@@ -29,26 +30,26 @@
 
 <template>
 	<PageHeader title={locale('explore')} icon="compass">
-		<Button
-			type={'header' + (timeline === 'local' ? ' selected' : '')}
+		<Tab
+			icon="users"
+			label={locale('tl_local')}
+			selected={timeline === 'local' ? true : false}
 			on:click={async () => {
 				timeline = 'local';
 				Store.set('explore_timeline', 'local');
 				refresh();
 			}}
-		>
-			<Icon name="users" size="16px" />
-		</Button>
-		<Button
-			type={'header' + (timeline === 'public' ? ' selected' : '')}
+		/>
+		<Tab
+			icon="planet"
+			label={locale('tl_global')}
+			selected={timeline === 'public' ? true : false}
 			on:click={async () => {
 				timeline = 'public';
 				Store.set('explore_timeline', 'public');
 				refresh();
 			}}
-		>
-			<Icon name="planet" size="16px" />
-		</Button>
+		/>
 		<hr class="vertical" />
 		<Button type="header" on:click={async () => refresh()}>
 			<Icon name="refresh" size="16px" />

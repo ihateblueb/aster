@@ -7,36 +7,37 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
+	import Tab from '$lib/components/Tab.svelte';
 
 	let timeline = 'all';
 </script>
 
 <template>
 	<PageHeader title={locale('notifications')} icon="bell">
-		<Button
-			type={'header' + (timeline === 'all' ? ' selected' : '')}
+		<Tab
+			icon="bell"
+			label={locale('all')}
+			selected={timeline === 'all' ? true : false}
 			on:click={async () => {
 				timeline = 'all';
 			}}
-		>
-			<Icon name="bell" size="16px" />
-		</Button>
-		<Button
-			type={'header' + (timeline === 'mentions' ? ' selected' : '')}
+		/>
+		<Tab
+			icon="at"
+			label={locale('mentions')}
+			selected={timeline === 'mentions' ? true : false}
 			on:click={async () => {
 				timeline = 'mentions';
 			}}
-		>
-			<Icon name="at" size="16px" />
-		</Button>
-		<Button
-			type={'header' + (timeline === 'direct' ? ' selected' : '')}
+		/>
+		<Tab
+			icon="mail"
+			label={locale('direct')}
+			selected={timeline === 'direct' ? true : false}
 			on:click={async () => {
 				timeline = 'direct';
 			}}
-		>
-			<Icon name="mail" size="16px" />
-		</Button>
+		/>
 		<hr class="vertical" />
 		<Button type="header" on:click={async () => refresh()}>
 			<Icon name="refresh" size="16px" />

@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "43",
+	"__version__": "45",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -153,5 +153,12 @@
 	"database": "Database",
 	"external_services": "External Services",
 	"queue_inbox": "Inbox",
-	"queue_deliver": "Deliver"
+	"queue_deliver": "Deliver",
+	"tl_home": "Home",
+	"tl_local": "Local",
+	"tl_bubble": "Bubble",
+	"tl_global": "Global",
+	"all": "All",
+	"mentions": "Mentions",
+	"direct": "Direct"
 }
