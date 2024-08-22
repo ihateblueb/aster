@@ -11,7 +11,9 @@
 
 <template>
 	<Button type={'header' + (selected ? ' selected' : '')} on:click>
-		<Icon name={icon} size="16px" />
+		{#if icon}
+			<Icon name={icon} size="16px" />
+		{/if}
 		{#if selected}
 			<span
 				class="label"

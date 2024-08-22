@@ -23,7 +23,7 @@
 		{:else}
 			<Sidebar side="left" widgets={defaultLeftWidgets} />
 		{/if}
-		<main>
+		<main tabindex="-1">
 			<slot></slot>
 			<PageFooter />
 		</main>
