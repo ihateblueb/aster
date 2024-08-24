@@ -1,4 +1,4 @@
-import { In, LessThan } from 'typeorm';
+import { In, LessThan, Not } from 'typeorm';
 
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
@@ -31,6 +31,7 @@ export default async function generateTimelineHome(user, take, since) {
 					.createQueryBuilder()
 					.where({
 						author: In(sortedFollowing),
+						visibility: Not('direct'),
 						created_at: LessThan(since)
 					})
 					.orderBy('created_at', 'DESC')
@@ -41,7 +42,8 @@ export default async function generateTimelineHome(user, take, since) {
 					.getRepository('note')
 					.createQueryBuilder()
 					.where({
-						author: In(sortedFollowing)
+						author: In(sortedFollowing),
+						visibility: Not('direct')
 					})
 					.orderBy('created_at', 'DESC')
 					.take(take)
@@ -65,6 +67,7 @@ export default async function generateTimelineHome(user, take, since) {
 					.createQueryBuilder()
 					.where({
 						author: In(sortedFollowing),
+						visibility: Not('direct'),
 						created_at: LessThan(since)
 					})
 					.orderBy('created_at', 'DESC')
@@ -75,7 +78,8 @@ export default async function generateTimelineHome(user, take, since) {
 					.getRepository('repeat')
 					.createQueryBuilder()
 					.where({
-						author: In(sortedFollowing)
+						author: In(sortedFollowing),
+						visibility: Not('direct')
 					})
 					.orderBy('created_at', 'DESC')
 					.take(take)
