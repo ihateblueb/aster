@@ -46,7 +46,7 @@
 	}
 
 	onMount(async () => {
-		refresh();
+		await refresh();
 	});
 
 	function actionWhenInViewport(e) {
@@ -124,9 +124,9 @@
 			</Button>
 		</PageHeader>
 		<div class="pageContent">
-			{#if notes && notes.length > 0}
-				<div class="paddedPage">
-					{#key notes}
+			{#key notes}
+				{#if notes && notes.length > 0}
+					<div class="paddedPage">
 						{#each notes as note}
 							{#if note.type === 'note'}
 								<Note data={note.object} inTimeline />
@@ -139,21 +139,21 @@
 								/>
 							{/if}
 						{/each}
-					{/key}
-					<div use:actionWhenInViewport />
-					{#if loadingMore}
+						<div use:actionWhenInViewport />
+						{#if loadingMore}
+							<div class="loading">
+								<Loading />
+							</div>
+						{/if}
+					</div>
+				{:else}
+					<div class="paddedPage">
 						<div class="loading">
 							<Loading />
 						</div>
-					{/if}
-				</div>
-			{:else}
-				<div class="paddedPage">
-					<div class="loading">
-						<Loading />
 					</div>
-				</div>
-			{/if}
+				{/if}
+			{/key}
 		</div>
 	{:else}
 		<PageHeader title={locale('welcome')} icon="heart" />
@@ -237,14 +237,5 @@
 				border-radius: var(--border-m);
 			}
 		}
-	}
-	.loading {
-		display: flex;
-		width: 100%;
-		height: 100%;
-		box-sizing: border-box;
-		align-items: center;
-		justify-content: center;
-		padding: 25px;
 	}
 </style>

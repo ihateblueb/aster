@@ -12,9 +12,9 @@
 			{locale('notifications')}
 		</div>
 		<div class="content">
-			{#await notificationsGet() then notifications}
+			{#await notificationsGet('all') then notifications}
 				{#each notifications as notification}
-					<Notification data={notification} small />
+					<Notification data={notification.object} small />
 				{/each}
 			{/await}
 		</div>

@@ -36,7 +36,6 @@
 	import Time from './Time.svelte';
 	import Store from '$lib/utils/Store';
 	import UserCard from './UserCard.svelte';
-	import { fly, slide } from 'svelte/transition';
 	import NoteSimple from './NoteSimple.svelte';
 
 	let userCard: UserCard;

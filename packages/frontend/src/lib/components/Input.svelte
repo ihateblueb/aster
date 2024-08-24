@@ -1,14 +1,14 @@
 <script lang="ts">
 	import { v4 as uuidv4 } from 'uuid';
 
+	let id = uuidv4();
+
 	export let big = false;
 	export let type = '';
 	export let formtype = '';
 	export let placeholder = '';
 	export let value = '';
 	export let label = '';
-
-	let id = uuidv4();
 
 	function formType(node) {
 		if (formtype) {

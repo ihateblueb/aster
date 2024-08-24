@@ -1,4 +1,5 @@
 import generateNote from '../../generators/note.js';
+import generateNotification from '../../generators/notification.js';
 import generateRepeat from '../../generators/repeat.js';
 import Logger from '../logger.js';
 
@@ -67,17 +68,50 @@ export default async function renderTimeline(collectedObjects) {
 							generatedRepeat.message
 					);
 				}
+			} else if (collectedObjects[i].type === 'notification') {
+				let generatedNotification = await generateNotification(
+					collectedObjects[i].object
+				);
+
+				if (
+					generatedNotification &&
+					generatedNotification.status === 200
+				) {
+					collectedNotes.push({
+						type: 'notification',
+						object: generatedNotification.notification
+					});
+					Logger.debug(
+						'timeline',
+						'rendered notification ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length
+					);
+				} else {
+					Logger.debug(
+						'timeline',
+						'failed to render notification ' +
+							(i + 1) +
+							'/' +
+							collectedObjects.length +
+							' error: ' +
+							generatedNotification.status +
+							' ' +
+							generatedNotification.message
+					);
+				}
+			} else {
+				console.log(collectedObjects[i]);
+				Logger.debug(
+					'timeline',
+					'failed to render object ' +
+						(i + 1) +
+						'/' +
+						collectedObjects.length +
+						' error: empty!'
+				);
 			}
-		} else {
-			console.log(collectedObjects[i]);
-			Logger.debug(
-				'timeline',
-				'failed to render object ' +
-					(i + 1) +
-					'/' +
-					collectedObjects.length +
-					' error: empty!'
-			);
 		}
 	}
 

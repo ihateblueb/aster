@@ -19,6 +19,7 @@
 	}
 
 	import fonts from '../../../static/fonts/fonts.json';
+	import Toggle from '$lib/components/Toggle.svelte';
 
 	function refreshFont(oldFont, newFont) {
 		document.body.classList.replace('font-' + oldFont, 'font-' + newFont);
@@ -63,8 +64,7 @@
 				{/each}
 			</Select>
 
-			<input type="checkbox" id="vehicle1" name="vehicle1" value="Bike" />
-			<label for="vehicle1">Use blur effects</label><br />
+			<Toggle label="Use blur effects" />
 
 			<h1>{locale('s_behavior')}</h1>
 			<h1>{locale('s_account')}</h1>

@@ -8,6 +8,7 @@ import generateTimelineBubble from '../../../generators/timeline/bubble.js';
 import generateTimelineLocal from '../../../generators/timeline/local.js';
 import generateTimelineHome from '../../../generators/timeline/home.js';
 import generateTimelineTag from '../../../generators/timeline/tag.js';
+import verifyToken from '../../../utils/auth/verifyToken.js';
 
 const router = express.Router();
 
@@ -56,15 +57,28 @@ router.get('/api/v2/timeline/bubble', async (req, res) => {
 
 router.get('/api/v2/timeline/home', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
+	let authRes = await verifyToken(req);
 
-	let take =
-		req.query.max < config.get().timeline.maxNotes
-			? req.query.max
-			: config.get().timeline.maxNotes;
+	if (authRes.status === 200) {
+		let take =
+			req.query.max < config.get().timeline.maxNotes
+				? req.query.max
+				: config.get().timeline.maxNotes;
 
-	res.status(200).json(
-		await renderTimeline(await generateTimelineHome(take, req.query.since))
-	);
+		res.status(200).json(
+			await renderTimeline(
+				await generateTimelineHome(
+					authRes.grabbedUserAuth.user,
+					take,
+					req.query.since
+				)
+			)
+		);
+	} else {
+		return res.status(authRes.status).json({
+			message: authRes.message
+		});
+	}
 });
 
 router.get('/api/v2/timeline/tag', async (req, res) => {

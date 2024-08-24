@@ -4,70 +4,58 @@ import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import Logger from '../../../utils/logger.js';
 import generateNotification from '../../../generators/notification.js';
+import config from '../../../utils/config.js';
+import generateNotificationsAll from '../../../generators/notifications/all.js';
+import generateNotificationsMentions from '../../../generators/notifications/mentions.js';
+import renderTimeline from '../../../utils/timeline/render.js';
 
 const router = express.Router();
 
-async function renderTimeline(grabbedNotifications) {
-	let collectedNotification = [];
-
-	for (const i of grabbedNotifications.keys()) {
-		let generatedNotification = await generateNotification(
-			grabbedNotifications[i]
-		);
-
-		if (generatedNotification && generatedNotification.status === 200) {
-			collectedNotification.push(generatedNotification.notification);
-			Logger.debug(
-				'timeline',
-				'rendered notification ' +
-					(i + 1) +
-					'/' +
-					grabbedNotifications.length
-			);
-		} else {
-			Logger.debug(
-				'timeline',
-				'failed to render notification ' +
-					(i + 1) +
-					'/' +
-					grabbedNotifications.length +
-					' error: ' +
-					grabbedNotifications.status +
-					' ' +
-					grabbedNotifications.message
-			);
-		}
-	}
-
-	collectedNotification.sort(
-		(x, y) => +new Date(y.created_at) - +new Date(x.created_at)
-	);
-
-	return collectedNotification;
-}
-
-router.get('/api/v2/notifications', async (req, res) => {
+router.get('/api/v2/notifications/all', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	let authRes = await verifyToken(req);
 
 	if (authRes.status === 200) {
-		let grabbedNotifications = await db
-			.getRepository('user_notification')
-			.find({
-				where: {
-					to: authRes.grabbedUserAuth.user
-				}
-			});
+		let take =
+			req.query.max < config.get().timeline.maxNotes
+				? req.query.max
+				: config.get().timeline.maxNotes;
 
-		if (grabbedNotifications) {
-			return res
-				.status(200)
-				.json(await renderTimeline(grabbedNotifications));
-		} else {
-			return res.status(204).json({
-				message: 'No notifications'
-			});
-		}
+		res.status(200).json(
+			await renderTimeline(
+				await generateNotificationsAll(
+					authRes.grabbedUserAuth.user,
+					take,
+					req.query.since
+				)
+			)
+		);
+	} else {
+		return res.status(authRes.status).json({
+			message: authRes.message
+		});
+	}
+});
+
+router.get('/api/v2/notifications/mentions', async (req, res) => {
+	res.setHeader('Content-Type', 'application/json');
+	let authRes = await verifyToken(req);
+
+	if (authRes.status === 200) {
+		let take =
+			req.query.max < config.get().timeline.maxNotes
+				? req.query.max
+				: config.get().timeline.maxNotes;
+
+		res.status(200).json(
+			await renderTimeline(
+				await generateNotificationsMentions(
+					authRes.grabbedUserAuth.user,
+					take,
+					req.query.since
+				)
+			)
+		);
 	} else {
 		return res.status(authRes.status).json({
 			message: authRes.message

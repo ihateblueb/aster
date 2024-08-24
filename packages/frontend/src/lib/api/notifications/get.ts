@@ -1,24 +1,30 @@
 import Store from '$lib/utils/Store';
 
-export default async function notificationsGet() {
-	let notificationsRes = {};
+export default async function notificationsGet(
+	timeline: string,
+	since?: string
+) {
+	let timelineRes = {};
 
-	let notificationsReq = await fetch(`/api/v2/notifications`, {
-		method: 'GET',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+	let timelineReq = await fetch(
+		`/api/v2/notifications/${timeline}${since ? '/?since=' + since : ''}`,
+		{
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				Accept: 'application/json',
+				Authorization: `Bearer ${Store.get('a_token')}`
+			}
 		}
-	});
+	);
 
-	notificationsRes = await notificationsReq.json();
+	timelineRes = await timelineReq.json();
 
-	if (notificationsReq.status === 200) {
-		console.log(notificationsRes);
+	if (timelineReq.status === 200) {
+		console.log(timelineRes);
 	} else {
-		console.log(notificationsRes);
+		console.log(timelineRes);
 	}
 
-	return notificationsRes;
+	return timelineRes;
 }
