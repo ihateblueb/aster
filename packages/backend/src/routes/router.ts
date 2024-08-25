@@ -1,6 +1,7 @@
 import express from 'express';
 
 import uploads from './uploads.js';
+import assets from './assets.js';
 
 import bullboard from './bullboard.js';
 
@@ -63,6 +64,7 @@ import config from '../utils/config.js';
 const router = express.Router();
 
 router.use('/', uploads);
+router.use('/', assets);
 
 if (config.get().frontend.bullboard) {
 	router.use('/', bullboard);

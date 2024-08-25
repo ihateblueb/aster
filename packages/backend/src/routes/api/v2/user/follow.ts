@@ -20,25 +20,28 @@ router.post(`/api/v2/user/:userid/follow`, async (req, res) => {
 
 			if (grabbedUser) {
 				if (grabbedUser.id === authRes.grabbedUserAuth.user) {
-					return res.status(400).json({
+					res.status(400).json({
 						message: 'You cannot follow yourself'
 					});
 				} else {
 					if (!grabbedUser.local) {
 					}
+					res.status(501).json({
+						message: 'unfihisehd'
+					});
 				}
 			} else {
-				return res.status(404).json({
+				res.status(404).json({
 					message: 'User not found'
 				});
 			}
 		} else {
-			return res.status(authRes.status).json({
+			res.status(authRes.status).json({
 				message: authRes.message
 			});
 		}
 	} else {
-		return res.status(400).json({
+		res.status(400).json({
 			message: 'User ID parameter required'
 		});
 	}

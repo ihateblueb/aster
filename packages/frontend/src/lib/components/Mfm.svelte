@@ -1,6 +1,7 @@
 <script>
 	import * as mfm from 'mfm-js';
 	import Sparkle from './Sparkle.svelte';
+	import twemoji from '@discordapp/twemoji';
 
 	export let content;
 	export let emojis = [];
@@ -59,10 +60,10 @@
 					return `:${object.props.name}:`;
 				}
 			} else {
-				return `<span class="mfm-emoji">:${object.props.name}:</span>`;
+				return `<span class="mfm-customEmoji">:${object.props.name}:</span>`;
 			}
 		} else if (object.type === 'unicodeEmoji') {
-			return `<span class="mfm-emoji">${object.props.emoji}</span>`;
+			return `${object.props.emoji}`;
 		} else if (object.type === 'mention') {
 			return `<a class="mfm-mention" href='/${object.props.acct}'>${object.props.acct}</a>`;
 		} else if (object.type === 'hashtag') {
@@ -344,10 +345,389 @@
 	<span class="mfmCtn" dir="auto" on:click>
 		{#if content}
 			{#each mfmTree as object}
-				{@html render(object)}
+				{@html twemoji.parse(render(object), {
+					base: '/assets/twemoji/',
+					folder: 'svg',
+					ext: '.svg',
+					className: 'mfm-emoji'
+				})}
 			{/each}
 		{:else}
 			<p></p>
 		{/if}
 	</span>
 </template>
+
+<style lang="scss" global>
+	.mfmCtn {
+		display: block;
+		overflow-wrap: break-word;
+		position: relative;
+		white-space: preserve;
+		text-wrap-mode: wrap;
+		white-space-collapse: preserve;
+		line-height: 1.35em;
+	}
+
+	.mfm-emoji {
+		display: inline;
+		vertical-align: middle;
+		height: 1.2em;
+		transition: 0.1s;
+	}
+
+	.mfm-emoji:hover {
+		transform: scale(1.2);
+	}
+
+	.mfm-quote {
+		margin: 8px 12px;
+		color: var(--txt-tertiary);
+		padding-left: 10px;
+		border-left: var(--border-width-m) solid var(--txt-tertiary);
+	}
+
+	.mfm-blur {
+		filter: blur(7px);
+		transition: 0.1s;
+	}
+
+	.mfm-blur:hover {
+		filter: blur(0px);
+	}
+
+	.mfm-x2 {
+		font-size: 200%;
+	}
+
+	.mfm-x3 {
+		font-size: 300%;
+	}
+
+	.mfm-x4 {
+		font-size: 400%;
+	}
+
+	.mfm-inlineCode {
+		font-size: var(--font-s);
+	}
+
+	.mfm-customEmoji {
+		display: inline;
+		vertical-align: middle;
+		height: 2em;
+		transition: 0.1s;
+	}
+
+	.mfm-customEmoji:hover {
+		transform: scale(1.2);
+	}
+
+	.mfm-blockCode {
+		display: block;
+		overflow-wrap: anywhere;
+		background: var(--bg-tertiary);
+		padding: 8px 12px;
+		margin: 5px 0px;
+		overflow: auto;
+		border-radius: var(--border-m);
+		font-family: monospace;
+		font-size: var(--font-s);
+	}
+
+	.mfm-rainbow {
+		background-image: linear-gradient(
+			to right,
+			rgb(255, 0, 0) 0%,
+			rgb(255, 165, 0) 17%,
+			rgb(255, 255, 0) 33%,
+			rgb(0, 255, 0) 50%,
+			rgb(0, 255, 255) 67%,
+			rgb(0, 0, 255) 83%,
+			rgb(255, 0, 255) 100%
+		);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	.mfm-mention {
+		color: var(--accent);
+		text-decoration: none;
+		background: var(--accent-20);
+		border-radius: var(--border-s);
+		padding: 0px 3px;
+	}
+
+	.mfm-mention:hover {
+		color: var(--accent);
+		text-decoration: underline;
+		background: var(--accent-20);
+		border-radius: var(--border-s);
+		padding: 0px 3px;
+	}
+
+	@keyframes mfm-spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	@keyframes mfm-spinX {
+		0% {
+			transform: perspective(128px) rotateX(0deg);
+		}
+		100% {
+			transform: perspective(128px) rotateX(360deg);
+		}
+	}
+
+	@keyframes mfm-spinY {
+		0% {
+			transform: perspective(128px) rotateY(0deg);
+		}
+		100% {
+			transform: perspective(128px) rotateY(360deg);
+		}
+	}
+
+	@keyframes mfm-tada {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		10%,
+		20% {
+			transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+		}
+		30%,
+		50%,
+		70%,
+		90% {
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+		}
+		40%,
+		60%,
+		80% {
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	@keyframes mfm-jump {
+		0% {
+			transform: translateY(0);
+		}
+		25% {
+			transform: translateY(-16px);
+		}
+		50% {
+			transform: translateY(0);
+		}
+		75% {
+			transform: translateY(-8px);
+		}
+		100% {
+			transform: translateY(0);
+		}
+	}
+
+	@keyframes mfm-bounce {
+		0% {
+			transform: translateY(0) scale(1, 1);
+		}
+		25% {
+			transform: translateY(-16px) scale(1, 1);
+		}
+		50% {
+			transform: translateY(0) scale(1, 1);
+		}
+		75% {
+			transform: translateY(0) scale(1.5, 0.75);
+		}
+		100% {
+			transform: translateY(0) scale(1, 1);
+		}
+	}
+
+	@keyframes mfm-twitch {
+		0% {
+			transform: translate(7px, -2px);
+		}
+		5% {
+			transform: translate(-3px, 1px);
+		}
+		10% {
+			transform: translate(-7px, -1px);
+		}
+		15% {
+			transform: translate(0px, -1px);
+		}
+		20% {
+			transform: translate(-8px, 6px);
+		}
+		25% {
+			transform: translate(-4px, -3px);
+		}
+		30% {
+			transform: translate(-4px, -6px);
+		}
+		35% {
+			transform: translate(-8px, -8px);
+		}
+		40% {
+			transform: translate(4px, 6px);
+		}
+		45% {
+			transform: translate(-3px, 1px);
+		}
+		50% {
+			transform: translate(2px, -10px);
+		}
+		55% {
+			transform: translate(-7px, 0px);
+		}
+		60% {
+			transform: translate(-2px, 4px);
+		}
+		65% {
+			transform: translate(3px, -8px);
+		}
+		70% {
+			transform: translate(6px, 7px);
+		}
+		75% {
+			transform: translate(-7px, -2px);
+		}
+		80% {
+			transform: translate(-7px, -8px);
+		}
+		85% {
+			transform: translate(9px, 3px);
+		}
+		90% {
+			transform: translate(-3px, -2px);
+		}
+		95% {
+			transform: translate(-10px, 2px);
+		}
+		100% {
+			transform: translate(-2px, -6px);
+		}
+	}
+
+	@keyframes mfm-shake {
+		0% {
+			transform: translate(-3px, -1px) rotate(-8deg);
+		}
+		5% {
+			transform: translate(0px, -1px) rotate(-10deg);
+		}
+		10% {
+			transform: translate(1px, -3px) rotate(0deg);
+		}
+		15% {
+			transform: translate(1px, 1px) rotate(11deg);
+		}
+		20% {
+			transform: translate(-2px, 1px) rotate(1deg);
+		}
+		25% {
+			transform: translate(-1px, -2px) rotate(-2deg);
+		}
+		30% {
+			transform: translate(-1px, 2px) rotate(-3deg);
+		}
+		35% {
+			transform: translate(2px, 1px) rotate(6deg);
+		}
+		40% {
+			transform: translate(-2px, -3px) rotate(-9deg);
+		}
+		45% {
+			transform: translate(0px, -1px) rotate(-12deg);
+		}
+		50% {
+			transform: translate(1px, 2px) rotate(10deg);
+		}
+		55% {
+			transform: translate(0px, -3px) rotate(8deg);
+		}
+		60% {
+			transform: translate(1px, -1px) rotate(8deg);
+		}
+		65% {
+			transform: translate(0px, -1px) rotate(-7deg);
+		}
+		70% {
+			transform: translate(-1px, -3px) rotate(6deg);
+		}
+		75% {
+			transform: translate(0px, -2px) rotate(4deg);
+		}
+		80% {
+			transform: translate(-2px, -1px) rotate(3deg);
+		}
+		85% {
+			transform: translate(1px, -3px) rotate(-10deg);
+		}
+		90% {
+			transform: translate(1px, 0px) rotate(3deg);
+		}
+		95% {
+			transform: translate(-2px, 0px) rotate(-3deg);
+		}
+		100% {
+			transform: translate(2px, 1px) rotate(2deg);
+		}
+	}
+
+	@keyframes mfm-jelly {
+		from {
+			transform: scale3d(1, 1, 1);
+		}
+		30% {
+			transform: scale3d(1.25, 0.75, 1);
+		}
+		40% {
+			transform: scale3d(0.75, 1.25, 1);
+		}
+		50% {
+			transform: scale3d(1.15, 0.85, 1);
+		}
+		65% {
+			transform: scale3d(0.95, 1.05, 1);
+		}
+		75% {
+			transform: scale3d(1.05, 0.95, 1);
+		}
+		to {
+			transform: scale3d(1, 1, 1);
+		}
+	}
+
+	@keyframes mfm-rainbow {
+		0% {
+			filter: hue-rotate(0deg) contrast(150%) saturate(150%);
+		}
+		100% {
+			filter: hue-rotate(360deg) contrast(150%) saturate(150%);
+		}
+	}
+
+	@keyframes mfm-fade {
+		0% {
+			opacity: 0;
+		}
+		50% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
+	}
+</style>
