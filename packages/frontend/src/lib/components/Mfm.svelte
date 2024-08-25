@@ -345,8 +345,6 @@
 			}
 		});
 
-		console.log(rendered);
-
 		rendered = twemoji.parse(rendered, {
 			base: '/assets/twemoji/',
 			folder: 'svg',
@@ -363,7 +361,7 @@
 <template>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<span class="mfmCtn" dir="auto" on:click>
+	<span class={'mfmCtn' + (simple ? ' simple' : '')} dir="auto" on:click>
 		{#if content}
 			{@html renderTree(mfmTree)}
 		{:else}
@@ -381,104 +379,109 @@
 		text-wrap-mode: wrap;
 		white-space-collapse: preserve;
 		line-height: 1.35em;
-	}
 
-	.mfm-emoji {
-		display: inline;
-		vertical-align: middle;
-		height: 1.2em;
-		transition: 0.1s;
-	}
+		&.simple {
+			display: inline;
+			line-height: normal;
+		}
 
-	.mfm-emoji:hover {
-		transform: scale(1.2);
-	}
+		> p {
+			margin-bottom: 5px;
+		}
 
-	.mfm-quote {
-		margin: 8px 12px;
-		color: var(--txt-tertiary);
-		padding-left: 10px;
-		border-left: var(--border-width-m) solid var(--txt-tertiary);
-	}
+		.mfm-emoji {
+			display: inline;
+			vertical-align: middle;
+			height: 1.2em;
+			transition: 0.1s;
 
-	.mfm-blur {
-		filter: blur(7px);
-		transition: 0.1s;
-	}
+			&:hover {
+				transform: scale(1.2);
+			}
+		}
 
-	.mfm-blur:hover {
-		filter: blur(0px);
-	}
+		.mfm-quote {
+			margin: 8px 12px;
+			color: var(--txt-tertiary);
+			padding-left: 10px;
+			border-left: var(--border-width-m) solid var(--txt-tertiary);
+		}
 
-	.mfm-x2 {
-		font-size: 200%;
-	}
+		.mfm-blur {
+			filter: blur(7px);
+			transition: 0.1s;
 
-	.mfm-x3 {
-		font-size: 300%;
-	}
+			&:hover {
+				filter: blur(0px);
+			}
+		}
 
-	.mfm-x4 {
-		font-size: 400%;
-	}
+		.mfm-x2 {
+			font-size: 200%;
+		}
 
-	.mfm-inlineCode {
-		font-size: var(--font-s);
-	}
+		.mfm-x3 {
+			font-size: 300%;
+		}
 
-	.mfm-customEmoji {
-		display: inline;
-		vertical-align: middle;
-		height: 2em;
-		transition: 0.1s;
-	}
+		.mfm-x4 {
+			font-size: 400%;
+		}
 
-	.mfm-customEmoji:hover {
-		transform: scale(1.2);
-	}
+		.mfm-inlineCode {
+			font-size: var(--font-s);
+		}
 
-	.mfm-blockCode {
-		display: block;
-		overflow-wrap: anywhere;
-		background: var(--bg-tertiary);
-		padding: 8px 12px;
-		margin: 5px 0px;
-		overflow: auto;
-		border-radius: var(--border-m);
-		font-family: monospace;
-		font-size: var(--font-s);
-	}
+		.mfm-customEmoji {
+			display: inline;
+			vertical-align: middle;
+			height: 2em;
+			transition: 0.1s;
 
-	.mfm-rainbow {
-		background-image: linear-gradient(
-			to right,
-			rgb(255, 0, 0) 0%,
-			rgb(255, 165, 0) 17%,
-			rgb(255, 255, 0) 33%,
-			rgb(0, 255, 0) 50%,
-			rgb(0, 255, 255) 67%,
-			rgb(0, 0, 255) 83%,
-			rgb(255, 0, 255) 100%
-		);
-		-webkit-background-clip: text;
-		background-clip: text;
-		color: transparent;
-	}
+			&:hover {
+				transform: scale(1.2);
+			}
+		}
 
-	.mfm-mention {
-		color: var(--accent);
-		text-decoration: none;
-		background: var(--accent-20);
-		border-radius: var(--border-s);
-		padding: 0px 3px;
-	}
+		.mfm-blockCode {
+			display: block;
+			overflow-wrap: anywhere;
+			background: var(--bg-tertiary);
+			padding: 8px 12px;
+			margin: 5px 0px;
+			overflow: auto;
+			border-radius: var(--border-m);
+			font-family: monospace;
+			font-size: var(--font-s);
+		}
 
-	.mfm-mention:hover {
-		color: var(--accent);
-		text-decoration: underline;
-		background: var(--accent-20);
-		border-radius: var(--border-s);
-		padding: 0px 3px;
+		.mfm-rainbow {
+			background-image: linear-gradient(
+				to right,
+				rgb(255, 0, 0) 0%,
+				rgb(255, 165, 0) 17%,
+				rgb(255, 255, 0) 33%,
+				rgb(0, 255, 0) 50%,
+				rgb(0, 255, 255) 67%,
+				rgb(0, 0, 255) 83%,
+				rgb(255, 0, 255) 100%
+			);
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+		}
+
+		.mfm-mention {
+			color: var(--accent);
+			text-decoration: none;
+			background: var(--accent-20);
+			border-radius: var(--border-m);
+			padding: 2px 4px;
+
+			&:hover {
+				text-decoration: underline;
+			}
+		}
 	}
 
 	@keyframes mfm-spin {

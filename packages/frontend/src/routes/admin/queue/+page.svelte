@@ -14,13 +14,19 @@
 
 <template>
 	<div class="pageContent">
-		<div class="paddedPage textMargins">
-			<h2>{locale('queue')}</h2>
-			<Button to="/admin/queue/dashboard">
-				<Icon name="external-link" size="18px" margin="0px 6px 0px 0px"
-				></Icon>
-				{locale('dashboard')}
-			</Button>
+		<div class="paddedPage">
+			<div class="textMargins">
+				<h2>{locale('queue')}</h2>
+				<Button to="/admin/queue/dashboard">
+					<Icon
+						name="external-link"
+						size="18px"
+						margin="0px 6px 0px 0px"
+					></Icon>
+					{locale('dashboard')}
+				</Button>
+				<br />
+			</div>
 			{#key queues}
 				{#await queues}
 					<div class="loading">

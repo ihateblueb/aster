@@ -104,13 +104,14 @@
 							data.author.username +
 							(!data.author.local ? '@' + data.author.host : '')}
 						class="displayname subtle"
-						><Mfm
+					>
+						<Mfm
 							content={data.author.displayname
 								? data.author.displayname
 								: data.author.username}
 							simple
-						/></a
-					>
+						/>
+					</a>
 					<a
 						href={'/@' +
 							data.author.username +

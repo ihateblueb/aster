@@ -2,6 +2,7 @@
 	import noteGet from '$lib/api/note/get';
 	import { locale } from '$lib/locale';
 	import Icon from './Icon.svelte';
+	import Mfm from './Mfm.svelte';
 	import Note from './Note.svelte';
 	import NoteSimple from './NoteSimple.svelte';
 	import Time from './Time.svelte';
@@ -26,7 +27,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('followed_you')}
 						</p>
@@ -52,7 +59,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('requested_to_follow_you')}
 						</p>
@@ -78,7 +91,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('liked_your_note')}
 						</p>
@@ -107,7 +126,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('reacted_to_your_note')}
 						</p>
@@ -136,7 +161,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('repeated_your_note')}
 						</p>
@@ -165,7 +196,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 							{locale('mentioned_you_in_a_note')}
 						</p>
@@ -195,7 +232,13 @@
 									data.from.username +
 									'@' +
 									data.from.host}
-								>{data.from.displayname}
+							>
+								<Mfm
+									content={data.from.displayname
+										? data.from.displayname
+										: data.from.username}
+									simple
+								/>
 							</a>
 						</p>
 					</div>
