@@ -336,6 +336,27 @@
 		}
 	}
 
+	function renderTree(tree) {
+		let rendered = '';
+
+		tree.forEach((e) => {
+			if (e) {
+				rendered += render(e);
+			}
+		});
+
+		console.log(rendered);
+
+		rendered = twemoji.parse(rendered, {
+			base: '/assets/twemoji/',
+			folder: 'svg',
+			ext: '.svg',
+			className: 'mfm-emoji'
+		});
+
+		return rendered;
+	}
+
 	console.log(mfmTree);
 </script>
 
@@ -344,14 +365,7 @@
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<span class="mfmCtn" dir="auto" on:click>
 		{#if content}
-			{#each mfmTree as object}
-				{@html twemoji.parse(render(object), {
-					base: '/assets/twemoji/',
-					folder: 'svg',
-					ext: '.svg',
-					className: 'mfm-emoji'
-				})}
-			{/each}
+			{@html renderTree(mfmTree)}
 		{:else}
 			<p></p>
 		{/if}
