@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function noteReact(noteId: string, reaction: string) {
 	let noteRes = {};
@@ -8,7 +8,7 @@ export default async function noteReact(noteId: string, reaction: string) {
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+			Authorization: `Bearer ${localstore.get('a_token')}`
 		},
 		body: JSON.stringify({
 			reaction: reaction

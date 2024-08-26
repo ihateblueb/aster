@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function notificationsGet(
 	timeline: string,
@@ -13,7 +13,7 @@ export default async function notificationsGet(
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
+				Authorization: `Bearer ${localstore.get('a_token')}`
 			}
 		}
 	);

@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function timelineGet(timeline: string, since?: string) {
 	let timelineRes = {};
@@ -10,7 +10,7 @@ export default async function timelineGet(timeline: string, since?: string) {
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
+				Authorization: `Bearer ${localstore.get('a_token')}`
 			}
 		}
 	);

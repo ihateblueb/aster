@@ -2,7 +2,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 
 	import { locale } from '$lib/locale';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore.js';
 
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';
@@ -25,7 +25,7 @@
 		loginRes = await loginReq.json();
 
 		if (loginReq.status === 200) {
-			Store.set('a_token', loginRes.token);
+			localstore.set('a_token', loginRes.token);
 
 			document.cookie = 'a_token=' + loginRes.token;
 
@@ -33,7 +33,7 @@
 			accountRes = await accountReq.json();
 
 			if (accountReq.status === 200) {
-				Store.set('account', JSON.stringify(accountRes));
+				localstore.set('account', JSON.stringify(accountRes));
 				location.replace('/');
 			}
 		}

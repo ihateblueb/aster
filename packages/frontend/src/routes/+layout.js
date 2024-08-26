@@ -1,7 +1,9 @@
 import { getLocaleFile } from '$lib/locale';
 
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
+import store from '$lib/utils/store';
 import { io } from 'socket.io-client';
+import { writable } from 'svelte/store';
 
 export const ssr = false;
 
@@ -11,13 +13,13 @@ export async function load({ url }) {
 	const data = await response.json();
 
 	// locale stuff
-	let grabbedLocale = Store.get('locale');
-	let grabbedNewLocale = await getLocaleFile(Store.get('lang'));
+	let grabbedLocale = localstore.get('locale');
+	let grabbedNewLocale = await getLocaleFile(localstore.get('lang'));
 	if (grabbedLocale) {
 		if (
 			grabbedNewLocale.__version__ > JSON.parse(grabbedLocale).__version__
 		) {
-			Store.set('locale', JSON.stringify(grabbedNewLocale));
+			localstore.set('locale', JSON.stringify(grabbedNewLocale));
 			console.log(
 				`[locale] ${grabbedNewLocale.__name__} (${grabbedNewLocale.__id__}) v${JSON.parse(grabbedLocale).__version__} was updated to v${grabbedNewLocale.__version__}`
 			);
@@ -28,7 +30,7 @@ export async function load({ url }) {
 		}
 	} else {
 		if (grabbedNewLocale) {
-			Store.set('locale', JSON.stringify(grabbedNewLocale));
+			localstore.set('locale', JSON.stringify(grabbedNewLocale));
 			console.log(
 				`[locale] ${grabbedNewLocale.__name__} (${grabbedNewLocale.__id__}) v${grabbedNewLocale.__version__} was installed`
 			);
@@ -37,18 +39,30 @@ export async function load({ url }) {
 		}
 	}
 
-	document.body.classList.add('theme-' + Store.get('theme'));
+	import(`../../static/themes/${localstore.get('theme')}.scss`);
+	document.body.classList.add('theme-' + localstore.get('theme'));
 
-	document.body.classList.add('font-' + Store.get('font'));
+	import(`../../static/fonts/${localstore.get('font')}.scss`);
+	document.body.classList.add('font-' + localstore.get('font'));
+
+	store.theme.set(localstore.get('theme'));
+	store.font.set(localstore.get('font'));
+
+	store.theme.subscribe((value) => {
+		import(`../../static/themes/${value}.scss`);
+	});
+	store.font.subscribe((value) => {
+		import(`../../static/fonts/${value}.scss`);
+	});
 
 	// update account
-	let account = Store.get('account');
+	let account = localstore.get('account');
 	if (account && JSON.parse(account).id) {
 		let accountReq = await fetch(`/api/v2/user/${JSON.parse(account).id}`);
 		let accountRes = await accountReq.json();
 
 		if (accountReq.status === 200) {
-			Store.set('account', JSON.stringify(accountRes));
+			localstore.set('account', JSON.stringify(accountRes));
 		}
 	}
 
@@ -58,8 +72,8 @@ export async function load({ url }) {
 
 	socket.send(
 		'hi. my name is ' +
-			(Store.get('account')
-				? JSON.parse(Store.get('account')).username
+			(localstore.get('account')
+				? JSON.parse(localstore.get('account')).username
 				: 'unknown')
 	);
 	*/

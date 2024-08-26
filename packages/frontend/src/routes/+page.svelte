@@ -10,7 +10,7 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Ad from '$lib/components/Ad.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import pkg from '../../../../package.json';
 	import Icon from '$lib/components/Icon.svelte';
 
@@ -20,7 +20,7 @@
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Tab from '$lib/components/Tab.svelte';
 
-	let timeline = Store.get('home_timeline');
+	let timeline = localstore.get('home_timeline');
 	let notes;
 	let loadingMore = false;
 
@@ -65,7 +65,7 @@
 </script>
 
 <template>
-	{#if Store.get('a_token')}
+	{#if localstore.get('a_token')}
 		<PageHeader
 			title={locale('home')}
 			icon={timeline === 'home'
@@ -84,7 +84,7 @@
 				selected={timeline === 'home' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'home';
-					Store.set('home_timeline', 'home');
+					localstore.set('home_timeline', 'home');
 					refresh();
 				}}
 			/>
@@ -94,7 +94,7 @@
 				selected={timeline === 'local' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'local';
-					Store.set('home_timeline', 'local');
+					localstore.set('home_timeline', 'local');
 					refresh();
 				}}
 			/>
@@ -104,7 +104,7 @@
 				selected={timeline === 'bubble' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'bubble';
-					Store.set('home_timeline', 'bubble');
+					localstore.set('home_timeline', 'bubble');
 					refresh();
 				}}
 			/>
@@ -114,7 +114,7 @@
 				selected={timeline === 'public' ? ' selected' : ''}
 				on:click={async () => {
 					timeline = 'public';
-					Store.set('home_timeline', 'public');
+					localstore.set('home_timeline', 'public');
 					refresh();
 				}}
 			/>

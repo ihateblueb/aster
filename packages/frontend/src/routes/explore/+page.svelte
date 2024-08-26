@@ -9,11 +9,11 @@
 	import Icon from '$lib/components/Icon.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import VirtualList from '$lib/components/VirtualList.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import Tab from '$lib/components/Tab.svelte';
 
-	let timeline = Store.get('explore_timeline')
-		? Store.get('explore_timeline')
+	let timeline = localstore.get('explore_timeline')
+		? localstore.get('explore_timeline')
 		: 'local';
 	let notes;
 
@@ -36,7 +36,7 @@
 			selected={timeline === 'local' ? true : false}
 			on:click={async () => {
 				timeline = 'local';
-				Store.set('explore_timeline', 'local');
+				localstore.set('explore_timeline', 'local');
 				refresh();
 			}}
 		/>
@@ -46,7 +46,7 @@
 			selected={timeline === 'public' ? true : false}
 			on:click={async () => {
 				timeline = 'public';
-				Store.set('explore_timeline', 'public');
+				localstore.set('explore_timeline', 'public');
 				refresh();
 			}}
 		/>

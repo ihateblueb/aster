@@ -4,7 +4,7 @@
 
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
 	console.log('pathname ' + $page.url.pathname);
 
@@ -15,7 +15,7 @@
 		document.getElementById('sidebar-out-right').classList.remove('open');
 	}
 
-	let account = Store.get('account');
+	let account = localstore.get('account');
 
 	if (account) {
 		account = JSON.parse(account);

@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function noteUnpin(noteId: string) {
 	let noteRes = {};
@@ -8,7 +8,7 @@ export default async function noteUnpin(noteId: string) {
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+			Authorization: `Bearer ${localstore.get('a_token')}`
 		}
 	});
 

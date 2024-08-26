@@ -1,9 +1,9 @@
 <script>
 	import { goto } from '$app/navigation';
 	import Loading from '$lib/components/Loading.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
-	Store.del('a_token');
+	localstore.del('a_token');
 	document.cookie = 'a_token=;';
 
 	location.replace('/');

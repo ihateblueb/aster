@@ -1,7 +1,7 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
 	import { locale } from '$lib/locale';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
 	async function indexAll() {
 		let searchRes = {};
@@ -11,7 +11,7 @@
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
+				Authorization: `Bearer ${localstore.get('a_token')}`
 			}
 		});
 
@@ -34,7 +34,7 @@
 			headers: {
 				'Content-Type': 'application/json',
 				Accept: 'application/json',
-				Authorization: `Bearer ${Store.get('a_token')}`
+				Authorization: `Bearer ${localstore.get('a_token')}`
 			}
 		});
 

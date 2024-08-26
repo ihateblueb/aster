@@ -11,7 +11,7 @@
 	import noteCreate from '$lib/api/note/create';
 	import Icon from '../Icon.svelte';
 	import Avatar from '../Avatar.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import Mfm from '../Mfm.svelte';
 	import Account from './Account.svelte';
 
@@ -21,7 +21,7 @@
 	let selectedVisibility = 'public';
 	let showPreview = false;
 
-	let account = Store.get('account');
+	let account = localstore.get('account');
 	if (account) {
 		account = JSON.parse(account);
 	}
@@ -33,25 +33,25 @@
 	let draft = {};
 
 	function storeDraft(draft) {
-		let grabbedDrafts = Store.get('drafts');
+		let grabbedDrafts = localstore.get('drafts');
 
 		if (draft.content && draft.content !== ' ') {
 			if (Object.keys(grabbedDrafts).length > 0) {
 				let parsedDrafts = JSON.parse(grabbedDrafts);
 				parsedDrafts[draft.id] = draft;
-				Store.set('drafts', JSON.stringify(parsedDrafts));
+				localstore.set('drafts', JSON.stringify(parsedDrafts));
 			} else {
 				grabbedDrafts[draft.id] = draft;
-				Store.set('drafts', JSON.stringify(grabbedDrafts));
+				localstore.set('drafts', JSON.stringify(grabbedDrafts));
 			}
 		} else {
 			if (Object.keys(grabbedDrafts).length > 0) {
 				let parsedDrafts = JSON.parse(grabbedDrafts);
 				delete parsedDrafts[draft.id];
-				Store.set('drafts', JSON.stringify(parsedDrafts));
+				localstore.set('drafts', JSON.stringify(parsedDrafts));
 			} else {
 				delete grabbedDrafts[draft.id];
-				Store.set('drafts', JSON.stringify(grabbedDrafts));
+				localstore.set('drafts', JSON.stringify(grabbedDrafts));
 			}
 		}
 	}

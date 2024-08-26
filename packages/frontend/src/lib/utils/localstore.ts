@@ -1,4 +1,4 @@
-import defaultStore from './defaultStore.json' with { type: 'json' };
+import defaultLocalstore from './defaultLocalstore.json' with { type: 'json' };
 
 export default {
 	set: (key: string, val: string) => {
@@ -9,16 +9,16 @@ export default {
 		if (toReturn) {
 			return toReturn;
 		} else {
-			return defaultStore[key];
+			return defaultLocalstore[key];
 		}
 	},
 	del: (key: string) => {
 		return localStorage.removeItem(key);
 	},
 	default: (key: string) => {
-		return defaultStore[key];
+		return defaultLocalstore[key];
 	},
 	defaultAll: () => {
-		return defaultStore;
+		return defaultLocalstore;
 	}
 };

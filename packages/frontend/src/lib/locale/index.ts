@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export async function getLocaleFile(locale) {
 	if (locale) {
@@ -10,7 +10,7 @@ export async function getLocaleFile(locale) {
 
 export function locale(string) {
 	if (string) {
-		let fetchedLocale = Store.get('locale');
+		let fetchedLocale = localstore.get('locale');
 		if (fetchedLocale) {
 			let matchedLocale = JSON.parse(fetchedLocale)[string];
 			if (matchedLocale) {

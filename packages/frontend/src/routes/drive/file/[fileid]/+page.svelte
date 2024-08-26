@@ -9,7 +9,7 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Time from '$lib/components/Time.svelte';
 	import { locale } from '$lib/locale';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import { onMount } from 'svelte';
 
 	let data = {
@@ -239,7 +239,7 @@
 										avatar: data.src
 									}).then((e) => {
 										if (e.user) {
-											Store.set(
+											localstore.set(
 												'account',
 												JSON.stringify(e.user)
 											);
@@ -261,7 +261,7 @@
 										banner: data.src
 									}).then((e) => {
 										if (e.user) {
-											Store.set(
+											localstore.set(
 												'account',
 												JSON.stringify(e.user)
 											);
@@ -283,7 +283,7 @@
 										background: data.src
 									}).then((e) => {
 										if (e.user) {
-											Store.set(
+											localstore.set(
 												'account',
 												JSON.stringify(e.user)
 											);

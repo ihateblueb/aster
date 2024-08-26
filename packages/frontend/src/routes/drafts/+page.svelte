@@ -2,10 +2,10 @@
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import { JsonView } from '@zerodevx/svelte-json-view';
 
-	let data = JSON.parse(Store.get('drafts'));
+	let data = JSON.parse(localstore.get('drafts'));
 </script>
 
 <template>

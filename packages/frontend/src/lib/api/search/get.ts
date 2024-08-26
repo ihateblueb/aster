@@ -1,7 +1,7 @@
 /*
 /api/v2/search?q=
 */
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function searchGet(query: string) {
 	let searchRes = {};
@@ -11,7 +11,7 @@ export default async function searchGet(query: string) {
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+			Authorization: `Bearer ${localstore.get('a_token')}`
 		}
 	});
 

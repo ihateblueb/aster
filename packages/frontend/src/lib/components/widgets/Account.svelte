@@ -1,9 +1,9 @@
 <script>
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import Avatar from '../Avatar.svelte';
 	import Mfm from '../Mfm.svelte';
 
-	let account = JSON.parse(Store.get('account'));
+	let account = JSON.parse(localstore.get('account'));
 </script>
 
 <template>

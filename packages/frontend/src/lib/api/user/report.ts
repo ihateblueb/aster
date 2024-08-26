@@ -1,4 +1,4 @@
-import Store from '$lib/utils/Store';
+import localstore from '$lib/utils/localstore';
 
 export default async function userReport(
 	userId: string,
@@ -11,7 +11,7 @@ export default async function userReport(
 		headers: {
 			'Content-Type': 'application/json',
 			Accept: 'application/json',
-			Authorization: `Bearer ${Store.get('a_token')}`
+			Authorization: `Bearer ${localstore.get('a_token')}`
 		},
 		body: JSON.stringify({
 			content: reportContent

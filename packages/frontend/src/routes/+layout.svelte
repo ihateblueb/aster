@@ -4,7 +4,7 @@
 	import PageFooter from '$lib/components/PageFooter.svelte';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
 	let defaultLeftWidgets = {
 		top: ['instancelogo'],
@@ -18,8 +18,8 @@
 
 <template>
 	<div class="page">
-		{#if Store.get('a_token')}
-			<Sidebar side="left" widgets={Store.get('widgets_left')} />
+		{#if localstore.get('a_token')}
+			<Sidebar side="left" widgets={localstore.get('widgets_left')} />
 		{:else}
 			<Sidebar side="left" widgets={defaultLeftWidgets} />
 		{/if}
@@ -27,8 +27,8 @@
 			<slot></slot>
 			<PageFooter />
 		</main>
-		{#if Store.get('a_token')}
-			<Sidebar side="right" widgets={Store.get('widgets_right')} />
+		{#if localstore.get('a_token')}
+			<Sidebar side="right" widgets={localstore.get('widgets_right')} />
 		{:else}
 			<Sidebar side="right" widgets={defaultRightWidgets} />
 		{/if}

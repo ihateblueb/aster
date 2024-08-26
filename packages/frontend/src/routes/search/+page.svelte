@@ -10,7 +10,7 @@
 	import { JsonView } from '@zerodevx/svelte-json-view';
 	import userGet from '$lib/api/user/get';
 	import noteGet from '$lib/api/note/get';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
 	let query;
 	let results = {};

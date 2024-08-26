@@ -34,13 +34,13 @@
 	import InstanceTicker from './InstanceTicker.svelte';
 	import NoteMedia from './NoteMedia.svelte';
 	import Time from './Time.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import NoteSimple from './NoteSimple.svelte';
 
 	let self = {};
 
-	if (Store.get('account')) {
-		self = JSON.parse(Store.get('account'));
+	if (localstore.get('account')) {
+		self = JSON.parse(localstore.get('account'));
 	}
 </script>
 

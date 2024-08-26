@@ -7,19 +7,19 @@
 	import driveGet from '$lib/api/drive/get';
 	import { onMount } from 'svelte';
 	import driveFileAdd from '$lib/api/drive/file/add';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 
 	let fileinput;
 
 	let driveLayout = 'grid';
 
-	if (Store.get('drive_layout')) {
-		driveLayout = Store.get('drive_layout');
+	if (localstore.get('drive_layout')) {
+		driveLayout = localstore.get('drive_layout');
 	}
 
 	function setLayout(layout) {
 		driveLayout = layout;
-		Store.set('drive_layout', layout);
+		localstore.set('drive_layout', layout);
 	}
 
 	let drive = [];

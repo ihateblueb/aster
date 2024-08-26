@@ -8,11 +8,11 @@
 	import Button from '$lib/components/Button.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
-	import Store from '$lib/utils/Store';
+	import localstore from '$lib/utils/localstore';
 	import editAccount from '$lib/api/user/edit';
 	import InfoBox from '$lib/components/InfoBox.svelte';
 
-	let account = JSON.parse(Store.get('account'));
+	let account = JSON.parse(localstore.get('account'));
 	let updatedAccount = {};
 
 	// TODO: update only modified values
@@ -30,7 +30,7 @@
 		if (res.message === 'Updated user') {
 			account = res.user;
 			updatedAccount = res.user;
-			Store.set('account', JSON.stringify(res.user));
+			localstore.set('account', JSON.stringify(res.user));
 		}
 	}
 </script>

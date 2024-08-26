@@ -1,35 +1,5 @@
 @import './static/themes/base.scss';
 
-@import './static/themes/purpura.scss';
-@import './static/themes/wisteria.scss';
-@import './static/themes/iceshrimp.scss';
-@import './static/themes/rosepine.scss';
-@import './static/themes/rosepine-moon.scss';
-@import './static/themes/rosepine-dawn.scss';
-@import './static/themes/material.scss';
-@import './static/themes/misskey.scss';
-@import './static/themes/mi-botanical.scss';
-@import './static/themes/mi-green.scss';
-@import './static/themes/mastodon.scss';
-@import './static/themes/mi-cherry.scss';
-
-@import './static/fonts/figtree.scss';
-@import './static/fonts/inclusive-sans.scss';
-@import './static/fonts/atkinson-hyperlegible.scss';
-@import './static/fonts/inter.scss';
-@import './static/fonts/roboto.scss';
-@import './static/fonts/nosey-rodent.scss';
-@import './static/fonts/balsamiq-sans.scss';
-@import './static/fonts/cantarell.scss';
-@import './static/fonts/ibm-plex-sans.scss';
-@import './static/fonts/lato.scss';
-@import './static/fonts/lexend.scss';
-@import './static/fonts/noto-sans.scss';
-@import './static/fonts/open-sans.scss';
-@import './static/fonts/ubuntu.scss';
-@import './static/fonts/work-sans.scss';
-@import './static/fonts/system-ui.scss';
-
 body {
 	margin: 0px;
 	scrollbar-color: var(--bg-accent) transparent;
@@ -73,6 +43,11 @@ h5 {
 
 h6 {
 	margin: 0px;
+}
+
+code {
+	font-size: var(--font-s);
+	font-family: var(--font-mono);
 }
 
 a {
