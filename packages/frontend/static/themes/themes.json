@@ -25,7 +25,7 @@
 		"scheme": ["light"]
 	},
 	{
-		"id": "m3",
+		"id": "material",
 		"name": "Material 3",
 		"scheme": ["light", "dark"]
 	},

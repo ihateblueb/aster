@@ -11,20 +11,15 @@
 
 	import themes from '../../../static/themes/themes.json';
 
-	function refreshTheme(oldTheme, newTheme) {
+	function refreshTheme(newTheme) {
 		store.theme.set(newTheme);
-		document.body.classList.replace(
-			'theme-' + oldTheme,
-			'theme-' + newTheme
-		);
 	}
 
 	import fonts from '../../../static/fonts/fonts.json';
 	import store from '$lib/utils/store';
 
-	function refreshFont(oldFont, newFont) {
+	function refreshFont(newFont) {
 		store.font.set(newFont);
-		document.body.classList.replace('font-' + oldFont, 'font-' + newFont);
 	}
 </script>
 
@@ -36,8 +31,7 @@
 			<h2>{locale('s_appearance_theme')}</h2>
 			<Select
 				on:change={(e) => {
-					refreshTheme(localstore.get('theme'), e.target.value);
-					localstore.set('theme', e.target.value);
+					refreshTheme(e.target.value);
 				}}
 			>
 				{#each themes as theme}
@@ -53,8 +47,7 @@
 			<h2>{locale('s_appearance_font')}</h2>
 			<Select
 				on:change={(e) => {
-					refreshFont(localstore.get('font'), e.target.value);
-					localstore.set('font', e.target.value);
+					refreshFont(e.target.value);
 				}}
 			>
 				{#each fonts as font}

@@ -3,6 +3,7 @@ import { getLocaleFile } from '$lib/locale';
 import localstore from '$lib/utils/localstore';
 import store from '$lib/utils/store';
 import { io } from 'socket.io-client';
+import { tick } from 'svelte';
 import { writable } from 'svelte/store';
 
 export const ssr = false;
@@ -48,11 +49,23 @@ export async function load({ url }) {
 	store.theme.set(localstore.get('theme'));
 	store.font.set(localstore.get('font'));
 
-	store.theme.subscribe((value) => {
-		import(`../../static/themes/${value}.scss`);
+	store.theme.subscribe(async (value) => {
+		import(`../../static/themes/${value}.scss`).then(() => {
+			document.body.classList.replace(
+				'theme-' + localstore.get('theme'),
+				'theme-' + value
+			);
+			localstore.set('theme', value);
+		});
 	});
-	store.font.subscribe((value) => {
-		import(`../../static/fonts/${value}.scss`);
+	store.font.subscribe(async (value) => {
+		import(`../../static/fonts/${value}.scss`).then(() => {
+			document.body.classList.replace(
+				'font-' + localstore.get('font'),
+				'font-' + value
+			);
+			localstore.set('font', value);
+		});
 	});
 
 	// update account
