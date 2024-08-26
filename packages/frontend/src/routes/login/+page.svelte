@@ -2,7 +2,7 @@
 	import { goto, invalidateAll } from '$app/navigation';
 
 	import { locale } from '$lib/locale';
-	import localstore from '$lib/utils/localstore.js';
+	import localstore from '$lib/utils/localstore';
 
 	import Button from '$lib/components/Button.svelte';
 	import Input from '$lib/components/Input.svelte';

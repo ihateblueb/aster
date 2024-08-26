@@ -40,32 +40,39 @@ export async function load({ url }) {
 		}
 	}
 
-	import(`../../static/themes/${localstore.get('theme')}.scss`);
 	document.body.classList.add('theme-' + localstore.get('theme'));
-
-	import(`../../static/fonts/${localstore.get('font')}.scss`);
 	document.body.classList.add('font-' + localstore.get('font'));
 
 	store.theme.set(localstore.get('theme'));
 	store.font.set(localstore.get('font'));
 
 	store.theme.subscribe(async (value) => {
-		import(`../../static/themes/${value}.scss`).then(() => {
+		let link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.onload = () => {
 			document.body.classList.replace(
 				'theme-' + localstore.get('theme'),
 				'theme-' + value
 			);
 			localstore.set('theme', value);
-		});
+		};
+
+		link.setAttribute('href', '/themes/' + value + '.scss');
+		document.getElementsByTagName('head')[0].appendChild(link);
 	});
 	store.font.subscribe(async (value) => {
-		import(`../../static/fonts/${value}.scss`).then(() => {
+		let link = document.createElement('link');
+		link.setAttribute('rel', 'stylesheet');
+		link.onload = () => {
 			document.body.classList.replace(
 				'font-' + localstore.get('font'),
 				'font-' + value
 			);
 			localstore.set('font', value);
-		});
+		};
+
+		link.setAttribute('href', '/fonts/' + value + '.scss');
+		document.getElementsByTagName('head')[0].appendChild(link);
 	});
 
 	// update account
