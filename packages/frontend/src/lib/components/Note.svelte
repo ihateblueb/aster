@@ -35,10 +35,7 @@
 	import NoteMedia from './NoteMedia.svelte';
 	import Time from './Time.svelte';
 	import Store from '$lib/utils/Store';
-	import UserCard from './UserCard.svelte';
 	import NoteSimple from './NoteSimple.svelte';
-
-	let userCard: UserCard;
 
 	let self = {};
 
@@ -407,6 +404,4 @@
 			<span>{locale('delete_note')}</span>
 		</DropdownItem>
 	</Dropdown>
-
-	<UserCard bind:this={userCard} />
 </template>

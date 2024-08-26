@@ -30,6 +30,8 @@
 			show = true;
 			target = e.target;
 
+			await tick();
+
 			updatePosition();
 
 			tick().then(() => {
@@ -39,22 +41,24 @@
 	}
 
 	function updatePosition() {
-		computePosition(target, dialog, {
-			middleware: [
-				shift(),
-				offset(10),
-				flip(),
-				size({
-					apply({ availableWidth, availableHeight }) {
-						maxWidth = availableWidth;
-						maxHeight = availableHeight - 22; // 10px off of bottom
-					}
-				})
-			]
-		}).then(({ x, y }) => {
-			left = x;
-			top = y;
-		});
+		if (target && dialog) {
+			computePosition(target, dialog, {
+				middleware: [
+					shift(),
+					offset(10),
+					flip(),
+					size({
+						apply({ availableWidth, availableHeight }) {
+							maxWidth = availableWidth;
+							maxHeight = availableHeight - 22; // 10px off of bottom
+						}
+					})
+				]
+			}).then(({ x, y }) => {
+				left = x;
+				top = y;
+			});
+		}
 	}
 
 	export function close() {
@@ -76,21 +80,23 @@
 	<!-- TODO: see below -->
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
 	<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-	<dialog
-		style={'top: ' +
-			top +
-			'px; left: ' +
-			left +
-			'px; max-width: ' +
-			maxWidth +
-			'px; max-height: ' +
-			maxHeight +
-			'px;'}
-		bind:this={dialog}
-		on:click={close}
-		on:close={() => (show = false)}
-		class={'_91qW7WV' + (show ? ' show' : '')}
-	>
-		<slot></slot>
-	</dialog>
+	{#if show}
+		<dialog
+			style={'top: ' +
+				top +
+				'px; left: ' +
+				left +
+				'px; max-width: ' +
+				maxWidth +
+				'px; max-height: ' +
+				maxHeight +
+				'px;'}
+			bind:this={dialog}
+			on:click={close}
+			on:close={() => (show = false)}
+			class={'_91qW7WV'}
+		>
+			<slot></slot>
+		</dialog>
+	{/if}
 </template>
