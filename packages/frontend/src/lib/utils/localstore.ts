@@ -2,10 +2,10 @@ import defaultLocalstore from './defaultLocalstore.json' with { type: 'json' };
 
 export default {
 	set: (key: string, val: string) => {
-		return localStorage.setItem(key, val);
+		return localStorage.setItem('aster_' + key, val);
 	},
 	get: (key: string) => {
-		let toReturn = localStorage.getItem(key);
+		let toReturn = localStorage.getItem('aster_' + key);
 		if (toReturn) {
 			return toReturn;
 		} else {
@@ -13,7 +13,7 @@ export default {
 		}
 	},
 	del: (key: string) => {
-		return localStorage.removeItem(key);
+		return localStorage.removeItem('aster_' + key);
 	},
 	default: (key: string) => {
 		return defaultLocalstore[key];

@@ -49,6 +49,7 @@ export async function load({ url }) {
 	store.theme.subscribe(async (value) => {
 		let link = document.createElement('link');
 		link.setAttribute('rel', 'stylesheet');
+
 		link.onload = () => {
 			document.body.classList.replace(
 				'theme-' + localstore.get('theme'),
@@ -63,6 +64,7 @@ export async function load({ url }) {
 	store.font.subscribe(async (value) => {
 		let link = document.createElement('link');
 		link.setAttribute('rel', 'stylesheet');
+
 		link.onload = () => {
 			document.body.classList.replace(
 				'font-' + localstore.get('font'),
