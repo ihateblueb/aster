@@ -1,5 +1,5 @@
+import { http } from '../http';
+
 export default async function userGet(userId: string) {
-	const response = await fetch(`/api/v2/user/${userId}`);
-	const data = await response.json();
-	return data;
+	return new http().get(`/api/v2/users/${userId}`);
 }

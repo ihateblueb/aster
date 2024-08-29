@@ -1,25 +1,6 @@
+import { http } from '$lib/api/http';
 import localstore from '$lib/utils/localstore';
 
 export default async function driveFileEdit(id: string, body: object) {
-	let driveFileRes = {};
-
-	let driveFileReq = await fetch(`/api/v2/drive/file/${id}`, {
-		method: 'PATCH',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			Authorization: `Bearer ${localstore.get('a_token')}`
-		},
-		body: JSON.stringify(body)
-	});
-
-	driveFileRes = await driveFileReq.json();
-
-	if (driveFileReq.status === 200) {
-		console.log(driveFileRes);
-	} else {
-		console.log(driveFileRes);
-	}
-
-	return driveFileRes;
+	return new http().patch(`/api/v2/drive/file/${id}`, body);
 }

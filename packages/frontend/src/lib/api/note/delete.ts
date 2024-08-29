@@ -1,27 +1,8 @@
 import localstore from '$lib/utils/localstore';
+import { http } from '../http';
 
 export default async function noteDelete(noteId: string) {
-	let noteRes = {};
-
-	let noteReq = await fetch(`/api/v2/note`, {
-		method: 'DELETE',
-		headers: {
-			'Content-Type': 'application/json',
-			Accept: 'application/json',
-			Authorization: `Bearer ${localstore.get('a_token')}`
-		},
-		body: JSON.stringify({
-			id: noteId
-		})
+	return new http().delete(`/api/v2/note`, {
+		id: noteId
 	});
-
-	noteRes = await noteReq.json();
-
-	if (noteReq.status === 200) {
-		console.log(noteRes);
-	} else {
-		console.log(noteRes);
-	}
-
-	return noteRes;
 }
