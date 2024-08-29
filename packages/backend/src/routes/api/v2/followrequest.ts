@@ -72,6 +72,10 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 					grabbedFollowrequest.object
 				);
 
+				await notification.delete({
+					object: grabbedFollowrequest.id
+				});
+
 				await notification.create(
 					grabbedToUser.id,
 					grabbedFromUser.id,

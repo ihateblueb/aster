@@ -13,7 +13,11 @@ type notificationType =
 	| 'note'
 	| 'follow'
 	| 'followrequest'
-	| 'bite';
+	| 'bite'
+	| 'report'
+	| 'severedRelationship'
+	| 'userSignup'
+	| 'userAwaitingApproval';
 
 class Notification {
 	public async create(
@@ -42,10 +46,8 @@ class Notification {
 		}
 	}
 
-	public async delete(id: string) {
-		await db.getRepository('user_notification').delete({
-			id: id
-		});
+	public async delete(where: object) {
+		await db.getRepository('user_notification').delete(where);
 	}
 }
 

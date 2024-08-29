@@ -65,7 +65,8 @@ export default async function IFollow(body) {
 		await notification.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
-			'follow'
+			'follow',
+			relationshipId
 		);
 
 		await signAndAccept(
