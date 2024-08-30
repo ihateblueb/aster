@@ -72,7 +72,11 @@
 				<Mfm
 					content={data.content}
 					simple
+					tabindex={0}
 					on:click={() => {
+						goto('/notes/' + data.id);
+					}}
+					on:keypress={() => {
 						goto('/notes/' + data.id);
 					}}
 				/>

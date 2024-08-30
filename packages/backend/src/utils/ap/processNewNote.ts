@@ -10,6 +10,8 @@ import getRemoteNote from './getRemoteNote.js';
 import processNewEmoji from './processNewEmoji.js';
 import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
+import * as mfm from 'mfm-js';
+import fromHtml from '../mfm/fromHtml.js';
 
 export default async function processNewNote(body) {
 	console.log(body);
@@ -149,7 +151,7 @@ export default async function processNewNote(body) {
 			// raw mfm
 			noteToInsert['content'] = sanitize(body.source.content);
 		} else {
-			noteToInsert['content'] = sanitize(body.content);
+			noteToInsert['content'] = sanitize(await fromHtml(body.content));
 		}
 
 		if (body.attachment) {

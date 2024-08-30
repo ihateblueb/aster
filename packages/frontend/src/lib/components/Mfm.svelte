@@ -6,6 +6,7 @@
 	export let content;
 	export let emojis = [];
 	export let simple = false;
+	export let tabindex = -1;
 
 	let mfmTree = [];
 
@@ -361,7 +362,14 @@
 <template>
 	<!-- svelte-ignore a11y-no-static-element-interactions -->
 	<!-- svelte-ignore a11y-click-events-have-key-events -->
-	<span class={'mfmCtn' + (simple ? ' simple' : '')} dir="auto" on:click>
+	<!-- svelte-ignore a11y-no-noninteractive-tabindex -->
+	<span
+		class={'mfmCtn' + (simple ? ' simple' : '')}
+		dir="auto"
+		{tabindex}
+		on:click
+		on:keypress
+	>
 		{#if content}
 			{@html renderTree(mfmTree)}
 		{:else}

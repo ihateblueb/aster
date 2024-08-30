@@ -189,6 +189,9 @@
 							on:click={() => {
 								if (!detailed) goto('/notes/' + data.id);
 							}}
+							on:keypress={() => {
+								if (!detailed) goto('/notes/' + data.id);
+							}}
 						/>
 						<NoteMedia attachments={data.attachments} />
 					</div>
@@ -198,7 +201,11 @@
 					<Mfm
 						content={data.content}
 						emojis={data.emojis}
+						tabindex={0}
 						on:click={() => {
+							if (!detailed) goto('/notes/' + data.id);
+						}}
+						on:keypress={() => {
 							if (!detailed) goto('/notes/' + data.id);
 						}}
 					/>
