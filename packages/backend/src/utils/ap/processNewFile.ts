@@ -19,7 +19,9 @@ export default async function processNewFile(attachment, note, author) {
 	driveFileToInsert['updated_at'] = sanitize(note.created_at);
 	driveFileToInsert['type'] = sanitize(attachment.mediaType);
 	driveFileToInsert['src'] = sanitize(attachment.url);
-	driveFileToInsert['alt'] = sanitize(attachment.summary);
+	driveFileToInsert['alt'] = sanitize(
+		attachment.summary ? attachment.summary : attachment.name
+	);
 
 	driveFileToInsert['width'] = 0;
 	driveFileToInsert['height'] = 0;

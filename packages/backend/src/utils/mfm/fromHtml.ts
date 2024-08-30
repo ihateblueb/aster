@@ -13,7 +13,11 @@ export default async function fromHtml(html: string) {
 			let newLink = document.createElement('a');
 
 			newLink.setAttribute('killme', 'true');
-			newLink.innerHTML = e.textContent + '@' + new URL(e.href).host;
+			newLink.innerHTML =
+				e.textContent +
+				(e.textContent.includes('@' + new URL(e.href).host)
+					? ''
+					: '@' + new URL(e.href).host);
 
 			e.replaceWith(newLink);
 		} else {
