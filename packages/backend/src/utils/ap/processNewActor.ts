@@ -4,6 +4,7 @@ import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 import getSigned from './getSigned.js';
+import fromHtml from '../mfm/fromHtml.js';
 
 export default async function processNewActor(body) {
 	if (body.preferredUsername && body.id && body.url && body.outbox) {
@@ -43,7 +44,7 @@ export default async function processNewActor(body) {
 		if (body._misskey_summary) {
 			actorToInsert['bio'] = sanitize(body._misskey_summary);
 		} else if (body.summary) {
-			actorToInsert['bio'] = sanitize(body.summary);
+			actorToInsert['bio'] = sanitize(await fromHtml(body.summary));
 		}
 
 		if (body.icon) {

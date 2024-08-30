@@ -1,6 +1,7 @@
 import db from '../database.js';
 import logger from '../logger.js';
 import Logger from '../logger.js';
+import fromHtml from '../mfm/fromHtml.js';
 import sanitize from '../sanitize.js';
 import getSigned from './getSigned.js';
 
@@ -47,7 +48,10 @@ export default async function updateRemoteActor(body) {
 	} else if (body.summary) {
 		grabbedUser = await db
 			.getRepository('user')
-			.update({ ap_id: body.id }, { bio: sanitize(body.summary) });
+			.update(
+				{ ap_id: body.id },
+				{ bio: sanitize(await fromHtml(body.summary)) }
+			);
 	}
 
 	if (body.icon) {

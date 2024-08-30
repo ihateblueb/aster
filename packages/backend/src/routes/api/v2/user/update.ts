@@ -9,7 +9,7 @@ import updateRemoteActor from '../../../../utils/ap/updateRemoteActor.js';
 
 const router = express.Router();
 
-router.get('/api/v2/user/:userid/update', async (req, res) => {
+router.post('/api/v2/user/:userid/update', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.params.userid) {
 		return res.status(400).json({
