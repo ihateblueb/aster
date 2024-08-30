@@ -11,6 +11,13 @@ export default async function processNewEmoji(body) {
 
 		const emojiId = uuidv4();
 
+		if (!body.name.startsWith(':')) {
+			body.name = ':' + body.name;
+		}
+		if (!body.name.endsWith(':')) {
+			body.name = body.name + ':';
+		}
+
 		emojiToInsert['id'] = emojiId;
 		emojiToInsert['ap_id'] = sanitize(body.id);
 		emojiToInsert['created_at'] = sanitize(body.updated);
