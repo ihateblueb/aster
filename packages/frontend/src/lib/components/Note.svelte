@@ -83,18 +83,18 @@
 			</div>
 		{/if}
 		<div class="noteHeader">
+			<a
+				href={'/@' + data.author.username + '@' + data.author.host}
+				class="displayname subtle"
+			>
+				<Avatar
+					src={data.author.avatar}
+					alt={data.author.avatar_alt}
+					isCat={data.author.is_cat}
+					size="45px"
+				/></a
+			>
 			<div class="left">
-				<a
-					href={'/@' + data.author.username + '@' + data.author.host}
-					class="displayname subtle"
-				>
-					<Avatar
-						src={data.author.avatar}
-						alt={data.author.avatar_alt}
-						isCat={data.author.is_cat}
-						size="45px"
-					/></a
-				>
 				<div class="names">
 					<a
 						href={'/@' +

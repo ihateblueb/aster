@@ -11,6 +11,7 @@ import Logger from '../../../utils/logger.js';
 import { ILike } from 'typeorm';
 import generateNote from '../../../generators/note.js';
 import fromHtml from '../../../utils/mfm/fromHtml.js';
+import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
 const router = express.Router();
 
@@ -228,6 +229,18 @@ router.get('/api/v2/search', async (req, res) => {
 		} else if (req.query.q.startsWith('fromHtml:')) {
 			let grabbedObject = await fromHtml(
 				req.query.q.replace('fromHtml:', '')
+			);
+
+			if (grabbedObject) {
+				results.push({
+					type: 'object',
+					by: 'fetched',
+					object: grabbedObject
+				});
+			}
+		} else if (req.query.q.startsWith('refreshInstance:')) {
+			let grabbedObject = await getRemoteInstance(
+				req.query.q.replace('refreshInstance:', '')
 			);
 
 			if (grabbedObject) {

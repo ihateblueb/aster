@@ -33,6 +33,8 @@
 		.left {
 			display: flex;
 			flex-grow: 2;
+			overflow: hidden;
+			text-overflow: ellipsis;
 
 			> .names {
 				display: inline-flex;
@@ -40,16 +42,25 @@
 				flex-direction: column;
 				margin-left: 10px;
 
+				overflow: inherit;
+				text-overflow: inherit;
+
 				> a {
 					display: block;
 
 					&.displayname {
 						font-weight: 600;
+
+						overflow: inherit;
+						text-overflow: inherit;
 					}
 
 					&.username {
 						font-size: var(--font-s);
 						color: var(--txt-tertiary);
+
+						overflow: inherit;
+						text-overflow: inherit;
 
 						.host {
 							opacity: 75%;

@@ -3,9 +3,19 @@
 	align-items: center;
 	gap: 4px;
 	user-select: none;
-	padding: 1px 0px;
-	font-weight: 700;
+	padding: 1px 4px;
+	border-radius: var(--border-l);
+	font-weight: 800;
+	margin-left: 4px;
 	margin-top: 4px;
+	font-size: var(--font-xs);
+	text-shadow:
+		1px 1px #000,
+		1px 0px #000,
+		-1px 0px #000,
+		0px 0px #000,
+		0px 1px #000,
+		0px -1px #000;
 
 	max-width: 135px;
 
@@ -13,8 +23,9 @@
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
-	img {
-		min-width: 16px;
-		min-height: 16px;
+	span {
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
 	}
 }

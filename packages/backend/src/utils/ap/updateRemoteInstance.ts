@@ -1,6 +1,7 @@
 import db from '../database.js';
 import Logger from '../logger.js';
 import sanitize from '../sanitize.js';
+import { JSDOM } from 'jsdom';
 
 export default async function updateRemoteInstance(host, body) {
 	let grabbedInstance = {};
@@ -102,14 +103,37 @@ export default async function updateRemoteInstance(host, body) {
 
 	// to get instance color if not set in nodeinfo, and favicon
 
-	//let req = await fetch('https://' + host);
-	//const html = req.text();
+	let req = await fetch('https://' + host);
+	const html = await req.text();
 
-	//const { window } = new JSDOM(html);
-	//let doc = window.document;
+	const { window } = new JSDOM(html);
+	let doc = window.document;
 
-	//console.log(doc);
-	//console.log(await doc.getElementsByTagName('link'));
+	let grabbedColor = doc.querySelectorAll('meta[name="theme-color"]');
+
+	if (grabbedColor.length > 0) {
+		grabbedInstance = await db.getRepository('instance').update(
+			{ host: host },
+			{
+				color: sanitize(grabbedColor[0].getAttribute('content'))
+			}
+		);
+	}
+
+	let grabbedIconLink = doc.querySelectorAll('link[rel="icon"]');
+
+	if (grabbedIconLink.length > 0) {
+		grabbedIconLink.forEach(async (e) => {
+			grabbedInstance = await db.getRepository('instance').update(
+				{ host: host },
+				{
+					icon: sanitize(
+						new URL(e.getAttribute('href'), 'https://' + host).href
+					)
+				}
+			);
+		});
+	}
 
 	Logger.info('ap', 'updated remote instance ' + host);
 
