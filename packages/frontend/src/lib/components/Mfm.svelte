@@ -481,11 +481,12 @@
 		}
 
 		.mfm-mention {
+			display: inline-flex;
 			color: var(--accent);
 			text-decoration: none;
 			background: var(--accent-20);
 			border-radius: var(--border-m);
-			padding: 2px 4px;
+			padding: 1px 3px;
 
 			&:hover {
 				text-decoration: underline;
