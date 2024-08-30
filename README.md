@@ -89,7 +89,7 @@ Things that work!
 -   Search api that supports lookup by username, displayname, ap id, bio, note content, note cw, and even allows fetching raw objects without processing them
 -   like note and unlike note
 -   repeat and unrepeat note
-- all incoming note content is converted from html to mfm, so are user bios
+-   all incoming note content is converted from html to mfm, so are user bios
 
 ### Frontend
 
