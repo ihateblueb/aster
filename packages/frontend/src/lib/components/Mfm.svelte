@@ -409,10 +409,11 @@
 		}
 
 		.mfm-quote {
-			margin: 8px 12px;
+			margin: 8px 6px;
 			color: var(--txt-tertiary);
 			padding-left: 10px;
 			border-left: var(--border-width-m) solid var(--txt-tertiary);
+			opacity: 75%;
 		}
 
 		.mfm-blur {
