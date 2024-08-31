@@ -21,7 +21,8 @@ export default {
 			!tokens
 				.url(req, res)
 				.startsWith('/admin/queue/dashboard/api/queues') &&
-			!tokens.url(req, res).startsWith('/admin/queue/dashboard/static')
+			!tokens.url(req, res).startsWith('/admin/queue/dashboard/static') &&
+			!tokens.url(req, res).startsWith('/assets')
 		) {
 			logger.http(
 				tokens.method(req, res),
