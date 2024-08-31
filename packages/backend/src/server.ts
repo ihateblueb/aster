@@ -13,7 +13,7 @@ import { createServer } from 'node:http';
 //import { Server } from 'socket.io';
 
 import config from './utils/config.js';
-import Logger from './utils/logger.js';
+import logger from './utils/logger.js';
 import db from './utils/database.js';
 import search from './utils/sonic/search.js';
 import ingest from './utils/sonic/ingest.js';
@@ -43,12 +43,12 @@ inboxWorker.on('progress', async (job, progress) => {
 });
 
 inboxWorker.on('completed', (job) => {
-	Logger.done('inbox', `job ${job.id} completed.`);
+	logger.done('inbox', `job ${job.id} completed.`);
 });
 
 inboxWorker.on('failed', (job, failedReason) => {
-	Logger.error('inbox', `job ${job.id} failed. ${failedReason}`);
-	Logger.debug('inbox', job.stacktrace);
+	logger.error('inbox', `job ${job.id} failed. ${failedReason}`);
+	logger.debug('inbox', job.stacktrace);
 });
 
 deliverWorker.on('progress', async (job, progress) => {
@@ -56,12 +56,12 @@ deliverWorker.on('progress', async (job, progress) => {
 });
 
 deliverWorker.on('completed', (job) => {
-	Logger.done('deliver', `job ${job.id} completed.`);
+	logger.done('deliver', `job ${job.id} completed.`);
 });
 
 deliverWorker.on('failed', (job, failedReason) => {
-	Logger.error('deliver', `job ${job.id} failed. ${failedReason}`);
-	Logger.debug('deliver', job.stacktrace);
+	logger.error('deliver', `job ${job.id} failed. ${failedReason}`);
+	logger.debug('deliver', job.stacktrace);
 });
 
 app.use(requestLogger.dev, requestLogger.combined);
@@ -100,17 +100,17 @@ const server = createServer(app);
 const io = new Server(server);
 
 io.on('connection', (socket) => {
-	Logger.debug( 'ws', 'client connected. total: ' + io.engine.clientsCount);
+	logger.debug( 'ws', 'client connected. total: ' + io.engine.clientsCount);
 	socket.broadcast.emit('guests', io.engine.clientsCount);
 	socket.on('disconnect', () => {
-		Logger.debug(
+		logger.debug(
 			'ws',
 			'client disconnected. total: ' + io.engine.clientsCount
 		);
 		socket.broadcast.emit('guests', io.engine.clientsCount);
 	});
 	socket.on('message', (message) => {
-		Logger.debug( 'ws', 'received message: ' + message);
+		logger.debug( 'ws', 'received message: ' + message);
 	});
 });
 */

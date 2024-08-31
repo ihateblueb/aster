@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 export default async function getWebfingerAcct(user, host) {
 	if (user && host) {
@@ -22,15 +22,15 @@ export default async function getWebfingerAcct(user, host) {
 				}
 			)
 			.then(async (res) => {
-				Logger.debug('webfinger', JSON.stringify(res.data));
+				logger.debug('webfinger', JSON.stringify(res.data));
 				const apIdFromWebfinger = await res.data.links.find(
 					(e) => e.rel === 'self'
 				).href;
-				Logger.debug('webfinger', 'got ' + apIdFromWebfinger);
+				logger.debug('webfinger', 'got ' + apIdFromWebfinger);
 				return apIdFromWebfinger;
 			})
 			.catch((e) => {
-				Logger.error('webfinger', e);
+				logger.error('webfinger', e);
 				return false;
 			});
 	}

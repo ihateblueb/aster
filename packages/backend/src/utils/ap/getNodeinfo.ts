@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import isValidUrl from '../isValidUrl.js';
 
 export default async function getNodeinfo(host) {
@@ -16,17 +16,17 @@ export default async function getNodeinfo(host) {
 					}
 				})
 				.then(async (res) => {
-					Logger.debug('nodeinfo', JSON.stringify(res.data));
+					logger.debug('nodeinfo', JSON.stringify(res.data));
 					const nodeinfo = await res.data.links.find(
 						(e) =>
 							e.rel ===
 							'http://nodeinfo.diaspora.software/ns/schema/2.0'
 					).href;
-					Logger.debug('nodeinfo', 'got ' + nodeinfo);
+					logger.debug('nodeinfo', 'got ' + nodeinfo);
 					return nodeinfo;
 				})
 				.catch((e) => {
-					Logger.error('nodeinfo', e);
+					logger.error('nodeinfo', e);
 				});
 		}
 		return false;

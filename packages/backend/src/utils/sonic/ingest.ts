@@ -1,7 +1,7 @@
 import Sonic from 'sonic-channel';
 
 import config from '../config.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 let ingest;
 
@@ -24,24 +24,24 @@ ingest = new Sonic.Ingest(sonicConnection);
 
 ingest.connect({
 	connected: function () {
-		Logger.debug('sonic', 'connected to ingest');
+		logger.debug('sonic', 'connected to ingest');
 	},
 
 	disconnected: function () {
-		Logger.debug('sonic', 'disconnected from ingest');
+		logger.debug('sonic', 'disconnected from ingest');
 	},
 
 	timeout: function () {
-		Logger.debug('sonic', 'ingest connection timed out');
+		logger.debug('sonic', 'ingest connection timed out');
 	},
 
 	retrying: function () {
-		Logger.debug('sonic', 'trying to reconnect to ingest...');
+		logger.debug('sonic', 'trying to reconnect to ingest...');
 	},
 
 	error: function (error) {
-		Logger.error('sonic', 'failed to connect to ingest');
-		Logger.error('sonic', error);
+		logger.error('sonic', 'failed to connect to ingest');
+		logger.error('sonic', error);
 	}
 });
 

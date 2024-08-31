@@ -1,11 +1,16 @@
 import db from '../database.js';
 import logger from '../logger.js';
-import Logger from '../logger.js';
-import fromHtml from '../mfm/fromHtml.js';
+import logger from '../logger.js';
+import mfmFromHtml from '../mfm/fromHtml.js';
+import mfmFromRemote from '../mfm/fromRemote.js';
 import sanitize from '../sanitize.js';
 import getSigned from './getSigned.js';
 
 export default async function updateRemoteActor(body) {
+	let grabbedOriginalUser = await db.getRepository('user').findOne({
+		where: { ap_id: body.id }
+	});
+
 	let grabbedUser = {};
 
 	grabbedUser = await db
@@ -33,24 +38,34 @@ export default async function updateRemoteActor(body) {
 		.update({ ap_id: body.id }, { url: sanitize(body.url) });
 
 	if (body.name) {
-		grabbedUser = await db
-			.getRepository('user')
-			.update({ ap_id: body.id }, { displayname: sanitize(body.name) });
+		grabbedUser = await db.getRepository('user').update(
+			{ ap_id: body.id },
+			{
+				displayname: sanitize(
+					await mfmFromRemote(body.name, grabbedOriginalUser.host)
+				)
+			}
+		);
 	}
 
 	if (body._misskey_summary) {
-		grabbedUser = await db
-			.getRepository('user')
-			.update(
-				{ ap_id: body.id },
-				{ bio: sanitize(body._misskey_summary) }
-			);
+		grabbedUser = await db.getRepository('user').update(
+			{ ap_id: body.id },
+			{
+				bio: sanitize(
+					await mfmFromRemote(
+						body._misskey_summary,
+						grabbedOriginalUser.host
+					)
+				)
+			}
+		);
 	} else if (body.summary) {
 		grabbedUser = await db
 			.getRepository('user')
 			.update(
 				{ ap_id: body.id },
-				{ bio: sanitize(await fromHtml(body.summary)) }
+				{ bio: sanitize(await mfmFromHtml(body.summary)) }
 			);
 	}
 

@@ -7,7 +7,7 @@ import processNewNote from '../../../utils/ap/processNewNote.js';
 import isValidUrl from '../../../utils/isValidUrl.js';
 import search from '../../../utils/sonic/search.js';
 import config from '../../../utils/config.js';
-import Logger from '../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import { ILike } from 'typeorm';
 import generateNote from '../../../generators/note.js';
 import fromHtml from '../../../utils/mfm/fromHtml.js';
@@ -36,7 +36,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedUser) {
-			Logger.debug('search', 'user grabbed by id');
+			logger.debug('search', 'user grabbed by id');
 			results.push({
 				type: 'user',
 				by: 'id',
@@ -51,7 +51,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedUser) {
-			Logger.debug('search', 'user grabbed by ap_id');
+			logger.debug('search', 'user grabbed by ap_id');
 			tryLookup = false;
 			results.push({
 				type: 'user',
@@ -67,7 +67,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedUser) {
-			Logger.debug('search', 'user grabbed by url');
+			logger.debug('search', 'user grabbed by url');
 			tryLookup = false;
 			results.push({
 				type: 'user',
@@ -83,7 +83,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedUser) {
-			Logger.debug('search', 'user grabbed by username');
+			logger.debug('search', 'user grabbed by username');
 			results.push({
 				type: 'user',
 				by: 'username',
@@ -98,7 +98,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedUser) {
-			Logger.debug('search', 'user grabbed by displayname');
+			logger.debug('search', 'user grabbed by displayname');
 			results.push({
 				type: 'user',
 				by: 'displayname',
@@ -113,7 +113,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedNote) {
-			Logger.debug('search', 'note grabbed by id');
+			logger.debug('search', 'note grabbed by id');
 			results.push({
 				type: 'note',
 				by: 'id',
@@ -128,7 +128,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedNote) {
-			Logger.debug('search', 'note grabbed by ap_id');
+			logger.debug('search', 'note grabbed by ap_id');
 			tryLookup = false;
 			results.push({
 				type: 'note',
@@ -144,7 +144,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedNote) {
-			Logger.debug('search', 'note grabbed by replying_to');
+			logger.debug('search', 'note grabbed by replying_to');
 			results.push({
 				type: 'note',
 				by: 'replying_to',
@@ -159,7 +159,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedNote) {
-			Logger.debug('search', 'note grabbed by author');
+			logger.debug('search', 'note grabbed by author');
 			results.push({
 				type: 'note',
 				by: 'author',
@@ -174,7 +174,7 @@ router.get('/api/v2/search', async (req, res) => {
 		});
 
 		if (grabbedNote) {
-			Logger.debug('search', 'note grabbed by quoted');
+			logger.debug('search', 'note grabbed by quoted');
 			results.push({
 				type: 'note',
 				by: 'quoted',
@@ -185,8 +185,8 @@ router.get('/api/v2/search', async (req, res) => {
 		if (req.query.q.startsWith('@')) {
 			let splitUsername = req.query.q.split('@');
 
-			Logger.debug('search', splitUsername[1]);
-			Logger.debug('search', splitUsername[2]);
+			logger.debug('search', splitUsername[1]);
+			logger.debug('search', splitUsername[2]);
 
 			let grabbedUsers;
 
@@ -285,11 +285,11 @@ router.get('/api/v2/search', async (req, res) => {
 							}
 						}
 					} else {
-						Logger.error('search', 'failed to fetch url');
+						logger.error('search', 'failed to fetch url');
 					}
 				}
 			} catch (e) {
-				Logger.error('search', e);
+				logger.error('search', e);
 			}
 		}
 

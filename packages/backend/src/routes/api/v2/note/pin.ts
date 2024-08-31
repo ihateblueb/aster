@@ -2,7 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
-import Logger from '../../../../utils/logger.js';
+import logger from '../../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.post(`/api/v2/note/:noteid/pin`, async (req, res) => {
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
-			Logger.debug('note', 'note pin requested');
+			logger.debug('note', 'note pin requested');
 
 			await db
 				.getRepository('user')
@@ -39,7 +39,7 @@ router.post(`/api/v2/note/:noteid/unpin`, async (req, res) => {
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
-			Logger.debug('note', 'note pin requested');
+			logger.debug('note', 'note pin requested');
 
 			await db
 				.getRepository('user')

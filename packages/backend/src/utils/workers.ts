@@ -1,6 +1,6 @@
 import acceptInboxRequest from './ap/acceptInboxRequest.js';
 import postSigned from './ap/postSigned.js';
-import Logger from './logger.js';
+import logger from './logger.js';
 import redis from './redis.js';
 import { Worker } from 'bullmq';
 
@@ -27,7 +27,7 @@ const deliverWorker = new Worker(
 const statsWorker = new Worker(
 	'stats',
 	async (job) => {
-		Logger.debug('stats', 'stats update triggered');
+		logger.debug('stats', 'stats update triggered');
 		return;
 	},
 	{ connection: redis, concurrency: 1 }

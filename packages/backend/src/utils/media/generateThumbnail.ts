@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 import generateBlurHash from './generateBlurHash.js';
 import calculateDimensions from './calculateDimensions.js';
 import config from '../config.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 export default async function generateThumbnail(
 	file,

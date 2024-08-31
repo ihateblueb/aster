@@ -3,13 +3,13 @@ import express from 'express';
 import config from '../../../../../utils/config.js';
 import db from '../../../../../utils/database.js';
 import ingest from '../../../../../utils/sonic/ingest.js';
-import Logger from '../../../../../utils/logger.js';
+import logger from '../../../../../utils/logger.js';
 import admin from '../../../../admin.js';
 
 const router = express.Router();
 
 router.get(`/api/v2/admin/federation`, admin, async (req, res) => {
-	Logger.debug('admin', 'get federation');
+	logger.debug('admin', 'get federation');
 
 	let grabbedInstances = await db
 		.getRepository('instance')

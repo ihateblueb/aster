@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { generateKeyPairSync } from 'crypto';
 
 import config from '../../utils/config.js';
-import Logger from '../../utils/logger.js';
+import logger from '../../utils/logger.js';
 import db from '../../utils/database.js';
 
 export default async function setup() {
@@ -58,16 +58,16 @@ export default async function setup() {
 		public_key: publicKey
 	};
 
-	Logger.debug('setup', 'to insert into user');
-	Logger.debug('setup', JSON.stringify(instanceActorToInsert));
+	logger.debug('setup', 'to insert into user');
+	logger.debug('setup', JSON.stringify(instanceActorToInsert));
 
 	let instanceActorPrivToInsert = {
 		id: iaId,
 		private_key: privateKey
 	};
 
-	Logger.debug('setup', 'to insert into user_priv');
-	Logger.debug('setup', JSON.stringify(instanceActorPrivToInsert));
+	logger.debug('setup', 'to insert into user_priv');
+	logger.debug('setup', JSON.stringify(instanceActorPrivToInsert));
 
 	await db.getRepository('user').insert(instanceActorToInsert);
 	await db.getRepository('user_priv').insert(instanceActorPrivToInsert);

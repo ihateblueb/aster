@@ -1,7 +1,7 @@
 import express from 'express';
 
 import verifyToken from '../../../../utils/auth/verifyToken.js';
-import Logger from '../../../../utils/logger.js';
+import logger from '../../../../utils/logger.js';
 import sanitize from '../../../../utils/sanitize.js';
 import getRemoteActor from '../../../../utils/ap/getRemoteActor.js';
 import getWebfingerAcct from '../../../../utils/ap/getWebfingerAcct.js';

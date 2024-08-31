@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import db from '../utils/database.js';
 import deliverQueue from '../utils/deliverQueue.js';
-import Logger from '../utils/logger.js';
+import logger from '../utils/logger.js';
 import ActAnnounce from '../constructors/activity/Announce.js';
 
 export default async function OAnnounce(localUserId, repeat) {
@@ -49,7 +49,7 @@ export default async function OAnnounce(localUserId, repeat) {
 							body: announceJson
 						});
 
-						Logger.debug(
+						logger.debug(
 							'ap',
 							'queued deliver to ' +
 								grabbedFollower.inbox +
@@ -61,7 +61,7 @@ export default async function OAnnounce(localUserId, repeat) {
 			});
 		}
 	} else {
-		Logger.error(
+		logger.error(
 			'ap',
 			'tried sending Announce activity for non-local user ' +
 				grabbedUser.ap_id

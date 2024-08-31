@@ -1,7 +1,7 @@
 import deleteNote from '../utils/actions/delete/note.js';
 import deleteUser from '../utils/actions/delete/user.js';
 import db from '../utils/database.js';
-import Logger from '../utils/logger.js';
+import logger from '../utils/logger.js';
 
 export default async function IDelete(body) {
 	if (body.object.id) {
@@ -22,19 +22,19 @@ export default async function IDelete(body) {
 				if (grabbedAuthor.ap_id === body.actor) {
 					await deleteNote(body.object.id);
 				} else {
-					Logger.debug(
+					logger.debug(
 						'ap',
 						'ignoring actor trying to delete a note not written by them'
 					);
 				}
 			} else {
-				Logger.debug(
+				logger.debug(
 					'ap',
 					'failed to fetch author of note being deleted, ignoring activity'
 				);
 			}
 		} else {
-			Logger.debug(
+			logger.debug(
 				'ap',
 				'failed to fetch note being deleted, ignoring activity'
 			);
@@ -56,7 +56,7 @@ export default async function IDelete(body) {
 				message: 'Actor deleted'
 			};
 		} else {
-			Logger.debug(
+			logger.debug(
 				'ap',
 				'accepted deletion of actor ' +
 					body.actor +
@@ -87,19 +87,19 @@ export default async function IDelete(body) {
 				if (grabbedAuthor.ap_id === body.actor) {
 					await deleteNote(body.object);
 				} else {
-					Logger.debug(
+					logger.debug(
 						'ap',
 						'ignoring actor trying to delete a note not written by them'
 					);
 				}
 			} else {
-				Logger.debug(
+				logger.debug(
 					'ap',
 					'failed to fetch author of note being deleted, ignoring activity'
 				);
 			}
 		} else {
-			Logger.debug(
+			logger.debug(
 				'ap',
 				'failed to fetch note being deleted, ignoring activity'
 			);

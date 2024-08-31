@@ -4,7 +4,7 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 
 import db from '../../../utils/database.js';
-import Logger from '../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -67,7 +67,7 @@ router.post('/api/v2/login', async (req, res) => {
 							grabbedUserPriv.password,
 							async (e, result) => {
 								if (e) {
-									Logger.error('auth', e);
+									logger.error('auth', e);
 								}
 								if (result) {
 									const token = crypto

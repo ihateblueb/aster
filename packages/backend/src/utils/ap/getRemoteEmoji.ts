@@ -1,5 +1,5 @@
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import getSigned from './getSigned.js';
 import processNewEmoji from './processNewEmoji.js';
 
@@ -11,10 +11,10 @@ export default async function getRemoteEmoji(apId, localUserId?) {
 	});
 
 	if (grabbedRemoteEmoji) {
-		Logger.debug('ap', 'remote emoji present in database');
+		logger.debug('ap', 'remote emoji present in database');
 		return grabbedRemoteEmoji;
 	} else {
-		Logger.debug('ap', 'remote emoji not present in database');
+		logger.debug('ap', 'remote emoji not present in database');
 
 		let response;
 
@@ -25,7 +25,7 @@ export default async function getRemoteEmoji(apId, localUserId?) {
 		} else if (grabbedEmoji.status === 410) {
 			response = 'gone';
 		} else {
-			Logger.debug('ap', 'fetched emoji sucessfully');
+			logger.debug('ap', 'fetched emoji sucessfully');
 
 			response = await processNewEmoji(grabbedEmoji.data);
 		}

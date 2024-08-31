@@ -1,6 +1,6 @@
 import config from '../config.js';
 import deliverQueue from '../deliverQueue.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import { v4 as uuidv4 } from 'uuid';
 import contexts from '../../../static/contexts.json' with { type: 'json' };
 

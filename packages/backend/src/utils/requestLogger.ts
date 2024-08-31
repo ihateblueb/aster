@@ -1,4 +1,4 @@
-import Logger from './logger.js';
+import logger from './logger.js';
 import fs from 'fs';
 import morgan from 'morgan';
 import path from 'path';
@@ -23,7 +23,7 @@ export default {
 				.startsWith('/admin/queue/dashboard/api/queues') &&
 			!tokens.url(req, res).startsWith('/admin/queue/dashboard/static')
 		) {
-			Logger.http(
+			logger.http(
 				tokens.method(req, res),
 				`${tokens.url(req, res)} responded ${tokens.status(req, res)} in ${tokens['response-time'](req, res) + 'ms'}`
 			);

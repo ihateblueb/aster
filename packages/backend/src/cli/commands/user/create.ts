@@ -3,7 +3,7 @@ import { generateKeyPairSync } from 'crypto';
 import bcrypt from 'bcryptjs';
 
 import config from '../../../utils/config.js';
-import Logger from '../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import db from '../../../utils/database.js';
 
 export default async function userCreate(options: {
@@ -19,9 +19,9 @@ export default async function userCreate(options: {
 	is_cat;
 	speak_as_cat;
 }) {
-	Logger.debug('user', options.username);
-	Logger.debug('user', options.password);
-	Logger.debug('user', JSON.stringify(options));
+	logger.debug('user', options.username);
+	logger.debug('user', options.password);
+	logger.debug('user', JSON.stringify(options));
 
 	const userId = uuidv4();
 
@@ -62,8 +62,8 @@ export default async function userCreate(options: {
 		public_key: publicKey
 	};
 
-	Logger.debug('user', 'to insert into user');
-	Logger.debug('user', JSON.stringify(userToInsert));
+	logger.debug('user', 'to insert into user');
+	logger.debug('user', JSON.stringify(userToInsert));
 
 	let userPrivToInsert = {
 		id: userId,
@@ -71,8 +71,8 @@ export default async function userCreate(options: {
 		private_key: privateKey
 	};
 
-	Logger.debug('user', 'to insert into user_priv');
-	Logger.debug('user', JSON.stringify(userPrivToInsert));
+	logger.debug('user', 'to insert into user_priv');
+	logger.debug('user', JSON.stringify(userPrivToInsert));
 
 	await db.getRepository('user').insert(userToInsert);
 	await db.getRepository('user_priv').insert(userPrivToInsert);

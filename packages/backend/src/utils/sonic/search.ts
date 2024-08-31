@@ -1,7 +1,7 @@
 import Sonic from 'sonic-channel';
 
 import config from '../config.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 let search;
 
@@ -24,24 +24,24 @@ search = new Sonic.Search(sonicConnection);
 
 search.connect({
 	connected: function () {
-		Logger.debug('sonic', 'connected to search');
+		logger.debug('sonic', 'connected to search');
 	},
 
 	disconnected: function () {
-		Logger.debug('sonic', 'disconnected from search');
+		logger.debug('sonic', 'disconnected from search');
 	},
 
 	timeout: function () {
-		Logger.debug('sonic', 'search connection timed out');
+		logger.debug('sonic', 'search connection timed out');
 	},
 
 	retrying: function () {
-		Logger.debug('sonic', 'trying to reconnect to search...');
+		logger.debug('sonic', 'trying to reconnect to search...');
 	},
 
 	error: function (error) {
-		Logger.error('sonic', 'failed to connect to search');
-		Logger.error('sonic', error);
+		logger.error('sonic', 'failed to connect to search');
+		logger.error('sonic', error);
 	}
 });
 

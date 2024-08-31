@@ -4,11 +4,11 @@ import crypto, { createHash } from 'node:crypto';
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 export default async function postSigned(inbox, localUserId, body) {
 	if (new URL(inbox).host === new URL(config.get().url).host) {
-		Logger.debug('ap', 'not sending post to myself');
+		logger.debug('ap', 'not sending post to myself');
 	} else {
 		let grabbedLocalUser = await db.getRepository('user').findOne({
 			where: {
@@ -62,7 +62,7 @@ export default async function postSigned(inbox, localUserId, body) {
 				});
 			}
 		} catch (e) {
-			Logger.debug('plugin', e);
+			logger.debug('plugin', e);
 		}
 
 		return await axios
@@ -79,10 +79,10 @@ export default async function postSigned(inbox, localUserId, body) {
 				}
 			})
 			.then(() => {
-				Logger.debug('ap', 'successfully send a post request signed');
+				logger.debug('ap', 'successfully send a post request signed');
 			})
 			.catch((e) => {
-				Logger.error('ap', e);
+				logger.error('ap', e);
 			});
 	}
 }

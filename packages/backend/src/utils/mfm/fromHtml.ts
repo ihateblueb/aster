@@ -1,6 +1,6 @@
 import { JSDOM } from 'jsdom';
 
-export default async function fromHtml(html: string) {
+export default async function mfmFromHtml(html: string) {
 	let document = new JSDOM(html).window.document;
 
 	// links and mentions

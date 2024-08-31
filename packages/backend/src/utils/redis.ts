@@ -1,5 +1,5 @@
 import config from './config.js';
-import Logger from './logger.js';
+import logger from './logger.js';
 
 if (!config.get().redis.host) {
 	Logger.fatal('core', 'no redis host configured');

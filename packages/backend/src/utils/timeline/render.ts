@@ -1,7 +1,7 @@
 import generateNote from '../../generators/note.js';
 import generateNotification from '../../generators/notification.js';
 import generateRepeat from '../../generators/repeat.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 
 export default async function renderTimeline(collectedObjects) {
 	let collectedNotes = [];
@@ -18,7 +18,7 @@ export default async function renderTimeline(collectedObjects) {
 						type: 'note',
 						object: generatedNote.note
 					});
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'rendered note ' +
 							(i + 1) +
@@ -26,7 +26,7 @@ export default async function renderTimeline(collectedObjects) {
 							collectedObjects.length
 					);
 				} else {
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'failed to render note ' +
 							(i + 1) +
@@ -48,7 +48,7 @@ export default async function renderTimeline(collectedObjects) {
 						type: 'repeat',
 						object: generatedRepeat.repeat
 					});
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'rendered repeat ' +
 							(i + 1) +
@@ -56,7 +56,7 @@ export default async function renderTimeline(collectedObjects) {
 							collectedObjects.length
 					);
 				} else {
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'failed to render repeat ' +
 							(i + 1) +
@@ -81,7 +81,7 @@ export default async function renderTimeline(collectedObjects) {
 						type: 'notification',
 						object: generatedNotification.notification
 					});
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'rendered notification ' +
 							(i + 1) +
@@ -89,7 +89,7 @@ export default async function renderTimeline(collectedObjects) {
 							collectedObjects.length
 					);
 				} else {
-					Logger.debug(
+					logger.debug(
 						'timeline',
 						'failed to render notification ' +
 							(i + 1) +
@@ -103,7 +103,7 @@ export default async function renderTimeline(collectedObjects) {
 				}
 			} else {
 				console.log(collectedObjects[i]);
-				Logger.debug(
+				logger.debug(
 					'timeline',
 					'failed to render object ' +
 						(i + 1) +

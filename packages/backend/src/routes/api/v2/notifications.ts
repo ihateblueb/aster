@@ -2,7 +2,7 @@ import express from 'express';
 
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
-import Logger from '../../../utils/logger.js';
+import logger from '../../../utils/logger.js';
 import generateNotification from '../../../generators/notification.js';
 import config from '../../../utils/config.js';
 import generateNotificationsAll from '../../../generators/notifications/all.js';

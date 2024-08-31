@@ -1,5 +1,5 @@
 import db from '../../database.js';
-import Logger from '../../logger.js';
+import logger from '../../logger.js';
 
 export default async function deleteUser(id, apId) {
 	let grabbedNotes = await db.getRepository('note').find({

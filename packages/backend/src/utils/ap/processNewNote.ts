@@ -1,17 +1,16 @@
 import config from '../config.js';
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import notification from '../notification.js';
 import sanitize from '../sanitize.js';
 import ingest from '../sonic/ingest.js';
 import getRemoteActor from './getRemoteActor.js';
 import getRemoteEmoji from './getRemoteEmoji.js';
 import getRemoteNote from './getRemoteNote.js';
-import processNewEmoji from './processNewEmoji.js';
 import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
-import * as mfm from 'mfm-js';
-import fromHtml from '../mfm/fromHtml.js';
+import mfmFromRemote from '../mfm/fromRemote.js';
+import mfmFromHtml from '../mfm/fromHtml.js';
 
 export default async function processNewNote(body) {
 	console.log(body);
@@ -149,9 +148,14 @@ export default async function processNewNote(body) {
 			body.source.mediaType === 'text/x.misskeymarkdown'
 		) {
 			// raw mfm
-			noteToInsert['content'] = sanitize(body.source.content);
+			noteToInsert['content'] = sanitize(
+				await mfmFromRemote(
+					body.source.content,
+					grabbedRemoteActor.host
+				)
+			);
 		} else {
-			noteToInsert['content'] = sanitize(await fromHtml(body.content));
+			noteToInsert['content'] = sanitize(await mfmFromHtml(body.content));
 		}
 
 		if (body.attachment) {
@@ -208,8 +212,8 @@ export default async function processNewNote(body) {
 						body.tag[i].name.split('@')[2] ===
 						new URL(config.get().url).host
 					) {
-						Logger.debug('ap', 'mention for this instance');
-						Logger.debug('ap', body.tag[i].name.split('@'));
+						logger.debug('ap', 'mention for this instance');
+						logger.debug('ap', body.tag[i].name.split('@'));
 
 						let grabbedMentionedUser = await db
 							.getRepository('user')
@@ -229,10 +233,10 @@ export default async function processNewNote(body) {
 							);
 						}
 					} else {
-						Logger.debug('ap', 'mention not for this instance');
+						logger.debug('ap', 'mention not for this instance');
 					}
 				} else {
-					Logger.warn('ap', 'unused tag type ' + body.tag[i].type);
+					logger.warn('ap', 'unused tag type ' + body.tag[i].type);
 				}
 			}
 		}
@@ -249,7 +253,7 @@ export default async function processNewNote(body) {
 						noteToInsert['cw']
 					)
 					.catch((e) => {
-						Logger.error('sonic', e);
+						logger.error('sonic', e);
 					});
 			}
 
@@ -261,7 +265,7 @@ export default async function processNewNote(body) {
 					noteToInsert['content']
 				)
 				.catch((e) => {
-					Logger.error('sonic', e);
+					logger.error('sonic', e);
 				});
 		}
 

@@ -1,6 +1,6 @@
 import config from '../config.js';
 import deliverQueue from '../deliverQueue.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import { v4 as uuidv4 } from 'uuid';
 
 export default async function signAndReject(userId, remoteInbox, body) {
@@ -14,7 +14,7 @@ export default async function signAndReject(userId, remoteInbox, body) {
 		object: body
 	};
 
-	Logger.debug('ap', JSON.stringify(rejectMessage));
+	logger.debug('ap', JSON.stringify(rejectMessage));
 
 	await deliverQueue.add('deliver', {
 		inbox: remoteInbox,

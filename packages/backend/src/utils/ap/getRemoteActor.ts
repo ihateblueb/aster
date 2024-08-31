@@ -1,5 +1,5 @@
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import getRemoteInstance from './getRemoteInstance.js';
 import getSigned from './getSigned.js';
 import processNewActor from './processNewActor.js';
@@ -7,7 +7,7 @@ import processNewActor from './processNewActor.js';
 export default async function getRemoteActor(apId) {
 	getRemoteInstance(new URL(apId).host);
 
-	Logger.debug('ap', 'getting remote actor with id ' + apId);
+	logger.debug('ap', 'getting remote actor with id ' + apId);
 
 	let grabbedRemoteActor = await db.getRepository('user').findOne({
 		where: {
@@ -16,10 +16,10 @@ export default async function getRemoteActor(apId) {
 	});
 
 	if (grabbedRemoteActor) {
-		Logger.debug('ap', 'remote actor present in database. updating');
+		logger.debug('ap', 'remote actor present in database. updating');
 		return grabbedRemoteActor;
 	} else {
-		Logger.debug('ap', 'remote actor not present in database');
+		logger.debug('ap', 'remote actor not present in database');
 
 		let response;
 
@@ -33,7 +33,7 @@ export default async function getRemoteActor(apId) {
 			// idk? just trying things
 			response = 'gone';
 		} else {
-			Logger.debug('ap', 'fetched actor sucessfully');
+			logger.debug('ap', 'fetched actor sucessfully');
 			response = await processNewActor(res.data);
 		}
 

@@ -1,5 +1,5 @@
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import calculateDimensions from '../media/calculateDimensions.js';
 import generateThumbnail from '../media/generateThumbnail.js';
 import sanitize from '../sanitize.js';

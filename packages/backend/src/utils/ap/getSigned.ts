@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../config.js';
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import isValidUrl from '../isValidUrl.js';
 
 export default async function getSigned(url, localUserId?) {
@@ -39,7 +39,7 @@ export default async function getSigned(url, localUserId?) {
 			});
 		}
 
-		Logger.debug(
+		logger.debug(
 			'ap',
 			'getting ' + url + ' as ' + grabbedLocalUser.username
 		);
@@ -88,7 +88,7 @@ export default async function getSigned(url, localUserId?) {
 				}
 			})
 			.catch((e) => {
-				Logger.error('ap', e);
+				logger.error('ap', e);
 
 				if (e.response) {
 					return {
@@ -105,7 +105,7 @@ export default async function getSigned(url, localUserId?) {
 				}
 			});
 	} else {
-		Logger.error('ap', 'failed fetch. url invalid');
+		logger.error('ap', 'failed fetch. url invalid');
 		return {
 			error: true,
 			status: 500,

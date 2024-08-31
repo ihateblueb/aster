@@ -1,5 +1,5 @@
 import db from '../database.js';
-import Logger from '../logger.js';
+import logger from '../logger.js';
 import getSigned from './getSigned.js';
 import processNewNote from './processNewNote.js';
 
@@ -11,10 +11,10 @@ export default async function getRemoteNote(apId, localUserId?) {
 	});
 
 	if (grabbedRemoteNote) {
-		Logger.debug('ap', 'remote note present in database');
+		logger.debug('ap', 'remote note present in database');
 		return grabbedRemoteNote;
 	} else {
-		Logger.debug('ap', 'remote note not present in database');
+		logger.debug('ap', 'remote note not present in database');
 
 		let response;
 
@@ -25,7 +25,7 @@ export default async function getRemoteNote(apId, localUserId?) {
 		} else if (grabbedNote.status === 410) {
 			response = 'gone';
 		} else {
-			Logger.debug('ap', 'fetched note sucessfully');
+			logger.debug('ap', 'fetched note sucessfully');
 
 			response = await processNewNote(grabbedNote.data);
 		}

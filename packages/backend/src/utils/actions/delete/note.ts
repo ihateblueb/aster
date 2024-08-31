@@ -1,5 +1,5 @@
 import db from '../../database.js';
-import Logger from '../../logger.js';
+import logger from '../../logger.js';
 
 export default async function deleteNote(apId) {
 	let grabbedNote = await db.getRepository('note').findOne({
@@ -21,7 +21,7 @@ export default async function deleteNote(apId) {
 			});
 		}
 
-		Logger.debug(
+		logger.debug(
 			'delete',
 			'deleting ' +
 				grabbedReplies.length +
@@ -41,7 +41,7 @@ export default async function deleteNote(apId) {
 			});
 		}
 
-		Logger.debug(
+		logger.debug(
 			'delete',
 			'deleting ' +
 				grabbedRepeats.length +
@@ -63,7 +63,7 @@ export default async function deleteNote(apId) {
 			});
 		}
 
-		Logger.debug(
+		logger.debug(
 			'delete',
 			'deleting ' +
 				grabbedRepeats.length +
@@ -73,6 +73,6 @@ export default async function deleteNote(apId) {
 
 		await db.getRepository('note').delete(grabbedNote.id);
 
-		Logger.debug('delete', 'deleted note ' + grabbedNote.ap_id);
+		logger.debug('delete', 'deleted note ' + grabbedNote.ap_id);
 	}
 }

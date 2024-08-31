@@ -7,7 +7,7 @@ import os from 'os';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
-import Logger from './utils/logger.js';
+import logger from './utils/logger.js';
 import config from './utils/config.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -34,7 +34,7 @@ try {
 		});
 	}
 } catch (e) {
-	Logger.debug('plugin', e);
+	logger.debug('plugin', e);
 }
 
 if (config.get().plugins && config.get().plugins.incoming) {
@@ -59,7 +59,7 @@ cluster.on('online', (worker) => {
 
 /*
 cluster.on('exit', (worker, code, signal) => {
-	Logger.error(
+	logger.error(
 		'main',
 		'worker ' +
 			worker.id +
@@ -74,7 +74,7 @@ cluster.on('exit', (worker, code, signal) => {
 */
 
 cluster.on('died', (worker, code, signal) => {
-	Logger.error(
+	logger.error(
 		'main',
 		'worker ' +
 			worker.id +
