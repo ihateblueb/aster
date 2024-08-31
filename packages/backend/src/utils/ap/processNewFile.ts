@@ -33,7 +33,7 @@ export default async function processNewFile(attachment, note, author) {
 
 	await db.getRepository('drive_file').insert(driveFileToInsert);
 
-	Logger.info('drive', 'created attachment ' + sanitize(attachment.url));
+	logger.info('drive', 'created attachment ' + sanitize(attachment.url));
 
 	return driveFileToInsert;
 }

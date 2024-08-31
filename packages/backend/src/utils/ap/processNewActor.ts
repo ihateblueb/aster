@@ -141,7 +141,7 @@ export default async function processNewActor(body) {
 
 		await db.getRepository('user').insert(actorToInsert);
 
-		Logger.info('ap', 'created remote actor ' + body.id);
+		logger.info('ap', 'created remote actor ' + body.id);
 
 		return actorToInsert;
 	}

@@ -70,7 +70,7 @@ export default async function processNewInstance(host, body) {
 
 	await db.getRepository('instance').insert(instanceToInsert);
 
-	Logger.info('ap', 'created remote instance ' + host);
+	logger.info('ap', 'created remote instance ' + host);
 
 	return instanceToInsert;
 }

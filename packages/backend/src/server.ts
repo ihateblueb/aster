@@ -39,7 +39,7 @@ if (config.get().sonic.enabled) {
 const app = express();
 
 inboxWorker.on('progress', async (job, progress) => {
-	Logger.info('inbox', `job ${job.id} says ${progress}`);
+	logger.info('inbox', `job ${job.id} says ${progress}`);
 });
 
 inboxWorker.on('completed', (job) => {
@@ -52,7 +52,7 @@ inboxWorker.on('failed', (job, failedReason) => {
 });
 
 deliverWorker.on('progress', async (job, progress) => {
-	Logger.info('deliver', `job ${job.id} says ${progress}`);
+	logger.info('deliver', `job ${job.id} says ${progress}`);
 });
 
 deliverWorker.on('completed', (job) => {
@@ -82,7 +82,7 @@ app.use((req, res, next) => {
 			new RegExp(config.get().security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
-		Logger.info(
+		logger.info(
 			'security',
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
@@ -120,7 +120,7 @@ app.use('/', router);
 if (config.get().frontend.enable) {
 	app.use(handler);
 } else {
-	Logger.info('core', `frontend disabled`);
+	logger.info('core', `frontend disabled`);
 }
 
 server.listen(config.get().port, () => {

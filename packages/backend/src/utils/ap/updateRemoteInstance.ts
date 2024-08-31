@@ -135,7 +135,7 @@ export default async function updateRemoteInstance(host, body) {
 		});
 	}
 
-	Logger.info('ap', 'updated remote instance ' + host);
+	logger.info('ap', 'updated remote instance ' + host);
 
 	return grabbedInstance;
 }

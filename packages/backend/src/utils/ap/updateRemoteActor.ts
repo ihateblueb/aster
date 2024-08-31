@@ -209,7 +209,7 @@ export default async function updateRemoteActor(body) {
 
 	console.log(grabbedUser);
 
-	Logger.info('ap', 'updated remote actor ' + body.id);
+	logger.info('ap', 'updated remote actor ' + body.id);
 
 	return grabbedUser;
 }

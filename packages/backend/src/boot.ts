@@ -14,8 +14,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const cpuCount = os.cpus().length;
 
-Logger.info('boot', 'machine has ' + cpuCount + ' cores');
-Logger.info('boot', 'worker count configured to ' + config.get().workers.count);
+logger.info('boot', 'machine has ' + cpuCount + ' cores');
+logger.info('boot', 'worker count configured to ' + config.get().workers.count);
 
 cluster.setupPrimary({
 	exec: __dirname + '/server.js'
@@ -24,7 +24,7 @@ cluster.setupPrimary({
 try {
 	if (config.get().plugins && config.get().plugins.boot) {
 		config.get().plugins.boot.forEach((e) => {
-			Logger.info('plugin', `registered boot plugin ${e}`);
+			logger.info('plugin', `registered boot plugin ${e}`);
 		});
 
 		config.get().plugins.boot.forEach(async (e) => {
@@ -39,13 +39,13 @@ try {
 
 if (config.get().plugins && config.get().plugins.incoming) {
 	config.get().plugins.incoming.forEach((e) => {
-		Logger.info('plugin', `registered incoming plugin ${e}`);
+		logger.info('plugin', `registered incoming plugin ${e}`);
 	});
 }
 
 if (config.get().plugins && config.get().plugins.outgoing) {
 	config.get().plugins.outgoing.forEach((e) => {
-		Logger.info('plugin', `registered outgoing plugin ${e}`);
+		logger.info('plugin', `registered outgoing plugin ${e}`);
 	});
 }
 
@@ -54,7 +54,7 @@ for (let i = 0; i < config.get().workers.count; i++) {
 }
 
 cluster.on('online', (worker) => {
-	Logger.info('boot', 'worker ' + worker.id + ' is now online');
+	logger.info('boot', 'worker ' + worker.id + ' is now online');
 });
 
 /*
@@ -93,7 +93,7 @@ cluster.on('message', (msg) => {
 	saysUp++;
 
 	if (saysUp == config.get().workers.count) {
-		Logger.info(
+		logger.info(
 			'main',
 			'server started as ' +
 				config.get().url +

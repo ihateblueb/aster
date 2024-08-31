@@ -6,18 +6,18 @@ import logger from '../../utils/logger.js';
 import db from '../../utils/database.js';
 
 export default async function setup() {
-	Logger.info('setup', 'initializing database');
+	logger.info('setup', 'initializing database');
 	await db.initialize();
 
-	Logger.info('setup', 'checking if instance is already setup');
+	logger.info('setup', 'checking if instance is already setup');
 	let meta = await db.getRepository('meta').createQueryBuilder().getOne();
 
 	if (meta.init) {
 		Logger.fatal('setup', 'instance already setup!');
 	}
 
-	Logger.info('setup', 'instance not yet setup, continuing');
-	Logger.info('setup', 'creating instance actor');
+	logger.info('setup', 'instance not yet setup, continuing');
+	logger.info('setup', 'creating instance actor');
 
 	const iaId = uuidv4();
 

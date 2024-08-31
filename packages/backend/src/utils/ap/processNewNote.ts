@@ -269,7 +269,7 @@ export default async function processNewNote(body) {
 				});
 		}
 
-		Logger.info('ap', 'created remote note ' + body.id);
+		logger.info('ap', 'created remote note ' + body.id);
 
 		console.log(noteToInsert);
 

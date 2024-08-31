@@ -25,7 +25,7 @@ router.get(`/api/v2/admin/sonic/index`, admin, async (req, res) => {
 					note.cw
 				)
 				.then(() => {
-					Logger.info('sonic', 'pushed ' + note.id + ' cw to sonic');
+					logger.info('sonic', 'pushed ' + note.id + ' cw to sonic');
 				})
 				.catch((e) => {
 					logger.error('sonic', e);
@@ -43,7 +43,7 @@ router.get(`/api/v2/admin/sonic/index`, admin, async (req, res) => {
 				note.content
 			)
 			.then(() => {
-				Logger.info('sonic', 'pushed ' + note.id + ' content to sonic');
+				logger.info('sonic', 'pushed ' + note.id + ' content to sonic');
 			})
 			.catch((e) => {
 				logger.error('sonic', e);
@@ -69,7 +69,7 @@ router.get(`/api/v2/admin/sonic/index`, admin, async (req, res) => {
 					user.bio
 				)
 				.then(() => {
-					Logger.info('sonic', 'pushed ' + user.id + ' bio to sonic');
+					logger.info('sonic', 'pushed ' + user.id + ' bio to sonic');
 				})
 				.catch((e) => {
 					logger.error('sonic', e);
@@ -89,7 +89,7 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.get().sonic.collectionPrefix + '_cw')
 		.then(() => {
-			Logger.info('sonic', 'flushed sonic cw collection');
+			logger.info('sonic', 'flushed sonic cw collection');
 		})
 		.catch((e) => {
 			logger.error('sonic', e);
@@ -101,7 +101,7 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.get().sonic.collectionPrefix + '_content')
 		.then(() => {
-			Logger.info('sonic', 'flushed sonic content collection');
+			logger.info('sonic', 'flushed sonic content collection');
 		})
 		.catch((e) => {
 			logger.error('sonic', e);
@@ -113,7 +113,7 @@ router.get(`/api/v2/admin/sonic/flush`, async (req, res) => {
 	await ingest
 		.flushc(config.get().sonic.collectionPrefix + '_bio')
 		.then(() => {
-			Logger.info('sonic', 'flushed sonic bio collection');
+			logger.info('sonic', 'flushed sonic bio collection');
 		})
 		.catch((e) => {
 			logger.error('sonic', e);
