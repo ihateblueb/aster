@@ -1,6 +1,5 @@
 import db from '../database.js';
 import logger from '../logger.js';
-import logger from '../logger.js';
 import mfmFromHtml from '../mfm/fromHtml.js';
 import mfmFromRemote from '../mfm/fromRemote.js';
 import sanitize from '../sanitize.js';
