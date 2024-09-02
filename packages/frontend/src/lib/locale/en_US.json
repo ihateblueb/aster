@@ -1,7 +1,7 @@
 {
 	"__id__": "en_US",
 	"__name__": "English (US)",
-	"__version__": "45",
+	"__version__": "47",
 
 	"aster": "Aster",
 	"welcome": "Welcome",
@@ -35,6 +35,7 @@
 	"block_user": "Block user",
 	"bite_note": "Bite note",
 	"bite_user": "Bite user",
+	"follow": "Follow",
 	"reply": "Reply",
 	"quote": "Quote",
 	"repeat": "Repeat",
@@ -160,5 +161,6 @@
 	"tl_global": "Global",
 	"all": "All",
 	"mentions": "Mentions",
-	"direct": "Direct"
+	"direct": "Direct",
+	"edit_profile": "Edit profile"
 }

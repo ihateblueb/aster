@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
+	import localstore from '$lib/utils/localstore'
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -13,7 +13,6 @@
 	import noteGet from '$lib/api/note/get';
 	import Button from '$lib/components/Button.svelte';
 	import userFollow from '$lib/api/user/follow.js';
-	import Time from '$lib/components/Time.svelte';
 	import userBite from '$lib/api/user/bite.js';
 	import { goto } from '$app/navigation';
 	import timelineUserGet from '$lib/api/timeline/user/get.js';
@@ -207,9 +206,11 @@
 									</div>
 								</div>
 								<div class="right">
-									<Button on:click={() => userFollow(data.id)}
-										>Follow</Button
-									>
+									{#if data.id !== (localstore.get('account') ? JSON.parse(localstore.get('account')).id : '')}
+										<Button on:click={() => userFollow(data.id)}>{locale('follow')}</Button>
+										{:else}
+										<Button to="/settings/profile">{locale('edit_profile')}</Button>
+									{/if}
 								</div>
 							</div>
 							<p class="bio">
@@ -282,7 +283,6 @@
 									<Note
 										data={note}
 										pinned
-										pinnedBy={data.displayname}
 									/>
 								{/await}
 							{/each}
