@@ -8,7 +8,7 @@ import isValidUrl from '../../../utils/isValidUrl.js';
 import search from '../../../utils/sonic/search.js';
 import config from '../../../utils/config.js';
 import logger from '../../../utils/logger.js';
-import { ILike } from 'typeorm';
+import { ILike, Like } from 'typeorm';
 import generateNote from '../../../generators/note.js';
 import fromHtml from '../../../utils/mfm/fromHtml.js';
 import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
@@ -371,6 +371,47 @@ router.get('/api/v2/search', async (req, res) => {
 							object: grabbedUser
 						});
 					}
+				}
+			}
+		} else {
+			// TODO: does this work at all?
+			let grabbedNotesByContent = await db.getRepository('note').find({
+				where: {
+					content: Like(req.query.q)
+				}
+			});
+			let grabbedNotesByCw = await db.getRepository('note').find({
+				where: {
+					content: Like(req.query.q)
+				}
+			});
+
+			console.log(grabbedNotesByContent);
+			console.log(grabbedNotesByCw);
+
+			if (grabbedNotesByContent) {
+				for (const i of grabbedNotesByContent) {
+					let generatedNote = await generateNote(
+						grabbedNotesByContent[i]
+					);
+
+					results.push({
+						type: 'note',
+						by: 'content',
+						object: generatedNote.note
+					});
+				}
+			}
+
+			if (grabbedNotesByCw) {
+				for (const i of grabbedNotesByCw) {
+					let generatedNote = await generateNote(grabbedNotesByCw[i]);
+
+					results.push({
+						type: 'note',
+						by: 'cw',
+						object: generatedNote.note
+					});
 				}
 			}
 		}

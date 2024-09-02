@@ -22,27 +22,29 @@ if (config.get().sonic.auth) {
 
 ingest = new Sonic.Ingest(sonicConnection);
 
-ingest.connect({
-	connected: function () {
-		logger.debug('sonic', 'connected to ingest');
-	},
+if (config.get().sonic.enabled) {
+	ingest.connect({
+		connected: function () {
+			logger.debug('sonic', 'connected to ingest');
+		},
 
-	disconnected: function () {
-		logger.debug('sonic', 'disconnected from ingest');
-	},
+		disconnected: function () {
+			logger.debug('sonic', 'disconnected from ingest');
+		},
 
-	timeout: function () {
-		logger.debug('sonic', 'ingest connection timed out');
-	},
+		timeout: function () {
+			logger.debug('sonic', 'ingest connection timed out');
+		},
 
-	retrying: function () {
-		logger.debug('sonic', 'trying to reconnect to ingest...');
-	},
+		retrying: function () {
+			logger.debug('sonic', 'trying to reconnect to ingest...');
+		},
 
-	error: function (error) {
-		logger.error('sonic', 'failed to connect to ingest');
-		logger.error('sonic', error);
-	}
-});
+		error: function (error) {
+			logger.error('sonic', 'failed to connect to ingest');
+			logger.error('sonic', error);
+		}
+	});
+}
 
 export default ingest;

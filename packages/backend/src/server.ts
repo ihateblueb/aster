@@ -6,7 +6,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import { createServer } from 'node:http';
-//import { Server } from 'socket.io';
 import config from './utils/config.js';
 import logger from './utils/logger.js';
 import db from './utils/database.js';

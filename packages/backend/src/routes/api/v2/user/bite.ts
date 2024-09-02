@@ -5,7 +5,7 @@ import logger from '../../../../utils/logger.js';
 
 const router = express.Router();
 
-router.post(`/api/v2/user/:userid/report`, async (req, res) => {
+router.post(`/api/v2/user/:userid/bite`, async (req, res) => {
 	let authRes = await verifyToken(req);
 
 	if (req.params.userid) {
