@@ -1,5 +1,4 @@
 <script lang="ts">
-
 	import Account from './widgets/Account.svelte';
 	import Clock from './widgets/Clock.svelte';
 	import HardwareMetrics from './widgets/HardwareMetrics.svelte';

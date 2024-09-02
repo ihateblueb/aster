@@ -1,5 +1,4 @@
 <script>
-
 	import { locale } from '$lib/locale';
 	import localstore from '$lib/utils/localstore';
 
