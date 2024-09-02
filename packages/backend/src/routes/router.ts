@@ -50,7 +50,11 @@ import api_meta_get from './api/v2/meta/get.js';
 import api_meta_edit from './api/v2/meta/edit.js';
 
 import api_ad from './api/v2/ad.js';
-import api_followrequest from './api/v2/followrequest.js';
+
+import api_followrequests_get from './api/v2/followrequest/get.js';
+import api_followrequest_accept from './api/v2/followrequest/accept.js';
+import api_followrequest_deny from './api/v2/followrequest/deny.js';
+
 import api_instance from './api/v2/instance.js';
 import api_login from './api/v2/login.js';
 import api_notifications from './api/v2/notifications.js';
@@ -117,7 +121,11 @@ router.use('/', api_meta_get);
 router.use('/', api_meta_edit);
 
 router.use('/', api_ad);
-router.use('/', api_followrequest);
+
+router.use('/', api_followrequests_get);
+router.use('/', api_followrequest_accept);
+router.use('/', api_followrequest_deny);
+
 router.use('/', api_instance);
 router.use('/', api_login);
 router.use('/', api_notifications);
