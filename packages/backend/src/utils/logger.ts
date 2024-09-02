@@ -29,24 +29,18 @@ class Logger {
 				cluster.isPrimary ? '*' : cluster.worker.id
 			);
 
-			if (level === 'sql')
-				string += '	' + chalk.bgGreen(chalk.bold(chalk.white(level)));
+			if (level === 'sql') string += '	' + chalk.green(chalk.bold(level));
 			if (level === 'http')
-				string += '	' + chalk.bgMagenta(chalk.bold(chalk.white(level)));
-			if (level === 'debug')
-				string += '	' + chalk.bgCyan(chalk.bold(chalk.white(level)));
-			if (level === 'info')
-				string += '	' + chalk.bgBlue(chalk.bold(chalk.white(level)));
+				string += '	' + chalk.magenta(chalk.bold(level));
+			if (level === 'debug') string += '	' + chalk.cyan(chalk.bold(level));
+			if (level === 'info') string += '	' + chalk.blue(chalk.bold(level));
 			if (level === 'warn')
-				string += '	' + chalk.bgYellow(chalk.bold(chalk.white(level)));
+				string += '	' + chalk.yellow(chalk.bold(level));
 			if (level === 'done')
-				string +=
-					'	' + chalk.bgGreenBright(chalk.bold(chalk.white(level)));
-			if (level === 'error')
-				string += '	' + chalk.bgRed(chalk.bold(chalk.white(level)));
+				string += '	' + chalk.greenBright(chalk.bold(level));
+			if (level === 'error') string += '	' + chalk.red(chalk.bold(level));
 			if (level === 'fatal')
-				string +=
-					'	' + chalk.bgRedBright(chalk.bold(chalk.white(level)));
+				string += '	' + chalk.redBright(chalk.bold(level));
 
 			string +=
 				'	' + chalk.gray(context.substring(0, 7).toLowerCase()) + '	';
