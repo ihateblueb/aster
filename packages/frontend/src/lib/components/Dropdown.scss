@@ -5,8 +5,7 @@ dialog._91qW7WV {
 	padding: 6px;
 
 	box-shadow: 0px 0px 20px #00000035;
-	background-color: var(--bg-secondary-50);
-	backdrop-filter: blur(32px);
+	background-color: var(--bg-secondary);
 	color: var(--txt-secondary);
 	font-size: var(--font-s);
 
@@ -45,7 +44,6 @@ dialog._91qW7WV {
 		width: 100%;
 		box-sizing: border-box;
 		background-color: var(--bg-secondary);
-		backdrop-filter: blur(0px);
 		font-size: var(--font-m);
 
 		padding: 10px 10px max(10px, env(safe-area-inset-bottom)) 10px !important;
