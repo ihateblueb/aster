@@ -1,12 +1,10 @@
 import express from 'express';
 
-import verifyToken from '../../../../utils/auth/verifyToken.js';
-import logger from '../../../../utils/logger.js';
-import sanitize from '../../../../utils/sanitize.js';
 import getRemoteActor from '../../../../utils/ap/getRemoteActor.js';
 import getWebfingerAcct from '../../../../utils/ap/getWebfingerAcct.js';
 import config from '../../../../utils/config.js';
 import db from '../../../../utils/database.js';
+import ApiUser from '../../../../constructors/user.js';
 
 const router = express.Router();
 
@@ -18,6 +16,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 		});
 	} else {
 		let splitUsername = [];
+
 		splitUsername = req.params.username.split('@');
 
 		if (!splitUsername[0]) {
@@ -54,7 +53,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 					message: 'User deactivated'
 				});
 			} else {
-				res.status(200).json(grabbedUser);
+				res.status(200).json(new ApiUser(grabbedUser));
 			}
 		} else {
 			if (splitUsername[1] !== new URL(config.get().url).host) {
@@ -76,7 +75,7 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 								message: 'User deactivated'
 							});
 						} else {
-							res.status(200).json(fetchedRemoteActor);
+							res.status(200).json(new ApiUser(fetchedRemoteActor));
 						}
 					} else {
 						return res.status(404).json({
