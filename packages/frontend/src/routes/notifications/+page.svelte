@@ -51,8 +51,6 @@
 
 		observer.observe(e);
 	}
-
-	export let data;
 </script>
 
 <template>
