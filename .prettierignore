@@ -20,3 +20,4 @@ LICENSE
 uploads
 /sonic
 .pnpm-store
+.idea

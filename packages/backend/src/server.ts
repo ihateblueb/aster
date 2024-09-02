@@ -1,17 +1,12 @@
 import process from 'node:process';
 import cluster from 'cluster';
 import pkg from '../../../package.json' with { type: 'json' };
-
-let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
-process.title = `Aster v${pkg.version} (${processId})`;
-
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import express from 'express';
 import { createServer } from 'node:http';
 //import { Server } from 'socket.io';
-
 import config from './utils/config.js';
 import logger from './utils/logger.js';
 import db from './utils/database.js';
@@ -27,8 +22,11 @@ import router from './routes/router.js';
 */
 import { handler } from 'frontend/build/handler.js';
 
+let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
+process.title = `Aster v${pkg.version} (${processId})`;
+
 await db.initialize().catch((e) => {
-	Logger.fatal('db', e);
+	logger.fatal('db', e);
 });
 
 if (config.get().sonic.enabled) {

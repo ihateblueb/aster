@@ -6,9 +6,9 @@ import logger from '../logger.js';
 let search;
 
 if (!config.get().sonic.host) {
-	Logger.fatal('core', 'no sonic host configured');
+	logger.fatal('core', 'no sonic host configured');
 } else if (!config.get().sonic.port) {
-	Logger.fatal('core', 'no sonic port configured');
+	logger.fatal('core', 'no sonic port configured');
 }
 
 let sonicConnection = {

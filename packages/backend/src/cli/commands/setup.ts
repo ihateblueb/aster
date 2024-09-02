@@ -13,7 +13,7 @@ export default async function setup() {
 	let meta = await db.getRepository('meta').createQueryBuilder().getOne();
 
 	if (meta.init) {
-		Logger.fatal('setup', 'instance already setup!');
+		logger.fatal('setup', 'instance already setup!');
 	}
 
 	logger.info('setup', 'instance not yet setup, continuing');
