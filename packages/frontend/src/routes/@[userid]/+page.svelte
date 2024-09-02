@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { locale } from '$lib/locale';
-	import localstore from '$lib/utils/localstore'
+	import localstore from '$lib/utils/localstore';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -207,9 +207,14 @@
 								</div>
 								<div class="right">
 									{#if data.id !== (localstore.get('account') ? JSON.parse(localstore.get('account')).id : '')}
-										<Button on:click={() => userFollow(data.id)}>{locale('follow')}</Button>
-										{:else}
-										<Button to="/settings/profile">{locale('edit_profile')}</Button>
+										<Button
+											on:click={() => userFollow(data.id)}
+											>{locale('follow')}</Button
+										>
+									{:else}
+										<Button to="/settings/profile"
+											>{locale('edit_profile')}</Button
+										>
 									{/if}
 								</div>
 							</div>
@@ -280,10 +285,7 @@
 						{#if data.pinned_notes && data.pinned_notes.length > 0}
 							{#each data.pinned_notes as noteId}
 								{#await noteGet(noteId) then note}
-									<Note
-										data={note}
-										pinned
-									/>
+									<Note data={note} pinned />
 								{/await}
 							{/each}
 							<hr />
