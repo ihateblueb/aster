@@ -75,7 +75,9 @@ router.get('/api/v2/lookup/@:username', async (req, res) => {
 								message: 'User deactivated'
 							});
 						} else {
-							res.status(200).json(new ApiUser(fetchedRemoteActor));
+							res.status(200).json(
+								new ApiUser(fetchedRemoteActor)
+							);
 						}
 					} else {
 						return res.status(404).json({
