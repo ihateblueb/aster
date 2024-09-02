@@ -1,5 +1,4 @@
 <script lang="ts">
-	import adGet from '$lib/api/ad/get';
 	import adGetRandom from '$lib/api/ad/getRandom';
 </script>
 

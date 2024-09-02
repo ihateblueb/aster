@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { afterNavigate, beforeNavigate } from '$app/navigation';
-	import { locale } from '$lib/locale';
-	import Button from './Button.svelte';
 
 	import Icon from './Icon.svelte';
 

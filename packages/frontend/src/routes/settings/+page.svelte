@@ -2,21 +2,18 @@
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Input from '$lib/components/Input.svelte';
-	import Button from '$lib/components/Button.svelte';
 	import Select from '$lib/components/Select.svelte';
 	import SelectItem from '$lib/components/SelectItem.svelte';
 	import localstore from '$lib/utils/localstore';
 	import Toggle from '$lib/components/Toggle.svelte';
 
 	import themes from '../../../static/themes/themes.json';
+	import fonts from '../../../static/fonts/fonts.json';
+	import store from '$lib/utils/store';
 
 	function refreshTheme(newTheme) {
 		store.theme.set(newTheme);
 	}
-
-	import fonts from '../../../static/fonts/fonts.json';
-	import store from '$lib/utils/store';
 
 	function refreshFont(newFont) {
 		store.font.set(newFont);

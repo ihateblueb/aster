@@ -13,7 +13,6 @@
 	import Avatar from '../Avatar.svelte';
 	import localstore from '$lib/utils/localstore';
 	import Mfm from '../Mfm.svelte';
-	import Account from './Account.svelte';
 
 	let noteCw = '';
 	let noteContent = '';

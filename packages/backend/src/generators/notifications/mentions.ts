@@ -1,7 +1,6 @@
 import { LessThan } from 'typeorm';
 
 import db from '../../utils/database.js';
-import generateNotification from '../notification.js';
 
 export default async function generateNotificationsAll(to, take, since) {
 	let collectedObjects = [];

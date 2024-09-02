@@ -1,6 +1,5 @@
 import express from 'express';
 
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import ApActor from '../../constructors/ApActor.js';
 

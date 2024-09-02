@@ -1,13 +1,10 @@
 <script>
-	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import Select from '$lib/components/Select.svelte';
-	import SelectItem from '$lib/components/SelectItem.svelte';
 	import localstore from '$lib/utils/localstore';
 	import editAccount from '$lib/api/user/edit';
 	import InfoBox from '$lib/components/InfoBox.svelte';

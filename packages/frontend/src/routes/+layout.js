@@ -2,9 +2,6 @@ import { getLocaleFile } from '$lib/locale';
 
 import localstore from '$lib/utils/localstore';
 import store from '$lib/utils/store';
-import { io } from 'socket.io-client';
-import { tick } from 'svelte';
-import { writable } from 'svelte/store';
 
 export const ssr = false;
 

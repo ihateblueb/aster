@@ -1,5 +1,4 @@
 <script>
-	import { goto, invalidateAll } from '$app/navigation';
 
 	import { locale } from '$lib/locale';
 	import localstore from '$lib/utils/localstore';

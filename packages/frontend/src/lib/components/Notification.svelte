@@ -1,9 +1,7 @@
 <script lang="ts">
-	import noteGet from '$lib/api/note/get';
 	import { locale } from '$lib/locale';
 	import Icon from './Icon.svelte';
 	import Mfm from './Mfm.svelte';
-	import Note from './Note.svelte';
 	import NoteSimple from './NoteSimple.svelte';
 	import Time from './Time.svelte';
 

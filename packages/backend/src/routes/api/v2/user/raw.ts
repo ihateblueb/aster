@@ -1,9 +1,6 @@
 import express from 'express';
 
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
-import logger from '../../../../utils/logger.js';
-import sanitize from '../../../../utils/sanitize.js';
 import getSigned from '../../../../utils/ap/getSigned.js';
 
 const router = express.Router();

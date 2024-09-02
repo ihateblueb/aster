@@ -1,5 +1,3 @@
-import { NoteReact } from '../../entities/NoteReact.js';
-import { User } from '../../entities/User.js';
 import config from '../../utils/config.js';
 import ApEmoji from '../ApEmoji.js';
 import contexts from '../../../static/contexts.json' with { type: 'json' };

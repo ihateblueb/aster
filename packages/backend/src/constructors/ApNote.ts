@@ -1,5 +1,4 @@
 import { Note } from '../entities/Note.js';
-import { User } from '../entities/User.js';
 import contexts from '../../static/contexts.json' with { type: 'json' };
 
 export default class ApNote {

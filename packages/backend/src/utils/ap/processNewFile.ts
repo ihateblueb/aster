@@ -1,7 +1,5 @@
 import db from '../database.js';
 import logger from '../logger.js';
-import calculateDimensions from '../media/calculateDimensions.js';
-import generateThumbnail from '../media/generateThumbnail.js';
 import sanitize from '../sanitize.js';
 import { v4 as uuidv4 } from 'uuid';
 

@@ -1,7 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import ActFollow from '../constructors/activity/Follow.js';
 import db from '../utils/database.js';
-import deliverQueue from '../utils/deliverQueue.js';
 import logger from '../utils/logger.js';
 
 export default async function OFollow(localUserId, object) {

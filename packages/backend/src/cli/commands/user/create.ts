@@ -1,6 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
 import { generateKeyPairSync } from 'crypto';
-import bcrypt from 'bcryptjs';
 
 import config from '../../../utils/config.js';
 import logger from '../../../utils/logger.js';

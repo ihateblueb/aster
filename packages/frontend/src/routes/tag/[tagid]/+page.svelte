@@ -1,10 +1,7 @@
 <script>
 	import { page } from '$app/stores';
-	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Input from '$lib/components/Input.svelte';
-	import Button from '$lib/components/Button.svelte';
 	import Note from '$lib/components/Note.svelte';
 
 	export let data;

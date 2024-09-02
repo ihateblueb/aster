@@ -3,8 +3,6 @@ import express from 'express';
 import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import deleteNote from '../../../../utils/actions/delete/note.js';
-import ingest from '../../../../utils/sonic/ingest.js';
-import config from '../../../../utils/config.js';
 
 const router = express.Router();
 

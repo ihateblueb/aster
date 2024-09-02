@@ -1,8 +1,6 @@
 import express from 'express';
 
-import config from '../../../../../utils/config.js';
 import db from '../../../../../utils/database.js';
-import ingest from '../../../../../utils/sonic/ingest.js';
 import logger from '../../../../../utils/logger.js';
 import admin from '../../../../admin.js';
 

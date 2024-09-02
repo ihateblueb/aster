@@ -1,12 +1,8 @@
 <script>
-	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
 	import PageFooter from '$lib/components/PageFooter.svelte';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import localstore from '$lib/utils/localstore';
-	import store from '$lib/utils/store';
-	import { tick } from 'svelte';
 
 	let defaultLeftWidgets = {
 		top: ['instancelogo'],

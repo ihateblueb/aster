@@ -1,9 +1,7 @@
 import express from 'express';
 
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import ApNote from '../../constructors/ApNote.js';
-import { Note } from '../../entities/Note.js';
 
 const router = express.Router();
 

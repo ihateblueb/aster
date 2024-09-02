@@ -3,7 +3,6 @@ import express from 'express';
 import verifyToken from '../../../utils/auth/verifyToken.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
-import { host } from 'frontend/build/index.js';
 import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
 const router = express.Router();

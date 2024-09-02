@@ -10,15 +10,16 @@
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import Emoji from '$lib/components/Emoji.svelte';
 
-	import noteBookmark from '$lib/api/note/bookmark';
 	import noteDelete from '$lib/api/note/delete';
-	import noteReact from '$lib/api/note/react';
 	import noteLike from '$lib/api/note/like';
 	import noteRepeat from '$lib/api/note/repeat';
 	import notePin from '$lib/api/note/pin';
 	import noteUnpin from '$lib/api/note/unpin';
-
-	import userBite from '$lib/api/user/bite';
+	import InstanceTicker from './InstanceTicker.svelte';
+	import NoteMedia from './NoteMedia.svelte';
+	import Time from './Time.svelte';
+	import localstore from '$lib/utils/localstore';
+	import NoteSimple from './NoteSimple.svelte';
 
 	export let data;
 	export let pinned: boolean = false;
@@ -30,12 +31,6 @@
 	let cwOpen = false;
 
 	let more: Dropdown;
-
-	import InstanceTicker from './InstanceTicker.svelte';
-	import NoteMedia from './NoteMedia.svelte';
-	import Time from './Time.svelte';
-	import localstore from '$lib/utils/localstore';
-	import NoteSimple from './NoteSimple.svelte';
 
 	let self = {};
 

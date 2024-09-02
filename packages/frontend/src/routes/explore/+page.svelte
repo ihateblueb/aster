@@ -8,7 +8,6 @@
 	import Button from '$lib/components/Button.svelte';
 	import Icon from '$lib/components/Icon.svelte';
 	import Loading from '$lib/components/Loading.svelte';
-	import VirtualList from '$lib/components/VirtualList.svelte';
 	import localstore from '$lib/utils/localstore';
 	import Tab from '$lib/components/Tab.svelte';
 

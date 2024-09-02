@@ -1,4 +1,3 @@
-import config from '../../utils/config.js';
 import contexts from '../../../static/contexts.json' with { type: 'json' };
 
 export default class ActUndo {

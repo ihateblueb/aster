@@ -1,9 +1,7 @@
 <script>
-	import { page } from '$app/stores';
 	import { locale } from '$lib/locale';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import Mfm from '$lib/components/Mfm.svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Note from '$lib/components/Note.svelte';
 

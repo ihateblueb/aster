@@ -1,5 +1,4 @@
 <script>
-	import { goto } from '$app/navigation';
 	import Loading from '$lib/components/Loading.svelte';
 	import localstore from '$lib/utils/localstore';
 

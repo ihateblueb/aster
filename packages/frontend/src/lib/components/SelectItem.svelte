@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
 
 	export let value: string = '';
 	export let name: string = '';

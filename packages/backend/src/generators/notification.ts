@@ -1,4 +1,3 @@
-import ApiMeta from '../constructors/meta.js';
 import ApiNotification from '../constructors/notification.js';
 import db from '../utils/database.js';
 import generateNote from './note.js';

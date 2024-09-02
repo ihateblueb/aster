@@ -5,12 +5,7 @@
 	import Input from '$lib/components/Input.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import searchGet from '$lib/api/search/get';
-	import { goto } from '$app/navigation';
-	import userLookup from '$lib/api/user/lookup';
 	import { JsonView } from '@zerodevx/svelte-json-view';
-	import userGet from '$lib/api/user/get';
-	import noteGet from '$lib/api/note/get';
-	import localstore from '$lib/utils/localstore';
 
 	let query;
 	let results = {};

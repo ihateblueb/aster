@@ -1,6 +1,5 @@
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import getRemoteNote from '../utils/ap/getRemoteNote.js';
-import config from '../utils/config.js';
 import db from '../utils/database.js';
 import { v4 as uuidv4 } from 'uuid';
 import notification from '../utils/notification.js';

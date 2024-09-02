@@ -1,10 +1,6 @@
 <script>
-	import { page } from '$app/stores';
-	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { locale } from '$lib/locale';
-
-	import VirtualList from '$lib/components/VirtualList.svelte';
 
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
@@ -17,7 +13,6 @@
 	import timelineGet from '$lib/api/timeline/get';
 	import Note from '$lib/components/Note.svelte';
 	import Loading from '$lib/components/Loading.svelte';
-	import SelectItem from '$lib/components/SelectItem.svelte';
 	import Tab from '$lib/components/Tab.svelte';
 
 	let timeline = localstore.get('home_timeline');

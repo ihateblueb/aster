@@ -1,6 +1,5 @@
 <script>
 	import * as mfm from 'mfm-js';
-	import Sparkle from './Sparkle.svelte';
 	import twemoji from '@discordapp/twemoji';
 
 	export let content;
