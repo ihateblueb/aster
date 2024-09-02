@@ -1,10 +1,12 @@
+import ApiUser from './user.js';
+
 export default class ApiNotification {
 	id: string;
 
 	type: string;
 
-	to: object;
-	from?: object;
+	to: ApiUser;
+	from?: ApiUser;
 
 	created_at: string;
 
@@ -13,8 +15,8 @@ export default class ApiNotification {
 
 	constructor(
 		grabbedNotification,
-		grabbedTo,
-		grabbedFrom?,
+		grabbedTo: ApiUser,
+		grabbedFrom?: ApiUser,
 		grabbedReaction?
 	) {
 		this.id = grabbedNotification.id;

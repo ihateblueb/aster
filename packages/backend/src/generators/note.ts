@@ -1,5 +1,6 @@
 import ApiNote from '../constructors/note.js';
 import db from '../utils/database.js';
+import ApiUser from '../constructors/user.js';
 
 export default async function generateNote(grabbedNote): Promise<{
 	status?: number;
@@ -102,7 +103,7 @@ export default async function generateNote(grabbedNote): Promise<{
 					status: 200,
 					note: new ApiNote(
 						grabbedNote,
-						grabbedAuthor,
+						new ApiUser(grabbedAuthor),
 						grabbedInstance,
 						(await generateNote(grabbedReplyingNote)).note,
 						grabbedAttachments,

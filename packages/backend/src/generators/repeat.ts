@@ -1,6 +1,7 @@
 import ApiRepeat from '../constructors/repeat.js';
 import db from '../utils/database.js';
 import generateNote from './note.js';
+import ApiUser from '../constructors/user.js';
 
 export default async function generateRepeat(grabbedRepeat): Promise<{
 	status?: number;
@@ -39,7 +40,7 @@ export default async function generateRepeat(grabbedRepeat): Promise<{
 					repeat: new ApiRepeat(
 						grabbedRepeat,
 						generatedNote.note,
-						grabbedAuthor
+						new ApiUser(grabbedAuthor)
 					)
 				};
 			}

@@ -1,6 +1,7 @@
 import ApiNotification from '../constructors/notification.js';
 import db from '../utils/database.js';
 import generateNote from './note.js';
+import ApiUser from '../constructors/user.js';
 
 export default async function generateNotification(
 	grabbedNotification
@@ -41,8 +42,8 @@ export default async function generateNotification(
 			status: 200,
 			notification: new ApiNotification(
 				grabbedNotification,
-				grabbedTo,
-				grabbedFrom,
+				new ApiUser(grabbedTo),
+				new ApiUser(grabbedFrom),
 				grabbedReaction
 			)
 		};

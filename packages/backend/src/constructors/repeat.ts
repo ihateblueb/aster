@@ -1,18 +1,19 @@
 import ApiNote from './note.js';
+import ApiUser from './user.js';
 
 export default class ApiRepeat {
 	id: string;
 	ap_id: string;
 	local: boolean;
 
-	author: object;
+	author: ApiUser;
 
 	created_at: string;
 	visibility: string;
 
 	note: ApiNote;
 
-	constructor(grabbedRepeat, generatedNote: ApiNote, grabbedAuthor) {
+	constructor(grabbedRepeat, generatedNote: ApiNote, grabbedAuthor: ApiUser) {
 		this.id = grabbedRepeat.id;
 		this.ap_id = grabbedRepeat.ap_id;
 		this.local = grabbedRepeat.local;

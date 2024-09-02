@@ -46,6 +46,7 @@ export default class ApiUser {
 	following_url: string;
 	followers_url: string;
 
+	// TODO: fix circular logic, ApiNote has ApiUser and ApiUser has ApiNote
 	pinned_notes: ApiNote[];
 
 	public_key: string;

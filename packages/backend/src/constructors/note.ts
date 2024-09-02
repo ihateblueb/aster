@@ -1,3 +1,5 @@
+import ApiUser from './user.js';
+
 export default class ApiNote {
 	id: string;
 	ap_id: string;
@@ -5,7 +7,7 @@ export default class ApiNote {
 	visibility: string;
 
 	replying_to?: object;
-	author: object;
+	author: ApiUser;
 	instance: object;
 
 	local: boolean;
@@ -24,7 +26,7 @@ export default class ApiNote {
 
 	constructor(
 		grabbedNote,
-		grabbedAuthor,
+		grabbedAuthor: ApiUser,
 		grabbedInstance?,
 		grabbedReplyingNote?,
 		grabbedAttachments?,

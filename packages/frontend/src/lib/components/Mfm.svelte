@@ -392,10 +392,6 @@
 			line-height: normal;
 		}
 
-		> p {
-			margin-bottom: 5px;
-		}
-
 		.mfm-emoji {
 			display: inline;
 			vertical-align: middle;

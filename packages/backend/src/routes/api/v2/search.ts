@@ -8,14 +8,13 @@ import isValidUrl from '../../../utils/isValidUrl.js';
 import search from '../../../utils/sonic/search.js';
 import config from '../../../utils/config.js';
 import logger from '../../../utils/logger.js';
-import { ILike, Like } from 'typeorm';
+import { ILike } from 'typeorm';
 import generateNote from '../../../generators/note.js';
 import fromHtml from '../../../utils/mfm/fromHtml.js';
 import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
 
 const router = express.Router();
 
-// get ad by id or random
 router.get('/api/v2/search', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
 	if (!req.query.q) {
@@ -377,12 +376,12 @@ router.get('/api/v2/search', async (req, res) => {
 			// TODO: does this work at all?
 			let grabbedNotesByContent = await db.getRepository('note').find({
 				where: {
-					content: Like(req.query.q)
+					content: ILike(req.query.q)
 				}
 			});
 			let grabbedNotesByCw = await db.getRepository('note').find({
 				where: {
-					content: Like(req.query.q)
+					content: ILike(req.query.q)
 				}
 			});
 
