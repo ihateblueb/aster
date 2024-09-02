@@ -209,11 +209,11 @@
 									{#if data.id !== (localstore.get('account') ? JSON.parse(localstore.get('account')).id : '')}
 										<Button
 											on:click={() => userFollow(data.id)}
-										>{locale('follow')}</Button
+											>{locale('follow')}</Button
 										>
 									{:else}
 										<Button to="/settings/profile"
-										>{locale('edit_profile')}</Button
+											>{locale('edit_profile')}</Button
 										>
 									{/if}
 								</div>
