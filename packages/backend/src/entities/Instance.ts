@@ -23,12 +23,6 @@ export class Instance {
 	@Column({ nullable: true })
 	note_count: number;
 
-	@Column({ default: false })
-	suspended: boolean;
-
-	@Column({ default: false })
-	silenced: boolean;
-
 	@Column({ nullable: true })
 	mod_note: string;
 
