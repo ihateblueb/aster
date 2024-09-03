@@ -193,3 +193,11 @@ main {
 		background-color: var(--bg-secondary);
 	}
 }
+
+.activeRequestIndicator {
+	position: fixed;
+	top: 0;
+	right: 0;
+	z-index: 1000000;
+	margin: 10px;
+}

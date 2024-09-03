@@ -1,8 +1,10 @@
 <script>
 	import PageFooter from '$lib/components/PageFooter.svelte';
+	import store from '$lib/utils/store';
 
 	import Sidebar from '$lib/components/Sidebar.svelte';
 	import localstore from '$lib/utils/localstore';
+	import Loading from '$lib/components/Loading.svelte';
 
 	let defaultLeftWidgets = {
 		top: ['instancelogo'],
@@ -12,9 +14,22 @@
 	let defaultRightWidgets = {
 		top: ['welcome']
 	};
+
+	let activeRequests = 0;
+
+	store.activeRequests.subscribe(async (value) => {
+		activeRequests = value;
+	});
 </script>
 
 <template>
+	{#key activeRequests}
+		{#if activeRequests > 0}
+			<div class="activeRequestIndicator">
+				<Loading size="16px" />
+			</div>
+		{/if}
+	{/key}
 	<div class="page">
 		{#if localstore.get('a_token')}
 			<Sidebar side="left" widgets={localstore.get('widgets_left')} />

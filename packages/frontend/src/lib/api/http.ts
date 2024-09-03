@@ -1,7 +1,17 @@
 import localstore from '$lib/utils/localstore';
+import store from '$lib/utils/store';
+
+let activeRequests = 0;
 
 export class http {
+	private activeRequestsCount(change: number) {
+		activeRequests = activeRequests + change;
+		store.activeRequests.set(activeRequests);
+	}
+
 	public async get(endpoint) {
+		this.activeRequestsCount(1);
+
 		const response = await fetch(endpoint, {
 			method: 'GET',
 			headers: {
@@ -10,10 +20,14 @@ export class http {
 			}
 		});
 		const data = await response.json();
+
+		this.activeRequestsCount(-1);
 		return data;
 	}
 
 	public async post(endpoint, body?) {
+		this.activeRequestsCount(1);
+
 		let response = {};
 
 		if (typeof body === 'object') {
@@ -36,10 +50,13 @@ export class http {
 			console.log(response);
 		}
 
+		this.activeRequestsCount(-1);
 		return response;
 	}
 
 	public async patch(endpoint, body) {
+		this.activeRequestsCount(1);
+
 		let response = {};
 
 		let request = await fetch(endpoint, {
@@ -58,10 +75,14 @@ export class http {
 			console.log(response);
 		}
 
+		this.activeRequestsCount(-1);
+
 		return response;
 	}
 
 	public async delete(endpoint, body?) {
+		this.activeRequestsCount(1);
+
 		let response = {};
 
 		let request = await fetch(endpoint, {
@@ -79,6 +100,8 @@ export class http {
 		if (request.status !== 200) {
 			console.log(response);
 		}
+
+		this.activeRequestsCount(-1);
 
 		return response;
 	}

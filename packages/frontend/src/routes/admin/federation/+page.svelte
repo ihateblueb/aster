@@ -1,5 +1,5 @@
 <script>
-	import adminFederationGet from '$lib/api/admin/federation/get';
+	import adminFederationGet from '$lib/api/admin/instances/get';
 	import Loading from '$lib/components/Loading.svelte';
 	import { locale } from '$lib/locale';
 </script>
