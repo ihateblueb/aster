@@ -12,7 +12,20 @@ import ap_user from './ap/user.js';
 import ap_note from './ap/note.js';
 
 import api_admin_sonic_index from './api/v2/admin/search/sonic.js';
-import api_admin_federation_get from './api/v2/admin/federation/get.js';
+
+import api_admin_instances_get from './api/v2/admin/instances/get.js';
+
+import api_admin_instances_blocked_get from './api/v2/admin/instances/blocked/get.js';
+import api_admin_instances_blocked_add from './api/v2/admin/instances/blocked/add.js';
+import api_admin_instances_blocked_remove from './api/v2/admin/instances/blocked/remove.js';
+
+import api_admin_instances_forcedVisibility_get from './api/v2/admin/instances/forcedVisibility/get.js';
+import api_admin_instances_forcedVisibility_add from './api/v2/admin/instances/forcedVisibility/add.js';
+import api_admin_instances_forcedVisibility_remove from './api/v2/admin/instances/forcedVisibility/remove.js';
+
+import api_admin_instances_silenced_get from './api/v2/admin/instances/silenced/get.js';
+import api_admin_instances_silenced_add from './api/v2/admin/instances/silenced/add.js';
+import api_admin_instances_silenced_remove from './api/v2/admin/instances/silenced/remove.js';
 
 import api_user_bite from './api/v2/user/bite.js';
 import api_user_create from './api/v2/user/create.js';
@@ -83,7 +96,20 @@ router.use('/', ap_note);
 
 // api
 router.use('/', api_admin_sonic_index);
-router.use('/', api_admin_federation_get);
+
+router.use('/', api_admin_instances_get);
+
+router.use('/', api_admin_instances_blocked_get);
+router.use('/', api_admin_instances_blocked_add);
+router.use('/', api_admin_instances_blocked_remove);
+
+router.use('/', api_admin_instances_forcedVisibility_get);
+router.use('/', api_admin_instances_forcedVisibility_add);
+router.use('/', api_admin_instances_forcedVisibility_remove);
+
+router.use('/', api_admin_instances_silenced_get);
+router.use('/', api_admin_instances_silenced_add);
+router.use('/', api_admin_instances_silenced_remove);
 
 router.use('/', api_user_bite);
 router.use('/', api_user_create);

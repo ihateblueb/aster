@@ -1,14 +1,11 @@
 import express from 'express';
 
 import db from '../../../../../utils/database.js';
-import logger from '../../../../../utils/logger.js';
 import admin from '../../../../admin.js';
 
 const router = express.Router();
 
-router.get(`/api/v2/admin/federation`, admin, async (req, res) => {
-	logger.debug('admin', 'get federation');
-
+router.get(`/api/v2/admin/instances`, admin, async (req, res) => {
 	let grabbedInstances = await db
 		.getRepository('instance')
 		.createQueryBuilder()
