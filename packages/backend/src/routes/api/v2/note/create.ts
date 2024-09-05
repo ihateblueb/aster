@@ -50,30 +50,32 @@ router.post(`/api/v2/note`, async (req, res) => {
 			.getRepository('user')
 			.findOne({ where: { id: authRes.grabbedUserAuth.user } });
 
-		if (noteToInsert['visibility'] === 'public') {
-			if (noteToInsert['cw']) {
+		if (config.get().sonic.enabled) {
+			if (noteToInsert['visibility'] === 'public') {
+				if (noteToInsert['cw']) {
+					await ingest
+						.push(
+							config.get().sonic.collectionPrefix + '_cw',
+							config.get().sonic.bucket,
+							noteToInsert['id'],
+							noteToInsert['cw']
+						)
+						.catch((e) => {
+							logger.error('sonic', e);
+						});
+				}
+
 				await ingest
 					.push(
-						config.get().sonic.collectionPrefix + '_cw',
+						config.get().sonic.collectionPrefix + '_content',
 						config.get().sonic.bucket,
 						noteToInsert['id'],
-						noteToInsert['cw']
+						noteToInsert['content']
 					)
 					.catch((e) => {
 						logger.error('sonic', e);
 					});
 			}
-
-			await ingest
-				.push(
-					config.get().sonic.collectionPrefix + '_content',
-					config.get().sonic.bucket,
-					noteToInsert['id'],
-					noteToInsert['content']
-				)
-				.catch((e) => {
-					logger.error('sonic', e);
-				});
 		}
 
 		if (grabbedUser) {
