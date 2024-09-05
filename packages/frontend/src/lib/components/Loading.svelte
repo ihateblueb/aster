@@ -6,6 +6,6 @@
 
 <template>
 	<div class="spin _9Gb36Cp">
-		<Icon name="loader-2" size={size} />
+		<Icon name="loader-2" {size} />
 	</div>
 </template>

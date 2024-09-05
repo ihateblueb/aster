@@ -2,7 +2,7 @@
 
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 
-Aster is a work-in-progress federated social media software. So far, development is going fine, but is unusable.
+Aster is a work-in-progress federated social media software. So far, development is going fine, but it's still unusable.
 I do not expect this software to be extra special, performant, or even stable. If it ends up being somewhat finished, maybe I'll polish it up to be usable.
 
 If you see something that is a bad practice, slow, very stupid, or a security vulnerability, please let me know! You can create an issue in this repo, or contact me directly (see https://harper.eepy.zone/) if it's serious.
@@ -20,8 +20,6 @@ Aster is developed with the following:
 -   DragonflyDB or Redis
 -   NodeJS
 -   pnpm
--   libvips
--   ffmpeg
 
 This may be flexible, but hasn't been tested or looked further into.
 
