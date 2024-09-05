@@ -20,8 +20,6 @@ Aster is developed with the following:
 -   DragonflyDB or Redis
 -   NodeJS
 -   pnpm
--   libvips
--   ffmpeg
 
 This may be flexible, but hasn't been tested or looked further into.
 
