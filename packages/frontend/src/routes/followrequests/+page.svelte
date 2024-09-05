@@ -41,7 +41,9 @@
 									<a
 										href={'/@' + from.username}
 										class="username subtle"
-									>@{from.username}{(from.local ? '' : '@' + from.host)}</a
+										>@{from.username}{from.local
+											? ''
+											: '@' + from.host}</a
 									>
 								</div>
 							</div>
