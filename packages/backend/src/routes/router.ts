@@ -13,6 +13,7 @@ import ap_note from './ap/note.js';
 
 import api_admin_sonic_index from './api/v2/admin/search/sonic.js';
 
+import api_admin_instance_get from './api/v2/admin/instance/get.js';
 import api_admin_instances_get from './api/v2/admin/instances/get.js';
 
 import api_admin_instances_blocked_get from './api/v2/admin/instances/blocked/get.js';
@@ -97,6 +98,7 @@ router.use('/', ap_note);
 // api
 router.use('/', api_admin_sonic_index);
 
+router.use('/', api_admin_instance_get);
 router.use('/', api_admin_instances_get);
 
 router.use('/', api_admin_instances_blocked_get);

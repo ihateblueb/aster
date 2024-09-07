@@ -2,6 +2,8 @@
 	import adminFederationGet from '$lib/api/admin/instances/get';
 	import Loading from '$lib/components/Loading.svelte';
 	import { locale } from '$lib/locale';
+	import Button from '$lib/components/Button.svelte';
+	import Icon from '$lib/components/Icon.svelte';
 </script>
 
 <template>
@@ -16,18 +18,31 @@
 				{#if instances}
 					{#each instances as instance}
 						<div class="instance">
-							<div class="left">
-								<img src={instance.icon} class="icon" />
-								<b
+							<div class="top">
+								<div class="left">
+									<img src={instance.icon} class="icon" />
+									<b
 									>{instance.name
 										? instance.name
 										: instance.host}</b
-								>
-								<span>
+									>
+									<span>
 									{instance.software}
-									{instance.version}
+										{instance.version}
 								</span>
+								</div>
+								<div class="right">
+									<Button to={'/admin/federation/'+instance.host}>
+										<Icon name="chevron-right" size="16px" />
+									</Button>
+								</div>
 							</div>
+							{#if instances.mod_note}
+								<div class="bottom">
+									<hr>
+									{instance.mod_note}
+								</div>
+							{/if}
 						</div>
 					{/each}
 				{/if}
@@ -40,20 +55,51 @@
 	.instance {
 		display: flex;
 		padding: 12px 16px;
+		gap: 5px;
+		flex-direction: column;
 		border-radius: var(--border-l);
 		margin-bottom: 10px;
 
 		background-color: var(--bg-secondary);
 
-		.left {
+		.top {
 			display: flex;
-			align-items: center;
-			gap: 5px;
+			gap: 10px;
 
-			.icon {
-				height: 25px;
-				width: 25px;
-				margin-right: 5px;
+			.left {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				flex-grow: 2;
+
+				.icon {
+					height: 25px;
+					width: 25px;
+					margin-right: 5px;
+				}
+			}
+
+			.right {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+			}
+		}
+
+		.bottom {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+
+			hr {
+				width: calc(100% - 10px);
+				margin: 0 5px;
+				border-color: var(--bg-accent);
+			}
+
+			.stats {
+				display: flex;
+				gap: 10px;
 			}
 		}
 	}
