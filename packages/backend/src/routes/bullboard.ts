@@ -6,8 +6,8 @@ import { ExpressAdapter } from '@bull-board/express';
 
 import inboxQueue from '../utils/inboxQueue.js';
 import deliverQueue from '../utils/deliverQueue.js';
-import verifyToken from '../utils/auth/verifyToken.js';
 import db from '../utils/database.js';
+import UserAuthService from '../services/UserAuthService.js';
 
 const serverAdapter = new ExpressAdapter();
 serverAdapter.setBasePath('/admin/queue/dashboard');
@@ -38,7 +38,7 @@ createBullBoard({
 });
 
 router.get('/admin/queue/dashboard*', async (req, res, next) => {
-	let authRes = await verifyToken(req, true);
+	let authRes = await UserAuthService.verifyToken(req, true);
 
 	if (authRes.status === 200) {
 		let grabbedUser = await db.getRepository('user').findOne({

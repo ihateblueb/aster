@@ -3,13 +3,12 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
-
-import verifyToken from '../../../../../utils/auth/verifyToken.js';
 import db from '../../../../../utils/database.js';
 import config from '../../../../../utils/config.js';
 
 import calculateDimensions from '../../../../../utils/media/calculateDimensions.js';
 import generateThumbnail from '../../../../../utils/media/generateThumbnail.js';
+import UserAuthService from '../../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
@@ -55,7 +54,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 router.post(`/api/v2/drive/file/:name`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (authRes.grabbedUserAuth.user) {

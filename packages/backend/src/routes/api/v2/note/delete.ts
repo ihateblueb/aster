@@ -1,13 +1,12 @@
 import express from 'express';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import deleteNote from '../../../../utils/actions/delete/note.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.delete(`/api/v2/note`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {

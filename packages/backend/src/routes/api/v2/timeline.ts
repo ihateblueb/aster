@@ -8,7 +8,7 @@ import generateTimelineBubble from '../../../generators/timeline/bubble.js';
 import generateTimelineLocal from '../../../generators/timeline/local.js';
 import generateTimelineHome from '../../../generators/timeline/home.js';
 import generateTimelineTag from '../../../generators/timeline/tag.js';
-import verifyToken from '../../../utils/auth/verifyToken.js';
+import UserAuthService from '../../../services/UserAuthService.js';
 
 const router = express.Router();
 
@@ -57,7 +57,7 @@ router.get('/api/v2/timeline/bubble', async (req, res) => {
 
 router.get('/api/v2/timeline/home', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		let take =

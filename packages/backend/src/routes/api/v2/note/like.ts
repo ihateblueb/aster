@@ -1,18 +1,17 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
 import OLike from '../../../../outgoing/like.js';
 import config from '../../../../utils/config.js';
 import notification from '../../../../utils/notification.js';
 import OUndoLike from '../../../../outgoing/undo/like.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {

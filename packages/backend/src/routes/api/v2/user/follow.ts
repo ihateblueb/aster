@@ -1,13 +1,12 @@
 import express from 'express';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import RelationshipService from '../../../../services/RelationshipService.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post(`/api/v2/user/:userid/follow`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (req.params.userid) {
 		if (authRes.status === 200) {

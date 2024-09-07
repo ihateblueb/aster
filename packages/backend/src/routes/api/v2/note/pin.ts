@@ -1,13 +1,12 @@
 import express from 'express';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post(`/api/v2/note/:noteid/pin`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {
@@ -35,7 +34,7 @@ router.post(`/api/v2/note/:noteid/pin`, async (req, res) => {
 });
 
 router.post(`/api/v2/note/:noteid/unpin`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {

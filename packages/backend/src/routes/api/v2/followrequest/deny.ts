@@ -1,14 +1,14 @@
 import express from 'express';
 
 import signAndReject from '../../../../utils/ap/reject.js';
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post('/api/v2/followrequest/deny', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {

@@ -1,17 +1,16 @@
 import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import config from '../../../../utils/config.js';
 import OAnnounce from '../../../../outgoing/announce.js';
 import notification from '../../../../utils/notification.js';
 import OUndoAnnounce from '../../../../outgoing/undo/announce.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (req.params.noteid) {
 		if (authRes.status === 200) {

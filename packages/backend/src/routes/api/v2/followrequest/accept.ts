@@ -1,15 +1,15 @@
 import express from 'express';
 
 import signAndAccept from '../../../../utils/ap/accept.js';
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import notification from '../../../../utils/notification.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post('/api/v2/followrequest/accept', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		if (JSON.parse(req.body).id) {

@@ -1,16 +1,15 @@
 import express from 'express';
-
-import verifyToken from '../../../utils/auth/verifyToken.js';
 import config from '../../../utils/config.js';
 import generateNotificationsAll from '../../../generators/notifications/all.js';
 import generateNotificationsMentions from '../../../generators/notifications/mentions.js';
 import renderTimeline from '../../../utils/timeline/render.js';
+import UserAuthService from '../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.get('/api/v2/notifications/all', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		let take =
@@ -36,7 +35,7 @@ router.get('/api/v2/notifications/all', async (req, res) => {
 
 router.get('/api/v2/notifications/mentions', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		let take =

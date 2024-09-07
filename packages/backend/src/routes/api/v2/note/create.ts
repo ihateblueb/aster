@@ -3,17 +3,17 @@ import { v4 as uuidv4 } from 'uuid';
 
 import config from '../../../../utils/config.js';
 import sanitize from '../../../../utils/sanitize.js';
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
 import ApNote from '../../../../constructors/ApNote.js';
 import OCreate from '../../../../outgoing/create.js';
 import ingest from '../../../../utils/sonic/ingest.js';
 import logger from '../../../../utils/logger.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.post(`/api/v2/note`, async (req, res) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		const noteId = uuidv4();

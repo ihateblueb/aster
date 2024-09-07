@@ -1,8 +1,8 @@
-import verifyToken from '../utils/auth/verifyToken.js';
 import db from '../utils/database.js';
+import UserAuthService from '../services/UserAuthService.js';
 
 export default async (req, res, next) => {
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		let grabbedUser = await db.getRepository('user').findOne({

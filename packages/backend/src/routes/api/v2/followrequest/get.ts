@@ -1,13 +1,12 @@
 import express from 'express';
-
-import verifyToken from '../../../../utils/auth/verifyToken.js';
 import db from '../../../../utils/database.js';
+import UserAuthService from '../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.get('/api/v2/followrequests', async (req, res) => {
 	res.setHeader('Content-Type', 'application/json');
-	let authRes = await verifyToken(req);
+	let authRes = await UserAuthService.verifyToken(req);
 
 	if (authRes.status === 200) {
 		let grabbedFollowrequests = await db

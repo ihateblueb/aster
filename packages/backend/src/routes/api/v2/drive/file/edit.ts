@@ -1,14 +1,13 @@
 import express from 'express';
-
-import verifyToken from '../../../../../utils/auth/verifyToken.js';
 import db from '../../../../../utils/database.js';
 import sanitize from '../../../../../utils/sanitize.js';
+import UserAuthService from '../../../../../services/UserAuthService.js';
 
 const router = express.Router();
 
 router.patch(`/api/v2/drive/file/:id`, async (req, res) => {
 	if (req.params.id) {
-		let authRes = await verifyToken(req);
+		let authRes = await UserAuthService.verifyToken(req);
 
 		if (authRes.status === 200) {
 			if (authRes.grabbedUserAuth.user) {
