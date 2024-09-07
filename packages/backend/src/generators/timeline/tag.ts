@@ -49,8 +49,7 @@ export default async function generateTimelineTag(take, since, tag) {
 			.createQueryBuilder()
 			.where({
 				visibility: 'public',
-				created_at: LessThan(since),
-				tags: ArrayContains(tag)
+				created_at: LessThan(since)
 			})
 			.orderBy('created_at', 'DESC')
 			.take(take)
@@ -60,8 +59,7 @@ export default async function generateTimelineTag(take, since, tag) {
 			.getRepository('repeat')
 			.createQueryBuilder()
 			.where({
-				visibility: 'public',
-				tags: ArrayContains(tag)
+				visibility: 'public'
 			})
 			.orderBy('created_at', 'DESC')
 			.take(take)

@@ -7,6 +7,7 @@ import processNewInstance from './processNewInstance.js';
 import updateRemoteInstance from './updateRemoteInstance.js';
 
 export default async function getRemoteInstance(host) {
+	return false;
 	if (host !== new URL(config.get().url).host) {
 		let grabbedRemoteInstance = await db.getRepository('instance').findOne({
 			where: {
@@ -68,5 +69,7 @@ export default async function getRemoteInstance(host) {
 				return false;
 			}
 		}
+	} else {
+		return false;
 	}
 }

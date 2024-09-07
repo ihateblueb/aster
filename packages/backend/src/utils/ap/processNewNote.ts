@@ -183,12 +183,15 @@ export default async function processNewNote(body) {
 			);
 		}
 
-		if (body.tag) {
+		if (body.tag && body.tag.length > 0) {
 			// emoji: https://eepy.zone/notes/9v98jdptk2cl00cp
 			console.log(body.tag);
 			for (const i in body.tag) {
 				if (body.tag[i].type === 'Emoji') {
 					let grabbedEmoji = await getRemoteEmoji(body.tag[i].id);
+					console.log('grabbedEmoji !!');
+					console.log(grabbedEmoji);
+					console.log('grabbedEmoji !!');
 					noteToInsert.emojis.push(grabbedEmoji.id);
 				} else if (body.tag[i].type === 'Hashtag') {
 					noteToInsert.tags.push(

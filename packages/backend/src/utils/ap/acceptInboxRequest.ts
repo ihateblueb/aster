@@ -1,6 +1,5 @@
 import logger from '../logger.js';
 import config from '../config.js';
-import getRemoteInstance from './getRemoteInstance.js';
 
 import IAccept from '../../incoming/accept.js';
 import IAdd from '../../incoming/add.js';
@@ -15,6 +14,7 @@ import ILike from '../../incoming/like.js';
 import IMove from '../../incoming/move.js';
 import IUndo from '../../incoming/undo.js';
 import IUpdate from '../../incoming/update.js';
+import getRemoteInstance from './getRemoteInstance.js';
 
 export default async function acceptInboxRequest(parsedBody) {
 	logger.debug('ap', 'activity of type ' + parsedBody.type + ' received');
@@ -69,4 +69,6 @@ export default async function acceptInboxRequest(parsedBody) {
 				" received that isn't known to aster."
 		);
 	}
+
+	return false;
 }
