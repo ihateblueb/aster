@@ -164,7 +164,7 @@
 							color="var(--warn)"
 							margin="0px 7px 0px 0px"
 						/>
-						<span>{data.cw}</span>
+						<Mfm content={data.cw} simple />
 					</div>
 					<div class="right">
 						<button on:click={() => (cwOpen = !cwOpen)}>
