@@ -29,6 +29,14 @@ export default defineConfig({
 				target: `http://localhost:9971/`,
 				changeOrigin: true
 			},
+			'/openapi.json': {
+				target: `http://localhost:9971/`,
+				changeOrigin: true
+			},
+			'/swagger': {
+				target: `http://localhost:9971/`,
+				changeOrigin: true
+			},
 			'/socket.io': {
 				target: `ws://localhost:9971/`,
 				changeOrigin: true,

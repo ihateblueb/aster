@@ -21,6 +21,8 @@ import router from './routes/router.js';
 */
 import { handler } from 'frontend/build/handler.js';
 
+import oapi from './utils/openapi.js';
+
 let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
 process.title = `Aster v${pkg.version} (${processId})`;
 
@@ -111,6 +113,9 @@ io.on('connection', (socket) => {
 	});
 });
 */
+
+app.use(oapi);
+app.use('/swagger', oapi.swaggerui());
 
 app.use('/', router);
 

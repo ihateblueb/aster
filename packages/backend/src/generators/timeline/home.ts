@@ -3,7 +3,12 @@ import { In, LessThan, Not } from 'typeorm';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 
-export default async function generateTimelineHome(user, take, since) {
+export default async function generateTimelineHome(
+	user: string,
+	excludeLocal: boolean,
+	take: number,
+	since: string
+) {
 	let collectedObjects = [];
 
 	let grabbedUser = await db
@@ -26,6 +31,8 @@ export default async function generateTimelineHome(user, take, since) {
 			}
 
 			if (since) {
+				// TODO: unions https://eepy.zone/notes/9xvu2awxmzlo04t8
+
 				grabbedNotes = await db
 					.getRepository('note')
 					.createQueryBuilder()
@@ -34,6 +41,13 @@ export default async function generateTimelineHome(user, take, since) {
 						visibility: Not('direct'),
 						created_at: LessThan(since)
 					})
+					.orWhere(
+						excludeLocal
+							? ''
+							: {
+									local: true
+								}
+					)
 					.orderBy('created_at', 'DESC')
 					.take(take)
 					.getMany();
@@ -45,6 +59,13 @@ export default async function generateTimelineHome(user, take, since) {
 						author: In(sortedFollowing),
 						visibility: Not('direct')
 					})
+					.orWhere(
+						excludeLocal
+							? ''
+							: {
+									local: true
+								}
+					)
 					.orderBy('created_at', 'DESC')
 					.take(take)
 					.getMany();
@@ -70,6 +91,13 @@ export default async function generateTimelineHome(user, take, since) {
 						visibility: Not('direct'),
 						created_at: LessThan(since)
 					})
+					.orWhere(
+						excludeLocal
+							? ''
+							: {
+									local: true
+								}
+					)
 					.orderBy('created_at', 'DESC')
 					.take(take)
 					.getMany();
@@ -81,6 +109,13 @@ export default async function generateTimelineHome(user, take, since) {
 						author: In(sortedFollowing),
 						visibility: Not('direct')
 					})
+					.orWhere(
+						excludeLocal
+							? ''
+							: {
+									local: true
+								}
+					)
 					.orderBy('created_at', 'DESC')
 					.take(take)
 					.getMany();

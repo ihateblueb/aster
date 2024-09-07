@@ -25,6 +25,7 @@
 		"@types/ffmpeg-static": "^3.0.3",
 		"@types/jsdom": "^21.1.7",
 		"@types/node": "^20.12.11",
+		"@wesleytodd/openapi": "^1.1.0",
 		"axios": "^1.6.8",
 		"bcryptjs": "^2.4.3",
 		"blurhash": "^2.0.5",

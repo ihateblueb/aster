@@ -65,10 +65,19 @@ router.get('/api/v2/timeline/home', async (req, res) => {
 				? req.query.max
 				: config.get().timeline.maxNotes;
 
+		let excludeLocal;
+
+		if (req.query.excludeLocal) {
+			excludeLocal = true;
+		} else {
+			excludeLocal = false;
+		}
+
 		res.status(200).json(
 			await renderTimeline(
 				await generateTimelineHome(
 					authRes.grabbedUserAuth.user,
+					excludeLocal,
 					take,
 					req.query.since
 				)
