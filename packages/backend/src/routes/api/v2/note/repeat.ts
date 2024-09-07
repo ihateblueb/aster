@@ -3,9 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import db from '../../../../utils/database.js';
 import config from '../../../../utils/config.js';
 import OAnnounce from '../../../../outgoing/announce.js';
-import notification from '../../../../utils/notification.js';
 import OUndoAnnounce from '../../../../outgoing/undo/announce.js';
 import UserAuthService from '../../../../services/UserAuthService.js';
+import NotificationService from '../../../../services/NotificationService.js';
 
 const router = express.Router();
 
@@ -70,7 +70,7 @@ router.post(`/api/v2/note/:noteid/repeat`, async (req, res) => {
 						grabbedNote.local &&
 						authRes.grabbedUserAuth.user !== grabbedNote.author
 					) {
-						await notification.create(
+						NotificationService.create(
 							grabbedNote.author,
 							authRes.grabbedUserAuth.user,
 							'repeat',

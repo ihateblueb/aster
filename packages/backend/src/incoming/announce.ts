@@ -2,7 +2,7 @@ import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import getRemoteNote from '../utils/ap/getRemoteNote.js';
 import db from '../utils/database.js';
 import { v4 as uuidv4 } from 'uuid';
-import notification from '../utils/notification.js';
+import NotificationService from '../services/NotificationService.js';
 
 export default async function IAnnounce(body) {
 	if (body.actor && body.object) {
@@ -76,7 +76,7 @@ export default async function IAnnounce(body) {
 					grabbedNote.local &&
 					grabbedActor.id !== grabbedNote.author
 				) {
-					await notification.create(
+					await NotificationService.create(
 						grabbedNote.author,
 						grabbedActor.id,
 						'repeat',

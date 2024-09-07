@@ -2,7 +2,7 @@ import db from '../utils/database.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import getRemoteEmoji from '../utils/ap/getRemoteEmoji.js';
 import { v4 as uuidv4 } from 'uuid';
-import notification from '../utils/notification.js';
+import NotificationService from '../services/NotificationService.js';
 
 export default async function ILike(body) {
 	// TODO: add duplicate checking
@@ -39,7 +39,7 @@ export default async function ILike(body) {
 							user: grabbedRemoteUser.id
 						});
 
-						await notification.create(
+						await NotificationService.create(
 							grabbedNote.author,
 							grabbedRemoteUser.id,
 							'react',
@@ -61,7 +61,7 @@ export default async function ILike(body) {
 							user: grabbedRemoteUser.id
 						});
 
-						await notification.create(
+						await NotificationService.create(
 							grabbedNote.author,
 							grabbedRemoteUser.id,
 							'like',
@@ -83,7 +83,7 @@ export default async function ILike(body) {
 						user: grabbedRemoteUser.id
 					});
 
-					await notification.create(
+					await NotificationService.create(
 						grabbedNote.author,
 						grabbedRemoteUser.id,
 						'like',

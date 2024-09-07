@@ -3,7 +3,7 @@ import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
 import { v4 as uuidv4 } from 'uuid';
-import notification from '../utils/notification.js';
+import NotificationService from '../services/NotificationService.js';
 
 export default async function IFollow(body) {
 	let grabbedLocalUser = await db.getRepository('user').findOne({
@@ -39,7 +39,7 @@ export default async function IFollow(body) {
 
 		await db.getRepository('relationship').insert(relationshipToInsert);
 
-		await notification.create(
+		await NotificationService.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'followrequest',
@@ -62,7 +62,7 @@ export default async function IFollow(body) {
 
 		await db.getRepository('relationship').insert(relationshipToInsert);
 
-		await notification.create(
+		await NotificationService.create(
 			grabbedLocalUser.id,
 			grabbedRemoteActor.id,
 			'follow',

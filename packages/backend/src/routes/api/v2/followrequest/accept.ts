@@ -2,8 +2,8 @@ import express from 'express';
 
 import signAndAccept from '../../../../utils/ap/accept.js';
 import db from '../../../../utils/database.js';
-import notification from '../../../../utils/notification.js';
 import UserAuthService from '../../../../services/UserAuthService.js';
+import NotificationService from '../../../../services/NotificationService.js';
 
 const router = express.Router();
 
@@ -49,11 +49,11 @@ router.post('/api/v2/followrequest/accept', async (req, res) => {
 					grabbedFollowrequest.object
 				);
 
-				await notification.delete({
+				await NotificationService.delete({
 					object: grabbedFollowrequest.id
 				});
 
-				await notification.create(
+				await NotificationService.create(
 					grabbedToUser.id,
 					grabbedFromUser.id,
 					'follow'

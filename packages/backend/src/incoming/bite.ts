@@ -1,6 +1,6 @@
 import db from '../utils/database.js';
 import getRemoteActor from '../utils/ap/getRemoteActor.js';
-import notification from '../utils/notification.js';
+import NotificationService from '../services/NotificationService.js';
 
 export default async function IBite(body) {
 	return {
@@ -21,7 +21,7 @@ export default async function IBite(body) {
 
 			let grabbedRemoteUser = await getRemoteActor(body.actor);
 
-			notification.create(
+			NotificationService.create(
 				grabbedLocalUser.id,
 				grabbedRemoteUser.id,
 				'bite',
@@ -34,7 +34,7 @@ export default async function IBite(body) {
 
 			let grabbedRemoteUser = await getRemoteActor(body.actor);
 
-			notification.create(
+			NotificationService.create(
 				grabbedLocalUser.id,
 				grabbedRemoteUser.id,
 				'bite'

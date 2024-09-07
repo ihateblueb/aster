@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import db from '../utils/database.js';
-import notification from '../utils/notification.js';
 import logger from '../utils/logger.js';
+import NotificationService from './NotificationService.js';
 
 class RelationshipService {
 	public async get(to: string, from: string) {
@@ -53,7 +53,7 @@ class RelationshipService {
 						.getRepository('relationship')
 						.insert(relationshipToInsert);
 
-					await notification.create(
+					await NotificationService.create(
 						grabbedUserTo.id,
 						grabbedUserFrom.id,
 						'followrequest',
@@ -88,7 +88,7 @@ class RelationshipService {
 						.getRepository('relationship')
 						.insert(relationshipToInsert);
 
-					await notification.create(
+					await NotificationService.create(
 						grabbedUserTo.id,
 						grabbedUserFrom.id,
 						'follow',

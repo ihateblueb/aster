@@ -1,7 +1,6 @@
 import config from '../config.js';
 import db from '../database.js';
 import logger from '../logger.js';
-import notification from '../notification.js';
 import sanitize from '../sanitize.js';
 import ingest from '../sonic/ingest.js';
 import getRemoteActor from './getRemoteActor.js';
@@ -11,6 +10,7 @@ import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
 import mfmFromRemote from '../mfm/fromRemote.js';
 import mfmFromHtml from '../mfm/fromHtml.js';
+import NotificationService from '../../services/NotificationService.js';
 
 export default async function processNewNote(body) {
 	console.log(body);
@@ -228,7 +228,7 @@ export default async function processNewNote(body) {
 							});
 
 						if (grabbedMentionedUser) {
-							await notification.create(
+							await NotificationService.create(
 								grabbedMentionedUser.id,
 								noteToInsert['author'],
 								'mention',

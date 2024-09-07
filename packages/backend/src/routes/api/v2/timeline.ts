@@ -67,11 +67,7 @@ router.get('/api/v2/timeline/home', async (req, res) => {
 
 		let excludeLocal;
 
-		if (req.query.excludeLocal) {
-			excludeLocal = true;
-		} else {
-			excludeLocal = false;
-		}
+		excludeLocal = !!req.query.excludeLocal;
 
 		res.status(200).json(
 			await renderTimeline(

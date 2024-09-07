@@ -4,9 +4,9 @@ import db from '../../../../utils/database.js';
 import logger from '../../../../utils/logger.js';
 import OLike from '../../../../outgoing/like.js';
 import config from '../../../../utils/config.js';
-import notification from '../../../../utils/notification.js';
 import OUndoLike from '../../../../outgoing/undo/like.js';
 import UserAuthService from '../../../../services/UserAuthService.js';
+import NotificationService from '../../../../services/NotificationService.js';
 
 const router = express.Router();
 
@@ -45,7 +45,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 						}
 					});
 
-					OUndoLike(
+					await OUndoLike(
 						grabbedPreviousLike.id,
 						authRes.grabbedUserAuth.user,
 						grabbedNote.author,
@@ -75,7 +75,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 						}
 					});
 
-					OLike(
+					await OLike(
 						likeId,
 						authRes.grabbedUserAuth.user,
 						grabbedAuthor,
@@ -84,7 +84,7 @@ router.post(`/api/v2/note/:noteid/like`, async (req, res) => {
 
 					if (grabbedAuthor) {
 						if (grabbedAuthor.local) {
-							await notification.create(
+							await NotificationService.create(
 								grabbedNote.author,
 								authRes.grabbedUserAuth.user,
 								'like',
