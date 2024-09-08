@@ -34,7 +34,7 @@ This may be flexible, but hasn't been tested or looked further into.
     -   Speaking as cat
     -   Emoji reactions
     -   Quote posts
--   mis's biting extension
+-   mia's biting extension
 -   Sharkey profile backgrounds
 -   Federated user statuses? (see `docs/planned-extensions.md`)
 -   Correct/incorrect poll answers?
