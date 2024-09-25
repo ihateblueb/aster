@@ -22,24 +22,30 @@
 								<div class="left">
 									<img src={instance.icon} class="icon" />
 									<b
-									>{instance.name
-										? instance.name
-										: instance.host}</b
+										>{instance.name
+											? instance.name
+											: instance.host}</b
 									>
 									<span>
-									{instance.software}
+										{instance.software}
 										{instance.version}
-								</span>
+									</span>
 								</div>
 								<div class="right">
-									<Button to={'/admin/federation/'+instance.host}>
-										<Icon name="chevron-right" size="16px" />
+									<Button
+										to={'/admin/federation/' +
+											instance.host}
+									>
+										<Icon
+											name="chevron-right"
+											size="16px"
+										/>
 									</Button>
 								</div>
 							</div>
 							{#if instances.mod_note}
 								<div class="bottom">
-									<hr>
+									<hr />
 									{instance.mod_note}
 								</div>
 							{/if}

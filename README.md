@@ -34,7 +34,7 @@ This may be flexible, but hasn't been tested or looked further into.
     -   Speaking as cat
     -   Emoji reactions
     -   Quote posts
--   mis's biting extension
+-   mia's biting extension
 -   Sharkey profile backgrounds
 -   Federated user statuses? (see `docs/planned-extensions.md`)
 -   Correct/incorrect poll answers?
@@ -84,7 +84,7 @@ Things that work!
 -   /mod endpoints require authentication and mod status
 -   /admin endpoints require authentication and admin status
 -   fetch timelines in chunks based on date, changable max/since
--   Search api that supports lookup by username, displayname, ap id, bio, note content, note cw, and even allows fetching raw objects without processing them
+-   Search api that supports lookup by username, displayname, apid, bio, note content, note cw, and even allows fetching raw objects without processing them
 -   like note and unlike note
 -   repeat and unrepeat note
 -   all incoming note content is converted from html to mfm, so are user bios
