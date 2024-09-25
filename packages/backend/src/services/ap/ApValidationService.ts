@@ -24,7 +24,7 @@ let validApTypes = [
 	'Activity',
 	'Collection',
 	'OrderedCollection',
-	
+
 	/*
 		Activity Types
 		https://www.w3.org/TR/activitystreams-vocabulary/#activity-types
@@ -68,7 +68,7 @@ let validApTypes = [
 	'Remove',
 	'Undo',
 	'Update',
-	
+
 	/*
 		Actor Types
 		https://www.w3.org/TR/activitystreams-vocabulary/#actor-types
@@ -151,12 +151,10 @@ class ApValidationService {
 				}
 				// #endregion
 
-				
 				// #region Object and Link Types
 				// #endregion
 
 				// #endregion
-
 			} else {
 				return false;
 			}
