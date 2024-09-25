@@ -4,40 +4,114 @@ import config from '../../utils/config.js';
 import crypto from 'crypto';
 import httpSignature from '@peertube/http-signature';
 
-import getRemoteActor from '../../utils/ap/getRemoteActor.js';
+import ApActorService from './ApActorService.js';
 
-let validApObjectTypes = [
-	// actor
+// #region Valid AP Types
+
+let validApTypes = [
+	/*
+		Core Types
+		https://www.w3.org/TR/activitystreams-vocabulary/#types
+
+		Omitted:
+		- IntransitiveActivity
+		- CollectionPage
+		- OrderedCollectionPage
+	*/
+
+	'Object',
+	'Link',
+	'Activity',
+	'Collection',
+	'OrderedCollection',
+	
+	/*
+		Activity Types
+		https://www.w3.org/TR/activitystreams-vocabulary/#activity-types
+
+		Omitted:
+		- Arrive
+		- Ignore
+		- Invite
+		- Join
+		- Leave
+		- Listen
+		- Offer
+		- Read
+		- TentativeAccept
+		- TentativeReject
+		- Travel
+		- Read
+
+		Added:
+		- Bite (as defined in https://ns.mia.jetzt/as/#Bite)
+		- EmojiReact (as defined in... somewhere) // TODO: get this
+		- Mood (as defined in... link tbd) // TODO: write this up
+	*/
+	'Accept',
+	'Add',
+	'Announce',
+	'Bite',
+	'Block',
+	'Create',
+	'Delete',
+	'Dislike',
+	'EmojiReact',
+	'Flag',
+	'Follow',
+	'Like',
+	'Mood',
+	'Move',
+	'Question',
+	'Reject',
+	'Read',
+	'Remove',
+	'Undo',
+	'Update',
+	
+	/*
+		Actor Types
+		https://www.w3.org/TR/activitystreams-vocabulary/#actor-types
+
+		Omitted:
+		- Group
+	*/
+	'Appligation',
+	'Organization',
 	'Person',
 	'Service',
 
-	// note
+	/*
+		Object and Link Types
+		https://www.w3.org/TR/activitystreams-vocabulary/#object-types
+
+		// TODO: try converting some of these to notes
+		Omitted:
+		- Audio
+		- Document
+		- Event
+		- Image
+		- Page
+		- Place
+		- Profile
+		- Relationship
+		- Video
+
+		Added:
+		- WafrnHashtag (as defined in... somewhere) // TODO: poke gabbo
+		- Emoji (toot:Emoji pretty sure)
+	*/
+	'Article',
 	'Note',
-	'Question',
+	'Tombstone',
 
-	// activity
-	'Accept',
-	'Reject',
-	'Add',
-	'Remove',
-	'Create',
-	'Delete',
-	'Update',
-	'Undo',
-	'Follow',
-	'Block',
-	'Move',
-	'Like',
-	'EmojiReact',
-	'Announce',
-
-	// other
-	'OrderedCollection',
-
-	// valid but unprocessed
-	'Read',
-	'View'
+	// TODO: theres more for sure
+	'Mention',
+	'WafrnHashtag',
+	'Emoji'
 ];
+
+// #endregion
 
 class ApValidationService {
 	public isValidObject(body) {
@@ -47,29 +121,42 @@ class ApValidationService {
 				'activity type present (' + body.type + ')'
 			);
 
-			if (validApObjectTypes.includes(body.type)) {
+			if (!body['@context']) return false;
+
+			if (validApTypes.includes(body.type)) {
 				logger.debug(
 					'validation',
-					'activity type is valid (' + body.type + ')'
+					'ap object type is valid (' + body.type + ')'
 				);
 
-				// TODO: this is probably wrong checking, see spec or something
-				if (
-					body.type === 'Undo' ||
-					body.type === 'Create' ||
-					body.type === 'Announce' ||
-					body.type === 'Delete'
-				) {
-					if (validApObjectTypes.includes(body.object.type)) {
-						logger.debug(
-							'validation',
-							'nested activity type is valid (' + body.type + ')'
-						);
-						return true;
-					} else {
-						return false;
-					}
+				// #region Specific Object Validation
+
+				// #region Core Types
+				// #endregion
+
+				// #region Activity Types
+				// #endregion
+
+				// #region Actor Types
+				if (body.type === 'Person' || body.type === 'Service') {
+					if (!body.id) return false;
+					if (!body.inbox) return false;
+					if (!body.outbox) return false;
+					if (!body.following) return false;
+					if (!body.followers) return false;
+					// TODO: spec does not require this, id fallback?
+					if (!body.preferredUsername) return false;
+
+					return true;
 				}
+				// #endregion
+
+				
+				// #region Object and Link Types
+				// #endregion
+
+				// #endregion
+
 			} else {
 				return false;
 			}
@@ -134,13 +221,11 @@ class ApValidationService {
 		}
 
 		// todo: kill this fuckjing God damn thing
-		let actor = await getRemoteActor(JSON.parse(req.body).actor);
+		let actor = await ApActorService.get(JSON.parse(req.body).actor);
 
 		if (!actor) {
 			logger.error('ap', 'actor not properly grabbed');
 			return false;
-		} else if (actor === 'gone') {
-			return true;
 		} else if (actor.suspended) {
 			return true;
 		} else {
