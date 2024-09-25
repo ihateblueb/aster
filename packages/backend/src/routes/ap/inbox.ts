@@ -1,8 +1,9 @@
 import express from 'express';
 
-import validateRequest from '../../utils/ap/validation.js';
-import inboxQueue from '../../utils/inboxQueue.js';
 import logger from '../../utils/logger.js';
+
+import ApValidationService from '../../services/ap/ApValidationService.js';
+import ApInboxService from '../../services/ap/ApInboxService.js';
 
 const router = express.Router();
 
@@ -14,19 +15,14 @@ router.post(['/inbox', '/users/:userid/inbox'], async (req, res) => {
 
 	logger.debug('inbox', JSON.stringify(JSON.parse(req.body)));
 
-	// this will return before the following can run if it's invalid
-	let validation = await validateRequest(req);
+	if (await ApValidationService.isValidRequest(req)) {
+		let inboxResponse = await ApInboxService.process(JSON.parse(req.body));
 
-	if (validation.status === 200 || validation.status === 202) {
-		if (validation.status === 202) {
-			await inboxQueue.add('inbox', {
-				body: JSON.parse(req.body)
-			});
-		}
-
-		res.status(200).send();
+		res.status(inboxResponse.status).json({
+			message: inboxResponse.message
+		});
 	} else {
-		res.status(validation.status).send();
+		res.status(401).send();
 	}
 });
 
