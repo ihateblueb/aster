@@ -1,6 +1,9 @@
 import { JSDOM } from 'jsdom';
+import * as mfm from 'mfm-js';
 
-export default async function mfmFromHtml(html: string) {
+class MfmService {
+    public fromHtml(html: string): string {
+        
 	let document = new JSDOM(html).window.document;
 
 	// links and mentions
@@ -172,4 +175,27 @@ export default async function mfmFromHtml(html: string) {
 	});
 
 	return document.body.innerHTML;
+    }
+
+    public fromRemote(remoteMfm: string, host: string) {
+        let parsed = mfm.parse(remoteMfm);
+
+	for (const i in parsed) {
+		let e = parsed[i];
+
+		if (e.type === 'mention' && !e.props.host) {
+			console.log(e);
+			console.log(e.props.acct, e.props.acct + '@' + host);
+
+			remoteMfm = remoteMfm.replaceAll(
+				e.props.acct,
+				e.props.acct + '@' + host
+			);
+		}
+	}
+
+	return remoteMfm;
+    }
 }
+
+export default new MfmService();
