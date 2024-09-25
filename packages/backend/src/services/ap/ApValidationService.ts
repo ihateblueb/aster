@@ -6,6 +6,39 @@ import httpSignature from '@peertube/http-signature';
 
 import getRemoteActor from '../../utils/ap/getRemoteActor.js';
 
+let validApObjectTypes = [
+	// actor
+	'Person',
+	'Service',
+
+	// note
+	'Note',
+	'Question',
+
+	// activity
+	'Accept',
+	'Reject',
+	'Add',
+	'Remove',
+	'Create',
+	'Delete',
+	'Update',
+	'Undo',
+	'Follow',
+	'Block',
+	'Move',
+	'Like',
+	'EmojiReact',
+	'Announce',
+
+	// other
+	'OrderedCollection',
+
+	// valid but unprocessed
+	'Read',
+	'View'
+];
+
 class ApValidationService {
 	public isValidObject(body) {
 		if (body.type) {
@@ -13,6 +46,28 @@ class ApValidationService {
 				'validation',
 				'activity type present (' + body.type + ')'
 			);
+
+			if (validApObjectTypes.includes(body.type)) {
+				logger.debug(
+					'validation',
+					'activity type is valid (' + body.type + ')'
+				);
+
+				// TODO: this is probably wrong checking, see spec or something
+				if (body.type === 'Undo' || body.type === 'Create' || body.type === 'Announce' || body.type === 'Delete') {
+					if (validApObjectTypes.includes(body.object.type)) {
+						logger.debug(
+							'validation',
+							'nested activity type is valid (' + body.type + ')'
+						);
+						return true;
+					} else {
+						return false
+					}
+				}
+			} else {
+				return false;
+			}
 		} else {
 			return false;
 		}
