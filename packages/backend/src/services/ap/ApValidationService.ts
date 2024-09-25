@@ -54,7 +54,12 @@ class ApValidationService {
 				);
 
 				// TODO: this is probably wrong checking, see spec or something
-				if (body.type === 'Undo' || body.type === 'Create' || body.type === 'Announce' || body.type === 'Delete') {
+				if (
+					body.type === 'Undo' ||
+					body.type === 'Create' ||
+					body.type === 'Announce' ||
+					body.type === 'Delete'
+				) {
 					if (validApObjectTypes.includes(body.object.type)) {
 						logger.debug(
 							'validation',
@@ -62,7 +67,7 @@ class ApValidationService {
 						);
 						return true;
 					} else {
-						return false
+						return false;
 					}
 				}
 			} else {
