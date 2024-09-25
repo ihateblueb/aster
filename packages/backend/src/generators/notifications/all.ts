@@ -9,7 +9,7 @@ export default async function generateNotificationsAll(to, take, since) {
 
 	if (since) {
 		grabbedNotifications = await db
-			.getRepository('user_notification')
+			.getRepository('notification')
 			.createQueryBuilder()
 			.where({
 				to: to,
@@ -20,7 +20,7 @@ export default async function generateNotificationsAll(to, take, since) {
 			.getMany();
 	} else {
 		grabbedNotifications = await db
-			.getRepository('user_notification')
+			.getRepository('notification')
 			.createQueryBuilder()
 			.where({
 				to: to

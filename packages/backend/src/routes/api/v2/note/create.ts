@@ -27,6 +27,20 @@ router.post(`/api/v2/note`, async (req, res) => {
 
 		noteToInsert['author'] = authRes.grabbedUserAuth.user;
 
+		let grabbedReplyingNote;
+
+		if ('replying_to' in JSON.parse(req.body)) {
+			grabbedReplyingNote = await db.getRepository('note').findOne({
+				where: {
+					replying_to: JSON.parse(req.body).replying_to
+				}
+			});
+
+			if (grabbedReplyingNote) {
+				noteToInsert['replying_to'] = grabbedReplyingNote.id;
+			}
+		}
+
 		noteToInsert['cw'] = sanitize(JSON.parse(req.body).cw);
 		noteToInsert['content'] = sanitize(JSON.parse(req.body).content);
 
@@ -81,7 +95,7 @@ router.post(`/api/v2/note`, async (req, res) => {
 		if (grabbedUser) {
 			await OCreate(
 				authRes.grabbedUserAuth.user,
-				new ApNote(noteToInsert, grabbedUser)
+				new ApNote(noteToInsert, grabbedUser, grabbedReplyingNote)
 			);
 		}
 

@@ -39,7 +39,7 @@ export default class ApNote {
 		this.attributedTo = author.ap_id;
 		this.actor = author.ap_id;
 
-		if (grabbedNote.replying_to) {
+		if (replying_to) {
 			this.inReplyTo = replying_to.ap_id;
 		}
 

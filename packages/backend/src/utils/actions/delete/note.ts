@@ -16,9 +16,9 @@ export default async function deleteNote(apId) {
 		});
 
 		if (grabbedReplies) {
-			await grabbedReplies.forEach(async (e) => {
+			for (const e of grabbedReplies) {
 				await db.getRepository('note').delete(e.id);
-			});
+			}
 		}
 
 		logger.debug(
@@ -36,9 +36,9 @@ export default async function deleteNote(apId) {
 		});
 
 		if (grabbedRepeats) {
-			await grabbedRepeats.forEach(async (e) => {
+			for (const e of grabbedRepeats) {
 				await db.getRepository('repeat').delete(e.id);
-			});
+			}
 		}
 
 		logger.debug(
@@ -50,7 +50,7 @@ export default async function deleteNote(apId) {
 		);
 
 		let grabbedNotificationsAbout = await db
-			.getRepository('user_notification')
+			.getRepository('notification')
 			.find({
 				where: {
 					object: grabbedNote.id
@@ -58,9 +58,9 @@ export default async function deleteNote(apId) {
 			});
 
 		if (grabbedNotificationsAbout) {
-			await grabbedNotificationsAbout.forEach(async (e) => {
-				await db.getRepository('user_notification').delete(e.id);
-			});
+			for (const e of grabbedNotificationsAbout) {
+				await db.getRepository('notification').delete(e.id);
+			}
 		}
 
 		logger.debug(

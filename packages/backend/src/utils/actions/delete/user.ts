@@ -9,9 +9,9 @@ export default async function deleteUser(id, apId) {
 	});
 
 	if (grabbedNotes) {
-		grabbedNotes.forEach(async (e) => {
+		for (const e of grabbedNotes) {
 			await db.getRepository('note').delete(e.id);
-		});
+		}
 		logger.info(
 			'delete',
 			'deleted ' + grabbedNotes.length + ' notes by ' + apId
@@ -25,9 +25,9 @@ export default async function deleteUser(id, apId) {
 	});
 
 	if (grabbedLikes) {
-		grabbedLikes.forEach(async (e) => {
+		for (const e of grabbedLikes) {
 			await db.getRepository('note_like').delete(e.id);
-		});
+		}
 		logger.info(
 			'delete',
 			'deleted ' + grabbedLikes.length + ' likes by ' + apId
@@ -41,9 +41,9 @@ export default async function deleteUser(id, apId) {
 	});
 
 	if (grabbedReactions) {
-		grabbedReactions.forEach(async (e) => {
+		for (const e of grabbedReactions) {
 			await db.getRepository('note_react').delete(e.id);
-		});
+		}
 		logger.info(
 			'delete',
 			'deleted ' + grabbedReactions.length + ' reactions by ' + apId
@@ -57,27 +57,25 @@ export default async function deleteUser(id, apId) {
 	});
 
 	if (grabbedDriveFiles) {
-		grabbedDriveFiles.forEach(async (e) => {
+		for (const e of grabbedDriveFiles) {
 			await db.getRepository('drive_file').delete(e.id);
-		});
+		}
 		logger.info(
 			'delete',
 			'deleted ' + grabbedDriveFiles.length + ' drive files by ' + apId
 		);
 	}
 
-	let grabbedNotificationsFrom = await db
-		.getRepository('user_notification')
-		.find({
-			where: {
-				from: id
-			}
-		});
+	let grabbedNotificationsFrom = await db.getRepository('notification').find({
+		where: {
+			from: id
+		}
+	});
 
 	if (grabbedNotificationsFrom) {
-		grabbedNotificationsFrom.forEach(async (e) => {
-			await db.getRepository('user_notification').delete(e.id);
-		});
+		for (const e of grabbedNotificationsFrom) {
+			await db.getRepository('notification').delete(e.id);
+		}
 		logger.info(
 			'delete',
 			'deleted ' +
@@ -87,23 +85,44 @@ export default async function deleteUser(id, apId) {
 		);
 	}
 
-	let grabbedFollowrequestFrom = await db
-		.getRepository('user_followrequest')
+	let grabbedRelationshipFrom = await db
+		.getRepository('user_relationship')
 		.find({
 			where: {
 				from: id
 			}
 		});
 
-	if (grabbedFollowrequestFrom) {
-		grabbedFollowrequestFrom.forEach(async (e) => {
-			await db.getRepository('user_followrequest').delete(e.id);
-		});
+	if (grabbedRelationshipFrom) {
+		for (const e of grabbedRelationshipFrom) {
+			await db.getRepository('relationship').delete(e.id);
+		}
 		logger.info(
 			'delete',
 			'deleted ' +
-				grabbedFollowrequestFrom.length +
-				' follow requests from ' +
+				grabbedRelationshipFrom.length +
+				' relationships from ' +
+				apId
+		);
+	}
+
+	let grabbedRelationshipTo = await db
+		.getRepository('user_relationship')
+		.find({
+			where: {
+				to: id
+			}
+		});
+
+	if (grabbedRelationshipTo) {
+		for (const e of grabbedRelationshipTo) {
+			await db.getRepository('relationship').delete(e.id);
+		}
+		logger.info(
+			'delete',
+			'deleted ' +
+				grabbedRelationshipTo.length +
+				' relationships to ' +
 				apId
 		);
 	}
@@ -115,9 +134,9 @@ export default async function deleteUser(id, apId) {
 	});
 
 	if (grabbedRepeats) {
-		grabbedRepeats.forEach(async (e) => {
+		for (const e of grabbedRepeats) {
 			await db.getRepository('repeat').delete(e.id);
-		});
+		}
 		logger.info(
 			'delete',
 			'deleted ' + grabbedRepeats.length + ' repeats from ' + apId

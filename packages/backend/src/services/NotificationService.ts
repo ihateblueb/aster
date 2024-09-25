@@ -10,7 +10,6 @@ type notificationType =
 	| 'like'
 	| 'repeat'
 	| 'pollEnd'
-	| 'note'
 	| 'follow'
 	| 'followrequest'
 	| 'bite'
@@ -40,14 +39,12 @@ class NotificationService {
 		notificationToInsert['reaction'] = reaction;
 
 		if (to !== from) {
-			await db
-				.getRepository('user_notification')
-				.insert(notificationToInsert);
+			await db.getRepository('notification').insert(notificationToInsert);
 		}
 	}
 
 	public async delete(where: object) {
-		await db.getRepository('user_notification').delete(where);
+		await db.getRepository('notification').delete(where);
 	}
 }
 
