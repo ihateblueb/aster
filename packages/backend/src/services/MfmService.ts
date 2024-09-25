@@ -2,140 +2,128 @@ import { JSDOM } from 'jsdom';
 import * as mfm from 'mfm-js';
 
 class MfmService {
-    public fromHtml(html: string): string {
-        
-	let document = new JSDOM(html).window.document;
+	public fromHtml(html: string): string {
+		let document = new JSDOM(html).window.document;
 
-	// links and mentions
+		// links and mentions
 
-	document.querySelectorAll('a').forEach((e) => {
-		if (
-			e.getAttributeNames().includes('href') &&
-			e.textContent.startsWith('@')
-		) {
-			let newLink = document.createElement('a');
+		document.querySelectorAll('a').forEach((e) => {
+			if (
+				e.getAttributeNames().includes('href') &&
+				e.textContent.startsWith('@')
+			) {
+				let newLink = document.createElement('a');
 
-			newLink.setAttribute('killme', 'true');
-			newLink.innerHTML =
-				e.textContent +
-				(e.textContent.includes('@' + new URL(e.href).host)
-					? ''
-					: '@' + new URL(e.href).host);
+				newLink.setAttribute('killme', 'true');
+				newLink.innerHTML =
+					e.textContent +
+					(e.textContent.includes('@' + new URL(e.href).host)
+						? ''
+						: '@' + new URL(e.href).host);
 
-			e.replaceWith(newLink);
-		} else {
-			let newLink = document.createElement('span');
+				e.replaceWith(newLink);
+			} else {
+				let newLink = document.createElement('span');
 
-			newLink.setAttribute('killme', 'true');
-			newLink.innerHTML =
-				'[' +
-				(e.innerHTML
-					? e.innerHTML.replace(/\\"/g, '"')
-					: e.href.replace(/\\"/g, '"')) +
-				']' +
-				'(' +
-				e.href.replace(/\\"/g, '"') +
-				')';
+				newLink.setAttribute('killme', 'true');
+				newLink.innerHTML =
+					'[' +
+					(e.innerHTML
+						? e.innerHTML.replace(/\\"/g, '"')
+						: e.href.replace(/\\"/g, '"')) +
+					']' +
+					'(' +
+					e.href.replace(/\\"/g, '"') +
+					')';
 
-			e.replaceWith(newLink);
-		}
-	});
+				e.replaceWith(newLink);
+			}
+		});
 
-	// general formatting
+		// general formatting
 
-	document.querySelectorAll('h1').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('h1').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '$[x2 **' + e.innerHTML + '**]';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '$[x2 **' + e.innerHTML + '**]';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('h2, h3').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('h2, h3').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '$[x2 ' + e.innerHTML + ']';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '$[x2 ' + e.innerHTML + ']';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('b, strong').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('b, strong').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '**' + e.innerHTML + '**';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '**' + e.innerHTML + '**';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('i, em').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('i, em').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '*' + e.innerHTML + '*';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '*' + e.innerHTML + '*';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('small').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('small').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '$[small ' + e.innerHTML + ']';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '$[small ' + e.innerHTML + ']';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('s, del').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('s, del').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '~~' + e.innerHTML + '~~';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '~~' + e.innerHTML + '~~';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('pre').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('pre').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '\n```\n' + e.innerHTML + '\n```\n';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '\n```\n' + e.innerHTML + '\n```\n';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('code').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('code').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '`' + e.innerHTML + '`';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '`' + e.innerHTML + '`';
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('blockquote').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('blockquote').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '\n> ' + e.innerHTML;
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '\n> ' + e.innerHTML;
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('p, h4, h5, h6').forEach((e) => {
-		let newText = document.createElement('span');
-
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = e.innerHTML + '\n';
-
-		e.replaceWith(newText);
-	});
-
-	document
-		.querySelectorAll('div, header, footer, article, dt, dd')
-		.forEach((e) => {
+		document.querySelectorAll('p, h4, h5, h6').forEach((e) => {
 			let newText = document.createElement('span');
 
 			newText.setAttribute('killme', 'true');
@@ -144,58 +132,69 @@ class MfmService {
 			e.replaceWith(newText);
 		});
 
-	document.querySelectorAll('li').forEach((e) => {
-		let newText = document.createElement('span');
+		document
+			.querySelectorAll('div, header, footer, article, dt, dd')
+			.forEach((e) => {
+				let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '\n-' + e.innerHTML;
+				newText.setAttribute('killme', 'true');
+				newText.innerHTML = e.innerHTML + '\n';
 
-		e.replaceWith(newText);
-	});
+				e.replaceWith(newText);
+			});
 
-	document.querySelectorAll('br').forEach((e) => {
-		let newText = document.createElement('span');
+		document.querySelectorAll('li').forEach((e) => {
+			let newText = document.createElement('span');
 
-		newText.setAttribute('killme', 'true');
-		newText.innerHTML = '\n';
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '\n-' + e.innerHTML;
 
-		e.replaceWith(newText);
-	});
+			e.replaceWith(newText);
+		});
 
-	// misc
+		document.querySelectorAll('br').forEach((e) => {
+			let newText = document.createElement('span');
 
-	document.querySelectorAll('.h-card').forEach((e) => {
-		e.replaceWith(...e.childNodes);
-	});
+			newText.setAttribute('killme', 'true');
+			newText.innerHTML = '\n';
 
-	// KILL ME
+			e.replaceWith(newText);
+		});
 
-	document.querySelectorAll('[killme=true]').forEach((e) => {
-		e.replaceWith(...e.childNodes);
-	});
+		// misc
 
-	return document.body.innerHTML;
-    }
+		document.querySelectorAll('.h-card').forEach((e) => {
+			e.replaceWith(...e.childNodes);
+		});
 
-    public fromRemote(remoteMfm: string, host: string) {
-        let parsed = mfm.parse(remoteMfm);
+		// KILL ME
 
-	for (const i in parsed) {
-		let e = parsed[i];
+		document.querySelectorAll('[killme=true]').forEach((e) => {
+			e.replaceWith(...e.childNodes);
+		});
 
-		if (e.type === 'mention' && !e.props.host) {
-			console.log(e);
-			console.log(e.props.acct, e.props.acct + '@' + host);
-
-			remoteMfm = remoteMfm.replaceAll(
-				e.props.acct,
-				e.props.acct + '@' + host
-			);
-		}
+		return document.body.innerHTML;
 	}
 
-	return remoteMfm;
-    }
+	public fromRemote(remoteMfm: string, host: string) {
+		let parsed = mfm.parse(remoteMfm);
+
+		for (const i in parsed) {
+			let e = parsed[i];
+
+			if (e.type === 'mention' && !e.props.host) {
+				console.log(e);
+				console.log(e.props.acct, e.props.acct + '@' + host);
+
+				remoteMfm = remoteMfm.replaceAll(
+					e.props.acct,
+					e.props.acct + '@' + host
+				);
+			}
+		}
+
+		return remoteMfm;
+	}
 }
 
 export default new MfmService();
