@@ -6,10 +6,7 @@ import config from '../../utils/config.js';
 import pkg from '../../../../../package.json';
 
 class ApResolverService {
-	public async getSigned(
-		apId: string,
-		as?: string
-	): Promise<object | boolean> {
+	public async getSigned(apId: string, as?: string): Promise<any | boolean> {
 		if (!isValidUrl(apId)) return;
 
 		let user;

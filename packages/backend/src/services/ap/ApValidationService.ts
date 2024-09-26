@@ -18,7 +18,6 @@ let validApTypes = [
 		- CollectionPage
 		- OrderedCollectionPage
 	*/
-
 	'Object',
 	'Link',
 	'Activity',
@@ -46,7 +45,7 @@ let validApTypes = [
 		Added:
 		- Bite (as defined in https://ns.mia.jetzt/as/#Bite)
 		- EmojiReact (as defined in... somewhere) // TODO: get this
-		- Mood (as defined in... link tbd) // TODO: write this up
+		- Mood (as defined in https://harper.eepy.zone/ns#Mood)
 	*/
 	'Accept',
 	'Add',
@@ -76,7 +75,7 @@ let validApTypes = [
 		Omitted:
 		- Group
 	*/
-	'Appligation',
+	'Application',
 	'Organization',
 	'Person',
 	'Service',
@@ -218,7 +217,6 @@ class ApValidationService {
 			logger.debug('ap', 'digest valid');
 		}
 
-		// todo: kill this fuckjing God damn thing
 		let actor = await ApActorService.get(JSON.parse(req.body).actor);
 
 		if (!actor) {
