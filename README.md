@@ -2,6 +2,8 @@
 
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 
+Development instance available at https://aster.pages.gay/.
+
 Aster is a work-in-progress federated social media software. So far, development is going fine, but it's still unusable.
 I do not expect this software to be extra special, performant, or even stable. If it ends up being somewhat finished, maybe I'll polish it up to be usable.
 
