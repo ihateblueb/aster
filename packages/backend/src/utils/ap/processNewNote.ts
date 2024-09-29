@@ -8,9 +8,8 @@ import getRemoteEmoji from './getRemoteEmoji.js';
 import getRemoteNote from './getRemoteNote.js';
 import processNewFile from './processNewFile.js';
 import { v4 as uuidv4 } from 'uuid';
-import mfmFromRemote from '../mfm/fromRemote.js';
-import mfmFromHtml from '../mfm/fromHtml.js';
 import NotificationService from '../../services/NotificationService.js';
+import MfmService from '../../services/MfmService.js';
 
 export default async function processNewNote(body) {
 	console.log(body);
@@ -149,13 +148,15 @@ export default async function processNewNote(body) {
 		) {
 			// raw mfm
 			noteToInsert['content'] = sanitize(
-				await mfmFromRemote(
+				MfmService.fromRemote(
 					body.source.content,
 					grabbedRemoteActor.host
 				)
 			);
 		} else {
-			noteToInsert['content'] = sanitize(await mfmFromHtml(body.content));
+			noteToInsert['content'] = sanitize(
+				MfmService.fromHtml(body.content)
+			);
 		}
 
 		if (body.attachment) {
@@ -167,20 +168,6 @@ export default async function processNewNote(body) {
 					grabbedRemoteActor
 				);
 			}
-		}
-
-		// from https://github.com/gabboman/wafrn/blob/c34fbd1bd5872d0161db265cbfc91c4f34eb23a3/packages/backend/utils/activitypub/postToJSONLD.ts#L97
-
-		function wafrnCamelize(str: string): string {
-			return str.replace(
-				/(?:^\w|[A-Z]|\b\w|\s+)/g,
-				function (match, index) {
-					if (+match === 0) return ''; // or if (/\s+/.test(match)) for white spaces
-					return index === 0
-						? match.toLowerCase()
-						: match.toUpperCase();
-				}
-			);
 		}
 
 		if (body.tag && body.tag.length > 0) {
@@ -200,14 +187,14 @@ export default async function processNewNote(body) {
 				} else if (body.tag[i].type === 'WafrnHashtag') {
 					noteToInsert.tags.splice(
 						noteToInsert.tags.indexOf(
-							'#' + wafrnCamelize(body.tag[i].name)
+							'#' + MfmService.wafrnCamelize(body.tag[i].name)
 						),
 						1
 					);
 					noteToInsert.tags.push(sanitize(body.tag[i].name));
 
 					noteToInsert.content = noteToInsert.content.replace(
-						'#' + wafrnCamelize(body.tag[i].name),
+						'#' + MfmService.wafrnCamelize(body.tag[i].name),
 						''
 					);
 				} else if (body.tag[i].type === 'Mention') {

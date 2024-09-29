@@ -10,8 +10,9 @@ import config from '../../../utils/config.js';
 import logger from '../../../utils/logger.js';
 import { ILike } from 'typeorm';
 import generateNote from '../../../generators/note.js';
-import fromHtml from '../../../utils/mfm/fromHtml.js';
 import getRemoteInstance from '../../../utils/ap/getRemoteInstance.js';
+
+import ApResolverService from '../../../services/ap/ApResolverService.js';
 
 const router = express.Router();
 
@@ -214,20 +215,8 @@ router.get('/api/v2/search', async (req, res) => {
 		}
 
 		if (req.query.q.startsWith('fetchOnly:')) {
-			let grabbedObject = await getSigned(
+			let grabbedObject = await ApResolverService.getSigned(
 				req.query.q.replace('fetchOnly:', '')
-			);
-
-			if (grabbedObject) {
-				results.push({
-					type: 'object',
-					by: 'fetched',
-					object: grabbedObject
-				});
-			}
-		} else if (req.query.q.startsWith('fromHtml:')) {
-			let grabbedObject = await fromHtml(
-				req.query.q.replace('fromHtml:', '')
 			);
 
 			if (grabbedObject) {

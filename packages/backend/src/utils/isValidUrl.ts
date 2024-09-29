@@ -1,6 +1,8 @@
 import logger from './logger.js';
 
-export default function isValidUrl(url: string) {
+export default function isValidUrl(url: string | URL) {
+	url = url.toString();
+
 	let newUrl;
 
 	if (url === 'localhost') {

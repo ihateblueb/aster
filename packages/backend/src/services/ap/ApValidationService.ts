@@ -11,41 +11,12 @@ import ApActorService from './ApActorService.js';
 let validApTypes = [
 	/*
 		Core Types
-		https://www.w3.org/TR/activitystreams-vocabulary/#types
-
-		Omitted:
-		- IntransitiveActivity
-		- CollectionPage
-		- OrderedCollectionPage
 	*/
-	'Object',
-	'Link',
-	'Activity',
 	'Collection',
 	'OrderedCollection',
 
 	/*
 		Activity Types
-		https://www.w3.org/TR/activitystreams-vocabulary/#activity-types
-
-		Omitted:
-		- Arrive
-		- Ignore
-		- Invite
-		- Join
-		- Leave
-		- Listen
-		- Offer
-		- Read
-		- TentativeAccept
-		- TentativeReject
-		- Travel
-		- Read
-
-		Added:
-		- Bite (as defined in https://ns.mia.jetzt/as/#Bite)
-		- EmojiReact (as defined in... somewhere) // TODO: get this
-		- Mood (as defined in https://harper.eepy.zone/ns#Mood)
 	*/
 	'Accept',
 	'Add',
@@ -70,10 +41,6 @@ let validApTypes = [
 
 	/*
 		Actor Types
-		https://www.w3.org/TR/activitystreams-vocabulary/#actor-types
-
-		Omitted:
-		- Group
 	*/
 	'Application',
 	'Organization',
@@ -82,32 +49,10 @@ let validApTypes = [
 
 	/*
 		Object and Link Types
-		https://www.w3.org/TR/activitystreams-vocabulary/#object-types
-
-		// TODO: try converting some of these to notes
-		Omitted:
-		- Audio
-		- Document
-		- Event
-		- Image
-		- Page
-		- Place
-		- Profile
-		- Relationship
-		- Video
-
-		Added:
-		- WafrnHashtag (as defined in... somewhere) // TODO: poke gabbo
-		- Emoji (toot:Emoji pretty sure)
 	*/
 	'Article',
 	'Note',
-	'Tombstone',
-
-	// TODO: theres more for sure
-	'Mention',
-	'WafrnHashtag',
-	'Emoji'
+	'Tombstone'
 ];
 
 // #endregion
@@ -128,32 +73,14 @@ class ApValidationService {
 					'ap object type is valid (' + body.type + ')'
 				);
 
-				// #region Specific Object Validation
-
-				// #region Core Types
-				// #endregion
-
-				// #region Activity Types
-				// #endregion
-
-				// #region Actor Types
-				if (body.type === 'Person' || body.type === 'Service') {
+				if (body.type === 'Note') {
 					if (!body.id) return false;
-					if (!body.inbox) return false;
-					if (!body.outbox) return false;
-					if (!body.following) return false;
-					if (!body.followers) return false;
-					// TODO: spec does not require this, id fallback?
-					if (!body.preferredUsername) return false;
+					if (!body.attributedTo) return false;
 
 					return true;
 				}
-				// #endregion
 
-				// #region Object and Link Types
-				// #endregion
-
-				// #endregion
+				return true;
 			} else {
 				return false;
 			}

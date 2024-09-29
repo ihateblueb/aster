@@ -6,7 +6,10 @@ import config from '../../utils/config.js';
 import pkg from '../../../../../package.json';
 
 class ApResolverService {
-	public async getSigned(apId: string, as?: string): Promise<any | boolean> {
+	public async getSigned(
+		apId: ApId,
+		as?: string
+	): Promise<ApObject | boolean> {
 		if (!isValidUrl(apId)) return;
 
 		let user;
@@ -66,7 +69,7 @@ class ApResolverService {
 		}
 	}
 
-	public async get(apId: string): Promise<object | boolean> {
+	public async get(apId: ApId): Promise<ApObject | boolean> {
 		if (!isValidUrl(apId)) return;
 
 		let request = await fetch(apId, {
