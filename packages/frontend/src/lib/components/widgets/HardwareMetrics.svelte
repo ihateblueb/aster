@@ -1,1 +1,0 @@
-<template> Hardware Metrics </template>
