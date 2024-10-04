@@ -7,6 +7,8 @@ import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 import LoggerService from '../utils/logger.js';
 
+import * as feHandler from 'frontend/build/handler.js';
+
 const router = express.Router();
 
 router.use(bodyParser.raw({ type: '*/*' }));
@@ -42,5 +44,7 @@ router.use((req, res, next) => {
 
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
+
+router.use(feHandler.handler);
 
 export default router;
