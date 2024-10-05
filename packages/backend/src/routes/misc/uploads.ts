@@ -9,7 +9,9 @@ const router = express.Router();
 
 router.use(
 	'/uploads',
-	express.static(path.resolve(__dirname, '..', '..', '..', '..', 'uploads'))
+	express.static(
+		path.resolve(__dirname, '..', '..', '..', '..', '..', 'uploads')
+	)
 );
 
 export default router;

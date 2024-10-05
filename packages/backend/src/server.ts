@@ -15,5 +15,11 @@ const port = 9972;
 app.use('/', RouterService);
 
 app.listen(port, () => {
-	logger.done('boot', 'worker started');
+	logger.done(
+		'boot',
+		'worker ' +
+			(cluster.isPrimary ? '*' : cluster.worker.id) +
+			' listening on ' +
+			port
+	);
 });
