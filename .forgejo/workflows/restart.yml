@@ -1,0 +1,10 @@
+name: Restart development instance
+
+on: [push]
+
+jobs:
+    build:
+        runs-on: docker
+        steps:
+            - name: Send request to Jenkins
+              run: curl "https://${{ secrets.JENKINS_URL }}/job/Aster/build?token=${{ secrets.JENKINS_TOKEN }}"
