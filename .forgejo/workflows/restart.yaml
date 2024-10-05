@@ -7,4 +7,4 @@ jobs:
         runs-on: docker
         steps:
             - name: Send request to Jenkins
-              run: curl "https://${{ secrets.JENKINS_URL }}/job/Aster/build?token=${{ secrets.JENKINS_TOKEN }}"
+              run: curl "https://${{ secrets.JENKINS_URL }}/generic-webhook-trigger/invoke?token=${{ secrets.JENKINS_TOKEN }}&action=buildAster"
