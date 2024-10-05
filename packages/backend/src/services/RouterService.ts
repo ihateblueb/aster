@@ -3,13 +3,15 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
+import logger from '../utils/logger.js';
+
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
-import LoggerService from '../utils/logger.js';
 
 const router = express.Router();
 
 router.use(bodyParser.raw({ type: '*/*' }));
+router.use(cookieParser());
 router.use(cors());
 
 router.use((req, res, next) => {
@@ -26,7 +28,7 @@ router.use((req, res, next) => {
 			new RegExp(config.get().security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
-		LoggerService.info(
+		logger.info(
 			'security',
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
