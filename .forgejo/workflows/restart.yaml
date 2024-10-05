@@ -3,7 +3,7 @@ name: Restart development instance
 on: [push]
 
 jobs:
-    build:
+    restart:
         runs-on: docker
         steps:
             - name: Send request to Jenkins
