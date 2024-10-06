@@ -19,7 +19,9 @@
 		"cookie-parser": "^1.4.6",
 		"cors": "^2.8.5",
 		"express": "^4.21.0",
-		"frontend": "workspace:frontend"
+		"frontend": "workspace:frontend",
+		"ini": "^5.0.0",
+		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
 		"@swc/cli": "0.4.1-nightly.20240914",
