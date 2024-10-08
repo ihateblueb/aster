@@ -3,7 +3,9 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
-import logger from '../utils/logger.js';
+import oapi from '../utils/apidoc.js';
+
+import auth_register from '../routes/api/auth/register.js';
 
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
@@ -43,6 +45,11 @@ router.use((req, res, next) => {
 
 	next();
 });
+
+router.use(oapi);
+router.use('/swagger', oapi.swaggerui())
+
+router.use('/', auth_register);
 
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
