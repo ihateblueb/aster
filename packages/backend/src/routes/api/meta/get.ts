@@ -4,23 +4,19 @@ import oapi from '../../../utils/apidoc.js';
 const router = express.Router();
 
 router.get(
-	'/api/user/:id',
+	'/api/meta',
 	oapi.path({
-		description: 'Fetch a user',
-		tags: ['User'],
+		description: 'Fetch metadata of instance',
+		tags: ['Meta'],
 		responses: {
 			200: {
-				description: 'Return a user.',
+				description: 'Return instance metadata.',
 				content: {
 					'application/json': {
-						$ref: '#/components/schemas/User'
+						$ref: '#/components/schemas/Meta'
 					}
 				}
 			},
-			400: { $ref: '#/components/responses/error-400' },
-			404: { $ref: '#/components/responses/error-404' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),

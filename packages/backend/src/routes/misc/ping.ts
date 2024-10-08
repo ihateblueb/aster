@@ -7,6 +7,7 @@ router.get(
 	'/ping',
 	oapi.validPath({
 		description: 'Ping server',
+		tags: ['Miscellaneous'],
 		responses: {
 			200: {
 				content: {

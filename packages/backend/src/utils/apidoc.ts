@@ -129,4 +129,29 @@ oapi.response('error-500', {
 	}
 });
 
+oapi.schema('Meta', {
+	type: 'object',
+	required: ['version', 'host', 'registration'],
+	properties: {
+		host: { type: 'string', example: 'as.example.com' },
+		version: { type: 'string', example: pkg.version },
+		name: { type: 'string', example: 'Aster' },
+		description: {
+			type: 'string',
+			example: 'a fediverse instance running Aster'
+		},
+		registration: { type: 'string', example: 'open' }
+	}
+});
+oapi.schema('User', {
+	type: 'object',
+	required: ['id', 'username'],
+	properties: {
+		id: { type: 'string', example: '01926979-4e91-7ed5-b865-c88f692c4495' },
+		username: { type: 'string', example: 'eeper' },
+		displayName: { type: 'string', example: 'the eeper' },
+		bio: { type: 'string', example: 'napping... so tired....' }
+	}
+});
+
 export default oapi;
