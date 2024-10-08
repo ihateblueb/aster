@@ -56,9 +56,10 @@ router.post(
 		}
 	}),
 	(req, res) => {
-		if (!req.body) return res.status(400).json({
-			message: 'Body required'
-		});
+		if (!req.body)
+			return res.status(400).json({
+				message: 'Body required'
+			});
 
 		let parsedBody;
 
@@ -70,24 +71,31 @@ router.post(
 			});
 		}
 
-		if (!parsedBody.username) return res.status(400).json({
-			message: 'Username required'
-		});
+		if (!parsedBody.username)
+			return res.status(400).json({
+				message: 'Username required'
+			});
 
-		if (!parsedBody.password) return res.status(400).json({
-			message: 'Password required'
-		});
+		if (!parsedBody.password)
+			return res.status(400).json({
+				message: 'Password required'
+			});
 
-		let registrations = config.registrations ? config.registrations : 'closed';
+		let registrations = config.registrations
+			? config.registrations
+			: 'closed';
 
 		if (registrations === 'open') {
-			UserRegistrationService
-				.register(parsedBody.username, parsedBody.password)
+			UserRegistrationService.register(
+				parsedBody.username,
+				parsedBody.password
+			)
 				.then((res) => {
 					console.log(res);
-				}).catch((e) => {
+				})
+				.catch((e) => {
 					console.log(e);
-					logger.error('registration', 'failed to register user')
+					logger.error('registration', 'failed to register user');
 				});
 
 			return res.status(501).json({
@@ -98,15 +106,20 @@ router.post(
 				message: 'WIP'
 			});
 		} else if (registrations === 'invite') {
-			if (!parsedBody.invite) return res.status(400).json({
-				message: 'Invite required'
-			});
+			if (!parsedBody.invite)
+				return res.status(400).json({
+					message: 'Invite required'
+				});
 
 			return res.status(501).json({
 				message: 'WIP'
 			});
 		} else {
-			if (registrations !== 'closed') logger.warn('config', '"security.registrations" seems misconfigured. falling back to closed.')
+			if (registrations !== 'closed')
+				logger.warn(
+					'config',
+					'"security.registrations" seems misconfigured. falling back to closed.'
+				);
 
 			return res.status(401).json({
 				message: 'Registrations closed'
