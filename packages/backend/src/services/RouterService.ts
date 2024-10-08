@@ -10,6 +10,7 @@ import auth_register from '../routes/api/auth/register.js';
 
 import meta_get from '../routes/api/meta/get.js';
 
+import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
 
 import misc_ping from '../routes/misc/ping.js';
@@ -59,6 +60,7 @@ router.use('/', auth_register);
 
 router.use('/', meta_get);
 
+router.use('/', user_edit);
 router.use('/', user_get);
 
 router.use('/', misc_ping);

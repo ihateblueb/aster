@@ -3,14 +3,21 @@ import oapi from '../../../utils/apidoc.js';
 
 const router = express.Router();
 
-router.get(
+router.patch(
 	'/api/user/:id',
 	oapi.path({
-		description: 'Fetch a user',
+		description: 'Update a user',
 		tags: ['User'],
+		requestBody: {
+			content: {
+				'application/json': {
+					type: 'object'
+				}
+			}
+		},
 		responses: {
 			200: {
-				description: 'Return a user.',
+				description: 'Return an updated user.',
 				content: {
 					'application/json': {
 						$ref: '#/components/schemas/User'
@@ -21,6 +28,7 @@ router.get(
 			401: { $ref: '#/components/responses/error-401' },
 			403: { $ref: '#/components/responses/error-403' },
 			404: { $ref: '#/components/responses/error-404' },
+			413: { $ref: '#/components/responses/error-413' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
