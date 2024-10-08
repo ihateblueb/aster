@@ -47,7 +47,7 @@ router.use((req, res, next) => {
 });
 
 router.use(oapi);
-router.use('/swagger', oapi.swaggerui())
+router.use('/swagger', oapi.swaggerui());
 
 router.use('/', auth_register);
 
