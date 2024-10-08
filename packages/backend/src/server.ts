@@ -12,12 +12,15 @@ import pkg from '../../../package.json' with { type: 'json' };
 let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
 process.title = `Aster v${pkg.version} (${processId})`;
 
-await db.initialize().then(() => {
-	logger.done('boot', 'initialized database connection')
-}).catch((e) => {
-	console.log(e);
-	logger.fatal('boot', 'couldn\'t initialize database connection');
-});
+await db
+	.initialize()
+	.then(() => {
+		logger.done('boot', 'initialized database connection');
+	})
+	.catch((e) => {
+		console.log(e);
+		logger.fatal('boot', "couldn't initialize database connection");
+	});
 
 const app = express();
 
@@ -29,6 +32,6 @@ app.listen(config.port, () => {
 		'worker ' +
 			(cluster.isPrimary ? '*' : cluster.worker.id) +
 			' listening on ' +
-		config.port
+			config.port
 	);
 });
