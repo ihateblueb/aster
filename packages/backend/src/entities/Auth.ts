@@ -1,16 +1,16 @@
 import { Entity, PrimaryColumn, Column } from 'typeorm';
 
 @Entity()
-export class UserPrivate {
+export class Auth {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-	@Column({ unique: true })
+	@Column()
 	user: string;
 
 	@Column()
-	password: string;
+	created_at: string;
 
-	@Column()
-	privateKey: string;
+	@Column({ unique: true })
+	token: string;
 }

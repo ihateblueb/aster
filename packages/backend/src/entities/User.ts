@@ -74,7 +74,7 @@ export class User {
 	@Column()
 	createdAt: string;
 
-	@Column()
+	@Column({ nullable: true })
 	updatedAt: string;
 
 	@Column()

@@ -3,7 +3,8 @@ import oapi from '../../../utils/apidoc.js';
 import logger from '../../../utils/logger.js';
 import config from '../../../utils/config.js';
 
-import UserRegistrationService from '../../../services/UserRegistrationService.js';
+import UserService from '../../../services/UserService.js';
+import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -86,21 +87,31 @@ router.post(
 			: 'closed';
 
 		if (registrations === 'open') {
-			UserRegistrationService.register(
-				parsedBody.username,
-				parsedBody.password
-			)
-				.then((res) => {
-					console.log(res);
+			UserService.register(parsedBody.username, parsedBody.password)
+				.then(async (e) => {
+					console.log(e);
+
+					if (e.error) {
+						return res.status(e.status).json({
+							message: e.message
+						});
+					} else {
+						let token = await AuthService.generateToken(e.user.id);
+
+						return res.status(200).json({
+							id: e.user.id,
+							token: token
+						});
+					}
 				})
 				.catch((e) => {
 					console.log(e);
 					logger.error('registration', 'failed to register user');
-				});
 
-			return res.status(501).json({
-				message: 'WIP'
-			});
+					return res.status(500).json({
+						message: 'Internal server error'
+					});
+				});
 		} else if (registrations === 'approval') {
 			return res.status(501).json({
 				message: 'WIP'
