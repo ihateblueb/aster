@@ -1,10 +1,11 @@
 class ApiRequestValidationService {
-    public validateBody(body) {
-        if (!body) return {
-            error: true,
-            status: 400,
-            message: 'Body required'
-        }
+	public validateBody(body) {
+		if (!body)
+			return {
+				error: true,
+				status: 400,
+				message: 'Body required'
+			};
 
 		let parsedBody;
 
@@ -12,18 +13,18 @@ class ApiRequestValidationService {
 			parsedBody = JSON.parse(body);
 		} catch (e) {
 			return {
-                error: true,
-                status: 400,
-                message: 'Body required'
-            }
+				error: true,
+				status: 400,
+				message: 'Body required'
+			};
 		}
 
-        return {
-            error: false,
-            status: 200,
-            body: parsedBody
-        }
-    }
+		return {
+			error: false,
+			status: 200,
+			body: parsedBody
+		};
+	}
 }
 
 export default new ApiRequestValidationService();

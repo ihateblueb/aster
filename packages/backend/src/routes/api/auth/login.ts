@@ -50,9 +50,10 @@ router.post(
 	(req, res, next) => {
 		let bodyValidation = ApiRequestValidationService.validateBody(req.body);
 
-		if (bodyValidation.error) return res.status(bodyValidation.status).json({
-			message: bodyValidation.message
-		})
+		if (bodyValidation.error)
+			return res.status(bodyValidation.status).json({
+				message: bodyValidation.message
+			});
 
 		let parsedBody = bodyValidation.body;
 
