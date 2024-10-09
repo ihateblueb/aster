@@ -111,11 +111,7 @@ router.post(
 					});
 				});
 		} else if (registrations === 'approval') {
-			UserService.register(
-				parsedBody.username,
-				parsedBody.password,
-				true
-			)
+			UserService.register(parsedBody.username, parsedBody.password, true)
 				.then(async (e) => {
 					if (e.error) {
 						return res.status(e.status).json({
