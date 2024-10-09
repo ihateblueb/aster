@@ -16,7 +16,10 @@ router.get(
 		tags: ['Federation'],
 		responses: {
 			200: {
-				description: 'Return instance nodeinfo.'
+				description: 'Return instance nodeinfo.',
+				content: {
+					'application/activity+json': {}
+				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
 			500: { $ref: '#/components/responses/error-500' }
@@ -65,7 +68,10 @@ router.get(
 		tags: ['Federation'],
 		responses: {
 			200: {
-				description: 'Return instance nodeinfo.'
+				description: 'Return instance nodeinfo.',
+				content: {
+					'application/activity+json': {}
+				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
 			500: { $ref: '#/components/responses/error-500' }

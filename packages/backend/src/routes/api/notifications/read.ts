@@ -4,19 +4,27 @@ import oapi from '../../../utils/apidoc.js';
 
 const router = express.Router();
 
-router.get(
-	'/api/notification/:id/read',
+router.post(
+	'/api/notification/read',
 	oapi.path({
 		description: 'Read a notification',
 		tags: ['Notification'],
-		responses: {
-			200: {
-				description: 'Return a notification.',
-				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Notification'
+		requestBody: {
+			content: {
+				'application/json': {
+					schema: {
+						type: 'object',
+						required: ['notifications'],
+						properties: {
+							notifications: { type: 'object' }
+						}
 					}
 				}
+			}
+		},
+		responses: {
+			200: {
+				description: 'Return a notification.'
 			},
 			400: { $ref: '#/components/responses/error-400' },
 			401: { $ref: '#/components/responses/error-401' },

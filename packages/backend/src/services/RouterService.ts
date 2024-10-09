@@ -27,6 +27,7 @@ import user_lookup from '../routes/api/user/lookup.js';
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 
+import wellknown from '../routes/ap/wellknown.js';
 import nodeinfo from '../routes/ap/nodeinfo.js';
 import ap_user from '../routes/ap/user.js';
 
@@ -89,6 +90,7 @@ router.use('/', misc_ping);
 router.use('/', misc_uploads);
 
 // ap
+router.use('/', wellknown);
 router.use('/', nodeinfo);
 router.use('/', ap_user);
 

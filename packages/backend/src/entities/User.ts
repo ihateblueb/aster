@@ -38,7 +38,7 @@ export class User {
 	@Column({ default: false })
 	discoverable: boolean;
 
-	@Column({ default: false })
+	@Column({ default: true })
 	indexable: boolean;
 
 	@Column({ default: false })
