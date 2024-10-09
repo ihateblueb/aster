@@ -58,7 +58,7 @@ class UserService {
 				return {
 					error: true,
 					status: 400,
-					message: 'Invite doesn\'t exist'
+					message: "Invite doesn't exist"
 				};
 			}
 		}

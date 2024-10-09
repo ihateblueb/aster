@@ -16,6 +16,8 @@ import user_get from '../routes/api/user/get.js';
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 
+import nodeinfo from '../routes/ap/nodeinfo.js';
+
 import * as feHandler from 'frontend/build/handler.js';
 
 const router = express.Router();
@@ -55,6 +57,7 @@ router.use((req, res, next) => {
 router.use(oapi);
 router.use('/swagger', oapi.swaggerui());
 
+// api
 router.use('/', auth_login);
 router.use('/', auth_register);
 
@@ -65,6 +68,9 @@ router.use('/', user_get);
 
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
+
+// ap
+router.use('/', nodeinfo);
 
 router.use(feHandler.handler);
 
