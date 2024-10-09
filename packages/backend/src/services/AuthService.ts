@@ -11,7 +11,7 @@ class AuthService {
 		await db.getRepository('auth').insert({
 			id: uuid.v7(),
 			user: user,
-			created_at: new Date(Date.now()).toISOString(),
+			createdAt: new Date(Date.now()).toISOString(),
 			token: token
 		});
 

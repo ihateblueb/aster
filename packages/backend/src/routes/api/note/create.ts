@@ -46,7 +46,7 @@ router.post(
 
 		let parsedBody = bodyValidation.body;
 
-		res.status(501);
+		res.status(501).send();
 	}
 );
 

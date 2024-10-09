@@ -31,7 +31,7 @@ router.get(
 				message: 'Notification not specified'
 			});
 
-		res.status(501);
+		res.status(501).send();
 	}
 );
 
