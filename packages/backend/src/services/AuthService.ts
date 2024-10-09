@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import * as uuid from 'uuid';
 
 import db from '../utils/database.js';
+import UserService from './UserService.js';
 
 class AuthService {
 	public async generateToken(user: string) {
@@ -28,10 +29,13 @@ class AuthService {
 			message: 'Token invalid'
 		}
 
+		let user = await UserService.get(grabbedToken.user);
+
 		return {
 			error: false,
 			status: 200,
-			user: grabbedToken.user
+			user: grabbedToken.user,
+			role: user.admin ? 'admin' : (user.mod ? 'mod' : null)
 		}
 	}
 }
