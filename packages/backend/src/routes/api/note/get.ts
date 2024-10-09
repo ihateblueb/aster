@@ -38,7 +38,7 @@ router.get(
 		});
 
 		if (note) {
-            res.status(200).json(note);
+			res.status(200).json(note);
 		} else {
 			res.status(404).json({
 				message: "Note doesn't exist"

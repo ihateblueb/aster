@@ -1,7 +1,7 @@
 class ApInboxService {
-    public async process() {
-        return;
-    }
+	public async process() {
+		return;
+	}
 }
 
 export default new ApInboxService();

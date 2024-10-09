@@ -30,9 +30,9 @@ router.post(
 		}
 	}),
 	async (req, res) => {
-        let auth = await AuthService.verify(req.headers.authorization);
+		let auth = await AuthService.verify(req.headers.authorization);
 
-        if (auth.error)
+		if (auth.error)
 			return res.status(auth.status).json({
 				message: auth.message
 			});
@@ -46,7 +46,7 @@ router.post(
 
 		let parsedBody = bodyValidation.body;
 
-        res.status(501);
+		res.status(501);
 	}
 );
 

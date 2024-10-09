@@ -1,8 +1,8 @@
-import db from "../utils/database.js";
+import db from '../utils/database.js';
 
 class NoteService {
 	public async get(where: object) {
-        // todo: joins needed here
+		// todo: joins needed here
 		return await db.getRepository('user').findOne({ where: where });
 	}
 }

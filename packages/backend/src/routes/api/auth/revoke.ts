@@ -28,7 +28,7 @@ router.post(
 		},
 		responses: {
 			200: {
-				description: 'Token revoked',
+				description: 'Token revoked'
 			},
 			400: { $ref: '#/components/responses/error-400' },
 			401: { $ref: '#/components/responses/error-401' },
@@ -37,9 +37,9 @@ router.post(
 		}
 	}),
 	async (req, res, next) => {
-        let auth = await AuthService.verify(req.headers.authorization);
+		let auth = await AuthService.verify(req.headers.authorization);
 
-        if (auth.error)
+		if (auth.error)
 			return res.status(auth.status).json({
 				message: auth.message
 			});
@@ -58,33 +58,33 @@ router.post(
 				message: 'Token required'
 			});
 
-        let tokenBeingRevoked = await db.getRepository('auth').findOne({
-            where: {
-                token: parsedBody.token
-            }
-        })
+		let tokenBeingRevoked = await db.getRepository('auth').findOne({
+			where: {
+				token: parsedBody.token
+			}
+		});
 
-        if (tokenBeingRevoked.user === auth.user) {
-            try {
-                await db.getRepository('auth').delete({
-                    where: {
-                        token: parsedBody.token
-                    }
-                })
-            } catch (e) {
-                return res.status(500).json({
-                    message: 'Internal server error'
-                });
-            }
+		if (tokenBeingRevoked.user === auth.user) {
+			try {
+				await db.getRepository('auth').delete({
+					where: {
+						token: parsedBody.token
+					}
+				});
+			} catch (e) {
+				return res.status(500).json({
+					message: 'Internal server error'
+				});
+			}
 
-            return res.status(200).json({
-                message: 'Token deleted'
-            });
-        } else {
-            return res.status(400).json({
-                message: 'Token doesn\'t exist'
-            });
-        }
+			return res.status(200).json({
+				message: 'Token deleted'
+			});
+		} else {
+			return res.status(400).json({
+				message: "Token doesn't exist"
+			});
+		}
 	}
 );
 

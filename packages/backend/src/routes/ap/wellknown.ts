@@ -38,7 +38,8 @@ router.get(
 				}
 			]
 		});
-	});
+	}
+);
 
 router.get(
 	['/.well-known/host-meta', '/.well-known/host-meta.json'],
@@ -69,17 +70,20 @@ router.get(
 				}
 			]
 		});
-	});
+	}
+);
 
 router.get(
 	'/.well-known/webfinger',
 	oapi.path({
 		description: 'Fetch apId of user from handle',
 		tags: ['Federation'],
-		parameters: [{
-			name: 'resource',
-			in: 'query',
-		}],
+		parameters: [
+			{
+				name: 'resource',
+				in: 'query'
+			}
+		],
 		responses: {
 			200: {
 				description: 'Return apId of user.',
@@ -94,14 +98,16 @@ router.get(
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/jrd+json');
 
-		if (!req.query.resource || !req.query.resource.startsWith('acct:')) return res.status(400).send();
+		if (!req.query.resource || !req.query.resource.startsWith('acct:'))
+			return res.status(400).send();
 
 		let user = await UserService.get({
 			local: true,
 			username: req.query.resource.replace('acct:', '').split('@')[1]
-		})
+		});
 
-		if (!user || user.suspended || !user.activated) return res.status(404).send();
+		if (!user || user.suspended || !user.activated)
+			return res.status(404).send();
 
 		return res.status(200).json({
 			subject: `acct:${user.username}@${new URL(config.url).host}`,
@@ -112,8 +118,8 @@ router.get(
 					href: `${new URL(config.url).href}users/${user.id}`
 				}
 			]
-
 		});
-	});
+	}
+);
 
 export default router;

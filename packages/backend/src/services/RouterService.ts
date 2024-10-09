@@ -16,9 +16,9 @@ import meta_get from '../routes/api/meta/get.js';
 import note_create from '../routes/api/note/create.js';
 import note_get from '../routes/api/note/get.js';
 
-import notification_get from '../routes/api/notifications/get.js'
-import notification_read from '../routes/api/notifications/read.js'
-import notification_timeline from '../routes/api/notifications/timeline.js'
+import notification_get from '../routes/api/notifications/get.js';
+import notification_read from '../routes/api/notifications/read.js';
+import notification_timeline from '../routes/api/notifications/timeline.js';
 
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';

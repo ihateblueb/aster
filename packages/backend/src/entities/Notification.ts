@@ -20,7 +20,7 @@ export class Notification {
 	@Column()
 	createdAt: string;
 
-    // todo: seperate object type entities? or just one object?
+	// todo: seperate object type entities? or just one object?
 	@Column({ nullable: true })
 	object: string;
 }

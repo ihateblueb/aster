@@ -1,10 +1,10 @@
-import context from "../../static/context.js";
+import context from '../../static/context.js';
 import config from '../../utils/config.js';
 
 class ApActorRenderer {
 	public render(user) {
 		let apActor = {
-            '@context': context,
+			'@context': context,
 
 			type: user.automated ? 'Service' : 'Person',
 
@@ -17,8 +17,8 @@ class ApActorRenderer {
 			summary: user.bio,
 			_misskey_summary: user.bio,
 
-			"vcard:bday": user.birthday,
-			"vcard:Address": user.location,
+			'vcard:bday': user.birthday,
+			'vcard:Address': user.location,
 
 			discoverable: user.discoverable,
 			manuallyApprovesFollowers: user.locked,
@@ -38,7 +38,7 @@ class ApActorRenderer {
 
 			publicKey: {
 				id: user.apId + '#main-key',
-				type: "Key",
+				type: 'Key',
 				owner: user.apId,
 				publicKeyPem: user.publicKey
 			}
