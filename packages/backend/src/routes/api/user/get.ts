@@ -1,5 +1,7 @@
 import express from 'express';
+
 import oapi from '../../../utils/apidoc.js';
+
 import UserService from '../../../services/UserService.js';
 
 const router = express.Router();
