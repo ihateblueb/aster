@@ -36,7 +36,6 @@ router.use((req, res, next) => {
 		res.setHeader('Cache-Control', 'public, max-age=86400');
 	}
 
-	
 	if (
 		req.headers['user-agent'].match(
 			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
