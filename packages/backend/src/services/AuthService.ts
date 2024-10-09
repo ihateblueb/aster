@@ -20,7 +20,9 @@ class AuthService {
 
 	public async verify(token: string) {
 		let grabbedToken = await db.getRepository('auth').findOne({
-			token: token
+			where: {
+				token: token
+			}
 		});
 
 		if (!grabbedToken)
@@ -30,13 +32,10 @@ class AuthService {
 				message: 'Token invalid'
 			};
 
-		let user = await UserService.get(grabbedToken.user);
-
 		return {
 			error: false,
 			status: 200,
-			user: grabbedToken.user,
-			role: user.admin ? 'admin' : user.mod ? 'mod' : null
+			user: grabbedToken.user
 		};
 	}
 }
