@@ -1,5 +1,5 @@
-class ApiRequestValidationService {
-	public validateBody(body) {
+class ValidationService {
+	public validateApiBody(body) {
 		if (!body)
 			return {
 				error: true,
@@ -27,4 +27,4 @@ class ApiRequestValidationService {
 	}
 }
 
-export default new ApiRequestValidationService();
+export default new ValidationService();

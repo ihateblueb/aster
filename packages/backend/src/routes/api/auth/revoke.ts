@@ -1,9 +1,10 @@
 import express from 'express';
 import oapi from '../../../utils/apidoc.js';
-import ApiRequestValidationService from '../../../services/ApiRequestValidationService.js';
-import AuthService from '../../../services/AuthService.js';
+
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
+import ValidationService from '../../../services/ValidationService.js';
+import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.post(
 				message: auth.message
 			});
 
-		let bodyValidation = ApiRequestValidationService.validateBody(req.body);
+		let bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)
 			return res.status(bodyValidation.status).json({

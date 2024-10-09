@@ -1,6 +1,7 @@
 import express from 'express';
 import oapi from '../../../utils/apidoc.js';
-import ApiRequestValidationService from '../../../services/ApiRequestValidationService.js';
+
+import ValidationService from '../../../services/ValidationService.js';
 
 const router = express.Router();
 
@@ -48,7 +49,7 @@ router.post(
 		}
 	}),
 	(req, res, next) => {
-		let bodyValidation = ApiRequestValidationService.validateBody(req.body);
+		let bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)
 			return res.status(bodyValidation.status).json({
