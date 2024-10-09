@@ -9,8 +9,12 @@ import config from '../utils/config.js';
 
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
+import auth_revoke from '../routes/api/auth/revoke.js';
 
 import meta_get from '../routes/api/meta/get.js';
+
+import note_create from '../routes/api/note/create.js';
+import note_get from '../routes/api/note/get.js';
 
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
@@ -62,8 +66,12 @@ router.use('/swagger', oapi.swaggerui());
 // api
 router.use('/', auth_login);
 router.use('/', auth_register);
+router.use('/', auth_revoke);
 
 router.use('/', meta_get);
+
+router.use('/', note_create);
+router.use('/', note_get);
 
 router.use('/', user_edit);
 router.use('/', user_get);
