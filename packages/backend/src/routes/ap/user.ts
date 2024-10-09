@@ -12,7 +12,7 @@ import UserService from '../../services/UserService.js';
 const router = express.Router();
 
 router.get(
-	'/user/:id',
+	'/users/:id',
 	oapi.path({
 		description: 'Fetch an actor',
 		tags: ['Federation'],

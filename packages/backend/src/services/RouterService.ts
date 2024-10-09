@@ -19,6 +19,7 @@ import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 
 import nodeinfo from '../routes/ap/nodeinfo.js';
+import ap_user from '../routes/ap/user.js';
 
 import * as feHandler from 'frontend/build/handler.js';
 
@@ -71,6 +72,7 @@ router.use('/', misc_uploads);
 
 // ap
 router.use('/', nodeinfo);
+router.use('/', ap_user);
 
 router.use(feHandler.handler);
 
