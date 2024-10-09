@@ -9,7 +9,7 @@ export class Auth {
 	user: string;
 
 	@Column()
-	created_at: string;
+	createdAt: string;
 
 	@Column({ unique: true })
 	token: string;

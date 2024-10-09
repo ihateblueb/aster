@@ -57,6 +57,19 @@ router.post(
 
 		let parsedBody = bodyValidation.body;
 
+		if (!parsedBody.username)
+			return res.status(400).json({
+				message: 'Username required'
+			});
+
+		if (!parsedBody.password)
+			return res.status(400).json({
+				message: 'Password required'
+			});
+
+		// todo: user service get private or something to compare?
+		// todo: blocking and muting? relationship service? should i split relationship to a different entity for this?
+
 		return res.status(501);
 	}
 );

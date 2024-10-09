@@ -21,4 +21,7 @@ export class Note {
 
 	@Column()
 	content: string;
+
+	@Column()
+	createdAt: string;
 }
