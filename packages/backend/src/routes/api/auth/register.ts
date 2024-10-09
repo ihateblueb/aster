@@ -89,8 +89,6 @@ router.post(
 		if (registrations === 'open') {
 			UserService.register(parsedBody.username, parsedBody.password)
 				.then(async (e) => {
-					console.log(e);
-
 					if (e.error) {
 						return res.status(e.status).json({
 							message: e.message
@@ -113,18 +111,64 @@ router.post(
 					});
 				});
 		} else if (registrations === 'approval') {
-			return res.status(501).json({
-				message: 'WIP'
-			});
+			UserService.register(
+				parsedBody.username,
+				parsedBody.password,
+				true
+			)
+				.then(async (e) => {
+					if (e.error) {
+						return res.status(e.status).json({
+							message: e.message
+						});
+					} else {
+						return res.status(200).json({
+							id: e.user.id
+						});
+					}
+				})
+				.catch((e) => {
+					console.log(e);
+					logger.error('registration', 'failed to register user');
+
+					return res.status(500).json({
+						message: 'Internal server error'
+					});
+				});
 		} else if (registrations === 'invite') {
 			if (!parsedBody.invite)
 				return res.status(400).json({
 					message: 'Invite required'
 				});
 
-			return res.status(501).json({
-				message: 'WIP'
-			});
+			UserService.register(
+				parsedBody.username,
+				parsedBody.password,
+				false,
+				parsedBody.invite
+			)
+				.then(async (e) => {
+					if (e.error) {
+						return res.status(e.status).json({
+							message: e.message
+						});
+					} else {
+						let token = await AuthService.generateToken(e.user.id);
+
+						return res.status(200).json({
+							id: e.user.id,
+							token: token
+						});
+					}
+				})
+				.catch((e) => {
+					console.log(e);
+					logger.error('registration', 'failed to register user');
+
+					return res.status(500).json({
+						message: 'Internal server error'
+					});
+				});
 		} else {
 			if (registrations !== 'closed')
 				logger.warn(

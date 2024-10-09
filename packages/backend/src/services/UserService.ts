@@ -7,7 +7,12 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 
 class UserService {
-	public async register(username: string, password: string, invite?: string) {
+	public async register(
+		username: string,
+		password: string,
+		approval?: boolean,
+		invite?: string
+	) {
 		logger.debug(
 			'registration',
 			'username: ' +
@@ -22,6 +27,41 @@ class UserService {
 
 		const id = uuid.v7();
 		const privateId = uuid.v7();
+
+		if (invite) {
+			let grabbedInvite = await db.getRepository('invite').findOne({
+				where: {
+					invite: invite
+				}
+			});
+
+			if (grabbedInvite) {
+				if (!grabbedInvite.usedBy) {
+					await db.getRepository('invite').update(
+						{
+							where: {
+								id: grabbedInvite.id
+							}
+						},
+						{
+							usedBy: id
+						}
+					);
+				} else {
+					return {
+						error: true,
+						status: 400,
+						message: 'Invite already used'
+					};
+				}
+			} else {
+				return {
+					error: true,
+					status: 400,
+					message: 'Invite doesn\'t exist'
+				};
+			}
+		}
 
 		let salt = bcrypt.genSaltSync(12);
 		let hash = bcrypt.hashSync(password, salt);
@@ -46,6 +86,7 @@ class UserService {
 			username: username,
 			host: instanceUrl.host,
 			local: true,
+			activated: !approval,
 			createdAt: new Date().toISOString(),
 			followingUrl: instanceUrl.href + 'users/' + id + '/following',
 			followersUrl: instanceUrl.href + 'users/' + id + '/followers',
@@ -97,7 +138,7 @@ class UserService {
 		return {
 			error: false,
 			status: 200,
-			message: 'Created user',
+			message: approval ? 'User awaiting approval' : 'Created user',
 			user: user,
 			userPrivate: userPrivate
 		};

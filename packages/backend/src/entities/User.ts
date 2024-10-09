@@ -33,7 +33,7 @@ export class User {
 	suspended: boolean;
 
 	@Column({ default: false })
-	deactivated: boolean;
+	activated: boolean;
 
 	@Column({ default: false })
 	discoverable: boolean;
