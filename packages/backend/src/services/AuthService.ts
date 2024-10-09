@@ -17,7 +17,23 @@ class AuthService {
 		return token;
 	}
 
-	public verify() {}
+	public async verify(token: string) {
+		let grabbedToken = await db.getRepository('auth').findOne({
+			token: token
+		})
+
+		if (!grabbedToken) return {
+			error: true,
+			status: 400,
+			message: 'Token invalid'
+		}
+
+		return {
+			error: false,
+			status: 200,
+			user: grabbedToken.user
+		}
+	}
 }
 
 export default new AuthService();
