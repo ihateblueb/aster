@@ -25,32 +25,37 @@ router.get(
 		}
 	}),
 	async (req, res, next) => {
-        if (req.headers['Accept'] !== "application/ld+json" || req.headers['Accept'] !== "application/activity+json") next();
-        res.setHeader('Content-Type', 'application/ld+json');
+		if (
+			req.headers['Accept'] !== 'application/ld+json' ||
+			req.headers['Accept'] !== 'application/activity+json'
+		)
+			next();
+		res.setHeader('Content-Type', 'application/ld+json');
 
-        if (!req.params.id) return res.status(400).json({
-			message: 'User not specified'
-        }) 
+		if (!req.params.id)
+			return res.status(400).json({
+				message: 'User not specified'
+			});
 
-        let user = await UserService.get({ apId: req.params.id })
+		let user = await UserService.get({ apId: req.params.id });
 
-        if (user) {
-            if (user.suspended) {
-                res.status(403).json({
-                    message: 'User suspended'
-                });
-            } else if (!user.activated) {
-                res.status(403).json({
-                    message: 'User not activated'
-                });
-            } else {
-                res.status(200).json(ApActorRenderer.render(user));
-            }
-        } else {
-            res.status(404).json({
-                message: "User doesn't exist"
-            });
-        }
+		if (user) {
+			if (user.suspended) {
+				res.status(403).json({
+					message: 'User suspended'
+				});
+			} else if (!user.activated) {
+				res.status(403).json({
+					message: 'User not activated'
+				});
+			} else {
+				res.status(200).json(ApActorRenderer.render(user));
+			}
+		} else {
+			res.status(404).json({
+				message: "User doesn't exist"
+			});
+		}
 	}
 );
 

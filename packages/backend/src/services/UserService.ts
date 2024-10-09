@@ -8,7 +8,7 @@ import db from '../utils/database.js';
 
 class UserService {
 	public async get(where: object) {
-		return await db.getRepository('user').findOne({ where: where })
+		return await db.getRepository('user').findOne({ where: where });
 	}
 
 	public async register(

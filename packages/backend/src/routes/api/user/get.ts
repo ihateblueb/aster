@@ -26,13 +26,14 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		if (!req.params.id) return res.status(400).json({
-			message: 'User not specified'
-		});
+		if (!req.params.id)
+			return res.status(400).json({
+				message: 'User not specified'
+			});
 
 		let user = await UserService.get({
 			id: req.params.id
-		})
+		});
 
 		if (user) {
 			if (user.suspended) {
