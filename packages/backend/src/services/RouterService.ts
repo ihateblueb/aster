@@ -4,6 +4,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import oapi from '../utils/apidoc.js';
+import logger from '../utils/logger.js';
+import config from '../utils/config.js';
 
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
@@ -29,15 +31,15 @@ router.use(cors());
 router.use((req, res, next) => {
 	res.setHeader('TDM-Reservation', '1');
 
-	// media has 1 day cache
+	// uploads have 1 day cache
 	if (req.path.startsWith('/uploads')) {
 		res.setHeader('Cache-Control', 'public, max-age=86400');
 	}
 
-	/*
+	
 	if (
 		req.headers['user-agent'].match(
-			new RegExp(config.get().security.blockedUserAgents.join('|'), 'i')
+			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
 		logger.info(
@@ -45,11 +47,10 @@ router.use((req, res, next) => {
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
 
-		res.status(403).end();
+		res.status(401).end();
 
-		next(403);
+		next(401);
 	}
-	*/
 
 	next();
 });
