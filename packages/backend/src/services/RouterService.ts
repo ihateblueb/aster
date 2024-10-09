@@ -14,6 +14,7 @@ import meta_get from '../routes/api/meta/get.js';
 
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
+import user_lookup from '../routes/api/user/lookup.js';
 
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
@@ -66,6 +67,7 @@ router.use('/', meta_get);
 
 router.use('/', user_edit);
 router.use('/', user_get);
+router.use('/', user_lookup);
 
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
