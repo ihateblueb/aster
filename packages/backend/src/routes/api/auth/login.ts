@@ -1,5 +1,6 @@
 import express from 'express';
 import oapi from '../../../utils/apidoc.js';
+import ApiRequestValidationService from '../../../services/ApiRequestValidationService.js';
 
 const router = express.Router();
 
@@ -24,7 +25,7 @@ router.post(
 		},
 		responses: {
 			200: {
-				description: 'User registered',
+				description: 'User logged in',
 				content: {
 					'application/json': {
 						schema: {
@@ -47,9 +48,15 @@ router.post(
 		}
 	}),
 	(req, res, next) => {
-		res.status(501).json({
-			message: 'not done lol'
-		});
+		let bodyValidation = ApiRequestValidationService.validateBody(req.body);
+
+		if (bodyValidation.error) return res.status(bodyValidation.status).json({
+			message: bodyValidation.message
+		})
+
+		let parsedBody = bodyValidation.body;
+
+		return res.status(501);
 	}
 );
 

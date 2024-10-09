@@ -5,6 +5,7 @@ import config from '../../../utils/config.js';
 
 import UserService from '../../../services/UserService.js';
 import AuthService from '../../../services/AuthService.js';
+import ApiRequestValidationService from '../../../services/ApiRequestValidationService.js';
 
 const router = express.Router();
 
@@ -57,20 +58,13 @@ router.post(
 		}
 	}),
 	(req, res) => {
-		if (!req.body)
-			return res.status(400).json({
-				message: 'Body required'
-			});
+		let bodyValidation = ApiRequestValidationService.validateBody(req.body);
 
-		let parsedBody;
+		if (bodyValidation.error) return res.status(bodyValidation.status).json({
+			message: bodyValidation.message
+		})
 
-		try {
-			parsedBody = JSON.parse(req.body);
-		} catch (e) {
-			return res.status(500).json({
-				message: 'Failed to parse body'
-			});
-		}
+		let parsedBody = bodyValidation.body;
 
 		if (!parsedBody.username)
 			return res.status(400).json({

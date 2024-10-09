@@ -7,6 +7,10 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 
 class UserService {
+	public async get(where: object) {
+		return await db.getRepository('user').findOne({ where: where })
+	}
+
 	public async register(
 		username: string,
 		password: string,

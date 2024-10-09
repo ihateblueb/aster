@@ -1,6 +1,6 @@
 import express from 'express';
 import oapi from '../../../utils/apidoc.js';
-import db from '../../../utils/database.js';
+import UserService from '../../../services/UserService.js';
 
 const router = express.Router();
 
@@ -26,33 +26,29 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		if (req.params.id) {
-			let user = await db.getRepository('user').findOne({
-				where: {
-					id: req.params.id
-				}
-			});
+		if (!req.params.id) return res.status(400).json({
+			message: 'User not specified'
+		});
 
-			if (user) {
-				if (user.suspended) {
-					res.status(403).json({
-						message: 'User suspended'
-					});
-				} else if (!user.activated) {
-					res.status(403).json({
-						message: 'User not activated'
-					});
-				} else {
-					res.status(200).json(user);
-				}
-			} else {
-				res.status(404).json({
-					message: "User doesn't exist"
+		let user = await UserService.get({
+			id: req.params.id
+		})
+
+		if (user) {
+			if (user.suspended) {
+				res.status(403).json({
+					message: 'User suspended'
 				});
+			} else if (!user.activated) {
+				res.status(403).json({
+					message: 'User not activated'
+				});
+			} else {
+				res.status(200).json(user);
 			}
 		} else {
-			res.status(400).json({
-				message: 'User not specified'
+			res.status(404).json({
+				message: "User doesn't exist"
 			});
 		}
 	}
