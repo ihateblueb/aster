@@ -30,6 +30,7 @@ router.get(
 			req.headers['Accept'] !== 'application/activity+json'
 		)
 			next();
+            
 		res.setHeader('Content-Type', 'application/ld+json');
 
 		if (!req.params.id)
