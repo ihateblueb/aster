@@ -138,34 +138,33 @@ class UserService {
 		};
 	}
 
-	public async login(
-		username: string,
-		password: string
-	) {
+	public async login(username: string, password: string) {
 		let user = await db.getRepository('user').findOne({
 			where: {
 				username: username,
 				local: true
 			}
-		})
+		});
 
-		if (!user) return {
-			error: true,
-			status: 404,
-			message: 'User not found'
-		};
+		if (!user)
+			return {
+				error: true,
+				status: 404,
+				message: 'User not found'
+			};
 
 		let userPrivate = await db.getRepository('user_private').findOne({
 			where: {
 				user: user.id
 			}
-		})
+		});
 
-		if (!userPrivate) return {
-			error: true,
-			status: 404,
-			message: 'User password not found'
-		};
+		if (!userPrivate)
+			return {
+				error: true,
+				status: 404,
+				message: 'User password not found'
+			};
 
 		if (bcrypt.compareSync(password, userPrivate.password)) {
 			return {
