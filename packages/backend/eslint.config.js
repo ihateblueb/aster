@@ -1,4 +1,5 @@
 import pluginJs from '@eslint/js';
+import onlyWarn from 'eslint-plugin-only-warn';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
@@ -10,6 +11,7 @@ export default [
 	...tseslint.configs.recommended,
 	{
 		plugins: {
+			'only-warn': onlyWarn,
 			'simple-import-sort': simpleImportSort
 		},
 		rules: {
