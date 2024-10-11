@@ -5,6 +5,7 @@ import express from 'express';
 import * as feHandler from 'frontend/build/handler.js';
 
 import nodeinfo from '../routes/ap/nodeinfo.js';
+import ap_note from '../routes/ap/note.js';
 import ap_user from '../routes/ap/user.js';
 import wellknown from '../routes/ap/wellknown.js';
 import auth_login from '../routes/api/auth/login.js';
@@ -84,6 +85,7 @@ router.use('/', misc_uploads);
 // ap
 router.use('/', wellknown);
 router.use('/', nodeinfo);
+router.use('/', ap_note);
 router.use('/', ap_user);
 
 router.use(feHandler.handler);

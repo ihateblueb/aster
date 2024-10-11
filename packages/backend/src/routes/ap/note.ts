@@ -3,17 +3,18 @@ import { In } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
-import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
+import NoteService from '../../services/NoteService.js';
+import ApNoteRenderer from '../../services/ap/ApNoteRenderer';
 
 const router = express.Router();
 
 router.get(
-	'/users/:id',
+	'/notes/:id',
 	oapi.path({
-		description: 'Fetch an actor',
+		description: 'Fetch a note',
 		tags: ['Federation'],
 		requestBody: {
 			content: {
@@ -22,7 +23,7 @@ router.get(
 		},
 		responses: {
 			200: {
-				description: 'Return specified actor.',
+				description: 'Return specified note.',
 				content: {
 					'application/activity+json': {}
 				}
@@ -41,26 +42,27 @@ router.get(
 
 		if (!req.params.id)
 			return res.status(400).json({
-				message: 'User not specified'
+				message: 'Note not specified'
 			});
 
-		let user = await UserService.get({ id: req.params.id });
+		let note = await NoteService.get({ id: req.params.id });
 
-		if (user) {
-			if (user.suspended) {
+        // todo: test this join, make sure this is correct usage
+		if (note) {
+			if (note.user.suspended) {
 				return res.status(403).json({
-					message: 'User suspended'
+					message: 'Author suspended'
 				});
-			} else if (!user.activated) {
+			} else if (!note.user.suspended) {
 				return res.status(403).json({
-					message: 'User not activated'
+					message: 'Author not activated'
 				});
 			} else {
-				return res.status(200).json(ApActorRenderer.render(user));
+				return res.status(200).json(ApNoteRenderer.render(note));
 			}
 		} else {
 			return res.status(404).json({
-				message: "User doesn't exist"
+				message: "Note doesn't exist"
 			});
 		}
 	}

@@ -21,6 +21,7 @@ router.get(
 				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
+			403: { $ref: '#/components/responses/error-403' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
@@ -73,6 +74,7 @@ router.get(
 				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
+			403: { $ref: '#/components/responses/error-403' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
