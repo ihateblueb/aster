@@ -14,7 +14,7 @@ Aster is a work-in-progress federated social media software. I'm rewriting it fr
 | AP note fetching              | Not started     |                                                                                                                                        |
 | Sending AP activities         | Not started     | Section will be expended later when this is started                                                                                    |
 | Receiving AP activities       | Not started     | The same thing goes for this.                                                                                                          |
-| `nodeinfo` & `nost-meta`      | Decent          | 2.0 and 2.1 partially implemented, a lot of missing statistics though.                                                                 |
+| `nodeinfo` & `host-meta`      | Decent          | 2.0 and 2.1 partially implemented, a lot of missing statistics though.                                                                 |
 | Webfinger                     | Decent          | Needs testing...                                                                                                                       |
 | User registration             | Complete        | Pretty good! I'm really happy with this part of Aster.                                                                                 |
 | User login                    | Complete        | Needs further testing but seems good?                                                                                                  |
