@@ -1,12 +1,11 @@
 import express from 'express';
 
-import oapi from '../../../utils/apidoc.js';
-import logger from '../../../utils/logger.js';
-import config from '../../../utils/config.js';
-
-import UserService from '../../../services/UserService.js';
 import AuthService from '../../../services/AuthService.js';
+import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
+import oapi from '../../../utils/apidoc.js';
+import config from '../../../utils/config.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 

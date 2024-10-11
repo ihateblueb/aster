@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, Column } from 'typeorm';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Relationship {
@@ -15,7 +15,7 @@ export class Relationship {
 	@Column()
 	type: string;
 
-	// only for when to has locked account
+	// only for when 'to' has locked account
 	@Column({ default: false })
 	pending: boolean;
 

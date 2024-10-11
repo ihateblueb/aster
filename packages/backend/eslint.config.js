@@ -1,7 +1,7 @@
-import globals from 'globals';
 import pluginJs from '@eslint/js';
+import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import globals from 'globals';
 import tseslint from 'typescript-eslint';
-import 'eslint-plugin-only-warn';
 
 export default [
 	{ files: ['**/*.{js,mjs,cjs,ts}'] },
@@ -9,8 +9,17 @@ export default [
 	pluginJs.configs.recommended,
 	...tseslint.configs.recommended,
 	{
+		plugins: {
+			'simple-import-sort': simpleImportSort
+		},
 		rules: {
-			'prefer-const': 'off'
+			'prefer-const': 'off',
+			'simple-import-sort/imports': 'warn',
+			'simple-import-sort/exports': 'warn',
+
+			// i cant do anything about typeorm
+			'no-class-assign': 'off',
+			'no-cond-assign': 'off'
 		}
 	}
 ];

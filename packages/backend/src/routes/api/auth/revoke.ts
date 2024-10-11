@@ -1,11 +1,10 @@
 import express from 'express';
 
+import AuthService from '../../../services/AuthService.js';
+import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import db from '../../../utils/database.js';
 import logger from '../../../utils/logger.js';
-
-import ValidationService from '../../../services/ValidationService.js';
-import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -64,13 +63,13 @@ router.post(
 			}
 		});
 
-		console.log(tokenBeingRevoked.user)
-		console.log(auth.user)
+		console.log(tokenBeingRevoked.user);
+		console.log(auth.user);
 
 		if (tokenBeingRevoked.user === auth.user) {
 			try {
 				await db.getRepository('auth').delete({
-						token: parsedBody.token
+					token: parsedBody.token
 				});
 			} catch (e) {
 				return res.status(500).json({

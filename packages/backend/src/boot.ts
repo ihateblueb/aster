@@ -2,8 +2,9 @@ import cluster from 'cluster';
 import os from 'os';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
-import logger from './utils/logger.js';
+
 import pkg from '../../../package.json' with { type: 'json' };
+import logger from './utils/logger.js';
 
 process.title = `Aster v${pkg.version} (Boot)`;
 

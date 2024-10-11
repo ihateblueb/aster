@@ -1,5 +1,6 @@
-import config from './config.js';
 import { DataSource, Logger, QueryRunner } from 'typeorm';
+
+import config from './config.js';
 import logger from './logger.js';
 
 export class TypeormLogger implements Logger {

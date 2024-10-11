@@ -1,10 +1,10 @@
 import express from 'express';
 
-import oapi from '../../../utils/apidoc.js';
-
-import NoteService from '../../../services/NoteService.js';
 import AuthService from '../../../services/AuthService.js';
+import NoteService from '../../../services/NoteService.js';
 import ValidationService from '../../../services/ValidationService.js';
+import oapi from '../../../utils/apidoc.js';
+import config from '../../../utils/config.js';
 
 const router = express.Router();
 
@@ -45,6 +45,17 @@ router.post(
 			});
 
 		let parsedBody = bodyValidation.body;
+
+		// move later
+		if (!parsedBody.content || parsedBody.content.length < 0)
+			return res.status(400).json({
+				message: 'Content required'
+			});
+
+		if (parsedBody.content.length > config.limits.soft.note)
+			return res.status(400).json({
+				message: 'Content too long'
+			});
 
 		res.status(501).send();
 	}

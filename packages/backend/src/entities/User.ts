@@ -45,7 +45,7 @@ export class User {
 	automated: boolean;
 
 	@Column({ nullable: true })
-	bio: boolean;
+	bio: string;
 
 	@Column({ nullable: true })
 	location: string;

@@ -1,5 +1,6 @@
-import cluster from 'cluster';
 import chalk from 'chalk';
+import cluster from 'cluster';
+
 import config from './config.js';
 
 type Level =

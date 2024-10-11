@@ -1,9 +1,8 @@
 import express from 'express';
 
+import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
-
-import UserService from '../../services/UserService.js';
 
 const router = express.Router();
 

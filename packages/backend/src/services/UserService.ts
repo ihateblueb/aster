@@ -1,10 +1,10 @@
-import crypto from 'crypto';
 import bcrypt from 'bcryptjs';
+import crypto from 'crypto';
 import * as uuid from 'uuid';
 
-import logger from '../utils/logger.js';
 import config from '../utils/config.js';
 import db from '../utils/database.js';
+import logger from '../utils/logger.js';
 
 class UserService {
 	public async get(where: object) {
@@ -17,6 +17,20 @@ class UserService {
 		approval?: boolean,
 		invite?: string
 	) {
+		if (username.length > config.limits.soft.username)
+			return {
+				error: true,
+				status: 400,
+				message: 'Username too long'
+			};
+
+		if (password.length > config.limits.soft.password)
+			return {
+				error: true,
+				status: 400,
+				message: 'Password too long'
+			};
+
 		const instanceUrl = new URL(config.url);
 
 		const id = uuid.v7();

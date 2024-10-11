@@ -1,4 +1,5 @@
 import openapi from '@wesleytodd/openapi';
+
 import pkg from '../../../../package.json' with { type: 'json' };
 
 let oapi = openapi({

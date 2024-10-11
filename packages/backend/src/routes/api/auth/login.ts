@@ -1,11 +1,10 @@
 import express from 'express';
 
+import AuthService from '../../../services/AuthService.js';
+import UserService from '../../../services/UserService.js';
+import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import logger from '../../../utils/logger.js';
-
-import ValidationService from '../../../services/ValidationService.js';
-import UserService from '../../../services/UserService.js';
-import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -49,6 +48,7 @@ router.post(
 			400: { $ref: '#/components/responses/error-400' },
 			401: { $ref: '#/components/responses/error-401' },
 			403: { $ref: '#/components/responses/error-403' },
+			404: { $ref: '#/components/responses/error-404' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),

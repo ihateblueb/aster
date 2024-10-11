@@ -1,37 +1,29 @@
-import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import express from 'express';
+import * as feHandler from 'frontend/build/handler.js';
 
-import oapi from '../utils/apidoc.js';
-import logger from '../utils/logger.js';
-import config from '../utils/config.js';
-
+import nodeinfo from '../routes/ap/nodeinfo.js';
+import ap_user from '../routes/ap/user.js';
+import wellknown from '../routes/ap/wellknown.js';
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
-
 import meta_get from '../routes/api/meta/get.js';
-
 import note_create from '../routes/api/note/create.js';
 import note_get from '../routes/api/note/get.js';
-
 import notification_get from '../routes/api/notifications/get.js';
 import notification_read from '../routes/api/notifications/read.js';
 import notification_timeline from '../routes/api/notifications/timeline.js';
-
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
-
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
-
-import wellknown from '../routes/ap/wellknown.js';
-import nodeinfo from '../routes/ap/nodeinfo.js';
-import ap_user from '../routes/ap/user.js';
-
-import * as feHandler from 'frontend/build/handler.js';
+import oapi from '../utils/apidoc.js';
+import config from '../utils/config.js';
+import logger from '../utils/logger.js';
 
 const router = express.Router();
 

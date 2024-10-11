@@ -1,11 +1,10 @@
 import express from 'express';
 import { In } from 'typeorm';
 
-import oapi from '../../utils/apidoc.js';
-import db from '../../utils/database.js';
-import config from '../../utils/config.js';
-
 import pkg from '../../../../../package.json' with { type: 'json' };
+import oapi from '../../utils/apidoc.js';
+import config from '../../utils/config.js';
+import db from '../../utils/database.js';
 
 const router = express.Router();
 
