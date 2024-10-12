@@ -1,4 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
 
 import { User } from './User.js';
 
@@ -10,9 +16,14 @@ export class Note {
 	@Column({ unique: true })
 	apId: string;
 
-	@OneToOne(() => User)
-	@JoinColumn()
-	user: User;
+	@ManyToOne(() => User, (user) => user.notes)
+	@JoinColumn({
+		name: 'user'
+	})
+	/* see https://github.com/typeorm/typeorm/issues/9894
+	 * importing Relation directly does not work
+	 * */
+	public user: typeorm.Relation<User>;
 
 	@Column({ default: false })
 	local: boolean;

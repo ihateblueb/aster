@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+
+import { Note } from './Note.js';
 
 @Entity()
 export class User {
@@ -88,4 +90,7 @@ export class User {
 
 	@Column()
 	publicKey: string;
+
+	@OneToMany(() => Note, (note) => note.user)
+	notes: Note[] | null;
 }

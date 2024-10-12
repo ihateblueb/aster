@@ -2,13 +2,20 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import * as uuid from 'uuid';
 
+import { Note } from '../entities/Note.js';
 import config from '../utils/config.js';
 import db from '../utils/database.js';
+import logger from '../utils/logger.js';
 
 class NoteService {
 	public async get(where: object) {
 		// todo: joins needed here
-		return await db.getRepository('user').findOne({ where: where });
+		return await db
+			.getRepository('note')
+			.createQueryBuilder('note')
+			.where(where)
+			.innerJoinAndSelect('note.user', 'user')
+			.getOne();
 	}
 
 	public async create(
@@ -60,23 +67,25 @@ class NoteService {
 			createdAt: new Date().toISOString()
 		};
 
-		await db
+		return await db
 			.getRepository('note')
 			.insert(note)
+			.then((e) => {
+				return {
+					error: false,
+					status: 200,
+					message: 'Note created',
+					note: note
+				};
+			})
 			.catch((e) => {
+				console.log(e);
 				return {
 					error: true,
 					status: 500,
 					message: 'Failed to insert note'
 				};
 			});
-
-		return {
-			error: false,
-			status: 200,
-			message: 'Note created',
-			note: note
-		};
 	}
 }
 

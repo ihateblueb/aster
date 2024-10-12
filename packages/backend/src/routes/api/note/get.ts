@@ -36,6 +36,8 @@ router.get(
 			id: req.params.id
 		});
 
+		console.log(note);
+
 		if (note) {
 			res.status(200).json(note);
 		} else {
