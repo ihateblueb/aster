@@ -3,11 +3,11 @@ import { In } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
+import ApNoteRenderer from '../../services/ap/ApNoteRenderer.js';
+import NoteService from '../../services/NoteService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
-import NoteService from '../../services/NoteService.js';
-import ApNoteRenderer from '../../services/ap/ApNoteRenderer';
 
 const router = express.Router();
 
@@ -47,7 +47,7 @@ router.get(
 
 		let note = await NoteService.get({ id: req.params.id });
 
-        // todo: test this join, make sure this is correct usage
+		// todo: test this join, make sure this is correct usage
 		if (note) {
 			if (note.user.suspended) {
 				return res.status(403).json({

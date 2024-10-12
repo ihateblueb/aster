@@ -5,6 +5,7 @@ import NoteService from '../../../services/NoteService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import config from '../../../utils/config.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -13,6 +14,20 @@ router.post(
 	oapi.path({
 		description: 'Create a note',
 		tags: ['Note'],
+		requestBody: {
+			content: {
+				'application/json': {
+					schema: {
+						type: 'object',
+						properties: {
+							cw: { type: 'string' },
+							content: { type: 'string' },
+							visibility: { type: 'string' }
+						}
+					}
+				}
+			}
+		},
 		responses: {
 			200: {
 				description: 'Return the created note.',
@@ -46,18 +61,29 @@ router.post(
 
 		let parsedBody = bodyValidation.body;
 
-		// move later
-		if (!parsedBody.content || parsedBody.content.length < 0)
-			return res.status(400).json({
-				message: 'Content required'
-			});
+		await NoteService.create(
+			auth.user,
+			parsedBody.cw,
+			parsedBody.content,
+			parsedBody.visibility
+		)
+			.then(async (e) => {
+				if (e.error) {
+					return res.status(e.status).json({
+						message: e.message
+					});
+				} else {
+					return res.status(200).json(e.note);
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+				logger.error('note', 'failed to create note');
 
-		if (parsedBody.content.length > config.limits.soft.note)
-			return res.status(400).json({
-				message: 'Content too long'
+				return res.status(500).json({
+					message: 'Internal server error'
+				});
 			});
-
-		res.status(501).send();
 	}
 );
 

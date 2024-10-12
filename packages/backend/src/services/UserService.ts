@@ -17,6 +17,20 @@ class UserService {
 		approval?: boolean,
 		invite?: string
 	) {
+		if (username.length <= 0)
+			return {
+				error: true,
+				status: 400,
+				message: 'Username too short'
+			};
+
+		if (password.length <= 6)
+			return {
+				error: true,
+				status: 400,
+				message: 'Password too short'
+			};
+
 		if (username.length > config.limits.soft.username)
 			return {
 				error: true,

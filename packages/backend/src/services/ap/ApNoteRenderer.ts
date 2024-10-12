@@ -8,7 +8,7 @@ class ApNoteRenderer {
 
 			type: 'Note',
 
-			id: note.apId,
+			id: note.apId
 		};
 
 		return apNote;

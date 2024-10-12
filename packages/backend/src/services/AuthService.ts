@@ -28,7 +28,7 @@ class AuthService {
 		if (!grabbedToken)
 			return {
 				error: true,
-				status: 400,
+				status: 401,
 				message: 'Token invalid'
 			};
 

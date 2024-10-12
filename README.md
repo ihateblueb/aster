@@ -9,7 +9,7 @@ Aster is a work-in-progress federated social media software. I'm rewriting it fr
 # Project Status
 
 | Feature                       | Status          | Notes                                                                                                                                  |
-|-------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | AP user fetching              | Partially done  | Profile metadata missing, avatar, banner, and background missing.                                                                      |
 | AP note fetching              | Not started     |                                                                                                                                        |
 | Sending AP activities         | Not started     | Section will be expended later when this is started                                                                                    |

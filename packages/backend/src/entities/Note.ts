@@ -17,11 +17,14 @@ export class Note {
 	@Column({ default: false })
 	local: boolean;
 
-	@Column({ default: 'public' })
-	visibility: string;
+	@Column({ nullable: true })
+	cw: string;
 
 	@Column()
 	content: string;
+
+	@Column({ default: 'public' })
+	visibility: string;
 
 	@Column()
 	createdAt: string;

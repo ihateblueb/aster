@@ -57,7 +57,7 @@ router.post(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	(req, res) => {
+	async (req, res) => {
 		let bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)
@@ -82,7 +82,7 @@ router.post(
 			: 'closed';
 
 		if (registrations === 'open') {
-			UserService.register(parsedBody.username, parsedBody.password)
+			await UserService.register(parsedBody.username, parsedBody.password)
 				.then(async (e) => {
 					if (e.error) {
 						return res.status(e.status).json({
@@ -106,7 +106,11 @@ router.post(
 					});
 				});
 		} else if (registrations === 'approval') {
-			UserService.register(parsedBody.username, parsedBody.password, true)
+			await UserService.register(
+				parsedBody.username,
+				parsedBody.password,
+				true
+			)
 				.then(async (e) => {
 					if (e.error) {
 						return res.status(e.status).json({
@@ -132,7 +136,7 @@ router.post(
 					message: 'Invite required'
 				});
 
-			UserService.register(
+			await UserService.register(
 				parsedBody.username,
 				parsedBody.password,
 				false,
