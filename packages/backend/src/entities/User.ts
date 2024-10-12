@@ -90,7 +90,4 @@ export class User {
 
 	@Column()
 	publicKey: string;
-
-	@OneToMany(() => Note, (note) => note.user)
-	notes: Note[] | null;
 }

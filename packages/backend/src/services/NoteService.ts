@@ -9,12 +9,12 @@ import logger from '../utils/logger.js';
 
 class NoteService {
 	public async get(where: object) {
-		// todo: joins needed here
 		return await db
 			.getRepository('note')
 			.createQueryBuilder('note')
+			.leftJoinAndSelect('note.user', 'user')
+			.loadAllRelationIds()
 			.where(where)
-			.innerJoinAndSelect('note.user', 'user')
 			.getOne();
 	}
 
@@ -55,6 +55,8 @@ class NoteService {
 		const instanceUrl = new URL(config.url);
 
 		const id = uuid.v7();
+
+		console.log('userId for inserted note is ' + user);
 
 		let note = {
 			id: id,

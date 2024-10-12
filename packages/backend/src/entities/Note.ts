@@ -3,7 +3,8 @@ import typeorm, {
 	Entity,
 	JoinColumn,
 	ManyToOne,
-	PrimaryColumn
+	PrimaryColumn,
+	RelationId
 } from 'typeorm';
 
 import { User } from './User.js';
@@ -16,14 +17,15 @@ export class Note {
 	@Column({ unique: true })
 	apId: string;
 
-	@ManyToOne(() => User, (user) => user.notes)
-	@JoinColumn({
-		name: 'user'
-	})
+	@Column()
+	userId: string;
+
+	@ManyToOne(() => User, (user) => user)
+	@JoinColumn({ name: 'userId', referencedColumnName: 'id' })
 	/* see https://github.com/typeorm/typeorm/issues/9894
-	 * importing Relation directly does not work
+	 * importing Relation directly does not work!
 	 * */
-	public user: typeorm.Relation<User>;
+	user: typeorm.Relation<User>;
 
 	@Column({ default: false })
 	local: boolean;
