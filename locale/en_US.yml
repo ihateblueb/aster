@@ -48,6 +48,6 @@ user:
 
 auth:
     success: 'Authenticated'
-    tokenRequired: 'Token invalid'
+    tokenRequired: 'Token required'
     tokenInvalid: 'Token invalid'
     tokenRevoked: 'Token revoked'
