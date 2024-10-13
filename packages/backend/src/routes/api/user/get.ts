@@ -2,6 +2,7 @@ import express from 'express';
 
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
+import locale from '../../../utils/locale.js';
 
 const router = express.Router();
 
@@ -29,7 +30,7 @@ router.get(
 	async (req, res) => {
 		if (!req.params.id)
 			return res.status(400).json({
-				message: 'User not specified'
+				message: locale.user.notSpecified
 			});
 
 		let user = await UserService.get({
@@ -39,18 +40,18 @@ router.get(
 		if (user) {
 			if (user.suspended) {
 				res.status(403).json({
-					message: 'User suspended'
+					message: locale.user.suspended
 				});
 			} else if (!user.activated) {
 				res.status(403).json({
-					message: 'User not activated'
+					message: locale.user.notActivated
 				});
 			} else {
 				res.status(200).json(user);
 			}
 		} else {
 			res.status(404).json({
-				message: "User doesn't exist"
+				message: locale.user.notFound
 			});
 		}
 	}

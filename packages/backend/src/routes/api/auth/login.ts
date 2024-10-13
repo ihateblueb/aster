@@ -4,6 +4,7 @@ import AuthService from '../../../services/AuthService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
 const router = express.Router();
@@ -64,12 +65,12 @@ router.post(
 
 		if (!parsedBody.username)
 			return res.status(400).json({
-				message: 'Username required'
+				message: locale.user.usernameRequired
 			});
 
 		if (!parsedBody.password)
 			return res.status(400).json({
-				message: 'Password required'
+				message: locale.user.passwordRequired
 			});
 
 		UserService.login(parsedBody.username, parsedBody.password)
@@ -83,7 +84,8 @@ router.post(
 
 					return res.status(200).json({
 						id: e.user.id,
-						token: token
+						token: token,
+						message: locale.auth.success
 					});
 				}
 			})
@@ -92,7 +94,7 @@ router.post(
 				logger.error('login', 'failed to authenticate user');
 
 				return res.status(500).json({
-					message: 'Internal server error'
+					message: locale.error.internalServer
 				});
 			});
 

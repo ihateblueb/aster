@@ -5,6 +5,7 @@ import NoteService from '../../../services/NoteService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import config from '../../../utils/config.js';
+import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
 const router = express.Router();
@@ -81,7 +82,7 @@ router.post(
 				logger.error('note', 'failed to create note');
 
 				return res.status(500).json({
-					message: 'Internal server error'
+					message: locale.error.internalServer
 				});
 			});
 	}

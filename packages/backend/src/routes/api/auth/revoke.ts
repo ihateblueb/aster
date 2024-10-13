@@ -4,6 +4,7 @@ import AuthService from '../../../services/AuthService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import db from '../../../utils/database.js';
+import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
 const router = express.Router();
@@ -54,7 +55,7 @@ router.post(
 
 		if (!parsedBody.token)
 			return res.status(400).json({
-				message: 'Token required'
+				message: locale.auth.tokenRequired
 			});
 
 		let tokenBeingRevoked = await db.getRepository('auth').findOne({
@@ -73,16 +74,16 @@ router.post(
 				});
 			} catch (e) {
 				return res.status(500).json({
-					message: 'Internal server error'
+					message: locale.error.internalServer
 				});
 			}
 
 			return res.status(200).json({
-				message: 'Token deleted'
+				message: locale.auth.tokenRevoked
 			});
 		} else {
 			return res.status(400).json({
-				message: "Token doesn't exist"
+				message: locale.auth.tokenInvalid
 			});
 		}
 	}

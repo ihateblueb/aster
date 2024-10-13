@@ -17,15 +17,15 @@ export class Note {
 	@Column({ unique: true })
 	apId: string;
 
-	@Column()
-	userId: string;
-
 	@ManyToOne(() => User, (user) => user)
-	@JoinColumn({ name: 'userId', referencedColumnName: 'id' })
+	@JoinColumn({ name: 'userId' })
 	/* see https://github.com/typeorm/typeorm/issues/9894
 	 * importing Relation directly does not work!
 	 * */
 	user: typeorm.Relation<User>;
+
+	@Column()
+	userId: string;
 
 	@Column({ default: false })
 	local: boolean;

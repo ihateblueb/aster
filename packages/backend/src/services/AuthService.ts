@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import * as uuid from 'uuid';
 
 import db from '../utils/database.js';
+import locale from '../utils/locale.js';
 import UserService from './UserService.js';
 
 class AuthService {
@@ -29,7 +30,7 @@ class AuthService {
 			return {
 				error: true,
 				status: 401,
-				message: 'Token invalid'
+				message: locale.auth.tokenInvalid
 			};
 
 		return {

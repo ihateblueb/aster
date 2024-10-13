@@ -5,6 +5,7 @@ import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import config from '../../../utils/config.js';
+import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
 const router = express.Router();
@@ -69,12 +70,12 @@ router.post(
 
 		if (!parsedBody.username)
 			return res.status(400).json({
-				message: 'Username required'
+				message: locale.user.usernameRequired
 			});
 
 		if (!parsedBody.password)
 			return res.status(400).json({
-				message: 'Password required'
+				message: locale.user.passwordRequired
 			});
 
 		let registrations = config.registrations
@@ -102,7 +103,7 @@ router.post(
 					logger.error('registration', 'failed to register user');
 
 					return res.status(500).json({
-						message: 'Internal server error'
+						message: locale.error.internalServer
 					});
 				});
 		} else if (registrations === 'approval') {
@@ -127,13 +128,13 @@ router.post(
 					logger.error('registration', 'failed to register user');
 
 					return res.status(500).json({
-						message: 'Internal server error'
+						message: locale.error.internalServer
 					});
 				});
 		} else if (registrations === 'invite') {
 			if (!parsedBody.invite)
 				return res.status(400).json({
-					message: 'Invite required'
+					message: locale.user.registration.inviteRequired
 				});
 
 			await UserService.register(
@@ -161,7 +162,7 @@ router.post(
 					logger.error('registration', 'failed to register user');
 
 					return res.status(500).json({
-						message: 'Internal server error'
+						message: locale.error.internalServer
 					});
 				});
 		} else {
@@ -172,7 +173,7 @@ router.post(
 				);
 
 			return res.status(401).json({
-				message: 'Registrations closed'
+				message: locale.user.registration.closed
 			});
 		}
 	}

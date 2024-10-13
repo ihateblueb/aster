@@ -1,10 +1,12 @@
+import locale from '../utils/locale.js';
+
 class ValidationService {
 	public validateApiBody(body) {
 		if (!body)
 			return {
 				error: true,
 				status: 400,
-				message: 'Body required'
+				message: locale.error.bodyRequired
 			};
 
 		let parsedBody;
@@ -15,7 +17,7 @@ class ValidationService {
 			return {
 				error: true,
 				status: 400,
-				message: 'Body required'
+				message: locale.error.bodyInvalid
 			};
 		}
 

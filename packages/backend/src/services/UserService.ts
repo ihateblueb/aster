@@ -4,6 +4,7 @@ import * as uuid from 'uuid';
 
 import config from '../utils/config.js';
 import db from '../utils/database.js';
+import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 
 class UserService {
@@ -21,28 +22,28 @@ class UserService {
 			return {
 				error: true,
 				status: 400,
-				message: 'Username too short'
+				message: locale.user.registration.usernameTooShort
 			};
 
 		if (password.length <= 6)
 			return {
 				error: true,
 				status: 400,
-				message: 'Password too short'
+				message: locale.user.registration.passwordTooShort
 			};
 
 		if (username.length > config.limits.soft.username)
 			return {
 				error: true,
 				status: 400,
-				message: 'Username too long'
+				message: locale.user.registration.usernameTooLong
 			};
 
 		if (password.length > config.limits.soft.password)
 			return {
 				error: true,
 				status: 400,
-				message: 'Password too long'
+				message: locale.user.registration.passwordTooLong
 			};
 
 		const instanceUrl = new URL(config.url);
@@ -73,14 +74,14 @@ class UserService {
 					return {
 						error: true,
 						status: 400,
-						message: 'Invite already used'
+						message: locale.user.registration.inviteAlreadyUsed
 					};
 				}
 			} else {
 				return {
 					error: true,
 					status: 400,
-					message: "Invite doesn't exist"
+					message: locale.user.registration.inviteDoesntExist
 				};
 			}
 		}
@@ -132,7 +133,7 @@ class UserService {
 			return {
 				error: true,
 				status: 400,
-				message: 'User with this username already exists'
+				message: locale.user.registration.usernameTaken
 			};
 
 		await db
@@ -142,7 +143,7 @@ class UserService {
 				return {
 					error: true,
 					status: 500,
-					message: 'Failed to insert user information'
+					message: locale.user.failedCreate
 				};
 			});
 
@@ -153,14 +154,16 @@ class UserService {
 				return {
 					error: true,
 					status: 500,
-					message: 'Failed to insert private user information'
+					message: locale.user.failedCreatePrivate
 				};
 			});
 
 		return {
 			error: false,
 			status: 200,
-			message: approval ? 'User awaiting approval' : 'Created user',
+			message: approval
+				? locale.user.awaitingApproval
+				: locale.user.created,
 			user: user,
 			userPrivate: userPrivate
 		};
@@ -178,7 +181,7 @@ class UserService {
 			return {
 				error: true,
 				status: 404,
-				message: 'User not found'
+				message: locale.user.notFound
 			};
 
 		let userPrivate = await db.getRepository('user_private').findOne({
@@ -191,21 +194,21 @@ class UserService {
 			return {
 				error: true,
 				status: 404,
-				message: 'User password not found'
+				message: locale.user.privateNotFound
 			};
 
 		if (bcrypt.compareSync(password, userPrivate.password)) {
 			return {
 				error: false,
 				status: 200,
-				message: 'Password correct',
+				message: locale.auth.success,
 				user: user
 			};
 		} else {
 			return {
 				error: true,
 				status: 400,
-				message: 'Password incorrect'
+				message: locale.user.incorrectPassword
 			};
 		}
 	}

@@ -1,11 +1,8 @@
-import bcrypt from 'bcryptjs';
-import crypto from 'crypto';
 import * as uuid from 'uuid';
 
-import { Note } from '../entities/Note.js';
 import config from '../utils/config.js';
 import db from '../utils/database.js';
-import logger from '../utils/logger.js';
+import locale from '../utils/locale.js';
 
 class NoteService {
 	public async get(where: object) {
@@ -28,28 +25,28 @@ class NoteService {
 			return {
 				error: true,
 				status: 400,
-				message: 'Content too short'
+				message: locale.note.contentTooShort
 			};
 
 		if (cw && cw.length > config.limits.soft.cw)
 			return {
 				error: true,
 				status: 400,
-				message: 'Content warning too long'
+				message: locale.note.contentWarningTooLong
 			};
 
 		if (content.length > config.limits.soft.note)
 			return {
 				error: true,
 				status: 400,
-				message: 'Content too long'
+				message: locale.note.contentTooLong
 			};
 
 		if (!['public', 'unlisted', 'followers', 'direct'].includes(visibility))
 			return {
 				error: true,
 				status: 400,
-				message: 'Visibility invalid'
+				message: locale.note.visibilityInvalid
 			};
 
 		const instanceUrl = new URL(config.url);
@@ -61,7 +58,7 @@ class NoteService {
 		let note = {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
-			userId: user,
+			user: { id: user },
 			local: true,
 			cw: cw,
 			content: content,
@@ -76,7 +73,7 @@ class NoteService {
 				return {
 					error: false,
 					status: 200,
-					message: 'Note created',
+					message: locale.note.created,
 					note: note
 				};
 			})
@@ -85,7 +82,7 @@ class NoteService {
 				return {
 					error: true,
 					status: 500,
-					message: 'Failed to insert note'
+					message: locale.note.failedCreate
 				};
 			});
 	}
