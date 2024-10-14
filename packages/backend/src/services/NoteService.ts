@@ -14,6 +14,15 @@ class NoteService {
 			.getOne();
 	}
 
+	public async getMany(where: object) {
+		return await db
+			.getRepository('note')
+			.createQueryBuilder('note')
+			.leftJoinAndSelect('note.user', 'user')
+			.where(where)
+			.getQueryAndParameters();
+	}
+
 	public async create(
 		user: string,
 		cw: string,

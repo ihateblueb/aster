@@ -14,9 +14,12 @@ import auth_revoke from '../routes/api/auth/revoke.js';
 import meta_get from '../routes/api/meta/get.js';
 import note_create from '../routes/api/note/create.js';
 import note_get from '../routes/api/note/get.js';
-import notification_get from '../routes/api/notifications/get.js';
 import notification_read from '../routes/api/notifications/read.js';
 import notification_timeline from '../routes/api/notifications/timeline.js';
+import timeline_bubble from '../routes/api/timeline/bubble.js';
+import timeline_home from '../routes/api/timeline/home.js';
+import timeline_local from '../routes/api/timeline/local.js';
+import timeline_public from '../routes/api/timeline/public.js';
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
@@ -71,9 +74,13 @@ router.use('/', meta_get);
 router.use('/', note_create);
 router.use('/', note_get);
 
-router.use('/', notification_get);
 router.use('/', notification_read);
 router.use('/', notification_timeline);
+
+router.use('/', timeline_bubble);
+router.use('/', timeline_home);
+router.use('/', timeline_local);
+router.use('/', timeline_public);
 
 router.use('/', user_edit);
 router.use('/', user_get);

@@ -1,22 +1,18 @@
 import express from 'express';
 
+import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
 
 const router = express.Router();
 
 router.get(
-	'/api/notification/:id',
+	'/api/timeline/local',
 	oapi.path({
-		description: 'Fetch a notification',
-		tags: ['Notification'],
+		description: 'Fetch a timeline of notes from this instance',
+		tags: ['Timeline'],
 		responses: {
 			200: {
-				description: 'Return a notification.',
-				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Notification'
-					}
-				}
+				description: 'Return a timeline.'
 			},
 			400: { $ref: '#/components/responses/error-400' },
 			401: { $ref: '#/components/responses/error-401' },
@@ -26,10 +22,7 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		if (!req.params.id)
-			return res.status(400).json({
-				message: 'Notification not specified'
-			});
+		TimelineService.get();
 
 		res.status(501).send();
 	}

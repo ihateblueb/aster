@@ -36,12 +36,15 @@ router.get(
 			}
 		});
 
-		const noteCount = await db.getRepository('note').count({
-			where: {
-				local: true,
+		const noteCount = await db
+			.getRepository('note')
+			.createQueryBuilder('note')
+			.leftJoinAndSelect('note.user', 'user')
+			.where({
+				'user.local': true,
 				visibility: In(['public', 'unlisted'])
-			}
-		});
+			})
+			.getCount();
 
 		return res.status(200).json({
 			version: '2.0',
@@ -89,12 +92,15 @@ router.get(
 			}
 		});
 
-		const noteCount = await db.getRepository('note').count({
-			where: {
-				local: true,
+		const noteCount = await db
+			.getRepository('note')
+			.createQueryBuilder('note')
+			.leftJoinAndSelect('note.user', 'user')
+			.where({
+				'user.local': true,
 				visibility: In(['public', 'unlisted'])
-			}
-		});
+			})
+			.getCount();
 
 		return res.status(200).json({
 			version: '2.1',
