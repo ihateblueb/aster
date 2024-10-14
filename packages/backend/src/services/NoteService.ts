@@ -10,7 +10,6 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
-			.loadAllRelationIds()
 			.where(where)
 			.getOne();
 	}
@@ -58,7 +57,7 @@ class NoteService {
 		let note = {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
-			user: { id: user },
+			userId: user,
 			local: true,
 			cw: cw,
 			content: content,

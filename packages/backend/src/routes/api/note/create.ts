@@ -47,7 +47,7 @@ router.post(
 	}),
 	async (req, res) => {
 		let auth = await AuthService.verify(req.headers.authorization);
-
+		console.log(auth);
 		if (auth.error)
 			return res.status(auth.status).json({
 				message: auth.message

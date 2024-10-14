@@ -20,9 +20,16 @@ class AuthService {
 	}
 
 	public async verify(token: string) {
+		if (!token || token.length <= 0)
+			return {
+				error: true,
+				status: 401,
+				message: locale.auth.tokenInvalid
+			};
+
 		let grabbedToken = await db.getRepository('auth').findOne({
 			where: {
-				token: token
+				token: token.replace('Bearer ', '')
 			}
 		});
 
