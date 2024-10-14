@@ -1,5 +1,3 @@
 packages:
     - 'packages/frontend'
-    - 'packages/cli'
     - 'packages/backend'
-    - 'packages/vite-plugin-svelte-auto-import-style'

@@ -43,13 +43,17 @@ router.get(
 
 		if (!req.params.id)
 			return res.status(400).json({
-				message: 'Note not specified'
+				message: locale.note.notSpecified
 			});
 
 		let note = await NoteService.get({ id: req.params.id });
 
 		if (note) {
-			if (note.user.suspended) {
+			if (!note.user.local) {
+				return res.status(404).json({
+					message: locale.user.notFound
+				});
+			} else if (note.user.suspended) {
 				return res.status(403).json({
 					message: locale.user.suspended
 				});

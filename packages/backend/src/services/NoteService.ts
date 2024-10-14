@@ -56,7 +56,6 @@ class NoteService {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
 			userId: user,
-			local: true,
 			cw: cw,
 			content: content,
 			visibility: visibility,

@@ -8,9 +8,7 @@
 	},
 	"workspaces": [
 		"packages/frontend",
-		"packages/cli",
-		"packages/backend",
-		"packages/vite-plugin-svelte-auto-import-style"
+		"packages/backend"
 	],
 	"private": true,
 	"scripts": {
@@ -28,9 +26,9 @@
 		"revert": "pnpm build-be && pnpm -filter=backend revert",
 		"pull": "git pull && git submodule update --init --recursive ",
 		"cli": "pnpm run --filter=backend cli",
+		"clean": "./scripts/clean.sh",
 		"clean-be": "./scripts/clean-be.sh",
 		"clean-fe": "./scripts/clean-fe.sh",
-		"clean": "./scripts/clean.sh",
 		"clean-all": "./scripts/clean-all.sh"
 	},
 	"keywords": [],

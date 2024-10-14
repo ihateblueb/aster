@@ -1,4 +1,3 @@
 echo "removing all build files"
-rm -Rf packages/backend/built
-rm -Rf packages/frontend/.svelte-kit
-rm -Rf packages/frontend/build
+sh ./scripts/clean-be.sh
+sh ./scripts/clean-fe.sh

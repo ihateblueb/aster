@@ -39,9 +39,6 @@ export class Note {
 	@JoinColumn({ name: 'replyingToId' })
 	replyingTo: typeorm.Relation<Note>;
 
-	@Column({ default: false })
-	local: boolean;
-
 	@Column({ nullable: true })
 	cw: string;
 

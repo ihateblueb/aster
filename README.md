@@ -3,11 +3,13 @@
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 [![Translate Aster](https://weblate.git.gay/widget/aster/locales/svg-badge.svg?native=1)](https://weblate.git.gay/projects/aster/locales/)
 
-Development instance available at https://dev.aster.pages.gay/.
+Aster is a federated microblogging software (heavily in development) intending to include the fun features of software like Misskey and also the practical features of software like Mastodon. 
+ 
+I also intend to have a somewhat good quality codebase with limited repetition and similar style throughout.
 
-Aster is a work-in-progress federated social media software. I'm rewriting it from the ground up right now.
+Development instance (sometimes) available at https://dev.aster.pages.gay/. It's run through a Cloudflare tunnel and is on my computer, so it's only up when I'm working on it.
 
-# Project Status
+## Project Status
 
 | Feature                       | Status          | Notes                                                                                                                                  |
 |-------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------|
@@ -42,8 +44,3 @@ Aster is a work-in-progress federated social media software. I'm rewriting it fr
 | Processing drive files        | Not started     |                                                                                                                                        |
 | Processing remote files       | Not started     |                                                                                                                                        |
 
-# Eventual Goals
-
--   Being usable (lmao)
--   Somewhat good Mood implementation
--   Mastodon API (dear god)
