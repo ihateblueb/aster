@@ -8,6 +8,7 @@ import NoteService from '../../services/NoteService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
+import locale from '../../utils/locale.js';
 
 const router = express.Router();
 
@@ -47,22 +48,21 @@ router.get(
 
 		let note = await NoteService.get({ id: req.params.id });
 
-		// todo: test this join, make sure this is correct usage
 		if (note) {
 			if (note.user.suspended) {
 				return res.status(403).json({
-					message: 'Author suspended'
+					message: locale.user.suspended
 				});
-			} else if (!note.user.suspended) {
+			} else if (!note.user.activated) {
 				return res.status(403).json({
-					message: 'Author not activated'
+					message: locale.user.notActivated
 				});
 			} else {
 				return res.status(200).json(ApNoteRenderer.render(note));
 			}
 		} else {
 			return res.status(404).json({
-				message: "Note doesn't exist"
+				message: locale.note.notFound
 			});
 		}
 	}

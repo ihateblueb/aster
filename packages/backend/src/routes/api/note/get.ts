@@ -40,7 +40,13 @@ router.get(
 		console.log(note);
 
 		if (note) {
-			res.status(200).json(note);
+			if (!note.user) {
+				res.status(404).json({
+					message: locale.note.authorNotFound
+				});
+			} else {
+				res.status(200).json(note);
+			}
 		} else {
 			res.status(404).json({
 				message: locale.note.notFound

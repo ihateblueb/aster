@@ -52,8 +52,6 @@ class NoteService {
 
 		const id = uuid.v7();
 
-		console.log('userId for inserted note is ' + user);
-
 		let note = {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
