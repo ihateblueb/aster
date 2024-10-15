@@ -1,5 +1,7 @@
 class ApInboxService {
-	public async process() {
+	public async process(body) {
+		console.log(JSON.stringify(body));
+
 		return;
 	}
 }

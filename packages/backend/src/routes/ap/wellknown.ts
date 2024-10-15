@@ -3,6 +3,7 @@ import express from 'express';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
+import logger from '../../utils/logger.js';
 
 const router = express.Router();
 
@@ -42,7 +43,7 @@ router.get(
 );
 
 router.get(
-	['/.well-known/host-meta', '/.well-known/host-meta.json'],
+	['/.well-known/host-meta'],
 	oapi.path({
 		description: 'Fetch host meta',
 		tags: ['Federation'],
@@ -50,7 +51,7 @@ router.get(
 			200: {
 				description: 'Return host meta.',
 				content: {
-					'application/jrd+json': {}
+					'application/xrd+xml': {}
 				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
@@ -59,18 +60,27 @@ router.get(
 		}
 	}),
 	(req, res) => {
-		res.setHeader('Content-Type', 'application/jrd+json');
-		return res.status(200).json({
-			links: [
-				{
-					rel: 'lrdd',
-					type: 'application/jrd+json',
-					template:
-						new URL(config.url).href +
-						'.well-known/webfinger?resource={uri}'
-				}
-			]
-		});
+		if (req.headers.accept.includes('application/xrd+xml')) {
+			res.setHeader('Content-Type', 'application/xrd+xml');
+			return res
+				.status(200)
+				.send(
+					`<XRD><Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" /></XRD>`
+				);
+		} else if (req.headers.accept.includes('application/jrd+json')) {
+			res.setHeader('Content-Type', 'application/jrd+json');
+			return res.status(200).json({
+				links: [
+					{
+						rel: 'lrdd',
+						type: 'application/jrd+json',
+						template:
+							new URL(config.url).href +
+							'.well-known/webfinger?resource={uri}'
+					}
+				]
+			});
+		}
 	}
 );
 
@@ -103,9 +113,11 @@ router.get(
 		if (!req.query.resource || !req.query.resource.startsWith('acct:'))
 			return res.status(400).send();
 
+		logger.debug('webfinger', req.query.resource);
+
 		let user = await UserService.get({
 			local: true,
-			username: req.query.resource.replace('acct:', '').split('@')[1]
+			username: req.query.resource.replace('acct:', '').split('@')[0]
 		});
 
 		if (!user || user.suspended || !user.activated)

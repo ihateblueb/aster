@@ -3,6 +3,7 @@ import express from 'express';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import RouterService from './services/RouterService.js';
+import WorkerService from './services/WorkerService.js';
 import config from './utils/config.js';
 import db from './utils/database.js';
 import logger from './utils/logger.js';
@@ -10,15 +11,26 @@ import logger from './utils/logger.js';
 let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
 process.title = `Aster v${pkg.version} (${processId})`;
 
-await db
-	.initialize()
-	.then(() => {
-		logger.done('boot', 'initialized database connection');
-	})
-	.catch((e) => {
-		console.log(e);
-		logger.fatal('boot', "couldn't initialize database connection");
-	});
+await db.initialize().catch((e) => {
+	console.log(e);
+	logger.fatal('boot', "couldn't initialize database connection");
+});
+
+WorkerService.inbox.on('completed', (job) => {
+	logger.done('inbox', 'job ' + job.id + ' completed');
+});
+WorkerService.inbox.on('failed', (job) => {
+	logger.error('inbox', 'job ' + job.id + ' failed');
+	console.log(job.stacktrace);
+});
+
+WorkerService.deliver.on('completed', (job) => {
+	logger.done('deliver', 'job ' + job.id + ' completed');
+});
+WorkerService.deliver.on('failed', (job) => {
+	logger.error('deliver', 'job ' + job.id + ' failed');
+	console.log(job.stacktrace);
+});
 
 const app = express();
 

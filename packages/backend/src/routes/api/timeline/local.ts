@@ -22,7 +22,7 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		TimelineService.get();
+		await TimelineService.get();
 
 		res.status(501).send();
 	}

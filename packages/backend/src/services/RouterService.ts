@@ -58,6 +58,15 @@ router.use((req, res, next) => {
 		next(401);
 	}
 
+	if (!req.path.startsWith('/_app'))
+		logger.debug(
+			req.method ? req.method.toLowerCase() : 'http',
+			req.path +
+				(req.headers.accept
+					? ' (accept: ' + req.headers.accept + ')'
+					: '')
+		);
+
 	next();
 });
 

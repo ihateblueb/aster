@@ -27,6 +27,7 @@ vite.config.**,**,js
 .pnpm-store
 
 .idea
+.fleet
 
 node_modules
 

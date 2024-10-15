@@ -35,7 +35,12 @@ router.get(
 		}
 	}),
 	async (req, res, next) => {
-		if (!req.headers || !req.headers.accept || req.accepts('html'))
+		if (
+			!req.headers ||
+			!req.headers.accept ||
+			(!req.headers.accept.includes('application/activity+json') &&
+				!req.headers.accept.includes('application/ld+json'))
+		)
 			return next();
 
 		res.setHeader('Content-Type', 'application/activity+json');
