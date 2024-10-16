@@ -1,6 +1,6 @@
 class FollowProcessor {
-	public async process() {
-		return;
+	public async process(body): Promise<Boolean> {
+		return false;
 	}
 }
 

@@ -1,8 +1,17 @@
+import ApValidationService from "./ApValidationService";
+
 class ApInboxService {
 	public async process(body) {
 		console.log(JSON.stringify(body));
 
-		return;
+		if (!ApValidationService.validBody(body)) return {
+			status: 400,
+			message: 'Invalid body'
+		};
+
+		return {
+			status: 202
+		};
 	}
 }
 
