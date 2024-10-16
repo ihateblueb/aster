@@ -10,6 +10,7 @@ class ApNoteRenderer {
 			id: note.apId,
 			actor: note.user.apId,
 			attributedTo: note.user.apId,
+			// todo: will this return false positives?
 			sensitive: Boolean(note.cw),
 			summary: note.cw,
 			content: note.content,

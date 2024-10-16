@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import typeorm, { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import { Activity } from './Activity.js';
 
 @Entity()
 export class Relationship {
@@ -18,6 +19,18 @@ export class Relationship {
 	// only for when 'to' has locked account
 	@Column({ default: false })
 	pending: boolean;
+
+	/* the id of the Activity that was sent
+	 * only saved if neccesary
+	 */
+	@Column({ select: false })
+	responseActivityId: string | null;
+
+	@OneToOne(() => Activity, (activity) => activity, {
+		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'responseActivityId' })
+	responseActivity: typeorm.Relation<Activity> | null;
 
 	@Column()
 	createdAt: string;

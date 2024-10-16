@@ -6,7 +6,7 @@ class TimelineService {
 	public async get() {
 		console.log(
 			await NoteService.getMany({
-				'user.local': true,
+				'user.local': Boolean(true), // todo: does this fix the undefined problem?
 				visibility: In(['public'])
 			})
 		);

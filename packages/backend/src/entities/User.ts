@@ -55,9 +55,6 @@ export class User {
 	@Column({ nullable: true })
 	birthday: string;
 
-	@Column({ type: 'jsonb', nullable: true })
-	metadata: string;
-
 	@Column({ default: false })
 	isCat: boolean;
 
@@ -72,6 +69,12 @@ export class User {
 
 	@Column({ nullable: true })
 	background: string;
+
+	@Column({ array: true, nullable: true })
+	metadataKeys: string;
+
+	@Column({ array: true, nullable: true })
+	metadataValues: string;
 
 	@Column()
 	createdAt: string;
