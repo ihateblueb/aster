@@ -76,6 +76,8 @@ export class User {
 	@Column({ array: true, nullable: true })
 	metadataValues: string;
 
+	// TODO (later): add emojis relation for emojis in displayname, bio, or metadata
+
 	@Column()
 	createdAt: string;
 

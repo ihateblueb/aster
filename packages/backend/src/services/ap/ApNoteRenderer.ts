@@ -8,8 +8,10 @@ class ApNoteRenderer {
 
 			type: 'Note',
 			id: note.apId,
+
 			actor: note.user.apId,
 			attributedTo: note.user.apId,
+
 			// todo: will this return false positives?
 			sensitive: Boolean(note.cw),
 			summary: note.cw,
@@ -18,7 +20,6 @@ class ApNoteRenderer {
 
 			// aster:visibility
 			visibility: note.visibility,
-
 			to: [],
 			cc: []
 		};
