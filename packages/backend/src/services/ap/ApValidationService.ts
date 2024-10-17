@@ -3,6 +3,7 @@ import crypto from 'crypto';
 
 import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
+import ApActorService from './ApActorService.js';
 
 class ApValidationService {
 	public async validSignature(req): Promise<boolean> {

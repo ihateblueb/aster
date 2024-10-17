@@ -26,6 +26,9 @@ class ApActorRenderer {
 			isCat: user.isCat,
 			speakAsCat: user.speakAsCat,
 
+			// todo: avatar, banner, background
+			// maybe drop background support? implementation of it sucks.
+
 			inbox: user.inbox,
 			outbox: user.outbox,
 			sharedInbox: new URL(config.url).href + 'inbox',

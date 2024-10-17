@@ -3,6 +3,7 @@ import express from 'express';
 import ApInboxService from '../../services/ap/ApInboxService.js';
 import QueueService from '../../services/QueueService.js';
 import WorkerService from '../../services/WorkerService.js';
+import ApValidationService from '../../services/ap/ApValidationService.js';
 
 const router = express.Router();
 
@@ -31,9 +32,23 @@ router.post(
 		}
 	}),
 	async (req, res, next) => {
+		console.log(JSON.stringify(req.body));
+
+		if (!ApValidationService.validBody(JSON.parse(req.body)))
+			return {
+				status: 400,
+				message: 'Invalid body'
+			};
+
+		if (!ApValidationService.validSignature(req))
+			return {
+				status: 401,
+				message: 'Invalid signature'
+			};
+
 		await QueueService.inbox.add('inbox', JSON.parse(req.body));
 
-		return res.status(501).send();
+		return res.status(202).send();
 	}
 );
 
