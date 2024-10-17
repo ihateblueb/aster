@@ -1,4 +1,11 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToOne,
+	PrimaryColumn
+} from 'typeorm';
 
 import { Note } from './Note.js';
 import { User } from './User.js';
@@ -18,7 +25,7 @@ export class NoteLike {
 	user: typeorm.Relation<User>;
 
 	@Column({ select: false })
-	noteId: string 
+	noteId: string;
 
 	@OneToOne(() => Note, (note) => note, {
 		onDelete: 'CASCADE'

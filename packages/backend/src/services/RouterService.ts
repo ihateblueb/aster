@@ -60,10 +60,12 @@ router.use((req, res, next) => {
 
 	logger.debug(
 		req.method ? req.method.toLowerCase() : 'http',
-		req.path ? req.path : '/' +
-			(req.headers.accept
-				? ' (accept: ' + req.headers.accept + ')'
-				: '')
+		req.path
+			? req.path
+			: '/' +
+					(req.headers.accept
+						? ' (accept: ' + req.headers.accept + ')'
+						: '')
 	);
 
 	next();

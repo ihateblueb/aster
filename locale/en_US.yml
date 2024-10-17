@@ -15,22 +15,22 @@ note:
     contentTooLong: 'Content too long'
     contentWarningTooLong: 'Content warning too long'
 
-    notSpecified: 'Note wasn''t specified'
-    notFound: 'Note couldn''t be found'
-    authorNotFound: 'Author couldn''t be found'
+    notSpecified: "Note wasn't specified"
+    notFound: "Note couldn't be found"
+    authorNotFound: "Author couldn't be found"
 
 user:
     usernameRequired: 'Username required'
     passwordRequired: 'Password required'
     failedCreate: 'Failed to create user'
-    failedCreatePrivate: 'Failed to create user''s private information'
+    failedCreatePrivate: "Failed to create user's private information"
     created: 'User created'
     awaitingApproval: 'User awaiting approval'
     privateNotFound: 'User private information not found'
     incorrectPassword: 'Password incorrect'
 
-    notSpecified: 'User wasn''t specified'
-    notFound: 'User couldn''t be found'
+    notSpecified: "User wasn't specified"
+    notFound: "User couldn't be found"
 
     suspended: 'User suspended'
     notActivated: 'User not activated'
@@ -44,7 +44,7 @@ user:
         passwordTooLong: 'Password too long'
         inviteRequired: 'Invite required'
         inviteAlreadyUsed: 'Invite already used'
-        inviteDoesntExist: 'Invite doesn''t exit'
+        inviteDoesntExist: "Invite doesn't exit"
 
 auth:
     success: 'Authenticated'

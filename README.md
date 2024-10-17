@@ -3,8 +3,8 @@
 [![Please don't upload to GitHub](https://nogithub.codeberg.page/badge.svg)](https://nogithub.codeberg.page)
 [![Translate Aster](https://weblate.git.gay/widget/aster/locales/svg-badge.svg?native=1)](https://weblate.git.gay/projects/aster/locales/)
 
-Aster is a federated microblogging software (heavily in development) intending to include the fun features of software like Misskey and also the practical features of software like Mastodon. 
- 
+Aster is a federated microblogging software (heavily in development) intending to include the fun features of software like Misskey and also the practical features of software like Mastodon.
+
 I also intend to have a somewhat good quality codebase with limited repetition and similar style throughout.
 
 Development instance (sometimes) available at https://dev.aster.pages.gay/. It's run through a Cloudflare tunnel and is on my computer, so it's only up when I'm working on it.
@@ -12,7 +12,7 @@ Development instance (sometimes) available at https://dev.aster.pages.gay/. It's
 ## Project Status
 
 | Feature                       | Status          | Notes                                                                                                                                  |
-|-------------------------------|-----------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| ----------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | AP user fetching              | Partially done  | Profile metadata missing, avatar, banner, and background missing.                                                                      |
 | AP note fetching              | Partially done  | Mostly good, just need to figure out direct message cc/to in the database schema and such                                              |
 | Sending AP activities         | Not started     | Section will be expended later when this is started                                                                                    |
@@ -43,4 +43,3 @@ Development instance (sometimes) available at https://dev.aster.pages.gay/. It's
 | Uploading drive files         | Not started     |                                                                                                                                        |
 | Processing drive files        | Not started     |                                                                                                                                        |
 | Processing remote files       | Not started     |                                                                                                                                        |
-

@@ -1,8 +1,15 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToOne,
+	PrimaryColumn
+} from 'typeorm';
 
+import { Emoji } from './Emoji.js';
 import { Note } from './Note.js';
 import { User } from './User.js';
-import { Emoji } from './Emoji.js';
 
 @Entity()
 export class NoteLike {
@@ -28,7 +35,7 @@ export class NoteLike {
 	emoji: typeorm.Relation<User>;
 
 	@Column({ select: false })
-	noteId: string 
+	noteId: string;
 
 	@OneToOne(() => Note, (note) => note, {
 		onDelete: 'CASCADE'

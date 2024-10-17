@@ -1,4 +1,11 @@
-import typeorm, { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	OneToOne,
+	PrimaryColumn
+} from 'typeorm';
+
 import { Activity } from './Activity.js';
 
 @Entity()

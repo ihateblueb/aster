@@ -1,7 +1,14 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
+
 import { Note } from './Note.js';
-import { User } from './User.js';
 import { Relationship } from './Relationship.js';
+import { User } from './User.js';
 
 @Entity()
 export class Notification {

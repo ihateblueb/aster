@@ -1,6 +1,13 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
-import { User } from './User.js';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
+
 import { Note } from './Note.js';
+import { User } from './User.js';
 
 @Entity()
 export class Activity {
@@ -16,7 +23,7 @@ export class Activity {
 	@JoinColumn({ name: 'creatorId' })
 	creator: typeorm.Relation<User>;
 
-    // bookmark a user, or a note
+	// bookmark a user, or a note
 
 	@Column({ select: false })
 	userId: string | null;

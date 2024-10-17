@@ -1,4 +1,11 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
+
 import { Note } from './Note.js';
 
 @Entity()
@@ -15,14 +22,14 @@ export class Poll {
 	@JoinColumn({ name: 'noteId' })
 	note: typeorm.Relation<Note>;
 
-    // todo: think of if this is reasonable
+	// todo: think of if this is reasonable
 
 	@Column({ array: true })
 	key: string;
 
-    @Column({ array: true })
+	@Column({ array: true })
 	value: string;
 
-    @Column({ array: true, nullable: true })
+	@Column({ array: true, nullable: true })
 	correctness: string;
 }

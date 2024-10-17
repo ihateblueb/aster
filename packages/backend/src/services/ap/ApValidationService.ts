@@ -1,8 +1,8 @@
-import crypto from 'crypto';
 import httpSignature from '@peertube/http-signature';
+import crypto from 'crypto';
 
-import logger from '../../utils/logger.js';
 import config from '../../utils/config.js';
+import logger from '../../utils/logger.js';
 
 class ApValidationService {
 	public async validSignature(req): Promise<boolean> {
@@ -92,8 +92,8 @@ class ApValidationService {
 			digest
 		);
 	}
-	
-	public async validBody(body): Promise<boolean> {
+
+	public validBody(body): boolean {
 		if (!body.type) return false;
 
 		logger.debug(

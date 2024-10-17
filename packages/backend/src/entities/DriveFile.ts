@@ -1,4 +1,12 @@
-import typeorm, { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	OneToOne,
+	PrimaryColumn
+} from 'typeorm';
+
 import { User } from './User.js';
 
 @Entity()
@@ -6,7 +14,7 @@ export class DriveFile {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-    // nullable because i dont want to assign remote media not posted by users to users (e.g. emoji)
+	// nullable because i dont want to assign remote media not posted by users to users (e.g. emoji)
 
 	@Column({ select: false })
 	userId: string | null;
@@ -17,22 +25,22 @@ export class DriveFile {
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User> | null;
 
-    @Column()
+	@Column()
 	type: string;
 
-    @Column({ nullable: true, default: 0 })
+	@Column({ nullable: true, default: 0 })
 	width: number;
 
-    @Column({ nullable: true, default: 0 })
+	@Column({ nullable: true, default: 0 })
 	height: number;
 
-    @Column({ default: false })
+	@Column({ default: false })
 	sensitive: boolean;
 
-    @Column()
+	@Column()
 	alt: string;
 
-    @Column()
+	@Column()
 	src: string;
 
 	@Column()

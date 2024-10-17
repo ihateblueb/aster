@@ -8,9 +8,9 @@ import typeorm, {
 	PrimaryColumn
 } from 'typeorm';
 
-import { User } from './User.js';
-import { Poll } from './Poll.js';
 import { DriveFile } from './DriveFile.js';
+import { Poll } from './Poll.js';
+import { User } from './User.js';
 
 // todo: move this note
 
