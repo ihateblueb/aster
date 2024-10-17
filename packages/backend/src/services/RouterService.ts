@@ -79,6 +79,8 @@ router.use('/', auth_login);
 router.use('/', auth_register);
 router.use('/', auth_revoke);
 
+// todo: bookmark use
+
 router.use('/', meta_get);
 
 router.use('/', note_create);
