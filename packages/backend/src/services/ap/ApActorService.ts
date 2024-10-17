@@ -1,5 +1,5 @@
-import UserService from "../UserService";
-import ApResolver from "./ApResolver";
+import UserService from "../UserService.js";
+import ApResolver from "./ApResolver.js";
 
 class ApActorService {
 	public async get(apId: string | URL) {
