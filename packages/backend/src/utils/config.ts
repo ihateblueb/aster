@@ -6,10 +6,6 @@ let configText = await readFile(`../../config/production.ini`, {
 	encoding: 'utf-8'
 });
 
-configText = await readFile(`../../config/production.ini`, {
-	encoding: 'utf-8'
-});
-
 let config = parse(configText);
 
 export default config;

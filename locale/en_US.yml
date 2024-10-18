@@ -9,6 +9,8 @@ error:
 
 note:
     created: 'Note created'
+    deleted: 'Note deleted'
+    cannotDelete: 'You cannot delete this note'
     failedCreate: 'Failed to create note'
     visibilityInvalid: 'Visibility invalid'
     contentTooShort: 'Content too short'
@@ -20,11 +22,12 @@ note:
     authorNotFound: "Author couldn't be found"
 
 user:
+    created: 'User created'
+    deleted: 'User deleted'
     usernameRequired: 'Username required'
     passwordRequired: 'Password required'
     failedCreate: 'Failed to create user'
     failedCreatePrivate: "Failed to create user's private information"
-    created: 'User created'
     awaitingApproval: 'User awaiting approval'
     privateNotFound: 'User private information not found'
     incorrectPassword: 'Password incorrect'

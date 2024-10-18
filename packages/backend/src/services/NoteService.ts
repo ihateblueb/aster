@@ -14,13 +14,24 @@ class NoteService {
 			.getOne();
 	}
 
-	public async getMany(where: object) {
+	public async delete(where: object) {
+		return db.getRepository('note').delete(where);
+	}
+
+	public async getMany(
+		where: object,
+		take?: number,
+		order?: string,
+		orderDirection?: 'ASC' | 'DESC'
+	) {
 		return await db
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
 			.where(where)
-			.getQueryAndParameters();
+			.take(take)
+			.orderBy(order, orderDirection)
+			.getMany();
 	}
 
 	public async create(
