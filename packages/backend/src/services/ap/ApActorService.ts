@@ -1,19 +1,19 @@
-import UserService from "../UserService.js";
-import ApResolver from "./ApResolver.js";
+import UserService from '../UserService.js';
+import ApResolver from './ApResolver.js';
 
 class ApActorService {
 	public async get(apId: string | URL) {
-        let uri = new URL(apId);
+		let uri = new URL(apId);
 
-        let actor = await UserService.get({ apId: apId });
+		let actor = await UserService.get({ apId: apId });
 
-        if (actor) return actor;
+		if (actor) return actor;
 
-        // let resolvedActor = await ApResolver.resolve(apId);
-        // todo: if resolved, register or update and then return as db entity
+		// let resolvedActor = await ApResolver.resolve(apId);
+		// todo: if resolved, register or update and then return as db entity
 
-        return;
-    }
+		return;
+	}
 }
 
 export default new ApActorService();

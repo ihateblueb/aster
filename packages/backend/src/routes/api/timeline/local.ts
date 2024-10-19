@@ -50,7 +50,7 @@ router.get(
 
 		if (req.query.since) where['createdAt'] = LessThan(req.query.since);
 		if (req.query.take) take = Number(req.query.take);
-		if (req.query.reverse) orderDirection = 'ASC';
+		if (req.query.reverse === 'true') orderDirection = 'ASC';
 
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;

@@ -72,6 +72,22 @@ oapi.response('error-404', {
 		}
 	}
 });
+oapi.response('error-409', {
+	description: 'Conflict present on server.',
+	content: {
+		'application/json': {
+			schema: {
+				type: 'object',
+				properties: {
+					message: {
+						type: 'string',
+						example: 'Disabled by instance configuration'
+					}
+				}
+			}
+		}
+	}
+});
 oapi.response('error-410', {
 	description: 'Resource gone.',
 	content: {

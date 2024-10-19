@@ -3,6 +3,7 @@ version: '1'
 name: 'English (United States)'
 
 error:
+    featureNotEnabled: 'Feature not enabled'
     bodyRequired: 'Body required'
     bodyInvalid: 'Body invalid'
     internalServer: 'Internal server error'

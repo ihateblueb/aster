@@ -10,24 +10,28 @@ import UpdateProcessor from './inbox/UpdateProcessor.js';
 
 class ApInboxService {
 	public async process(body) {
-		
 		if (body.type === 'Accept') {
-			await AcceptProcessor.process(body)
+			await AcceptProcessor.process(body);
 		} else if (body.type === 'Create') {
-			await CreateProcessor.process(body)
+			await CreateProcessor.process(body);
 		} else if (body.type === 'Delete') {
-			await DeleteProcessor.process(body)
+			await DeleteProcessor.process(body);
 		} else if (body.type === 'Follow') {
-			await FollowProcessor.process(body)
+			await FollowProcessor.process(body);
 		} else if (body.type === 'Like') {
-			await LikeProcessor.process(body)
+			await LikeProcessor.process(body);
 		} else if (body.type === 'Reject') {
-			await RejectProcessor.process(body)
+			await RejectProcessor.process(body);
 		} else if (body.type === 'Update') {
-			await UpdateProcessor.process(body)
+			await UpdateProcessor.process(body);
 		} else {
-			logger.warn('inbox', 'received activity of type '+body.type+' that has no processor')
-		};
+			logger.warn(
+				'inbox',
+				'received activity of type ' +
+					body.type +
+					' that has no processor'
+			);
+		}
 
 		return {
 			status: 202

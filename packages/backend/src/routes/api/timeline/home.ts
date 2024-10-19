@@ -1,6 +1,13 @@
 import express from 'express';
+import { In, LessThan } from 'typeorm';
 
+import AuthService from '../../../services/AuthService.js';
+import RelationshipService from '../../../services/RelationshipService.js';
+import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
+import config from '../../../utils/config.js';
+import locale from '../../../utils/locale.js';
+import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -22,7 +29,48 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		res.status(501).send();
+		let auth = await AuthService.verify(req.headers.authorization);
+
+		if (auth.error)
+			return res.status(auth.status).json({
+				message: auth.message
+			});
+
+		let followingIds = await RelationshipService.getFollowing(auth.user);
+
+		// to get notes from self also
+		followingIds.push(auth.user);
+
+		let where = {
+			user: { id: In(followingIds) },
+			visibility: In(['public', 'unlisted', 'followers'])
+		};
+
+		let take;
+		let orderDirection;
+
+		if (req.query.since) where['createdAt'] = LessThan(req.query.since);
+		if (req.query.take) take = Number(req.query.take);
+		if (req.query.reverse === 'true') orderDirection = 'ASC';
+
+		take =
+			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
+
+		let timeline = await TimelineService.get(
+			'note',
+			where,
+			take,
+			'note.createdAt',
+			orderDirection ? orderDirection : 'DESC'
+		).catch((err) => {
+			console.log(err);
+			logger.error('timeline', 'failed to generate timeline');
+			return res.status(500).json({
+				message: locale.error.internalServer
+			});
+		});
+
+		if (timeline) return res.status(200).json(timeline);
 	}
 );
 

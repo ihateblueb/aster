@@ -1,11 +1,11 @@
 class ApImageRenderer {
 	public render(src: string, sensitive?: boolean, alt?: string) {
-        // todo: is this correct at all
+		// todo: is this correct at all
 		let apImage = {
 			type: 'Image',
-            href: src,
-            description: alt,
-            sensitive: sensitive
+			href: src,
+			description: alt,
+			sensitive: sensitive
 		};
 
 		return apImage;
