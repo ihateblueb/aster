@@ -3,7 +3,7 @@
 	let value: String;
 
 	function setCookie() {
-		document.cookie = key+"="+value+";"
+		document.cookie = key + '=' + value + ';';
 	}
 </script>
 

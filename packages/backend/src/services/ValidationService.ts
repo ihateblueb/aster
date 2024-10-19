@@ -27,6 +27,20 @@ class ValidationService {
 			body: parsedBody
 		};
 	}
+
+	public validUrl(url: string) {
+		let unusedUrlVar;
+
+		try {
+			unusedUrlVar = new URL(url);
+		} catch (err) {
+			return false;
+		}
+
+		unusedUrlVar = undefined;
+
+		return true;
+	}
 }
 
 export default new ValidationService();

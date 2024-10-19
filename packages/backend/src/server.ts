@@ -3,6 +3,7 @@ import express from 'express';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import RouterService from './services/RouterService.js';
+import SetupService from './services/SetupService.js';
 import WorkerService from './services/WorkerService.js';
 import config from './utils/config.js';
 import db from './utils/database.js';
@@ -15,6 +16,8 @@ await db.initialize().catch((e) => {
 	console.log(e);
 	logger.fatal('boot', "couldn't initialize database connection");
 });
+
+await SetupService.try();
 
 WorkerService.inbox.on('completed', (job) => {
 	logger.done('inbox', 'job ' + job.id + ' completed');

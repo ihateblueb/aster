@@ -1,28 +1,50 @@
+import crypto from 'crypto';
+
 import pkg from '../../../../../package.json' with { type: 'json' };
+import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
 import UserService from '../UserService.js';
+import ValidationService from '../ValidationService.js';
 
 class ApResolver {
-	public async resolve(url: string | URL, as?: string) {
+	public async resolveSigned(apId: string, as?: string) {
 		let actor;
+		let actorPrivate;
 
 		if (as) {
 			actor = await UserService.get({ id: as });
+			actorPrivate = await UserService.getPrivate({ id: as });
 		} else {
-			// todo: instance actor setup
 			actor = await UserService.get({ username: 'instanceactor' });
+			actorPrivate = await UserService.getPrivate({
+				user: actor.id
+			});
 		}
 
-		await fetch(url, {
+		if (!ValidationService.validUrl(apId)) return;
+
+		const url = new URL(apId);
+		const sendDate = new Date(Date.now()).toUTCString();
+
+		const stringToSign = `(request-target): get ${url.pathname}\nhost: ${url.host}\ndate: ${sendDate}\naccept: application/activity+json, application/ld+json`;
+
+		const signature = crypto
+			.sign('sha256', Buffer.from(stringToSign), actorPrivate.privateKey)
+			.toString('base64');
+
+		const signatureHeader = `keyId="${config.url}users/${actor.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signature}"`;
+
+		return await fetch(url, {
 			method: 'GET',
 			headers: {
-				Accept: 'application/activity+json, application/ls+json; ', //todo: add that one link
-				'User-Agent': `${pkg.name}/${pkg.version}`
-				// todo: signing
+				'User-Agent': `${pkg.name}/${pkg.version}`,
+				Accept: 'application/activity+json, application/ld+json',
+				Algorithm: 'rsa-sha256',
+				Date: sendDate,
+				Signature: signatureHeader
 			}
 		})
 			.then((e) => {
-				console.log(e);
 				logger.debug(
 					'resolver',
 					'resolved ' + url + ' as @' + actor.username
@@ -36,6 +58,28 @@ class ApResolver {
 					'failed to resolve ' + url + ' as @' + actor.username
 				);
 			});
+	}
+
+	public async resolve(apId: string): Promise<object | boolean> {
+		if (!ValidationService.validUrl(apId)) return;
+
+		let request = await fetch(apId, {
+			method: 'GET',
+			headers: {
+				'User-Agent': `Aster/${pkg.version}`,
+				Accept: 'application/activity+json, application/ld+json'
+			}
+		});
+
+		if (request.ok) {
+			return request.json();
+		} else {
+			logger.error(
+				'resolver',
+				'failed request to ' + apId + 'with status ' + request.status
+			);
+			return false;
+		}
 	}
 }
 

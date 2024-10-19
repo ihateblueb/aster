@@ -837,7 +837,7 @@ undo
       'cats.city',           'shrimple.aagaming.me',
       'fedi.notfire.cc',     'soc.noob.quest',
       'mk.noob.quest',       'koko.micenest.xyz',
-      'chadthundercock.com', 
+      'chadthundercock.com',
       'oomfie.city'
     ],
     mailerEnabled: false,

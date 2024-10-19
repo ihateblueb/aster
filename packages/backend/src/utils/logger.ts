@@ -86,6 +86,7 @@ class logger {
 
 	public fatal(context: string, message: Message) {
 		this.log('fatal', context, message);
+		process.exit(1);
 	}
 }
 

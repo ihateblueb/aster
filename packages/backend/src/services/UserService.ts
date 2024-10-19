@@ -12,6 +12,10 @@ class UserService {
 		return await db.getRepository('user').findOne({ where: where });
 	}
 
+	public async getPrivate(where: object) {
+		return await db.getRepository('user_private').findOne({ where: where });
+	}
+
 	public async register(
 		username: string,
 		password: string,
