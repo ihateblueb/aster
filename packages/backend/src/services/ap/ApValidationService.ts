@@ -69,13 +69,16 @@ class ApValidationService {
 		} else if (actor.suspended) {
 			return true;
 		} else {
-			let parsedRequest = httpSignature.parseRequest(req, {
+			let parsedRequest = await httpSignature.parseRequest(req, {
 				headers: ['(request-target)', 'digest', 'host', 'date']
 			});
 
-			if (
-				httpSignature.verifySignature(parsedRequest, actor.public_key)
-			) {
+			let signatureValid = httpSignature.verifySignature(
+				parsedRequest,
+				actor.publicKey
+			);
+
+			if (signatureValid) {
 				logger.debug('ap', 'signature verified');
 				return true;
 			} else {

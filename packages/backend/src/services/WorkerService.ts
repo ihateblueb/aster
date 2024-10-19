@@ -7,7 +7,7 @@ import ApInboxService from './ap/ApInboxService.js';
 const inbox = new Worker(
 	'inbox',
 	async (job) => {
-		return await ApInboxService.process(await job.data.body);
+		return await ApInboxService.process(job.data);
 	},
 	{ connection: redis, concurrency: Number(config.inbox.concurrency) }
 );
