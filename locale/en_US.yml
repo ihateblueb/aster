@@ -52,6 +52,7 @@ user:
 
 auth:
     success: 'Authenticated'
+    insufficientPermissions: 'Insufficient permissions'
     tokenRequired: 'Token required'
     tokenInvalid: 'Token invalid'
     tokenRevoked: 'Token revoked'

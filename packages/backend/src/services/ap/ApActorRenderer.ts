@@ -1,5 +1,6 @@
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
+import ApImageRenderer from './ApImageRenderer.js';
 
 class ApActorRenderer {
 	public render(user) {
@@ -20,14 +21,23 @@ class ApActorRenderer {
 			'vcard:bday': user.birthday,
 			'vcard:Address': user.location,
 
+			sensitive: user.sensitive,
 			discoverable: user.discoverable,
 			manuallyApprovesFollowers: user.locked,
 			noindex: !user.indexable,
 			isCat: user.isCat,
 			speakAsCat: user.speakAsCat,
 
-			// todo: avatar, banner, background
-			// maybe drop background support? implementation of it sucks.
+			icon: ApImageRenderer.render(
+				user.avatar,
+				user.sensitive,
+				user.avatarAlt
+			),
+			image: ApImageRenderer.render(
+				user.banner,
+				user.sensitive,
+				user.bannerAlt
+			),
 
 			inbox: user.inbox,
 			outbox: user.outbox,

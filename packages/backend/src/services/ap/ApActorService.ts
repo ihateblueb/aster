@@ -2,8 +2,8 @@ import UserService from '../UserService.js';
 import ApResolver from './ApResolver.js';
 
 class ApActorService {
-	public async get(apId: string | URL) {
-		let uri = new URL(apId);
+	public async get(apId: string) {
+		let url = new URL(apId);
 
 		let actor = await UserService.get({ apId: apId });
 

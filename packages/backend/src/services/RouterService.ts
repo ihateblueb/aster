@@ -1,9 +1,13 @@
+import { createBullBoard } from '@bull-board/api';
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter.js';
+import { ExpressAdapter } from '@bull-board/express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import * as feHandler from 'frontend/build/handler.js';
 
+import ap_inbox from '../routes/ap/inbox.js';
 import nodeinfo from '../routes/ap/nodeinfo.js';
 import ap_note from '../routes/ap/note.js';
 import ap_user from '../routes/ap/user.js';
@@ -28,7 +32,11 @@ import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 import oapi from '../utils/apidoc.js';
 import config from '../utils/config.js';
+import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import AuthService from './AuthService.js';
+import QueueService from './QueueService.js';
+import UserService from './UserService.js';
 
 const router = express.Router();
 
@@ -69,8 +77,61 @@ router.use((req, res, next) => {
 						: '')
 	);
 
+	console.log(req.cookies);
+
 	next();
 });
+
+// bull board
+
+const serverAdapter = new ExpressAdapter();
+serverAdapter.setBasePath('/queue');
+
+createBullBoard({
+	queues: [
+		new BullMQAdapter(QueueService.inbox),
+		new BullMQAdapter(QueueService.deliver)
+	],
+	serverAdapter,
+	options: {
+		uiConfig: {
+			boardTitle: 'Queue Dashboard',
+			boardLogo: {
+				path: '/favicon.ico',
+				width: 0,
+				height: 0
+			},
+			miscLinks: [
+				{ text: 'Back to Aster', url: '/' },
+				{ text: 'Logout', url: '/logout' }
+			],
+			favIcon: {
+				default: '/favicon.ico',
+				alternative: '/favicon.ico'
+			}
+		}
+	}
+});
+
+router.get('/queue*', async (req, res, next) => {
+	let auth = await AuthService.verify(req.cookies.as_token);
+
+	if (auth.error)
+		return res.status(auth.status).json({
+			message: auth.message
+		});
+
+	if (!(await UserService.get({ id: auth.user })).admin)
+		return res.status(403).json({
+			message: locale.auth.insufficientPermissions
+		});
+
+	next();
+});
+
+router.use('/queue', serverAdapter.getRouter());
+
+// regular routes
 
 router.use(oapi);
 router.use('/swagger', oapi.swaggerui());
@@ -102,10 +163,11 @@ router.use('/', misc_ping);
 router.use('/', misc_uploads);
 
 // ap
-router.use('/', wellknown);
+router.use('/', ap_inbox);
 router.use('/', nodeinfo);
 router.use('/', ap_note);
 router.use('/', ap_user);
+router.use('/', wellknown);
 
 router.use(feHandler.handler);
 

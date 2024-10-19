@@ -3,9 +3,9 @@ class ApImageRenderer {
 		// todo: is this correct at all
 		let apImage = {
 			type: 'Image',
-			href: src,
-			description: alt,
-			sensitive: sensitive
+			url: src,
+			sensitive: sensitive,
+			description: alt
 		};
 
 		return apImage;

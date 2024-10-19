@@ -65,10 +65,16 @@ export class User {
 	avatar: string;
 
 	@Column({ nullable: true })
+	avatarAlt: string;
+
+	@Column({ nullable: true })
 	banner: string;
 
 	@Column({ nullable: true })
-	background: string;
+	bannerAlt: string;
+
+	@Column({ default: false })
+	sensitive: string;
 
 	@Column({ array: true, nullable: true })
 	metadataKeys: string;

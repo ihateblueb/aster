@@ -4,6 +4,7 @@ import ApInboxService from '../../services/ap/ApInboxService.js';
 import ApValidationService from '../../services/ap/ApValidationService.js';
 import QueueService from '../../services/QueueService.js';
 import WorkerService from '../../services/WorkerService.js';
+import oapi from '../../utils/apidoc.js';
 
 const router = express.Router();
 
@@ -32,7 +33,7 @@ router.post(
 		}
 	}),
 	async (req, res, next) => {
-		console.log(JSON.stringify(req.body));
+		console.log(JSON.stringify(JSON.parse(req.body)));
 
 		if (!ApValidationService.validBody(JSON.parse(req.body)))
 			return {
@@ -40,7 +41,7 @@ router.post(
 				message: 'Invalid body'
 			};
 
-		if (!ApValidationService.validSignature(req))
+		if (!(await ApValidationService.validSignature(req)))
 			return {
 				status: 401,
 				message: 'Invalid signature'

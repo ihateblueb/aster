@@ -72,12 +72,10 @@ class ApValidationService {
 			let parsedRequest = httpSignature.parseRequest(req, {
 				headers: ['(request-target)', 'digest', 'host', 'date']
 			});
-			let signatureVerified = httpSignature.verifySignature(
-				parsedRequest,
-				actor.public_key
-			);
 
-			if (signatureVerified) {
+			if (
+				httpSignature.verifySignature(parsedRequest, actor.public_key)
+			) {
 				logger.debug('ap', 'signature verified');
 				return true;
 			} else {
@@ -95,6 +93,7 @@ class ApValidationService {
 	}
 
 	public validBody(body): boolean {
+		if (!body) return false;
 		if (!body.type) return false;
 
 		logger.debug(
