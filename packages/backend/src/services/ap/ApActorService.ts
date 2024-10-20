@@ -16,13 +16,20 @@ class ApActorService {
 		let resolvedActor = await ApResolver.resolveSigned(apId);
 
 		if (!resolvedActor) return false;
+		if (
+			!['Person', 'Service', 'Application'].includes(
+				(await resolvedActor.json()).type
+			)
+		)
+			return false;
+
 		return await this.register(await resolvedActor.json());
 	}
 
 	public async register(body) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		console.log(body);
+		console.log(body); //todo: remove
 
 		const id = uuid.v7();
 
@@ -77,7 +84,7 @@ class ApActorService {
 		if (body.publicKey && body.publicKey.publicKeyPem)
 			user['publicKey'] = body.publicKey.publicKeyPem;
 
-		console.log(user);
+		console.log(user); //todo: remove
 
 		await db
 			.getRepository('user')

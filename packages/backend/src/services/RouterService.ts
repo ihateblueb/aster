@@ -7,6 +7,8 @@ import cors from 'cors';
 import express from 'express';
 import * as feHandler from 'frontend/build/handler.js';
 
+import ap_followers from '../routes/ap/followers.js';
+import ap_following from '../routes/ap/following.js';
 import ap_inbox from '../routes/ap/inbox.js';
 import nodeinfo from '../routes/ap/nodeinfo.js';
 import ap_note from '../routes/ap/note.js';
@@ -166,6 +168,8 @@ router.use('/', misc_ping);
 router.use('/', misc_uploads);
 
 // ap
+router.use('/', ap_followers);
+router.use('/', ap_following);
 router.use('/', ap_inbox);
 router.use('/', nodeinfo);
 router.use('/', ap_note);

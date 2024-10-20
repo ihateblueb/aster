@@ -41,4 +41,7 @@ export class Relationship {
 
 	@Column()
 	createdAt: string;
+
+	@Column()
+	updatedAt: string;
 }

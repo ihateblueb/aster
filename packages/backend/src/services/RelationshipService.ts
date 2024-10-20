@@ -8,7 +8,6 @@ class RelationshipService {
 			.where({
 				from: from
 			})
-			.select('to')
 			.getMany();
 	}
 	public async getFollowers(to: string) {
@@ -18,7 +17,6 @@ class RelationshipService {
 			.where({
 				to: to
 			})
-			.select('from')
 			.getMany();
 	}
 }
