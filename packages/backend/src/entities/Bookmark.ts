@@ -25,20 +25,22 @@ export class Activity {
 
 	// bookmark a user, or a note
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	userId: string | null;
 
 	@ManyToOne(() => User, (user) => user, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User> | null;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	noteId: string | null;
 
 	@ManyToOne(() => Note, (note) => note, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'noteId' })
 	note: typeorm.Relation<Note> | null;

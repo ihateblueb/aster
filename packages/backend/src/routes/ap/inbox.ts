@@ -33,22 +33,18 @@ router.post(
 		}
 	}),
 	async (req, res, next) => {
-		console.log(JSON.stringify(JSON.parse(req.body)));
-
-		if (!ApValidationService.validBody(JSON.parse(req.body)))
-			return {
-				status: 400,
-				message: 'Invalid body'
-			};
+		try {
+			if (!ApValidationService.validBody(JSON.parse(req.body)))
+				res.status(400).json({ message: 'Invalid body' });
+		} catch (err) {
+			console.log(err);
+			res.status(400).json({ message: "Couldn't parse body" });
+		}
 
 		if (!(await ApValidationService.validSignature(req)))
-			return {
-				status: 401,
-				message: 'Invalid signature'
-			};
+			res.status(401).json({ message: 'Invalid signature' });
 
 		await QueueService.inbox.add('inbox', JSON.parse(req.body));
-
 		return res.status(202).send();
 	}
 );

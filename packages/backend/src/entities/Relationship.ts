@@ -30,11 +30,12 @@ export class Relationship {
 	/* the id of the Activity that was sent
 	 * only saved if neccesary
 	 */
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	responseActivityId: string | null;
 
 	@OneToOne(() => Activity, (activity) => activity, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'responseActivityId' })
 	responseActivity: typeorm.Relation<Activity> | null;
@@ -42,6 +43,6 @@ export class Relationship {
 	@Column()
 	createdAt: string;
 
-	@Column()
+	@Column({ nullable: true })
 	updatedAt: string;
 }

@@ -2,6 +2,7 @@ import { Worker } from 'bullmq';
 
 import config from '../utils/config.js';
 import redis from '../utils/redis.js';
+import ApDeliverService from './ap/ApDeliverService.js';
 import ApInboxService from './ap/ApInboxService.js';
 
 const inbox = new Worker(
@@ -15,7 +16,7 @@ const inbox = new Worker(
 const deliver = new Worker(
 	'deliver',
 	async (job) => {
-		return;
+		return await ApDeliverService.deliver(job.data);
 	},
 	{ connection: redis, concurrency: Number(config.deliver.concurrency) }
 );

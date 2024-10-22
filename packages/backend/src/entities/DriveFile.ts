@@ -16,11 +16,12 @@ export class DriveFile {
 
 	// nullable because i dont want to assign remote media not posted by users to users (e.g. emoji)
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	userId: string | null;
 
 	@ManyToOne(() => User, (user) => user, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User> | null;

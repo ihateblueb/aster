@@ -44,7 +44,8 @@ export class Note {
 	replyingToId: string;
 
 	@ManyToOne(() => Note, (note) => note, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'replyingToId' })
 	replyingTo: typeorm.Relation<Note>;
@@ -62,18 +63,20 @@ export class Note {
 	pollId: string;
 
 	@OneToOne(() => Poll, (poll) => poll, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'pollId' })
 	poll: typeorm.Relation<Poll>;
 
-	/* TODO: never done a ManyToMany in this way, is this right and the correct way to join?	
-	
+	/* TODO: never done a ManyToMany in this way, is this right and the correct way to join?
+
 	@Column({ array: true, select: false, nullable: true })
 	driveFileIds: string;
 
 	@ManyToMany(() => DriveFile, (driveFile) => driveFile, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'driveFileIds' })
 	driveFiles: typeorm.Relation<DriveFile>;
