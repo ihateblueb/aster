@@ -1,52 +1,34 @@
-node_modules
-
 config/production.ini
 /logs
 
 build
 built
+target
 .svelte-kit
+.output
+.vercel
 
 uploads
 
-# used for development when making users manually
-private.pem
-public.pem
-
-.env
+*.pem
 
 packages/frontend/static/favicon.ico
 packages/frontend/static/logo.png
 
-# rust
-target
-
-vite.config.**,**,js
-
-/sonic
+node_modules
 .pnpm-store
-
 .idea
 .fleet
-
-node_modules
-
-# Output
-.output
-.vercel
-/.svelte-kit
-/build
-
-# OS
 .DS_Store
 Thumbs.db
 
-# Env
 .env
 .env.*
 !.env.example
 !.env.test
 
-# Vite
+vite.config.**,**,js
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+/sonic

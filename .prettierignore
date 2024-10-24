@@ -14,8 +14,7 @@ build
 .npmrc
 .env
 .editorconfig
-private.pem
-public.pem
+*.pem
 LICENSE
 uploads
 /sonic
