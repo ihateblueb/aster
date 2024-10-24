@@ -2,6 +2,7 @@ import cluster from 'cluster';
 import express from 'express';
 
 import pkg from '../../../package.json' with { type: 'json' };
+import MetricsService from './services/MetricsService.js';
 import RouterService from './services/RouterService.js';
 import SetupService from './services/SetupService.js';
 import WorkerService from './services/WorkerService.js';
@@ -18,6 +19,8 @@ await db.initialize().catch((e) => {
 });
 
 await SetupService.try();
+
+if (config.metrics.enabled) MetricsService.registerMetrics();
 
 WorkerService.inbox.on('completed', (job) => {
 	logger.done('inbox', 'job ' + job.id + ' completed');

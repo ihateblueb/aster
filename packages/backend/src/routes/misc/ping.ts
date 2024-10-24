@@ -24,8 +24,8 @@ router.get(
 			}
 		}
 	}),
-	(res, req) => {
-		req.status(200).json({
+	(req, res) => {
+		res.status(200).json({
 			serverTime: new Date(Date.now()).toISOString()
 		});
 	}

@@ -4,6 +4,8 @@ import { In } from 'typeorm';
 import pkg from '../../../../../package.json' with { type: 'json' };
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
 import ApNoteRenderer from '../../services/ap/ApNoteRenderer.js';
+import CacheService from '../../services/CacheService.js';
+import MetricsService from '../../services/MetricsService.js';
 import NoteService from '../../services/NoteService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
@@ -51,6 +53,17 @@ router.get(
 				message: locale.note.notSpecified
 			});
 
+		if (config.cache.ap) {
+			let cachedNote = await CacheService.get('ap_note_' + req.params.id);
+
+			if (cachedNote) {
+				MetricsService.apNoteCacheHits.inc(1);
+				return res.status(200).json(JSON.parse(cachedNote));
+			} else {
+				MetricsService.apNoteCacheMisses.inc(1);
+			}
+		}
+
 		let note = await NoteService.get({ id: req.params.id });
 
 		if (note) {
@@ -67,7 +80,16 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				return res.status(200).json(ApNoteRenderer.render(note));
+				let rendered = ApNoteRenderer.render(note);
+
+				if (config.cache.ap)
+					await CacheService.set(
+						'ap_note_' + req.params.id,
+						JSON.stringify(rendered),
+						config.apExpiration
+					);
+
+				return res.status(200).json(rendered);
 			}
 		} else {
 			return res.status(404).json({

@@ -30,6 +30,7 @@ import timeline_public from '../routes/api/timeline/public.js';
 import user_edit from '../routes/api/user/edit.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
+import misc_metrics from '../routes/misc/metrics.js';
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 import oapi from '../utils/apidoc.js';
@@ -164,6 +165,7 @@ router.use('/', user_edit);
 router.use('/', user_get);
 router.use('/', user_lookup);
 
+if (config.metrics.enabled) router.use('/', misc_metrics);
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
 

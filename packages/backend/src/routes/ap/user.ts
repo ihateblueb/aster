@@ -3,6 +3,9 @@ import { In } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
+import ApNoteRenderer from '../../services/ap/ApNoteRenderer.js';
+import CacheService from '../../services/CacheService.js';
+import MetricsService from '../../services/MetricsService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
@@ -50,6 +53,17 @@ router.get(
 				message: 'User not specified'
 			});
 
+		if (config.cache.ap) {
+			let cachedUser = await CacheService.get('ap_user_' + req.params.id);
+
+			if (cachedUser) {
+				MetricsService.apUserCacheHits.inc(1);
+				return res.status(200).json(JSON.parse(cachedUser));
+			} else {
+				MetricsService.apUserCacheMisses.inc(1);
+			}
+		}
+
 		let user = await UserService.get({ id: req.params.id });
 
 		if (user) {
@@ -66,7 +80,16 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				return res.status(200).json(ApActorRenderer.render(user));
+				let rendered = ApActorRenderer.render(user);
+
+				if (config.cache.ap)
+					await CacheService.set(
+						'ap_user_' + req.params.id,
+						JSON.stringify(rendered),
+						config.apExpiration
+					);
+
+				return res.status(200).json(rendered);
 			}
 		} else {
 			return res.status(404).json({
