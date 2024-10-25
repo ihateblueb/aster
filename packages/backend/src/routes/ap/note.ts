@@ -86,7 +86,7 @@ router.get(
 					await CacheService.set(
 						'ap_note_' + req.params.id,
 						JSON.stringify(rendered),
-						config.apExpiration
+						Number(config.cache.apExpiration)
 					);
 
 				return res.status(200).json(rendered);
