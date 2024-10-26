@@ -4,6 +4,8 @@ import { In } from 'typeorm';
 import pkg from '../../../../../package.json' with { type: 'json' };
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
 import ApOrderedCollectionRenderer from '../../services/ap/ApOrderedCollectionRenderer.js';
+import CacheService from '../../services/CacheService.js';
+import MetricsService from '../../services/MetricsService.js';
 import RelationshipService from '../../services/RelationshipService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
@@ -52,6 +54,30 @@ router.get(
 				message: 'User not specified'
 			});
 
+		let first = false;
+		if (!req.query.page) first = true;
+
+		let cursor = '';
+		if (req.query.cursor) cursor = req.query.cursor.toString();
+
+		if (config.cache.ap) {
+			let cachedUserFollowing = await CacheService.get(
+				'ap_user_followers_first-' +
+					first +
+					'_cursor-' +
+					cursor +
+					'_' +
+					req.params.id
+			);
+
+			if (cachedUserFollowing) {
+				MetricsService.apUserCacheHits.inc(1);
+				return res.status(200).json(JSON.parse(cachedUserFollowing));
+			} else {
+				MetricsService.apUserCacheMisses.inc(1);
+			}
+		}
+
 		let user = await UserService.get({ id: req.params.id });
 
 		if (user) {
@@ -68,26 +94,30 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				let first = false;
-				if (!req.query.page) first = true;
-
-				let cursor = '';
-				if (req.query.cursor) cursor = req.query.cursor.toString();
-
 				let items = await RelationshipService.getFollowers(
 					req.params.id
 				);
 
-				return res
-					.status(200)
-					.json(
-						ApOrderedCollectionRenderer.render(
-							first,
-							'users/' + req.params.id + '/followers',
-							cursor,
-							items
-						)
+				let rendered = ApOrderedCollectionRenderer.render(
+					first,
+					'users/' + req.params.id + '/followers',
+					cursor,
+					items
+				);
+
+				if (config.cache.ap)
+					await CacheService.set(
+						'ap_user_followers_first-' +
+							first +
+							'_cursor-' +
+							cursor +
+							'_' +
+							req.params.id,
+						JSON.stringify(rendered),
+						Number(config.cache.apExpiration)
 					);
+
+				return res.status(200).json(rendered);
 			}
 		} else {
 			return res.status(404).json({

@@ -14,17 +14,19 @@ class RelationshipService {
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
 			.where({
-				from: from
+				from: from,
+				pending: false
 			})
 			.getMany();
 	}
-	
+
 	public async getFollowers(to: string) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
 			.where({
-				to: to
+				to: to,
+				pending: false
 			})
 			.getMany();
 	}
@@ -33,34 +35,40 @@ class RelationshipService {
 		let deliver = ApAcceptRenderer.render({
 			id: id,
 			activity: body
-		})
-
-		return await QueueService.deliver.add('deliver', {
-			as: to,
-			inbox: from,
-			body: deliver
-		}).then(() => {
-			return true;
-		}).catch(() => {
-			return false;
 		});
+
+		return await QueueService.deliver
+			.add('deliver', {
+				as: to,
+				inbox: from,
+				body: deliver
+			})
+			.then(() => {
+				return true;
+			})
+			.catch(() => {
+				return false;
+			});
 	}
 
 	public async rejectFollow(id: string, to: string, from: string, body) {
 		let deliver = ApRejectRenderer.render({
 			id: id,
 			activity: body
-		})
-
-		return await QueueService.deliver.add('deliver', {
-			as: to,
-			inbox: from,
-			body: deliver
-		}).then(() => {
-			return true;
-		}).catch(() => {
-			return false;
 		});
+
+		return await QueueService.deliver
+			.add('deliver', {
+				as: to,
+				inbox: from,
+				body: deliver
+			})
+			.then(() => {
+				return true;
+			})
+			.catch(() => {
+				return false;
+			});
 	}
 
 	public async registerFollow(body) {
@@ -69,7 +77,7 @@ class RelationshipService {
 
 		let from = await ApActorService.get(body.actor);
 		if (!from) return false;
-		
+
 		if (to.locked) {
 			const id = uuid.v7();
 			const aId = uuid.v7();
@@ -79,7 +87,8 @@ class RelationshipService {
 				.insert({
 					id: aId,
 					activity: JSON.stringify(body)
-				}).then(() => {
+				})
+				.then(() => {
 					return true;
 				})
 				.catch((err) => {
@@ -102,7 +111,8 @@ class RelationshipService {
 					pending: true,
 					responseActivityId: aId,
 					createdAt: new Date().toISOString()
-				}).then(() => {
+				})
+				.then(() => {
 					return true;
 				})
 				.catch((err) => {
