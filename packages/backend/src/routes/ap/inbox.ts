@@ -5,6 +5,7 @@ import ApValidationService from '../../services/ap/ApValidationService.js';
 import QueueService from '../../services/QueueService.js';
 import WorkerService from '../../services/WorkerService.js';
 import oapi from '../../utils/apidoc.js';
+import logger from '../../utils/logger.js';
 
 const router = express.Router();
 
@@ -44,8 +45,13 @@ router.post(
 		if (!(await ApValidationService.validSignature(req)))
 			res.status(401).json({ message: 'Invalid signature' });
 
-		await QueueService.inbox.add('inbox', JSON.parse(req.body));
-		return res.status(202).send();
+		return await QueueService.inbox.add('inbox', JSON.parse(req.body)).then(() => {
+			return res.status(202).send();
+		}).catch((err) => {
+			console.log(err);
+			logger.error('inbox', 'failed to add activity to queue');
+			return res.status(500).send();
+		});
 	}
 );
 

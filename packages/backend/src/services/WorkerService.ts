@@ -6,7 +6,7 @@ import ApDeliverService from './ap/ApDeliverService.js';
 import ApInboxService from './ap/ApInboxService.js';
 
 const inbox = new Worker(
-	'inbox',
+	'{inbox}',
 	async (job) => {
 		return await ApInboxService.process(job.data);
 	},
@@ -14,7 +14,7 @@ const inbox = new Worker(
 );
 
 const deliver = new Worker(
-	'deliver',
+	'{deliver}',
 	async (job) => {
 		return await ApDeliverService.deliver(job.data);
 	},

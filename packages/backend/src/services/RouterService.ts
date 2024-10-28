@@ -73,7 +73,8 @@ router.use((req, res, next) => {
 	if (
 		req.path &&
 		!req.path.startsWith('/_app') &&
-		!req.path.startsWith('/queue/api')
+		!req.path.startsWith('/queue/api') &&
+		!req.path.startsWith('/metrics')
 	)
 		logger.debug(
 			req.method ? req.method.toLowerCase() : 'http',
