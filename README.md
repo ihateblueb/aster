@@ -60,3 +60,8 @@ Run `pnpm start` and your instance will start up.
 | Uploading drive files         | Not started     |                                                                                                                                        |
 | Processing drive files        | Not started     |                                                                                                                                        |
 | Processing remote files       | Not started     |                                                                                                                                        |
+
+## TODO
+
+- handle robots.txt from backend, generate from config
+- favicons
