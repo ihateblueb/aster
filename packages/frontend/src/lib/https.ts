@@ -7,7 +7,7 @@ class https {
         // changed in svelte 5 or do i just not remember how to do this?
         // i dont think this is correct
         let count = Store.activeRequests
-        count.update(() => num);
+        count.update((e) => e + num);
     }
 
     public async get(url: string, auth?: boolean) {
@@ -21,6 +21,8 @@ class https {
         })
 
         this.count(-1);
+
+        return req.json();
     }
     public async post(url: string) {
         this.count(1);
@@ -33,6 +35,8 @@ class https {
         })
         
         this.count(-1);
+
+        return req.json();
     }
     public async patch(url: string) {
         this.count(1);
@@ -45,6 +49,8 @@ class https {
         })
         
         this.count(-1);
+
+        return req.json();
     }
     public async delete(url: string) {
         this.count(1);
@@ -57,6 +63,8 @@ class https {
         })
         
         this.count(-1);
+        
+        return req.json();
     }
 }
 

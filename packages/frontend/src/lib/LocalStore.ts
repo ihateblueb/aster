@@ -1,4 +1,6 @@
 let defaults = {
+    debug: false,
+    
     homeTab: 'public',
     exploreTab: 'local',
     notificationsTab: 'all',
