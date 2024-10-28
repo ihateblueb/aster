@@ -20,3 +20,4 @@ uploads
 /sonic
 .pnpm-store
 .idea
+pnpm-lock.yaml
