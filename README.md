@@ -8,14 +8,30 @@ I also intend to have a somewhat good quality codebase with limited repetition a
 
 Development instance (sometimes) available at https://dev.aster.pages.gay/. It's run through a Cloudflare tunnel and is on my computer, so it's only up when I'm working on it.
 
+## Requirements
+- NodeJS
+- pnpm
+- PostgreSQL
+- DragonflyDB 
+
+Latest of all of these are best
+
+## Setup
+Install dependencies with `pnpm i` and then build with `pnpm build`.\
+Afterward, copy `./config/example.ini` to `./config/production.ini` and update it to your liking.\
+It is recommended you set the logging to fancy during initial setup.\
+After configuration, run `pnpm migrate` to set up your database, and then you're good to go!\
+Run `pnpm start` and your instance will start up.
+
+
 ## Project Status
 
 | Feature                       | Status          | Notes                                                                                                                                  |
-| ----------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| ----------------------------- |-----------------| -------------------------------------------------------------------------------------------------------------------------------------- |
 | AP user fetching              | Partially done  | Profile metadata missing, avatar, banner, and background missing.                                                                      |
 | AP note fetching              | Partially done  | Mostly good, just need to figure out direct message cc/to in the database schema and such                                              |
-| Sending AP activities         | Not started     | Section will be expended later when this is started                                                                                    |
-| Receiving AP activities       | Not started     | The same thing goes for this.                                                                                                          |
+| Sending AP activities         | Started         | Section will be expended later when this is started                                                                                    |
+| Receiving AP activities       | Started         | The same thing goes for this.                                                                                                          |
 | `nodeinfo` & `host-meta`      | Good            | 2.0 and 2.1 partially implemented, a lot of missing statistics though.                                                                 |
 | Webfinger                     | Good            | Works with Mastodon, but needs further testing.                                                                                        |
 | User registration             | Complete        | Pretty good! I'm really happy with this part of Aster.                                                                                 |

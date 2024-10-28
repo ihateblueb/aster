@@ -3,7 +3,7 @@ import { Queue } from 'bullmq';
 import config from '../utils/config.js';
 import redis from '../utils/redis.js';
 
-const inbox = new Queue('inbox', {
+const inbox = new Queue('{inbox}', {
 	connection: redis,
 	defaultJobOptions: {
 		removeOnComplete: false,
@@ -16,7 +16,7 @@ const inbox = new Queue('inbox', {
 	}
 });
 
-const deliver = new Queue('deliver', {
+const deliver = new Queue('{deliver}', {
 	connection: redis,
 	defaultJobOptions: {
 		removeOnComplete: false,
