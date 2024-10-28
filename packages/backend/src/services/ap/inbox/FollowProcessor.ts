@@ -6,6 +6,7 @@ class FollowProcessor {
 		if (!body.object) return false;
 
 		return await RelationshipService.registerFollow(body);
-}}
+	}
+}
 
 export default new FollowProcessor();

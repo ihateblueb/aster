@@ -74,6 +74,7 @@ router.use((req, res, next) => {
 		req.path &&
 		!req.path.startsWith('/_app') &&
 		!req.path.startsWith('/queue/api') &&
+		!req.path.startsWith('/queue/static') &&
 		!req.path.startsWith('/metrics')
 	)
 		logger.debug(

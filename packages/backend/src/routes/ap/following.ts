@@ -49,6 +49,8 @@ router.get(
 
 		res.setHeader('Content-Type', 'application/activity+json');
 
+		return res.status(404).send();
+
 		if (!req.params.id)
 			return res.status(400).json({
 				message: 'User not specified'

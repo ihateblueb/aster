@@ -16,14 +16,10 @@ class ApActorService {
 		let resolvedActor = await ApResolver.resolveSigned(apId);
 
 		if (!resolvedActor) return false;
-		if (
-			!['Person', 'Service', 'Application'].includes(
-				(await resolvedActor.json()).type
-			)
-		)
+		if (!['Person', 'Service', 'Application'].includes(resolvedActor.type))
 			return false;
 
-		return await this.register(await resolvedActor.json());
+		return await this.register(resolvedActor);
 	}
 
 	public async register(body) {

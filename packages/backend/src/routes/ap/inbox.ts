@@ -45,13 +45,16 @@ router.post(
 		if (!(await ApValidationService.validSignature(req)))
 			res.status(401).json({ message: 'Invalid signature' });
 
-		return await QueueService.inbox.add('inbox', JSON.parse(req.body)).then(() => {
-			return res.status(202).send();
-		}).catch((err) => {
-			console.log(err);
-			logger.error('inbox', 'failed to add activity to queue');
-			return res.status(500).send();
-		});
+		return await QueueService.inbox
+			.add('inbox', JSON.parse(req.body))
+			.then(() => {
+				return res.status(202).send();
+			})
+			.catch((err) => {
+				console.log(err);
+				logger.error('inbox', 'failed to add activity to queue');
+				return res.status(500).send();
+			});
 	}
 );
 
