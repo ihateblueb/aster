@@ -65,3 +65,4 @@ Run `pnpm start` and your instance will start up.
 
 - handle robots.txt from backend, generate from config
 - favicons
+- refactor Store and LocalStore, i shouldnt've capitalized them
