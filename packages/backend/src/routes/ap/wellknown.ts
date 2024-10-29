@@ -16,7 +16,8 @@ router.get(
 			200: {
 				description: 'Return nodeinfo links.',
 				content: {
-					'application/activity+json': {}
+					'application/activity+json': {},
+					'application/ld+json': {}
 				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
@@ -25,7 +26,14 @@ router.get(
 		}
 	}),
 	(req, res) => {
-		res.setHeader('Content-Type', 'application/activity+json');
+		if (
+			req.headers.accept &&
+			req.headers.accept.includes('application/ld+json')
+		) {
+			res.setHeader('Content-Type', 'application/ld+json');
+		} else {
+			res.setHeader('Content-Type', 'application/activity+json');
+		}
 
 		return res.status(200).json({
 			links: [
@@ -64,7 +72,7 @@ router.get(
 		if (req.headers.accept.includes('application/xrd+xml')) {
 			res.setHeader('Content-Type', 'application/xrd+xml');
 			return res.status(200).send(
-				`<XRD>
+				`<XRD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
 					<Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" />
 				</XRD>`
 			);
