@@ -1,26 +1,35 @@
+import { browser } from '$app/environment';
+
 let defaults = {
-    debug: false,
-    
-    homeTab: 'public',
-    exploreTab: 'local',
-    notificationsTab: 'all',
+	debug: false,
 
-    locale: 'en_US',
-    colorscheme: '',
-    theme: '',
-    font: '',
+	homeTab: 'public',
+	exploreTab: 'local',
+	notificationsTab: 'all',
 
-    self: undefined,
-    token: undefined
-}
+	locale: 'en_US',
+	colorscheme: '',
+	theme: '',
+	font: '',
+
+	self: undefined,
+	token: undefined
+};
 
 class LocalStore {
-    public defaults = defaults;
+	public defaults = defaults;
 
-    public get(key: string) {
-        return localStorage.getItem(key);
-        // TODO: fallback to defaults
-    }
+	public get(key: string) {
+		let toReturn;
+
+		if (browser) toReturn = localStorage.getItem('aster_' + key);
+
+		if (toReturn) {
+			return toReturn;
+		} else {
+			return defaults[key];
+		}
+	}
 }
 
 export default new LocalStore();

@@ -51,7 +51,8 @@ router.get(
 			200: {
 				description: 'Return host meta.',
 				content: {
-					'application/xrd+xml': {}
+					'application/xrd+xml': {},
+					'application/jrd+json': {}
 				}
 			},
 			401: { $ref: '#/components/responses/error-401' },
@@ -62,11 +63,11 @@ router.get(
 	(req, res) => {
 		if (req.headers.accept.includes('application/xrd+xml')) {
 			res.setHeader('Content-Type', 'application/xrd+xml');
-			return res
-				.status(200)
-				.send(
-					`<XRD><Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" /></XRD>`
-				);
+			return res.status(200).send(
+				`<XRD>
+					<Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" />
+				</XRD>`
+			);
 		} else if (req.headers.accept.includes('application/jrd+json')) {
 			res.setHeader('Content-Type', 'application/jrd+json');
 			return res.status(200).json({
@@ -99,40 +100,82 @@ router.get(
 			200: {
 				description: 'Return apId of user.',
 				content: {
-					'application/jrd+json': {}
+					'application/jrd+json': {},
+					'application/xrd+xml': {}
 				}
 			},
+			400: { $ref: '#/components/responses/error-400' },
 			401: { $ref: '#/components/responses/error-401' },
 			403: { $ref: '#/components/responses/error-403' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
 	async (req, res) => {
-		res.setHeader('Content-Type', 'application/jrd+json');
+		if (!req.query.resource) return res.status(400).send();
 
-		if (!req.query.resource || !req.query.resource.startsWith('acct:'))
-			return res.status(400).send();
+		let resource = new URL(
+			req.query.resource
+				.toString()
+				.replace('acct:@', '')
+				.replace('acct:', '')
+				.replace('@' + new URL(config.url).host, '')
+		).searchParams.get('resource');
 
-		logger.debug('webfinger', req.query.resource);
+		logger.debug('webfinger', 'resource: ' + resource);
 
 		let user = await UserService.get({
 			local: true,
-			username: req.query.resource.replace('acct:', '').split('@')[0]
+			username: resource
 		});
 
 		if (!user || user.suspended || !user.activated)
 			return res.status(404).send();
 
-		return res.status(200).json({
-			subject: `acct:${user.username}@${new URL(config.url).host}`,
-			links: [
-				{
-					rel: 'self',
-					type: 'application/activity+json',
-					href: `${new URL(config.url).href}users/${user.id}`
-				}
-			]
-		});
+		// todo: /authorize-follow?acct={uri}
+		if (
+			req.headers.accept &&
+			req.headers.accept.includes('application/xrd+xml')
+		) {
+			res.setHeader('Content-Type', 'application/xrd+xml');
+
+			return res.status(200).send(
+				`<XRD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
+					<Subject>acct:${user.username}@${new URL(config.url).host}</Subject>
+					<Alias>${new URL(config.url).href}users/${user.id}</Alias>
+					<Alias>${new URL(config.url).href}@${user.username}</Alias>
+					<Link rel="self" type="application/activity+json" href="${new URL(config.url).href}users/${user.id}" />
+					<Link rel="self" type="application/ld+json" href="${new URL(config.url).href}users/${user.id}" />
+					<Link rel="http://webfinger.net/rel/profile-page" type="text/html" href="${new URL(config.url).href}users/${user.id}" />
+				</XRD>`
+			);
+		} else {
+			res.setHeader('Content-Type', 'application/jrd+json');
+
+			return res.status(200).json({
+				subject: `acct:${user.username}@${new URL(config.url).host}`,
+				aliases: [
+					`${new URL(config.url).href}users/${user.id}`,
+					`${new URL(config.url).href}@${user.username}`
+				],
+				links: [
+					{
+						rel: 'self',
+						type: 'application/activity+json',
+						href: `${new URL(config.url).href}users/${user.id}`
+					},
+					{
+						rel: 'self',
+						type: 'application/ld+json',
+						href: `${new URL(config.url).href}users/${user.id}`
+					},
+					{
+						rel: 'http://webfinger.net/rel/profile-page',
+						type: 'text/html',
+						href: `${new URL(config.url).href}users/${user.id}`
+					}
+				]
+			});
+		}
 	}
 );
 
