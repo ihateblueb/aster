@@ -42,11 +42,13 @@ router.post(
 			res.status(400).json({ message: "Couldn't parse body" });
 		}
 
-		if (!(await ApValidationService.validSignature(req)))
-			res.status(401).json({ message: 'Invalid signature' });
-
-		return await QueueService.inbox
-			.add('inbox', JSON.parse(req.body))
+		let apvs = await ApValidationService.validSignature(req, String(JSON.parse(req.body).type));
+		
+		if (!apvs.valid && apvs.pretendToProcess) res.status(202).json();
+		if (!apvs.valid && !apvs.pretendToProcess) res.status(401).json({ message: 'Invalid signature' });
+		
+		if (apvs.valid) return await QueueService.inbox
+			.add('{inbox}', JSON.parse(req.body))
 			.then(() => {
 				return res.status(202).send();
 			})

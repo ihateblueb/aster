@@ -38,7 +38,7 @@ class RelationshipService {
 		});
 
 		return await QueueService.deliver
-			.add('deliver', {
+			.add('{deliver}', {
 				as: to,
 				inbox: from,
 				body: deliver
@@ -58,7 +58,7 @@ class RelationshipService {
 		});
 
 		return await QueueService.deliver
-			.add('deliver', {
+			.add('{deliver}', {
 				as: to,
 				inbox: from,
 				body: deliver
