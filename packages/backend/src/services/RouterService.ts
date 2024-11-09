@@ -21,6 +21,7 @@ import meta_get from '../routes/api/meta/get.js';
 import note_create from '../routes/api/note/create.js';
 import note_delete from '../routes/api/note/delete.js';
 import note_get from '../routes/api/note/get.js';
+import note_like from '../routes/api/note/like.js';
 import notification_read from '../routes/api/notifications/read.js';
 import notification_timeline from '../routes/api/notifications/timeline.js';
 import timeline_bubble from '../routes/api/timeline/bubble.js';
@@ -154,6 +155,7 @@ router.use('/', meta_get);
 router.use('/', note_create);
 router.use('/', note_delete);
 router.use('/', note_get);
+router.use('/', note_like);
 
 router.use('/', notification_read);
 router.use('/', notification_timeline);

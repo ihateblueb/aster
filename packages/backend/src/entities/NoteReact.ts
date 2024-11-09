@@ -12,7 +12,7 @@ import { Note } from './Note.js';
 import { User } from './User.js';
 
 @Entity()
-export class NoteLike {
+export class NoteReact {
 	@PrimaryColumn({ unique: true })
 	id: string;
 

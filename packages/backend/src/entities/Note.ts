@@ -4,11 +4,13 @@ import typeorm, {
 	JoinColumn,
 	ManyToMany,
 	ManyToOne,
+	OneToMany,
 	OneToOne,
 	PrimaryColumn
 } from 'typeorm';
 
 import { DriveFile } from './DriveFile.js';
+import { NoteLike } from './NoteLike.js';
 import { Poll } from './Poll.js';
 import { User } from './User.js';
 
@@ -84,8 +86,12 @@ export class Note {
 	TODO (later): add emojis relation for emojis in post content
 	*/
 
-	// todo: NoteLike, NoteReact, Note relations?
-	// Note relations may have potential to loop weirdly if not careful
+	@OneToMany(() => NoteLike, (noteLike) => noteLike, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinColumn()
+	likes: typeorm.Relation<NoteLike>;
 
 	@Column()
 	createdAt: string;

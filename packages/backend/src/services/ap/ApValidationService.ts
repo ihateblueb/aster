@@ -6,7 +6,10 @@ import logger from '../../utils/logger.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {
-	public async validSignature(req, type: string): Promise<{ valid: boolean, pretendToProcess?: boolean }> {
+	public async validSignature(
+		req,
+		type: string
+	): Promise<{ valid: boolean; pretendToProcess?: boolean }> {
 		if (!req.headers.host) {
 			logger.error('ap', 'no host present');
 			return {
@@ -78,17 +81,23 @@ class ApValidationService {
 		let actor = await ApActorService.get(JSON.parse(req.body).actor);
 
 		if (!actor) {
-			logger.debug('ap', 'actor not properly fetched');
+			if (type === 'Delete') {
+				logger.debug(
+					'ap',
+					"actor not known, so there's nothing to delete. pretending to process"
+				);
 
-			// actor not present, so there's nothing to delete
-			if (type === "Delete") return {
-				valid: false,
-				pretendToProcess: true
-			};
-			
-			return {
-				valid: false
-			};
+				return {
+					valid: false,
+					pretendToProcess: true
+				};
+			} else {
+				logger.debug('ap', 'actor not properly fetched');
+
+				return {
+					valid: false
+				};
+			}
 		} else if (actor.suspended) {
 			return {
 				valid: false,

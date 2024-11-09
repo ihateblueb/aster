@@ -47,7 +47,7 @@ class ApResolver {
 			.then((e) => {
 				logger.debug(
 					'resolver',
-					'resolved ' + url + ' as @' + actor.username
+					'fetched ' + url + ' as @' + actor.username
 				);
 				return e;
 			})
@@ -55,7 +55,7 @@ class ApResolver {
 				console.log(err);
 				logger.error(
 					'resolver',
-					'failed to resolve ' + url + ' as @' + actor.username
+					'failed to fetch ' + url + ' as @' + actor.username
 				);
 			});
 	}
