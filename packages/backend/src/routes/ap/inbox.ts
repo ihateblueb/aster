@@ -16,13 +16,14 @@ router.post(
 		tags: ['Federation'],
 		requestBody: {
 			content: {
-				'application/activity+json': {}
+				'application/activity+json': {},
+				'application/ld+json': {}
 			}
 		},
 		responses: {
 			200: {
 				content: {
-					'application/activity+json': {}
+					'application/application+json': {}
 				}
 			},
 			202: { $ref: '#/components/responses/error-202' },
@@ -42,21 +43,26 @@ router.post(
 			res.status(400).json({ message: "Couldn't parse body" });
 		}
 
-		let apvs = await ApValidationService.validSignature(req, String(JSON.parse(req.body).type));
-		
+		let apvs = await ApValidationService.validSignature(
+			req,
+			String(JSON.parse(req.body).type)
+		);
+
 		if (!apvs.valid && apvs.pretendToProcess) res.status(202).json();
-		if (!apvs.valid && !apvs.pretendToProcess) res.status(401).json({ message: 'Invalid signature' });
-		
-		if (apvs.valid) return await QueueService.inbox
-			.add('{inbox}', JSON.parse(req.body))
-			.then(() => {
-				return res.status(202).send();
-			})
-			.catch((err) => {
-				console.log(err);
-				logger.error('inbox', 'failed to add activity to queue');
-				return res.status(500).send();
-			});
+		if (!apvs.valid && !apvs.pretendToProcess)
+			res.status(401).json({ message: 'Invalid signature' });
+
+		if (apvs.valid)
+			return await QueueService.inbox
+				.add('{inbox}', JSON.parse(req.body))
+				.then(() => {
+					return res.status(202).send();
+				})
+				.catch((err) => {
+					console.log(err);
+					logger.error('inbox', 'failed to add activity to queue');
+					return res.status(500).send();
+				});
 	}
 );
 

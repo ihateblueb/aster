@@ -12,6 +12,7 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
+			.leftJoinAndSelect('note.likes', 'note_like')
 			.where(where)
 			.getOne();
 	}

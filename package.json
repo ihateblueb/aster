@@ -2,6 +2,10 @@
 	"name": "aster",
 	"version": "2024.10.14",
 	"module": "true",
+	"keywords": [],
+	"author": "blueb",
+	"license": "AGPL-3.0",
+	"private": true,
 	"repository": {
 		"type": "git",
 		"url": "https://git.gay/blueb/aster.git"
@@ -10,7 +14,6 @@
 		"packages/frontend",
 		"packages/backend"
 	],
-	"private": true,
 	"scripts": {
 		"start": "./scripts/greet.sh && pnpm --filter=backend start",
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
@@ -31,9 +34,6 @@
 		"clean-fe": "./scripts/clean-fe.sh",
 		"clean-all": "./scripts/clean-all.sh"
 	},
-	"keywords": [],
-	"author": "blueb",
-	"license": "AGPL-3.0",
 	"dependencies": {
 		"@eslint/js": "^9.12.0",
 		"eslint": "^9.12.0",

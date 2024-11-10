@@ -86,11 +86,14 @@ export class Note {
 	TODO (later): add emojis relation for emojis in post content
 	*/
 
+	@Column({ array: true, select: false, nullable: true })
+	likeIds: string;
+
 	@OneToMany(() => NoteLike, (noteLike) => noteLike, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
-	@JoinColumn()
+	@JoinColumn({ name: 'likeIds' })
 	likes: typeorm.Relation<NoteLike>;
 
 	@Column()

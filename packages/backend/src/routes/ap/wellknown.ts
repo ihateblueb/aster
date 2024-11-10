@@ -121,13 +121,12 @@ router.get(
 	async (req, res) => {
 		if (!req.query.resource) return res.status(400).send();
 
-		let resource = new URL(
-			req.query.resource
-				.toString()
-				.replace('acct:@', '')
-				.replace('acct:', '')
-				.replace('@' + new URL(config.url).host, '')
-		).searchParams.get('resource');
+		let resource = req.query.resource
+			.toString()
+			.replace('acct:@', '')
+			.replace('acct:', '')
+			.replace('@' + new URL(config.url).host, '')
+			.replace('@', '');
 
 		logger.debug('webfinger', 'resource: ' + resource);
 
@@ -152,7 +151,6 @@ router.get(
 					<Alias>${new URL(config.url).href}users/${user.id}</Alias>
 					<Alias>${new URL(config.url).href}@${user.username}</Alias>
 					<Link rel="self" type="application/activity+json" href="${new URL(config.url).href}users/${user.id}" />
-					<Link rel="self" type="application/ld+json" href="${new URL(config.url).href}users/${user.id}" />
 					<Link rel="http://webfinger.net/rel/profile-page" type="text/html" href="${new URL(config.url).href}users/${user.id}" />
 				</XRD>`
 			);
@@ -169,11 +167,6 @@ router.get(
 					{
 						rel: 'self',
 						type: 'application/activity+json',
-						href: `${new URL(config.url).href}users/${user.id}`
-					},
-					{
-						rel: 'self',
-						type: 'application/ld+json',
 						href: `${new URL(config.url).href}users/${user.id}`
 					},
 					{

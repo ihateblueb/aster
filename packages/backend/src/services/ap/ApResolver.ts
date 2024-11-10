@@ -49,7 +49,7 @@ class ApResolver {
 					'resolver',
 					'fetched ' + url + ' as @' + actor.username
 				);
-				return e;
+				return e.json();
 			})
 			.catch((err) => {
 				console.log(err);

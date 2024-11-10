@@ -15,6 +15,8 @@ class ApActorService {
 
 		let resolvedActor = await ApResolver.resolveSigned(apId);
 
+		console.log(resolvedActor);
+
 		if (!resolvedActor) return false;
 		if (!['Person', 'Service', 'Application'].includes(resolvedActor.type))
 			return false;
