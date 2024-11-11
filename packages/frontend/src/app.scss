@@ -1,0 +1,149 @@
+:root {
+	$bg1: #1d1825;
+	$bg2: #221c2c;
+	$bg3: #2b2438;
+	$bg4: #383046;
+
+	$tx1: #f3efff;
+	$tx2: #d8cfee;
+	$tx3: #b3a7d5;
+
+	$ac1: #8b64e6;
+
+	// background
+
+	--bg1: #{$bg1};
+	--bg2: #{$bg2};
+	--bg3: #{$bg3};
+	--bg4: #{$bg4};
+
+	--bg1-25: #{rgba($bg1, .25)};
+	--bg2-25: #{rgba($bg2, .25)};
+	--bg3-25: #{rgba($bg3, .25)};
+	--bg4-25: #{rgba($bg4, .25)};
+
+	--bg1-50: #{rgba($bg1, .5)};
+	--bg2-50: #{rgba($bg2, .5)};
+	--bg3-50: #{rgba($bg3, .5)};
+	--bg4-50: #{rgba($bg4, .5)};
+
+	--bg1-75: #{rgba($bg1, .75)};
+	--bg2-75: #{rgba($bg2, .75)};
+	--bg3-75: #{rgba($bg3, .75)};
+	--bg4-75: #{rgba($bg4, .75)};
+
+	--bg1-99: #{rgba($bg1, .99)};
+	--bg2-99: #{rgba($bg2, .99)};
+	--bg3-99: #{rgba($bg3, .99)};
+	--bg4-99: #{rgba($bg4, .99)};
+
+	// text
+
+	--tx1: #{$tx1};
+	--tx2: #{$tx2};
+	--tx3: #{$tx3};
+
+	--tx1-25: #{rgba($tx1, .25)};
+	--tx2-25: #{rgba($tx2, .25)};
+	--tx3-25: #{rgba($tx3, .25)};
+
+	--tx1-50: #{rgba($tx1, .5)};
+	--tx2-50: #{rgba($tx2, .5)};
+	--tx3-50: #{rgba($tx3, .5)};
+
+	--tx1-75: #{rgba($tx1, .75)};
+	--tx2-75: #{rgba($tx2, .75)};
+	--tx3-75: #{rgba($tx3, .75)};
+
+	// accent
+
+	--ac1: #{$ac1};
+	--ac1-25: #{rgba($ac1, .25)};
+	--ac1-50: #{rgba($ac1, .5)};
+	--ac1-75: #{rgba($ac1, .75)};
+
+	--fs-xxs: 10px;
+	--fs-xs: 14px;
+	--fs-sm: 16px;
+	--fs-md: 18px;
+	--fs-lg: 20px;
+	--fs-xl: 22px;
+	--fs-xxl: 26px;
+
+	--br-mn: 0px;
+	--br-xxs: 2px;
+	--br-xs: 4px;
+	--br-sm: 6px;
+	--br-md: 10px;
+	--br-lg: 14px;
+	--br-xl: 16px;
+	--br-xxl: 22px;
+	--br-mx: 99999px;
+}
+
+body {
+	display: flex;
+	justify-content: center;
+
+	margin: 0;
+	font-family: system-ui;
+
+	background-color: var(--bg1);
+	color: var(--tx2);
+
+	.app {
+		display: flex;
+		justify-content: center;
+	}
+
+	main {
+		width: 800px;
+		max-width: 800px;
+	}
+}
+
+h1 {
+	font-size: var(--fs-xxl);
+}
+
+h2 {
+	font-size: var(--fs-xl);
+}
+
+h3 {
+	font-size: var(--fs-lg);
+}
+
+
+h1, h2, h3 {
+	color: var(--tx1);
+
+	&:not(.mg) {
+		margin: 0;
+	}
+}
+
+h4 {
+	font-size: var(--fs-md);
+}
+
+h5, p {
+	font-size: var(--fs-sm);
+}
+
+h6 {
+	font-size: var(--fs-xs);
+}
+
+h4, h5, h6, p {
+	color: var(--tx2);
+
+	&:not(.mg) {
+		margin: 0;
+	}
+}
+
+small {
+	color: var(--tx3);
+	font-size: var(--fs-xxs);
+}

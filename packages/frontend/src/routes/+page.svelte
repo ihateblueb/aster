@@ -1,17 +1,10 @@
-<script lang="ts">
-	let key: String;
-	let value: String;
-
-	function setCookie() {
-		document.cookie = key + '=' + value + ';';
-	}
+<script>
+	import PageWrapper from '$lib/components/PageWrapper.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
 </script>
 
-aster a work in progress fedi software see <a href="https://git.gay/blueb/aster"
-	>https://git.gay/blueb/aster</a
->
-for source and <a href="/swagger">/swagger</a> for api endpoints
+<PageHeader>Home</PageHeader>
 
-<h2>token cookie setter</h2>
-<input bind:value={key} /> <input bind:value />
-<button on:click={() => setCookie()}>set</button>
+<PageWrapper>
+	<p>Work in progress Aster client</p>
+</PageWrapper>
