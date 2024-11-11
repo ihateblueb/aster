@@ -3,7 +3,7 @@
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 </script>
 
-<PageHeader>Style Testing Page</PageHeader>
+<PageHeader title="Style Testing Page"></PageHeader>
 
 <PageWrapper>
 	<h1>Header 1</h1>

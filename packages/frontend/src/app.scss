@@ -1,8 +1,10 @@
+@import url('$lib/fonts/inter.css');
+
 :root {
-	$bg1: #1d1825;
-	$bg2: #221c2c;
-	$bg3: #2b2438;
-	$bg4: #383046;
+	$bg1: #1b1523;
+	$bg2: #231c2e;
+	$bg3: #272133;
+	$bg4: #362e45;
 
 	$tx1: #f3efff;
 	$tx2: #d8cfee;
@@ -63,9 +65,9 @@
 	--ac1-75: #{rgba($ac1, .75)};
 
 	--fs-xxs: 10px;
-	--fs-xs: 14px;
-	--fs-sm: 16px;
-	--fs-md: 18px;
+	--fs-xs: 12px;
+	--fs-sm: 14px;
+	--fs-md: 16px;
 	--fs-lg: 20px;
 	--fs-xl: 22px;
 	--fs-xxl: 26px;
@@ -86,10 +88,11 @@ body {
 	justify-content: center;
 
 	margin: 0;
-	font-family: system-ui;
+	font-family: Inter, system-ui;
+	font-size: var(--fs-md);
 
-	background-color: var(--bg1);
 	color: var(--tx2);
+	background-color: var(--bg1);
 
 	.app {
 		display: flex;
@@ -97,9 +100,15 @@ body {
 	}
 
 	main {
-		width: 800px;
-		max-width: 800px;
+		min-width: 200px;
+		width: 750px;
+		max-width: 750px;
 	}
+}
+
+::selection {
+	color: var(--tx1);
+	background-color: var(--ac1-50);
 }
 
 h1 {
@@ -123,11 +132,11 @@ h1, h2, h3 {
 	}
 }
 
-h4 {
+h4, p {
 	font-size: var(--fs-md);
 }
 
-h5, p {
+h5s {
 	font-size: var(--fs-sm);
 }
 

@@ -1,34 +1,31 @@
 <script>
 	import Compose from '$lib/components/Compose.svelte';
+	import ComposeWidget from '$lib/components/widget/ComposeWidget.svelte';
+	import AccountWidget from '$lib/components/widget/AccountWidget.svelte';
+	import DevelopmentWidget from '$lib/components/widget/DevelopmentWidget.svelte';
 </script>
 
 <div class="pageSidebar">
 	<div class="body">
 		<div class="top">
-			<Compose />
-			<Compose />
-			<Compose />
-			<Compose />
+			<ComposeWidget />
+			<ComposeWidget />
+			<ComposeWidget />
+			<DevelopmentWidget />
 		</div>
 		<div class="bottom">
-			<Compose />
+			<AccountWidget />
 		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	.pageSidebar {
-		display: flex;
-
-		width: 350px;
-		max-width: 350px;
-
 		.body {
 			display: flex;
 			flex-direction: column;
 			gap: 10px;
 
-			width: 100%;
 			margin-top: 38px;
 			padding: 12px 16px;
 			height: calc((100vh - 38px) - (12px * 2));

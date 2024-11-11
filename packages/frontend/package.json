@@ -20,8 +20,10 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.2.5",
+		"@tabler/icons-svelte": "^3.21.0",
+		"sass": "^1.80.6",
+		"svelte-navigator": "^3.2.2",
 		"svelte-preprocess": "^6.0.3",
-		"vite-plugin-dynamic-import": "^1.6.0",
-		"sass": "^1.80.6"
+		"vite-plugin-dynamic-import": "^1.6.0"
 	}
 }

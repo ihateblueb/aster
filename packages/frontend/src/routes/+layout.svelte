@@ -1,15 +1,13 @@
 <script lang="ts">
-	import localStore from '$lib/LocalStore';
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
+	import { Router } from 'svelte-navigator';
 </script>
 
-<div class="app">
-	<PageSidebar />
-	<main>
-		<slot />
-	</main>
-	<PageSidebar />
-</div>
+<PageSidebar />
+<main>
+	<slot />
+</main>
+<PageSidebar />
 
 <style lang="scss" global>
 	@use '../app.scss';

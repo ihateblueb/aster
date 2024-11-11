@@ -8,6 +8,7 @@ const apiurl = process.env.ASTERFE_API_URL
 
 export default defineConfig({
 	plugins: [sveltekit(), dynamicImport({ loose: true })],
+	optimizeDeps: { exclude: ['svelte-navigator'] },
 	server: {
 		proxy: {
 			'/api': {
