@@ -1,14 +1,14 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import dynamicImport from 'vite-plugin-dynamic-import';
+import optimizeTabler from './vite-plugin-optimize-tabler';
 
 const apiurl = process.env.ASTERFE_API_URL
 	? process.env.ASTERFE_API_URL
 	: `http://localhost:9172/`;
 
 export default defineConfig({
-	plugins: [sveltekit(), dynamicImport({ loose: true })],
-	optimizeDeps: { exclude: ['svelte-navigator'] },
+	plugins: [sveltekit(), dynamicImport({ loose: true }), optimizeTabler()],
 	server: {
 		proxy: {
 			'/api': {

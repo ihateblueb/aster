@@ -30,6 +30,12 @@ class LocalStore {
 			return defaults[key];
 		}
 	}
+
+	public set(key: string, val: string) {
+		if (browser) localStorage.setItem('aster_' + key, val);
+
+		return;
+	}
 }
 
 export default new LocalStore();

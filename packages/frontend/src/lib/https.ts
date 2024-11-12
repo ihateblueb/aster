@@ -3,8 +3,6 @@ import Store from './store';
 
 class https {
 	private count(num: number) {
-		// changed in svelte 5 or do i just not remember how to do this?
-		// i dont think this is correct
 		let count = Store.activeRequests;
 		count.update((e) => e + num);
 	}
@@ -23,7 +21,10 @@ class https {
 
 		this.count(-1);
 
-		return req.json();
+		return {
+			status: req.status,
+			res: await req.json()
+		};
 	}
 	public async post(url: string) {
 		this.count(1);

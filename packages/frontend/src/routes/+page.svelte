@@ -10,20 +10,37 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import IconWrapper from '$lib/components/IconWrapper.svelte';
 	import Store from '$lib/store';
+	import localstore from '$lib/localstore';
+	import getTimeline from '$lib/api/timeline';
+	import InlineError from '$lib/components/InlineError.svelte';
 
-	let timeline: String = 'home';
+	let timeline: string;
+	let notes = [];
 
-	Store.viewRefresh.subscribe((e) => {
+	let localstoreTimeline = localstore.get('homeTab');
+	if (localstoreTimeline) {
+		updateTimeline(localstoreTimeline);
+	} else {
+		updateTimeline('home');
+	}
+
+	Store.viewRefresh.subscribe(async (e) => {
 		if (e) {
 			console.log(
 				'timeline page caught viewRefresh store change to ' + e
 			);
+
+			notes = [];
+			notes = await getTimeline(timeline);
+			console.log(notes);
+
 			Store.viewRefresh.set(false);
 		}
 	});
 
-	function updateTimeline(to: String) {
+	function updateTimeline(to) {
 		timeline = to;
+		localstore.set('homeTab', to);
 		Store.viewRefresh.set(true);
 	}
 </script>
@@ -79,5 +96,24 @@
 {/key}
 
 <PageWrapper>
-	<p>Work in progress Aster client</p>
+	{#key notes}
+		{#if notes}
+			{#if notes.status !== 200}
+				<InlineError>
+					<h1>{notes.status}</h1>
+					<h2>
+						{notes.res
+							? notes.res.message
+								? notes.res.message
+								: ''
+							: ''}
+					</h2>
+				</InlineError>
+			{:else}
+				{JSON.stringify(notes.res)}
+			{/if}
+		{:else}
+			<p>No returned notes</p>
+		{/if}
+	{/key}
 </PageWrapper>
