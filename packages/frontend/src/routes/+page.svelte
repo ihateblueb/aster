@@ -15,6 +15,7 @@
 	import Note from '$lib/components/Note.svelte';
 	import { createQuery } from '@tanstack/svelte-query';
 	import Error from '$lib/components/Error.svelte';
+	import Tab from '$lib/components/Tab.svelte';
 
 	let timeline: string;
 
@@ -73,30 +74,42 @@
 				<IconPlanet size="var(--fs-lg)" />
 			{/if}
 		</svelte:fragment>
-		<IconWrapper on:click={() => updateTimeline('home')}>
+		<Tab
+			selected={timeline === 'home'}
+			on:click={() => updateTimeline('home')}
+		>
 			<IconHome
 				size="var(--fs-lg)"
 				color={timeline === 'home' ? 'var(--ac1)' : 'var(--tx1)'}
 			/>
-		</IconWrapper>
-		<IconWrapper on:click={() => updateTimeline('local')}>
+		</Tab>
+		<Tab
+			selected={timeline === 'local'}
+			on:click={() => updateTimeline('local')}
+		>
 			<IconUsers
 				size="var(--fs-lg)"
 				color={timeline === 'local' ? 'var(--ac1)' : 'var(--tx1)'}
 			/>
-		</IconWrapper>
-		<IconWrapper on:click={() => updateTimeline('bubble')}>
+		</Tab>
+		<Tab
+			selected={timeline === 'bubble'}
+			on:click={() => updateTimeline('bubble')}
+		>
 			<IconChartBubble
 				size="var(--fs-lg)"
 				color={timeline === 'bubble' ? 'var(--ac1)' : 'var(--tx1)'}
 			/>
-		</IconWrapper>
-		<IconWrapper on:click={() => updateTimeline('public')}>
+		</Tab>
+		<Tab
+			selected={timeline === 'public'}
+			on:click={() => updateTimeline('public')}
+		>
 			<IconPlanet
 				size="var(--fs-lg)"
 				color={timeline === 'public' ? 'var(--ac1)' : 'var(--tx1)'}
 			/>
-		</IconWrapper>
+		</Tab>
 	</PageHeader>
 {/key}
 

@@ -1,6 +1,6 @@
-<button class="icon" on:click>
+<div class="icon">
 	<slot />
-</button>
+</div>
 
 <style lang="scss">
 	.icon {
@@ -8,9 +8,6 @@
 		align-items: center;
 		justify-content: center;
 
-		background: none;
-		border: none;
-		color: inherit;
 		padding: 1px;
 		margin: 0;
 
