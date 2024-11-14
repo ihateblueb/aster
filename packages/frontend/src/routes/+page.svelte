@@ -12,10 +12,17 @@
 	import Store from '$lib/store';
 	import localstore from '$lib/localstore';
 	import getTimeline from '$lib/api/timeline';
-	import InlineError from '$lib/components/InlineError.svelte';
+	import Note from '$lib/components/Note.svelte';
+	import { createQuery } from '@tanstack/svelte-query';
+	import Error from '$lib/components/Error.svelte';
 
 	let timeline: string;
-	let notes = [];
+
+	const query = createQuery({
+		queryKey: ['timeline'],
+		retry: false,
+		queryFn: () => getTimeline(timeline)
+	});
 
 	let localstoreTimeline = localstore.get('homeTab');
 	if (localstoreTimeline) {
@@ -30,15 +37,13 @@
 				'timeline page caught viewRefresh store change to ' + e
 			);
 
-			notes = [];
-			notes = await getTimeline(timeline);
-			console.log(notes);
+			await $query.refetch();
 
 			Store.viewRefresh.set(false);
 		}
 	});
 
-	function updateTimeline(to) {
+	function updateTimeline(to: string) {
 		timeline = to;
 		localstore.set('homeTab', to);
 		Store.viewRefresh.set(true);
@@ -96,24 +101,18 @@
 {/key}
 
 <PageWrapper>
-	{#key notes}
-		{#if notes}
-			{#if notes.status !== 200}
-				<InlineError>
-					<h1>{notes.status}</h1>
-					<h2>
-						{notes.res
-							? notes.res.message
-								? notes.res.message
-								: ''
-							: ''}
-					</h2>
-				</InlineError>
-			{:else}
-				{JSON.stringify(notes.res)}
-			{/if}
-		{:else}
-			<p>No returned notes</p>
-		{/if}
-	{/key}
+	{#if $query.isLoading}
+		<p>Loading...</p>
+	{:else if $query.isError}
+		<Error
+			status={$query.error.status}
+			message={$query.error.message}
+			server={Boolean($query.error.status)}
+			retry={() => $query.refetch()}
+		/>
+	{:else if $query.isSuccess}
+		{#each $query.data as note}
+			<Note {note} />
+		{/each}
+	{/if}
 </PageWrapper>

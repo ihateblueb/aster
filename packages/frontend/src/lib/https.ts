@@ -1,14 +1,38 @@
 import LocalStore from './localstore';
 import Store from './store';
 
+class ApiError extends Error {
+	constructor(
+		public status: number,
+		public message: string
+	) {
+		super();
+		Object.setPrototypeOf(this, ApiError.prototype);
+		this.name = 'ApiError';
+		this.status = status ?? 0;
+	}
+}
+
 class https {
 	private count(num: number) {
 		let count = Store.activeRequests;
 		count.update((e) => e + num);
 	}
 
-	public async get(url: string, auth?: boolean) {
+	private async start() {
 		this.count(1);
+	}
+
+	private async end(res: Response) {
+		this.count(-1);
+
+		if (!res.ok) throw new ApiError(res.status, (await res.json()).message);
+
+		return await res.json();
+	}
+
+	public async get(url: string, auth?: boolean) {
+		await this.start();
 
 		let req = await fetch(url, {
 			method: 'GET',
@@ -19,15 +43,10 @@ class https {
 				: {}
 		});
 
-		this.count(-1);
-
-		return {
-			status: req.status,
-			res: await req.json()
-		};
+		return await this.end(req);
 	}
 	public async post(url: string) {
-		this.count(1);
+		await this.start();
 
 		let req = await fetch(url, {
 			method: 'POST',
@@ -36,12 +55,10 @@ class https {
 			}
 		});
 
-		this.count(-1);
-
-		return req.json();
+		return await this.end(req);
 	}
 	public async patch(url: string) {
-		this.count(1);
+		await this.start();
 
 		let req = await fetch(url, {
 			method: 'PATCH',
@@ -50,12 +67,10 @@ class https {
 			}
 		});
 
-		this.count(-1);
-
-		return req.json();
+		return await this.end(req);
 	}
 	public async delete(url: string) {
-		this.count(1);
+		await this.start();
 
 		let req = await fetch(url, {
 			method: 'DELETE',
@@ -64,9 +79,7 @@ class https {
 			}
 		});
 
-		this.count(-1);
-
-		return req.json();
+		return await this.end(req);
 	}
 }
 

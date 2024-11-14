@@ -1,13 +1,17 @@
 <script lang="ts">
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
-	import { Router } from 'svelte-navigator';
+	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
+
+	const queryClient = new QueryClient();
 </script>
 
-<PageSidebar />
-<main>
-	<slot />
-</main>
-<PageSidebar />
+<QueryClientProvider client={queryClient}>
+	<PageSidebar />
+	<main>
+		<slot />
+	</main>
+	<PageSidebar />
+</QueryClientProvider>
 
 <style lang="scss" global>
 	@use '../app.scss';
