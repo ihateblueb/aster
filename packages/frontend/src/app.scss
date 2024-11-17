@@ -120,12 +120,23 @@ body {
 	.app {
 		display: flex;
 		justify-content: center;
+		width: 100%;
 	}
 
 	main {
 		min-width: 200px;
-		width: 750px;
+		width: 100%;
 		max-width: 750px;
+
+
+		@media (max-width: 1355px) {
+			max-width: 850px;
+		}
+		@media (max-width: 750px) {
+			width: 100%;
+			max-width: none;
+		}
+
 	}
 }
 

@@ -20,15 +20,28 @@
 </div>
 
 <style lang="scss">
+	@media (max-width: 750px) {
+		.pageSidebar {
+			display: none;
+		}
+	}
+
+	@media (max-width: 1355px) {
+		.pageSidebar {
+			max-width: 74px;
+		}
+	}
+
 	.pageSidebar {
 		.body {
 			display: flex;
 			flex-direction: column;
+			box-sizing: border-box;
 			gap: 10px;
 
 			margin-top: 38px;
 			padding: 12px 16px;
-			height: calc((100vh - 38px) - (12px * 2));
+			height: calc((100vh - 38px));
 
 			.top {
 				display: flex;
