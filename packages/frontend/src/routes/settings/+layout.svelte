@@ -20,7 +20,7 @@
 		selected={selectedTab === 0}
 		on:click={() => {
 			selectedTab = 0;
-			goto('/settings/general');
+			goto('/settings');
 		}}
 		title="Client"
 	></Tab>
@@ -38,22 +38,16 @@
 	<div class="subheader">
 		{#if selectedTab === 0}
 			<Tab
+				short
 				selected={$page.route.id === '/settings'}
 				on:click={() => {
 					selectedTab = 0;
 					goto('/settings');
 				}}
-				title="Info"
-			></Tab>
-			<Tab
-				selected={$page.route.id === '/settings/general'}
-				on:click={() => {
-					selectedTab = 0;
-					goto('/settings/general');
-				}}
 				title="General"
 			></Tab>
 			<Tab
+				short
 				selected={$page.route.id === '/settings/themes'}
 				on:click={() => {
 					selectedTab = 0;
@@ -62,6 +56,7 @@
 				title="Themes"
 			></Tab>
 			<Tab
+				short
 				selected={$page.route.id === '/settings/sounds'}
 				on:click={() => {
 					selectedTab = 0;
@@ -71,6 +66,7 @@
 			></Tab>
 		{:else}
 			<Tab
+				short
 				selected={$page.route.id === '/settings/account'}
 				on:click={() => {
 					selectedTab = 1;
@@ -79,6 +75,7 @@
 				title="Account"
 			></Tab>
 			<Tab
+				short
 				selected={$page.route.id === '/settings/account/privacy'}
 				on:click={() => {
 					selectedTab = 1;
@@ -87,6 +84,7 @@
 				title="Privacy"
 			></Tab>
 			<Tab
+				short
 				selected={$page.route.id === '/settings/account/security'}
 				on:click={() => {
 					selectedTab = 1;
@@ -106,8 +104,8 @@
 		overflow-x: scroll;
 
 		gap: 10px;
-		height: 50px;
-		padding: 2px 16px;
+		height: 48px;
+		padding: 0 16px;
 		margin: -12px -16px;
 		margin-bottom: 16px;
 

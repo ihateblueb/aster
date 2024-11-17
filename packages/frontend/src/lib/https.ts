@@ -1,5 +1,5 @@
-import LocalStore from './localstore';
 import Store from './store';
+import localstore from './localstore';
 
 class ApiError extends Error {
 	constructor(
@@ -22,12 +22,9 @@ class https {
 	private async start() {
 		this.count(1);
 	}
-
 	private async end(res: Response) {
 		this.count(-1);
-
 		if (!res.ok) throw new ApiError(res.status, (await res.json()).message);
-
 		return await res.json();
 	}
 
@@ -38,21 +35,22 @@ class https {
 			method: 'GET',
 			headers: auth
 				? {
-						Authorization: 'Bearer ' + LocalStore.get('token')
+						Authorization: 'Bearer ' + localstore.get('token')
 					}
 				: {}
 		});
 
 		return await this.end(req);
 	}
-	public async post(url: string) {
+	public async post(url: string, body?: object) {
 		await this.start();
 
 		let req = await fetch(url, {
 			method: 'POST',
 			headers: {
-				Authorization: 'Bearer ' + LocalStore.get('token')
-			}
+				Authorization: 'Bearer ' + localstore.get('token')
+			},
+			body: JSON.stringify(body)
 		});
 
 		return await this.end(req);
@@ -63,7 +61,7 @@ class https {
 		let req = await fetch(url, {
 			method: 'PATCH',
 			headers: {
-				Authorization: 'Bearer ' + LocalStore.get('token')
+				Authorization: 'Bearer ' + localstore.get('token')
 			}
 		});
 
@@ -75,7 +73,7 @@ class https {
 		let req = await fetch(url, {
 			method: 'DELETE',
 			headers: {
-				Authorization: 'Bearer ' + LocalStore.get('token')
+				Authorization: 'Bearer ' + localstore.get('token')
 			}
 		});
 

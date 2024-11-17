@@ -1,6 +1,6 @@
 <script lang="ts">
 	import WidgetBase from '$lib/components/WidgetBase.svelte';
-	import Store from '$lib/store';
+	import Store from '$lib/store.js';
 	import { goto } from '$app/navigation';
 
 	let ckey: String;

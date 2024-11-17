@@ -1,6 +1,7 @@
 <script>
 	import Visibility from '$lib/components/Visibility.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Time from '$lib/components/Time.svelte';
 
 	export let note;
 </script>
@@ -23,6 +24,7 @@
 	</div>
 	<div class="right">
 		<Visibility visibility={note.visibility} />
+		<Time time={note.createdAt} />
 	</div>
 </header>
 
@@ -48,6 +50,12 @@
 					font-weight: 600;
 				}
 			}
+		}
+
+		.right {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
 		}
 	}
 </style>

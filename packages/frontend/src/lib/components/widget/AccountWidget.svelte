@@ -1,6 +1,6 @@
 <script lang="ts">
 	import localstore from '$lib/localstore';
-	import store from '$lib/store';
+	import store from '$lib/store.js';
 	import Button from '$lib/components/Button.svelte';
 	import { IconLogin, IconUserPlus } from '@tabler/icons-svelte';
 
@@ -30,9 +30,9 @@
 				<IconLogin size="var(--fs-lg)" />
 				Login
 			</Button>
-			<Button to="/signup" secondary centered wide nm>
+			<Button to="/register" secondary centered wide nm>
 				<IconUserPlus size="var(--fs-lg)" />
-				Sign Up
+				Register
 			</Button>
 		</div>
 	{/if}

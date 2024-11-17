@@ -175,7 +175,17 @@ h4, h5, h6, p {
 	}
 }
 
+a {
+	color: var(--ac1);
+	text-decoration-color: var(--ac1-50);
+	transition: 0.1s;
+
+	&:hover {
+		text-decoration-color: var(--ac1);
+	}
+}
+
 small {
 	color: var(--tx3);
-	font-size: var(--fs-xxs);
+	font-size: var(--fs-xs);
 }

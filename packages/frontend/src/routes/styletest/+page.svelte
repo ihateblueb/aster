@@ -1,13 +1,17 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
-	import Tab from '$lib/components/Tab.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import { IconCube, IconReload } from '@tabler/icons-svelte';
+	import { IconCube } from '@tabler/icons-svelte';
+	import Input from '$lib/components/Input.svelte';
+
+	let inputtest = '';
 </script>
 
-<PageHeader title="Style Testing Page"></PageHeader>
+<PageHeader title="Style Testing Page">
+	{inputtest}
+</PageHeader>
 
 <PageWrapper>
 	<h1>Header 1</h1>
@@ -28,6 +32,30 @@
 	<div class="brTest xl">Border Radius Test (xl)</div>
 	<div class="brTest xxl">Border Radius Test (xxl)</div>
 	<div class="brTest mx">Border Radius Test (mx)</div>
+
+	<Input
+		placeholder="Sample Input (default)"
+		label="Sample Input Label"
+		bind:value={inputtest}
+	/>
+	<Input
+		placeholder="Sample Input (nm)"
+		label="Sample Input Label"
+		bind:value={inputtest}
+		nm
+	/>
+	<Input
+		placeholder="Sample Input (wide)"
+		label="Sample Input Label"
+		bind:value={inputtest}
+		wide
+	/>
+	<Input
+		placeholder="Sample Input (big)"
+		label="Sample Input Label"
+		bind:value={inputtest}
+		big
+	/>
 
 	<Button>
 		<IconCube size="var(--fs-lg)" />
