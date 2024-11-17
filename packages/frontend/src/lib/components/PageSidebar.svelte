@@ -1,5 +1,4 @@
 <script>
-	import Compose from '$lib/components/Compose.svelte';
 	import ComposeWidget from '$lib/components/widget/ComposeWidget.svelte';
 	import AccountWidget from '$lib/components/widget/AccountWidget.svelte';
 	import DevelopmentWidget from '$lib/components/widget/DevelopmentWidget.svelte';
@@ -8,8 +7,6 @@
 <div class="pageSidebar">
 	<div class="body">
 		<div class="top">
-			<ComposeWidget />
-			<ComposeWidget />
 			<ComposeWidget />
 			<DevelopmentWidget />
 		</div>
@@ -22,13 +19,14 @@
 <style lang="scss">
 	@media (max-width: 750px) {
 		.pageSidebar {
+			max-width: none !important;
 			display: none;
 		}
 	}
 
 	@media (max-width: 1355px) {
 		.pageSidebar {
-			max-width: 74px;
+			max-width: 75px;
 		}
 	}
 
@@ -40,7 +38,7 @@
 			gap: 10px;
 
 			margin-top: 38px;
-			padding: 12px 16px;
+			padding: 12px;
 			height: calc((100vh - 38px));
 
 			.top {

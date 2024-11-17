@@ -20,11 +20,15 @@
 	store.selfRefresh.subscribe((e) => {
 		updateSelf();
 	});
+
+	let innerWidth: number; // sorry, this sucks, but i cant figure it out with css right now
 </script>
+
+<svelte:window bind:innerWidth />
 
 <div class="accountWidget">
 	{#if self}
-		<Avatar user={self} size="40px" />
+		<Avatar user={self} size={innerWidth > 1355 ? '45px' : '50px'} />
 		<a class="names" href={'/user/' + self.id}>
 			<span class="top">
 				{self.displayName ? self.displayName : self.username}

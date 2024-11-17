@@ -1,9 +1,15 @@
 <script lang="ts">
 	export let nm: Boolean = false;
+	export let tl: Boolean = false;
 	export let centered: Boolean = false;
 </script>
 
-<div class={'pageWrapper' + (nm ? ' nm' : '') + (centered ? ' centered' : '')}>
+<div
+	class={'pageWrapper' +
+		(nm ? ' nm' : '') +
+		(tl ? ' tl' : '') +
+		(centered ? ' centered' : '')}
+>
 	<slot />
 </div>
 
@@ -19,7 +25,12 @@
 		&:not(.nm) {
 			// minus PageHeader, minus top and bottom padding
 			height: calc((100vh - 50px) - (12px * 2));
-			padding: 12px 16px;
+			padding: 12px;
+		}
+
+		&.tl {
+			height: calc((100vh - 50px) - (8px * 2));
+			padding: 8px;
 		}
 
 		&.centered {

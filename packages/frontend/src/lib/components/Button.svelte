@@ -9,8 +9,10 @@
 	export let success: boolean = false;
 	export let warn: boolean = false;
 	export let danger: boolean = false;
+	export let transparent: boolean = false;
 	export let rounded: boolean = false;
 	export let centered: boolean = false;
+	export let nav: boolean = false;
 	export let wide: boolean = false;
 	export let nm: boolean = false;
 
@@ -24,7 +26,8 @@
 				accent ||
 				success ||
 				warn ||
-				danger
+				danger ||
+				transparent
 			)
 		) {
 			tertiary = true;
@@ -39,7 +42,9 @@
 			(success ? ' success' : '') +
 			(warn ? ' warn' : '') +
 			(danger ? ' danger' : '') +
+			(transparent ? ' transparent' : '') +
 			(rounded ? ' rounded' : '') +
+			(nav ? ' nav' : '') +
 			(centered ? ' centered' : '') +
 			(wide ? ' wide' : '') +
 			(nm ? ' nm' : '')
@@ -64,21 +69,24 @@
 		box-sizing: border-box;
 		gap: 6px;
 
-		box-shadow:
-			inset 0 -2px 3px #00000020,
-			inset 0 -1px 1px #00000020,
-			inset 0 1px 1px #ffffff05,
-			inset 0 2px 3px #ffffff05;
+		box-shadow: var(--funky-effect);
 		border: none;
 		border-radius: var(--br-md);
-		padding: 10px 14px;
+		padding: 8px 12px;
 		margin: 5px 0;
 
 		font-family: var(--font);
+		font-feature-settings: var(--font-features);
 		font-size: var(--fs-md);
 		text-decoration: none;
 
 		transition: 0.1s;
+		min-height: 35px;
+
+		&:focus-visible {
+			outline: 2px solid var(--ac1-50);
+			outline-offset: 1px;
+		}
 
 		&.nm {
 			margin: 0;
@@ -156,15 +164,31 @@
 				background-color: var(--danger-75);
 			}
 		}
+		&.transparent {
+			color: var(--tx1);
+			background-color: transparent;
+			box-shadow: none;
+
+			&:hover {
+				color: var(--tx1);
+				background-color: var(--bg3-50);
+			}
+		}
 
 		&.wide {
 			width: 100%;
 		}
-		&.rounded {
+		&.nav {
+			width: 100%;
+			height: 50px;
+			justify-content: center;
 			border-radius: var(--br-mx);
 		}
 		&.centered {
 			justify-content: center;
+		}
+		&.rounded {
+			border-radius: var(--br-mx);
 		}
 	}
 </style>

@@ -101,8 +101,13 @@
 	--br-xxl: 22px;
 	--br-mx: 99999px;
 
-	// mics
+	// misc
 	--font: Inter, serif;
+	--font-features: 'cv05', 'cv08';
+	--funky-effect:
+		inset 0 -1px 1px #00000020,
+		inset 0 1px 1px #ffffff05,
+		inset 0 2px 3px #ffffff05
 }
 
 body {
@@ -111,7 +116,7 @@ body {
 
 	margin: 0;
 	font-family: var(--font);
-	font-feature-settings: 'cv05', 'cv08';
+	font-feature-settings: var(--font-features);
 	font-size: var(--fs-md);
 
 	color: var(--tx2);

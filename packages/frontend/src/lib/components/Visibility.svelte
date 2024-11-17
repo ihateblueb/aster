@@ -20,3 +20,11 @@
 		<IconMail size="18px" />
 	{/if}
 </div>
+
+<style lang="scss" scoped>
+	.visibility {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+</style>

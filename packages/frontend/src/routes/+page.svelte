@@ -94,7 +94,7 @@
 	</Tab>
 </PageHeader>
 
-<PageWrapper>
+<PageWrapper tl>
 	{#if $query.isLoading}
 		<Loading />
 	{:else if $query.isError}

@@ -105,9 +105,9 @@
 
 		gap: 10px;
 		height: 48px;
-		padding: 0 16px;
-		margin: -12px -16px;
-		margin-bottom: 16px;
+		padding: 0 18px;
+		margin: -12px;
+		margin-bottom: 12px;
 
 		background-color: var(--bg3-25);
 	}

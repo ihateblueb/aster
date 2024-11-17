@@ -46,17 +46,14 @@
 		box-sizing: border-box;
 		gap: 6px;
 
-		box-shadow:
-			inset 0 -2px 3px #00000020,
-			inset 0 -1px 1px #00000020,
-			inset 0 1px 1px #ffffff05,
-			inset 0 2px 3px #ffffff05;
+		box-shadow: var(--funky-effect);
 		border: none;
 		border-radius: var(--br-md);
-		padding: 10px 14px;
+		padding: 8px 12px;
 		margin: 5px 0;
 
 		font-family: var(--font);
+		font-feature-settings: var(--font-features);
 		font-size: var(--fs-md);
 		text-decoration: none;
 
@@ -67,12 +64,13 @@
 
 		color: var(--tx1);
 		background-color: var(--bg3);
-		&:hover {
-			color: var(--tx1);
-			background-color: var(--bg3-75);
-		}
 
 		width: 275px;
+
+		&:focus-visible {
+			outline: 2px solid var(--ac1-50);
+			outline-offset: 1px;
+		}
 
 		&.nm {
 			margin: 0;

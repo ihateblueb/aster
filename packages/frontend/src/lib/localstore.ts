@@ -13,7 +13,9 @@ let defaults = {
 	font: '',
 
 	self: undefined,
-	token: undefined
+	token: undefined,
+
+	defaultVisibility: 'public'
 };
 
 class LocalStore {
