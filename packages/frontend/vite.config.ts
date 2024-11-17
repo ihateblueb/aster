@@ -5,7 +5,7 @@ import optimizeTabler from './vite-plugin-optimize-tabler';
 
 const apiurl = process.env.ASTERFE_API_URL
 	? process.env.ASTERFE_API_URL
-	: `http://localhost:9172/`;
+	: `https://dev.aster.pages.gay/`;
 
 export default defineConfig({
 	plugins: [sveltekit(), dynamicImport({ loose: true }), optimizeTabler()],

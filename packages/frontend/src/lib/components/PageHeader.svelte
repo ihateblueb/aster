@@ -2,6 +2,7 @@
 	import { IconArrowLeft } from '@tabler/icons-svelte';
 	import { page } from '$app/stores';
 	import IconWrapper from '$lib/components/IconWrapper.svelte';
+	import { goto } from '$app/navigation';
 
 	export let title;
 
@@ -14,8 +15,8 @@
 
 <div class="pageHeader">
 	{#if showBack}
-		<div class="back">
-			<IconWrapper on:click={() => window.history.back()}>
+		<div class="back" on:click={() => goto('/')}>
+			<IconWrapper>
 				<IconArrowLeft size="var(--fs-md)" />
 			</IconWrapper>
 		</div>
@@ -24,7 +25,6 @@
 		<div class="icon">
 			<slot name="icon" />
 		</div>
-
 		{title}
 	</div>
 	<div class="right">
@@ -38,7 +38,9 @@
 
 		padding: 14px 18px;
 		background: var(--bg1);
-		max-height: 50px;
+
+		height: calc(50px - (14px * 2));
+		max-height: calc(50px - (14px * 2));
 
 		.back {
 			display: flex;

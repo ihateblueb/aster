@@ -13,12 +13,18 @@
 	<NoteFooter {note} />
 </article>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	article {
 		padding: 16px;
+		transition: 0.1s;
 
 		.content {
 			margin: 10px 0;
+		}
+
+		&:hover {
+			border-radius: var(--br-md);
+			background-color: var(--bg3-25);
 		}
 	}
 </style>

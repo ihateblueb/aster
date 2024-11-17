@@ -8,7 +8,6 @@
 
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import IconWrapper from '$lib/components/IconWrapper.svelte';
 	import Store from '$lib/store';
 	import localstore from '$lib/localstore';
 	import getTimeline from '$lib/api/timeline';
@@ -16,13 +15,14 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import Error from '$lib/components/Error.svelte';
 	import Tab from '$lib/components/Tab.svelte';
+	import Loading from '$lib/components/Loading.svelte';
 
 	let timeline: string;
 
 	const query = createQuery({
 		queryKey: ['timeline'],
 		retry: false,
-		queryFn: () => getTimeline(timeline)
+		queryFn: async () => await getTimeline(timeline)
 	});
 
 	let localstoreTimeline = localstore.get('homeTab');
@@ -115,7 +115,7 @@
 
 <PageWrapper>
 	{#if $query.isLoading}
-		<p>Loading...</p>
+		<Loading />
 	{:else if $query.isError}
 		<Error
 			status={$query.error.status}

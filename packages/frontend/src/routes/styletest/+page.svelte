@@ -1,6 +1,10 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
+	import Tab from '$lib/components/Tab.svelte';
+	import Loading from '$lib/components/Loading.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import { IconCube, IconReload } from '@tabler/icons-svelte';
 </script>
 
 <PageHeader title="Style Testing Page"></PageHeader>
@@ -24,6 +28,53 @@
 	<div class="brTest xl">Border Radius Test (xl)</div>
 	<div class="brTest xxl">Border Radius Test (xxl)</div>
 	<div class="brTest mx">Border Radius Test (mx)</div>
+
+	<Button>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (default)
+	</Button>
+	<Button primary>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (primary)
+	</Button>
+	<Button secondary>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (secondary)
+	</Button>
+	<Button tertiary>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (tertiary)
+	</Button>
+	<Button quaternary>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (quaternary)
+	</Button>
+	<Button accent>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (accent)
+	</Button>
+	<Button success>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (success)
+	</Button>
+	<Button warn>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (warn)
+	</Button>
+	<Button danger>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (danger)
+	</Button>
+	<Button rounded>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (rounded)
+	</Button>
+	<Button wide>
+		<IconCube size="var(--fs-lg)" />
+		Sample Button (wide)
+	</Button>
+
+	<Loading />
 </PageWrapper>
 
 <style lang="scss">

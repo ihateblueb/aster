@@ -1,4 +1,7 @@
 <script lang="ts">
+	import Button from '$lib/components/Button.svelte';
+	import { IconReload } from '@tabler/icons-svelte';
+
 	export let status: number = 0;
 	export let message: string = '';
 	export let server: boolean = false;
@@ -14,7 +17,10 @@
 	<p>{message}</p>
 
 	{#if retry}
-		<button on:click={retry}>retry</button>
+		<Button rounded on:click={retry}>
+			<IconReload size="var(--fs-lg)" />
+			Retry
+		</Button>
 	{/if}
 </div>
 

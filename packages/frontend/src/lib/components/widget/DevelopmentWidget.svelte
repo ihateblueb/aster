@@ -58,4 +58,5 @@
 	</p>
 	<a href="/">a /</a>
 	<a href="/styletest">a /styletest</a>
+	<a href="/settings">a /settings</a>
 </WidgetBase>

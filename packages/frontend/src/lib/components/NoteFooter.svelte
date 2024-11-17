@@ -34,6 +34,9 @@
 <style lang="scss">
 	footer {
 		display: flex;
+		align-items: center;
+		justify-content: start;
+		gap: 10px;
 
 		button {
 			display: flex;

@@ -43,6 +43,10 @@
 				align-items: start;
 				flex-direction: column;
 				flex-grow: 1;
+
+				.top {
+					font-weight: 600;
+				}
 			}
 		}
 	}

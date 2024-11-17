@@ -3,14 +3,18 @@
 :root {
 	$bg1: #1b1523;
 	$bg2: #231c2e;
-	$bg3: #272133;
-	$bg4: #362e45;
+	$bg3: #362c45;
+	$bg4: #483d5c;
 
 	$tx1: #f3efff;
 	$tx2: #d8cfee;
 	$tx3: #b3a7d5;
 
 	$ac1: #8b64e6;
+
+	$success: #38b84d;
+	$warn: #e39244;
+	$danger: #e65448;
 
 	// background
 
@@ -64,11 +68,26 @@
 	--ac1-50: #{rgba($ac1, .5)};
 	--ac1-75: #{rgba($ac1, .75)};
 
-	--fs-xxs: 10px;
-	--fs-xs: 12px;
-	--fs-sm: 14px;
-	--fs-md: 16px;
-	--fs-lg: 20px;
+	--success: #{$success};
+	--success-25: #{rgba($success, .25)};
+	--success-50: #{rgba($success, .5)};
+	--success-75: #{rgba($success, .75)};
+
+	--warn: #{$warn};
+	--warn-25: #{rgba($warn, .25)};
+	--warn-50: #{rgba($warn, .5)};
+	--warn-75: #{rgba($warn, .75)};
+
+	--danger: #{$danger};
+	--danger-25: #{rgba($danger, .25)};
+	--danger-50: #{rgba($danger, .5)};
+	--danger-75: #{rgba($danger, .75)};
+
+	--fs-xxs: 8px;
+	--fs-xs: 10px;
+	--fs-sm: 13px;
+	--fs-md: 15px;
+	--fs-lg: 18px;
 	--fs-xl: 22px;
 	--fs-xxl: 26px;
 
@@ -81,6 +100,9 @@
 	--br-xl: 16px;
 	--br-xxl: 22px;
 	--br-mx: 99999px;
+
+	// mics
+	--font: Inter, serif;
 }
 
 body {
@@ -88,7 +110,7 @@ body {
 	justify-content: center;
 
 	margin: 0;
-	font-family: Inter, system-ui;
+	font-family: var(--font);
 	font-feature-settings: 'cv05', 'cv08';
 	font-size: var(--fs-md);
 
