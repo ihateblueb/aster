@@ -5,8 +5,10 @@
 	import Button from '$lib/components/Button.svelte';
 	import { IconCube } from '@tabler/icons-svelte';
 	import Input from '$lib/components/Input.svelte';
+	import Switch from '$lib/components/Toggle.svelte';
 
 	let inputtest = '';
+	let switchtest = false;
 </script>
 
 <PageHeader title="Style Testing Page">
@@ -32,6 +34,8 @@
 	<div class="brTest xl">Border Radius Test (xl)</div>
 	<div class="brTest xxl">Border Radius Test (xxl)</div>
 	<div class="brTest mx">Border Radius Test (mx)</div>
+
+	<Switch bind:checked={switchtest}></Switch>
 
 	<Input
 		placeholder="Sample Input (default)"

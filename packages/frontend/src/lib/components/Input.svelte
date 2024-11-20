@@ -60,7 +60,8 @@
 		transition:
 			0.1s,
 			width 0s,
-			height 0s;
+			height 0s,
+			outline 0s;
 
 		color: var(--tx1);
 		background-color: var(--bg3);
@@ -77,6 +78,10 @@
 		}
 		&.wide {
 			width: 100%;
+		}
+		&.big {
+			min-height: 100px;
+			resize: vertical;
 		}
 	}
 </style>

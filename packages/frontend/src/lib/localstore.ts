@@ -15,7 +15,13 @@ let defaults = {
 	self: undefined,
 	token: undefined,
 
-	defaultVisibility: 'public'
+	defaultVisibility: 'public',
+
+	warnNoAlt: true,
+	renderAdvancedMfm: true,
+	catSpeak: true,
+	uncollapseCws: false,
+	hideAllMedia: false
 };
 
 class LocalStore {
@@ -34,7 +40,14 @@ class LocalStore {
 	}
 
 	public set(key: string, val: string) {
-		if (browser) localStorage.setItem('aster_' + key, val);
+		if (browser) {
+			if (val) {
+				// a 'false' string is considered true!
+				localStorage.setItem('aster_' + key, val);
+			} else {
+				localStorage.setItem('aster_' + key, '');
+			}
+		}
 
 		return;
 	}

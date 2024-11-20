@@ -65,7 +65,7 @@
 		.right {
 			display: flex;
 			align-items: center;
-			gap: 12px;
+			gap: 8px;
 		}
 	}
 </style>

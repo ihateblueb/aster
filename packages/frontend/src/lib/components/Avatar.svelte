@@ -7,8 +7,8 @@
 <img
 	class={'avatar' + (small ? ' small' : '')}
 	style={`height:${size};width:${size};`}
-	src={user.avatar ?? '/fallback/avatar.png'}
-	alt={user.avatarAlt}
+	src={user?.avatar ?? '/fallback/avatar.png'}
+	alt={user?.avatarAlt}
 />
 
 <style lang="scss">

@@ -3,10 +3,21 @@
 </script>
 
 <div class="loading">
-	<IconLoader2 size="38px" class="spinner" />
+	<div class="spinner">
+		<IconLoader2 size="38px" />
+	</div>
 </div>
 
 <style lang="scss">
+	@keyframes loading {
+		0% {
+			transform: rotate(0deg);
+		}
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
 	.loading {
 		display: flex;
 		align-items: center;
@@ -17,15 +28,10 @@
 	}
 
 	.spinner {
-		animation: loading 1s infinite;
-	}
-
-	@keyframes loading {
-		0% {
-			rotation: 0deg;
-		}
-		100% {
-			rotation: 360deg;
-		}
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		animation: loading 1.25s infinite;
 	}
 </style>

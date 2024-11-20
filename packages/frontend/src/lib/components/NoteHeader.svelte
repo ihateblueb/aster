@@ -17,7 +17,7 @@
 			</span>
 			<span class="bottom">
 				@{note.user.username}{#if note.user.local}
-					@{note.user.host}
+					<span class="host">@{note.user.host}</span>
 				{/if}
 			</span>
 		</div>
@@ -48,6 +48,11 @@
 
 				.top {
 					font-weight: 600;
+				}
+				.bottom {
+					.host {
+						color: var(--tx3);
+					}
 				}
 			}
 		}

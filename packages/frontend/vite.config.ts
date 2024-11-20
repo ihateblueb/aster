@@ -26,6 +26,10 @@ export default defineConfig({
 			'/swagger': {
 				target: apiurl,
 				changeOrigin: true
+			},
+			'/queue': {
+				target: apiurl,
+				changeOrigin: true
 			}
 		}
 	}

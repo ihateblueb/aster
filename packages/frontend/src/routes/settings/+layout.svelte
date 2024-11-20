@@ -103,7 +103,7 @@
 		align-items: center;
 		overflow-x: scroll;
 
-		gap: 10px;
+		gap: 8px;
 		height: 48px;
 		padding: 0 18px;
 		margin: -12px;

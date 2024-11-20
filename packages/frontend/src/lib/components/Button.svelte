@@ -80,7 +80,11 @@
 		font-size: var(--fs-md);
 		text-decoration: none;
 
-		transition: 0.1s;
+		transition:
+			0.1s,
+			width 0s,
+			height 0s,
+			outline 0s;
 		min-height: 35px;
 
 		&:focus-visible {
