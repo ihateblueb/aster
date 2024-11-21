@@ -23,25 +23,25 @@
 	--bg3: #{$bg3};
 	--bg4: #{$bg4};
 
-	--bg1-25: #{rgba($bg1, .25)};
-	--bg2-25: #{rgba($bg2, .25)};
-	--bg3-25: #{rgba($bg3, .25)};
-	--bg4-25: #{rgba($bg4, .25)};
+	--bg1-25: #{rgba($bg1, 0.25)};
+	--bg2-25: #{rgba($bg2, 0.25)};
+	--bg3-25: #{rgba($bg3, 0.25)};
+	--bg4-25: #{rgba($bg4, 0.25)};
 
-	--bg1-50: #{rgba($bg1, .5)};
-	--bg2-50: #{rgba($bg2, .5)};
-	--bg3-50: #{rgba($bg3, .5)};
-	--bg4-50: #{rgba($bg4, .5)};
+	--bg1-50: #{rgba($bg1, 0.5)};
+	--bg2-50: #{rgba($bg2, 0.5)};
+	--bg3-50: #{rgba($bg3, 0.5)};
+	--bg4-50: #{rgba($bg4, 0.5)};
 
-	--bg1-75: #{rgba($bg1, .75)};
-	--bg2-75: #{rgba($bg2, .75)};
-	--bg3-75: #{rgba($bg3, .75)};
-	--bg4-75: #{rgba($bg4, .75)};
+	--bg1-75: #{rgba($bg1, 0.75)};
+	--bg2-75: #{rgba($bg2, 0.75)};
+	--bg3-75: #{rgba($bg3, 0.75)};
+	--bg4-75: #{rgba($bg4, 0.75)};
 
-	--bg1-99: #{rgba($bg1, .99)};
-	--bg2-99: #{rgba($bg2, .99)};
-	--bg3-99: #{rgba($bg3, .99)};
-	--bg4-99: #{rgba($bg4, .99)};
+	--bg1-99: #{rgba($bg1, 0.99)};
+	--bg2-99: #{rgba($bg2, 0.99)};
+	--bg3-99: #{rgba($bg3, 0.99)};
+	--bg4-99: #{rgba($bg4, 0.99)};
 
 	// text
 
@@ -49,39 +49,39 @@
 	--tx2: #{$tx2};
 	--tx3: #{$tx3};
 
-	--tx1-25: #{rgba($tx1, .25)};
-	--tx2-25: #{rgba($tx2, .25)};
-	--tx3-25: #{rgba($tx3, .25)};
+	--tx1-25: #{rgba($tx1, 0.25)};
+	--tx2-25: #{rgba($tx2, 0.25)};
+	--tx3-25: #{rgba($tx3, 0.25)};
 
-	--tx1-50: #{rgba($tx1, .5)};
-	--tx2-50: #{rgba($tx2, .5)};
-	--tx3-50: #{rgba($tx3, .5)};
+	--tx1-50: #{rgba($tx1, 0.5)};
+	--tx2-50: #{rgba($tx2, 0.5)};
+	--tx3-50: #{rgba($tx3, 0.5)};
 
-	--tx1-75: #{rgba($tx1, .75)};
-	--tx2-75: #{rgba($tx2, .75)};
-	--tx3-75: #{rgba($tx3, .75)};
+	--tx1-75: #{rgba($tx1, 0.75)};
+	--tx2-75: #{rgba($tx2, 0.75)};
+	--tx3-75: #{rgba($tx3, 0.75)};
 
 	// accent
 
 	--ac1: #{$ac1};
-	--ac1-25: #{rgba($ac1, .25)};
-	--ac1-50: #{rgba($ac1, .5)};
-	--ac1-75: #{rgba($ac1, .75)};
+	--ac1-25: #{rgba($ac1, 0.25)};
+	--ac1-50: #{rgba($ac1, 0.5)};
+	--ac1-75: #{rgba($ac1, 0.75)};
 
 	--success: #{$success};
-	--success-25: #{rgba($success, .25)};
-	--success-50: #{rgba($success, .5)};
-	--success-75: #{rgba($success, .75)};
+	--success-25: #{rgba($success, 0.25)};
+	--success-50: #{rgba($success, 0.5)};
+	--success-75: #{rgba($success, 0.75)};
 
 	--warn: #{$warn};
-	--warn-25: #{rgba($warn, .25)};
-	--warn-50: #{rgba($warn, .5)};
-	--warn-75: #{rgba($warn, .75)};
+	--warn-25: #{rgba($warn, 0.25)};
+	--warn-50: #{rgba($warn, 0.5)};
+	--warn-75: #{rgba($warn, 0.75)};
 
 	--danger: #{$danger};
-	--danger-25: #{rgba($danger, .25)};
-	--danger-50: #{rgba($danger, .5)};
-	--danger-75: #{rgba($danger, .75)};
+	--danger-25: #{rgba($danger, 0.25)};
+	--danger-50: #{rgba($danger, 0.5)};
+	--danger-75: #{rgba($danger, 0.75)};
 
 	--fs-xxs: 8px;
 	--fs-xs: 10px;
@@ -105,10 +105,8 @@
 	--font: Inter, serif;
 	--font-features: 'cv05', 'cv08';
 	// trying rem? maybe it'll help the effect looking drastically different on some screens
-	--funky-effect:
-		inset 0 -0.1rem 2.5px #00000020,
-		inset 0 0.035rem 1px #ffffff05,
-		inset 0 0.055rem 2.5px #ffffff05
+	--funky-effect: inset 0 -0.1rem 2.5px #00000020,
+		inset 0 0.035rem 1px #ffffff05, inset 0 0.055rem 2.5px #ffffff05;
 }
 
 body {
@@ -141,7 +139,6 @@ body {
 			width: 100%;
 			max-width: none;
 		}
-
 	}
 }
 
@@ -162,8 +159,9 @@ h3 {
 	font-size: var(--fs-lg);
 }
 
-
-h1, h2, h3 {
+h1,
+h2,
+h3 {
 	color: var(--tx1);
 
 	&:not(.mg) {
@@ -171,7 +169,8 @@ h1, h2, h3 {
 	}
 }
 
-h4, p {
+h4,
+p {
 	font-size: var(--fs-md);
 }
 
@@ -183,7 +182,10 @@ h6 {
 	font-size: var(--fs-xs);
 }
 
-h4, h5, h6, p {
+h4,
+h5,
+h6,
+p {
 	color: var(--tx2);
 
 	&:not(.mg) {
