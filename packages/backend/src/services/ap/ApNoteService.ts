@@ -53,7 +53,10 @@ class ApNoteService {
 
 		if (body.content) note['content'] = body.content;
 		if (body._misskey_content) note['content'] = body._misskey_content;
-		if (body.source.content) note['content'] = body.source.content;
+		if (body.source && body.source.content)
+			note['content'] = body.source.content;
+
+		body.visibility = 'direct';
 
 		if (
 			body.visibility &&
@@ -77,7 +80,6 @@ class ApNoteService {
 
 		console.log(note); //todo: remove
 
-		/*
 		await db
 			.getRepository('note')
 			.insert(note)
@@ -85,7 +87,6 @@ class ApNoteService {
 				console.log(err);
 				logger.error('ap', 'failed to insert remote note');
 			});
-		*/
 
 		return await NoteService.get({ id: id });
 	}

@@ -16,7 +16,7 @@
 					: note.user.username}
 			</span>
 			<span class="bottom">
-				@{note.user.username}{#if note.user.local}
+				@{note.user.username}{#if !note.user.local}
 					<span class="host">@{note.user.host}</span>
 				{/if}
 			</span>
