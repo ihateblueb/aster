@@ -1,9 +1,9 @@
 import * as uuid from 'uuid';
 
-import NoteService from '../../../built/services/NoteService.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import UserService from '../UserService.js';
+import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
@@ -14,6 +14,9 @@ class ApNoteService {
 
 		let actor = await UserService.get({ apId: apId });
 		if (actor) return actor;
+
+		let existingNote = await NoteService.get({ apId: apId });
+		if (existingNote) return existingNote;
 
 		let resolvedNote = await ApResolver.resolveSigned(apId);
 

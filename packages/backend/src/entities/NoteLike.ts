@@ -27,7 +27,7 @@ export class NoteLike {
 	@Column({ select: false })
 	noteId: string;
 
-	@OneToOne(() => Note, (note) => note.likes, {
+	@ManyToOne(() => Note, (note) => note.likes, {
 		onDelete: 'CASCADE'
 	})
 	@JoinColumn({ name: 'noteId' })

@@ -12,7 +12,15 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
-			//.leftJoinAndSelect('note.likes', 'note_like')
+			.leftJoinAndSelect('note.likes', 'note_like')
+			.leftJoin('note_like.user', 'like_user')
+			.addSelect(['like_user.id'])
+			.addSelect(['like_user.username'])
+			.addSelect(['like_user.host'])
+			.addSelect(['like_user.displayName'])
+			.addSelect(['like_user.avatar'])
+			.addSelect(['like_user.avatarAlt'])
+			.addSelect(['like_user.isCat'])
 			.where(where)
 			.getOne();
 	}
@@ -27,6 +35,15 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
+			.leftJoinAndSelect('note.likes', 'note_like')
+			.leftJoin('note_like.user', 'like_user')
+			.addSelect(['like_user.id'])
+			.addSelect(['like_user.username'])
+			.addSelect(['like_user.host'])
+			.addSelect(['like_user.displayName'])
+			.addSelect(['like_user.avatar'])
+			.addSelect(['like_user.avatarAlt'])
+			.addSelect(['like_user.isCat'])
 			.where(where)
 			.take(take)
 			.orderBy(order, orderDirection)
@@ -37,7 +54,7 @@ class NoteService {
 		return db.getRepository('note').delete(where);
 	}
 
-	public async like(noteId: string, as: string) {
+	public async like(noteId: string, as: string, toggle?: boolean) {
 		const id = uuid.v7();
 
 		let user = await UserService.get({ id: as });
@@ -50,26 +67,33 @@ class NoteService {
 		});
 
 		if (existingLike) {
-			return await db
-				.getRepository('note_like')
-				.delete({
-					userId: user.id,
-					noteId: noteId
-				})
-				.then(() => {
-					return {
-						status: 200,
-						message: 'Removed like'
-					};
-				})
-				.catch((err) => {
-					console.error(err);
-					logger.error('note', 'like delete failed');
-					return {
-						status: 500,
-						message: 'Failed to remove like'
-					};
-				});
+			if (toggle) {
+				return await db
+					.getRepository('note_like')
+					.delete({
+						userId: user.id,
+						noteId: noteId
+					})
+					.then(() => {
+						return {
+							status: 200,
+							message: 'Removed like'
+						};
+					})
+					.catch((err) => {
+						console.error(err);
+						logger.error('note', 'like delete failed');
+						return {
+							status: 500,
+							message: 'Failed to remove like'
+						};
+					});
+			} else {
+				return {
+					status: 409,
+					message: 'Like already exists'
+				};
+			}
 		} else {
 			let like = {
 				id: id,

@@ -89,7 +89,7 @@ export class Note {
 	@Column({ array: true, select: false, nullable: true })
 	likeIds: string;
 
-	@OneToMany(() => NoteLike, (noteLike) => noteLike, {
+	@OneToMany(() => NoteLike, (noteLike) => noteLike.note, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})

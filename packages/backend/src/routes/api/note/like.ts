@@ -2,12 +2,8 @@ import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
 import NoteService from '../../../services/NoteService.js';
-import UserService from '../../../services/UserService.js';
-import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
-import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
-import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -38,7 +34,7 @@ router.post(
 				message: locale.note.notSpecified
 			});
 
-		return await NoteService.like(req.params.id, auth.user)
+		return await NoteService.like(req.params.id, auth.user, true)
 			.then((e) => {
 				return res.status(e.status).json({ message: e.message });
 			})
