@@ -3,6 +3,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
+import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import UserService from '../UserService.js';
 
@@ -10,6 +11,17 @@ class ApDeliverService {
 	public async deliver(data) {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
+
+		let moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: new URL(data.inbox).host
+				}
+			});
+
+		if (moderatedInstance && !moderatedInstance.deliver)
+			throw new Error('cannot deliver with to no deliver instance');
 
 		let as: ObjectLiteral;
 		let asPrivate: ObjectLiteral;
@@ -63,7 +75,7 @@ class ApDeliverService {
 		})
 			.then(() => {
 				logger.debug(
-					'resolver',
+					'deliver',
 					'posted to ' + inboxUrl + ' as @' + as.username
 				);
 				return true;
@@ -71,7 +83,7 @@ class ApDeliverService {
 			.catch((err) => {
 				console.log(err);
 				logger.error(
-					'resolver',
+					'deliver',
 					'failed to post to ' + inboxUrl + ' as @' + as.username
 				);
 				throw new Error(err);

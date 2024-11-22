@@ -2,6 +2,7 @@ import * as uuid from 'uuid';
 
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
@@ -35,7 +36,7 @@ class ApNoteService {
 
 		let note = {
 			id: id,
-			apId: body.id,
+			apId: SanitizerService.sanitize(body.id),
 			local: false
 		};
 
@@ -49,12 +50,14 @@ class ApNoteService {
 			? new Date(body.published).toISOString()
 			: new Date().toISOString();
 
-		if (body.summary) note['cw'] = body.summary;
+		if (body.summary) note['cw'] = SanitizerService.sanitize(body.summary);
 
-		if (body.content) note['content'] = body.content;
-		if (body._misskey_content) note['content'] = body._misskey_content;
+		if (body.content)
+			note['content'] = SanitizerService.sanitize(body.content);
+		if (body._misskey_content)
+			note['content'] = SanitizerService.sanitize(body._misskey_content);
 		if (body.source && body.source.content)
-			note['content'] = body.source.content;
+			note['content'] = SanitizerService.sanitize(body.source.content);
 
 		body.visibility = 'direct';
 

@@ -14,9 +14,15 @@ export class ModeratedInstance {
 	@Column({ default: false })
 	sensitive: boolean;
 
-	@Column({ default: false })
-	suspend: boolean;
+	@Column({ default: true })
+	deliver: boolean;
 
-	@Column({ default: false })
-	silence: boolean;
+	@Column({ default: true })
+	accept: boolean;
+
+	@Column({ default: true })
+	fetch: boolean;
+
+	@Column({ default: true })
+	return: boolean;
 }

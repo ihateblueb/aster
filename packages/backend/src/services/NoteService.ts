@@ -4,6 +4,7 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
 class NoteService {
@@ -164,8 +165,8 @@ class NoteService {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
 			userId: user,
-			cw: cw,
-			content: content,
+			cw: SanitizerService.sanitize(cw),
+			content: SanitizerService.sanitize(content),
 			visibility: visibility,
 			createdAt: new Date().toISOString()
 		};

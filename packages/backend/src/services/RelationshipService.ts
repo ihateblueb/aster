@@ -31,11 +31,23 @@ class RelationshipService {
 			.getMany();
 	}
 
+	public async isFollowing(to: string, from: string) {
+		return Boolean(
+			await db
+				.getRepository('relationship')
+				.createQueryBuilder('relationship')
+				.where({
+					to: to,
+					from: from,
+					pending: false
+				})
+
+				.getOne()
+		);
+	}
+
 	public async acceptFollow(id: string, to: string, from: string, body) {
-		let deliver = ApAcceptRenderer.render({
-			id: id,
-			activity: body
-		});
+		let deliver = ApAcceptRenderer.render(id, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -52,10 +64,7 @@ class RelationshipService {
 	}
 
 	public async rejectFollow(id: string, to: string, from: string, body) {
-		let deliver = ApRejectRenderer.render({
-			id: id,
-			activity: body
-		});
+		let deliver = ApRejectRenderer.render(id, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -86,7 +95,8 @@ class RelationshipService {
 				.getRepository('activity')
 				.insert({
 					id: aId,
-					activity: JSON.stringify(body)
+					activity: JSON.stringify(body),
+					createdAt: new Date().toISOString()
 				})
 				.then(() => {
 					return true;

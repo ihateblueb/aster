@@ -2,6 +2,7 @@ import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
 
 import config from '../../utils/config.js';
+import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import ApActorService from './ApActorService.js';
 
@@ -17,6 +18,20 @@ class ApValidationService {
 			};
 		} else {
 			logger.debug('ap', 'host present');
+		}
+
+		let moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: req.headers.host
+				}
+			});
+
+		if (moderatedInstance && !moderatedInstance.accept) {
+			return {
+				valid: false
+			};
 		}
 
 		if (req.headers.host !== new URL(config.url).host) {

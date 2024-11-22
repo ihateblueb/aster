@@ -2,12 +2,29 @@ import crypto from 'crypto';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
+import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
 
 class ApResolver {
 	public async resolveSigned(apId: string, as?: string) {
+		let moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: new URL(apId).host
+				}
+			});
+
+		if (moderatedInstance && !moderatedInstance.fetch) {
+			logger.error(
+				'resolver',
+				'refused to resolve from a no fetch instance'
+			);
+			return false;
+		}
+
 		let actor;
 		let actorPrivate;
 

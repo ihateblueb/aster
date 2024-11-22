@@ -1,6 +1,8 @@
 import express from 'express';
 
+import AuthService from '../../../services/AuthService.js';
 import NoteService from '../../../services/NoteService.js';
+import VisibilityService from '../../../services/VisibilityService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 
@@ -45,10 +47,19 @@ router.get(
 					message: locale.note.authorNotFound
 				});
 			} else {
-				res.status(200).json(note);
+				let auth = await AuthService.verify(req.headers.authorization);
+
+				if (await VisibilityService.canISee(note, auth.user)) {
+					return res.status(200).json(note);
+				} else {
+					// pretend it isn't real
+					return res.status(404).json({
+						message: locale.note.notFound
+					});
+				}
 			}
 		} else {
-			res.status(404).json({
+			return res.status(404).json({
 				message: locale.note.notFound
 			});
 		}
