@@ -8,7 +8,7 @@
 <article>
 	<NoteHeader {note} />
 	<div class="content">
-		{note.content}
+		{@html note.content}
 	</div>
 	<NoteFooter {note} />
 </article>

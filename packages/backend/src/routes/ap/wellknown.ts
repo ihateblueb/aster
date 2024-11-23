@@ -69,14 +69,17 @@ router.get(
 		}
 	}),
 	(req, res) => {
-		if (req.headers.accept.includes('application/xrd+xml')) {
+		if (
+			req.headers.accept &&
+			req.headers.accept.includes('application/xrd+xml')
+		) {
 			res.setHeader('Content-Type', 'application/xrd+xml');
 			return res.status(200).send(
 				`<XRD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
 					<Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" />
 				</XRD>`
 			);
-		} else if (req.headers.accept.includes('application/jrd+json')) {
+		} else {
 			res.setHeader('Content-Type', 'application/jrd+json');
 			return res.status(200).json({
 				links: [

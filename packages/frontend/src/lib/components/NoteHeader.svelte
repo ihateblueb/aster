@@ -10,16 +10,26 @@
 	<div class="left">
 		<Avatar user={note.user} />
 		<div class="names">
-			<span class="top">
+			<a
+				class="top"
+				href={'/@' +
+					note.user.username +
+					(note.user.local ? '' : '@' + note.user.host)}
+			>
 				{note.user.displayName
 					? note.user.displayName
 					: note.user.username}
-			</span>
-			<span class="bottom">
+			</a>
+			<a
+				class="bottom"
+				href={'/@' +
+					note.user.username +
+					(note.user.local ? '' : '@' + note.user.host)}
+			>
 				@{note.user.username}{#if !note.user.local}
 					<span class="host">@{note.user.host}</span>
 				{/if}
-			</span>
+			</a>
 		</div>
 	</div>
 	<div class="right">
@@ -48,8 +58,13 @@
 
 				.top {
 					font-weight: 600;
+					color: var(--tx2);
+					text-decoration: none;
 				}
 				.bottom {
+					color: var(--tx2);
+					text-decoration: none;
+
 					.host {
 						color: var(--tx3);
 					}
@@ -61,6 +76,8 @@
 			display: flex;
 			align-items: center;
 			flex-direction: column;
+			gap: 5px;
+			font-size: var(--fs-sm);
 		}
 	}
 </style>

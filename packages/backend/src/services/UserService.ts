@@ -16,6 +16,10 @@ class UserService {
 		return await db.getRepository('user_private').findOne({ where: where });
 	}
 
+	public async delete(where: object) {
+		return await db.getRepository('user').delete(where);
+	}
+
 	public async register(
 		username: string,
 		password: string,
