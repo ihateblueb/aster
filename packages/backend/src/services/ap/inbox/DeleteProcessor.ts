@@ -8,7 +8,6 @@ class DeleteProcessor {
 		if (user) {
 			logger.debug('delete', 'deleting user');
 			await UserService.delete({ apId: apId });
-			await NoteService.delete({ user: { apId: apId } });
 			return true;
 		}
 
