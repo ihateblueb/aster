@@ -27,39 +27,29 @@ Run `pnpm start` and your instance will start up.
 
 ## Project Status
 
-| Feature                       | Status          | Notes                                                                                                                                  |
-| ----------------------------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| AP user fetching              | Partially done  | Profile metadata missing, avatar, banner, and background missing.                                                                      |
-| AP note fetching              | Partially done  | Mostly good, just need to figure out direct message cc/to in the database schema and such                                              |
-| Sending AP activities         | Started         | Section will be expended later when this is started                                                                                    |
-| Receiving AP activities       | Started         | The same thing goes for this.                                                                                                          |
-| `nodeinfo` & `host-meta`      | Good            | 2.0 and 2.1 partially implemented, a lot of missing statistics though.                                                                 |
-| Webfinger                     | Good            | Works with Mastodon, but needs further testing.                                                                                        |
-| User registration             | Complete        | Pretty good! I'm really happy with this part of Aster.                                                                                 |
-| User login                    | Complete        | Needs further testing but seems good?                                                                                                  |
-| Revoking auth tokens          | Poorly done     | Messed up! It's not my #1 thing todo right now though.                                                                                 |
-| Automatically expiring tokens | TODO...         | TODO... yeah...                                                                                                                        |
-| Creating notes                | Mostly done     | Notes can be created, no media or other attachments yet though                                                                         |
-| Viewing notes                 | Done            | Just grabbed from the database like user, and it works just fine :3                                                                    |
-| Viewing notes in timeline     | Mostly done     | Regular note view, all joined nicely, and collected. Just needs stuff....                                                              |
-| Editing notes                 | Not started     |                                                                                                                                        |
-| Liking notes                  | Not started     |                                                                                                                                        |
-| Repeating notes               | Not started     |                                                                                                                                        |
-| Bookmarking notes             | Not started     |                                                                                                                                        |
-| Reporting                     | Not started     | Just reporting, I want one endpoint for multiple types of reports for simplicity.                                                      |
-| Getting notification timeline | Not started     |                                                                                                                                        |
-| Reading notification(s)       | Not started     |                                                                                                                                        |
-| Viewing users                 | Done            | Just grabbing straight from the database and sending. May have a need for other things later, caching maybe? That isn't a now problem. |
-| Editing users                 | Not started     |                                                                                                                                        |
-| Looking up users              | Needs rewriting | Kind of copied old code, needs review and likely reformatting to fit the new style.                                                    |
-| Blocking users                | Not started     |                                                                                                                                        |
-| Muting users                  | Not started     |                                                                                                                                        |
-| Biting users                  | Not started     | Do I even want to add this? It was kind of annoying on eepy.zone.                                                                      |
-| Static uploads directory      | Done            |                                                                                                                                        |
-| Getting drive files           | Not started     |                                                                                                                                        |
-| Uploading drive files         | Not started     |                                                                                                                                        |
-| Processing drive files        | Not started     |                                                                                                                                        |
-| Processing remote files       | Not started     |                                                                                                                                        |
+### AP
+- Notes can be fetched
+- Actors can be fetched
+- Follower and following collection endpoints exist, and are a messy work in progress
+- Likes are accepted, although if they have a reaction the reaction is ignored for now
+- Deletes are accepted, first the User will be tried then Note
+- Follows are accepted, but don't yet work because...
+- Deliver should work in theory but something is off. Looking into it.
+
+### Federation
+- Supports nodeinfo 2.0 and 2.1
+- host-meta works neatly
+- webfinger implemented, and has high tolerance of different formats
+- json and xml supported! for the most part!
+
+### API
+- You can like a note
+- You can create a note with no polls or other attachments
+- You can register
+- You can login
+- You can fetch the instance metadata
+- Fetch user
+- Fetch note
 
 ## TODO
 
