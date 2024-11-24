@@ -9,6 +9,17 @@ import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
 class RelationshipService {
+	public async get(to: string, from: string) {
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.where({
+				to: to,
+				from: from
+			})
+			.getOne();
+	}
+
 	public async getFollowing(from: string) {
 		return await db
 			.getRepository('relationship')
@@ -39,7 +50,8 @@ class RelationshipService {
 				.where({
 					to: to,
 					from: from,
-					pending: false
+					pending: false,
+					type: 'follow'
 				})
 
 				.getOne()
@@ -47,7 +59,7 @@ class RelationshipService {
 	}
 
 	public async acceptFollow(id: string, to: string, from: string, body) {
-		let deliver = ApAcceptRenderer.render(id, body);
+		let deliver = ApAcceptRenderer.render(id, to, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -64,7 +76,7 @@ class RelationshipService {
 	}
 
 	public async rejectFollow(id: string, to: string, from: string, body) {
-		let deliver = ApRejectRenderer.render(id, body);
+		let deliver = ApRejectRenderer.render(id, to, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -86,6 +98,20 @@ class RelationshipService {
 
 		let from = await ApActorService.get(body.actor);
 		if (!from) return false;
+
+		let alreadyFollowing = await this.get(to.id, from.id);
+
+		if (!alreadyFollowing.pending && alreadyFollowing.type === 'follow') {
+			// accept anyway, already exists to us!
+			await this.acceptFollow(
+				alreadyFollowing.id,
+				to.id,
+				from.inbox,
+				body
+			);
+
+			return true;
+		}
 
 		if (to.locked) {
 			const id = uuid.v7();
