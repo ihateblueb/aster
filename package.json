@@ -8,7 +8,7 @@
 	"private": true,
 	"repository": {
 		"type": "git",
-		"url": "https://git.gay/blueb/aster.git"
+		"url": "https://github.com/ihateblueb/aster"
 	},
 	"workspaces": [
 		"packages/frontend",

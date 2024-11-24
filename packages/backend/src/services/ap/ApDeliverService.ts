@@ -39,25 +39,20 @@ class ApDeliverService {
 		if (new URL(data.inbox).host === new URL(config.url).host) return;
 
 		const inboxUrl = new URL(data.inbox);
+		const sendDate = new Date().toUTCString();
 
 		const digest = crypto
 			.createHash('sha256')
 			.update(JSON.stringify(data.body))
 			.digest('base64');
 
-		const signer = crypto.createSign('sha256');
-
-		const sendDate = new Date().toUTCString();
-
 		const stringToSign = `(request-target): post ${inboxUrl.pathname}\nhost: ${inboxUrl.host}\ndate: ${sendDate}\nalgorithm: rsa-sha256\ndigest: SHA-256=${digest}`;
-		signer.update(stringToSign);
-		signer.end();
 
-		const signedString = signer
-			.sign(asPrivate.privateKey)
+		const signature = crypto
+			.sign('sha256', Buffer.from(stringToSign), asPrivate.privateKey)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.url}users/${as.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signedString}"`;
+		const signatureHeader = `keyId="${config.url}users/${as.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signature}"`;
 
 		return await fetch(inboxUrl, {
 			method: 'POST',
@@ -65,19 +60,20 @@ class ApDeliverService {
 				'Content-Type': 'application/activity+json',
 				'User-Agent': `${pkg.name}/${pkg.version}`,
 				Accept: 'application/activity+json',
-				Algorithm: 'rsa-sha256',
 				Host: inboxUrl.host,
 				Date: sendDate,
+				Algorithm: 'rsa-sha256',
 				Digest: `SHA-256=${digest}`,
 				Signature: signatureHeader
 			},
-			body: data.body
+			body: JSON.stringify(data.body)
 		})
-			.then(() => {
+			.then(async (e) => {
 				logger.debug(
 					'deliver',
 					'posted to ' + inboxUrl + ' as @' + as.username
 				);
+				console.log(e.status);
 				return true;
 			})
 			.catch((err) => {

@@ -53,7 +53,7 @@ router.get(
 				version: pkg.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: (config.registrations = 'open'),
+			openRegistrations: Boolean((config.registrations = 'open')),
 			usage: {
 				users: {
 					total: userCount
@@ -109,7 +109,7 @@ router.get(
 				version: pkg.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: (config.registrations = 'open'),
+			openRegistrations: Boolean((config.registrations = 'open')),
 			usage: {
 				users: {
 					total: userCount

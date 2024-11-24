@@ -28,16 +28,20 @@ class ApActorRenderer {
 			isCat: user.isCat,
 			speakAsCat: user.speakAsCat,
 
-			icon: ApImageRenderer.render(
-				user.avatar,
-				user.sensitive,
-				user.avatarAlt
-			),
-			image: ApImageRenderer.render(
-				user.banner,
-				user.sensitive,
-				user.bannerAlt
-			),
+			icon: user.avatar
+				? ApImageRenderer.render(
+						user.avatar,
+						user.sensitive,
+						user.avatarAlt
+					)
+				: undefined,
+			image: user.banner
+				? ApImageRenderer.render(
+						user.banner,
+						user.sensitive,
+						user.bannerAlt
+					)
+				: undefined,
 
 			inbox: user.inbox,
 			outbox: user.outbox,
