@@ -13,9 +13,11 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
 			.where({
-				to: to,
-				from: from
+				to: { id: to },
+				from: { id: from }
 			})
 			.getOne();
 	}
@@ -24,9 +26,11 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.from', 'from')
 			.where({
-				from: from,
-				pending: false
+				from: { id: from },
+				pending: false,
+				type: 'follow'
 			})
 			.getMany();
 	}
@@ -35,9 +39,11 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
 			.where({
-				to: to,
-				pending: false
+				to: { id: to },
+				pending: false,
+				type: 'follow'
 			})
 			.getMany();
 	}
@@ -47,9 +53,11 @@ class RelationshipService {
 			await db
 				.getRepository('relationship')
 				.createQueryBuilder('relationship')
+				.leftJoinAndSelect('relationship.to', 'to')
+				.leftJoinAndSelect('relationship.from', 'from')
 				.where({
-					to: to,
-					from: from,
+					to: { id: to },
+					from: { id: from },
 					pending: false,
 					type: 'follow'
 				})
@@ -101,8 +109,13 @@ class RelationshipService {
 
 		let alreadyFollowing = await this.get(to.id, from.id);
 
-		if (!alreadyFollowing.pending && alreadyFollowing.type === 'follow') {
+		if (
+			alreadyFollowing &&
+			!alreadyFollowing.pending &&
+			alreadyFollowing.type === 'follow'
+		) {
 			// accept anyway, already exists to us!
+			logger.warn('follow', 'follow already exists and isnt pending');
 			await this.acceptFollow(
 				alreadyFollowing.id,
 				to.id,
@@ -141,8 +154,8 @@ class RelationshipService {
 				.getRepository('relationship')
 				.insert({
 					id: id,
-					to: to.id,
-					from: from.id,
+					toId: to.id,
+					fromId: from.id,
 					type: 'follow',
 					pending: true,
 					responseActivityId: aId,
@@ -167,8 +180,8 @@ class RelationshipService {
 				.getRepository('relationship')
 				.insert({
 					id: id,
-					to: to.id,
-					from: from.id,
+					toId: to.id,
+					fromId: from.id,
 					type: 'follow',
 					pending: false,
 					createdAt: new Date().toISOString()
