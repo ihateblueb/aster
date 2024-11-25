@@ -4,6 +4,9 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import ApCreateRenderer from './ap/ApCreateRenderer.js';
+import ApDeliverService from './ap/ApDeliverService.js';
+import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
@@ -129,7 +132,7 @@ class NoteService {
 		content: string,
 		visibility?: string
 	) {
-		if (content && content.length <= 0)
+		if (!content || (content && content.length <= 0))
 			return {
 				error: true,
 				status: 400,
@@ -171,10 +174,10 @@ class NoteService {
 			createdAt: new Date().toISOString()
 		};
 
-		return await db
+		let result = await db
 			.getRepository('note')
 			.insert(note)
-			.then((e) => {
+			.then(() => {
 				return {
 					error: false,
 					status: 200,
@@ -190,6 +193,16 @@ class NoteService {
 					message: locale.note.failedCreate
 				};
 			});
+
+		let create = ApCreateRenderer.render(
+			uuid.v7(),
+			user,
+			ApNoteRenderer.render(await this.get({ id: note.id }))
+		);
+
+		await ApDeliverService.deliverToFollowers(create, user);
+
+		return result;
 	}
 }
 

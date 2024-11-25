@@ -5,9 +5,28 @@ import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import QueueService from '../QueueService.js';
+import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
+import ApAcceptRenderer from './ApAcceptRenderer.js';
 
 class ApDeliverService {
+	public async deliverToFollowers(body, as: string) {
+		let relationships = await RelationshipService.getFollowers(as);
+
+		for (const i in relationships) {
+			let follower = relationships[i].from;
+
+			console.log(follower);
+
+			await QueueService.deliver.add('{deliver}', {
+				as: as,
+				inbox: follower.inbox,
+				body: body
+			});
+		}
+	}
+
 	public async deliver(data) {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');

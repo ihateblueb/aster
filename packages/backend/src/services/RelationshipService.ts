@@ -26,6 +26,7 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
 			.where({
 				from: { id: from },
@@ -40,6 +41,7 @@ class RelationshipService {
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
 			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
 			.where({
 				to: { id: to },
 				pending: false,

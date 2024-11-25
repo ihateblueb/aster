@@ -10,6 +10,7 @@
 		IconPaperclip
 	} from '@tabler/icons-svelte';
 	import Visibility from '$lib/components/Visibility.svelte';
+	import createNote from '$lib/api/note/create';
 
 	let self;
 
@@ -23,11 +24,20 @@
 
 	updateSelf();
 
+	let result;
+
 	let note = {
 		cw: '',
 		content: '',
 		visibility: localstore.get('defaultVisibility')
 	};
+
+	async function post() {
+		if (note.content.length >= 1) {
+			result = await createNote(note);
+			console.log(result);
+		}
+	}
 </script>
 
 <div class="compose">
@@ -57,7 +67,11 @@
 			</Button>
 		</div>
 		<div class="right">
-			<Button nm>Post</Button>
+			<Button
+				accent={note.content.length >= 1}
+				nm
+				on:click={async () => await post()}>Post</Button
+			>
 		</div>
 	</div>
 </div>
