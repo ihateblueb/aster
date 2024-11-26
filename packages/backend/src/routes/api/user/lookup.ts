@@ -37,7 +37,7 @@ router.get(
 		// todo: test if this works
 		let user = await UserService.get({
 			username: splitHandle[1],
-			host: splitHandle[3]
+			host: splitHandle[2]
 		});
 
 		if (user) {

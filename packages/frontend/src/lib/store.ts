@@ -8,7 +8,7 @@ const activeRequests = writable(0);
 class Store {
 	public appReload = appReload; // full browser reload
 	public selfRefresh = selfRefresh; // refresh self widgets
-	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or @[userid] page component
+	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or user page component
 	public activeRequests = activeRequests;
 }
 
