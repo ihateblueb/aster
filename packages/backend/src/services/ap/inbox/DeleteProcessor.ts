@@ -28,9 +28,7 @@ class DeleteProcessor {
 		if (!body.object.type) {
 			return await this.findAndDelete(body.object);
 		} else {
-			if (body.object.type === 'Tombstone') {
-				return await this.findAndDelete(body.object.id);
-			}
+			return await this.findAndDelete(body.object.id);
 		}
 	}
 }

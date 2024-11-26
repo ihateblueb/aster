@@ -28,8 +28,6 @@ class ApActorService {
 	public async register(body) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		console.log(body); //todo: remove
-
 		const id = uuid.v7();
 
 		let user = {
@@ -37,8 +35,7 @@ class ApActorService {
 			apId: SanitizerService.sanitize(body.id),
 			host: new URL(body.id).host,
 			local: false,
-			activated: true,
-			createdAt: new Date().toISOString()
+			activated: true
 		};
 
 		if (!body.preferredUsername) return false;
@@ -56,12 +53,17 @@ class ApActorService {
 		if (body['vcard:bday'])
 			user['birthday'] = new Date(body['vcard:birthday']).toISOString();
 
+		// todo: false positives?
 		if (body.sensitive) user['sensitive'] = true;
 		if (body.discoverable) user['discoverable'] = true;
 		if (body.manuallyApprovesFollowers) user['locked'] = true;
 		if (body.noindex) user['indexable'] = false;
 		if (body.isCat) user['isCat'] = true;
 		if (body.speakAsCat) user['speakAsCat'] = true;
+
+		if (body.published)
+			user['createdAt'] = new Date(body.published).toISOString();
+		if (!body.published) user['createdAt'] = new Date().toISOString();
 
 		if (body.icon && body.icon.url)
 			user['avatar'] = SanitizerService.sanitize(body.icon.url);
@@ -101,8 +103,6 @@ class ApActorService {
 			user['publicKey'] = SanitizerService.sanitize(
 				body.publicKey.publicKeyPem
 			);
-
-		console.log(user); //todo: remove
 
 		await db
 			.getRepository('user')
