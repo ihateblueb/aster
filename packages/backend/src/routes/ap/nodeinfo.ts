@@ -1,7 +1,7 @@
 import express from 'express';
 
+import MetaService from '../../services/MetaService.js';
 import oapi from '../../utils/apidoc.js';
-import MetaService from '../../services/MetaService';
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get(
 				version: meta.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: Boolean(meta.registrations === "open"),
+			openRegistrations: Boolean(meta.registrations === 'open'),
 			usage: {
 				users: {
 					total: meta.stats.user
@@ -64,7 +64,7 @@ router.get(
 	}),
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
-		
+
 		const meta = await MetaService.get();
 
 		return res.status(200).json({
@@ -74,7 +74,7 @@ router.get(
 				version: meta.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: Boolean(meta.registrations === "open"),
+			openRegistrations: Boolean(meta.registrations === 'open'),
 			usage: {
 				users: {
 					total: meta.stats.user
