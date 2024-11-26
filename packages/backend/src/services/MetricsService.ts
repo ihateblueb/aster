@@ -12,11 +12,11 @@ const apUserCacheMisses = new client.Counter({
 });
 const apMetaCacheHits = new client.Counter({
 	name: 'ap_meta_cache_hits',
-	help: 'Number of times the cache was used for instance metadata  requests.'
+	help: 'Number of times the cache was used for nodeinfo requests.'
 });
 const apMetaCacheMisses = new client.Counter({
 	name: 'ap_meta_cache_misses',
-	help: 'Number of times the cache was not used for instance metadata requests.'
+	help: 'Number of times the cache was not used for nodeinfo requests.'
 });
 const apNoteCacheHits = new client.Counter({
 	name: 'ap_note_cache_hits',
@@ -25,6 +25,14 @@ const apNoteCacheHits = new client.Counter({
 const apNoteCacheMisses = new client.Counter({
 	name: 'ap_note_cache_misses',
 	help: 'Number of times the cache was not used for ActivityPub note requests.'
+});
+const metaCacheHits = new client.Counter({
+	name: 'meta_cache_hits',
+	help: 'Number of times the cache was used for instance metadata  requests.'
+});
+const metaCacheMisses = new client.Counter({
+	name: 'meta_cache_misses',
+	help: 'Number of times the cache was not used for instance metadata requests.'
 });
 
 class MetricsService {
@@ -36,6 +44,8 @@ class MetricsService {
 	public apMetaCacheMisses = apMetaCacheMisses;
 	public apNoteCacheHits = apNoteCacheHits;
 	public apNoteCacheMisses = apNoteCacheMisses;
+	public metaCacheHits = metaCacheHits;
+	public metaCacheMisses = metaCacheMisses;
 
 	public registerMetrics() {
 		registry.registerMetric(apUserCacheHits);
@@ -44,6 +54,8 @@ class MetricsService {
 		registry.registerMetric(apMetaCacheMisses);
 		registry.registerMetric(apNoteCacheHits);
 		registry.registerMetric(apNoteCacheMisses);
+		registry.registerMetric(metaCacheHits);
+		registry.registerMetric(metaCacheMisses);
 	}
 }
 

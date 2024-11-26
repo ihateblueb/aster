@@ -1,10 +1,7 @@
 import express from 'express';
-import { In } from 'typeorm';
 
-import pkg from '../../../../../package.json' with { type: 'json' };
 import oapi from '../../utils/apidoc.js';
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
+import MetaService from '../../services/MetaService';
 
 const router = express.Router();
 
@@ -28,37 +25,21 @@ router.get(
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
-		const userCount = await db.getRepository('user').count({
-			where: {
-				local: true,
-				activated: true,
-				suspended: false
-			}
-		});
-
-		const noteCount = await db
-			.getRepository('note')
-			.createQueryBuilder('note')
-			.leftJoinAndSelect('note.user', 'user')
-			.where({
-				'user.local': true,
-				visibility: In(['public', 'unlisted'])
-			})
-			.getCount();
+		const meta = await MetaService.get();
 
 		return res.status(200).json({
 			version: '2.0',
 			software: {
-				name: pkg.name,
-				version: pkg.version
+				name: meta.software,
+				version: meta.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: Boolean((config.registrations = 'open')),
+			openRegistrations: Boolean(meta.registrations === "open"),
 			usage: {
 				users: {
-					total: userCount
+					total: meta.stats.user
 				},
-				localPosts: noteCount
+				localPosts: meta.stats.note
 			}
 		});
 	}
@@ -83,38 +64,22 @@ router.get(
 	}),
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
-
-		const userCount = await db.getRepository('user').count({
-			where: {
-				local: true,
-				activated: true,
-				suspended: false
-			}
-		});
-
-		const noteCount = await db
-			.getRepository('note')
-			.createQueryBuilder('note')
-			.leftJoinAndSelect('note.user', 'user')
-			.where({
-				'user.local': true,
-				visibility: In(['public', 'unlisted'])
-			})
-			.getCount();
+		
+		const meta = await MetaService.get();
 
 		return res.status(200).json({
 			version: '2.1',
 			software: {
-				name: pkg.name,
-				version: pkg.version
+				name: meta.software,
+				version: meta.version
 			},
 			protocols: ['activitypub'],
-			openRegistrations: Boolean((config.registrations = 'open')),
+			openRegistrations: Boolean(meta.registrations === "open"),
 			usage: {
 				users: {
-					total: userCount
+					total: meta.stats.user
 				},
-				localPosts: noteCount
+				localPosts: meta.stats.note
 			}
 		});
 	}

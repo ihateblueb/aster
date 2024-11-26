@@ -8,6 +8,7 @@ import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
+import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteService {
 	public async get(apId: string) {
@@ -59,27 +60,7 @@ class ApNoteService {
 		if (body.source && body.source.content)
 			note['content'] = SanitizerService.sanitize(body.source.content);
 
-		body.visibility = 'direct';
-
-		if (
-			body.visibility &&
-			['public', 'unlisted', 'followers', 'direct'].includes(
-				body.visibility
-			)
-		)
-			note['visibility'] = body.visibility;
-
-		if (body.to.includes(author.followersUrl))
-			note['visibility'] = 'followers';
-
-		if (
-			body.cc.includes('https://www.w3.org/ns/activitystreams#Public') &&
-			body.to.includes(author.followersUrl)
-		)
-			note['visibility'] = 'unlisted';
-
-		if (body.to.includes('https://www.w3.org/ns/activitystreams#Public'))
-			note['visibility'] = 'public';
+		note['visibility'] = await ApVisibilityService.determine(body);
 
 		console.log(note); //todo: remove
 

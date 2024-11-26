@@ -5,9 +5,9 @@ import oapi from '../../../utils/apidoc.js';
 const router = express.Router();
 
 router.post(
-	'/api/notification/read',
+	'/api/notifications/read',
 	oapi.path({
-		description: 'Read a notification',
+		description: 'Read notifications',
 		tags: ['Notification'],
 		requestBody: {
 			content: {
