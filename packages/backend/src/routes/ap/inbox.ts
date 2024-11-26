@@ -1,9 +1,7 @@
 import express from 'express';
 
-import ApInboxService from '../../services/ap/ApInboxService.js';
 import ApValidationService from '../../services/ap/ApValidationService.js';
 import QueueService from '../../services/QueueService.js';
-import WorkerService from '../../services/WorkerService.js';
 import oapi from '../../utils/apidoc.js';
 import logger from '../../utils/logger.js';
 

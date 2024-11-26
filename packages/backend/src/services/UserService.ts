@@ -5,7 +5,6 @@ import * as uuid from 'uuid';
 import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
-import logger from '../utils/logger.js';
 
 class UserService {
 	public async get(where: object) {
@@ -147,7 +146,7 @@ class UserService {
 		await db
 			.getRepository('user')
 			.insert(user)
-			.catch((e) => {
+			.catch(() => {
 				return {
 					error: true,
 					status: 500,
@@ -158,7 +157,7 @@ class UserService {
 		await db
 			.getRepository('user_private')
 			.insert(userPrivate)
-			.catch((e) => {
+			.catch(() => {
 				return {
 					error: true,
 					status: 500,

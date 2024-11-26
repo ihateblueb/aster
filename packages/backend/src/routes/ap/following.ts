@@ -1,8 +1,5 @@
 import express from 'express';
-import { In } from 'typeorm';
 
-import pkg from '../../../../../package.json' with { type: 'json' };
-import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
 import ApOrderedCollectionRenderer from '../../services/ap/ApOrderedCollectionRenderer.js';
 import CacheService from '../../services/CacheService.js';
 import MetricsService from '../../services/MetricsService.js';
@@ -10,7 +7,6 @@ import RelationshipService from '../../services/RelationshipService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import config from '../../utils/config.js';
-import db from '../../utils/database.js';
 import locale from '../../utils/locale.js';
 
 const router = express.Router();

@@ -4,6 +4,7 @@ import config from './config.js';
 import logger from './logger.js';
 
 export class TypeormLogger implements Logger {
+	// todo: cleanup
 	logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
 		logger.sql('query', query);
 	}

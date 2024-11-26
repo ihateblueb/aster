@@ -3,7 +3,6 @@ import * as uuid from 'uuid';
 
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
-import UserService from './UserService.js';
 
 class AuthService {
 	public async generateToken(user: string) {
