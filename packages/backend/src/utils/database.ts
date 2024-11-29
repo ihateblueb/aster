@@ -1,47 +1,32 @@
-import { DataSource, Logger, QueryRunner } from 'typeorm';
+import { DataSource, Logger } from 'typeorm';
 
 import config from './config.js';
 import logger from './logger.js';
 
 export class TypeormLogger implements Logger {
-	// todo: cleanup
-	logQuery(query: string, parameters?: any[], queryRunner?: QueryRunner) {
+	logQuery(query: string) {
 		logger.sql('query', query);
 	}
 
-	logQueryError(
-		error: string | Error,
-		query: string,
-		parameters?: any[],
-		queryRunner?: QueryRunner
-	) {
+	logQueryError(error: string | Error, query: string) {
 		logger.error('query', error.toString());
 		logger.error('query', query);
 	}
 
-	logQuerySlow(
-		time: number,
-		query: string,
-		parameters?: any[],
-		queryRunner?: QueryRunner
-	) {
+	logQuerySlow(time: number, query: string) {
 		logger.warn('query', time.toString());
 		logger.warn('query', query);
 	}
 
-	logSchemaBuild(message: string, queryRunner?: QueryRunner) {
+	logSchemaBuild(message: string) {
 		logger.info('db', message);
 	}
 
-	logMigration(message: string, queryRunner?: QueryRunner) {
+	logMigration(message: string) {
 		logger.info('db', message);
 	}
 
-	log(
-		level: 'info' | 'warn' | 'log',
-		message: any,
-		queryRunner?: QueryRunner
-	) {
+	log(level: 'info' | 'warn' | 'log', message: any) {
 		if (
 			!message.startsWith('All classes found using provided glob pattern')
 		) {

@@ -32,9 +32,6 @@ export default [
 		// firefish
 		firefish: 'https://joinfirefish.org/ns#',
 		speakAsCat: 'firefish:speakAsCat',
-		// sharkey
-		sharkey: 'https://joinsharkey.org/ns#',
-		backgroundUrl: 'sharkey:backgroundUrl',
 		// aster
 		aster: 'https://blueb.pages.gay/ns#',
 		visibility: 'aster:visibility',

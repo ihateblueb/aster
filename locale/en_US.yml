@@ -17,6 +17,7 @@ note:
     contentTooShort: 'Content too short'
     contentTooLong: 'Content too long'
     contentWarningTooLong: 'Content warning too long'
+    repeatTargetNotFound: 'Repeat target not found'
 
     notSpecified: "Note wasn't specified"
     notFound: "Note couldn't be found"

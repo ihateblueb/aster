@@ -130,9 +130,11 @@ class NoteService {
 		user: string,
 		cw: string,
 		content: string,
-		visibility?: string
+		visibility?: string,
+		repeat?: string
 	) {
-		if (!content || (content && content.length <= 0))
+		// if repeat, missing content is allowed. if content, it's a quote.
+		if ((!content && !repeat) || (content && content.length <= 0))
 			return {
 				error: true,
 				status: 400,
@@ -173,6 +175,19 @@ class NoteService {
 			visibility: visibility,
 			createdAt: new Date().toISOString()
 		};
+
+		if (repeat) {
+			let repeatedNote = await this.get({ id: repeat });
+
+			if (!repeatedNote)
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.repeatTargetNotFound
+				};
+
+			note['repeatId'] = repeatedNote.id;
+		}
 
 		let result = await db
 			.getRepository('note')
