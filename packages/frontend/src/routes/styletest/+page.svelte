@@ -6,6 +6,7 @@
 	import { IconCube } from '@tabler/icons-svelte';
 	import Input from '$lib/components/Input.svelte';
 	import Switch from '$lib/components/Toggle.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	let inputtest = '';
 	let switchtest = false;
@@ -60,6 +61,8 @@
 		bind:value={inputtest}
 		big
 	/>
+
+	<Mfm content={inputtest}></Mfm>
 
 	<Button>
 		<IconCube size="var(--fs-lg)" />

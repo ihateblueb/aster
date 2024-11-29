@@ -94,17 +94,40 @@
 		</div>
 		<div class="lower">
 			<p class="description">
-				<span class="missing">This user hasn't written a bio yet.</span>
+				{#if $query.data.bio}
+					<span>{$query.data.bio}</span>
+				{:else}
+					<span class="missing"
+						>This user hasn't written a bio yet.</span
+					>
+				{/if}
 			</p>
 			<div class="pairs">
-				<p class="pair">
-					<span class="key"><IconCake size="var(--fs-lg)" /> </span>
-					<span class="val">25 November 2024</span>
-				</p>
-				<p class="pair">
-					<span class="key"><IconMapPin size="var(--fs-lg)" /></span>
-					<span class="val">Bottom of the Atlantic</span>
-				</p>
+				{#if $query.data.birthday}
+					<p class="pair">
+						<span class="key">
+							<IconCake size="var(--fs-lg)" />
+						</span>
+						<span class="val">
+							{new Date($query.data.birthday).toLocaleString(
+								undefined,
+								{
+									month: 'long',
+									day: 'numeric',
+									year: 'numeric'
+								}
+							)}
+						</span>
+					</p>
+				{/if}
+				{#if $query.data.location}
+					<p class="pair">
+						<span class="key"
+							><IconMapPin size="var(--fs-lg)" /></span
+						>
+						<span class="val">{$query.data.location}</span>
+					</p>
+				{/if}
 			</div>
 			<p class="joinedOn">
 				Joined {new Date($query.data.createdAt).toLocaleTimeString(

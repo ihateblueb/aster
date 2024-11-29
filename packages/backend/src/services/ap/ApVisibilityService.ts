@@ -62,7 +62,6 @@ class ApVisibilityService {
                      return UserService.get after ApActorService.get of it
                      UserService fallback WebfingerService?
                      then for each actor apId, push to "to"
-
                      alternatively: determine on NoteService.create? store in db?
                      do that instead.
             */

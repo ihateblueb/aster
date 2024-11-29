@@ -120,6 +120,9 @@ importers:
       jsdom:
         specifier: ^25.0.1
         version: 25.0.1
+      mfm-js:
+        specifier: ^0.24.0
+        version: 0.24.0
       pg:
         specifier: ^8.13.0
         version: 8.13.0
@@ -135,6 +138,9 @@ importers:
       uuid:
         specifier: ^10.0.0
         version: 10.0.0
+      ws:
+        specifier: ^8.18.0
+        version: 8.18.0
       yaml:
         specifier: ^2.5.1
         version: 2.5.1
@@ -175,6 +181,9 @@ importers:
       '@tanstack/svelte-query':
         specifier: ^5.59.20
         version: 5.59.20(svelte@5.1.13)
+      mfm-js:
+        specifier: ^0.24.0
+        version: 0.24.0
       sass:
         specifier: ^1.80.6
         version: 1.80.6
@@ -1247,6 +1256,9 @@ packages:
 
   '@tokenizer/token@0.3.0':
     resolution: {integrity: sha512-OvjF+z51L3ov0OyAU0duzsYuvO01PH7x4t6DJx+guahgTnBHkhJdG7soQeTSFLWN3efnHyibZ4Z8l2EuWwJN3A==}
+
+  '@twemoji/parser@15.0.0':
+    resolution: {integrity: sha512-lh9515BNsvKSNvyUqbj5yFu83iIDQ77SwVcsN/SnEGawczhsKU6qWuogewN1GweTi5Imo5ToQ9s+nNTf97IXvg==}
 
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
@@ -3063,6 +3075,9 @@ packages:
   methods@1.1.2:
     resolution: {integrity: sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w==}
     engines: {node: '>= 0.6'}
+
+  mfm-js@0.24.0:
+    resolution: {integrity: sha512-6m8N0ElH9/4CA1izhVqmxTfLj5Z9RspdqM/lMew4xU/UTgm4Pf//VpDunpasxbRFjeJSVW+zoVwL4ZPfPtfiQg==}
 
   micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
@@ -5556,6 +5571,8 @@ snapshots:
 
   '@tokenizer/token@0.3.0': {}
 
+  '@twemoji/parser@15.0.0': {}
+
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.26.1
@@ -7809,6 +7826,10 @@ snapshots:
   merge2@1.4.1: {}
 
   methods@1.1.2: {}
+
+  mfm-js@0.24.0:
+    dependencies:
+      '@twemoji/parser': 15.0.0
 
   micromatch@4.0.5:
     dependencies:

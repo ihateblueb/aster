@@ -14,17 +14,6 @@ import { NoteLike } from './NoteLike.js';
 import { Poll } from './Poll.js';
 import { User } from './User.js';
 
-// todo: move this note
-
-/* why typeorm.Relation<>?
- * see https://github.com/typeorm/typeorm/issues/9894
- * importing Relation directly does not work!
- *
- * also note: only one should be in the ManyToOne relations,
- * OneToOne makes the column unique which would mean only one
- * note could exist per user/per note being replied to
- * */
-
 @Entity()
 export class Note {
 	@PrimaryColumn({ unique: true })
@@ -51,6 +40,16 @@ export class Note {
 	})
 	@JoinColumn({ name: 'replyingToId' })
 	replyingTo: typeorm.Relation<Note>;
+
+	@Column({ select: false, nullable: true })
+	repeatId: string;
+
+	@ManyToOne(() => Note, (note) => note, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinColumn({ name: 'repeatId' })
+	repeat: typeorm.Relation<Note>;
 
 	@Column({ nullable: true })
 	cw: string;
@@ -95,6 +94,16 @@ export class Note {
 	})
 	@JoinColumn({ name: 'likeIds' })
 	likes: typeorm.Relation<NoteLike>;
+
+	@Column({ array: true, select: false, nullable: true })
+	repeatIds: string;
+
+	@OneToMany(() => Note, (Note) => Note.repeat, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinColumn({ name: 'repeatIds' })
+	repeats: typeorm.Relation<Note>;
 
 	@Column()
 	createdAt: string;
