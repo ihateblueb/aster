@@ -32,10 +32,10 @@ router.get(
 		for (let i = 0; i < 1000000; i++) {
 			let genId = IdService.generateAs()
 			console.log(i + '	' + genId)
-			asIds.push(genId)
 			if (asIds.includes(genId)) {
 				logger.fatal('id', 'ID COLLISION')
 			}
+			asIds.push(genId)
 		}
 
 		res.status(200).json({
