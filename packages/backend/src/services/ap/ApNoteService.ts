@@ -1,7 +1,6 @@
-import * as uuid from 'uuid';
-
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import IdService from '../IdService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import NoteService from './../NoteService.js';
@@ -33,7 +32,7 @@ class ApNoteService {
 
 		console.log(body); //todo: remove
 
-		const id = uuid.v7();
+		const id = IdService.generate();
 
 		let note = {
 			id: id,

@@ -27,17 +27,6 @@ router.get(
 		}
 	}),
 	(req, res) => {
-		let asIds = []
-
-		for (let i = 0; i < 1000000; i++) {
-			let genId = IdService.generateAs()
-			console.log(i + '	' + genId)
-			if (asIds.includes(genId)) {
-				logger.fatal('id', 'ID COLLISION')
-			}
-			asIds.push(genId)
-		}
-
 		res.status(200).json({
 			serverTime: new Date(Date.now()).toISOString(),
 			id: {

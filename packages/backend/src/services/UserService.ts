@@ -1,10 +1,10 @@
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
-import * as uuid from 'uuid';
 
 import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
+import IdService from './IdService.js';
 
 class UserService {
 	public async get(where: object) {
@@ -55,8 +55,8 @@ class UserService {
 
 		const instanceUrl = new URL(config.url);
 
-		const id = uuid.v7();
-		const privateId = uuid.v7();
+		const id = IdService.generate();
+		const privateId = IdService.generate();
 
 		if (invite) {
 			let grabbedInvite = await db.getRepository('invite').findOne({

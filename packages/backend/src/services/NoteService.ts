@@ -1,5 +1,3 @@
-import * as uuid from 'uuid';
-
 import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
@@ -7,6 +5,7 @@ import logger from '../utils/logger.js';
 import ApCreateRenderer from './ap/ApCreateRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
+import IdService from './IdService.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
@@ -59,7 +58,7 @@ class NoteService {
 	}
 
 	public async like(noteId: string, as: string, toggle?: boolean) {
-		const id = uuid.v7();
+		const id = IdService.generate();
 
 		let user = await UserService.get({ id: as });
 
@@ -164,7 +163,7 @@ class NoteService {
 
 		const instanceUrl = new URL(config.url);
 
-		const id = uuid.v7();
+		const id = IdService.generate();
 
 		let note = {
 			id: id,
@@ -210,7 +209,7 @@ class NoteService {
 			});
 
 		let create = ApCreateRenderer.render(
-			uuid.v7(),
+			IdService.generate(),
 			user,
 			ApNoteRenderer.render(await this.get({ id: note.id }))
 		);

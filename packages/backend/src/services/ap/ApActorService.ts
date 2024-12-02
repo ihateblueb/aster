@@ -1,7 +1,6 @@
-import * as uuid from 'uuid';
-
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import IdService from '../IdService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import ApResolver from './ApResolver.js';
@@ -28,7 +27,7 @@ class ApActorService {
 	public async register(body) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		const id = uuid.v7();
+		const id = IdService.generate();
 
 		let user = {
 			id: id,
