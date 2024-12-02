@@ -1,15 +1,15 @@
 import crypto from 'crypto';
-import * as uuid from 'uuid';
 
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
+import IdService from './IdService.js';
 
 class AuthService {
 	public async generateToken(user: string) {
 		const token = crypto.randomBytes(64).toString('hex');
 
 		await db.getRepository('auth').insert({
-			id: uuid.v7(),
+			id: IdService.generate(),
 			user: user,
 			createdAt: new Date(Date.now()).toISOString(),
 			token: token

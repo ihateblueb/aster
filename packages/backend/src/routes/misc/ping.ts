@@ -1,6 +1,8 @@
 import express from 'express';
 
 import oapi from '../../utils/apidoc.js';
+import IdService from '../../services/IdService.js';
+import logger from '../../utils/logger.js';
 
 const router = express.Router();
 
@@ -26,7 +28,19 @@ router.get(
 	}),
 	(req, res) => {
 		res.status(200).json({
-			serverTime: new Date(Date.now()).toISOString()
+			serverTime: new Date(Date.now()).toISOString(),
+			id: {
+				default: IdService.generate(),
+				as: IdService.generateAs(),
+				aid: IdService.generateAid(),
+				aidx: IdService.generateAidx(),
+				meid: IdService.generateMeid(),
+				meidg: IdService.generateMeidg(),
+				objectid: IdService.generateObjectId(),
+				ulid: IdService.generateUlid(),
+				uuidv4: IdService.generateUuidv4(),
+				uuidv7: IdService.generateUuidv7()
+			}
 		});
 	}
 );

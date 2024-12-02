@@ -1,10 +1,9 @@
-import * as uuid from 'uuid';
-
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import ApAcceptRenderer from './ap/ApAcceptRenderer.js';
 import ApActorService from './ap/ApActorService.js';
 import ApRejectRenderer from './ap/ApRejectRenderer.js';
+import IdService from './IdService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
@@ -129,8 +128,8 @@ class RelationshipService {
 		}
 
 		if (to.locked) {
-			const id = uuid.v7();
-			const aId = uuid.v7();
+			const id = IdService.generate();
+			const aId = IdService.generate();
 
 			let insertedActivity = await db
 				.getRepository('activity')
@@ -176,7 +175,7 @@ class RelationshipService {
 
 			return true;
 		} else {
-			const id = uuid.v7();
+			const id = IdService.generate();
 
 			await db
 				.getRepository('relationship')
