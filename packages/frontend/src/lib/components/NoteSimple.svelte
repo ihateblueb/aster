@@ -1,4 +1,11 @@
-<script ✂prettier:content✂="CglpbXBvcnQgVmlzaWJpbGl0eSBmcm9tICckbGliL2NvbXBvbmVudHMvVmlzaWJpbGl0eS5zdmVsdGUnOwoJaW1wb3J0IEF2YXRhciBmcm9tICckbGliL2NvbXBvbmVudHMvQXZhdGFyLnN2ZWx0ZSc7CglpbXBvcnQgVGltZSBmcm9tICckbGliL2NvbXBvbmVudHMvVGltZS5zdmVsdGUnOwoJaW1wb3J0IE1mbSBmcm9tICckbGliL2NvbXBvbmVudHMvTWZtLnN2ZWx0ZSc7CglpbXBvcnQgeyBJY29uUmVwZWF0IH0gZnJvbSAnQHRhYmxlci9pY29ucy1zdmVsdGUnOwoKCWV4cG9ydCBsZXQgbm90ZTsK">{}</script>
+<script>
+	import Visibility from '$lib/components/Visibility.svelte';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import Time from '$lib/components/Time.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
+
+	export let note;
+</script>
 
 <div class="noteSimple">
 	<div class="header">
@@ -37,4 +44,42 @@
 	</p>
 </div>
 
-<style lang="scss" ✂prettier:content✂="Cgkubm90ZVNpbXBsZSB7CgkJcGFkZGluZzogMTBweDsKCQlib3JkZXI6IDFweCBzb2xpZCB2YXIoLS1iZzMpOwoJCWJvcmRlci1yYWRpdXM6IHZhcigtLWJyLW1kKTsKCQltYXJnaW4tYm90dG9tOiAxMHB4OwoKCQl0cmFuc2l0aW9uOiAwLjFzOwoKCQkmOmhvdmVyIHsKCQkJYmFja2dyb3VuZC1jb2xvcjogdmFyKC0tYmczLTUwKTsKCQl9CgoJCS5oZWFkZXIgewoJCQlkaXNwbGF5OiBmbGV4OwoJCQlhbGlnbi1pdGVtczogY2VudGVyOwoKCQkJZ2FwOiAxMHB4OwoJCQltYXJnaW4tYm90dG9tOiA1cHg7CgoJCQkubGVmdCB7CgkJCQlkaXNwbGF5OiBmbGV4OwoJCQkJYWxpZ24taXRlbXM6IGNlbnRlcjsKCQkJCWdhcDogMTBweDsKCQkJCWZsZXgtZ3JvdzogMTsKCgkJCQlhIHsKCQkJCQlmb250LXdlaWdodDogNjAwOwoJCQkJCWNvbG9yOiB2YXIoLS10eDIpOwoJCQkJCXRleHQtZGVjb3JhdGlvbjogbm9uZTsKCQkJCX0KCgkJCQkuaGFuZGxlIHsKCQkJCQlmb250LXdlaWdodDogNDAwOwoJCQkJCWNvbG9yOiB2YXIoLS10eDMpOwoJCQkJfQoJCQl9CgoJCQkucmlnaHQgewoJCQkJZGlzcGxheTogZmxleDsKCQkJCWFsaWduLWl0ZW1zOiBjZW50ZXI7CgkJCQlnYXA6IDVweDsKCQkJCWZvbnQtc2l6ZTogdmFyKC0tZnMtc20pOwoJCQl9CgkJfQoJfQo="></style>
+<style lang="scss">
+	.noteSimple {
+		padding: 10px;
+		border: 1px solid var(--bg3);
+		border-radius: var(--br-md);
+		margin-bottom: 10px;
+		transition: 0.1s;
+		&:hover {
+			background-color: var(--bg3-50);
+		}
+		.header {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			margin-bottom: 5px;
+			.left {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				flex-grow: 1;
+				a {
+					font-weight: 600;
+					color: var(--tx2);
+					text-decoration: none;
+				}
+				.handle {
+					font-weight: 400;
+					color: var(--tx3);
+				}
+			}
+			.right {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+				font-size: var(--fs-sm);
+			}
+		}
+	}
+</style>
