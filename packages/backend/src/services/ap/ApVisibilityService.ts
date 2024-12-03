@@ -37,26 +37,26 @@ class ApVisibilityService {
 		return visibility;
 	}
 
-	public async render(user, note) {
+	public async render(user, object) {
 		let grabbedUser = await UserService.get({ id: user });
 
-		if (note.visibility === 'public')
+		if (object.visibility === 'public')
 			return {
 				to: [this.asPublic],
 				cc: []
 			};
-		if (note.visibility === 'unlisted')
+		if (object.visibility === 'unlisted')
 			return {
 				to: [grabbedUser.followersUrl],
 				cc: [this.asPublic]
 			};
-		if (note.visibility === 'followers')
+		if (object.visibility === 'followers')
 			return {
 				to: [grabbedUser.followersUrl],
 				cc: [this.asPublic]
 			};
 
-		if (note.visibility === 'direct') {
+		if (object.visibility === 'direct') {
 			// todo: make MfmService
 			/* todo: for each mention, WebfingerService.get(@user@host)
                      return UserService.get after ApActorService.get of it
