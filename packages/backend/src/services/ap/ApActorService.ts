@@ -49,8 +49,15 @@ class ApActorService {
 
 		if (body['vcard:Address'])
 			user['location'] = SanitizerService.sanitize(body['vcard:Address']);
-		if (body['vcard:bday'])
-			user['birthday'] = new Date(body['vcard:birthday']).toISOString();
+
+		try {
+			if (body['vcard:bday'])
+				user['birthday'] = new Date(
+					body['vcard:birthday']
+				).toISOString();
+		} catch (err) {
+			console.log(err);
+		}
 
 		// todo: false positives?
 		if (body.sensitive) user['sensitive'] = true;

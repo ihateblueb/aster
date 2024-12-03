@@ -1,8 +1,12 @@
+import { ObjectLiteral } from 'typeorm';
+
 import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import ApAnnounceRenderer from './ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from './ap/ApCreateRenderer.js';
+import ApDeleteRenderer from './ap/ApDeleteRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import IdService from './IdService.js';
@@ -15,6 +19,24 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
+			.leftJoinAndSelect('note.repeat', 'repeat')
+			.leftJoin('repeat.user', 'repeat_user')
+			.addSelect(['repeat_user.id'])
+			.addSelect(['repeat_user.username'])
+			.addSelect(['repeat_user.host'])
+			.addSelect(['repeat_user.displayName'])
+			.addSelect(['repeat_user.avatar'])
+			.addSelect(['repeat_user.avatarAlt'])
+			.addSelect(['repeat_user.isCat'])
+			.leftJoinAndSelect('note.repeats', 'repeats')
+			.leftJoin('repeats.user', 'repeats_user')
+			.addSelect(['repeats_user.id'])
+			.addSelect(['repeats_user.username'])
+			.addSelect(['repeats_user.host'])
+			.addSelect(['repeats_user.displayName'])
+			.addSelect(['repeats_user.avatar'])
+			.addSelect(['repeats_user.avatarAlt'])
+			.addSelect(['repeats_user.isCat'])
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(['like_user.id'])
@@ -38,6 +60,24 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
+			.leftJoinAndSelect('note.repeat', 'repeat')
+			.leftJoin('repeat.user', 'repeat_user')
+			.addSelect(['repeat_user.id'])
+			.addSelect(['repeat_user.username'])
+			.addSelect(['repeat_user.host'])
+			.addSelect(['repeat_user.displayName'])
+			.addSelect(['repeat_user.avatar'])
+			.addSelect(['repeat_user.avatarAlt'])
+			.addSelect(['repeat_user.isCat'])
+			.leftJoinAndSelect('note.repeats', 'repeats')
+			.leftJoin('repeats.user', 'repeats_user')
+			.addSelect(['repeats_user.id'])
+			.addSelect(['repeats_user.username'])
+			.addSelect(['repeats_user.host'])
+			.addSelect(['repeats_user.displayName'])
+			.addSelect(['repeats_user.avatar'])
+			.addSelect(['repeats_user.avatarAlt'])
+			.addSelect(['repeats_user.isCat'])
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(['like_user.id'])
@@ -54,6 +94,17 @@ class NoteService {
 	}
 
 	public async delete(where: object) {
+		let note = await this.get(where);
+		if (note) {
+			let del = ApDeleteRenderer.render(
+				IdService.generate(),
+				note.user.id,
+				note.apId
+			);
+
+			await ApDeliverService.deliverToFollowers(del, note.user.id);
+		}
+
 		return db.getRepository('note').delete(where);
 	}
 
@@ -133,7 +184,7 @@ class NoteService {
 		repeat?: string
 	) {
 		// if repeat, missing content is allowed. if content, it's a quote.
-		if ((!content && !repeat) || (content && content.length <= 0))
+		if (!repeat && content && content.length <= 0)
 			return {
 				error: true,
 				status: 400,
@@ -147,7 +198,7 @@ class NoteService {
 				message: locale.note.contentWarningTooLong
 			};
 
-		if (content.length > config.limits.soft.note)
+		if (!repeat && content.length > config.limits.soft.note)
 			return {
 				error: true,
 				status: 400,
@@ -175,8 +226,14 @@ class NoteService {
 			createdAt: new Date().toISOString()
 		};
 
+		let repeatedNote: ObjectLiteral;
+
 		if (repeat) {
-			let repeatedNote = await this.get({ id: repeat });
+			repeatedNote = await this.get({ id: repeat });
+
+			if (visibility !== repeatedNote.visibility) {
+				note.visibility = repeatedNote.visibility;
+			}
 
 			if (!repeatedNote)
 				return {
@@ -208,13 +265,24 @@ class NoteService {
 				};
 			});
 
-		let create = ApCreateRenderer.render(
-			IdService.generate(),
-			user,
-			ApNoteRenderer.render(await this.get({ id: note.id }))
-		);
+		if (repeat && repeatedNote) {
+			let announce = await ApAnnounceRenderer.render(
+				IdService.generate(),
+				user,
+				note.visibility,
+				ApNoteRenderer.render(repeatedNote)
+			);
 
-		await ApDeliverService.deliverToFollowers(create, user);
+			await ApDeliverService.deliverToFollowers(announce, user);
+		} else {
+			let create = ApCreateRenderer.render(
+				IdService.generate(),
+				user,
+				ApNoteRenderer.render(await this.get({ id: note.id }))
+			);
+
+			await ApDeliverService.deliverToFollowers(create, user);
+		}
 
 		return result;
 	}
