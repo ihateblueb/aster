@@ -34,8 +34,8 @@ Run `pnpm start` and your instance will start up.
 -   Follower and following collection endpoints exist, and are a messy work in progress
 -   Likes are accepted, although if they have a reaction the reaction is ignored for now
 -   Deletes are accepted, first the User will be tried then Note
--   Follows are accepted, but don't yet work because...
--   Deliver works.
+-   Follows are accepted
+-   Deliver works
 -   Deletes are sent out
 -   Announces are sent out
 -   Creates are sent out
