@@ -1,44 +1,4 @@
-<script>
-	import Input from '$lib/components/Input.svelte';
-	import Button from '$lib/components/Button.svelte';
-	import Avatar from '$lib/components/Avatar.svelte';
-	import localstore from '$lib/localstore';
-
-	import {
-		IconChartBar,
-		IconMoodSmile,
-		IconPaperclip
-	} from '@tabler/icons-svelte';
-	import Visibility from '$lib/components/Visibility.svelte';
-	import createNote from '$lib/api/note/create';
-
-	let self;
-
-	function updateSelf() {
-		let grabbedSelf = localstore.get('self');
-
-		if (grabbedSelf) {
-			self = JSON.parse(grabbedSelf);
-		}
-	}
-
-	updateSelf();
-
-	let result;
-
-	let note = {
-		cw: '',
-		content: '',
-		visibility: localstore.get('defaultVisibility')
-	};
-
-	async function post() {
-		if (note.content.length >= 1) {
-			result = await createNote(note);
-			console.log(result);
-		}
-	}
-</script>
+<script ✂prettier:content✂="CglpbXBvcnQgSW5wdXQgZnJvbSAnJGxpYi9jb21wb25lbnRzL0lucHV0LnN2ZWx0ZSc7CglpbXBvcnQgQnV0dG9uIGZyb20gJyRsaWIvY29tcG9uZW50cy9CdXR0b24uc3ZlbHRlJzsKCWltcG9ydCBBdmF0YXIgZnJvbSAnJGxpYi9jb21wb25lbnRzL0F2YXRhci5zdmVsdGUnOwoJaW1wb3J0IGxvY2Fsc3RvcmUgZnJvbSAnJGxpYi9sb2NhbHN0b3JlJzsKCglpbXBvcnQgewoJCUljb25DaGFydEJhciwKCQlJY29uTW9vZFNtaWxlLAoJCUljb25QYXBlcmNsaXAKCX0gZnJvbSAnQHRhYmxlci9pY29ucy1zdmVsdGUnOwoJaW1wb3J0IFZpc2liaWxpdHkgZnJvbSAnJGxpYi9jb21wb25lbnRzL1Zpc2liaWxpdHkuc3ZlbHRlJzsKCWltcG9ydCBjcmVhdGVOb3RlIGZyb20gJyRsaWIvYXBpL25vdGUvY3JlYXRlJzsKCglsZXQgc2VsZjsKCglmdW5jdGlvbiB1cGRhdGVTZWxmKCkgewoJCWxldCBncmFiYmVkU2VsZiA9IGxvY2Fsc3RvcmUuZ2V0KCdzZWxmJyk7CgoJCWlmIChncmFiYmVkU2VsZikgewoJCQlzZWxmID0gSlNPTi5wYXJzZShncmFiYmVkU2VsZik7CgkJfQoJfQoKCXVwZGF0ZVNlbGYoKTsKCglsZXQgcmVzdWx0OwoKCWxldCBub3RlID0gewoJCWN3OiAnJywKCQljb250ZW50OiAnJywKCQl2aXNpYmlsaXR5OiBsb2NhbHN0b3JlLmdldCgnZGVmYXVsdFZpc2liaWxpdHknKSwKCQlyZXBlYXQ6ICcnCgl9OwoKCWFzeW5jIGZ1bmN0aW9uIHBvc3QoKSB7CgkJaWYgKG5vdGUuY29udGVudC5sZW5ndGggPj0gMSkgewoJCQlyZXN1bHQgPSBhd2FpdCBjcmVhdGVOb3RlKG5vdGUpOwoJCQljb25zb2xlLmxvZyhyZXN1bHQpOwoJCX0KCX0K">{}</script>
 
 <div class="compose">
 	<div class="top">
@@ -54,6 +14,7 @@
 	<Input placeholder="Content warning" bind:value={note.cw} wide></Input>
 	<Input placeholder="What's going on?" bind:value={note.content} wide big
 	></Input>
+	<Input placeholder="Repeat ID" bind:value={note.repeat} wide></Input>
 	<div class="btm">
 		<div class="left">
 			<Button transparent centered nm>
@@ -76,30 +37,4 @@
 	</div>
 </div>
 
-<style lang="scss" scoped>
-	.compose {
-		.top {
-			margin-bottom: 10px;
-		}
-		.btm {
-			margin-top: 10px;
-		}
-		.btm,
-		.top {
-			display: flex;
-			align-items: center;
-			gap: 10px;
-
-			.left {
-				display: flex;
-				align-items: center;
-				overflow-x: scroll;
-				flex-grow: 1;
-			}
-			.right {
-				display: flex;
-				align-items: center;
-			}
-		}
-	}
-</style>
+<style lang="scss" scoped ✂prettier:content✂="CgkuY29tcG9zZSB7CgkJLnRvcCB7CgkJCW1hcmdpbi1ib3R0b206IDEwcHg7CgkJfQoJCS5idG0gewoJCQltYXJnaW4tdG9wOiAxMHB4OwoJCX0KCQkuYnRtLAoJCS50b3AgewoJCQlkaXNwbGF5OiBmbGV4OwoJCQlhbGlnbi1pdGVtczogY2VudGVyOwoJCQlnYXA6IDEwcHg7CgoJCQkubGVmdCB7CgkJCQlkaXNwbGF5OiBmbGV4OwoJCQkJYWxpZ24taXRlbXM6IGNlbnRlcjsKCQkJCW92ZXJmbG93LXg6IHNjcm9sbDsKCQkJCWZsZXgtZ3JvdzogMTsKCQkJfQoJCQkucmlnaHQgewoJCQkJZGlzcGxheTogZmxleDsKCQkJCWFsaWduLWl0ZW1zOiBjZW50ZXI7CgkJCX0KCQl9Cgl9Cg=="></style>

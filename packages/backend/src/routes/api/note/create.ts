@@ -23,7 +23,8 @@ router.post(
 						properties: {
 							cw: { type: 'string' },
 							content: { type: 'string' },
-							visibility: { type: 'string' }
+							visibility: { type: 'string' },
+							repeat: { type: 'string' }
 						}
 					}
 				}
@@ -66,7 +67,8 @@ router.post(
 			auth.user,
 			parsedBody.cw,
 			parsedBody.content,
-			parsedBody.visibility
+			parsedBody.visibility,
+			parsedBody.repeat
 		)
 			.then(async (e) => {
 				if (e.error) {
