@@ -28,6 +28,8 @@ class NoteService {
 			.addSelect(['repeat_user.avatar'])
 			.addSelect(['repeat_user.avatarAlt'])
 			.addSelect(['repeat_user.isCat'])
+			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
+			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
 			.leftJoinAndSelect('note.repeats', 'repeats')
 			.leftJoin('repeats.user', 'repeats_user')
 			.addSelect(['repeats_user.id'])
@@ -69,6 +71,8 @@ class NoteService {
 			.addSelect(['repeat_user.avatar'])
 			.addSelect(['repeat_user.avatarAlt'])
 			.addSelect(['repeat_user.isCat'])
+			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
+			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
 			.leftJoinAndSelect('note.repeats', 'repeats')
 			.leftJoin('repeats.user', 'repeats_user')
 			.addSelect(['repeats_user.id'])
@@ -270,7 +274,9 @@ class NoteService {
 				IdService.generate(),
 				user,
 				note.visibility,
-				ApNoteRenderer.render(repeatedNote)
+				repeatedNote.local
+					? ApNoteRenderer.render(repeatedNote)
+					: repeatedNote.apId
 			);
 
 			await ApDeliverService.deliverToFollowers(announce, user);
