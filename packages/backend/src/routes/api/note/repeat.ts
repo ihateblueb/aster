@@ -53,57 +53,29 @@ router.post(
 
 		let parsedBody = bodyValidation.body;
 
-		// todo: solidify this. move it to the NoteService.
-
-		let existingRepeat = await NoteService.get({
-			user: { id: auth.user },
-			repeat: { id: req.params.id }
-		});
-
-		if (existingRepeat) {
-			logger.debug('note', 'repeat exists');
-			await NoteService.delete({ id: existingRepeat.id })
-				.then(async () => {
-					logger.debug('note', 'repeat deleted');
-					return res.status(200).json({
-						message: locale.note.deleted
+		await NoteService.repeat(
+			req.params.id,
+			auth.user,
+			true,
+			parsedBody.visibility
+		)
+			.then(async (e) => {
+				if (e.error) {
+					return res.status(e.status).json({
+						message: e.message
 					});
-				})
-				.catch((e) => {
-					console.log(e);
-					logger.error('note', 'failed to undo repeat');
+				} else {
+					return res.status(200).json(e);
+				}
+			})
+			.catch((e) => {
+				console.log(e);
+				logger.error('note', 'failed to create repeat');
 
-					return res.status(500).json({
-						message: locale.error.internalServer
-					});
+				return res.status(500).json({
+					message: locale.error.internalServer
 				});
-		} else {
-			logger.debug('note', 'repeat doesnt exist');
-			await NoteService.create(
-				auth.user,
-				'',
-				'',
-				parsedBody.visibility,
-				req.params.id
-			)
-				.then(async (e) => {
-					if (e.error) {
-						return res.status(e.status).json({
-							message: e.message
-						});
-					} else {
-						return res.status(200).json(e.note);
-					}
-				})
-				.catch((e) => {
-					console.log(e);
-					logger.error('note', 'failed to create repeat');
-
-					return res.status(500).json({
-						message: locale.error.internalServer
-					});
-				});
-		}
+			});
 	}
 );
 

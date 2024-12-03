@@ -1,3 +1,4 @@
+import { P } from 'frontend/build/server/chunks/PageHeader-D00RbiDX.js';
 import { ObjectLiteral } from 'typeorm';
 
 import config from '../utils/config.js';
@@ -297,6 +298,70 @@ class NoteService {
 		}
 
 		return result;
+	}
+
+	/*  for use strictly for a plain repeat
+		these toggle(ish), quotes do not
+	*/
+	public async repeat(
+		noteId: string,
+		as: string,
+		toggle?: boolean,
+		visibility?: string
+	) {
+		if (toggle) {
+			let existingRepeat = await this.get({
+				user: { id: as },
+				repeat: { id: noteId }
+			});
+
+			if (existingRepeat) {
+				return await this.delete({ id: existingRepeat.id })
+					.then(() => {
+						return {
+							error: false,
+							status: 200,
+							message: locale.note.deleted
+						};
+					})
+					.catch((e) => {
+						return {
+							error: true,
+							status: 500,
+							message: locale.error.internalServer
+						};
+					});
+			} else {
+				return await this.create(
+					as,
+					'',
+					'',
+					visibility ?? 'public',
+					noteId
+				)
+					.then((e) => {
+						if (e.error) {
+							return {
+								error: e.error,
+								message: e.message
+							};
+						} else {
+							return {
+								error: false,
+								status: 200,
+								message: locale.note.created
+							};
+						}
+					})
+					.catch((e) => {
+						return {
+							error: true,
+							status: 500,
+							message: locale.error.internalServer
+						};
+					});
+			}
+		}
 	}
 }
 

@@ -6,7 +6,7 @@ class DeleteProcessor {
 	private async findAndDelete(as: string, apId: string): Promise<boolean> {
 		let actor = await UserService.get({ apId: as });
 		if (!actor) return false;
-		
+
 		let user = await UserService.get({ apId: apId });
 		if (user && actor.host === user.host) {
 			logger.debug('delete', 'deleting user');
