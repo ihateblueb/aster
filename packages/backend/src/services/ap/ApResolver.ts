@@ -51,6 +51,7 @@ class ApResolver {
 
 		const signatureHeader = `keyId="${config.url}users/${actor.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signature}"`;
 
+		// todo: make sure this is safe
 		return await fetch(url, {
 			method: 'GET',
 			headers: {

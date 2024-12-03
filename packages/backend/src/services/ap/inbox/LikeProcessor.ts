@@ -1,3 +1,4 @@
+import logger from '../../../utils/logger.js';
 import NoteService from '../../NoteService.js';
 import ApActorService from '../ApActorService.js';
 import ApNoteService from '../ApNoteService.js';
@@ -12,13 +13,18 @@ class LikeProcessor {
 		if (!actor) return false;
 		if (!note) return false;
 
-		return await NoteService.like(note.id, actor.id, false)
-			.then(() => {
-				return true;
-			})
-			.catch(() => {
-				return false;
-			});
+		if (body._misskey_content) {
+			logger.warn('like', 'appears to be a react. tag:');
+			console.log(body.tag);
+		} else {
+			return await NoteService.like(note.id, actor.id, false)
+				.then(() => {
+					return true;
+				})
+				.catch(() => {
+					return false;
+				});
+		}
 	}
 }
 
