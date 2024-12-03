@@ -12,7 +12,6 @@ class ApNoteRenderer {
 			actor: note.user.apId,
 			attributedTo: note.user.apId,
 
-			// todo: will this return false positives?
 			sensitive: Boolean(note.cw),
 			summary: note.cw,
 			content: note.content,
@@ -23,6 +22,11 @@ class ApNoteRenderer {
 			to: [],
 			cc: []
 		};
+
+		if (note.repeat) {
+			apNote['quoteUrl'] = note.repeat.apId;
+			apNote['quoteUri'] = note.repeat.apId;
+		}
 
 		if (note.visibility === 'public') {
 			apNote.to = ['https://www.w3.org/ns/activitystreams#Public'];

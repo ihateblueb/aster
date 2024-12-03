@@ -29,7 +29,7 @@ class NoteService {
 			.addSelect(['repeat_user.avatar'])
 			.addSelect(['repeat_user.avatarAlt'])
 			.addSelect(['repeat_user.isCat'])
-			.addSelect(['repeat_user.locall'])
+			.addSelect(['repeat_user.local'])
 			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
 			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
 			.leftJoinAndSelect('note.repeats', 'repeats')
@@ -276,7 +276,7 @@ class NoteService {
 				};
 			});
 
-		if (repeat && repeatedNote) {
+		if (repeat && repeatedNote && !content) {
 			let announce = await ApAnnounceRenderer.render(
 				IdService.generate(),
 				user,
@@ -309,58 +309,51 @@ class NoteService {
 		toggle?: boolean,
 		visibility?: string
 	) {
-		if (toggle) {
-			let existingRepeat = await this.get({
-				user: { id: as },
-				repeat: { id: noteId }
-			});
-
-			if (existingRepeat) {
-				return await this.delete({ id: existingRepeat.id })
-					.then(() => {
+		if (toggle && existingRepeat) {
+			return await this.delete({ id: existingRepeat.id })
+				.then(() => {
+					logger.debug('repeat', 'failed to delete');
+					return {
+						error: false,
+						status: 200,
+						message: locale.note.deleted
+					};
+				})
+				.catch((err) => {
+					console.log(err);
+					return {
+						error: true,
+						status: 500,
+						message: locale.error.internalServer
+					};
+				});
+		} else {
+			return await this.create(as, '', '', visibility ?? 'public', noteId)
+				.then((e) => {
+					if (e.error) {
+						logger.debug('repeat', 'failed to create');
+						return {
+							error: e.error,
+							status: e.status,
+							message: e.message
+						};
+					} else {
+						logger.debug('repeat', 'created');
 						return {
 							error: false,
 							status: 200,
-							message: locale.note.deleted
+							message: locale.note.created
 						};
-					})
-					.catch((e) => {
-						return {
-							error: true,
-							status: 500,
-							message: locale.error.internalServer
-						};
-					});
-			} else {
-				return await this.create(
-					as,
-					'',
-					'',
-					visibility ?? 'public',
-					noteId
-				)
-					.then((e) => {
-						if (e.error) {
-							return {
-								error: e.error,
-								message: e.message
-							};
-						} else {
-							return {
-								error: false,
-								status: 200,
-								message: locale.note.created
-							};
-						}
-					})
-					.catch((e) => {
-						return {
-							error: true,
-							status: 500,
-							message: locale.error.internalServer
-						};
-					});
-			}
+					}
+				})
+				.catch((err) => {
+					console.log(err);
+					return {
+						error: true,
+						status: 500,
+						message: locale.error.internalServer
+					};
+				});
 		}
 	}
 }

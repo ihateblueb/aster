@@ -1,3 +1,4 @@
+import logger from '../../../utils/logger.js';
 import NoteService from '../../NoteService.js';
 import ApActorService from '../ApActorService.js';
 import ApNoteService from '../ApNoteService.js';
@@ -15,9 +16,14 @@ class AnnounceProcessor {
 		if (!actor) return false;
 		if (!note) return false;
 
+		logger.debug(
+			'announce',
+			'by ' + actor.apId + ' targeting ' + note.id + ' vis ' + visibility
+		);
+
 		return await NoteService.repeat(note.id, actor.id, false, visibility)
-			.then((e) => {
-				return e.error;
+			.then(() => {
+				return true;
 			})
 			.catch((err) => {
 				console.log(err);
