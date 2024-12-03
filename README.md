@@ -35,7 +35,10 @@ Run `pnpm start` and your instance will start up.
 -   Likes are accepted, although if they have a reaction the reaction is ignored for now
 -   Deletes are accepted, first the User will be tried then Note
 -   Follows are accepted, but don't yet work because...
--   Deliver should work in theory but something is off. Looking into it.
+-   Deliver works.
+-   Deletes are sent out
+-   Announces are sent out
+-   Creates are sent out
 
 ### Federation
 
@@ -48,6 +51,7 @@ Run `pnpm start` and your instance will start up.
 
 -   You can like a note
 -   You can create a note with no polls or other attachments
+-   You can repeat a note
 -   You can register
 -   You can login
 -   You can fetch the instance metadata
