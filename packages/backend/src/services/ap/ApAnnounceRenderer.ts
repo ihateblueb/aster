@@ -6,8 +6,8 @@ import ApVisibilityService from './ApVisibilityService.js';
 
 class ApAnnounceRenderer {
 	public async render(
-		id: string,
-		actor: string,
+		id: GenericId,
+		actor: GenericId,
 		visibility: string,
 		activity: ObjectLiteral
 	) {

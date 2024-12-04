@@ -4,7 +4,7 @@ import context from '../../static/context.js';
 import config from '../../utils/config.js';
 
 class ApCreateRenderer {
-	public render(id: string, actor: string, note: ObjectLiteral) {
+	public render(id: GenericId, actor: GenericId, note: ObjectLiteral) {
 		return {
 			'@context': context,
 

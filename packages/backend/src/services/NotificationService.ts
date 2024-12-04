@@ -1,22 +1,20 @@
 import db from '../utils/database.js';
-import IdService from './IdService';
+import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
 import UserService from './UserService.js';
 
-type NotificationType = 'like' | 'repeat' | 'mention' | 'follow' | '';
-
 class NotificationService {
-	public async get(where: object) {}
-	public async getMany(where: object) {}
+	public async get(where: where) {}
+	public async getMany(where: where) {}
 
 	public async create(
-		to: string,
-		from: string,
+		to: GenericId,
+		from: GenericId,
 		type: NotificationType,
-		note?: string,
-		user?: string,
-		relationship?: string
+		note?: GenericId,
+		user?: GenericId,
+		relationship?: GenericId
 	) {
 		let sender = await UserService.get({ id: from });
 		let recipient = await UserService.get({ id: to });

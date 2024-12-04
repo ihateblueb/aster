@@ -1,4 +1,3 @@
-import { P } from 'frontend/build/server/chunks/PageHeader-D00RbiDX.js';
 import { ObjectLiteral } from 'typeorm';
 
 import config from '../utils/config.js';
@@ -15,7 +14,7 @@ import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
 class NoteService {
-	public async get(where: object) {
+	public async get(where: where) {
 		return await db
 			.getRepository('note')
 			.createQueryBuilder('note')
@@ -57,7 +56,7 @@ class NoteService {
 	}
 
 	public async getMany(
-		where: object,
+		where: where,
 		take?: number,
 		order?: string,
 		orderDirection?: 'ASC' | 'DESC'
@@ -104,7 +103,7 @@ class NoteService {
 			.getMany();
 	}
 
-	public async delete(where: object) {
+	public async delete(where: where) {
 		let note = await this.get(where);
 		if (note) {
 			let del = ApDeleteRenderer.render(
@@ -119,7 +118,7 @@ class NoteService {
 		return db.getRepository('note').delete(where);
 	}
 
-	public async like(noteId: string, as: string, toggle?: boolean) {
+	public async like(noteId: GenericId, as: GenericId, toggle?: boolean) {
 		const id = IdService.generate();
 
 		let user = await UserService.get({ id: as });
@@ -188,11 +187,11 @@ class NoteService {
 	}
 
 	public async create(
-		user: string,
+		user: GenericId,
 		cw: string,
 		content: string,
 		visibility?: string,
-		repeat?: string
+		repeat?: GenericId
 	) {
 		// if repeat, missing content is allowed. if content, it's a quote.
 		if (!repeat && content && content.length <= 0)
@@ -304,8 +303,8 @@ class NoteService {
 		these toggle(ish), quotes do not
 	*/
 	public async repeat(
-		noteId: string,
-		as: string,
+		noteId: GenericId,
+		as: GenericId,
 		toggle?: boolean,
 		visibility?: string
 	) {

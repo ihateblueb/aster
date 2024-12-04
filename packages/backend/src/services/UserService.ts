@@ -7,15 +7,15 @@ import locale from '../utils/locale.js';
 import IdService from './IdService.js';
 
 class UserService {
-	public async get(where: object) {
+	public async get(where: where) {
 		return await db.getRepository('user').findOne({ where: where });
 	}
 
-	public async getPrivate(where: object) {
+	public async getPrivate(where: where) {
 		return await db.getRepository('user_private').findOne({ where: where });
 	}
 
-	public async delete(where: object) {
+	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
 	}
 

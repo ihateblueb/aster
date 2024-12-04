@@ -8,7 +8,7 @@ import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
 class RelationshipService {
-	public async get(where: object) {
+	public async get(where: where) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
@@ -18,7 +18,7 @@ class RelationshipService {
 			.getOne();
 	}
 
-	public async getFollowing(from: string) {
+	public async getFollowing(from: where) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
@@ -32,7 +32,7 @@ class RelationshipService {
 			.getMany();
 	}
 
-	public async getFollowers(to: string) {
+	public async getFollowers(to: GenericId) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
@@ -46,7 +46,7 @@ class RelationshipService {
 			.getMany();
 	}
 
-	public async isFollowing(to: string, from: string) {
+	public async isFollowing(to: GenericId, from: GenericId) {
 		return Boolean(
 			await db
 				.getRepository('relationship')
@@ -64,7 +64,7 @@ class RelationshipService {
 		);
 	}
 
-	public async acceptFollow(id: string, to: string, from: string, body) {
+	public async acceptFollow(id: GenericId, to: GenericId, from: GenericId, body) {
 		let deliver = ApAcceptRenderer.render(id, to, body);
 
 		return await QueueService.deliver
@@ -81,7 +81,7 @@ class RelationshipService {
 			});
 	}
 
-	public async rejectFollow(id: string, to: string, from: string, body) {
+	public async rejectFollow(id: GenericId, to: GenericId, from: GenericId, body) {
 		let deliver = ApRejectRenderer.render(id, to, body);
 
 		return await QueueService.deliver

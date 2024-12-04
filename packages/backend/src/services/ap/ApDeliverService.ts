@@ -8,10 +8,9 @@ import logger from '../../utils/logger.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
-import ApAcceptRenderer from './ApAcceptRenderer.js';
 
 class ApDeliverService {
-	public async deliverToFollowers(body, as: string) {
+	public async deliverToFollowers(body, as: GenericId) {
 		let relationships = await RelationshipService.getFollowers(as);
 
 		for (const i in relationships) {

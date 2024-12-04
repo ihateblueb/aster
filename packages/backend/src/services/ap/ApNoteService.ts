@@ -10,7 +10,7 @@ import ApValidationService from './ApValidationService.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteService {
-	public async get(apId: string) {
+	public async get(apId: ApId) {
 		let url = new URL(apId);
 
 		let actor = await UserService.get({ apId: apId });

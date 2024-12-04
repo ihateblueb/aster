@@ -5,7 +5,7 @@ import locale from '../utils/locale.js';
 import IdService from './IdService.js';
 
 class AuthService {
-	public async generateToken(user: string) {
+	public async generateToken(user: GenericId) {
 		const token = crypto.randomBytes(64).toString('hex');
 
 		await db.getRepository('auth').insert({

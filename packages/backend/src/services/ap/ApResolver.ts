@@ -8,7 +8,7 @@ import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
 
 class ApResolver {
-	public async resolveSigned(apId: string, as?: string) {
+	public async resolveSigned(apId: ApId, as?: GenericId) {
 		let moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
@@ -78,7 +78,7 @@ class ApResolver {
 			});
 	}
 
-	public async resolve(apId: string): Promise<object | boolean> {
+	public async resolve(apId: ApId): Promise<object | boolean> {
 		if (!ValidationService.validUrl(apId)) return;
 
 		let request = await fetch(apId, {

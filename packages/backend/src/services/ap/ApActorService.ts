@@ -1,3 +1,4 @@
+import { ObjectLiteral } from 'typeorm';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import IdService from '../IdService.js';
@@ -7,7 +8,7 @@ import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
 
 class ApActorService {
-	public async get(apId: string) {
+	public async get(apId: ApId) {
 		let url = new URL(apId);
 
 		let actor = await UserService.get({ apId: apId });
@@ -24,7 +25,7 @@ class ApActorService {
 		return await this.register(resolvedActor);
 	}
 
-	public async register(body) {
+	public async register(body: ObjectLiteral) {
 		if (!ApValidationService.validBody(body)) return false;
 
 		const id = IdService.generate();
