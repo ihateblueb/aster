@@ -15,11 +15,23 @@ export class Notification {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-	@Column()
-	to: string;
+	@Column({ select: false })
+	toId: string;
 
-	@Column()
-	from: string;
+	@ManyToOne(() => User, (user) => user, {
+		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'toId' })
+	to: typeorm.Relation<User>;
+
+	@Column({ select: false })
+	fromId: string;
+
+	@ManyToOne(() => User, (user) => user, {
+		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'fromId' })
+	from: typeorm.Relation<User>;
 
 	@Column()
 	type: string;

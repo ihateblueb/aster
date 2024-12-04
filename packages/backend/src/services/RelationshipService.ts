@@ -8,16 +8,13 @@ import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
 class RelationshipService {
-	public async get(to: string, from: string) {
+	public async get(where: object) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
-			.where({
-				to: { id: to },
-				from: { id: from }
-			})
+			.where(where)
 			.getOne();
 	}
 
@@ -108,7 +105,7 @@ class RelationshipService {
 		let from = await ApActorService.get(body.actor);
 		if (!from) return false;
 
-		let alreadyFollowing = await this.get(to.id, from.id);
+		let alreadyFollowing = await this.get({to:to.id, from:from.id});
 
 		if (
 			alreadyFollowing &&
