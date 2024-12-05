@@ -7,5 +7,4 @@ let configText = await readFile(`../../config/production.ini`, {
 });
 
 let config = parse(configText);
-
 export default config;
