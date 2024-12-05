@@ -6,7 +6,7 @@ class FollowProcessor {
 		if (!body.actor) return false;
 		if (!body.object) return false;
 
-		let object = await UserService.get({ apId: body.object });
+		const object = await UserService.get({ apId: body.object });
 		if (!object) return false;
 		if (!object.local) return false;
 

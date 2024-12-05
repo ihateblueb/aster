@@ -24,7 +24,7 @@ router.delete(
 		}
 	}),
 	async (req, res) => {
-		let auth = await AuthService.verify(req.headers.authorization);
+		const auth = await AuthService.verify(req.headers.authorization);
 
 		if (auth.error)
 			return res.status(auth.status).json({
@@ -36,14 +36,14 @@ router.delete(
 				message: locale.note.notSpecified
 			});
 
-		let note = await NoteService.get({ id: req.params.id });
+		const note = await NoteService.get({ id: req.params.id });
 
 		if (!note)
 			return res.status(400).json({
 				message: locale.note.notFound
 			});
 
-		let user = await UserService.get({ id: note.user.id });
+		const user = await UserService.get({ id: note.user.id });
 
 		if (note.user.id !== auth.user && !user.admin)
 			return res.status(400).json({

@@ -20,7 +20,7 @@ class ApValidationService {
 			logger.debug('ap', 'host present');
 		}
 
-		let moderatedInstance = await db
+		const moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
@@ -79,7 +79,7 @@ class ApValidationService {
 			logger.debug('ap', 'signature header present');
 		}
 
-		let digestValid = this.validDigest(
+		const digestValid = this.validDigest(
 			req,
 			req.headers.digest.replace('SHA-256=', '')
 		);
@@ -93,7 +93,7 @@ class ApValidationService {
 			logger.debug('ap', 'digest valid');
 		}
 
-		let actor = await ApActorService.get(JSON.parse(req.body).actor);
+		const actor = await ApActorService.get(JSON.parse(req.body).actor);
 
 		if (!actor) {
 			if (type === 'Delete') {
@@ -124,11 +124,11 @@ class ApValidationService {
 				pretendToProcess: true
 			};
 		} else {
-			let parsedRequest = await httpSignature.parseRequest(req, {
+			const parsedRequest = await httpSignature.parseRequest(req, {
 				headers: ['(request-target)', 'digest', 'host', 'date']
 			});
 
-			let signatureValid = httpSignature.verifySignature(
+			const signatureValid = httpSignature.verifySignature(
 				parsedRequest,
 				actor.publicKey
 			);

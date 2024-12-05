@@ -9,7 +9,7 @@ import ValidationService from '../ValidationService.js';
 
 class ApResolver {
 	public async resolveSigned(apId: ApId, as?: GenericId) {
-		let moderatedInstance = await db
+		const moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
@@ -81,7 +81,7 @@ class ApResolver {
 	public async resolve(apId: ApId): Promise<object | boolean> {
 		if (!ValidationService.validUrl(apId)) return;
 
-		let request = await fetch(apId, {
+		const request = await fetch(apId, {
 			method: 'GET',
 			headers: {
 				'User-Agent': `Aster/${pkg.version}`,

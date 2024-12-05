@@ -7,8 +7,8 @@ class LikeProcessor {
 	public async process(body): Promise<boolean> {
 		if (!body.actor || !body.object) return false;
 
-		let actor = await ApActorService.get(body.actor);
-		let note = await ApNoteService.get(body.object);
+		const actor = await ApActorService.get(body.actor);
+		const note = await ApNoteService.get(body.object);
 
 		if (!actor) return false;
 		if (!note) return false;

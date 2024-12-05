@@ -59,7 +59,7 @@ router.get(
 		if (req.query.cursor) cursor = req.query.cursor.toString();
 
 		if (config.cache.ap) {
-			let cachedUserFollowing = await CacheService.get(
+			const cachedUserFollowing = await CacheService.get(
 				'ap_user_followers_first-' +
 					first +
 					'_cursor-' +
@@ -76,7 +76,7 @@ router.get(
 			}
 		}
 
-		let user = await UserService.get({ id: req.params.id });
+		const user = await UserService.get({ id: req.params.id });
 
 		if (user) {
 			if (!user.local) {
@@ -92,11 +92,11 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				let items = await RelationshipService.getFollowers(
+				const items = await RelationshipService.getFollowers(
 					req.params.id
 				);
 
-				let rendered = ApOrderedCollectionRenderer.render(
+				const rendered = ApOrderedCollectionRenderer.render(
 					first,
 					'users/' + req.params.id + '/followers',
 					cursor,

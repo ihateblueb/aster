@@ -16,8 +16,8 @@ class NotificationService {
 		user?: GenericId,
 		relationship?: GenericId
 	) {
-		let sender = await UserService.get({ id: from });
-		let recipient = await UserService.get({ id: to });
+		const sender = await UserService.get({ id: from });
+		const recipient = await UserService.get({ id: to });
 
 		if (!sender)
 			return {
@@ -30,7 +30,7 @@ class NotificationService {
 				message: 'No recipient found'
 			};
 
-		let notification = {
+		const notification = {
 			id: IdService.generate(),
 			toId: recipient.id,
 			fromId: sender.id,
@@ -39,13 +39,13 @@ class NotificationService {
 			createdAt: new Date().toISOString()
 		};
 
-		let grabbedNote = await NoteService.get({ id: note });
+		const grabbedNote = await NoteService.get({ id: note });
 		if (grabbedNote) notification['noteId'] = grabbedNote.id;
 
-		let grabbedUser = await UserService.get({ id: user });
+		const grabbedUser = await UserService.get({ id: user });
 		if (grabbedUser) notification['userId'] = grabbedUser.id;
 
-		let grabbedRelationship = await RelationshipService.get({
+		const grabbedRelationship = await RelationshipService.get({
 			id: relationship
 		});
 		if (grabbedRelationship)

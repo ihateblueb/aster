@@ -4,7 +4,7 @@ import ApActorService from './ApActorService.js';
 class ApVisibilityService {
 	private asPublic = 'https://www.w3.org/ns/activitystreams#Public';
 	public async determine(body) {
-		let creator = await ApActorService.get(
+		const creator = await ApActorService.get(
 			body.attributedTo ? body.attributedTo : body.actor
 		);
 		if (!creator) return 'direct';
@@ -38,7 +38,7 @@ class ApVisibilityService {
 	}
 
 	public async render(user, object) {
-		let grabbedUser = await UserService.get({ id: user });
+		const grabbedUser = await UserService.get({ id: user });
 
 		if (object.visibility === 'public')
 			return {

@@ -51,12 +51,12 @@ router.get(
 				message: locale.error.featureNotEnabled
 			});
 
-		let bubbleInstances = config.bubbleInstances;
+		const bubbleInstances = config.bubbleInstances;
 
 		if (req.query.local === 'true')
 			bubbleInstances.push(new URL(config.url).host);
 
-		let where = {
+		const where = {
 			user: { host: In(bubbleInstances) },
 			visibility: 'public'
 		};
@@ -71,7 +71,7 @@ router.get(
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
 
-		let timeline = await TimelineService.get(
+		const timeline = await TimelineService.get(
 			'note',
 			where,
 			take,

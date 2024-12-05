@@ -1,11 +1,12 @@
 import { ObjectLiteral } from 'typeorm';
+
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
 import ApImageRenderer from './ApImageRenderer.js';
 
 class ApActorRenderer {
 	public render(user: ObjectLiteral) {
-		let apActor = {
+		const apActor = {
 			'@context': context,
 
 			type: user.automated ? 'Service' : 'Person',

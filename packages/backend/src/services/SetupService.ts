@@ -6,7 +6,7 @@ import UserService from './UserService.js';
 
 class SetupService {
 	public async try() {
-		let instanceActor = await db
+		const instanceActor = await db
 			.getRepository('user')
 			.findOne({ where: { username: 'instanceactor' } })
 			.catch((err) => {

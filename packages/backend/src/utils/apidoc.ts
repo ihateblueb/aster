@@ -2,7 +2,7 @@ import openapi from '@wesleytodd/openapi';
 
 import pkg from '../../../../package.json' with { type: 'json' };
 
-let oapi = openapi({
+const oapi = openapi({
 	openapi: '3.0.0',
 	info: {
 		title: 'Aster API',

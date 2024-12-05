@@ -59,7 +59,7 @@ class UserService {
 		const privateId = IdService.generate();
 
 		if (invite) {
-			let grabbedInvite = await db.getRepository('invite').findOne({
+			const grabbedInvite = await db.getRepository('invite').findOne({
 				where: {
 					invite: invite
 				}
@@ -93,8 +93,8 @@ class UserService {
 			}
 		}
 
-		let salt = bcrypt.genSaltSync(12);
-		let hash = bcrypt.hashSync(password, salt);
+		const salt = bcrypt.genSaltSync(12);
+		const hash = bcrypt.hashSync(password, salt);
 
 		const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
 			modulusLength: 2048,
@@ -108,7 +108,7 @@ class UserService {
 			}
 		});
 
-		let user = {
+		const user = {
 			id: id,
 			apId: instanceUrl.href + 'users/' + id,
 			inbox: instanceUrl.href + 'users/' + id + '/inbox',
@@ -123,14 +123,14 @@ class UserService {
 			publicKey: publicKey
 		};
 
-		let userPrivate = {
+		const userPrivate = {
 			id: privateId,
 			user: id,
 			password: hash,
 			privateKey: privateKey
 		};
 
-		let existingUser = await db.getRepository('user').find({
+		const existingUser = await db.getRepository('user').find({
 			where: {
 				username: username
 			}
@@ -177,7 +177,7 @@ class UserService {
 	}
 
 	public async login(username: string, password: string) {
-		let user = await db.getRepository('user').findOne({
+		const user = await db.getRepository('user').findOne({
 			where: {
 				username: username,
 				local: true
@@ -191,7 +191,7 @@ class UserService {
 				message: locale.user.notFound
 			};
 
-		let userPrivate = await db.getRepository('user_private').findOne({
+		const userPrivate = await db.getRepository('user_private').findOne({
 			where: {
 				user: user.id
 			}

@@ -35,7 +35,7 @@ router.get(
 				message: locale.note.notSpecified
 			});
 
-		let note = await NoteService.get({
+		const note = await NoteService.get({
 			id: req.params.id
 		});
 
@@ -47,7 +47,9 @@ router.get(
 					message: locale.note.authorNotFound
 				});
 			} else {
-				let auth = await AuthService.verify(req.headers.authorization);
+				const auth = await AuthService.verify(
+					req.headers.authorization
+				);
 
 				if (await VisibilityService.canISee(note, auth.user)) {
 					return res.status(200).json(note);

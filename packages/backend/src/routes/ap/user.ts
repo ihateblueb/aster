@@ -50,7 +50,9 @@ router.get(
 			});
 
 		if (config.cache.ap) {
-			let cachedUser = await CacheService.get('ap_user_' + req.params.id);
+			const cachedUser = await CacheService.get(
+				'ap_user_' + req.params.id
+			);
 
 			if (cachedUser) {
 				MetricsService.apUserCacheHits.inc(1);
@@ -60,7 +62,7 @@ router.get(
 			}
 		}
 
-		let user = await UserService.get({ id: req.params.id });
+		const user = await UserService.get({ id: req.params.id });
 
 		if (user) {
 			if (!user.local) {
@@ -76,7 +78,7 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				let rendered = ApActorRenderer.render(user);
+				const rendered = ApActorRenderer.render(user);
 
 				if (config.cache.ap)
 					await CacheService.set(

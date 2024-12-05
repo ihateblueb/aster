@@ -124,7 +124,7 @@ router.get(
 	async (req, res) => {
 		if (!req.query.resource) return res.status(400).send();
 
-		let resource = req.query.resource
+		const resource = req.query.resource
 			.toString()
 			.replace('acct:@', '')
 			.replace('acct:', '')
@@ -133,7 +133,7 @@ router.get(
 
 		logger.debug('webfinger', 'resource: ' + resource);
 
-		let user = await UserService.get({
+		const user = await UserService.get({
 			local: true,
 			username: resource
 		});

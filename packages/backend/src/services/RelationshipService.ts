@@ -64,8 +64,13 @@ class RelationshipService {
 		);
 	}
 
-	public async acceptFollow(id: GenericId, to: GenericId, from: GenericId, body) {
-		let deliver = ApAcceptRenderer.render(id, to, body);
+	public async acceptFollow(
+		id: GenericId,
+		to: GenericId,
+		from: GenericId,
+		body
+	) {
+		const deliver = ApAcceptRenderer.render(id, to, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -81,8 +86,13 @@ class RelationshipService {
 			});
 	}
 
-	public async rejectFollow(id: GenericId, to: GenericId, from: GenericId, body) {
-		let deliver = ApRejectRenderer.render(id, to, body);
+	public async rejectFollow(
+		id: GenericId,
+		to: GenericId,
+		from: GenericId,
+		body
+	) {
+		const deliver = ApRejectRenderer.render(id, to, body);
 
 		return await QueueService.deliver
 			.add('{deliver}', {
@@ -99,13 +109,13 @@ class RelationshipService {
 	}
 
 	public async registerFollow(body) {
-		let to = await UserService.get({ apId: body.object });
+		const to = await UserService.get({ apId: body.object });
 		if (!to) return false;
 
-		let from = await ApActorService.get(body.actor);
+		const from = await ApActorService.get(body.actor);
 		if (!from) return false;
 
-		let alreadyFollowing = await this.get({to:to.id, from:from.id});
+		const alreadyFollowing = await this.get({ to: to.id, from: from.id });
 
 		if (
 			alreadyFollowing &&
@@ -128,7 +138,7 @@ class RelationshipService {
 			const id = IdService.generate();
 			const aId = IdService.generate();
 
-			let insertedActivity = await db
+			const insertedActivity = await db
 				.getRepository('activity')
 				.insert({
 					id: aId,
@@ -148,7 +158,7 @@ class RelationshipService {
 
 			if (!insertedActivity) return false;
 
-			let insertedRelationship = await db
+			const insertedRelationship = await db
 				.getRepository('relationship')
 				.insert({
 					id: id,

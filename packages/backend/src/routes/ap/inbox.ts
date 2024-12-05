@@ -41,7 +41,7 @@ router.post(
 			res.status(400).json({ message: "Couldn't parse body" });
 		}
 
-		let apvs = await ApValidationService.validSignature(
+		const apvs = await ApValidationService.validSignature(
 			req,
 			String(JSON.parse(req.body).type)
 		);

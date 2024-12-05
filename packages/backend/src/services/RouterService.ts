@@ -67,9 +67,7 @@ router.use((req, res, next) => {
 			'blocked request from useragent ' + req.headers['user-agent']
 		);
 
-		res.status(401).end();
-
-		next(401);
+		return res.status(401).send();
 	}
 
 	if (
@@ -124,7 +122,7 @@ createBullBoard({
 });
 
 router.get('/queue*', async (req, res, next) => {
-	let auth = await AuthService.verify(req.cookies.as_token);
+	const auth = await AuthService.verify(req.cookies.as_token);
 
 	if (auth.error)
 		return res.status(auth.status).json({

@@ -11,7 +11,7 @@ class ApAnnounceRenderer {
 		visibility: string,
 		activity: ObjectLiteral
 	) {
-		let announce = {
+		const announce = {
 			'@context': context,
 
 			type: 'Announce',
@@ -23,7 +23,7 @@ class ApAnnounceRenderer {
 			visibility: visibility
 		};
 
-		let tocc = await ApVisibilityService.render(actor, announce);
+		const tocc = await ApVisibilityService.render(actor, announce);
 
 		announce['to'] = tocc.to;
 		announce['cc'] = tocc.cc;

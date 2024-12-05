@@ -11,15 +11,15 @@ import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteService {
 	public async get(apId: ApId) {
-		let url = new URL(apId);
+		const url = new URL(apId);
 
-		let actor = await UserService.get({ apId: apId });
+		const actor = await UserService.get({ apId: apId });
 		if (actor) return actor;
 
-		let existingNote = await NoteService.get({ apId: apId });
+		const existingNote = await NoteService.get({ apId: apId });
 		if (existingNote) return existingNote;
 
-		let resolvedNote = await ApResolver.resolveSigned(apId);
+		const resolvedNote = await ApResolver.resolveSigned(apId);
 
 		if (!resolvedNote) return false;
 		if ((await resolvedNote.json()).type !== 'Note') return false;
@@ -34,13 +34,13 @@ class ApNoteService {
 
 		const id = IdService.generate();
 
-		let note = {
+		const note = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
 			local: false
 		};
 
-		let author = await ApActorService.get(
+		const author = await ApActorService.get(
 			body.attributedTo ? body.attributedTo : body.actor
 		);
 		if (!author) return false;

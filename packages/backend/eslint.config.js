@@ -15,7 +15,7 @@ export default [
 			'simple-import-sort': simpleImportSort
 		},
 		rules: {
-			'prefer-const': 'off',
+			'prefer-const': 'warn',
 			'simple-import-sort/imports': 'warn',
 			'simple-import-sort/exports': 'warn',
 

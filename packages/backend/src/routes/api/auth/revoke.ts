@@ -37,28 +37,28 @@ router.post(
 		}
 	}),
 	async (req, res, next) => {
-		let auth = await AuthService.verify(req.headers.authorization);
+		const auth = await AuthService.verify(req.headers.authorization);
 
 		if (auth.error)
 			return res.status(auth.status).json({
 				message: auth.message
 			});
 
-		let bodyValidation = ValidationService.validateApiBody(req.body);
+		const bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)
 			return res.status(bodyValidation.status).json({
 				message: bodyValidation.message
 			});
 
-		let parsedBody = bodyValidation.body;
+		const parsedBody = bodyValidation.body;
 
 		if (!parsedBody.token)
 			return res.status(400).json({
 				message: locale.auth.tokenRequired
 			});
 
-		let tokenBeingRevoked = await db.getRepository('auth').findOne({
+		const tokenBeingRevoked = await db.getRepository('auth').findOne({
 			where: {
 				token: parsedBody.token
 			}

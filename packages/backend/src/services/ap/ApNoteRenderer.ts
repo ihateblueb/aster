@@ -3,7 +3,7 @@ import config from '../../utils/config.js';
 
 class ApNoteRenderer {
 	public render(note) {
-		let apNote = {
+		const apNote = {
 			'@context': context,
 
 			type: 'Note',

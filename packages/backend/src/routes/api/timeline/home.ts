@@ -29,19 +29,19 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		let auth = await AuthService.verify(req.headers.authorization);
+		const auth = await AuthService.verify(req.headers.authorization);
 
 		if (auth.error)
 			return res.status(auth.status).json({
 				message: auth.message
 			});
 
-		let followingIds = await RelationshipService.getFollowing(auth.user);
+		const followingIds = await RelationshipService.getFollowing(auth.user);
 
 		// to get notes from self also
 		followingIds.push(auth.user);
 
-		let where = {
+		const where = {
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])
 		};
@@ -56,7 +56,7 @@ router.get(
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
 
-		let timeline = await TimelineService.get(
+		const timeline = await TimelineService.get(
 			'note',
 			where,
 			take,

@@ -11,10 +11,10 @@ import UserService from '../UserService.js';
 
 class ApDeliverService {
 	public async deliverToFollowers(body, as: GenericId) {
-		let relationships = await RelationshipService.getFollowers(as);
+		const relationships = await RelationshipService.getFollowers(as);
 
 		for (const i in relationships) {
-			let follower = relationships[i].from;
+			const follower = relationships[i].from;
 
 			console.log(follower);
 
@@ -30,7 +30,7 @@ class ApDeliverService {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
 
-		let moderatedInstance = await db
+		const moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {

@@ -26,7 +26,7 @@ class AuthService {
 				message: locale.auth.tokenInvalid
 			};
 
-		let grabbedToken = await db.getRepository('auth').findOne({
+		const grabbedToken = await db.getRepository('auth').findOne({
 			where: {
 				token: token.replace('Bearer ', '')
 			}

@@ -50,7 +50,9 @@ router.get(
 			});
 
 		if (config.cache.ap) {
-			let cachedNote = await CacheService.get('ap_note_' + req.params.id);
+			const cachedNote = await CacheService.get(
+				'ap_note_' + req.params.id
+			);
 
 			if (cachedNote) {
 				MetricsService.apNoteCacheHits.inc(1);
@@ -60,7 +62,7 @@ router.get(
 			}
 		}
 
-		let note = await NoteService.get({ id: req.params.id });
+		const note = await NoteService.get({ id: req.params.id });
 
 		if (note) {
 			if (!note.user.local) {
@@ -76,7 +78,7 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				let rendered = ApNoteRenderer.render(note);
+				const rendered = ApNoteRenderer.render(note);
 
 				if (config.cache.ap)
 					await CacheService.set(

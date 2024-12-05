@@ -9,7 +9,7 @@ import MetricsService from './MetricsService.js';
 class MetaService {
 	public async get() {
 		if (config.cache.meta) {
-			let cachedMeta = await CacheService.get('meta');
+			const cachedMeta = await CacheService.get('meta');
 
 			if (cachedMeta) {
 				MetricsService.metaCacheHits.inc(1);
@@ -38,7 +38,7 @@ class MetaService {
 			})
 			.getCount();
 
-		let meta = {
+		const meta = {
 			software: pkg.name,
 			version: pkg.version,
 			registrations: config.registrations,

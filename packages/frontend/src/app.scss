@@ -109,6 +109,13 @@
 		inset 0 0.035rem 1px #ffffff05, inset 0 0.055rem 2.5px #ffffff05;
 }
 
+html {
+	font-family: var(--font);
+	font-feature-settings: var(--font-features);
+	font-size: var(--fs-md);
+	color: var(--tx2);
+}
+
 body {
 	display: flex;
 	justify-content: center;

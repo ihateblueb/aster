@@ -32,10 +32,10 @@ router.get(
 				message: 'User not specified'
 			});
 
-		let splitHandle = req.params.handle.split('@');
+		const splitHandle = req.params.handle.split('@');
 
 		// todo: test if this works
-		let user = await UserService.get({
+		const user = await UserService.get({
 			username: splitHandle[1],
 			host: splitHandle[2]
 		});

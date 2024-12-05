@@ -1,7 +1,7 @@
 class ApImageRenderer {
 	public render(src: string, sensitive?: boolean, alt?: string) {
 		// todo: is this correct at all
-		let apImage = {
+		const apImage = {
 			type: 'Image',
 			url: src,
 			sensitive: sensitive,

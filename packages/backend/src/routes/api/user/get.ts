@@ -33,7 +33,7 @@ router.get(
 				message: locale.user.notSpecified
 			});
 
-		let user = await UserService.get({
+		const user = await UserService.get({
 			id: req.params.id
 		});
 

@@ -54,14 +54,14 @@ router.post(
 		}
 	}),
 	(req, res, next) => {
-		let bodyValidation = ValidationService.validateApiBody(req.body);
+		const bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)
 			return res.status(bodyValidation.status).json({
 				message: bodyValidation.message
 			});
 
-		let parsedBody = bodyValidation.body;
+		const parsedBody = bodyValidation.body;
 
 		if (!parsedBody.username)
 			return res.status(400).json({
@@ -80,7 +80,7 @@ router.post(
 						message: e.message
 					});
 				} else {
-					let token = await AuthService.generateToken(e.user.id);
+					const token = await AuthService.generateToken(e.user.id);
 
 					return res.status(200).json({
 						id: e.user.id,

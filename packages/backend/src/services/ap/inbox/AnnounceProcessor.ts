@@ -9,9 +9,9 @@ class AnnounceProcessor {
 		if (!body.object) return false;
 		if (!body.actor) return false;
 
-		let actor = await ApActorService.get(body.actor);
-		let note = await ApNoteService.get(body.object);
-		let visibility = await ApVisibilityService.determine(body);
+		const actor = await ApActorService.get(body.actor);
+		const note = await ApNoteService.get(body.object);
+		const visibility = await ApVisibilityService.determine(body);
 
 		if (!actor) return false;
 		if (!note) return false;

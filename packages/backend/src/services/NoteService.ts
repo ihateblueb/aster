@@ -104,9 +104,9 @@ class NoteService {
 	}
 
 	public async delete(where: where) {
-		let note = await this.get(where);
+		const note = await this.get(where);
 		if (note) {
-			let del = ApDeleteRenderer.render(
+			const del = ApDeleteRenderer.render(
 				IdService.generate(),
 				note.user.id,
 				note.apId
@@ -121,9 +121,9 @@ class NoteService {
 	public async like(noteId: GenericId, as: GenericId, toggle?: boolean) {
 		const id = IdService.generate();
 
-		let user = await UserService.get({ id: as });
+		const user = await UserService.get({ id: as });
 
-		let existingLike = await db.getRepository('note_like').findOne({
+		const existingLike = await db.getRepository('note_like').findOne({
 			where: {
 				userId: user.id,
 				noteId: noteId
@@ -159,7 +159,7 @@ class NoteService {
 				};
 			}
 		} else {
-			let like = {
+			const like = {
 				id: id,
 				userId: user.id,
 				noteId: noteId,
@@ -226,7 +226,7 @@ class NoteService {
 
 		const id = IdService.generate();
 
-		let note = {
+		const note = {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
 			userId: user,
@@ -255,7 +255,7 @@ class NoteService {
 			note['repeatId'] = repeatedNote.id;
 		}
 
-		let result = await db
+		const result = await db
 			.getRepository('note')
 			.insert(note)
 			.then(() => {
@@ -276,7 +276,7 @@ class NoteService {
 			});
 
 		if (repeat && repeatedNote && !content) {
-			let announce = await ApAnnounceRenderer.render(
+			const announce = await ApAnnounceRenderer.render(
 				IdService.generate(),
 				user,
 				note.visibility,
@@ -287,7 +287,7 @@ class NoteService {
 
 			await ApDeliverService.deliverToFollowers(announce, user);
 		} else {
-			let create = ApCreateRenderer.render(
+			const create = ApCreateRenderer.render(
 				IdService.generate(),
 				user,
 				ApNoteRenderer.render(await this.get({ id: note.id }))

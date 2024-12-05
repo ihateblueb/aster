@@ -10,7 +10,7 @@ import config from './utils/config.js';
 import db from './utils/database.js';
 import logger from './utils/logger.js';
 
-let processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
+const processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
 process.title = `Aster v${pkg.version} (${processId})`;
 
 await db.initialize().catch((e) => {

@@ -27,7 +27,7 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		let where = {
+		const where = {
 			visibility: 'public'
 		};
 
@@ -41,7 +41,7 @@ router.get(
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
 
-		let timeline = await TimelineService.get(
+		const timeline = await TimelineService.get(
 			'note',
 			where,
 			take,
