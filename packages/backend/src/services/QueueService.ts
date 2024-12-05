@@ -29,9 +29,23 @@ const deliver = new Queue('{deliver}', {
 	}
 });
 
+const backfill = new Queue('{backfill}', {
+	connection: redis,
+	defaultJobOptions: {
+		removeOnComplete: false,
+		removeOnFail: false,
+		attempts: config.backfill.attempts,
+		backoff: {
+			type: 'exponential',
+			delay: config.backfill.backoff
+		}
+	}
+});
+
 class QueueService {
 	public inbox = inbox;
 	public deliver = deliver;
+	public backfill = backfill;
 }
 
 export default new QueueService();

@@ -61,5 +61,6 @@ Run `pnpm start` and your instance will start up.
 ## TODO
 
 -   handle robots.txt from backend, generate from config
--   favicons
--   refactor Store and LocalStore, i shouldnt've capitalized them
+-   favicon
+-   try using typeof for some types of validation
+-   use backfill queue (reply, quote)
