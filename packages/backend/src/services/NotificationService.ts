@@ -30,6 +30,12 @@ class NotificationService {
 				message: 'No recipient found'
 			};
 
+		if (sender.id === recipient.id)
+			return {
+				error: true,
+				message: "Cannot send notification to the user it's from"
+			};
+
 		const notification = {
 			id: IdService.generate(),
 			toId: recipient.id,

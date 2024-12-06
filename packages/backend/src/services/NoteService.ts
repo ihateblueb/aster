@@ -10,6 +10,7 @@ import ApDeleteRenderer from './ap/ApDeleteRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import IdService from './IdService.js';
+import NotificationService from './NotificationService.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
@@ -294,6 +295,17 @@ class NoteService {
 			);
 
 			await ApDeliverService.deliverToFollowers(create, user);
+		}
+
+		if (repeat && repeatedNote) {
+			await NotificationService.create(
+				repeatedNote.user.id,
+				user,
+				'repeat',
+				content ? note.id : repeatedNote.id
+			).catch((err) => {
+				console.log(err);
+			});
 		}
 
 		return result;
