@@ -11,7 +11,9 @@ class AnnounceProcessor {
 
 		const actor = await ApActorService.get(body.actor);
 		const note = await ApNoteService.get(body.object);
-		const visibility = await ApVisibilityService.determine(body);
+
+		const visibility = (await ApVisibilityService.determine(body))
+			.visibility;
 
 		if (!actor) return false;
 		if (!note) return false;

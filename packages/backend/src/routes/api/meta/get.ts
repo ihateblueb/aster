@@ -1,5 +1,6 @@
 import express from 'express';
 
+import MetaService from '../../../services/MetaService.js';
 import oapi from '../../../utils/apidoc.js';
 
 const router = express.Router();
@@ -21,10 +22,8 @@ router.get(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	(req, res) => {
-		res.status(501).json({
-			message: 'not done lol'
-		});
+	async (req, res) => {
+		res.status(200).json(await MetaService.get());
 	}
 );
 

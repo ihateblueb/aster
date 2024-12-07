@@ -3,11 +3,16 @@ import ApActorService from './ApActorService.js';
 
 class ApVisibilityService {
 	private asPublic = 'https://www.w3.org/ns/activitystreams#Public';
+
 	public async determine(body) {
 		const creator = await ApActorService.get(
 			body.attributedTo ? body.attributedTo : body.actor
 		);
-		if (!creator) return 'direct';
+		if (!creator)
+			return {
+				visibility: 'direct',
+				to: undefined
+			};
 
 		let visibility = 'direct';
 
@@ -33,8 +38,45 @@ class ApVisibilityService {
 		)
 			visibility = body.visibility;
 
-		// todo: if OrderedCollection of actors exists in to, resolve actors and make direct to those actors
-		return visibility;
+		const filteredTo = body.to
+			.filter((e) => {
+				return e !== this.asPublic;
+			})
+			.filter((e) => {
+				return e !== creator.followersUrl;
+			});
+		const filteredCc = body.cc
+			.filter((e) => {
+				return e !== this.asPublic;
+			})
+			.filter((e) => {
+				return e !== creator.followersUrl;
+			});
+
+		console.log('filteredTo', filteredTo);
+		console.log('filteredCc', filteredCc);
+
+		const toIds: string[] = [];
+
+		for (const item of filteredTo) {
+			const actor = await ApActorService.get(item);
+			if (actor) toIds.push(actor.id);
+		}
+
+		for (const item of filteredCc) {
+			const actor = await ApActorService.get(item);
+			if (actor) toIds.push(actor.id);
+		}
+
+		console.log({
+			visibility: visibility,
+			to: toIds
+		});
+
+		return {
+			visibility: visibility,
+			to: toIds
+		};
 	}
 
 	public async render(user, object) {

@@ -59,7 +59,10 @@ class ApNoteService {
 		if (body.source && body.source.content)
 			note['content'] = SanitizerService.sanitize(body.source.content);
 
-		note['visibility'] = await ApVisibilityService.determine(body);
+		const determinedVisibility = await ApVisibilityService.determine(body);
+
+		note['visibility'] = determinedVisibility.visibility;
+		note['toIds'] = determinedVisibility.to;
 
 		console.log(note); //todo: remove
 
