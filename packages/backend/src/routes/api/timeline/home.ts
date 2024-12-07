@@ -1,5 +1,5 @@
 import express from 'express';
-import { In, LessThan } from 'typeorm';
+import { ArrayContains, In, LessThan } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
 import RelationshipService from '../../../services/RelationshipService.js';
@@ -45,6 +45,9 @@ router.get(
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])
 		};
+		const orWhere = {
+			to: ArrayContains([auth.user])
+		};
 
 		let take;
 		let orderDirection;
@@ -56,21 +59,27 @@ router.get(
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
 
-		const timeline = await TimelineService.get(
+		return await TimelineService.get(
 			'note',
 			where,
 			take,
 			'note.createdAt',
-			orderDirection ? orderDirection : 'DESC'
-		).catch((err) => {
-			console.log(err);
-			logger.error('timeline', 'failed to generate timeline');
-			return res.status(500).json({
-				message: locale.error.internalServer
+			orderDirection ? orderDirection : 'DESC',
+			orWhere
+		)
+			.then((e) => {
+				if (e) return res.status(200).json(e);
+				return res.status(500).json({
+					message: locale.error.internalServer
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+				logger.error('timeline', 'failed to generate timeline');
+				return res.status(500).json({
+					message: locale.error.internalServer
+				});
 			});
-		});
-
-		if (timeline) return res.status(200).json(timeline);
 	}
 );
 

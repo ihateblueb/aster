@@ -15,7 +15,7 @@ import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 
 class NoteService {
-	public async get(where: where) {
+	public async get(where: where, orWhere?: where) {
 		return await db
 			.getRepository('note')
 			.createQueryBuilder('note')
@@ -53,6 +53,7 @@ class NoteService {
 			.addSelect(['like_user.isCat'])
 			.addSelect(['like_user.local'])
 			.where(where)
+			.orWhere(orWhere)
 			.getOne();
 	}
 
@@ -60,7 +61,8 @@ class NoteService {
 		where: where,
 		take?: number,
 		order?: string,
-		orderDirection?: 'ASC' | 'DESC'
+		orderDirection?: 'ASC' | 'DESC',
+		orWhere?: where
 	) {
 		return await db
 			.getRepository('note')
@@ -99,6 +101,7 @@ class NoteService {
 			.addSelect(['like_user.isCat'])
 			.addSelect(['like_user.local'])
 			.where(where)
+			.orWhere(orWhere)
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();

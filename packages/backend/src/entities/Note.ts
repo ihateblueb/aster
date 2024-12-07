@@ -105,15 +105,8 @@ export class Note {
 	@JoinColumn({ name: 'repeatIds' })
 	repeats: typeorm.Relation<Note>;
 
-	@Column({ array: true, select: false, nullable: true })
-	toIds: string;
-
-	@OneToMany(() => User, (User) => User, {
-		onDelete: 'CASCADE',
-		nullable: true
-	})
-	@JoinColumn({ name: 'toIds' })
-	to: typeorm.Relation<User>;
+	@Column({ array: true, nullable: true })
+	to: string;
 
 	@Column()
 	createdAt: string;

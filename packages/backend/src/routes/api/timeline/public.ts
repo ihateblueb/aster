@@ -41,21 +41,26 @@ router.get(
 		take =
 			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
 
-		const timeline = await TimelineService.get(
+		return await TimelineService.get(
 			'note',
 			where,
 			take,
 			'note.createdAt',
 			orderDirection ? orderDirection : 'DESC'
-		).catch((err) => {
-			console.log(err);
-			logger.error('timeline', 'failed to generate timeline');
-			return res.status(500).json({
-				message: locale.error.internalServer
+		)
+			.then((e) => {
+				if (e) return res.status(200).json(e);
+				return res.status(500).json({
+					message: locale.error.internalServer
+				});
+			})
+			.catch((err) => {
+				console.log(err);
+				logger.error('timeline', 'failed to generate timeline');
+				return res.status(500).json({
+					message: locale.error.internalServer
+				});
 			});
-		});
-
-		if (timeline) return res.status(200).json(timeline);
 	}
 );
 

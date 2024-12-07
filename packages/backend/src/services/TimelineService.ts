@@ -3,10 +3,11 @@ import NoteService from './NoteService.js';
 class TimelineService {
 	public async get(
 		type: string,
-		where: any,
+		where: where,
 		take: number,
 		order: string,
-		orderDirection: 'ASC' | 'DESC'
+		orderDirection: 'ASC' | 'DESC',
+		orWhere?: where
 	) {
 		let timelineObjects;
 
@@ -15,7 +16,8 @@ class TimelineService {
 				where,
 				take,
 				order,
-				orderDirection
+				orderDirection,
+				orWhere
 			);
 
 		return await this.sort(timelineObjects, take);
