@@ -7,35 +7,37 @@
 </script>
 
 <header>
-	<div class="left">
-		<Avatar user={note.user} />
-		<div class="names">
-			<a
-				class="top"
-				href={'/@' +
-					note.user.username +
-					(note.user.local ? '' : '@' + note.user.host)}
-			>
-				{note.user.displayName
-					? note.user.displayName
-					: note.user.username}
-			</a>
-			<a
-				class="bottom"
-				href={'/@' +
-					note.user.username +
-					(note.user.local ? '' : '@' + note.user.host)}
-			>
-				@{note.user.username}{#if !note.user.local}
-					<span class="host">@{note.user.host}</span>
-				{/if}
-			</a>
+	{#if note.user}
+		<div class="left">
+			<Avatar user={note.user} />
+			<div class="names">
+				<a
+					class="top"
+					href={'/@' +
+						note.user.username +
+						(note.user.local ? '' : '@' + note.user.host)}
+				>
+					{note.user.displayName
+						? note.user.displayName
+						: note.user.username}
+				</a>
+				<a
+					class="bottom"
+					href={'/@' +
+						note.user.username +
+						(note.user.local ? '' : '@' + note.user.host)}
+				>
+					@{note.user.username}{#if !note.user.local}
+						<span class="host">@{note.user.host}</span>
+					{/if}
+				</a>
+			</div>
 		</div>
-	</div>
-	<div class="right">
-		<Visibility visibility={note.visibility} />
-		<Time time={note.createdAt} />
-	</div>
+		<div class="right">
+			<Visibility visibility={note.visibility} />
+			<Time time={note.createdAt} />
+		</div>
+	{/if}
 </header>
 
 <style lang="scss">

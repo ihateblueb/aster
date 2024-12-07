@@ -9,6 +9,7 @@
 	import getNote from '$lib/api/note/get.js';
 	import Note from '$lib/components/Note.svelte';
 	import Tab from '$lib/components/Tab.svelte';
+	import NoteHeader from '$lib/components/NoteHeader.svelte';
 
 	let props = $props();
 
@@ -70,6 +71,23 @@
 				short>Reactions</Tab
 			>
 		</div>
+		<div class="bottom">
+			{#if selectedTab === 'replies'}
+				replies
+			{:else if selectedTab === 'repeats'}
+				{#each $query.data.repeats as repeat}
+					{#if repeat.content}
+						<Note note={repeat} />
+					{:else}
+						<div class="userCard">
+							<NoteHeader note={repeat} />
+						</div>
+					{/if}
+				{/each}
+			{:else if selectedTab === 'reactions'}
+				reactions
+			{/if}
+		</div>
 	{/if}
 </PageWrapper>
 
@@ -88,5 +106,18 @@
 		padding: 0 20px;
 
 		border-bottom: 1px solid var(--bg3);
+	}
+	.bottom {
+		margin-top: 8px;
+
+		.userCard {
+			padding: 16px;
+			transition: 0.1s;
+
+			&:hover {
+				border-radius: var(--br-md);
+				background-color: var(--bg3-25);
+			}
+		}
 	}
 </style>
