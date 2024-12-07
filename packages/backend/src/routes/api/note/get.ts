@@ -54,7 +54,6 @@ router.get(
 				if (await VisibilityService.canISee(note, auth.user)) {
 					return res.status(200).json(note);
 				} else {
-					// pretend it isn't real
 					return res.status(404).json({
 						message: locale.note.notFound
 					});
