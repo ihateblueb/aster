@@ -6,7 +6,7 @@ import IdService from './IdService.js';
 
 class AuthService {
 	public async generateToken(user: GenericId) {
-		const token = crypto.randomBytes(64).toString('hex');
+		const token = crypto.randomBytes(16).toString('hex');
 
 		await db.getRepository('auth').insert({
 			id: IdService.generate(),

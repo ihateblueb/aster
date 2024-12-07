@@ -98,7 +98,8 @@ serverAdapter.setBasePath('/queue');
 createBullBoard({
 	queues: [
 		new BullMQAdapter(QueueService.inbox),
-		new BullMQAdapter(QueueService.deliver)
+		new BullMQAdapter(QueueService.deliver),
+		new BullMQAdapter(QueueService.backfill)
 	],
 	serverAdapter,
 	options: {

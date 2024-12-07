@@ -38,6 +38,14 @@ WorkerService.deliver.on('failed', (job) => {
 	console.log(job.stacktrace);
 });
 
+WorkerService.backfill.on('completed', (job) => {
+	logger.done('backfill', 'job ' + job.id + ' completed');
+});
+WorkerService.backfill.on('failed', (job) => {
+	logger.error('backfill', 'job ' + job.id + ' failed');
+	console.log(job.stacktrace);
+});
+
 const app = express();
 
 app.use('/', RouterService);
