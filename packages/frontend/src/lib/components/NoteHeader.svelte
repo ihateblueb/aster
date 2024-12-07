@@ -51,21 +51,38 @@
 			align-items: center;
 			gap: 10px;
 			flex-grow: 1;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			overflow: hidden;
 
 			.names {
-				display: flex;
+				display: block;
 				align-items: start;
 				flex-direction: column;
 				flex-grow: 1;
 
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+
 				.top {
+					display: block;
 					font-weight: 600;
 					color: var(--tx2);
 					text-decoration: none;
+
+					white-space: inherit;
+					text-overflow: inherit;
+					overflow: inherit;
 				}
 				.bottom {
+					display: block;
 					color: var(--tx2);
 					text-decoration: none;
+
+					white-space: inherit;
+					text-overflow: inherit;
+					overflow: inherit;
 
 					.host {
 						color: var(--tx3);
