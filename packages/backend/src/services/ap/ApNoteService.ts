@@ -62,7 +62,7 @@ class ApNoteService {
 		const determinedVisibility = await ApVisibilityService.determine(body);
 
 		note['visibility'] = determinedVisibility.visibility;
-		note['toIds'] = determinedVisibility.to;
+		note['to'] = determinedVisibility.to;
 
 		console.log(note); //todo: remove
 

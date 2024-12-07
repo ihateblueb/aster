@@ -53,7 +53,7 @@ class NoteService {
 			.addSelect(['like_user.isCat'])
 			.addSelect(['like_user.local'])
 			.where(where)
-			.orWhere(orWhere)
+			.orWhere(orWhere ?? {})
 			.getOne();
 	}
 
@@ -101,7 +101,7 @@ class NoteService {
 			.addSelect(['like_user.isCat'])
 			.addSelect(['like_user.local'])
 			.where(where)
-			.orWhere(orWhere)
+			.orWhere(orWhere ?? {})
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();

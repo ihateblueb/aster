@@ -38,34 +38,36 @@ class ApVisibilityService {
 		)
 			visibility = body.visibility;
 
-		const filteredTo = body.to
-			.filter((e) => {
-				return e !== this.asPublic;
-			})
-			.filter((e) => {
-				return e !== creator.followersUrl;
-			});
-		const filteredCc = body.cc
-			.filter((e) => {
-				return e !== this.asPublic;
-			})
-			.filter((e) => {
-				return e !== creator.followersUrl;
-			});
-
-		console.log('filteredTo', filteredTo);
-		console.log('filteredCc', filteredCc);
-
 		const toIds: string[] = [];
 
-		for (const item of filteredTo) {
-			const actor = await ApActorService.get(item);
-			if (actor) toIds.push(actor.id);
+		if (body.to && Array.isArray(body.to)) {
+			const filteredTo = body.to
+				.filter((e) => {
+					return e !== this.asPublic;
+				})
+				.filter((e) => {
+					return e !== creator.followersUrl;
+				});
+
+			for (const item of filteredTo) {
+				const actor = await ApActorService.get(item);
+				if (actor) toIds.push(actor.id);
+			}
 		}
 
-		for (const item of filteredCc) {
-			const actor = await ApActorService.get(item);
-			if (actor) toIds.push(actor.id);
+		if (body.cc && Array.isArray(body.cc)) {
+			const filteredCc = body.cc
+				.filter((e) => {
+					return e !== this.asPublic;
+				})
+				.filter((e) => {
+					return e !== creator.followersUrl;
+				});
+
+			for (const item of filteredCc) {
+				const actor = await ApActorService.get(item);
+				if (actor) toIds.push(actor.id);
+			}
 		}
 
 		console.log({
