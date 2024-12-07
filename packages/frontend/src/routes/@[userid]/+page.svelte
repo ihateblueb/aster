@@ -1,4 +1,32 @@
-<script lang="ts" ✂prettier:content✂="CglpbXBvcnQgUGFnZVdyYXBwZXIgZnJvbSAnJGxpYi9jb21wb25lbnRzL1BhZ2VXcmFwcGVyLnN2ZWx0ZSc7CglpbXBvcnQgUGFnZUhlYWRlciBmcm9tICckbGliL2NvbXBvbmVudHMvUGFnZUhlYWRlci5zdmVsdGUnOwoKCWltcG9ydCB7IGNyZWF0ZVF1ZXJ5IH0gZnJvbSAnQHRhbnN0YWNrL3N2ZWx0ZS1xdWVyeSc7CglpbXBvcnQgRXJyb3IgZnJvbSAnJGxpYi9jb21wb25lbnRzL0Vycm9yLnN2ZWx0ZSc7CglpbXBvcnQgTG9hZGluZyBmcm9tICckbGliL2NvbXBvbmVudHMvTG9hZGluZy5zdmVsdGUnOwoJaW1wb3J0IEF2YXRhciBmcm9tICckbGliL2NvbXBvbmVudHMvQXZhdGFyLnN2ZWx0ZSc7CglpbXBvcnQgewoJCUljb25DYWtlLAoJCUljb25NYXBQaW4sCgkJSWNvblBpbiwKCQlJY29uVXNlckNpcmNsZQoJfSBmcm9tICdAdGFibGVyL2ljb25zLXN2ZWx0ZSc7CglpbXBvcnQgbG9va3VwVXNlciBmcm9tICckbGliL2FwaS91c2VyL2xvb2t1cC5qcyc7CglpbXBvcnQgQnV0dG9uIGZyb20gJyRsaWIvY29tcG9uZW50cy9CdXR0b24uc3ZlbHRlJzsKCWltcG9ydCBsb2NhbHN0b3JlIGZyb20gJyRsaWIvbG9jYWxzdG9yZS5qcyc7CglpbXBvcnQgTWZtIGZyb20gJyRsaWIvY29tcG9uZW50cy9NZm0uc3ZlbHRlJzsKCglsZXQgeyBkYXRhIH0gPSAkcHJvcHMoKTsKCgljb25zb2xlLmxvZyhkYXRhKTsKCgljb25zdCBxdWVyeSA9IGNyZWF0ZVF1ZXJ5KHsKCQlxdWVyeUtleTogWyd1c2VyJ10sCgkJcmV0cnk6IGZhbHNlLAoJCXF1ZXJ5Rm46IGFzeW5jICgpID0+IGF3YWl0IGxvb2t1cFVzZXIoJ0AnICsgZGF0YS51c2VyaWQpCgl9KTsK">{}</script>
+<script lang="ts">
+	import PageWrapper from '$lib/components/PageWrapper.svelte';
+	import PageHeader from '$lib/components/PageHeader.svelte';
+
+	import { createQuery } from '@tanstack/svelte-query';
+	import Error from '$lib/components/Error.svelte';
+	import Loading from '$lib/components/Loading.svelte';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import {
+		IconCake,
+		IconMapPin,
+		IconPin,
+		IconUserCircle
+	} from '@tabler/icons-svelte';
+	import lookupUser from '$lib/api/user/lookup.js';
+	import Button from '$lib/components/Button.svelte';
+	import localstore from '$lib/localstore.js';
+	import Mfm from '$lib/components/Mfm.svelte';
+
+	let { data } = $props();
+
+	console.log(data);
+
+	const query = createQuery({
+		queryKey: ['user'],
+		retry: false,
+		queryFn: async () => await lookupUser('@' + data.userid)
+	});
+</script>
 
 <PageHeader
 	title={$query.data
@@ -93,7 +121,7 @@
 					{#if $query.data.location}
 						<p class="pair">
 							<span class="key"
-							><IconMapPin size="var(--fs-lg)" /></span
+								><IconMapPin size="var(--fs-lg)" /></span
 							>
 							<span class="val">{$query.data.location}</span>
 						</p>
@@ -129,4 +157,122 @@
 	{/if}
 </PageWrapper>
 
-<style lang="scss" scoped ✂prettier:content✂="CgkuaGVhZGVyIHsKCQlwb3NpdGlvbjogcmVsYXRpdmU7CgkJbWFyZ2luOiAtOHB4IC04cHggMCAtOHB4OwoJCW92ZXJmbG93OiBoaWRkZW47CgoJCSY6OmFmdGVyIHsKCQkJcG9zaXRpb246IGFic29sdXRlOwoJCQljb250ZW50OiAnJzsKCgkJCXdpZHRoOiBjYWxjKDEwMCUgKyA4MHB4KTsKCQkJaGVpZ2h0OiAxMDAlOwoJCQlsZWZ0OiAtNDBweDsKCQkJdG9wOiAwOwoKCQkJYm94LXNoYWRvdzogaW5zZXQgMHB4IC00MHB4IDMwcHggdmFyKC0tYmcyKTsKCQl9CgoJCS5iYW5uZXIgewoJCQloZWlnaHQ6IDMwMHB4OwoJCQl3aWR0aDogMTAwJTsKCgkJCWJveC1zaXppbmc6IGJvcmRlci1ib3g7CgkJCW9iamVjdC1maXQ6IGNvdmVyOwoJCQl1c2VyLXNlbGVjdDogbm9uZTsKCgkJCWJhY2tncm91bmQtY29sb3I6IHZhcigtLWJnMy0yNSk7CgkJfQoKCQkuZmxvYXQgewoJCQlkaXNwbGF5OiBmbGV4OwoJCQlwb3NpdGlvbjogYWJzb2x1dGU7CgkJCWFsaWduLWl0ZW1zOiBjZW50ZXI7CgkJCWdhcDogMTBweDsKCgkJCWJvdHRvbTogMDsKCQkJei1pbmRleDogMTA7CgoJCQltYXJnaW4tYm90dG9tOiAzMHB4OwoJCQlwYWRkaW5nOiAxMnB4OwoKCQkJd2lkdGg6IDEwMCU7CgkJCWJveC1zaXppbmc6IGJvcmRlci1ib3g7CgoJCQkubGVmdCwKCQkJLnJpZ2h0IHsKCQkJCWRpc3BsYXk6IGZsZXg7CgkJCQlhbGlnbi1pdGVtczogY2VudGVyOwoJCQkJZ2FwOiAxMHB4OwoJCQl9CgoJCQkubGVmdCB7CgkJCQlmbGV4LWdyb3c6IDE7CgoJCQkJcCB7CgkJCQkJY29sb3I6IHZhcigtLXR4MSk7CgkJCQkJdGV4dC1zaGFkb3c6CgkJCQkJCTAgMXB4IDVweCB2YXIoLS1iZzEpLAoJCQkJCQkwIC0xcHggNXB4IHZhcigtLWJnMSksCgkJCQkJCTFweCAxcHggNXB4IHZhcigtLWJnMSksCgkJCQkJCS0xcHggLTFweCA1cHggdmFyKC0tYmcxKTsKCgkJCQkJJi50b3AgewoJCQkJCQlmb250LXNpemU6IHZhcigtLWZzLXhsKTsKCQkJCQkJZm9udC13ZWlnaHQ6IGJvbGQ7CgkJCQkJfQoJCQkJfQoJCQl9CgkJfQoJfQoJLmxvd2VyIHsKCQlwYWRkaW5nOiAxOHB4IDIwcHg7CgkJbWFyZ2luOiAtOHB4IC04cHggMCAtOHB4OwoJCWJvcmRlci1ib3R0b206IDFweCBzb2xpZCB2YXIoLS1iZzMpOwoKCQkuZGVzY3JpcHRpb24gewoJCQkubWlzc2luZyB7CgkJCQljb2xvcjogdmFyKC0tdHgzKTsKCQkJCWZvbnQtc3R5bGU6IGl0YWxpYzsKCQkJfQoJCX0KCgkJLnBhaXJzIHsKCQkJZGlzcGxheTogZmxleDsKCQkJZmxleC1kaXJlY3Rpb246IGNvbHVtbjsKCgkJCW1hcmdpbi10b3A6IDEwcHg7CgkJCWdhcDogNXB4OwoKCQkJLnBhaXIgewoJCQkJZGlzcGxheTogZmxleDsKCQkJCWFsaWduLWl0ZW1zOiBjZW50ZXI7CgkJCQlnYXA6IDVweDsKCgkJCQkua2V5LAoJCQkJLnZhbCB7CgkJCQkJZGlzcGxheTogZmxleDsKCQkJCQlhbGlnbi1pdGVtczogY2VudGVyOwoJCQkJCWp1c3RpZnktY29udGVudDogY2VudGVyOwoJCQkJfQoKCQkJCS5rZXkgewoJCQkJCWZvbnQtd2VpZ2h0OiA2MDA7CgkJCQl9CgkJCX0KCQl9CgoJCS5qb2luZWRPbiB7CgkJCW1hcmdpbi10b3A6IDEwcHg7CgkJfQoKCQkuY291bnRzIHsKCQkJbWFyZ2luLXRvcDogMTBweDsKCQkJZGlzcGxheTogZmxleDsKCQkJYWxpZ24taXRlbXM6IGNlbnRlcjsKCQkJZ2FwOiAxMHB4OwoJCX0KCX0K"></style>
+<style lang="scss" scoped>
+	.header {
+		position: relative;
+		margin: -8px -8px 0 -8px;
+		overflow: hidden;
+
+		&::after {
+			position: absolute;
+			content: '';
+
+			width: calc(100% + 80px);
+			height: 100%;
+			left: -40px;
+			top: 0;
+
+			box-shadow: inset 0px -40px 30px var(--bg2);
+		}
+
+		.banner {
+			height: 300px;
+			width: 100%;
+
+			box-sizing: border-box;
+			object-fit: cover;
+			user-select: none;
+
+			background-color: var(--bg3-25);
+		}
+
+		.float {
+			display: flex;
+			position: absolute;
+			align-items: center;
+			gap: 10px;
+
+			bottom: 0;
+			z-index: 10;
+
+			margin-bottom: 30px;
+			padding: 12px;
+
+			width: 100%;
+			box-sizing: border-box;
+
+			.left,
+			.right {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.left {
+				flex-grow: 1;
+
+				p {
+					color: var(--tx1);
+					text-shadow:
+						0 1px 5px var(--bg1),
+						0 -1px 5px var(--bg1),
+						1px 1px 5px var(--bg1),
+						-1px -1px 5px var(--bg1);
+
+					&.top {
+						font-size: var(--fs-xl);
+						font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+	.lower {
+		padding: 18px 20px;
+		margin: -8px -8px 0 -8px;
+		border-bottom: 1px solid var(--bg3);
+
+		.description {
+			.missing {
+				color: var(--tx3);
+				font-style: italic;
+			}
+		}
+
+		.pairs {
+			display: flex;
+			flex-direction: column;
+
+			margin-top: 10px;
+			gap: 5px;
+
+			.pair {
+				display: flex;
+				align-items: center;
+				gap: 5px;
+
+				.key,
+				.val {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				.key {
+					font-weight: 600;
+				}
+			}
+		}
+
+		.joinedOn {
+			margin-top: 10px;
+		}
+
+		.counts {
+			margin-top: 10px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+	}
+</style>

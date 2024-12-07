@@ -57,21 +57,18 @@
 			<Tab
 				selected={selectedTab === 'replies'}
 				on:click={() => updateTab('replies')}
-				short
-				>Replies
-			</Tab>
+				short>Replies</Tab
+			>
 			<Tab
 				selected={selectedTab === 'repeats'}
 				on:click={() => updateTab('repeats')}
-				short
-				>Repeats
-			</Tab>
+				short>Repeats</Tab
+			>
 			<Tab
 				selected={selectedTab === 'reactions'}
 				on:click={() => updateTab('reactions')}
-				short
-				>Reactions
-			</Tab>
+				short>Reactions</Tab
+			>
 		</div>
 	{/if}
 </PageWrapper>
