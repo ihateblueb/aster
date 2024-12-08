@@ -12,5 +12,6 @@ type NotificationType =
 	| 'repeat'
 	| 'mention'
 	| 'follow'
+	| 'acceptedFollow'
 	| 'brokenFollow'
 	| 'report';

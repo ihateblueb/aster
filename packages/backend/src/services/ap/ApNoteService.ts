@@ -24,9 +24,9 @@ class ApNoteService {
 		const resolvedNote = await ApResolver.resolveSigned(apId);
 
 		if (!resolvedNote) return false;
-		if ((await resolvedNote.json()).type !== 'Note') return false;
+		if (resolvedNote.type !== 'Note') return false;
 
-		return await this.register(await resolvedNote.json());
+		return await this.register(resolvedNote);
 	}
 
 	public async register(body) {

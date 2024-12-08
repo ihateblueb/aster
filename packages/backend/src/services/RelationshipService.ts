@@ -32,25 +32,47 @@ class RelationshipService {
 			.getMany();
 	}
 
+	public async update(where: where, update: object) {
+		return db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where(where)
+			.update(update);
+	}
+
 	public async delete(where: where) {
 		return await db.getRepository('relationship').delete(where);
 	}
 
 	// specific get types
 	public async getFollowing(from: where) {
-		return await this.getMany({
-			from: { id: from },
-			pending: false,
-			type: 'follow'
-		});
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where({
+				from: { id: from },
+				pending: false,
+				type: 'follow'
+			})
+			.getMany();
 	}
 
 	public async getFollowers(to: GenericId) {
-		return await this.getMany({
-			to: { id: to },
-			pending: false,
-			type: 'follow'
-		});
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where({
+				to: { id: to },
+				pending: false,
+				type: 'follow'
+			})
+			.getMany();
 	}
 
 	public async isFollowing(to: GenericId, from: GenericId) {

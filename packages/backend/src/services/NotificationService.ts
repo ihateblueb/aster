@@ -1,4 +1,5 @@
 import db from '../utils/database.js';
+import logger from '../utils/logger.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
@@ -57,7 +58,12 @@ class NotificationService {
 		if (grabbedRelationship)
 			notification['relationshipId'] = grabbedRelationship.id;
 
-		db.getRepository('notification').create();
+		await db
+			.getRepository('notification')
+			.insert(notification)
+			.catch((err) => {
+				console.log(err);
+			});
 	}
 }
 

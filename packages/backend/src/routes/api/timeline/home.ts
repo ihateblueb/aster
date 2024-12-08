@@ -36,11 +36,14 @@ router.get(
 				message: auth.message
 			});
 
-		const followingIds = await RelationshipService.getFollowing(
-			auth.user.id
-		);
-		// to get notes from self also
-		followingIds.push(auth.user.id);
+		const following = await RelationshipService.getFollowing(auth.user.id);
+
+		const followingIds: string[] = [auth.user.id];
+		for (const user of following) {
+			followingIds.push(user.to.id);
+		}
+
+		console.log(followingIds);
 
 		const where = {
 			user: { id: In(followingIds) },
