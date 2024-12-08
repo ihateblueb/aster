@@ -10,7 +10,7 @@ class AuthService {
 
 		await db.getRepository('auth').insert({
 			id: IdService.generate(),
-			user: user,
+			userId: user,
 			createdAt: new Date(Date.now()).toISOString(),
 			token: token
 		});
@@ -26,17 +26,34 @@ class AuthService {
 				message: locale.auth.tokenInvalid
 			};
 
-		const grabbedToken = await db.getRepository('auth').findOne({
-			where: {
+		const grabbedToken = await db
+			.getRepository('auth')
+			.createQueryBuilder('auth')
+			.leftJoinAndSelect('auth.user', 'user')
+			.where({
 				token: token.replace('Bearer ', '')
-			}
-		});
+			})
+			.getOne();
 
 		if (!grabbedToken)
 			return {
 				error: true,
 				status: 401,
 				message: locale.auth.tokenInvalid
+			};
+
+		if (grabbedToken.user.suspended)
+			return {
+				error: true,
+				status: 403,
+				message: locale.user.suspended
+			};
+
+		if (!grabbedToken.user.activated)
+			return {
+				error: true,
+				status: 403,
+				message: locale.user.notActivated
 			};
 
 		return {

@@ -1,12 +1,26 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
+
+import { User } from './User.js';
 
 @Entity()
 export class Auth {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-	@Column()
-	user: string;
+	@Column({ select: false })
+	userId: string;
+
+	@ManyToOne(() => User, (user) => user, {
+		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'userId' })
+	user: typeorm.Relation<User>;
 
 	@Column()
 	createdAt: string;
