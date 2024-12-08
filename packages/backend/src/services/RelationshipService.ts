@@ -1,9 +1,13 @@
+import { Notification } from '../entities/Notification.js';
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import ApAcceptRenderer from './ap/ApAcceptRenderer.js';
 import ApActorService from './ap/ApActorService.js';
+import ApDeliverService from './ap/ApDeliverService.js';
+import ApFollowRenderer from './ap/ApFollowRenderer.js';
 import ApRejectRenderer from './ap/ApRejectRenderer.js';
 import IdService from './IdService.js';
+import NotificationService from './NotificationService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
@@ -28,49 +32,35 @@ class RelationshipService {
 			.getMany();
 	}
 
+	public async delete(where: where) {
+		return await db.getRepository('relationship').delete(where);
+	}
+
+	// specific get types
 	public async getFollowing(from: where) {
-		return await db
-			.getRepository('relationship')
-			.createQueryBuilder('relationship')
-			.leftJoinAndSelect('relationship.to', 'to')
-			.leftJoinAndSelect('relationship.from', 'from')
-			.where({
-				from: { id: from },
-				pending: false,
-				type: 'follow'
-			})
-			.getMany();
+		return await this.getMany({
+			from: { id: from },
+			pending: false,
+			type: 'follow'
+		});
 	}
 
 	public async getFollowers(to: GenericId) {
-		return await db
-			.getRepository('relationship')
-			.createQueryBuilder('relationship')
-			.leftJoinAndSelect('relationship.to', 'to')
-			.leftJoinAndSelect('relationship.from', 'from')
-			.where({
-				to: { id: to },
-				pending: false,
-				type: 'follow'
-			})
-			.getMany();
+		return await this.getMany({
+			to: { id: to },
+			pending: false,
+			type: 'follow'
+		});
 	}
 
 	public async isFollowing(to: GenericId, from: GenericId) {
 		return Boolean(
-			await db
-				.getRepository('relationship')
-				.createQueryBuilder('relationship')
-				.leftJoinAndSelect('relationship.to', 'to')
-				.leftJoinAndSelect('relationship.from', 'from')
-				.where({
-					to: { id: to },
-					from: { id: from },
-					pending: false,
-					type: 'follow'
-				})
-
-				.getOne()
+			await this.get({
+				to: { id: to },
+				from: { id: from },
+				pending: false,
+				type: 'follow'
+			})
 		);
 	}
 

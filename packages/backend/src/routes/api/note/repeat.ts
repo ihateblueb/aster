@@ -55,7 +55,7 @@ router.post(
 
 		await NoteService.repeat(
 			req.params.id,
-			auth.user,
+			auth.user.id,
 			true,
 			parsedBody.visibility
 		)

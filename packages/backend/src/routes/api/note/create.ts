@@ -64,7 +64,7 @@ router.post(
 		const parsedBody = bodyValidation.body;
 
 		await NoteService.create(
-			auth.user,
+			auth.user.id,
 			parsedBody.cw,
 			parsedBody.content,
 			parsedBody.visibility,

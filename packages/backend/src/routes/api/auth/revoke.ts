@@ -67,7 +67,7 @@ router.post(
 		console.log(tokenBeingRevoked.user);
 		console.log(auth.user);
 
-		if (tokenBeingRevoked.user === auth.user) {
+		if (tokenBeingRevoked.user === auth.user.id) {
 			try {
 				await db.getRepository('auth').delete({
 					token: parsedBody.token

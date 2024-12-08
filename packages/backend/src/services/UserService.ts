@@ -4,7 +4,11 @@ import crypto from 'crypto';
 import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
+import logger from '../utils/logger.js';
+import ApFollowRenderer from './ap/ApFollowRenderer.js';
 import IdService from './IdService.js';
+import QueueService from './QueueService.js';
+import RelationshipService from './RelationshipService.js';
 
 class UserService {
 	public async get(where: where) {
@@ -17,6 +21,98 @@ class UserService {
 
 	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
+	}
+
+	public async follow(user: GenericId, as: GenericId, toggle?: boolean) {
+		const id = IdService.generate();
+
+		const to = await this.get({ id: user });
+		const from = await this.get({ id: as });
+
+		if (!to || !from) {
+			return {
+				status: 404,
+				message: 'User not found'
+			};
+		}
+
+		if (to.id === from.id) {
+			return {
+				status: 400,
+				message: "You can't follow yourself"
+			};
+		}
+
+		const existingFollow = await RelationshipService.get({
+			to: { id: user },
+			from: { id: from.id },
+			type: 'follow'
+		});
+
+		if (existingFollow) {
+			if (toggle) {
+				return RelationshipService.delete({
+					id: existingFollow.id
+				})
+					.then(() => {
+						return {
+							status: 200,
+							message: 'Removed follow'
+						};
+					})
+					.catch((err) => {
+						console.error(err);
+						logger.error('user', 'follow delete failed');
+						return {
+							status: 500,
+							message: 'Failed to remove follow'
+						};
+					});
+			} else {
+				return {
+					status: 409,
+					message: 'Follow already exists'
+				};
+			}
+		} else {
+			const follow = {
+				id: id,
+				toId: user,
+				fromId: as,
+				type: 'follow',
+				createdAt: new Date().toISOString()
+			};
+
+			follow['pending'] = !to.locked;
+
+			if (!to.local) {
+				const activity = ApFollowRenderer.render(id, from.id, to.apId);
+
+				await QueueService.deliver.add('{deliver}', {
+					as: from.id,
+					inbox: to.inbox,
+					body: activity
+				});
+			}
+
+			return await db
+				.getRepository('relationship')
+				.insert(follow)
+				.then(() => {
+					return {
+						status: 200,
+						message: 'Added follow'
+					};
+				})
+				.catch((err) => {
+					console.error(err);
+					logger.error('user', 'follow failed');
+					return {
+						status: 500,
+						message: 'Failed to add follow'
+					};
+				});
+		}
 	}
 
 	public async register(

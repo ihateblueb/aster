@@ -12,7 +12,7 @@ const globalEmitter = new EventEmitter();
 const wss = new WebSocketServer({ noServer: true });
 
 wss.on('connection', async (ws, request, auth) => {
-	const user = await UserService.get({ id: auth.user });
+	const user = await UserService.get({ id: auth.user.id });
 
 	logger.debug('ws', 'user ' + user.username + ' connected');
 
@@ -23,7 +23,7 @@ wss.on('connection', async (ws, request, auth) => {
 		})
 	);
 
-	userEmitter.on(auth.user, (data) => {
+	userEmitter.on(auth.user.id, (data) => {
 		ws.send(JSON.stringify(data));
 	});
 

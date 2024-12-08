@@ -1,5 +1,6 @@
 import express from 'express';
 
+import IdService from '../../services/IdService.js';
 import oapi from '../../utils/apidoc.js';
 
 const router = express.Router();
@@ -26,6 +27,7 @@ router.get(
 	}),
 	(req, res) => {
 		res.status(200).json({
+			id: IdService.generate(),
 			serverTime: new Date(Date.now()).toISOString()
 		});
 	}

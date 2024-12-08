@@ -46,9 +46,10 @@ router.post(
 			String(JSON.parse(req.body).type)
 		);
 
-		if (!apvs.valid && apvs.pretendToProcess) res.status(202).json();
+		if (!apvs.valid && apvs.pretendToProcess) return res.status(202).json();
+		if (!apvs.valid && apvs.blocked) return res.status(403).json();
 		if (!apvs.valid && !apvs.pretendToProcess)
-			res.status(401).json({ message: 'Invalid signature' });
+			return res.status(401).json({ message: 'Invalid signature' });
 
 		if (apvs.valid)
 			return await QueueService.inbox

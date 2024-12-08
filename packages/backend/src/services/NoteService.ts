@@ -141,8 +141,7 @@ class NoteService {
 				return await db
 					.getRepository('note_like')
 					.delete({
-						userId: user.id,
-						noteId: noteId
+						id: existingLike.id
 					})
 					.then(() => {
 						return {

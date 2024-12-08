@@ -45,7 +45,7 @@ router.delete(
 
 		const user = await UserService.get({ id: note.user.id });
 
-		if (note.user.id !== auth.user && !user.admin)
+		if (note.user.id !== auth.user.id && !auth.user.admin)
 			return res.status(400).json({
 				message: locale.note.cannotDelete
 			});

@@ -10,7 +10,11 @@ class ApValidationService {
 	public async validSignature(
 		req,
 		type: string
-	): Promise<{ valid: boolean; pretendToProcess?: boolean }> {
+	): Promise<{
+		valid: boolean;
+		pretendToProcess?: boolean;
+		blocked?: boolean;
+	}> {
 		if (!req.headers.host) {
 			logger.error('ap', 'no host present');
 			return {
@@ -18,20 +22,6 @@ class ApValidationService {
 			};
 		} else {
 			logger.debug('ap', 'host present');
-		}
-
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: req.headers.host
-				}
-			});
-
-		if (moderatedInstance && !moderatedInstance.accept) {
-			return {
-				valid: false
-			};
 		}
 
 		if (req.headers.host !== new URL(config.url).host) {
@@ -93,7 +83,25 @@ class ApValidationService {
 			logger.debug('ap', 'digest valid');
 		}
 
-		const actor = await ApActorService.get(JSON.parse(req.body).actor);
+		const actorApId = JSON.parse(req.body).actor;
+
+		const moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: new URL(actorApId).host
+				}
+			});
+
+		if (moderatedInstance && !moderatedInstance.accept) {
+			logger.debug('ap', 'blocked activity ' + new URL(actorApId).host);
+			return {
+				valid: false,
+				blocked: true
+			};
+		}
+
+		const actor = await ApActorService.get(actorApId);
 
 		if (!actor) {
 			if (type === 'Delete') {

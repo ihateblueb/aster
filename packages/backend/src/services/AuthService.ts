@@ -42,6 +42,13 @@ class AuthService {
 				message: locale.auth.tokenInvalid
 			};
 
+		if (!grabbedToken.user)
+			return {
+				error: true,
+				status: 401,
+				message: locale.user.notFound
+			};
+
 		if (grabbedToken.user.suspended)
 			return {
 				error: true,

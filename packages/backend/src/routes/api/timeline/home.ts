@@ -36,17 +36,18 @@ router.get(
 				message: auth.message
 			});
 
-		const followingIds = await RelationshipService.getFollowing(auth.user);
-
+		const followingIds = await RelationshipService.getFollowing(
+			auth.user.id
+		);
 		// to get notes from self also
-		followingIds.push(auth.user);
+		followingIds.push(auth.user.id);
 
 		const where = {
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])
 		};
 		const orWhere = {
-			to: ArrayContains([auth.user])
+			to: ArrayContains([auth.user.id])
 		};
 
 		let take;

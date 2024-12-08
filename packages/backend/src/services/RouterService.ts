@@ -30,6 +30,7 @@ import timeline_home from '../routes/api/timeline/home.js';
 import timeline_local from '../routes/api/timeline/local.js';
 import timeline_public from '../routes/api/timeline/public.js';
 import user_edit from '../routes/api/user/edit.js';
+import user_follow from '../routes/api/user/folllow.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
 import misc_metrics from '../routes/misc/metrics.js';
@@ -130,7 +131,7 @@ router.get('/queue*', async (req, res, next) => {
 			message: auth.message
 		});
 
-	if (!(await UserService.get({ id: auth.user })).admin)
+	if (!(await UserService.get({ id: auth.user.id })).admin)
 		return res.status(403).json({
 			message: locale.auth.insufficientPermissions
 		});
@@ -167,6 +168,7 @@ router.use('/', timeline_local);
 router.use('/', timeline_public);
 
 router.use('/', user_edit);
+router.use('/', user_follow);
 router.use('/', user_get);
 router.use('/', user_lookup);
 
