@@ -10,6 +10,7 @@
 	import Note from '$lib/components/Note.svelte';
 	import Tab from '$lib/components/Tab.svelte';
 	import NoteHeader from '$lib/components/NoteHeader.svelte';
+	import UserCard from '$lib/components/UserCard.svelte';
 
 	let props = $props();
 
@@ -66,6 +67,11 @@
 				short>Repeats</Tab
 			>
 			<Tab
+				selected={selectedTab === 'likes'}
+				on:click={() => updateTab('likes')}
+				short>Likes</Tab
+			>
+			<Tab
 				selected={selectedTab === 'reactions'}
 				on:click={() => updateTab('reactions')}
 				short>Reactions</Tab
@@ -73,19 +79,44 @@
 		</div>
 		<div class="bottom">
 			{#if selectedTab === 'replies'}
-				replies
+				{#if $query.data.replies && $query.data.replies.length >= 1}
+					{#each $query.data.replies as reply}
+						reply
+					{/each}
+				{:else}
+					<p>Nobody's replied to this yet.</p>
+				{/if}
 			{:else if selectedTab === 'repeats'}
-				{#each $query.data.repeats as repeat}
-					{#if repeat.content}
-						<Note note={repeat} />
-					{:else}
-						<div class="userCard">
-							<NoteHeader note={repeat} />
-						</div>
-					{/if}
-				{/each}
+				{#if $query.data.repeats && $query.data.repeats.length >= 1}
+					{#each $query.data.repeats as repeat}
+						{#if repeat.content}
+							<Note note={repeat} />
+						{:else}
+							<UserCard
+								user={repeat.user}
+								time={repeat.createdAt}
+							/>
+						{/if}
+					{/each}
+				{:else}
+					<p>Nobody's repeated this yet.</p>
+				{/if}
+			{:else if selectedTab === 'likes'}
+				{#if $query.data.likes && $query.data.likes.length >= 1}
+					{#each $query.data.likes as like}
+						<UserCard user={like.user} time={like.createdAt} />
+					{/each}
+				{:else}
+					<p>Nobody's liked this yet.</p>
+				{/if}
 			{:else if selectedTab === 'reactions'}
-				reactions
+				{#if $query.data.reactions && $query.data.reactions.length >= 1}
+					{#each $query.data.reactions as react}
+						<UserCard user={react.user} time={react.createdAt} />
+					{/each}
+				{:else}
+					<p>Nobody's reacted to this yet.</p>
+				{/if}
 			{/if}
 		</div>
 	{/if}
