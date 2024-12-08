@@ -27,20 +27,20 @@ wss.on('connection', async (ws, request, auth) => {
 		ws.send(JSON.stringify(data));
 	});
 
-	let currentTimeline = '';
+	let subscriptions = [];
 
 	globalEmitter.on('timeline:local', (data) => {
-		if (currentTimeline === 'local') {
+		if (subscriptions.includes('timeline:local')) {
 			ws.send(JSON.stringify(data));
 		}
 	});
 	globalEmitter.on('timeline:bubble', (data) => {
-		if (currentTimeline === 'bubble') {
+		if (subscriptions.includes('timeline:bubble')) {
 			ws.send(JSON.stringify(data));
 		}
 	});
 	globalEmitter.on('timeline:global', (data) => {
-		if (currentTimeline === 'global') {
+		if (subscriptions.includes('timeline:global')) {
 			ws.send(JSON.stringify(data));
 		}
 	});
@@ -48,12 +48,13 @@ wss.on('connection', async (ws, request, auth) => {
 	ws.on('message', (data) => {
 		logger.debug('ws', user.username + ': ' + data.toString());
 
-		if (data.toString() === 'sub timeline:local') {
-			currentTimeline = 'local';
-		} else if (data.toString() === 'sub timeline:bubble') {
-			currentTimeline = 'bubble';
-		} else if (data.toString() === 'sub timeline:global') {
-			currentTimeline = 'global';
+		if (data.toString().startsWith('sub ')) {
+			if (!subscriptions.includes(data.toString().replace('sub ', '')))
+				subscriptions.push(data.toString().replace('sub ', ''));
+		} else if (data.toString().startsWith('unsub ')) {
+			subscriptions = subscriptions.filter(
+				(e) => e !== data.toString().replace('unsub ', '')
+			);
 		}
 
 		ws.send(JSON.stringify({ type: 'echo', data: data.toString() }));
