@@ -18,6 +18,16 @@ class RelationshipService {
 			.getOne();
 	}
 
+	public async getMany(where: where) {
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where(where)
+			.getMany();
+	}
+
 	public async getFollowing(from: where) {
 		return await db
 			.getRepository('relationship')

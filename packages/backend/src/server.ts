@@ -1,10 +1,14 @@
+import * as http from 'node:http';
+
 import cluster from 'cluster';
 import express from 'express';
+import { WebSocketServer } from 'ws';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import MetricsService from './services/MetricsService.js';
 import RouterService from './services/RouterService.js';
 import SetupService from './services/SetupService.js';
+import WebsocketService from './services/WebsocketService.js';
 import WorkerService from './services/WorkerService.js';
 import config from './utils/config.js';
 import db from './utils/database.js';
@@ -50,7 +54,13 @@ const app = express();
 
 app.use('/', RouterService);
 
-app.listen(config.port, () => {
+const server = http.createServer(app);
+
+server.on('upgrade', (request, socket, head) =>
+	WebsocketService.server(request, socket, head)
+);
+
+server.listen(config.port, () => {
 	logger.done(
 		'boot',
 		'worker ' +

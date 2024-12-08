@@ -1,8 +1,10 @@
+import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import IdService from '../IdService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
+import WebsocketService from '../WebsocketService.js';
 import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
 import ApResolver from './ApResolver.js';
@@ -74,7 +76,26 @@ class ApNoteService {
 				logger.error('ap', 'failed to insert remote note');
 			});
 
-		return await NoteService.get({ id: id });
+		const grabbedNote = await NoteService.get({ id: id });
+
+		if (
+			config.bubbleTimeline &&
+			config.bubbleInstances.includes(author.host)
+		) {
+			WebsocketService.globalEmitter.emit('timeline:bubble', {
+				type: 'timeline:add',
+				timeline: 'bubble',
+				note: grabbedNote
+			});
+		}
+
+		WebsocketService.globalEmitter.emit('timeline:global', {
+			type: 'timeline:add',
+			timeline: 'global',
+			note: grabbedNote
+		});
+
+		return grabbedNote;
 	}
 }
 

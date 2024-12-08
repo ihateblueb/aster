@@ -11,8 +11,10 @@ import ApDeliverService from './ap/ApDeliverService.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
+import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
+import WebsocketService from './WebsocketService.js';
 
 class NoteService {
 	public async get(where: where, orWhere?: where) {
@@ -298,6 +300,48 @@ class NoteService {
 			);
 
 			await ApDeliverService.deliverToFollowers(create, user);
+		}
+
+		if (note.visibility !== 'direct') {
+			const localFollowers = await RelationshipService.getMany({
+				to: { id: user },
+				from: { local: true },
+				type: 'follow',
+				pending: false
+			});
+
+			localFollowers.push({
+				id: user
+			});
+
+			for (const i in localFollowers) {
+				const follower = localFollowers[i];
+				WebsocketService.userEmitter.emit(follower.id, {
+					type: 'timeline:add',
+					timeline: 'home',
+					note: await this.get({ id: note.id })
+				});
+			}
+
+			WebsocketService.globalEmitter.emit('timeline:local', {
+				type: 'timeline:add',
+				timeline: 'local',
+				note: await this.get({ id: note.id })
+			});
+
+			if (config.bubbleTimeline) {
+				WebsocketService.globalEmitter.emit('timeline:bubble', {
+					type: 'timeline:add',
+					timeline: 'bubble',
+					note: await this.get({ id: note.id })
+				});
+			}
+
+			WebsocketService.globalEmitter.emit('timeline:global', {
+				type: 'timeline:add',
+				timeline: 'global',
+				note: await this.get({ id: note.id })
+			});
 		}
 
 		if (repeat && repeatedNote) {

@@ -1,8 +1,6 @@
 import express from 'express';
 
-import IdService from '../../services/IdService.js';
 import oapi from '../../utils/apidoc.js';
-import logger from '../../utils/logger.js';
 
 const router = express.Router();
 
