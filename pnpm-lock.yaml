@@ -185,8 +185,8 @@ importers:
         specifier: ^5.2.5
         version: 5.2.5(@sveltejs/kit@2.6.1(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.13)(vite@5.4.8(@types/node@22.7.4)(sass-embedded@1.80.6)(sass@1.80.6)))(svelte@5.1.13)(vite@5.4.8(@types/node@22.7.4)(sass-embedded@1.80.6)(sass@1.80.6)))
       '@tabler/icons-svelte':
-        specifier: ^3.21.0
-        version: 3.21.0(svelte@5.1.13)
+        specifier: ^3.24.0
+        version: 3.24.0(svelte@5.1.13)
       '@tanstack/svelte-query':
         specifier: ^5.59.20
         version: 5.59.20(svelte@5.1.13)
@@ -1247,13 +1247,13 @@ packages:
     resolution: {integrity: sha512-4BAffykYOgO+5nzBWYwE3W90sBgLJoUPRWWcL8wlyiM8IB8ipJz3UMJ9KXQd1RKQXpKp8Tutn80HZtWsu2u76w==}
     engines: {node: '>=10'}
 
-  '@tabler/icons-svelte@3.21.0':
-    resolution: {integrity: sha512-idkcWOz2SzBjaZZeZ2WbsqHwnXTgZZ+gyqATC7i1h+ZX6q4fMsEmOkOn6eyul0/75Y6fzNA9FCktribRuSudfw==}
+  '@tabler/icons-svelte@3.24.0':
+    resolution: {integrity: sha512-T1oR4/gSsq7nr2u6gej8WGF5Orq/rPBMYyHbgWQEfpsDq2f3wVmImWBi61cvd9HAQ3lzbJ6I/SiIZtPyPGf9Ew==}
     peerDependencies:
       svelte: '>=3 <6 || >=5.0.0-next.0'
 
-  '@tabler/icons@3.21.0':
-    resolution: {integrity: sha512-5+GkkmWCr1wgMor5cOF1/YYflTQdc15y10FUikJ3HW8hDiFjfbuoAHJi17FT1vwsr1sA78rkJMn+fDoOOjnnPA==}
+  '@tabler/icons@3.24.0':
+    resolution: {integrity: sha512-qNis9e90QcdxAGV3wNIeX0Ba2R7ktm0cnqOToKHJfC2kj3fvJwEVLsw63K0/fm7NW8rSZjDSTQRmMnSg8g/wrg==}
 
   '@tanstack/query-core@5.59.20':
     resolution: {integrity: sha512-e8vw0lf7KwfGe1if4uPFhvZRWULqHjFcz3K8AebtieXvnMOz5FSzlZe3mTLlPuUBcydCnBRqYs2YJ5ys68wwLg==}
@@ -5496,12 +5496,12 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
-  '@tabler/icons-svelte@3.21.0(svelte@5.1.13)':
+  '@tabler/icons-svelte@3.24.0(svelte@5.1.13)':
     dependencies:
-      '@tabler/icons': 3.21.0
+      '@tabler/icons': 3.24.0
       svelte: 5.1.13
 
-  '@tabler/icons@3.21.0': {}
+  '@tabler/icons@3.24.0': {}
 
   '@tanstack/query-core@5.59.20': {}
 

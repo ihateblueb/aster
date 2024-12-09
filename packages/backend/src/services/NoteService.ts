@@ -15,6 +15,8 @@ import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
 import WebsocketService from './WebsocketService.js';
+import UserMini from '../utils/entities/UserMini.js';
+import VisibilityService from './VisibilityService.js';
 
 class NoteService {
 	public async get(where: where, orWhere?: where) {
@@ -24,36 +26,15 @@ class NoteService {
 			.leftJoinAndSelect('note.user', 'user')
 			.leftJoinAndSelect('note.repeat', 'repeat')
 			.leftJoin('repeat.user', 'repeat_user')
-			.addSelect(['repeat_user.id'])
-			.addSelect(['repeat_user.username'])
-			.addSelect(['repeat_user.host'])
-			.addSelect(['repeat_user.displayName'])
-			.addSelect(['repeat_user.avatar'])
-			.addSelect(['repeat_user.avatarAlt'])
-			.addSelect(['repeat_user.isCat'])
-			.addSelect(['repeat_user.local'])
+			.addSelect(UserMini('repeat_user'))
 			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
 			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
 			.leftJoinAndSelect('note.repeats', 'repeats')
 			.leftJoin('repeats.user', 'repeats_user')
-			.addSelect(['repeats_user.id'])
-			.addSelect(['repeats_user.username'])
-			.addSelect(['repeats_user.host'])
-			.addSelect(['repeats_user.displayName'])
-			.addSelect(['repeats_user.avatar'])
-			.addSelect(['repeats_user.avatarAlt'])
-			.addSelect(['repeats_user.isCat'])
-			.addSelect(['repeats_user.local'])
+			.addSelect(UserMini('repeats_user'))
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
-			.addSelect(['like_user.id'])
-			.addSelect(['like_user.username'])
-			.addSelect(['like_user.host'])
-			.addSelect(['like_user.displayName'])
-			.addSelect(['like_user.avatar'])
-			.addSelect(['like_user.avatarAlt'])
-			.addSelect(['like_user.isCat'])
-			.addSelect(['like_user.local'])
+			.addSelect(UserMini('like_user'))
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.getOne();
@@ -72,36 +53,15 @@ class NoteService {
 			.leftJoinAndSelect('note.user', 'user')
 			.leftJoinAndSelect('note.repeat', 'repeat')
 			.leftJoin('repeat.user', 'repeat_user')
-			.addSelect(['repeat_user.id'])
-			.addSelect(['repeat_user.username'])
-			.addSelect(['repeat_user.host'])
-			.addSelect(['repeat_user.displayName'])
-			.addSelect(['repeat_user.avatar'])
-			.addSelect(['repeat_user.avatarAlt'])
-			.addSelect(['repeat_user.isCat'])
-			.addSelect(['repeat_user.local'])
+			.addSelect(UserMini('repeat_user'))
 			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
 			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
 			.leftJoinAndSelect('note.repeats', 'repeats')
 			.leftJoin('repeats.user', 'repeats_user')
-			.addSelect(['repeats_user.id'])
-			.addSelect(['repeats_user.username'])
-			.addSelect(['repeats_user.host'])
-			.addSelect(['repeats_user.displayName'])
-			.addSelect(['repeats_user.avatar'])
-			.addSelect(['repeats_user.avatarAlt'])
-			.addSelect(['repeats_user.isCat'])
-			.addSelect(['repeats_user.local'])
+			.addSelect(UserMini('repeats_user'))
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
-			.addSelect(['like_user.id'])
-			.addSelect(['like_user.username'])
-			.addSelect(['like_user.host'])
-			.addSelect(['like_user.displayName'])
-			.addSelect(['like_user.avatar'])
-			.addSelect(['like_user.avatarAlt'])
-			.addSelect(['like_user.isCat'])
-			.addSelect(['like_user.local'])
+			.addSelect(UserMini('like_user'))
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.take(take)
@@ -128,6 +88,11 @@ class NoteService {
 		const id = IdService.generate();
 
 		const user = await UserService.get({ id: as });
+
+		if (!VisibilityService.canISee(this.get({ id: noteId }), as)) return {
+			status: 404,
+			message: 'Note not found'
+		};
 
 		const existingLike = await db.getRepository('note_like').findOne({
 			where: {
@@ -366,6 +331,18 @@ class NoteService {
 		toggle?: boolean,
 		visibility?: string
 	) {
+		if (!VisibilityService.canISee(this.get({ id: noteId }), as)) return {
+			status: 404,
+			message: 'Note not found'
+		};
+
+		const existingRepeat = await db.getRepository('note').findOne({
+			where: {
+				user: { id: as },
+				repeat: noteId
+			}
+		});
+
 		if (toggle && existingRepeat) {
 			return await this.delete({ id: existingRepeat.id })
 				.then(() => {

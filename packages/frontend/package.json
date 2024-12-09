@@ -20,7 +20,7 @@
 	},
 	"dependencies": {
 		"@sveltejs/adapter-node": "^5.2.5",
-		"@tabler/icons-svelte": "^3.21.0",
+		"@tabler/icons-svelte": "^3.24.0",
 		"@tanstack/svelte-query": "^5.59.20",
 		"mfm-js": "^0.24.0",
 		"sass": "^1.80.6",
