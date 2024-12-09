@@ -13,11 +13,14 @@ class ApNoteRenderer {
 			attributedTo: note.user.apId,
 
 			sensitive: Boolean(note.cw),
-			summary: note.cw,
-			content: note.content,
-			published: note.createdAt,
 
-			// aster:visibility
+			summary: note.cw,
+			_misskey_summary: note.cw,
+			content: note.content,
+			_misskey_content: note.content,
+
+			published: note.createdAt,
+			
 			visibility: note.visibility,
 			to: [],
 			cc: []
@@ -26,6 +29,7 @@ class ApNoteRenderer {
 		if (note.repeat) {
 			apNote['quoteUrl'] = note.repeat.apId;
 			apNote['quoteUri'] = note.repeat.apId;
+			apNote['_misskey_quote'] = note.repeat.apId;
 		}
 
 		if (note.visibility === 'public') {

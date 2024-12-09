@@ -24,7 +24,7 @@ const deliver = new Worker(
 const backfill = new Worker(
 	'{backfill}',
 	async (job) => {
-		return; //await ApDeliverService.deliver(job.data);
+		return;
 	},
 	{ connection: redis, concurrency: Number(config.backfill.concurrency) }
 );

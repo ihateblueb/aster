@@ -101,14 +101,7 @@ class ApVisibilityService {
 			};
 
 		if (object.visibility === 'direct') {
-			// todo: make MfmService
-			/* todo: for each mention, WebfingerService.get(@user@host)
-                     return UserService.get after ApActorService.get of it
-                     UserService fallback WebfingerService?
-                     then for each actor apId, push to "to"
-                     alternatively: determine on NoteService.create? store in db?
-                     do that instead.
-            */
+			// todo: take to column, find their apIds, add, all good
 			return {
 				to: [],
 				cc: []
