@@ -2,7 +2,6 @@ import * as http from 'node:http';
 
 import cluster from 'cluster';
 import express from 'express';
-import { WebSocketServer } from 'ws';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import MetricsService from './services/MetricsService.js';

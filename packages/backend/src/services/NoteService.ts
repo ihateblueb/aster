@@ -2,6 +2,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import config from '../utils/config.js';
 import db from '../utils/database.js';
+import UserMini from '../utils/entities/UserMini.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApAnnounceRenderer from './ap/ApAnnounceRenderer.js';
@@ -14,9 +15,8 @@ import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
 import UserService from './UserService.js';
-import WebsocketService from './WebsocketService.js';
-import UserMini from '../utils/entities/UserMini.js';
 import VisibilityService from './VisibilityService.js';
+import WebsocketService from './WebsocketService.js';
 
 class NoteService {
 	public async get(where: where, orWhere?: where) {
@@ -89,10 +89,11 @@ class NoteService {
 
 		const user = await UserService.get({ id: as });
 
-		if (!VisibilityService.canISee(this.get({ id: noteId }), as)) return {
-			status: 404,
-			message: 'Note not found'
-		};
+		if (!VisibilityService.canISee(this.get({ id: noteId }), as))
+			return {
+				status: 404,
+				message: 'Note not found'
+			};
 
 		const existingLike = await db.getRepository('note_like').findOne({
 			where: {
@@ -331,10 +332,11 @@ class NoteService {
 		toggle?: boolean,
 		visibility?: string
 	) {
-		if (!VisibilityService.canISee(this.get({ id: noteId }), as)) return {
-			status: 404,
-			message: 'Note not found'
-		};
+		if (!VisibilityService.canISee(this.get({ id: noteId }), as))
+			return {
+				status: 404,
+				message: 'Note not found'
+			};
 
 		const existingRepeat = await db.getRepository('note').findOne({
 			where: {
