@@ -33,7 +33,7 @@ export default [
 		speakAsCat: 'firefish:speakAsCat',
 		// aster
 		aster: 'https://blueb.pages.gay/ns#',
-		visibility: 'aster:visibility',
+		visibility: 'aster:visibility'
 		//Mood: 'aster:Mood',
 		//hasCorrectAnswer: 'aster:hasCorrectAnswer',
 		//correct: 'aster:correct'

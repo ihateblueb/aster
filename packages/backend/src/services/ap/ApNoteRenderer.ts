@@ -20,7 +20,7 @@ class ApNoteRenderer {
 			_misskey_content: note.content,
 
 			published: note.createdAt,
-			
+
 			visibility: note.visibility,
 			to: [],
 			cc: []

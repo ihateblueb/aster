@@ -15,8 +15,9 @@ class ApNoteService {
 	public async get(apId: ApId) {
 		const url = new URL(apId);
 
-		const actor = await UserService.get({ apId: apId });
-		if (actor) return actor;
+		// why is this here? this is for notes
+		//const actor = await UserService.get({ apId: apId });
+		//if (actor) return actor;
 
 		const existingNote = await NoteService.get({ apId: apId });
 		if (existingNote) return existingNote;
@@ -43,7 +44,7 @@ class ApNoteService {
 		};
 
 		const author = await ApActorService.get(
-			body.attributedTo ? body.attributedTo : body.actor
+			body.attributedTo ?? body.actor
 		);
 		if (!author) return false;
 		note['userId'] = author.id;
@@ -52,14 +53,30 @@ class ApNoteService {
 			? new Date(body.published).toISOString()
 			: new Date().toISOString();
 
+		let replyingTo;
+
+		if (body.replyingTo) replyingTo = await this.get(body.replyingTo);
+
+		if (replyingTo) note['replyingTo'] = replyingTo.id;
+
+		let quote;
+
+		if (body.quoteUrl) quote = await this.get(body.quoteUrl);
+		if (body.quoteUri) quote = await this.get(body.quoteUri);
+		if (body._misskey_quote) quote = await this.get(body._misskey_quote);
+
+		if (quote) note['replyingTo'] = quote.id;
+
 		if (body.summary) note['cw'] = SanitizerService.sanitize(body.summary);
+		if (body._misskey_summary)
+			note['cw'] = SanitizerService.sanitize(body._misskey_summary);
 
 		if (body.content)
 			note['content'] = SanitizerService.sanitize(body.content);
-		if (body._misskey_content)
-			note['content'] = SanitizerService.sanitize(body._misskey_content);
 		if (body.source && body.source.content)
 			note['content'] = SanitizerService.sanitize(body.source.content);
+		if (body._misskey_content)
+			note['content'] = SanitizerService.sanitize(body._misskey_content);
 
 		const determinedVisibility = await ApVisibilityService.determine(body);
 
