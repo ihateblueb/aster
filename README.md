@@ -10,10 +10,10 @@ Development instance (sometimes) available at https://dev.aster.pages.gay/. It's
 
 ## Requirements
 
--   NodeJS
--   pnpm
--   PostgreSQL
--   DragonflyDB
+- NodeJS
+- pnpm
+- PostgreSQL
+- DragonflyDB
 
 Latest of all of these are best
 
@@ -29,38 +29,38 @@ Run `pnpm start` and your instance will start up.
 
 ### AP
 
--   Notes can be fetched
--   Actors can be fetched
--   Follower and following collection endpoints exist, and are a messy work in progress
--   Likes are accepted, although if they have a reaction the reaction is ignored for now
--   Deletes are accepted, first the User will be tried then Note
--   Follows are accepted
--   Deliver works
--   Deletes are sent out
--   Announces are sent out
--   Creates are sent out
+- Notes can be fetched
+- Actors can be fetched
+- Follower and following collection endpoints exist, and are a messy work in progress
+- Likes are accepted, although if they have a reaction the reaction is ignored for now
+- Deletes are accepted, first the User will be tried then Note
+- Follows are accepted
+- Deliver works
+- Deletes are sent out
+- Announces are sent out
+- Creates are sent out
 
 ### Federation
 
--   Supports nodeinfo 2.0 and 2.1
--   host-meta works neatly
--   webfinger implemented, and has high tolerance of different formats
--   json and xml supported! for the most part!
+- Supports nodeinfo 2.0 and 2.1
+- host-meta works neatly
+- webfinger implemented, and has high tolerance of different formats
+- json and xml supported! for the most part!
 
 ### API
 
--   You can like a note
--   You can create a note with no polls or other attachments
--   You can repeat a note
--   You can register
--   You can login
--   You can fetch the instance metadata
--   Fetch user
--   Fetch note
+- You can like a note
+- You can create a note with no polls or other attachments
+- You can repeat a note
+- You can register
+- You can login
+- You can fetch the instance metadata
+- Fetch user
+- Fetch note
 
 ## TODO
 
--   handle robots.txt from backend, generate from config
--   favicon
--   try using typeof for some types of validation
--   use backfill queue (reply, quote)
+- handle robots.txt from backend, generate from config
+- favicon
+- try using typeof for some types of validation
+- use backfill queue (reply, quote)

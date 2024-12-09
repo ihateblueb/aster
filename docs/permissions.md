@@ -8,31 +8,31 @@ Permissions intended for anyone
 
 ### Interact
 
--   interactAll
--   interactNote (like, repeat,)
--   interactUser (follow)
+- interactAll
+- interactNote (like, repeat,)
+- interactUser (follow)
 
 ### Modify
 
--   modifyAll
--   modifyNote
--   modifyFile (add alt text, set sensitive)
--   modifyProfile
+- modifyAll
+- modifyNote
+- modifyFile (add alt text, set sensitive)
+- modifyProfile
 
 ### Create
 
--   createAll
--   createNote
--   createFile
--   createInvite
+- createAll
+- createNote
+- createFile
+- createInvite
 
 ### Delete
 
--   deleteAll
--   deleteNote
--   deleteProfile
--   deleteFile
--   deleteInvite (only own)
+- deleteAll
+- deleteNote
+- deleteProfile
+- deleteFile
+- deleteInvite (only own)
 
 ## Moderation
 
@@ -40,21 +40,21 @@ Permissions intended for moderators.
 
 ### Modify
 
--   modModifyNote (edit any users notes)
--   modModifyProfile (edit any users profile)
--   modModifyEmoji
--   modModifyBlockedInstances
--   modModifySilencedInstances
--   modModifyBlockedUsers
--   modModifySilencedUsers
+- modModifyNote (edit any users notes)
+- modModifyProfile (edit any users profile)
+- modModifyEmoji
+- modModifyBlockedInstances
+- modModifySilencedInstances
+- modModifyBlockedUsers
+- modModifySilencedUsers
 
 ### Create
 
--   modCreateEmoji
+- modCreateEmoji
 
 ### Delete
 
--   modDeleteNote
--   modDeleteProfile
--   modDeleteInvite
--   modDeleteEmoji
+- modDeleteNote
+- modDeleteProfile
+- modDeleteInvite
+- modDeleteEmoji

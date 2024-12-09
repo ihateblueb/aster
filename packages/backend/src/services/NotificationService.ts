@@ -4,10 +4,39 @@ import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
 import UserService from './UserService.js';
+import WebsocketService from './WebsocketService.js';
 
 class NotificationService {
-	public async get(where: where) {}
-	public async getMany(where: where) {}
+	public async get(where: where) {
+		return await db
+			.getRepository('notification')
+			.createQueryBuilder('notification')
+			.leftJoinAndSelect('notification.user', 'user')
+			.leftJoinAndSelect('notification.note', 'note')
+			.leftJoinAndSelect('notification.relationship', 'relationship')
+			.where(where)
+			.getOne();
+	}
+
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		orderDirection?: 'ASC' | 'DESC',
+		orWhere?: where
+	) {
+		return await db
+			.getRepository('notification')
+			.createQueryBuilder('notification')
+			.leftJoinAndSelect('notification.user', 'user')
+			.leftJoinAndSelect('notification.note', 'note')
+			.leftJoinAndSelect('notification.relationship', 'relationship')
+			.where(where)
+			.orWhere(orWhere ?? where)
+			.take(take)
+			.orderBy(order, orderDirection)
+			.getMany();
+	}
 
 	public async create(
 		to: GenericId,
@@ -37,8 +66,10 @@ class NotificationService {
 				message: "Cannot send notification to the user it's from"
 			};
 
+		const id = IdService.generate();
+
 		const notification = {
-			id: IdService.generate(),
+			id: id,
 			toId: recipient.id,
 			fromId: sender.id,
 			type: type,
@@ -64,6 +95,11 @@ class NotificationService {
 			.catch((err) => {
 				console.log(err);
 			});
+
+		WebsocketService.userEmitter.emit(to, {
+			type: 'notification:add',
+			notification: await this.get({ id: id })
+		});
 	}
 }
 

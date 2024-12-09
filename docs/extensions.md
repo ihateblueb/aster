@@ -6,10 +6,10 @@ Extends `Note`
 
 Options:
 
--   public (anyone can view)
--   unlisted (anyone can view, hidden from local/global timelines)
--   followers (only followers of actor can view)
--   direct (only users mentioned may view)
+- public (anyone can view)
+- unlisted (anyone can view, hidden from local/global timelines)
+- followers (only followers of actor can view)
+- direct (only users mentioned may view)
 
 Example from Aster
 (see `packages/backend/src/routes/ap/note.ts`)

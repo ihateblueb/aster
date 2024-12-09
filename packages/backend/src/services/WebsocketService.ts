@@ -71,7 +71,12 @@ class WebsocketService {
 		const auth = await AuthService.verify(request.headers.authorization);
 
 		if (auth.error) {
-			socket.write('HTTP/1.1 401 Unauthorized\r\n\r\n');
+			socket.write(`HTTP/1.1 ${auth.status}\r\n\r\n`);
+			socket.send(
+				JSON.stringify({
+					message: auth.message
+				})
+			);
 			socket.destroy();
 		}
 
