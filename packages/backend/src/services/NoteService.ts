@@ -109,8 +109,9 @@ class NoteService {
 		const id = IdService.generate();
 
 		const user = await UserService.get({ id: as });
+		const note = await this.get({ id: noteId });
 
-		if (!VisibilityService.canISee(this.get({ id: noteId }), as))
+		if (!(await VisibilityService.canISee(this.get({ id: noteId }), as)))
 			return {
 				status: 404,
 				message: 'Note not found'
@@ -161,7 +162,14 @@ class NoteService {
 			return await db
 				.getRepository('note_like')
 				.insert(like)
-				.then(() => {
+				.then(async () => {
+					await NotificationService.create(
+						note.user.id,
+						user.id,
+						'like',
+						note.id
+					);
+
 					return {
 						status: 200,
 						message: 'Added like'
@@ -183,7 +191,8 @@ class NoteService {
 		cw: string,
 		content: string,
 		visibility?: string,
-		repeat?: GenericId
+		repeat?: GenericId,
+		replyingTo?: GenericId
 	) {
 		// if repeat, missing content is allowed. if content, it's a quote.
 		if (!repeat && content && content.length <= 0)
@@ -227,6 +236,25 @@ class NoteService {
 			visibility: visibility,
 			createdAt: new Date().toISOString()
 		};
+
+		let replyingToNote: ObjectLiteral;
+
+		if (replyingTo) {
+			replyingToNote = await this.get({ id: replyingTo });
+
+			if (visibility !== replyingToNote.visibility) {
+				note.visibility = replyingToNote.visibility;
+			}
+
+			if (!replyingToNote)
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.replyTargetNotFound
+				};
+
+			note['replyingToId'] = replyingToNote.id;
+		}
 
 		let repeatedNote: ObjectLiteral;
 

@@ -210,6 +210,17 @@ a {
 	}
 }
 
+button {
+	&.nobg {
+		display: flex;
+		color: inherit;
+		background: none;
+		border: none;
+		padding: inherit;
+		cursor: pointer;
+	}
+}
+
 small {
 	color: var(--tx3);
 	font-size: var(--fs-xs);

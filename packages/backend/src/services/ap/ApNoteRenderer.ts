@@ -26,6 +26,10 @@ class ApNoteRenderer {
 			cc: []
 		};
 
+		if (note.replyingTo) {
+			apNote['inReplyTo'] = note.replyingTo.apId;
+		}
+
 		if (note.repeat) {
 			apNote['quoteUrl'] = note.repeat.apId;
 			apNote['quoteUri'] = note.repeat.apId;

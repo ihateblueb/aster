@@ -7,15 +7,25 @@
 		IconStar
 	} from '@tabler/icons-svelte';
 	import { bounceInOut } from 'svelte/easing';
+	import store from '$lib/store';
 
 	let animation = bounceInOut(1);
 
 	export let note;
+
+	function reply() {
+		store.draft_replyingTo.set(note?.id);
+	}
+
+	function repeat() {}
+	function quote() {}
+	function like() {}
+	function react() {}
 </script>
 
 <footer>
 	<div class="item">
-		<button>
+		<button on:click={() => reply()}>
 			<span class="icon">
 				<IconArrowBackUp size="20px" />
 			</span>

@@ -1,3 +1,5 @@
+import * as punycode from 'node:punycode';
+
 import { ObjectLiteral } from 'typeorm';
 
 import db from '../../utils/database.js';

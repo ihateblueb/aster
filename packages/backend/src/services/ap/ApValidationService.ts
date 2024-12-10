@@ -1,3 +1,5 @@
+import * as punycode from 'node:punycode';
+
 import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
 

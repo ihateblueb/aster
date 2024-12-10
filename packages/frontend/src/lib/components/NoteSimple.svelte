@@ -6,9 +6,10 @@
 	import { goto } from '$app/navigation';
 
 	export let note;
+	export let nobg = false;
 </script>
 
-<div class="noteSimple">
+<div class={'noteSimple' + (nobg ? ' nobg' : '')}>
 	<div class="header">
 		<div class="left">
 			<Avatar user={note.user} size="25px" small />
@@ -28,8 +29,7 @@
 						note.user.username +
 						(note.user.local ? '' : '@' + note.user.host)}
 				>
-					@{note.user.username}
-					{#if !note.user.local}
+					@{note.user.username}{#if !note.user.local}
 						<span class="host">@{note.user.host}</span>
 					{/if}
 				</a>
@@ -56,19 +56,38 @@
 		border-radius: var(--br-md);
 		margin-bottom: 10px;
 		transition: 0.1s;
+
 		&:hover {
 			background-color: var(--bg3-50);
 		}
+
+		&.nobg {
+			padding: 0;
+			border: none;
+			&:hover {
+				background: none;
+			}
+		}
+
 		.header {
 			display: flex;
 			align-items: center;
 			gap: 10px;
 			margin-bottom: 5px;
+
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
+
 			.left {
 				display: flex;
 				align-items: center;
 				gap: 10px;
-				flex-grow: 1;
+
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				overflow: hidden;
+
 				a {
 					font-weight: 600;
 					color: var(--tx2);
@@ -79,11 +98,13 @@
 					color: var(--tx3);
 				}
 			}
+
 			.right {
 				display: flex;
 				align-items: center;
 				gap: 5px;
 				font-size: var(--fs-sm);
+				flex-grow: 1;
 			}
 		}
 	}

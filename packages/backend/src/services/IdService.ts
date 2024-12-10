@@ -7,7 +7,6 @@ import config from '../utils/config.js';
 import logger from '../utils/logger.js';
 
 class IdService {
-	private asCounter = 0;
 	private aidCounter = crypto.randomBytes(2).readUInt16LE(0);
 	private aidxCounter = 0;
 
@@ -15,33 +14,6 @@ class IdService {
 		'0123456789abcdefghijklmnopqrstuvwxyz',
 		4
 	)();
-
-	public generateAs() {
-		let id = '0a';
-
-		const now = new Date();
-		const time2000 = 946684800000;
-
-		let time;
-		time = +now - time2000;
-		if (time < 0) time = 0;
-
-		function oneChar() {
-			return crypto.randomBytes(1).toString('base64url').slice(1);
-		}
-
-		id += now.getFullYear().toString(36);
-		id += crypto.randomBytes(8).toString('base64url');
-		id += time.toString(36).padStart(8, '0').slice(-8);
-		id += this.asCounter.toString(36).padStart(4, oneChar()).slice(-4);
-
-		id = id.replaceAll('_', oneChar());
-		id = id.replaceAll('-', oneChar());
-
-		this.asCounter++;
-
-		return id;
-	}
 
 	public generateUuidv4() {
 		return uuid.v4();
@@ -181,9 +153,7 @@ class IdService {
 	}
 
 	public generate(): string {
-		if (config.id === 'as') {
-			return this.generateAs();
-		} else if (config.id === 'uuidv4') {
+		if (config.id === 'uuidv4') {
 			return this.generateUuidv4();
 		} else if (config.id === 'uuidv7') {
 			return this.generateUuidv7();
@@ -200,8 +170,8 @@ class IdService {
 		} else if (config.id === 'ulid') {
 			return this.generateUlid();
 		} else {
-			logger.warn('id', 'cannot determine type of id to use, using as');
-			return this.generateAs();
+			logger.warn('id', 'cannot determine type of id to use, using aidx');
+			return this.generateAidx();
 		}
 	}
 }

@@ -66,6 +66,12 @@ class NotificationService {
 				message: "Cannot send notification to the user it's from"
 			};
 
+		if (!recipient.local)
+			return {
+				error: true,
+				message: 'Cannot send notification to non-local user'
+			};
+
 		const id = IdService.generate();
 
 		const notification = {

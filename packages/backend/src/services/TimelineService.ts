@@ -1,4 +1,5 @@
 import NoteService from './NoteService.js';
+import NotificationService from './NotificationService.js';
 
 class TimelineService {
 	public async get(
@@ -13,6 +14,14 @@ class TimelineService {
 
 		if (type === 'note')
 			timelineObjects = await NoteService.getMany(
+				where,
+				take,
+				order,
+				orderDirection,
+				orWhere
+			);
+		if (type === 'notification')
+			timelineObjects = await NotificationService.getMany(
 				where,
 				take,
 				order,
