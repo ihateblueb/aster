@@ -78,7 +78,7 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
-				const rendered = ApNoteRenderer.render(note);
+				const rendered = await ApNoteRenderer.render(note);
 
 				if (config.cache.ap)
 					await CacheService.set(

@@ -1,8 +1,9 @@
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
+import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
-	public render(note) {
+	public async render(note) {
 		const apNote = {
 			'@context': context,
 
@@ -36,16 +37,10 @@ class ApNoteRenderer {
 			apNote['_misskey_quote'] = note.repeat.apId;
 		}
 
-		if (note.visibility === 'public') {
-			apNote.to = ['https://www.w3.org/ns/activitystreams#Public'];
-		} else if (note.visibility === 'unlisted') {
-			apNote.to = [note.user.followersUrl];
-			apNote.cc = ['https://www.w3.org/ns/activitystreams#Public'];
-		} else if (note.visibility === 'followers') {
-			apNote.to = [note.user.followingUrl];
-		} else if (note.visibility === 'direct') {
-			apNote.to = [];
-		}
+		let visibility = await ApVisibilityService.render(note.user, note)
+
+		apNote.to = visibility.to;
+		apNote.cc = visibility.cc;
 
 		return apNote;
 	}

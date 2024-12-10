@@ -301,7 +301,7 @@ class NoteService {
 				user,
 				note.visibility,
 				repeatedNote.local
-					? ApNoteRenderer.render(repeatedNote)
+					? await ApNoteRenderer.render(repeatedNote)
 					: repeatedNote.apId
 			);
 
@@ -310,7 +310,7 @@ class NoteService {
 			const create = ApCreateRenderer.render(
 				IdService.generate(),
 				user,
-				ApNoteRenderer.render(await this.get({ id: note.id }))
+				await ApNoteRenderer.render(await this.get({ id: note.id }))
 			);
 
 			await ApDeliverService.deliverToFollowers(create, user);
