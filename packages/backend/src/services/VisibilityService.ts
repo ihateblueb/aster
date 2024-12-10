@@ -7,11 +7,14 @@ class VisibilityService {
 		if (!note.visibility) return false;
 
 		if (['public', 'unlisted'].includes(note.visibility)) return true;
-		if (note.to && note.to.includes(as)) return true;
-		if (note.visibility === 'followers')
-			return as
-				? await RelationshipService.isFollowing(note.user.id, as)
-				: false;
+
+		if (as) {
+			if (note.to && note.to.includes(as)) return true;
+			if (note.visibility === 'followers')
+				return as
+					? await RelationshipService.isFollowing(note.user.id, as)
+					: false;
+		}
 
 		return false;
 	}

@@ -51,7 +51,7 @@ router.get(
 					req.headers.authorization
 				);
 
-				if (await VisibilityService.canISee(note, auth.user.id)) {
+				if (await VisibilityService.canISee(note, auth.user?.id)) {
 					return res.status(200).json(note);
 				} else {
 					return res.status(404).json({

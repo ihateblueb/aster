@@ -54,7 +54,7 @@ export class Note {
 	@Column({ nullable: true })
 	cw: string;
 
-	@Column()
+	@Column({ nullable: true })
 	content: string;
 
 	@Column({ default: 'public' })

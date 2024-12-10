@@ -56,8 +56,9 @@ class ApNoteService {
 		let replyingTo;
 
 		if (body.replyingTo) replyingTo = await this.get(body.replyingTo);
+		if (body.inReplyTo) replyingTo = await this.get(body.inReplyTo);
 
-		if (replyingTo) note['replyingTo'] = replyingTo.id;
+		if (replyingTo) note['replyingToId'] = replyingTo.id;
 
 		let quote;
 
@@ -65,7 +66,7 @@ class ApNoteService {
 		if (body.quoteUri) quote = await this.get(body.quoteUri);
 		if (body._misskey_quote) quote = await this.get(body._misskey_quote);
 
-		if (quote) note['replyingTo'] = quote.id;
+		if (quote) note['repeatId'] = quote.id;
 
 		if (body.summary) note['cw'] = SanitizerService.sanitize(body.summary);
 		if (body._misskey_summary)

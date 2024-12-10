@@ -43,8 +43,6 @@ router.get(
 			followingIds.push(user.to.id);
 		}
 
-		console.log(followingIds);
-
 		const where = {
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])
