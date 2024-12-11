@@ -43,7 +43,7 @@ class TimelineService {
 			timeline.length = take;
 		}
 
-		if (timeline.length > 1) return undefined;
+		//if (timeline.length > 1) return undefined;
 
 		return timeline;
 	}

@@ -1,3 +1,6 @@
+// https://dev.aster.pages.gay/queue/queue/%7Binbox%7D/1477
+// https://dev.aster.pages.gay/queue/queue/%7Binbox%7D/1478
+
 class UpdateProcessor {
 	public async process(body): Promise<boolean> {
 		return false;
