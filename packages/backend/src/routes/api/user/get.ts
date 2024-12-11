@@ -38,7 +38,7 @@ router.get(
 		});
 
 		if (user) {
-			if (user.suspended) 
+			if (user.suspended)
 				return res.status(403).json({
 					message: locale.user.suspended
 				});

@@ -60,7 +60,7 @@ router.post(
 			parsedBody.visibility
 		)
 			.then(async (e) => {
-				if (e.error) 
+				if (e.error)
 					return res.status(e.status).json({
 						message: e.message
 					});

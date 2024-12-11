@@ -67,30 +67,29 @@ router.get(
 		const user = await UserService.get({ id: req.params.id });
 
 		if (user) {
-			if (!user.local) {
+			if (!user.local)
 				return res.status(404).json({
 					message: locale.user.notFound
 				});
-			} else if (user.suspended) {
+			if (user.suspended)
 				return res.status(403).json({
 					message: locale.user.suspended
 				});
-			} else if (!user.activated) {
+			if (!user.activated)
 				return res.status(403).json({
 					message: locale.user.notActivated
 				});
-			} else {
-				const rendered = ApActorRenderer.render(user);
 
-				if (config.cache.ap)
-					await CacheService.set(
-						'ap_user_' + req.params.id,
-						JSON.stringify(rendered),
-						Number(config.cache.apExpiration)
-					);
+			const rendered = ApActorRenderer.render(user);
 
-				return res.status(200).json(rendered);
-			}
+			if (config.cache.ap)
+				await CacheService.set(
+					'ap_user_' + req.params.id,
+					JSON.stringify(rendered),
+					Number(config.cache.apExpiration)
+				);
+
+			return res.status(200).json(rendered);
 		} else {
 			return res.status(404).json({
 				message: locale.user.notFound
