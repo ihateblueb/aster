@@ -50,9 +50,7 @@ router.get(
 		)
 			.then((e) => {
 				if (e) return res.status(200).json(e);
-				return res.status(500).json({
-					message: locale.error.internalServer
-				});
+				return res.status(204).send();
 			})
 			.catch((err) => {
 				console.log(err);

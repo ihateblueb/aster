@@ -1,3 +1,5 @@
+import { ObjectLiteral } from 'typeorm';
+
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 
@@ -29,10 +31,10 @@ class TimelineService {
 				orWhere
 			);
 
-		return await this.sort(timelineObjects, take);
+		return this.sort(timelineObjects, take);
 	}
 
-	public async sort(timeline: any[], take: number) {
+	public sort(timeline: ObjectLiteral[], take: number) {
 		timeline.sort(
 			(x, y) => +new Date(y.createdAt) - +new Date(x.createdAt)
 		);
@@ -40,6 +42,8 @@ class TimelineService {
 		if (timeline.length > take) {
 			timeline.length = take;
 		}
+
+		if (timeline.length > 1) return undefined;
 
 		return timeline;
 	}

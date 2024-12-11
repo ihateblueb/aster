@@ -2,7 +2,7 @@
 	import NoteHeader from '$lib/components/NoteHeader.svelte';
 	import NoteFooter from '$lib/components/NoteFooter.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
-	import { IconRepeat } from '@tabler/icons-svelte';
+	import { IconArrowBackUp, IconRepeat } from '@tabler/icons-svelte';
 	import Time from '$lib/components/Time.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Visibility from '$lib/components/Visibility.svelte';

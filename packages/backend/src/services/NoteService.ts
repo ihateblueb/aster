@@ -25,6 +25,7 @@ class NoteService {
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
 
+			//reply
 			.leftJoinAndSelect('note.replyingTo', 'replyingTo')
 			.leftJoinAndSelect('replyingTo.user', 'replyingTo_user')
 
@@ -42,6 +43,7 @@ class NoteService {
 
 			// repeat
 			.leftJoinAndSelect('note.repeat', 'repeat')
+
 			.leftJoin('repeat.user', 'repeat_user')
 			.addSelect(UserMini('repeat_user'))
 
@@ -52,6 +54,7 @@ class NoteService {
 			.leftJoin('repeats.user', 'repeats_user')
 			.addSelect(UserMini('repeats_user'))
 
+			//likes
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(UserMini('like_user'))
@@ -72,17 +75,41 @@ class NoteService {
 			.getRepository('note')
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
+
+			//reply
+			.leftJoinAndSelect('note.replyingTo', 'replyingTo')
+			.leftJoinAndSelect('replyingTo.user', 'replyingTo_user')
+
+			.leftJoinAndSelect('replyingTo.repeat', 'replyingTo_repeat')
+			.leftJoin('replyingTo_repeat.user', 'replyingTo_repeat_user')
+			.addSelect(UserMini('replyingTo_repeat_user'))
+
+			.leftJoinAndSelect('replyingTo.repeats', 'replyingTo_repeats')
+			.leftJoin('replyingTo_repeats.user', 'replyingTo_repeats_user')
+			.addSelect(UserMini('replyingTo_repeats_user'))
+
+			.leftJoinAndSelect('replyingTo.likes', 'replyingTo_likes')
+			.leftJoin('replyingTo_likes.user', 'replyingTo_likes_user')
+			.addSelect(UserMini('replyingTo_likes_user'))
+
+			// repeat
 			.leftJoinAndSelect('note.repeat', 'repeat')
+
 			.leftJoin('repeat.user', 'repeat_user')
 			.addSelect(UserMini('repeat_user'))
+
 			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
 			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
+
 			.leftJoinAndSelect('note.repeats', 'repeats')
 			.leftJoin('repeats.user', 'repeats_user')
 			.addSelect(UserMini('repeats_user'))
+
+			//likes
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(UserMini('like_user'))
+
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.take(take)

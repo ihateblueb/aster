@@ -11,10 +11,11 @@
 	import localstore from '$lib/localstore';
 	import getTimeline from '$lib/api/timeline';
 	import Note from '$lib/components/Note.svelte';
-	import { createQuery } from '@tanstack/svelte-query';
+	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
 	import Error from '$lib/components/Error.svelte';
 	import Tab from '$lib/components/Tab.svelte';
 	import Loading from '$lib/components/Loading.svelte';
+	import Button from '$lib/components/Button.svelte';
 	let timeline: string;
 
 	let localstoreTimeline = localstore.get('homeTab');
@@ -24,10 +25,16 @@
 		timeline = 'home';
 	}
 
-	const query = createQuery({
+	const query = createInfiniteQuery({
 		queryKey: ['timeline'],
 		retry: false,
-		queryFn: async () => await getTimeline(timeline)
+		queryFn: async ({ pageParam }) =>
+			await getTimeline(timeline, pageParam),
+		initialPageParam: undefined,
+		getNextPageParam: (lastPage) => {
+			console.log('lastNote', lastPage.at(-1).createdAt);
+			return lastPage ? lastPage.at(-1).createdAt : undefined;
+		}
 	});
 
 	function updateTimeline(to: string) {
@@ -105,8 +112,22 @@
 			retry={() => $query.refetch()}
 		/>
 	{:else if $query.isSuccess}
-		{#each $query.data as note}
-			<Note {note} />
+		{#each $query.data.pages as results}
+			{#each results as note}
+				<Note {note} />
+			{/each}
 		{/each}
+		<Button
+			on:click={() => $query.fetchNextPage()}
+			disabled={!$query.hasNextPage || $query.isFetchingNextPage}
+		>
+			{#if $query.isFetching}
+				Loading more...
+			{:else if $query.hasNextPage}
+				Load More
+			{:else}
+				Nothing more to load
+			{/if}
+		</Button>
 	{/if}
 </PageWrapper>
