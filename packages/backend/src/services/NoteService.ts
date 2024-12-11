@@ -119,7 +119,7 @@ class NoteService {
 
 	public async delete(where: where) {
 		const note = await this.get(where);
-		if (note) {
+		if (note && note.local) {
 			const del = ApDeleteRenderer.render(
 				IdService.generate(),
 				note.user.id,

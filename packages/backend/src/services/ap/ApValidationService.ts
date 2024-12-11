@@ -90,12 +90,9 @@ class ApValidationService {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
 
-		// get user from here?? keyId?
-		// we send out keyId="${config.url}users/${as.id}#main-key" but is that structure required or just the unagreed standard?
-		console.log(parsedRequest);
-
-		// this needs to be replaced, relying on the body for this is bad
-		const actorApId = tryurl(JSON.parse(req.body).actor);
+		const actorApId = new URL(
+			parsedRequest.keyId.replace(new URL(parsedRequest.keyId).hash, '')
+		);
 		if (!actorApId)
 			return {
 				valid: false
@@ -110,7 +107,10 @@ class ApValidationService {
 			});
 
 		if (moderatedInstance && !moderatedInstance.accept) {
-			logger.debug('ap', 'blocked activity ' + new URL(actorApId).host);
+			logger.debug(
+				'ap',
+				'blocked request from ' + new URL(actorApId).host
+			);
 			return {
 				valid: false,
 				blocked: true

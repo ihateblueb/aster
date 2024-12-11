@@ -16,6 +16,7 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import Button from '$lib/components/Button.svelte';
+	import queryclient from '$lib/queryclient.js';
 	let timeline: string;
 
 	let localstoreTimeline = localstore.get('homeTab');
@@ -40,6 +41,7 @@
 	function updateTimeline(to: string) {
 		timeline = to;
 		localstore.set('homeTab', to);
+		queryclient.clear();
 		$query.refetch();
 	}
 </script>

@@ -38,7 +38,6 @@
 	<div class="subheader">
 		{#if selectedTab === 0}
 			<Tab
-				short
 				selected={$page.route.id === '/settings'}
 				on:click={() => {
 					selectedTab = 0;
@@ -47,7 +46,6 @@
 				title="General"
 			></Tab>
 			<Tab
-				short
 				selected={$page.route.id === '/settings/themes'}
 				on:click={() => {
 					selectedTab = 0;
@@ -56,7 +54,6 @@
 				title="Themes"
 			></Tab>
 			<Tab
-				short
 				selected={$page.route.id === '/settings/sounds'}
 				on:click={() => {
 					selectedTab = 0;
@@ -66,7 +63,6 @@
 			></Tab>
 		{:else}
 			<Tab
-				short
 				selected={$page.route.id === '/settings/account'}
 				on:click={() => {
 					selectedTab = 1;
@@ -75,7 +71,6 @@
 				title="Account"
 			></Tab>
 			<Tab
-				short
 				selected={$page.route.id === '/settings/account/privacy'}
 				on:click={() => {
 					selectedTab = 1;
@@ -84,7 +79,6 @@
 				title="Privacy"
 			></Tab>
 			<Tab
-				short
 				selected={$page.route.id === '/settings/account/security'}
 				on:click={() => {
 					selectedTab = 1;
@@ -104,7 +98,7 @@
 		overflow-x: scroll;
 
 		gap: 8px;
-		height: 48px;
+		height: 50px;
 		padding: 0 18px;
 		margin: -12px;
 		margin-bottom: 12px;

@@ -14,12 +14,10 @@
 	} from '@tabler/icons-svelte';
 	import lookupUser from '$lib/api/user/lookup.js';
 	import Button from '$lib/components/Button.svelte';
-	import localstore from '$lib/localstore.js';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import queryClient from '$lib/queryclient.js';
-	import { writable } from 'svelte/store';
 
-	let { data } = $props();
+	export let data;
 
 	console.log(data);
 
@@ -89,7 +87,7 @@
 					</div>
 				</div>
 				<div class="right">
-					<Button nm>Follow</Button>
+					<Button secondary nm>Follow</Button>
 				</div>
 			</div>
 		</div>
@@ -176,7 +174,7 @@
 			left: -40px;
 			top: 0;
 
-			box-shadow: inset 0px -40px 30px var(--bg2);
+			box-shadow: inset 0px -50px 40px var(--bg2);
 		}
 
 		.banner {
@@ -187,7 +185,7 @@
 			object-fit: cover;
 			user-select: none;
 
-			background-color: var(--bg3-25);
+			background-color: var(--bg3-50);
 		}
 
 		.float {
@@ -199,7 +197,7 @@
 			bottom: 0;
 			z-index: 10;
 
-			margin-bottom: 30px;
+			margin-bottom: 10px;
 			padding: 12px;
 
 			width: 100%;
