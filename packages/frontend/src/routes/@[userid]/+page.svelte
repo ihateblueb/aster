@@ -23,8 +23,7 @@
 
 	console.log(data);
 
-	if (data.userid)
-		queryClient.clear()
+	if (data.userid) queryClient.clear();
 
 	const query = createQuery({
 		queryKey: ['user'],

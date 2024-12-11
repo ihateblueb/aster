@@ -93,58 +93,60 @@ router.use((req, res, next) => {
 
 // bull board
 
-const serverAdapter = new ExpressAdapter();
-serverAdapter.setBasePath('/queue');
+if (config.frontends.queue) {
+	const serverAdapter = new ExpressAdapter();
+	serverAdapter.setBasePath('/queue');
 
-createBullBoard({
-	queues: [
-		new BullMQAdapter(QueueService.inbox),
-		new BullMQAdapter(QueueService.deliver),
-		new BullMQAdapter(QueueService.backfill)
-	],
-	serverAdapter,
-	options: {
-		uiConfig: {
-			boardTitle: 'Queue Dashboard',
-			boardLogo: {
-				path: '/favicon.ico',
-				width: 0,
-				height: 0
-			},
-			miscLinks: [
-				{ text: 'Back to Aster', url: '/' },
-				{ text: 'Logout', url: '/logout' }
-			],
-			favIcon: {
-				default: '/favicon.ico',
-				alternative: '/favicon.ico'
+	createBullBoard({
+		queues: [
+			new BullMQAdapter(QueueService.inbox),
+			new BullMQAdapter(QueueService.deliver),
+			new BullMQAdapter(QueueService.backfill)
+		],
+		serverAdapter,
+		options: {
+			uiConfig: {
+				boardTitle: 'Queue Dashboard',
+				boardLogo: {
+					path: '/favicon.ico',
+					width: 0,
+					height: 0
+				},
+				miscLinks: [
+					{ text: 'Back to Aster', url: '/' },
+					{ text: 'Logout', url: '/logout' }
+				],
+				favIcon: {
+					default: '/favicon.ico',
+					alternative: '/favicon.ico'
+				}
 			}
 		}
-	}
-});
+	});
 
-router.get('/queue*', async (req, res, next) => {
-	const auth = await AuthService.verify(req.cookies.as_token);
+	router.get('/queue*', async (req, res, next) => {
+		const auth = await AuthService.verify(req.cookies.as_token);
 
-	if (auth.error)
-		return res.status(auth.status).json({
-			message: auth.message
-		});
+		if (auth.error)
+			return res.status(auth.status).json({
+				message: auth.message
+			});
 
-	if (!(await UserService.get({ id: auth.user.id })).admin)
-		return res.status(403).json({
-			message: locale.auth.insufficientPermissions
-		});
+		if (!(await UserService.get({ id: auth.user.id })).admin)
+			return res.status(403).json({
+				message: locale.auth.insufficientPermissions
+			});
 
-	next();
-});
+		next();
+	});
 
-router.use('/queue', serverAdapter.getRouter());
+	router.use('/queue', serverAdapter.getRouter());
+}
 
 // regular routes
 
-router.use(oapi);
-router.use('/swagger', oapi.swaggerui());
+if (config.frontends.oapi) router.use(oapi);
+if (config.frontends.swagger) router.use('/swagger', oapi.swaggerui());
 
 // api
 router.use('/', auth_login);
@@ -185,6 +187,7 @@ router.use('/', ap_note);
 router.use('/', ap_user);
 router.use('/', wellknown);
 
-router.use(feHandler.handler);
+// packages/frontend
+if (config.frontends.enable) router.use(feHandler.handler);
 
 export default router;

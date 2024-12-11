@@ -12,7 +12,7 @@ import ApActorService from './ApActorService.js';
 class ApValidationService {
 	public async validSignature(
 		req,
-		type: string
+		type?: string
 	): Promise<{
 		valid: boolean;
 		pretendToProcess?: boolean;
@@ -34,15 +34,6 @@ class ApValidationService {
 			};
 		} else {
 			logger.debug('ap', 'host header matches configuration');
-		}
-
-		if (!req.body) {
-			logger.error('ap', 'body not present');
-			return {
-				valid: false
-			};
-		} else {
-			logger.debug('ap', 'body present');
 		}
 
 		if (!req.headers.digest) {
@@ -72,6 +63,15 @@ class ApValidationService {
 			logger.debug('ap', 'signature header present');
 		}
 
+		if (req.method === 'POST' && !req.body) {
+			logger.error('ap', 'body not present');
+			return {
+				valid: false
+			};
+		} else {
+			logger.debug('ap', 'body present or not required');
+		}
+
 		const digestValid = this.validDigest(
 			req,
 			req.headers.digest.replace('SHA-256=', '')
@@ -86,6 +86,15 @@ class ApValidationService {
 			logger.debug('ap', 'digest valid');
 		}
 
+		const parsedRequest = await httpSignature.parseRequest(req, {
+			headers: ['(request-target)', 'digest', 'host', 'date']
+		});
+
+		// get user from here?? keyId?
+		// we send out keyId="${config.url}users/${as.id}#main-key" but is that structure required or just the unagreed standard?
+		console.log(parsedRequest);
+
+		// this needs to be replaced, relying on the body for this is bad
 		const actorApId = tryurl(JSON.parse(req.body).actor);
 		if (!actorApId)
 			return {
@@ -139,10 +148,6 @@ class ApValidationService {
 				pretendToProcess: true
 			};
 		} else {
-			const parsedRequest = await httpSignature.parseRequest(req, {
-				headers: ['(request-target)', 'digest', 'host', 'date']
-			});
-
 			const signatureValid = httpSignature.verifySignature(
 				parsedRequest,
 				actor.publicKey
@@ -171,6 +176,7 @@ class ApValidationService {
 
 	public validBody(body): boolean {
 		if (!body) return false;
+		if (!body.id) return false;
 		if (!body.type) return false;
 
 		logger.debug(

@@ -48,7 +48,9 @@ router.get(
 		if (req.query.reverse === 'true') orderDirection = 'ASC';
 
 		take =
-			take <= config.timeline.maxNotes ? take : config.timeline.maxNotes;
+			take <= config.timeline.maxObjects
+				? take
+				: config.timeline.maxObjects;
 
 		return await TimelineService.get(
 			'notification',

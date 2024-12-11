@@ -1,6 +1,7 @@
 import express from 'express';
 
 import ApNoteRenderer from '../../services/ap/ApNoteRenderer.js';
+import AuthorizedFetchService from '../../services/AuthorizedFetchService.js';
 import CacheService from '../../services/CacheService.js';
 import MetricsService from '../../services/MetricsService.js';
 import NoteService from '../../services/NoteService.js';
@@ -33,6 +34,7 @@ router.get(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
+	await AuthorizedFetchService,
 	async (req, res, next) => {
 		if (
 			!req.headers ||

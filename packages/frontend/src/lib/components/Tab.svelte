@@ -4,11 +4,10 @@
 	export let title = '';
 </script>
 
-<button class={"tab" + (short ? ' short' : '')} on:click>
+<button class={'tab' + (short ? ' short' : '')} on:click>
 	<slot></slot>
 	<span class={'title' + (selected ? ' selected' : '')}>{title}</span>
-	<span class={'bar' + (selected ? ' show' : '')}>
-	</span>
+	<span class={'bar' + (selected ? ' show' : '')}> </span>
 </button>
 
 <style lang="scss" scoped>

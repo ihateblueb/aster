@@ -1,6 +1,7 @@
 import express from 'express';
 
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
+import AuthorizedFetchService from '../../services/AuthorizedFetchService.js';
 import CacheService from '../../services/CacheService.js';
 import MetricsService from '../../services/MetricsService.js';
 import UserService from '../../services/UserService.js';
@@ -33,6 +34,7 @@ router.get(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
+	await AuthorizedFetchService,
 	async (req, res, next) => {
 		if (
 			!req.headers ||
