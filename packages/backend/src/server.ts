@@ -30,7 +30,6 @@ WorkerService.inbox.on('completed', (job) => {
 });
 WorkerService.inbox.on('failed', (job) => {
 	logger.error('inbox', 'job ' + job.id + ' failed');
-	console.log(job.stacktrace);
 });
 
 WorkerService.deliver.on('completed', (job) => {
@@ -38,7 +37,6 @@ WorkerService.deliver.on('completed', (job) => {
 });
 WorkerService.deliver.on('failed', (job) => {
 	logger.error('deliver', 'job ' + job.id + ' failed');
-	console.log(job.stacktrace);
 });
 
 WorkerService.backfill.on('completed', (job) => {
@@ -46,7 +44,6 @@ WorkerService.backfill.on('completed', (job) => {
 });
 WorkerService.backfill.on('failed', (job) => {
 	logger.error('backfill', 'job ' + job.id + ' failed');
-	console.log(job.stacktrace);
 });
 
 const app = express();

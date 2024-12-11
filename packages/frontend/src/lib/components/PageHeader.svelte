@@ -13,6 +13,10 @@
 	if ($page.url.pathname !== '/' && history.length > 2) showBack = true;
 </script>
 
+<svelte:head>
+	<title>{title + (title ? ' - ' : '') + $page.url.host}</title>
+</svelte:head>
+
 <div class="pageHeader">
 	{#if showBack}
 		<div class="back" on:click={() => goto('/')}>

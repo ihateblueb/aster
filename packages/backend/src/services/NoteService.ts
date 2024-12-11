@@ -111,7 +111,12 @@ class NoteService {
 		const user = await UserService.get({ id: as });
 		const note = await this.get({ id: noteId });
 
-		if (!(await VisibilityService.canISee(this.get({ id: noteId }), as)))
+		if (
+			!(await VisibilityService.canISee(
+				await this.get({ id: noteId }),
+				as
+			))
+		)
 			return {
 				status: 404,
 				message: 'Note not found'
@@ -381,17 +386,20 @@ class NoteService {
 		toggle?: boolean,
 		visibility?: string
 	) {
-		if (!VisibilityService.canISee(this.get({ id: noteId }), as))
+		if (
+			!(await VisibilityService.canISee(
+				await this.get({ id: noteId }),
+				as
+			))
+		)
 			return {
 				status: 404,
 				message: 'Note not found'
 			};
 
-		const existingRepeat = await db.getRepository('note').findOne({
-			where: {
-				user: { id: as },
-				repeat: noteId
-			}
+		const existingRepeat = await this.get({
+			user: { id: as },
+			repeatId: noteId
 		});
 
 		if (toggle && existingRepeat) {

@@ -92,10 +92,10 @@ class ApDeliverService {
 					'posted to ' + inboxUrl + ' as @' + as.username
 				);
 				console.log(e.status);
+				if (!e.ok) throw new Error(e.status.toString());
 				return true;
 			})
 			.catch((err) => {
-				console.log(err);
 				logger.error(
 					'deliver',
 					'failed to post to ' + inboxUrl + ' as @' + as.username

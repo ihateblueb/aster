@@ -36,7 +36,7 @@ class ApActorService {
 		const user = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
-			host: new URL(body.id).host,
+			host: punycode.toASCII(new URL(body.id).host),
 			local: false,
 			activated: true
 		};

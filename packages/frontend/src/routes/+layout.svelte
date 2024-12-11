@@ -1,8 +1,7 @@
 <script lang="ts">
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
-	import { QueryClient, QueryClientProvider } from '@tanstack/svelte-query';
-
-	const queryClient = new QueryClient();
+	import queryClient from '$lib/queryclient';
+	import { QueryClientProvider } from '@tanstack/svelte-query';
 </script>
 
 <QueryClientProvider client={queryClient}>

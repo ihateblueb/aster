@@ -2,7 +2,7 @@
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 
-	import { createQuery } from '@tanstack/svelte-query';
+	import { createQuery, QueryCache } from '@tanstack/svelte-query';
 	import Error from '$lib/components/Error.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
@@ -16,10 +16,15 @@
 	import Button from '$lib/components/Button.svelte';
 	import localstore from '$lib/localstore.js';
 	import Mfm from '$lib/components/Mfm.svelte';
+	import queryClient from '$lib/queryclient.js';
+	import { writable } from 'svelte/store';
 
 	let { data } = $props();
 
 	console.log(data);
+
+	if (data.userid)
+		queryClient.clear()
 
 	const query = createQuery({
 		queryKey: ['user'],

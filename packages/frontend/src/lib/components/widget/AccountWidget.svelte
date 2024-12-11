@@ -28,7 +28,7 @@
 
 <div class="accountWidget">
 	{#if self}
-		<Avatar user={self} size={innerWidth > 1355 ? '45px' : '50px'} />
+		<Avatar user={self} size={innerWidth > 1355 ? '40px' : '50px'} />
 		<a
 			class="names"
 			href={'/@' + self.username + (self.local ? '' : '@' + self.host)}

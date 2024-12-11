@@ -137,7 +137,10 @@ class RelationshipService {
 		const from = await ApActorService.get(body.actor);
 		if (!from) return false;
 
-		const alreadyFollowing = await this.get({ to: to.id, from: from.id });
+		const alreadyFollowing = await this.get({
+			to: { id: to.id },
+			from: { id: from.id }
+		});
 
 		if (
 			alreadyFollowing &&

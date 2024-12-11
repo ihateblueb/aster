@@ -16,15 +16,16 @@ class LikeProcessor {
 		if (body._misskey_content) {
 			logger.warn('like', 'appears to be a react. tag:');
 			console.log(body.tag);
-		} else {
-			return await NoteService.like(note.id, actor.id, false)
-				.then(() => {
-					return true;
-				})
-				.catch(() => {
-					return false;
-				});
 		}
+
+		return await NoteService.like(note.id, actor.id, false)
+			.then((e) => {
+				console.log(e);
+				return true;
+			})
+			.catch(() => {
+				return false;
+			});
 	}
 }
 

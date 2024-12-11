@@ -54,6 +54,7 @@
 
 	function clearReply() {
 		store.draft_replyingTo.set('');
+		replyingToNote = undefined;
 	}
 </script>
 

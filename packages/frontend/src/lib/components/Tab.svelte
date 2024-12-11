@@ -4,10 +4,10 @@
 	export let title = '';
 </script>
 
-<button class="tab" on:click>
+<button class={"tab" + (short ? ' short' : '')} on:click>
 	<slot></slot>
 	<span class={'title' + (selected ? ' selected' : '')}>{title}</span>
-	<span class={'bar' + (selected ? ' show' : '') + (short ? ' short' : '')}>
+	<span class={'bar' + (selected ? ' show' : '')}>
 	</span>
 </button>
 
@@ -23,6 +23,12 @@
 		border: none;
 		color: inherit;
 
+		height: 50px;
+
+		&.short {
+			height: 45px;
+		}
+
 		.title {
 			font-family: var(--font);
 			line-height: var(--fs-lg);
@@ -34,7 +40,6 @@
 
 		.bar {
 			position: absolute;
-
 			opacity: 0;
 			width: 0;
 			height: 4px;
@@ -42,11 +47,7 @@
 			background-color: var(--ac1);
 			min-width: var(--br-md);
 
-			top: calc(50px - var(--fs-lg));
-
-			&.short {
-				top: calc(45px - (var(--fs-md)));
-			}
+			bottom: 0;
 
 			transition:
 				width 0.2s ease,

@@ -6,6 +6,7 @@ import crypto from 'crypto';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import tryurl from '../../utils/tryurl.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {
@@ -85,13 +86,17 @@ class ApValidationService {
 			logger.debug('ap', 'digest valid');
 		}
 
-		const actorApId = JSON.parse(req.body).actor;
+		const actorApId = tryurl(JSON.parse(req.body).actor);
+		if (!actorApId)
+			return {
+				valid: false
+			};
 
 		const moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: new URL(actorApId).host
+					host: punycode.toASCII(actorApId.host)
 				}
 			});
 
@@ -103,7 +108,7 @@ class ApValidationService {
 			};
 		}
 
-		const actor = await ApActorService.get(actorApId);
+		const actor = await ApActorService.get(actorApId.toString());
 
 		if (!actor) {
 			if (type === 'Delete') {

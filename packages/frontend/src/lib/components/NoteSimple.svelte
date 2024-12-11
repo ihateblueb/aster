@@ -87,6 +87,8 @@
 				white-space: nowrap;
 				text-overflow: ellipsis;
 				overflow: hidden;
+				
+				flex-grow: 1;
 
 				a {
 					font-weight: 600;
@@ -104,7 +106,6 @@
 				align-items: center;
 				gap: 5px;
 				font-size: var(--fs-sm);
-				flex-grow: 1;
 			}
 		}
 	}
