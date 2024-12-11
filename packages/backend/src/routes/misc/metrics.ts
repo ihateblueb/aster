@@ -16,7 +16,7 @@ router.get(
 	}),
 	async (req, res) => {
 		res.setHeader('Content-Type', 'text/plain');
-		res.status(200).send(await MetricsService.registry.metrics());
+		return res.status(200).send(await MetricsService.registry.metrics());
 	}
 );
 

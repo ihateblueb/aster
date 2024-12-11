@@ -22,7 +22,7 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		res.status(501).send();
+		return res.status(501).send();
 	}
 );
 

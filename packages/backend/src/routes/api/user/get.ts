@@ -38,19 +38,17 @@ router.get(
 		});
 
 		if (user) {
-			if (user.suspended) {
-				res.status(403).json({
+			if (user.suspended) 
+				return res.status(403).json({
 					message: locale.user.suspended
 				});
-			} else if (!user.activated) {
-				res.status(403).json({
+			if (!user.activated)
+				return res.status(403).json({
 					message: locale.user.notActivated
 				});
-			} else {
-				res.status(200).json(user);
-			}
+			return res.status(200).json(user);
 		} else {
-			res.status(404).json({
+			return res.status(404).json({
 				message: locale.user.notFound
 			});
 		}

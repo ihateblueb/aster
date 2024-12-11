@@ -26,8 +26,7 @@ router.get(
 		}
 	}),
 	(req, res) => {
-		res.status(200).json({
-			id: IdService.generate(),
+		return res.status(200).json({
 			serverTime: new Date(Date.now()).toISOString()
 		});
 	}

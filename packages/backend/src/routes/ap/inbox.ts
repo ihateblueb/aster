@@ -35,10 +35,10 @@ router.post(
 	async (req, res, next) => {
 		try {
 			if (!ApValidationService.validBody(JSON.parse(req.body)))
-				res.status(400).json({ message: 'Invalid body' });
+				return res.status(400).json({ message: 'Invalid body' });
 		} catch (err) {
 			console.log(err);
-			res.status(400).json({ message: "Couldn't parse body" });
+			return res.status(400).json({ message: "Couldn't parse body" });
 		}
 
 		const apvs = await ApValidationService.validSignature(

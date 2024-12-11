@@ -23,7 +23,7 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		res.status(200).json(await MetaService.get());
+		return res.status(200).json(await MetaService.get());
 	}
 );
 

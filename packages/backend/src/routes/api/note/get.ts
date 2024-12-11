@@ -43,7 +43,7 @@ router.get(
 
 		if (note) {
 			if (!note.user) {
-				res.status(404).json({
+				return res.status(404).json({
 					message: locale.note.authorNotFound
 				});
 			} else {

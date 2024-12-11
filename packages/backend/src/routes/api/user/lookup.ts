@@ -34,26 +34,23 @@ router.get(
 
 		const splitHandle = req.params.handle.split('@');
 
-		// todo: test if this works
 		const user = await UserService.get({
 			username: splitHandle[1],
 			host: splitHandle[2]
 		});
 
 		if (user) {
-			if (user.suspended) {
-				res.status(403).json({
+			if (user.suspended)
+				return res.status(403).json({
 					message: 'User suspended'
 				});
-			} else if (!user.activated) {
-				res.status(403).json({
+			if (!user.activated)
+				return res.status(403).json({
 					message: 'User not activated'
 				});
-			} else {
-				res.status(200).json(user);
-			}
+			return res.status(200).json(user);
 		} else {
-			res.status(404).json({
+			return res.status(404).json({
 				message: "User doesn't exist"
 			});
 		}

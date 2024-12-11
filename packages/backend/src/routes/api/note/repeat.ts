@@ -60,13 +60,11 @@ router.post(
 			parsedBody.visibility
 		)
 			.then(async (e) => {
-				if (e.error) {
+				if (e.error) 
 					return res.status(e.status).json({
 						message: e.message
 					});
-				} else {
-					return res.status(200).json(e);
-				}
+				return res.status(200).json(e);
 			})
 			.catch((e) => {
 				console.log(e);

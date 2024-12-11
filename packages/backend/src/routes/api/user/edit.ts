@@ -34,9 +34,7 @@ router.patch(
 		}
 	}),
 	(req, res) => {
-		res.status(501).json({
-			message: 'not done lol'
-		});
+		return res.status(501).send();
 	}
 );
 
