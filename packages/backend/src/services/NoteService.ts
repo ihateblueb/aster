@@ -59,9 +59,6 @@ class NoteService {
 			.leftJoin('note_likes.user', 'likes_user')
 			.addSelect(UserMini('likes_user'))
 
-			.leftJoinAndSelect('note.replies', 'note_replies')
-			.leftJoinAndSelect('note_replies.user', 'replies_user')
-
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.getOne();
