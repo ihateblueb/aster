@@ -23,8 +23,6 @@ class ApValidationService {
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'host present');
 		}
 
 		if (req.headers.host !== new URL(config.url).host) {
@@ -32,17 +30,13 @@ class ApValidationService {
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'host header matches configuration');
 		}
-
+		
 		if (!req.headers.digest) {
 			logger.error('ap', 'digest not present');
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'digest present');
 		}
 
 		if (!req.headers.digest.startsWith('SHA-256=')) {
@@ -50,8 +44,6 @@ class ApValidationService {
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'digest started with SHA-256=');
 		}
 
 		if (!req.headers.signature) {
@@ -59,17 +51,6 @@ class ApValidationService {
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'signature header present');
-		}
-
-		if (req.method === 'POST' && !req.body) {
-			logger.error('ap', 'body not present');
-			return {
-				valid: false
-			};
-		} else {
-			logger.debug('ap', 'body present or not required');
 		}
 
 		const digestValid = this.validDigest(
@@ -82,13 +63,16 @@ class ApValidationService {
 			return {
 				valid: false
 			};
-		} else {
-			logger.debug('ap', 'digest valid');
 		}
 
 		const parsedRequest = await httpSignature.parseRequest(req, {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
+
+		if (!parsedRequest.keyId) {
+			logger.error('ap', 'parsed request did not have keyId')
+			return { valid: false }
+		}
 
 		const actorApId = new URL(
 			parsedRequest.keyId.replace(new URL(parsedRequest.keyId).hash, '')
@@ -106,15 +90,26 @@ class ApValidationService {
 				}
 			});
 
-		if (moderatedInstance && !moderatedInstance.accept) {
-			logger.debug(
-				'ap',
-				'blocked request from ' + new URL(actorApId).host
-			);
-			return {
-				valid: false,
-				blocked: true
-			};
+		if (moderatedInstance) {
+			if (req.method === 'POST' && !moderatedInstance.accept) {
+				logger.info(
+					'ap',
+					'blocked activity from ' + new URL(actorApId).host
+				);
+				return {
+					valid: false,
+					blocked: true
+				};
+			} else if (req.method === 'GET' && !moderatedInstance.return) {
+				logger.info(
+					'ap',
+					'blocked fetch from ' + new URL(actorApId).host
+				);
+				return {
+					valid: false,
+					blocked: true
+				};
+			}
 		}
 
 		const actor = await ApActorService.get(actorApId.toString());
@@ -154,7 +149,6 @@ class ApValidationService {
 			);
 
 			if (signatureValid) {
-				logger.debug('ap', 'signature verified');
 				return {
 					valid: true
 				};

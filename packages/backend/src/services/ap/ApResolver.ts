@@ -1,3 +1,4 @@
+import * as punycode from 'node:punycode';
 import crypto from 'crypto';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
@@ -13,14 +14,14 @@ class ApResolver {
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: new URL(apId).host
+					host: punycode.toASCII(new URL(apId).host)
 				}
 			});
 
 		if (moderatedInstance && !moderatedInstance.fetch) {
-			logger.error(
+			logger.info(
 				'resolver',
-				'refused to resolve from a no fetch instance'
+				'blocked fetch of '
 			);
 			return false;
 		}
