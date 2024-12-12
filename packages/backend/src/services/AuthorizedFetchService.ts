@@ -9,7 +9,9 @@ export default async function (req, res, next) {
 		if (apvs.blocked)
 			return res.status(403).json({ message: locale.error.hostBlocked });
 		if (!apvs.valid)
-			return res.status(401).json({ message: locale.error.invalidSignature });
+			return res
+				.status(401)
+				.json({ message: locale.error.invalidSignature });
 		if (apvs.valid) next();
 	} else {
 		if (apvs.blocked)

@@ -6,20 +6,19 @@ import UserService from './UserService.js';
 
 class SetupService {
 	public async try() {
-		const instanceActor = await db
-			.getRepository('user')
-			.findOne({ where: { username: 'instanceactor' } })
-			.catch((err) => {
-				console.log(err);
-				logger.error('setup', "couldn't fetch instance actor");
-			});
+		const instanceActor = await UserService.get({
+			username: 'instanceactor'
+		}).catch((err) => {
+			console.log(err);
+			logger.error('setup', "couldn't fetch instance actor");
+		});
 
 		if (!instanceActor) {
 			logger.info('setup', 'instance actor not found, generating');
 
 			await UserService.register(
 				'instanceactor',
-				crypto.randomBytes(64).toString('hex')
+				crypto.randomBytes(32).toString('hex')
 			)
 				.then(() => {
 					logger.info(
