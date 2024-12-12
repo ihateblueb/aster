@@ -17,16 +17,16 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import queryClient from '$lib/queryclient.js';
 
-	export let data;
+	let props = $props();
 
-	console.log(data);
+	console.log(props.data);
 
-	if (data.userid) queryClient.clear();
+	if (props.data.userid) queryClient.clear();
 
 	const query = createQuery({
 		queryKey: ['user'],
 		retry: false,
-		queryFn: async () => await lookupUser('@' + data.userid)
+		queryFn: async () => await lookupUser('@' + props.data.userid)
 	});
 </script>
 

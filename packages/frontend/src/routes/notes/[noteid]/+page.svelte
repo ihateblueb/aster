@@ -11,10 +11,13 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import NoteHeader from '$lib/components/NoteHeader.svelte';
 	import UserCard from '$lib/components/UserCard.svelte';
+	import queryClient from '$lib/queryclient.js';
 
 	let props = $props();
 
 	console.log(props.data);
+
+	if (props.data.userid) queryClient.clear();
 
 	const query = createQuery({
 		queryKey: ['user'],

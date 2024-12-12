@@ -2,11 +2,13 @@ import typeorm, {
 	Column,
 	Entity,
 	JoinColumn,
-	ManyToMany,
 	ManyToOne,
 	OneToMany,
 	OneToOne,
-	PrimaryColumn
+	PrimaryColumn,
+	Tree,
+	TreeChildren,
+	TreeParent
 } from 'typeorm';
 
 import { DriveFile } from './DriveFile.js';

@@ -55,9 +55,12 @@ class NoteService {
 			.addSelect(UserMini('repeats_user'))
 
 			//likes
-			.leftJoinAndSelect('note.likes', 'note_like')
-			.leftJoin('note_like.user', 'like_user')
-			.addSelect(UserMini('like_user'))
+			.leftJoinAndSelect('note.likes', 'note_likes')
+			.leftJoin('note_likes.user', 'likes_user')
+			.addSelect(UserMini('likes_user'))
+
+			.leftJoinAndSelect('note.replies', 'note_replies')
+			.leftJoinAndSelect('note_replies.user', 'replies_user')
 
 			.where(where)
 			.orWhere(orWhere ?? where)
