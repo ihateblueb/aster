@@ -70,11 +70,6 @@ class ApVisibilityService {
 			}
 		}
 
-		console.log({
-			visibility: visibility,
-			to: toIds
-		});
-
 		return {
 			visibility: visibility,
 			to: toIds

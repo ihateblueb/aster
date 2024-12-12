@@ -4,6 +4,7 @@ import ApValidationService from '../../services/ap/ApValidationService.js';
 import QueueService from '../../services/QueueService.js';
 import oapi from '../../utils/apidoc.js';
 import logger from '../../utils/logger.js';
+import locale from '../../utils/locale.js';
 
 const router = express.Router();
 
@@ -35,10 +36,10 @@ router.post(
 	async (req, res, next) => {
 		try {
 			if (!ApValidationService.validBody(JSON.parse(req.body)))
-				return res.status(400).json({ message: 'Invalid body' });
+				return res.status(400).json({ message: locale.error.bodyInvalid });
 		} catch (err) {
 			console.log(err);
-			return res.status(400).json({ message: "Couldn't parse body" });
+			return res.status(400).json({ message: locale.error.bodyInvalid });
 		}
 
 		const apvs = await ApValidationService.validSignature(
@@ -48,9 +49,9 @@ router.post(
 
 		if (apvs.pretendToProcess) return res.status(202).json();
 		if (apvs.blocked)
-			return res.status(403).json({ message: 'Host blocked' });
+			return res.status(403).json({ message: locale.error.hostBlocked });
 		if (!apvs.valid)
-			return res.status(401).json({ message: 'Invalid signature' });
+			return res.status(401).json({ message: locale.error.invalidSignature });
 
 		if (apvs.valid)
 			return await QueueService.inbox

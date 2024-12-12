@@ -18,8 +18,6 @@ class ApDeliverService {
 		for (const i in relationships) {
 			const follower = relationships[i].from;
 
-			console.log(follower);
-
 			await QueueService.deliver.add('{deliver}', {
 				as: as,
 				inbox: follower.inbox,

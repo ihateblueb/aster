@@ -6,18 +6,6 @@ import ApActorService from '../ApActorService.js';
 
 class AcceptProcessor {
 	public async process(body): Promise<boolean> {
-		console.log(body);
-
-		/*type: 'Accept',
-  actor: 'https://booping.synth.download/users/9zzn79zrftdt02ak',
-  object: {
-    id: 'https://dev.aster.pages.gay/activities/0a1k8Qfozd6gUnjca1jf1o2wQQQ1',
-    type: 'Follow',
-    actor: 'https://dev.aster.pages.gay/users/01926e83-e61a-7ff6-a8d9-b7fb4bb8297a',
-    object: 'https://booping.synth.download/users/9zzn79zrftdt02ak'
-  },
-  id: 'https://booping.synth.download/14ea3e14-ea6e-499b-81eb-05f84f4856ad'*/
-
 		if (!body.actor) return false;
 		if (!body.object && !body.object.type) return false;
 

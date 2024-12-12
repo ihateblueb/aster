@@ -40,8 +40,6 @@ router.get(
 			id: req.params.id
 		});
 
-		console.log(note);
-
 		if (note) {
 			if (!note.user) {
 				return res.status(404).json({

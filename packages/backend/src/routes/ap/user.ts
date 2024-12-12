@@ -48,7 +48,7 @@ router.get(
 
 		if (!req.params.id)
 			return res.status(400).json({
-				message: 'User not specified'
+				message: locale.user.notSpecified
 			});
 
 		if (config.cache.ap) {

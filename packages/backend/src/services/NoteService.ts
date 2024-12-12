@@ -146,7 +146,7 @@ class NoteService {
 		)
 			return {
 				status: 404,
-				message: 'Note not found'
+				message: locale.note.notFound
 			};
 
 		const existingLike = await db.getRepository('note_like').findOne({

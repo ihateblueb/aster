@@ -7,6 +7,8 @@ error:
     bodyRequired: 'Body required'
     bodyInvalid: 'Body invalid'
     internalServer: 'Internal server error'
+    hostBlocked: 'Host blocked'
+    invalidSignature: 'Invalid signature'
 
 note:
     created: 'Note created'
