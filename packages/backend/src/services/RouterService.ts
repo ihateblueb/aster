@@ -79,19 +79,21 @@ router.use((req, res, next) => {
 	if (
 		req.path &&
 		!req.path.startsWith('/_app') &&
+		!req.path.startsWith('/api/queues') &&
 		!req.path.startsWith('/queue/api') &&
 		!req.path.startsWith('/queue/static') &&
 		!req.path.startsWith('/metrics')
 	)
 		logger.http(
 			'<--',
-			`${req.method.toLowerCase()} ${req.path} - ${req.headers.accept ? 'accept: ' + req.headers.accept : ''} ${logger.formatHttpId(id)}`
+			`${req.method.toLowerCase()} ${req.path} - ${req.headers.accept ? 'accept: ' + req.headers.accept : ' '}${logger.formatHttpId(id)}`
 		);
 
 	res.on('finish', () => {
 		if (
 			req.path &&
 			!req.path.startsWith('/_app') &&
+			!req.path.startsWith('/api/queues') &&
 			!req.path.startsWith('/queue/api') &&
 			!req.path.startsWith('/queue/static') &&
 			!req.path.startsWith('/metrics')

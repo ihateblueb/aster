@@ -78,18 +78,30 @@ class ApNoteService {
 		let replyingTo;
 
 		if (body.inReplyTo)
-			replyingTo = await this.get(body.inReplyTo, getRelatedNotesAs.id);
+			replyingTo = await this.get(
+				body.inReplyTo,
+				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
+			);
 
 		if (replyingTo) note['replyingToId'] = replyingTo.id;
 
 		let quote;
 
 		if (body.quoteUrl)
-			quote = await this.get(body.quoteUrl, getRelatedNotesAs.id);
+			quote = await this.get(
+				body.quoteUrl,
+				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
+			);
 		if (body.quoteUri)
-			quote = await this.get(body.quoteUri, getRelatedNotesAs.id);
+			quote = await this.get(
+				body.quoteUri,
+				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
+			);
 		if (body._misskey_quote)
-			quote = await this.get(body._misskey_quote, getRelatedNotesAs.id);
+			quote = await this.get(
+				body._misskey_quote,
+				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
+			);
 
 		if (quote) note['repeatId'] = quote.id;
 
