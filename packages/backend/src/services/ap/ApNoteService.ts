@@ -1,3 +1,5 @@
+import { In } from 'typeorm';
+
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
@@ -12,7 +14,7 @@ import ApValidationService from './ApValidationService.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteService {
-	public async get(apId: ApId) {
+	public async get(apId: ApId, as?: GenericId) {
 		const url = new URL(apId);
 
 		// why is this here? this is for notes
@@ -22,7 +24,7 @@ class ApNoteService {
 		const existingNote = await NoteService.get({ apId: apId });
 		if (existingNote) return existingNote;
 
-		const resolvedNote = await ApResolver.resolveSigned(apId);
+		const resolvedNote = await ApResolver.resolveSigned(apId, as);
 
 		if (!resolvedNote) return false;
 		if (resolvedNote.type !== 'Note') return false;
@@ -61,18 +63,33 @@ class ApNoteService {
 			? new Date(body.published).toISOString()
 			: new Date().toISOString();
 
+		const determinedVisibility = await ApVisibilityService.determine(body);
+
+		note['visibility'] = determinedVisibility.visibility;
+		note['to'] = determinedVisibility.to;
+
+		let getRelatedNotesAs;
+		if (determinedVisibility.to)
+			getRelatedNotesAs = await UserService.get({
+				id: In(determinedVisibility.to),
+				local: true
+			});
+
 		let replyingTo;
 
-		if (body.replyingTo) replyingTo = await this.get(body.replyingTo);
-		if (body.inReplyTo) replyingTo = await this.get(body.inReplyTo);
+		if (body.inReplyTo)
+			replyingTo = await this.get(body.inReplyTo, getRelatedNotesAs.id);
 
 		if (replyingTo) note['replyingToId'] = replyingTo.id;
 
 		let quote;
 
-		if (body.quoteUrl) quote = await this.get(body.quoteUrl);
-		if (body.quoteUri) quote = await this.get(body.quoteUri);
-		if (body._misskey_quote) quote = await this.get(body._misskey_quote);
+		if (body.quoteUrl)
+			quote = await this.get(body.quoteUrl, getRelatedNotesAs.id);
+		if (body.quoteUri)
+			quote = await this.get(body.quoteUri, getRelatedNotesAs.id);
+		if (body._misskey_quote)
+			quote = await this.get(body._misskey_quote, getRelatedNotesAs.id);
 
 		if (quote) note['repeatId'] = quote.id;
 
@@ -93,11 +110,6 @@ class ApNoteService {
 			note['content'] = SanitizerService.sanitize(body.source.content);
 		if (body._misskey_content)
 			note['content'] = SanitizerService.sanitize(body._misskey_content);
-
-		const determinedVisibility = await ApVisibilityService.determine(body);
-
-		note['visibility'] = determinedVisibility.visibility;
-		note['to'] = determinedVisibility.to;
 
 		console.log(note); //todo: remove
 
