@@ -41,6 +41,14 @@ class ApActorService {
 			activated: true
 		};
 
+		const moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: user.host
+				}
+			});
+
 		if (!body.preferredUsername) return false;
 		user['username'] = SanitizerService.sanitize(body.preferredUsername);
 
@@ -65,6 +73,9 @@ class ApActorService {
 
 		// todo: false positives?
 		if (body.sensitive) user['sensitive'] = true;
+		if (moderatedInstance && !moderatedInstance.sensitive)
+			user['sensitive'] = true;
+
 		if (body.discoverable) user['discoverable'] = true;
 		if (body.manuallyApprovesFollowers) user['locked'] = true;
 		if (body.noindex) user['indexable'] = false;

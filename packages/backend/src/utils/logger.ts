@@ -53,15 +53,15 @@ class logger {
 	}
 
 	public formatHttpId(id: string) {
-		return chalk.gray(`(${id})`)
+		return chalk.gray(`(${id})`);
 	}
 
 	public formatStatus(status: number) {
-		if (status.toString().startsWith('1')) return chalk.blue(status)
-		if (status.toString().startsWith('2')) return chalk.green(status)
-		if (status.toString().startsWith('3')) return chalk.cyan(status)
-		if (status.toString().startsWith('4')) return chalk.yellow(status)
-		if (status.toString().startsWith('5')) return chalk.red(status)
+		if (status.toString().startsWith('1')) return chalk.blue(status);
+		if (status.toString().startsWith('2')) return chalk.green(status);
+		if (status.toString().startsWith('3')) return chalk.cyan(status);
+		if (status.toString().startsWith('4')) return chalk.yellow(status);
+		if (status.toString().startsWith('5')) return chalk.red(status);
 	}
 
 	public sql(context: string, message: Message) {

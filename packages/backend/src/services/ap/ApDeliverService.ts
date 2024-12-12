@@ -1,3 +1,5 @@
+import * as punycode from 'node:punycode';
+
 import crypto from 'crypto';
 import { ObjectLiteral } from 'typeorm';
 
@@ -30,16 +32,20 @@ class ApDeliverService {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
 
+		const deliverHost = punycode.toASCII(new URL(data.inbox).host);
+
 		const moderatedInstance = await db
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: new URL(data.inbox).host
+					host: deliverHost
 				}
 			});
 
 		if (moderatedInstance && !moderatedInstance.deliver)
-			throw new Error('cannot deliver with to no deliver instance');
+			throw new Error(
+				'cannot deliver to no deliver instance ' + deliverHost
+			);
 
 		let as: ObjectLiteral;
 		let asPrivate: ObjectLiteral;

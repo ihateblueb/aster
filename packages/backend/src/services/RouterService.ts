@@ -41,9 +41,9 @@ import config from '../utils/config.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import AuthService from './AuthService.js';
+import IdService from './IdService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
-import IdService from './IdService.js';
 
 const router = express.Router();
 
@@ -74,7 +74,7 @@ router.use((req, res, next) => {
 
 	const id = IdService.generate();
 
-	res.setHeader('As-Request-Id', id)
+	res.setHeader('As-Request-Id', id);
 
 	if (
 		req.path &&
@@ -96,11 +96,11 @@ router.use((req, res, next) => {
 			!req.path.startsWith('/queue/static') &&
 			!req.path.startsWith('/metrics')
 		)
-		logger.http(
-			'-->',
-			`${req.method.toLowerCase()} ${req.path} - ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
-		)
-	})
+			logger.http(
+				'-->',
+				`${req.method.toLowerCase()} ${req.path} - ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
+			);
+	});
 
 	next();
 });

@@ -1,4 +1,5 @@
 import * as punycode from 'node:punycode';
+
 import crypto from 'crypto';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
@@ -19,10 +20,7 @@ class ApResolver {
 			});
 
 		if (moderatedInstance && !moderatedInstance.fetch) {
-			logger.info(
-				'resolver',
-				'blocked fetch of '
-			);
+			logger.info('resolver', 'blocked fetch of ');
 			return false;
 		}
 

@@ -30,7 +30,7 @@ class ApValidationService {
 				valid: false
 			};
 		}
-		
+
 		if (!req.headers.digest) {
 			logger.error('ap', 'digest not present');
 			return {
@@ -69,8 +69,8 @@ class ApValidationService {
 		});
 
 		if (!parsedRequest.keyId) {
-			logger.error('ap', 'parsed request did not have keyId')
-			return { valid: false }
+			logger.error('ap', 'parsed request did not have keyId');
+			return { valid: false };
 		}
 
 		const actorApId = new URL(

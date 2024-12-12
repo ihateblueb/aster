@@ -49,6 +49,14 @@ class ApNoteService {
 		if (!author) return false;
 		note['userId'] = author.id;
 
+		const moderatedInstance = await db
+			.getRepository('moderated_instance')
+			.findOne({
+				where: {
+					host: author.host
+				}
+			});
+
 		note['createdAt'] = body.published
 			? new Date(body.published).toISOString()
 			: new Date().toISOString();
@@ -71,6 +79,13 @@ class ApNoteService {
 		if (body.summary) note['cw'] = SanitizerService.sanitize(body.summary);
 		if (body._misskey_summary)
 			note['cw'] = SanitizerService.sanitize(body._misskey_summary);
+
+		if (
+			moderatedInstance &&
+			moderatedInstance.cw &&
+			(!note['cw'] || note['cw'].length > 0)
+		)
+			note['cw'] = moderatedInstance.cw;
 
 		if (body.content)
 			note['content'] = SanitizerService.sanitize(body.content);
