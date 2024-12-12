@@ -6,7 +6,6 @@ import crypto from 'crypto';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import tryurl from '../../utils/tryurl.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {

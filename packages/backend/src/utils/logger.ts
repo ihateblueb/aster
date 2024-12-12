@@ -52,6 +52,18 @@ class logger {
 		}
 	}
 
+	public formatHttpId(id: string) {
+		return chalk.gray(`(${id})`)
+	}
+
+	public formatStatus(status: number) {
+		if (status.toString().startsWith('1')) return chalk.blue(status)
+		if (status.toString().startsWith('2')) return chalk.green(status)
+		if (status.toString().startsWith('3')) return chalk.cyan(status)
+		if (status.toString().startsWith('4')) return chalk.yellow(status)
+		if (status.toString().startsWith('5')) return chalk.red(status)
+	}
+
 	public sql(context: string, message: Message) {
 		if (config.logging.sql) {
 			this.log('sql', context, message);
@@ -59,7 +71,9 @@ class logger {
 	}
 
 	public http(context: string, message: Message) {
-		this.log('http', context, message);
+		if (config.logging.http) {
+			this.log('http', context, message);
+		}
 	}
 
 	public debug(context: string, message: Message) {

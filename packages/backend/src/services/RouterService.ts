@@ -43,6 +43,7 @@ import logger from '../utils/logger.js';
 import AuthService from './AuthService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
+import IdService from './IdService.js';
 
 const router = express.Router();
 
@@ -71,6 +72,10 @@ router.use((req, res, next) => {
 		return res.status(401).send();
 	}
 
+	const id = IdService.generate();
+
+	res.setHeader('As-Request-Id', id)
+
 	if (
 		req.path &&
 		!req.path.startsWith('/_app') &&
@@ -78,15 +83,24 @@ router.use((req, res, next) => {
 		!req.path.startsWith('/queue/static') &&
 		!req.path.startsWith('/metrics')
 	)
-		logger.debug(
-			req.method ? req.method.toLowerCase() : 'http',
-			req.path
-				? req.path
-				: '/' +
-						(req.headers.accept
-							? ' (accept: ' + req.headers.accept + ')'
-							: '')
+		logger.http(
+			'<--',
+			`${req.method.toLowerCase()} ${req.path} - ${req.headers.accept ? 'accept: ' + req.headers.accept : ''} ${logger.formatHttpId(id)}`
 		);
+
+	res.on('finish', () => {
+		if (
+			req.path &&
+			!req.path.startsWith('/_app') &&
+			!req.path.startsWith('/queue/api') &&
+			!req.path.startsWith('/queue/static') &&
+			!req.path.startsWith('/metrics')
+		)
+		logger.http(
+			'-->',
+			`${req.method.toLowerCase()} ${req.path} - ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
+		)
+	})
 
 	next();
 });
