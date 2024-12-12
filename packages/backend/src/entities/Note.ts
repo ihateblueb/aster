@@ -62,6 +62,15 @@ export class Note {
 	@Column({ default: 'public' })
 	visibility: string;
 
+	@Column({ array: true, nullable: true })
+	to: string;
+
+	@Column()
+	createdAt: string;
+
+	@Column({ nullable: true })
+	updatedAt: string;
+
 	@Column({ select: false, nullable: true })
 	pollId: string;
 
@@ -72,19 +81,18 @@ export class Note {
 	@JoinColumn({ name: 'pollId' })
 	poll: typeorm.Relation<Poll>;
 
-	/* TODO: never done a ManyToMany in this way, is this right and the correct way to join?
-
 	@Column({ array: true, select: false, nullable: true })
 	driveFileIds: string;
 
-	@ManyToMany(() => DriveFile, (driveFile) => driveFile, {
+	@OneToMany(() => DriveFile, (driveFile) => driveFile, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
 	@JoinColumn({ name: 'driveFileIds' })
 	driveFiles: typeorm.Relation<DriveFile>;
 
-	TODO (later): add emojis relation for emojis in post content
+	/*
+		TODO (later): add emojis relation for emojis in post content
 	*/
 
 	@Column({ array: true, select: false, nullable: true })
@@ -106,13 +114,4 @@ export class Note {
 	})
 	@JoinColumn({ name: 'repeatIds' })
 	repeats: typeorm.Relation<Note>;
-
-	@Column({ array: true, nullable: true })
-	to: string;
-
-	@Column()
-	createdAt: string;
-
-	@Column({ nullable: true })
-	updatedAt: string;
 }

@@ -32,7 +32,7 @@ export class NoteReact {
 		onDelete: 'CASCADE'
 	})
 	@JoinColumn({ name: 'Emoji' })
-	emoji: typeorm.Relation<User>;
+	emoji: typeorm.Relation<Emoji>;
 
 	@Column({ select: false })
 	noteId: string;
