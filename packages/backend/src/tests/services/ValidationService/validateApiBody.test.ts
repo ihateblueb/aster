@@ -1,5 +1,4 @@
-import test from 'ava';
-import { registerCompletionHandler } from 'ava';
+import { expect, test } from 'vitest';
 
 import ValidationService from '../../../services/ValidationService.js';
 import locale from '../../../utils/locale.js';
@@ -12,40 +11,37 @@ const validJson = {
 	one: 'two',
 	three: 'four'
 };
+
 const vs4 = ValidationService.validateApiBody(JSON.stringify(validJson));
 
-test('undefined is not valid', (t) => {
-	t.like(vs1, {
+test('undefined is not valid', () => {
+	expect(vs1).toStrictEqual({
 		error: true,
 		status: 400,
 		message: locale.error.bodyRequired
 	});
 });
 
-test('random string is not valid', (t) => {
-	t.like(vs2, {
+test('random string is not valid', () => {
+	expect(vs2).toStrictEqual({
 		error: true,
 		status: 400,
 		message: locale.error.bodyInvalid
 	});
 });
 
-test('invalid json is not valid', (t) => {
-	t.like(vs3, {
+test('invalid json is not valid', () => {
+	expect(vs3).toStrictEqual({
 		error: true,
 		status: 400,
 		message: locale.error.bodyInvalid
 	});
 });
 
-test('valid json is valid', (t) => {
-	t.like(vs4, {
+test('valid json is valid', () => {
+	expect(vs4).toStrictEqual({
 		error: false,
 		status: 200,
 		body: validJson
 	});
-});
-
-registerCompletionHandler(() => {
-	process.exit();
 });

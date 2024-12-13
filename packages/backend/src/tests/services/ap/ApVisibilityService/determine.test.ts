@@ -1,5 +1,4 @@
-import test from 'ava';
-import { registerCompletionHandler } from 'ava';
+import { expect, test } from 'vitest';
 
 import ApVisibilityService from '../../../../services/ap/ApVisibilityService.js';
 import UserService from '../../../../services/UserService.js';
@@ -61,78 +60,74 @@ const apvis10 = await ApVisibilityService.determine({
 	]
 });
 
-test('no actor returns direct', (t) => {
-	t.like(apvis1, {
+test('no actor returns direct', () => {
+	expect(apvis1).toStrictEqual({
 		visibility: 'direct',
 		to: undefined
 	});
 });
 
-test('actor but no to/cc returns direct', (t) => {
-	t.like(apvis2, {
+test('actor but no to/cc returns direct', () => {
+	expect(apvis2).toStrictEqual({
 		visibility: 'direct',
 		to: undefined
 	});
 });
 
-test('to (followers) cc (nobody) returns followers', (t) => {
-	t.like(apvis3, {
+test('to (followers) cc (nobody) returns followers', () => {
+	expect(apvis3).toStrictEqual({
 		visibility: 'followers',
 		to: undefined
 	});
 });
 
-test('to (followers) cc (public) returns unlisted', (t) => {
-	t.like(apvis4, {
+test('to (followers) cc (public) returns unlisted', () => {
+	expect(apvis4).toStrictEqual({
 		visibility: 'unlisted',
 		to: undefined
 	});
 });
 
-test('to (public) cc (nobody) returns public', (t) => {
-	t.like(apvis5, {
+test('to (public) cc (nobody) returns public', () => {
+	expect(apvis5).toStrictEqual({
 		visibility: 'public',
 		to: undefined
 	});
 });
 
-test('to (public) cc (followers) returns public', (t) => {
-	t.like(apvis6, {
+test('to (public) cc (followers) returns public', () => {
+	expect(apvis6).toStrictEqual({
 		visibility: 'public',
 		to: undefined
 	});
 });
 
-test('to (public) cc (public) returns public', (t) => {
-	t.like(apvis7, {
+test('to (public) cc (public) returns public', () => {
+	expect(apvis7).toStrictEqual({
 		visibility: 'public',
 		to: undefined
 	});
 });
 
-test('to (public, actor) cc (nobody) returns public and to actor', (t) => {
-	t.like(apvis8, {
+test('to (public, actor) cc (nobody) returns public and to actor', () => {
+	expect(apvis8).toStrictEqual({
 		visibility: 'public',
 		to: [instanceactor.id]
 	});
 });
 
-test('to (public) cc (followers, actor) returns public and to actor', (t) => {
-	t.like(apvis9, {
+test('to (public) cc (followers, actor) returns public and to actor', () => {
+	expect(apvis9).toStrictEqual({
 		visibility: 'public',
 		to: [instanceactor.id]
 	});
 });
 
-test('to (public, followers) cc (followers, followers, actor) returns public and to actor', (t) => {
-	t.like(apvis10, {
+test('to (public, followers) cc (followers, followers, actor) returns public and to actor', () => {
+	expect(apvis10).toStrictEqual({
 		visibility: 'public',
 		to: [instanceactor.id]
 	});
 });
 
 await db.destroy();
-
-registerCompletionHandler(() => {
-	process.exit();
-});

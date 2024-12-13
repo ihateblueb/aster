@@ -107,7 +107,7 @@ class ApActorService {
 		if (body.inbox) user['inbox'] = SanitizerService.sanitize(body.inbox);
 		if (body.sharedInbox)
 			user['inbox'] = SanitizerService.sanitize(body.sharedInbox);
-		if (body.endpoints.sharedInbox)
+		if (body.endpoints && body.endpoints.sharedInbox)
 			user['inbox'] = SanitizerService.sanitize(
 				body.endpoints.sharedInbox
 			);

@@ -1,5 +1,4 @@
-import test from 'ava';
-import { registerCompletionHandler } from 'ava';
+import { expect, test } from 'vitest';
 
 import ApValidationService from '../../../../services/ap/ApValidationService.js';
 
@@ -16,26 +15,22 @@ const apvb5 = ApValidationService.validBody({
 	type: 'Note'
 });
 
-test('ap object with no body is not valid', (t) => {
-	t.is(apvb1, false);
+test('ap object with no body is not valid', () => {
+	expect(apvb1 === false);
 });
 
-test('ap object with no id is not valid', (t) => {
-	t.is(apvb2, false);
+test('ap object with no id is not valid', () => {
+	expect(apvb2 === false);
 });
 
-test('ap object with id that is unable to be parsed is not valid', (t) => {
-	t.is(apvb3, false);
+test('ap object with id that is unable to be parsed is not valid', () => {
+	expect(apvb3 === false);
 });
 
-test('ap object without type is not valid', (t) => {
-	t.is(apvb4, false);
+test('ap object without type is not valid', () => {
+	expect(apvb4 === false);
 });
 
-test('ap object with type and valid id is valid', (t) => {
-	t.is(apvb5, true);
-});
-
-registerCompletionHandler(() => {
-	process.exit();
+test('ap object with type and valid id is valid', () => {
+	expect(apvb5 === true);
 });

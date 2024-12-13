@@ -1,5 +1,4 @@
-import test from 'ava';
-import { registerCompletionHandler } from 'ava';
+import { expect, test } from 'vitest';
 
 import ApVisibilityService from '../../../../services/ap/ApVisibilityService.js';
 import UserService from '../../../../services/UserService.js';
@@ -27,37 +26,37 @@ const apvis5 = await ApVisibilityService.render(instanceactor, {
 })
 */
 
-test('no actor returns to nobody cc nobody', (t) => {
-	t.like(apvis1, {
+test('no actor returns to nobody cc nobody', () => {
+	expect(apvis1).toStrictEqual({
 		to: [],
 		cc: []
 	});
 });
 
-test('public returns to public cc nobody', (t) => {
-	t.like(apvis2, {
+test('public returns to public cc nobody', () => {
+	expect(apvis2).toStrictEqual({
 		to: ['https://www.w3.org/ns/activitystreams#Public'],
 		cc: []
 	});
 });
 
-test('unlisted returns to public cc nobody', (t) => {
-	t.like(apvis3, {
+test('unlisted returns to public cc nobody', () => {
+	expect(apvis3).toStrictEqual({
 		to: [instanceactor.followersUrl],
 		cc: ['https://www.w3.org/ns/activitystreams#Public']
 	});
 });
 
-test('followers returns to public cc nobody', (t) => {
-	t.like(apvis4, {
+test('followers returns to public cc nobody', () => {
+	expect(apvis4).toStrictEqual({
 		to: [instanceactor.followersUrl],
 		cc: []
 	});
 });
 
 /*
-test('direct returns to actor cc nobody', t => {
-	t.like(apvis5, {
+test('direct returns to actor cc nobody', () => {
+	expect(apvis5).toStrictEqual({
         to: [],
         cc: []
     });
@@ -65,7 +64,3 @@ test('direct returns to actor cc nobody', t => {
 */
 
 await db.destroy();
-
-registerCompletionHandler(() => {
-	process.exit();
-});

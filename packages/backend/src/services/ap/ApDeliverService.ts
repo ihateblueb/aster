@@ -7,7 +7,7 @@ import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import IdService from '../IdService';
+import IdService from '../IdService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
