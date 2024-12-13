@@ -18,35 +18,35 @@ class ApValidationService {
 		blocked?: boolean;
 	}> {
 		if (!req.headers.host) {
-			logger.error('ap', 'no host present');
+			logger.debug('ap', 'no host present');
 			return {
 				valid: false
 			};
 		}
 
 		if (req.headers.host !== new URL(config.url).host) {
-			logger.error('ap', 'host header did not match configuration');
+			logger.debug('ap', 'host header did not match configuration');
 			return {
 				valid: false
 			};
 		}
 
 		if (!req.headers.digest) {
-			logger.error('ap', 'digest not present');
+			logger.debug('ap', 'digest not present');
 			return {
 				valid: false
 			};
 		}
 
 		if (!req.headers.digest.startsWith('SHA-256=')) {
-			logger.error('ap', 'digest did not start with SHA-256=');
+			logger.debug('ap', 'digest did not start with SHA-256=');
 			return {
 				valid: false
 			};
 		}
 
 		if (!req.headers.signature) {
-			logger.error('ap', 'signature header not present');
+			logger.debug('ap', 'signature header not present');
 			return {
 				valid: false
 			};
@@ -58,7 +58,7 @@ class ApValidationService {
 		);
 
 		if (!digestValid) {
-			logger.error('ap', 'digest invalid');
+			logger.debug('ap', 'digest invalid');
 			return {
 				valid: false
 			};
@@ -69,7 +69,7 @@ class ApValidationService {
 		});
 
 		if (!parsedRequest.keyId) {
-			logger.error('ap', 'parsed request did not have keyId');
+			logger.debug('ap', 'parsed request did not have keyId');
 			return { valid: false };
 		}
 

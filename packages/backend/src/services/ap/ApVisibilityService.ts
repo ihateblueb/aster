@@ -5,6 +5,12 @@ class ApVisibilityService {
 	private asPublic = 'https://www.w3.org/ns/activitystreams#Public';
 
 	public async determine(body) {
+		if (!body.actor && !body.attributedTo)
+			return {
+				visibility: 'direct',
+				to: undefined
+			};
+		
 		const creator = await ApActorService.get(
 			body.attributedTo ? body.attributedTo : body.actor
 		);
@@ -13,6 +19,13 @@ class ApVisibilityService {
 				visibility: 'direct',
 				to: undefined
 			};
+
+
+			if (!body.to && !body.cc) 
+				return {
+					visibility: 'direct',
+					to: undefined
+				};
 
 		let visibility = 'direct';
 
@@ -38,7 +51,7 @@ class ApVisibilityService {
 		)
 			visibility = body.visibility;
 
-		const toIds: string[] = [];
+		let toIds: string[] = [];
 
 		if (body.to && Array.isArray(body.to)) {
 			const filteredTo = body.to
@@ -70,6 +83,8 @@ class ApVisibilityService {
 			}
 		}
 
+		if (toIds.length === 0) toIds = undefined;
+
 		return {
 			visibility: visibility,
 			to: toIds
@@ -78,6 +93,11 @@ class ApVisibilityService {
 
 	public async render(user, object) {
 		const grabbedUser = await UserService.get({ id: user });
+
+		if (!grabbedUser) return {
+			to: [],
+			cc: []
+		};
 
 		if (object.visibility === 'public')
 			return {
@@ -92,7 +112,7 @@ class ApVisibilityService {
 		if (object.visibility === 'followers')
 			return {
 				to: [grabbedUser.followersUrl],
-				cc: [this.asPublic]
+				cc: []
 			};
 
 		if (object.visibility === 'direct') {

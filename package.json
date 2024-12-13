@@ -32,7 +32,8 @@
 		"clean": "./scripts/clean.sh",
 		"clean-be": "./scripts/clean-be.sh",
 		"clean-fe": "./scripts/clean-fe.sh",
-		"clean-all": "./scripts/clean-all.sh"
+		"clean-all": "./scripts/clean-all.sh",
+		"test": "pnpm build-be && pnpm --filter=backend test"
 	},
 	"dependencies": {
 		"@eslint/js": "^9.16.0",
