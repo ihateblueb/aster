@@ -95,7 +95,7 @@ class RelationshipService {
 		const deliver = ApAcceptRenderer.render(id, to, body);
 
 		return await QueueService.deliver
-			.add('{deliver}', {
+			.add(IdService.generate(), {
 				as: to,
 				inbox: from,
 				body: deliver
@@ -117,7 +117,7 @@ class RelationshipService {
 		const deliver = ApRejectRenderer.render(id, to, body);
 
 		return await QueueService.deliver
-			.add('{deliver}', {
+			.add(IdService.generate(), {
 				as: to,
 				inbox: from,
 				body: deliver

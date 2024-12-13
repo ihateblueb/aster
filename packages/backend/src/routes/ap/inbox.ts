@@ -5,6 +5,7 @@ import QueueService from '../../services/QueueService.js';
 import oapi from '../../utils/apidoc.js';
 import locale from '../../utils/locale.js';
 import logger from '../../utils/logger.js';
+import IdService from '../../services/IdService.js';
 
 const router = express.Router();
 
@@ -59,7 +60,7 @@ router.post(
 
 		if (apvs.valid)
 			return await QueueService.inbox
-				.add('{inbox}', JSON.parse(req.body))
+				.add(IdService.generate(), JSON.parse(req.body))
 				.then(() => {
 					return res.status(202).send();
 				})

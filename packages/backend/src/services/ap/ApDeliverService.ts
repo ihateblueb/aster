@@ -10,6 +10,7 @@ import logger from '../../utils/logger.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
+import IdService from '../IdService';
 
 class ApDeliverService {
 	public async deliverToFollowers(body, as: GenericId) {
@@ -18,7 +19,7 @@ class ApDeliverService {
 		for (const i in relationships) {
 			const follower = relationships[i].from;
 
-			await QueueService.deliver.add('{deliver}', {
+			await QueueService.deliver.add(IdService.generate(), {
 				as: as,
 				inbox: follower.inbox,
 				body: body

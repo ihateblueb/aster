@@ -88,7 +88,7 @@ class UserService {
 			if (!to.local) {
 				const activity = ApFollowRenderer.render(id, from.id, to.apId);
 
-				await QueueService.deliver.add('{deliver}', {
+				await QueueService.deliver.add(IdService.generate(), {
 					as: from.id,
 					inbox: to.inbox,
 					body: activity
