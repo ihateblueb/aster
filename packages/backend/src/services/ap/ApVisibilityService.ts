@@ -10,7 +10,7 @@ class ApVisibilityService {
 				visibility: 'direct',
 				to: undefined
 			};
-		
+
 		const creator = await ApActorService.get(
 			body.attributedTo ? body.attributedTo : body.actor
 		);
@@ -20,12 +20,11 @@ class ApVisibilityService {
 				to: undefined
 			};
 
-
-			if (!body.to && !body.cc) 
-				return {
-					visibility: 'direct',
-					to: undefined
-				};
+		if (!body.to && !body.cc)
+			return {
+				visibility: 'direct',
+				to: undefined
+			};
 
 		let visibility = 'direct';
 
@@ -94,10 +93,11 @@ class ApVisibilityService {
 	public async render(user, object) {
 		const grabbedUser = await UserService.get({ id: user });
 
-		if (!grabbedUser) return {
-			to: [],
-			cc: []
-		};
+		if (!grabbedUser)
+			return {
+				to: [],
+				cc: []
+			};
 
 		if (object.visibility === 'public')
 			return {

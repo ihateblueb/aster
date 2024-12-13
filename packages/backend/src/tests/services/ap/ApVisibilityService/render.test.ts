@@ -1,57 +1,58 @@
 import test from 'ava';
 import { registerCompletionHandler } from 'ava';
-import db from '../../../../utils/database.js';
+
 import ApVisibilityService from '../../../../services/ap/ApVisibilityService.js';
 import UserService from '../../../../services/UserService.js';
+import db from '../../../../utils/database.js';
 
-await db.initialize()
+await db.initialize();
 
-const instanceactor = await UserService.get({ username: 'instanceactor' })
+const instanceactor = await UserService.get({ username: 'instanceactor' });
 
 const apvis1 = await ApVisibilityService.render('fakeid', {
-    visibility: 'public'
-})
+	visibility: 'public'
+});
 const apvis2 = await ApVisibilityService.render(instanceactor.id, {
-    visibility: 'public'
-})
+	visibility: 'public'
+});
 const apvis3 = await ApVisibilityService.render(instanceactor.id, {
-    visibility: 'unlisted'
-})
+	visibility: 'unlisted'
+});
 const apvis4 = await ApVisibilityService.render(instanceactor.id, {
-    visibility: 'followers'
-})
+	visibility: 'followers'
+});
 /*
 const apvis5 = await ApVisibilityService.render(instanceactor, {
     visibility: 'direct'
 })
 */
 
-test('no actor returns to nobody cc nobody', t => {
+test('no actor returns to nobody cc nobody', (t) => {
 	t.like(apvis1, {
-        to: [],
-        cc: []
-    });
+		to: [],
+		cc: []
+	});
 });
 
-test('public returns to public cc nobody', t => {
+test('public returns to public cc nobody', (t) => {
 	t.like(apvis2, {
-        to: ['https://www.w3.org/ns/activitystreams#Public'],
-        cc: []
-    });
+		to: ['https://www.w3.org/ns/activitystreams#Public'],
+		cc: []
+	});
 });
 
-test('unlisted returns to public cc nobody', t => {
+test('unlisted returns to public cc nobody', (t) => {
 	t.like(apvis3, {
-        to: [instanceactor.followersUrl],
-        cc: ['https://www.w3.org/ns/activitystreams#Public']
-    });
+		to: [instanceactor.followersUrl],
+		cc: ['https://www.w3.org/ns/activitystreams#Public']
+	});
 });
 
-test('followers returns to public cc nobody', t => {
+test('followers returns to public cc nobody', (t) => {
 	t.like(apvis4, {
-        to: [instanceactor.followersUrl],
-        cc: []
-    });
+		to: [instanceactor.followersUrl],
+		cc: []
+	});
 });
 
 /*
@@ -63,7 +64,7 @@ test('direct returns to actor cc nobody', t => {
 });
 */
 
-await db.destroy()
+await db.destroy();
 
 registerCompletionHandler(() => {
 	process.exit();

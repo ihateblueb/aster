@@ -37,7 +37,7 @@ class ValidationService {
 			return false;
 		}
 
-		if (!['http:','https:'].includes(urlTest.protocol)) return false;
+		if (!['http:', 'https:'].includes(urlTest.protocol)) return false;
 
 		urlTest = undefined;
 

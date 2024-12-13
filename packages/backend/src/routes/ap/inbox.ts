@@ -1,11 +1,11 @@
 import express from 'express';
 
 import ApValidationService from '../../services/ap/ApValidationService.js';
+import IdService from '../../services/IdService.js';
 import QueueService from '../../services/QueueService.js';
 import oapi from '../../utils/apidoc.js';
 import locale from '../../utils/locale.js';
 import logger from '../../utils/logger.js';
-import IdService from '../../services/IdService.js';
 
 const router = express.Router();
 

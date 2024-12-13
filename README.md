@@ -29,34 +29,70 @@ Run `pnpm start` and your instance will start up.
 
 ### AP
 
-- Notes can be fetched
-- Actors can be fetched
-- Follower and following collection endpoints exist, and are a messy work in progress
-- Likes are accepted, although if they have a reaction the reaction is ignored for now
-- Deletes are accepted, first the User will be tried then Note
-- Follows are accepted
-- Deliver works
-- Deletes are sent out
-- Announces are sent out
-- Creates are sent out
+Endpoints done:
+
+- /user/:id
+- /user/:id/inbox
+- /note/:id
+
+Endpoints in progress:
+
+- /user/:id/followers (OrderedCollection of following actors)
+- /user/:id/following (OrderedCollection of followed actors)
+- /user/:id/outbox (OrderedCollection of recently sent public activities. Do I even do this? Does anyone even use it?)
+
+Endpoints needed:
+
+- /note/:id/replies (OrderedCollection of Links to Note objects\*)
+- /note/:id/likes (OrderedCollection of Links to Like activities\*)
+- /note/:id/shares (OrderedCollection of Links to Announce activities\*)
+
+\*or entire object with LD signature, to save time on the fetching end. I need to look into the best way to implement this further.
+
+Activities Sent:
+
+- Accept
+    - Follow
+- Reject
+    - Follow
+- Create
+    - Note
+- Like
+    - Note
+- Announce
+    - Note
+
+I'm thinking of sending Create(Actor()) to instances with followers to local since I process that
+
+Activities Processed:
+
+- Accept
+    - Follow
+- Create
+    - Note
+    - Actor
+- Like
+    - Note
+- Announce
+    - Note
 
 ### Federation
 
 - Supports nodeinfo 2.0 and 2.1
 - host-meta works neatly
-- webfinger implemented, and has high tolerance of different formats
+- webfinger implemented, and has high tolerance of formatting (eg. resource can be @user@host, user, @user, user@host, etc.)
 - json and xml supported! for the most part!
 
 ### API
 
-- You can like a note
-- You can create a note with no polls or other attachments
-- You can repeat a note
-- You can register
-- You can login
-- You can fetch the instance metadata
-- Fetch user
-- Fetch note
+- Get note
+- Create notes
+- Create notes with replies or quotes
+- Create repeats
+- Register
+- Login
+- Get user
+- Get instance metadata
 
 ## TODO
 

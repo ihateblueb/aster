@@ -6,8 +6,8 @@ import crypto from 'crypto';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import ApActorService from './ApActorService.js';
 import tryurl from '../../utils/tryurl.js';
+import ApActorService from './ApActorService.js';
 
 class ApValidationService {
 	public async validSignature(
@@ -174,10 +174,7 @@ class ApValidationService {
 		if (!tryurl(body.id)) return false;
 		if (!body.type) return false;
 
-		logger.debug(
-			'validation',
-			'ap object type is ' + body.type
-		);
+		logger.debug('validation', 'ap object type is ' + body.type);
 
 		return true;
 	}
