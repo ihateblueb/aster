@@ -1,8 +1,8 @@
 import test from 'ava';
 import { registerCompletionHandler } from 'ava';
-import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
-import UserService from '../../../services/UserService.js';
-import db from '../../../utils/database.js';
+import ApActorRenderer from '../../../../services/ap/ApActorRenderer.js';
+import UserService from '../../../../services/UserService.js';
+import db from '../../../../utils/database.js';
 
 await db.initialize()
 

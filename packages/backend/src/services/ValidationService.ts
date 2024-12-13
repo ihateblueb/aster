@@ -29,15 +29,17 @@ class ValidationService {
 	}
 
 	public validUrl(url: string) {
-		let unusedUrlVar;
+		let urlTest: URL;
 
 		try {
-			unusedUrlVar = new URL(url);
+			urlTest = new URL(url);
 		} catch (err) {
 			return false;
 		}
 
-		unusedUrlVar = undefined;
+		if (!['http:','https:'].includes(urlTest.protocol)) return false;
+
+		urlTest = undefined;
 
 		return true;
 	}

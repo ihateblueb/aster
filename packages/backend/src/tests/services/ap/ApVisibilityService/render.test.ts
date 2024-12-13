@@ -1,8 +1,8 @@
 import test from 'ava';
 import { registerCompletionHandler } from 'ava';
-import db from '../../../utils/database.js';
-import ApVisibilityService from '../../../services/ap/ApVisibilityService.js';
-import UserService from '../../../services/UserService.js';
+import db from '../../../../utils/database.js';
+import ApVisibilityService from '../../../../services/ap/ApVisibilityService.js';
+import UserService from '../../../../services/UserService.js';
 
 await db.initialize()
 

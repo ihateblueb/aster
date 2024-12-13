@@ -12,7 +12,7 @@
 		"start": "node --no-warnings built/boot.js",
 		"start-dev": "node --watch --watch-preserve-output built/server.js",
 		"lint": "pnpm exec eslint",
-		"test": "ava --no-warnings"
+		"test": "ava --node-arguments=\"--no-warnings\""
 	},
 	"license": "AGPL-3.0",
 	"dependencies": {

@@ -7,6 +7,7 @@ import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import ApActorService from './ApActorService.js';
+import tryurl from '../../utils/tryurl.js';
 
 class ApValidationService {
 	public async validSignature(
@@ -68,7 +69,7 @@ class ApValidationService {
 			headers: ['(request-target)', 'digest', 'host', 'date']
 		});
 
-		if (!parsedRequest.keyId) {
+		if (!parsedRequest && !parsedRequest.keyId) {
 			logger.debug('ap', 'parsed request did not have keyId');
 			return { valid: false };
 		}
@@ -170,11 +171,12 @@ class ApValidationService {
 	public validBody(body): boolean {
 		if (!body) return false;
 		if (!body.id) return false;
+		if (!tryurl(body.id)) return false;
 		if (!body.type) return false;
 
 		logger.debug(
 			'validation',
-			'ap object type is valid (' + body.type + ')'
+			'ap object type is ' + body.type
 		);
 
 		return true;
