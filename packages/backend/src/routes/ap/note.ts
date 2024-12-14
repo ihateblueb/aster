@@ -50,20 +50,20 @@ router.get(
 				message: locale.note.notSpecified
 			});
 
-		if (config.cache.ap) {
+		const note = await NoteService.get({ id: req.params.id });
+
+		/*if (config.cache.ap) {
 			const cachedNote = await CacheService.get(
 				'ap_note_' + req.params.id
 			);
 
 			if (cachedNote) {
 				MetricsService.apNoteCacheHits.inc(1);
-				return res.status(200).json(JSON.parse(cachedNote));
+				note = JSON.parse(cachedNote);
 			} else {
 				MetricsService.apNoteCacheMisses.inc(1);
 			}
-		}
-
-		const note = await NoteService.get({ id: req.params.id });
+		}*/
 
 		if (note) {
 			if (!note.user.local) {
@@ -82,18 +82,18 @@ router.get(
 				const afs = await AuthorizedFetchService.try(req, note);
 
 				if (afs.error)
-					res.status(afs.status).json({
+					return res.status(afs.status).json({
 						message: afs.message
 					});
 
 				const rendered = await ApNoteRenderer.render(note);
 
-				if (config.cache.ap)
+				/*if (config.cache.ap)
 					await CacheService.set(
 						'ap_note_' + req.params.id,
 						JSON.stringify(rendered),
 						Number(config.cache.apExpiration)
-					);
+					);*/
 
 				return res.status(200).json(rendered);
 			}

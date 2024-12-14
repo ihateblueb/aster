@@ -9,8 +9,6 @@ class AuthorizedFetchService {
 	public async try(req, note?: ObjectLiteral) {
 		const apvs = await ApValidationService.validSignature(req);
 
-		console.log(req.url + ' hit afs');
-
 		if (config.authorizedFetch) {
 			if (apvs.blocked)
 				return {
