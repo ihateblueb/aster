@@ -7,6 +7,7 @@ import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
@@ -31,7 +32,9 @@ class ApDeliverService {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
 
-		const deliverHost = punycode.toASCII(new URL(data.inbox).host);
+		const deliverHost = punycode.toASCII(
+			reduceSubdomain(new URL(data.inbox).host)
+		);
 
 		const moderatedInstance = await db
 			.getRepository('moderated_instance')

@@ -6,7 +6,8 @@ import crypto from 'crypto';
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import tryurl from '../../utils/tryurl.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import tryUrl from '../../utils/tryUrl.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {
@@ -87,7 +88,7 @@ class ApValidationService {
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: punycode.toASCII(actorApId.host)
+					host: punycode.toASCII(reduceSubdomain(actorApId.host))
 				}
 			});
 
@@ -176,7 +177,7 @@ class ApValidationService {
 	public validBody(body): boolean {
 		if (!body) return false;
 		if (!body.id) return false;
-		if (!tryurl(body.id)) return false;
+		if (!tryUrl(body.id)) return false;
 		if (!body.type) return false;
 
 		logger.debug('validation', 'ap object type is ' + body.type);

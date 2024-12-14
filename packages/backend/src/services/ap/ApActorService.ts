@@ -4,6 +4,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
@@ -45,7 +46,7 @@ class ApActorService {
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: user.host
+					host: punycode.toASCII(reduceSubdomain(user.host))
 				}
 			});
 

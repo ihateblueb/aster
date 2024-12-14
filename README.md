@@ -93,6 +93,8 @@ Activities Processed:
 - Login
 - Get user
 - Get instance metadata
+- Moderate remote instances (admin)
+- Get moderated remote instances (admin)
 
 ## TODO
 

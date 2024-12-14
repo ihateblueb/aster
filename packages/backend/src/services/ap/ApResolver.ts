@@ -6,6 +6,7 @@ import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
 
@@ -15,7 +16,7 @@ class ApResolver {
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: punycode.toASCII(new URL(apId).host)
+					host: punycode.toASCII(reduceSubdomain(new URL(apId).host))
 				}
 			});
 

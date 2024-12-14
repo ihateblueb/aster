@@ -1,4 +1,4 @@
-export default function tryurl(string: string) {
+export default function tryUrl(string: string) {
 	let url: URL;
 	try {
 		url = new URL(string);

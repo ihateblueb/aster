@@ -14,6 +14,8 @@ import nodeinfo from '../routes/ap/nodeinfo.js';
 import ap_note from '../routes/ap/note.js';
 import ap_user from '../routes/ap/user.js';
 import wellknown from '../routes/ap/wellknown.js';
+import admin_federation_rules_get from '../routes/api/admin/federation/rules/get.js';
+import admin_federation_rules_update from '../routes/api/admin/federation/rules/update.js';
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
@@ -165,6 +167,10 @@ if (config.frontends.oapi) router.use(oapi);
 if (config.frontends.swagger) router.use('/swagger', oapi.swaggerui());
 
 // api
+
+router.use('/', admin_federation_rules_get);
+router.use('/', admin_federation_rules_update);
+
 router.use('/', auth_login);
 router.use('/', auth_register);
 router.use('/', auth_revoke);

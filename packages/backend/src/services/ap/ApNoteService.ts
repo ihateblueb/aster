@@ -1,8 +1,11 @@
+import punycode from 'node:punycode';
+
 import { In } from 'typeorm';
 
 import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
@@ -55,7 +58,7 @@ class ApNoteService {
 			.getRepository('moderated_instance')
 			.findOne({
 				where: {
-					host: author.host
+					host: punycode.toASCII(reduceSubdomain(author.host))
 				}
 			});
 

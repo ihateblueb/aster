@@ -239,9 +239,16 @@ class UserService {
 				message: locale.user.registration.usernameTaken
 			};
 
-		await db
+		// uo and upo (user (private) output) returns errors if they are there.
+		// forgot to do that before
+		// yes, the then return undefined is necessary, otherwise it returns InsertResult whcih sucks
+
+		const uo = await db
 			.getRepository('user')
 			.insert(user)
+			.then(() => {
+				return undefined;
+			})
 			.catch(() => {
 				return {
 					error: true,
@@ -250,9 +257,14 @@ class UserService {
 				};
 			});
 
-		await db
+		if (uo.error) return uo;
+
+		const upo = await db
 			.getRepository('user_private')
 			.insert(userPrivate)
+			.then(() => {
+				return undefined;
+			})
 			.catch(() => {
 				return {
 					error: true,
@@ -260,6 +272,8 @@ class UserService {
 					message: locale.user.failedCreatePrivate
 				};
 			});
+
+		if (upo.error) return upo;
 
 		return {
 			error: false,

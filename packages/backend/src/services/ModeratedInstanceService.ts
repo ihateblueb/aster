@@ -1,0 +1,98 @@
+import punycode from 'node:punycode';
+
+import db from '../utils/database.js';
+import locale from '../utils/locale.js';
+import reduceSubdomain from '../utils/reduceSubdomain.js';
+import IdService from './IdService.js';
+
+class ModeratedInstanceService {
+	public async get(where: where) {
+		return await db
+			.getRepository('moderated_instance')
+			.findOne({ where: where });
+	}
+
+	public async getMany(where?: where) {
+		return await db
+			.getRepository('moderated_instance')
+			.find({ where: where });
+	}
+
+	public async delete(where: where) {
+		return await db.getRepository('moderated_instance').delete(where);
+	}
+	public async update(
+		host: string,
+		cw: string,
+		sensitive: boolean,
+		deliver: boolean,
+		accept: boolean,
+		fetch: boolean,
+		return_: boolean
+	) {
+		const existing = await this.get({
+			host: host
+		});
+
+		if (existing) {
+			return await db
+				.getRepository('moderated_instance')
+				.update(
+					{
+						host: host
+					},
+					{
+						cw: cw,
+						sensitive: sensitive,
+						deliver: deliver,
+						accept: accept,
+						fetch: fetch,
+						return: return_
+					}
+				)
+				.then(async () => {
+					return {
+						error: false,
+						status: 200,
+						instance: await this.get({ host: host })
+					};
+				})
+				.catch(() => {
+					return {
+						error: true,
+						status: 500
+					};
+				});
+		} else {
+			const moderatedInstance = {
+				id: IdService.generate(),
+				host: punycode.toASCII(reduceSubdomain(host)),
+				cw: cw,
+				sensitive: sensitive,
+				deliver: deliver,
+				accept: accept,
+				fetch: fetch,
+				return: return_
+			};
+
+			return await db
+				.getRepository('moderated_instance')
+				.insert(moderatedInstance)
+				.then(() => {
+					return {
+						error: false,
+						status: 200,
+						instance: moderatedInstance
+					};
+				})
+				.catch(() => {
+					return {
+						error: true,
+						status: 500
+					};
+				});
+		}
+	}
+}
+
+export default new ModeratedInstanceService();
