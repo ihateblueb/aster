@@ -58,7 +58,7 @@ class IdService {
 
 		id += time.toString(36).padStart(8, '0');
 		id += this.aidxNodeId;
-		id += this.aidCounter.toString(36).padStart(4, '0').slice(-4);
+		id += this.aidxCounter.toString(36).padStart(4, '0').slice(-4);
 
 		return id;
 	}

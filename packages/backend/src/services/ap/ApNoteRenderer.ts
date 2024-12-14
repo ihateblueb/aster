@@ -37,7 +37,7 @@ class ApNoteRenderer {
 			apNote['_misskey_quote'] = note.repeat.apId;
 		}
 
-		const visibility = await ApVisibilityService.render(note.user, note);
+		const visibility = await ApVisibilityService.render(note.user.id, note);
 
 		apNote.to = visibility.to;
 		apNote.cc = visibility.cc;

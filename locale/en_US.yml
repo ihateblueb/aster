@@ -9,6 +9,7 @@ error:
     internalServer: 'Internal server error'
     hostBlocked: 'Host blocked'
     invalidSignature: 'Invalid signature'
+    notFound: 'Not found'
 
 note:
     created: 'Note created'

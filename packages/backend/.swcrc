@@ -20,6 +20,5 @@
 		},
 		"target": "es2022"
 	},
-	"minify": true,
 	"sourceMaps": "inline"
 }

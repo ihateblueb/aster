@@ -6,6 +6,7 @@ import CacheService from '../../services/CacheService.js';
 import MetricsService from '../../services/MetricsService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
+import authorizedFetch from '../../utils/authorizedFetch.js';
 import config from '../../utils/config.js';
 import locale from '../../utils/locale.js';
 
@@ -34,7 +35,7 @@ router.get(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	await AuthorizedFetchService,
+	await authorizedFetch,
 	async (req, res, next) => {
 		if (
 			!req.headers ||

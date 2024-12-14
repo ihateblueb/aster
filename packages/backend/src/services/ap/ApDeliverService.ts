@@ -42,9 +42,7 @@ class ApDeliverService {
 			});
 
 		if (moderatedInstance && !moderatedInstance.deliver)
-			throw new Error(
-				'cannot deliver to no deliver instance ' + deliverHost
-			);
+			return 'cannot deliver to no deliver instance ' + deliverHost;
 
 		let as: ObjectLiteral;
 		let asPrivate: ObjectLiteral;

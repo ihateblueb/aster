@@ -17,6 +17,7 @@ class ApValidationService {
 		valid: boolean;
 		pretendToProcess?: boolean;
 		blocked?: boolean;
+		user?: string;
 	}> {
 		if (!req.headers.host) {
 			logger.debug('ap', 'no host present');
@@ -135,12 +136,14 @@ class ApValidationService {
 		} else if (actor.suspended) {
 			return {
 				valid: false,
-				pretendToProcess: true
+				pretendToProcess: true,
+				user: actor.id
 			};
 		} else if (!actor.activated) {
 			return {
 				valid: false,
-				pretendToProcess: true
+				pretendToProcess: true,
+				user: actor.id
 			};
 		} else {
 			const signatureValid = httpSignature.verifySignature(
@@ -150,12 +153,14 @@ class ApValidationService {
 
 			if (signatureValid) {
 				return {
-					valid: true
+					valid: true,
+					user: actor.id
 				};
 			} else {
 				logger.error('ap', 'signature verification failed');
 				return {
-					valid: false
+					valid: false,
+					user: actor.id
 				};
 			}
 		}

@@ -34,7 +34,6 @@ router.get(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	await AuthorizedFetchService,
 	async (req, res, next) => {
 		if (
 			!req.headers ||
@@ -80,6 +79,13 @@ router.get(
 					message: locale.user.notActivated
 				});
 			} else {
+				const afs = await AuthorizedFetchService.try(req, note);
+
+				if (afs.error)
+					res.status(afs.status).json({
+						message: afs.message
+					});
+
 				const rendered = await ApNoteRenderer.render(note);
 
 				if (config.cache.ap)
