@@ -150,7 +150,7 @@ if (config.frontends.queue) {
 				message: auth.message
 			});
 
-		if (!(await UserService.get({ id: auth.user.id })).admin)
+		if (!auth.user.admin)
 			return res.status(403).json({
 				message: locale.auth.insufficientPermissions
 			});
@@ -210,6 +210,24 @@ router.use('/', ap_user);
 router.use('/', wellknown);
 
 // packages/frontend
-if (config.frontends.enable) router.use(feHandler.handler);
+if (config.frontends.enable) {
+	router.get('/admin*', async (req, res, next) => {
+		const auth = await AuthService.verify(req.cookies.as_token);
+
+		if (auth.error)
+			return res.status(auth.status).json({
+				message: auth.message
+			});
+
+		if (!auth.user.admin)
+			return res.status(403).json({
+				message: locale.auth.insufficientPermissions
+			});
+
+		next();
+	});
+
+	router.use(feHandler.handler);
+}
 
 export default router;
