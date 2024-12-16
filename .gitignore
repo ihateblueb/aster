@@ -34,3 +34,13 @@ vite.config.ts.timestamp-*
 /sonic
 
 qodana.**
+
+# Devenv
+.devenv*
+devenv.local.nix
+
+# direnv
+.direnv
+
+# pre-commit
+.pre-commit-config.yaml

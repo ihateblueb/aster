@@ -86,6 +86,16 @@ class RelationshipService {
 		);
 	}
 
+	public async isBlocking(to: GenericId, from: GenericId) {
+		return Boolean(
+			await this.get({
+				to: { id: to },
+				from: { id: from },
+				type: 'block'
+			})
+		);
+	}
+
 	public async acceptFollow(
 		id: GenericId,
 		to: GenericId,

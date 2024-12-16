@@ -102,3 +102,11 @@ Activities Processed:
 - favicon
 - try using typeof for some types of validation
 - use backfill queue (reply, quote)
+
+## Development
+
+`devenv up` automatically starts a fresh postgres instance, creates a database and user with the correct permissions, and a redis instance.
+
+`devenv shell` opens a shell with helpful aliases and automatically adjusts which config is used by aster, so you don't have to modify the config to start.
+
+you can use direnv to automatically start the devenv shell when in aster

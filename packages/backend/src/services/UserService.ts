@@ -257,7 +257,7 @@ class UserService {
 				};
 			});
 
-		if (uo.error) return uo;
+		if (uo && uo.error) return uo;
 
 		const upo = await db
 			.getRepository('user_private')
@@ -273,7 +273,7 @@ class UserService {
 				};
 			});
 
-		if (upo.error) return upo;
+		if (upo && upo.error) return upo;
 
 		return {
 			error: false,

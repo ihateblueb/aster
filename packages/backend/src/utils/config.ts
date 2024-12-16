@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 
 import { parse } from 'ini';
 
-const configText = await readFile(`../../config/production.ini`, {
+const configText = await readFile(`../../config/${process.env.NODE_ENV === "development" ? 'development' : 'production'}.ini`, {
 	encoding: 'utf-8'
 });
 
