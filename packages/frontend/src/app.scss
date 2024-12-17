@@ -1,20 +1,24 @@
 @import url('$lib/fonts/inter.css');
 
 :root {
-	$bg1: #1b1523;
-	$bg2: #231c2e;
-	$bg3: #362c45;
-	$bg4: #483d5c;
+	$bg1: #140e1b;
+	$bg2: #1a1423;
+	$bg3: #261e37;
+	$bg4: #3f325a;
 
 	$tx1: #f3efff;
-	$tx2: #d8cfee;
-	$tx3: #b3a7d5;
+	$tx2: #d8cdf1;
+	$tx3: #9688bd;
 
-	$ac1: #8b64e6;
+	$ac1: #865fdf;
 
 	$success: #38b84d;
 	$warn: #e39244;
 	$danger: #e65448;
+
+	/*
+		colors
+	*/
 
 	// background
 
@@ -83,27 +87,37 @@
 	--danger-50: #{rgba($danger, 0.5)};
 	--danger-75: #{rgba($danger, 0.75)};
 
-	--fs-xxs: 8px;
-	--fs-xs: 10px;
-	--fs-sm: 13px;
-	--fs-md: 15px;
-	--fs-lg: 18px;
-	--fs-xl: 22px;
-	--fs-xxl: 26px;
+	/*
+		measurements
+	*/
 
+	// border radius
 	--br-mn: 0px;
 	--br-xxs: 2px;
 	--br-xs: 4px;
-	--br-sm: 6px;
+	--br-sm: 8px;
 	--br-md: 10px;
-	--br-lg: 14px;
-	--br-xl: 16px;
-	--br-xxl: 22px;
+	--br-lg: 12px;
+	--br-xl: 14px;
+	--br-xxl: 18px;
 	--br-mx: 99999px;
 
-	// misc
+	// font
+	--fs-xxs: 8px;
+	--fs-xs: 10px;
+	--fs-sm: 12px;
+	--fs-md: 14px;
+	--fs-lg: 18px;
+	--fs-xl: 20px;
+	--fs-xxl: 22px;
+
 	--font: Inter, serif;
 	--font-features: 'cv05', 'cv08';
+
+	/*
+		misc
+	*/
+
 	// trying rem? maybe it'll help the effect looking drastically different on some screens
 	--funky-effect: inset 0 -0.1rem 2.5px #00000020,
 		inset 0 0.035rem 1px #ffffff05, inset 0 0.055rem 2.5px #ffffff05;

@@ -9,6 +9,6 @@
 		padding: 12px 16px;
 
 		background: var(--bg2);
-		border-radius: var(--br-md);
+		border-radius: var(--br-lg);
 	}
 </style>

@@ -112,11 +112,7 @@ class ApNoteService {
 		if (body._misskey_summary)
 			note['cw'] = SanitizerService.sanitize(body._misskey_summary);
 
-		if (
-			moderatedInstance &&
-			moderatedInstance.cw &&
-			(!note['cw'] || note['cw'].length > 0)
-		)
+		if (moderatedInstance && moderatedInstance.cw && !note['cw'])
 			note['cw'] = moderatedInstance.cw;
 
 		if (body.content)

@@ -1,26 +1,43 @@
-<script>
+<script lang="ts">
 	import {
+		IconAlertCircle,
 		IconArrowBackUp,
+		IconBellOff,
+		IconBookmark,
+		IconCopy,
 		IconDots,
+		IconInfoCircle,
+		IconLink,
+		IconPencil,
 		IconPlus,
+		IconQuote,
 		IconRepeat,
-		IconStar
+		IconStar,
+		IconTrash
 	} from '@tabler/icons-svelte';
-	import { bounceInOut } from 'svelte/easing';
 	import store from '$lib/store';
-
-	let animation = bounceInOut(1);
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import DropdownItem from '$lib/components/DropdownItem.svelte';
+	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
+	import repeatNote from '$lib/api/note/repeat.js';
 
 	export let note;
 
 	function reply() {
 		store.draft_replyingTo.set(note?.id);
 	}
-
-	function repeat() {}
-	function quote() {}
+	function repeat() {
+		repeatNote(note?.id);
+	}
+	function quote() {
+		store.draft_repeat.set(note?.id);
+	}
 	function like() {}
 	function react() {}
+
+	let repeatDropdown: Dropdown;
+	let reactDropdown: Dropdown;
+	let moreDropdown: Dropdown;
 </script>
 
 <footer>
@@ -35,7 +52,7 @@
 		</button>
 	</div>
 	<div class="item">
-		<button>
+		<button on:click={(e) => repeatDropdown.open(e)}>
 			<span class="icon">
 				<IconRepeat size="20px" />
 			</span>
@@ -45,7 +62,7 @@
 		</button>
 	</div>
 	<div class="item">
-		<button>
+		<button on:click={() => like()}>
 			<span class="icon">
 				<IconStar size="20px" />
 			</span>
@@ -55,20 +72,78 @@
 		</button>
 	</div>
 	<div class="item">
-		<button>
+		<button on:click={(e) => reactDropdown.open(e)}>
 			<span class="icon">
 				<IconPlus size="20px" />
 			</span>
 		</button>
 	</div>
 	<div class="item">
-		<button>
+		<button on:click={(e) => moreDropdown.open(e)}>
 			<span class="icon">
 				<IconDots size="20px" />
 			</span>
 		</button>
 	</div>
 </footer>
+
+<!-- Repeat Dropdown -->
+<Dropdown bind:this={repeatDropdown}>
+	<DropdownItem on:click={() => repeat()}>
+		<IconRepeat size="var(--fs-lg)" />
+		<span>Repeat</span>
+	</DropdownItem>
+	<DropdownItem on:click={() => quote()}>
+		<IconQuote size="var(--fs-lg)" />
+		<span>Quote</span>
+	</DropdownItem>
+</Dropdown>
+
+<!-- React Dropdown -->
+<Dropdown bind:this={reactDropdown}>React dropdown will be here</Dropdown>
+
+<!-- More Dropdown -->
+<Dropdown bind:this={moreDropdown}>
+	<DropdownItem to={'/notes/' + note.id}>
+		<IconInfoCircle size="var(--fs-lg)" />
+		<span>Details</span>
+	</DropdownItem>
+	<DropdownDivider />
+	<DropdownItem>
+		<IconCopy size="var(--fs-lg)" />
+		<span>Copy content</span>
+	</DropdownItem>
+	<DropdownItem>
+		<IconLink size="var(--fs-lg)" />
+		<span>Copy link</span>
+	</DropdownItem>
+	<DropdownItem>
+		<IconLink size="var(--fs-lg)" />
+		<span>Copy link (origin)</span>
+	</DropdownItem>
+	<DropdownDivider />
+	<DropdownItem>
+		<IconBookmark size="var(--fs-lg)" />
+		<span>Bookmark</span>
+	</DropdownItem>
+	<DropdownItem>
+		<IconBellOff size="var(--fs-lg)" />
+		<span>Mute thread</span>
+	</DropdownItem>
+	<DropdownItem>
+		<IconAlertCircle size="var(--fs-lg)" />
+		<span>Report</span>
+	</DropdownItem>
+	<DropdownDivider />
+	<DropdownItem>
+		<IconPencil size="var(--fs-lg)" />
+		<span>Edit</span>
+	</DropdownItem>
+	<DropdownItem danger>
+		<IconTrash size="var(--fs-lg)" />
+		<span>Delete</span>
+	</DropdownItem>
+</Dropdown>
 
 <style lang="scss">
 	footer {

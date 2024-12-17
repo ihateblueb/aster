@@ -20,7 +20,7 @@
 
 		background: var(--bg2);
 
-		border-radius: var(--br-md) var(--br-md) 0 0;
+		border-radius: var(--br-lg) var(--br-lg) 0 0;
 
 		&:not(.nm) {
 			// minus PageHeader, minus top and bottom padding

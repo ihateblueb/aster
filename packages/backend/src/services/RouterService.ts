@@ -87,8 +87,8 @@ router.use((req, res, next) => {
 		!req.path.startsWith('/metrics')
 	)
 		logger.http(
-			'<--',
-			`${req.method.toLowerCase()} ${req.path} - ${req.headers.accept ? 'accept: ' + req.headers.accept : ' '}${logger.formatHttpId(id)}`
+			'-->',
+			`${req.method.toLowerCase()} ${req.path} ${logger.formatHttpId(id)}`
 		);
 
 	res.on('finish', () => {
@@ -101,8 +101,8 @@ router.use((req, res, next) => {
 			!req.path.startsWith('/metrics')
 		)
 			logger.http(
-				'-->',
-				`${req.method.toLowerCase()} ${req.path} - ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
+				'<--',
+				`${req.method.toLowerCase()} ${req.path} ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
 			);
 	});
 
