@@ -16,18 +16,35 @@
   languages.typescript.enable = true;
 
   scripts = {
+    up.exec = "devenv up";
+    down.exec = "devenv down";
+
     ins.exec = "pnpm i";
     upd.exec = "pnpm update";
 
-    start.exec = "pnpm dev";
-    start-prod.exec = "pnpm start";
+    start.exec = "pnpm start";
+    dev.exec = "pnpm dev";
 
     build.exec = "pnpm build";
-    build-be.exec = "pnpm build-be";
-    build-fe.exec = "pnpm build-fe";
+    buildBack.exec = "pnpm build-be";
+    buildFront.exec = "pnpm build-fe";
 
     test.exec = "pnpm test";
     migrate.exec = "pnpm migrate";
+    revert.exec = "pnpm revert";
+
+    format.exec = "pnpm format";
+    lint.exec = "pnpm lint-fix-be";
+
+    clean.exec = "pnpm clean";
+    cleanBack.exec = "pnpm clean-be";
+    cleanFront.exec = "pnpm clean-fe";
+    cleanAll.exec = "pnpm clean-all";
+
+    generateMigration.exec = "./scripts/generate-migration.sh migration";
+
+    pull.exec = "pnpm pull";
+    cli.exec = "pnpm cli";
   };
 
   services = {

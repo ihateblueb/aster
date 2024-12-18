@@ -21,3 +21,7 @@ uploads
 .pnpm-store
 .idea
 pnpm-lock.yaml
+.devenv
+.direnv
+.devenv.flake.nix
+devenv.lock
