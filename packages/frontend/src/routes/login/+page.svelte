@@ -9,6 +9,8 @@
 	import { goto } from '$app/navigation';
 	import getUser from '$lib/api/user/get';
 
+	// todo: use svelte query for this
+
 	let error = false;
 	let errorMsg = '';
 

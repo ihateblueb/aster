@@ -1,11 +1,11 @@
 import getUser from '$lib/api/user/get';
-import Store from '$lib/store';
+import store from '$lib/store';
 import localstore from '$lib/localstore';
 
 export const prerender = false;
 export const ssr = false;
 
-Store.appReload.subscribe((e) => {
+store.appReload.subscribe((e) => {
 	if (e) {
 		location.reload();
 	}
@@ -29,3 +29,9 @@ if (self) {
 		console.error(err);
 	}
 }
+
+/*
+	todo: key events
+	`p` should toggle compose modal
+	`r`	should toggle viewRefresh store
+*/

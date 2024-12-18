@@ -3,6 +3,7 @@
 	import AccountWidget from '$lib/components/widget/AccountWidget.svelte';
 	import DevelopmentWidget from '$lib/components/widget/DevelopmentWidget.svelte';
 	import MetaWidget from '$lib/components/widget/MetaWidget.svelte';
+	
 	import localstore from '$lib/localstore';
 
 	export let left = false;

@@ -4,6 +4,7 @@
 	import { QueryClientProvider } from '@tanstack/svelte-query';
 	import { page } from '$app/stores';
 	import localstore from '$lib/localstore';
+	import store from '$lib/store';
 
 	let loggedIn = false;
 	if (localstore.get('token')) loggedIn = true;
@@ -14,9 +15,16 @@
 
 	let showWelcome = false;
 	if (!loggedIn && $page.url.pathname === '/') showWelcome = true;
+
+	let showCompose = false;
+	store.showCompose.subscribe((e) => {
+		showCompose = e;
+	});
 </script>
 
 <QueryClientProvider client={queryClient}>
+	<!-- todo: modal shown on store change -->
+	
 	{#if loggedIn}
 		<PageSidebar left />
 	{/if}
