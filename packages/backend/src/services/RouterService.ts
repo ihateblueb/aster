@@ -35,6 +35,7 @@ import user_edit from '../routes/api/user/edit.js';
 import user_follow from '../routes/api/user/folllow.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
+import misc_manifest from '../routes/misc/manifest.js';
 import misc_metrics from '../routes/misc/metrics.js';
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
@@ -200,6 +201,7 @@ router.use('/', user_follow);
 router.use('/', user_get);
 router.use('/', user_lookup);
 
+router.use('/', misc_manifest);
 if (config.metrics.enabled) router.use('/', misc_metrics);
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
