@@ -10,7 +10,10 @@
 	if (localstore.get('token')) loggedIn = true;
 
 	let showPage = true;
-	if (!loggedIn && ($page.url.pathname === '/' || $page.url.pathname === '/settings'))
+	if (
+		!loggedIn &&
+		($page.url.pathname === '/' || $page.url.pathname === '/settings')
+	)
 		showPage = false;
 
 	let showWelcome = false;
@@ -24,7 +27,7 @@
 
 <QueryClientProvider client={queryClient}>
 	<!-- todo: modal shown on store change -->
-	
+
 	{#if loggedIn}
 		<PageSidebar left />
 	{/if}

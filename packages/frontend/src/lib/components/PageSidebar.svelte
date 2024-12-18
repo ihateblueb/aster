@@ -3,15 +3,15 @@
 	import AccountWidget from '$lib/components/widget/AccountWidget.svelte';
 	import DevelopmentWidget from '$lib/components/widget/DevelopmentWidget.svelte';
 	import MetaWidget from '$lib/components/widget/MetaWidget.svelte';
-	
+
 	import localstore from '$lib/localstore';
 
 	export let left = false;
 	export let right = false;
 
 	let widgets;
-	if (left) localstore.get('sidebarLeft')
-	if (right) localstore.get('sidebarRight')
+	if (left) localstore.get('sidebarLeft');
+	if (right) localstore.get('sidebarRight');
 </script>
 
 {#snippet component(type: string)}
@@ -19,9 +19,9 @@
 		<AccountWidget />
 	{:else if type === 'compose'}
 		<ComposeWidget />
-	{:else if type === "development"}
+	{:else if type === 'development'}
 		<DevelopmentWidget />
-	{:else if type === "meta"}
+	{:else if type === 'meta'}
 		<MetaWidget />
 	{/if}
 {/snippet}

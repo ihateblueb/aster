@@ -15,9 +15,9 @@ class Store {
 	public appReload = appReload; // full browser reload
 	public selfRefresh = selfRefresh; // refresh self widgets
 	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or user page component
-	
+
 	public showCompose = showCompose;
-	
+
 	public activeRequests = activeRequests;
 
 	public draft_replyingTo = draft_replyingTo;
