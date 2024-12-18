@@ -1,10 +1,13 @@
 <script lang="ts">
 	export let danger = false;
+	export let warn = false;
 
 	export let to = '';
 
 	function calculateClass() {
-		return 'dropdownItem' + (danger ? ' danger' : '');
+		return (
+			'dropdownItem' + (danger ? ' danger' : '') + (warn ? ' warn' : '')
+		);
 	}
 </script>
 
@@ -51,6 +54,14 @@
 
 			&:hover {
 				background: var(--danger-25);
+			}
+		}
+
+		&.warn {
+			color: var(--warn);
+
+			&:hover {
+				background: var(--warn-25);
 			}
 		}
 	}

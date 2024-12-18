@@ -2,7 +2,7 @@
 	<slot />
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.widget {
 		width: 300px;
 

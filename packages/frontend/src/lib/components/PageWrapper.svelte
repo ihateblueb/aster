@@ -13,7 +13,7 @@
 	<slot />
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.pageWrapper {
 		height: calc(100vh - 50px);
 		overflow-y: scroll;

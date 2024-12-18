@@ -172,7 +172,7 @@
 	{/if}
 </Dropdown>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	footer {
 		display: flex;
 		flex-direction: row;

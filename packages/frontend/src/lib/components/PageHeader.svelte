@@ -19,7 +19,8 @@
 
 <div class="pageHeader">
 	{#if showBack}
-		<div class="back" on:click={() => goto('/')}>
+		<!-- svelte-ignore a11y_click_events_have_key_events -->
+		<div class="back" on:click={() => goto('/')} role="button" tabindex="0">
 			<IconWrapper>
 				<IconArrowLeft size="var(--fs-md)" />
 			</IconWrapper>
@@ -36,7 +37,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.pageHeader {
 		display: flex;
 

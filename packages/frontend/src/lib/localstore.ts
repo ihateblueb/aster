@@ -8,14 +8,22 @@ let defaults = {
 	notificationsTab: 'all',
 
 	locale: 'en_US',
-	colorscheme: '',
+	colorScheme: '',
 	theme: '',
-	font: '',
 
 	self: undefined,
 	token: undefined,
 
 	defaultVisibility: 'public',
+
+	sidebarLeft: {
+		top: ['navigation'],
+		bottom: ['account']
+	},
+	sidebarRight: {
+		top: ['compose', 'notifications'],
+		bottom: ['meta']
+	},
 
 	warnNoAlt: true,
 	renderAdvancedMfm: true,

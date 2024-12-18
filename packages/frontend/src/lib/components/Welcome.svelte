@@ -12,7 +12,7 @@
 	</div>
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.welcome {
 		display: flex;
 
