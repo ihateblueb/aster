@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import Loading from '$lib/components/Loading.svelte';
@@ -7,9 +7,13 @@
 	import Input from '$lib/components/Input.svelte';
 	import Switch from '$lib/components/Toggle.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+	import Toggle from '$lib/components/Toggle.svelte';
 
 	let inputtest = '';
 	let switchtest = false;
+
+	let modal: Modal;
 </script>
 
 <PageHeader title="Style Testing Page">
@@ -64,10 +68,11 @@
 
 	<Mfm content={inputtest}></Mfm>
 
-	<Button>
+	<Button on:click={() => modal.open()}>
 		<IconCube size="var(--fs-lg)" />
 		Sample Button (default)
 	</Button>
+
 	<Button primary>
 		<IconCube size="var(--fs-lg)" />
 		Sample Button (primary)

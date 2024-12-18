@@ -9,15 +9,7 @@
 		size
 	} from '@floating-ui/dom';
 
-	import {
-		blur,
-		crossfade,
-		draw,
-		fade,
-		fly,
-		scale,
-		slide
-	} from 'svelte/transition';
+	import { scale } from 'svelte/transition';
 
 	export let width = '200px';
 
