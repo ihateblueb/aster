@@ -55,13 +55,20 @@ class ApValidationService {
 			};
 		}
 
-		const digestValid = this.validDigest(
-			req,
-			req.headers.digest.replace('SHA-256=', '')
-		);
+		try {
+			const digestValid = this.validDigest(
+				req,
+				req.headers.digest.replace('SHA-256=', '')
+			);
 
-		if (!digestValid) {
-			logger.debug('ap', 'digest invalid');
+			if (!digestValid) {
+				logger.debug('ap', 'digest invalid');
+				return {
+					valid: false
+				};
+			}
+		} catch {
+			logger.debug('ap', 'failed to validate digest');
 			return {
 				valid: false
 			};

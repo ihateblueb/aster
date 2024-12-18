@@ -49,12 +49,31 @@
 		if (e.length > 0) {
 			let grabbedNote = await getNote(e);
 			if (grabbedNote) replyingToNote = grabbedNote;
+
+			if (note.content.length >= 0)
+				note.content += `@${grabbedNote.user.username}${grabbedNote.user.local ? '' : '@' + grabbedNote.user.host} `;
 		}
 	});
 
 	function clearReply() {
 		store.draft_replyingTo.set('');
 		replyingToNote = undefined;
+	}
+
+	let quotingNote;
+
+	store.draft_repeat.subscribe(async (e) => {
+		note.repeat = e;
+
+		if (e.length > 0) {
+			let grabbedNote = await getNote(e);
+			if (grabbedNote) quotingNote = grabbedNote;
+		}
+	});
+
+	function clearQuote() {
+		store.draft_repeat.set('');
+		quotingNote = undefined;
 	}
 </script>
 
@@ -90,7 +109,23 @@
 	<Input placeholder="Content warning" bind:value={note.cw} wide></Input>
 	<Input placeholder="What's going on?" bind:value={note.content} wide big
 	></Input>
-	<Input placeholder="Repeat ID" bind:value={note.repeat} wide></Input>
+
+	{#if note.repeat && quotingNote}
+		<div class="quoteBox">
+			<div class="top">
+				<p>
+					Quoting @{quotingNote.user.username}{quotingNote.user.local
+						? ''
+						: '@' + quotingNote.user.host}
+				</p>
+				<button class="nobg" on:click={() => clearQuote()}>
+					<IconX size="var(--fs-lg)" />
+				</button>
+			</div>
+			<NoteSimple note={quotingNote} />
+		</div>
+	{/if}
+
 	<div class="btm">
 		<div class="left">
 			<Button transparent centered nm>
@@ -118,7 +153,8 @@
 		.top {
 			margin-bottom: 10px;
 		}
-		.replyBox {
+		.replyBox,
+		.quoteBox {
 			.top {
 				display: flex;
 				align-items: center;
@@ -132,7 +168,8 @@
 				}
 			}
 		}
-		.btm {
+		.btm,
+		.quoteBox {
 			margin-top: 10px;
 		}
 		.btm,

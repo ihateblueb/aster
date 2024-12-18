@@ -45,7 +45,8 @@ class ApNoteService {
 		const note = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
-			local: false
+			local: false,
+			attachmentIds: []
 		};
 
 		const author = await ApActorService.get(
@@ -121,6 +122,50 @@ class ApNoteService {
 			note['content'] = SanitizerService.sanitize(body.source.content);
 		if (body._misskey_content)
 			note['content'] = SanitizerService.sanitize(body._misskey_content);
+
+		if (body.attachment) {
+			let iterations = 0;
+
+			for (const attachment of body.attachment) {
+				iterations++;
+				if (iterations <= 12) {
+					if (!attachment.url) return;
+
+					const driveFile = {
+						id: IdService.generate(),
+						src: attachment.url,
+						userId: note['userId'],
+						createdAt: new Date().toISOString()
+					};
+
+					if (attachment.name) driveFile['alt'] = attachment.name;
+					if (attachment.summary)
+						driveFile['alt'] = attachment.summary;
+
+					if (attachment.sensitive)
+						driveFile['sensitive'] = Boolean(attachment.sensitive);
+
+					await db
+						.getRepository('drive_file')
+						.insert(driveFile)
+						.then(() => {
+							note.attachmentIds.push(driveFile.id);
+						})
+						.catch((err) => {
+							console.log(err);
+							logger.error(
+								'ap',
+								'failed to insert remote note attachment'
+							);
+						});
+				} else {
+					logger.debug(
+						'note',
+						'hit iteration limit on attachments, ignoring rest'
+					);
+				}
+			}
+		}
 
 		console.log(note); //todo: remove
 

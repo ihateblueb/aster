@@ -5,10 +5,7 @@ import typeorm, {
 	ManyToOne,
 	OneToMany,
 	OneToOne,
-	PrimaryColumn,
-	Tree,
-	TreeChildren,
-	TreeParent
+	PrimaryColumn
 } from 'typeorm';
 
 import { DriveFile } from './DriveFile.js';
@@ -82,14 +79,14 @@ export class Note {
 	poll: typeorm.Relation<Poll>;
 
 	@Column({ array: true, select: false, nullable: true })
-	driveFileIds: string;
+	attachmentIds: string;
 
 	@OneToMany(() => DriveFile, (driveFile) => driveFile, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
-	@JoinColumn({ name: 'driveFileIds' })
-	driveFiles: typeorm.Relation<DriveFile>;
+	@JoinColumn({ name: 'attachmentIds' })
+	attachments: typeorm.Relation<DriveFile>;
 
 	/*
 		TODO (later): add emojis relation for emojis in post content

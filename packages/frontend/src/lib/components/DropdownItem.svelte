@@ -39,6 +39,7 @@
 		font-family: var(--font);
 
 		transition: 0s;
+		cursor: pointer;
 
 		&:hover {
 			color: var(--ac1);

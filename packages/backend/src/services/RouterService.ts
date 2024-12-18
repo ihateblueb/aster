@@ -44,6 +44,7 @@ import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import AuthService from './AuthService.js';
 import IdService from './IdService.js';
+import MetricsService from './MetricsService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
@@ -75,8 +76,9 @@ router.use((req, res, next) => {
 	}
 
 	const id = IdService.generate();
-
 	res.setHeader('As-Request-Id', id);
+
+	const end = MetricsService.requestResponseTime.startTimer();
 
 	if (
 		req.path &&
@@ -87,7 +89,7 @@ router.use((req, res, next) => {
 		!req.path.startsWith('/metrics')
 	)
 		logger.http(
-			'-->',
+			'<--',
 			`${req.method.toLowerCase()} ${req.path} ${logger.formatHttpId(id)}`
 		);
 
@@ -101,9 +103,11 @@ router.use((req, res, next) => {
 			!req.path.startsWith('/metrics')
 		)
 			logger.http(
-				'<--',
+				'-->',
 				`${req.method.toLowerCase()} ${req.path} ${logger.formatStatus(res.statusCode)} ${logger.formatHttpId(id)}`
 			);
+
+		end();
 	});
 
 	next();

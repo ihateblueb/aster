@@ -20,6 +20,18 @@
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
 	import repeatNote from '$lib/api/note/repeat.js';
+	import localstore from '$lib/localstore.js';
+	import deleteNote from '$lib/api/note/delete.js';
+	import { page } from '$app/stores';
+
+	let self;
+	function updateSelf() {
+		let grabbedSelf = localstore.get('self');
+		if (grabbedSelf) {
+			self = JSON.parse(grabbedSelf);
+		}
+	}
+	updateSelf();
 
 	export let note;
 
@@ -38,6 +50,10 @@
 	let repeatDropdown: Dropdown;
 	let reactDropdown: Dropdown;
 	let moreDropdown: Dropdown;
+
+	function moreDelete() {
+		deleteNote(note?.id);
+	}
 </script>
 
 <footer>
@@ -109,15 +125,18 @@
 		<span>Details</span>
 	</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem>
+	<DropdownItem on:click={() => navigator.clipboard.writeText(note.content)}>
 		<IconCopy size="var(--fs-lg)" />
 		<span>Copy content</span>
 	</DropdownItem>
-	<DropdownItem>
+	<DropdownItem
+		on:click={() =>
+			navigator.clipboard.writeText($page.url.href + 'notes/' + note.id)}
+	>
 		<IconLink size="var(--fs-lg)" />
 		<span>Copy link</span>
 	</DropdownItem>
-	<DropdownItem>
+	<DropdownItem on:click={() => navigator.clipboard.writeText(note.apId)}>
 		<IconLink size="var(--fs-lg)" />
 		<span>Copy link (origin)</span>
 	</DropdownItem>
@@ -134,15 +153,23 @@
 		<IconAlertCircle size="var(--fs-lg)" />
 		<span>Report</span>
 	</DropdownItem>
-	<DropdownDivider />
-	<DropdownItem>
-		<IconPencil size="var(--fs-lg)" />
-		<span>Edit</span>
-	</DropdownItem>
-	<DropdownItem danger>
-		<IconTrash size="var(--fs-lg)" />
-		<span>Delete</span>
-	</DropdownItem>
+	{#if note.user.id === self.id}
+		<DropdownDivider />
+		<DropdownItem>
+			<IconPencil size="var(--fs-lg)" />
+			<span>Edit</span>
+		</DropdownItem>
+		<DropdownItem danger on:click={() => moreDelete()}>
+			<IconTrash size="var(--fs-lg)" />
+			<span>Delete</span>
+		</DropdownItem>
+	{:else if self.admin}
+		<DropdownDivider />
+		<DropdownItem danger on:click={() => moreDelete()}>
+			<IconTrash size="var(--fs-lg)" />
+			<span>Delete</span>
+		</DropdownItem>
+	{/if}
 </Dropdown>
 
 <style lang="scss">

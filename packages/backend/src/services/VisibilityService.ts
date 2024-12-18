@@ -9,6 +9,45 @@ class VisibilityService {
 		if (['public', 'unlisted'].includes(note.visibility)) return true;
 
 		if (as) {
+			if (await RelationshipService.isBlocking(note.user.id, as))
+				return false;
+			if (await RelationshipService.isBlocking(as, note.user.id))
+				return false;
+
+			if (note.replyingTo) {
+				if (
+					await RelationshipService.isBlocking(
+						note.replyingTo.user.id,
+						as
+					)
+				)
+					return false;
+				if (
+					await RelationshipService.isBlocking(
+						as,
+						note.replyingTo.user.id
+					)
+				)
+					return false;
+			}
+
+			if (note.repeat) {
+				if (
+					await RelationshipService.isBlocking(
+						note.repeat.user.id,
+						as
+					)
+				)
+					return false;
+				if (
+					await RelationshipService.isBlocking(
+						as,
+						note.repeat.user.id
+					)
+				)
+					return false;
+			}
+
 			if (note.to && note.to.includes(as)) return true;
 			if (note.visibility === 'followers')
 				return as

@@ -34,6 +34,10 @@ const metaCacheMisses = new client.Counter({
 	name: 'meta_cache_misses',
 	help: 'Number of times the cache was not used for instance metadata requests.'
 });
+const requestResponseTime = new client.Histogram({
+	name: 'request_response_time',
+	help: 'Duration between request entry and exit.'
+});
 
 class MetricsService {
 	public registry = registry;
@@ -46,6 +50,7 @@ class MetricsService {
 	public apNoteCacheMisses = apNoteCacheMisses;
 	public metaCacheHits = metaCacheHits;
 	public metaCacheMisses = metaCacheMisses;
+	public requestResponseTime = requestResponseTime;
 
 	public registerMetrics() {
 		registry.registerMetric(apUserCacheHits);
@@ -56,6 +61,7 @@ class MetricsService {
 		registry.registerMetric(apNoteCacheMisses);
 		registry.registerMetric(metaCacheHits);
 		registry.registerMetric(metaCacheMisses);
+		registry.registerMetric(requestResponseTime);
 	}
 }
 
