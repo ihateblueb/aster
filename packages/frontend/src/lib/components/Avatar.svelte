@@ -11,7 +11,7 @@
 	alt={user?.avatarAlt}
 />
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.avatar {
 		border-radius: var(--br-md);
 		user-select: none;

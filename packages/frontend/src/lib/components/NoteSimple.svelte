@@ -49,7 +49,7 @@
 	</p>
 </div>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.noteSimple {
 		padding: 10px;
 		border: 1px solid var(--bg3);

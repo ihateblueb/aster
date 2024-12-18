@@ -30,16 +30,6 @@
 	<p>Paragraph</p>
 	<small>Small</small>
 
-	<div class="brTest mn">Border Radius Test (mn)</div>
-	<div class="brTest xxs">Border Radius Test (xxs)</div>
-	<div class="brTest xs">Border Radius Test (xs)</div>
-	<div class="brTest sm">Border Radius Test (sm)</div>
-	<div class="brTest md">Border Radius Test (md)</div>
-	<div class="brTest lg">Border Radius Test (lg)</div>
-	<div class="brTest xl">Border Radius Test (xl)</div>
-	<div class="brTest xxl">Border Radius Test (xxl)</div>
-	<div class="brTest mx">Border Radius Test (mx)</div>
-
 	<Switch bind:checked={switchtest}></Switch>
 
 	<Input
@@ -114,10 +104,20 @@
 		Sample Button (wide)
 	</Button>
 
+	<div class="brTest mn">Border Radius Test (mn)</div>
+	<div class="brTest xxs">Border Radius Test (xxs)</div>
+	<div class="brTest xs">Border Radius Test (xs)</div>
+	<div class="brTest sm">Border Radius Test (sm)</div>
+	<div class="brTest md">Border Radius Test (md)</div>
+	<div class="brTest lg">Border Radius Test (lg)</div>
+	<div class="brTest xl">Border Radius Test (xl)</div>
+	<div class="brTest xxl">Border Radius Test (xxl)</div>
+	<div class="brTest mx">Border Radius Test (mx)</div>
+
 	<Loading />
 </PageWrapper>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.brTest {
 		margin-top: 5px;
 		margin-bottom: 5px;

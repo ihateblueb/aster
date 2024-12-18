@@ -40,7 +40,7 @@
 	{/if}
 </header>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	header {
 		display: flex;
 		align-items: center;

@@ -49,7 +49,7 @@
 					size({
 						apply({ availableWidth, availableHeight }) {
 							maxWidth = availableWidth;
-							maxHeight = availableHeight - 22; // 10px off of bottom
+							maxHeight = availableHeight - 22; // 10px off of bottom (?? where does this number come from)
 						}
 					})
 				]
@@ -68,7 +68,6 @@
 <svelte:window on:resize={updatePosition} />
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 {#if show}
 	<dialog
 		class="dropdown"

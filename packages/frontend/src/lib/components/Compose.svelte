@@ -1,20 +1,29 @@
-<script>
+<script lang="ts">
 	import Input from '$lib/components/Input.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import localstore from '$lib/localstore';
 	import {
 		IconChartBar,
+		IconHome,
+		IconLock,
+		IconMail,
 		IconMoodSmile,
 		IconPaperclip,
+		IconPlus,
+		IconWorld,
 		IconX
 	} from '@tabler/icons-svelte';
 	import Visibility from '$lib/components/Visibility.svelte';
 	import createNote from '$lib/api/note/create';
 	import store from '$lib/store';
 	import getNote from '$lib/api/note/get';
-	import Note from '$lib/components/Note.svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
+	import Dropdown from './Dropdown.svelte';
+	import DropdownItem from './DropdownItem.svelte';
+
+	let addDropdown: Dropdown;
+	let visibilityDropdown: Dropdown;
 
 	let self;
 	function updateSelf() {
@@ -41,7 +50,7 @@
 		}
 	}
 
-	let replyingToNote;
+	let replyingToNote: any;
 
 	store.draft_replyingTo.subscribe(async (e) => {
 		note.replyingTo = e;
@@ -60,7 +69,7 @@
 		replyingToNote = undefined;
 	}
 
-	let quotingNote;
+	let quotingNote: any;
 
 	store.draft_repeat.subscribe(async (e) => {
 		note.repeat = e;
@@ -83,9 +92,16 @@
 			<Avatar user={self} size="35px" />
 		</div>
 		<div class="right">
-			<Button transparent centered nm>
-				<Visibility visibility={note.visibility} />
-			</Button>
+			{#key note.visibility}
+				<Button
+					transparent
+					centered
+					nm
+					on:click={() => visibilityDropdown.open()}
+				>
+					<Visibility visibility={note.visibility} />
+				</Button>
+			{/key}
 		</div>
 	</div>
 
@@ -128,11 +144,8 @@
 
 	<div class="btm">
 		<div class="left">
-			<Button transparent centered nm>
-				<IconPaperclip size="var(--fs-lg)" />
-			</Button>
-			<Button transparent centered nm>
-				<IconChartBar size="var(--fs-lg)" />
+			<Button transparent centered nm on:click={() => addDropdown.open()}>
+				<IconPlus size="var(--fs-lg)" />
 			</Button>
 			<Button transparent centered nm>
 				<IconMoodSmile size="var(--fs-lg)" />
@@ -147,6 +160,48 @@
 		</div>
 	</div>
 </div>
+
+<Dropdown bind:this={visibilityDropdown}>
+	<DropdownItem on:click={() => note.visibility === 'public'}>
+		<p>
+			<IconWorld size="var(--fs-lg)" />
+			Public
+		</p>
+		<p>Shown on all timelines</p>
+	</DropdownItem>
+	<DropdownItem on:click={() => note.visibility === 'unlisted'}>
+		<p>
+			<IconHome size="var(--fs-lg)" />
+			Unlisted
+		</p>
+		<p>Only shown on the home timeline of followers</p>
+	</DropdownItem>
+	<DropdownItem on:click={() => note.visibility === 'followers'}>
+		<p>
+			<IconLock size="var(--fs-lg)" />
+			Followers
+		</p>
+		<p>Only shown to your followers</p>
+	</DropdownItem>
+	<DropdownItem on:click={() => note.visibility === 'direct'}>
+		<p>
+			<IconMail size="var(--fs-lg)" />
+			Direct
+		</p>
+		<p>Only shown to those mentioned</p>
+	</DropdownItem>
+</Dropdown>
+
+<Dropdown bind:this={addDropdown}>
+	<DropdownItem>
+		<IconPaperclip size="var(--fs-lg)" />
+		Add file
+	</DropdownItem>
+	<DropdownItem>
+		<IconChartBar size="var(--fs-lg)" />
+		Add poll
+	</DropdownItem>
+</Dropdown>
 
 <style lang="scss" scoped>
 	.compose {
