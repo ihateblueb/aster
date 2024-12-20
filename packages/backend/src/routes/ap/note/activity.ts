@@ -1,5 +1,6 @@
 import express from 'express';
 
+import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
 import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
 import CacheService from '../../../services/CacheService.js';
@@ -8,7 +9,6 @@ import NoteService from '../../../services/NoteService.js';
 import oapi from '../../../utils/apidoc.js';
 import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
-import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
 
 const router = express.Router();
 
@@ -87,7 +87,9 @@ router.get(
 						message: afs.message
 					});
 
-				const rendered = ApCreateRenderer.render(await ApNoteRenderer.render(note));
+				const rendered = ApCreateRenderer.render(
+					await ApNoteRenderer.render(note)
+				);
 
 				/*if (config.cache.ap)
 					await CacheService.set(
