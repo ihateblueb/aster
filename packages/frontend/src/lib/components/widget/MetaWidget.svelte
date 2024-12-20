@@ -9,15 +9,28 @@
 	});
 </script>
 
-<div>
+<div class="meta">
 	{#if $query.isSuccess}
 		<p>
 			{$query.data?.software ?? 'aster'}
 			{$query.data?.version ?? 'unknown version'}
 		</p>
 		<p>
-			<a href="/about">About</a> &bull; <a href="/source">Source code</a>
-			&bull; <a>link</a>
+			<a href="/about">About</a> <a href="/source">Source code</a>
+			<a>link</a>
 		</p>
 	{/if}
 </div>
+
+<style lang="scss" scoped>
+	p {
+		opacity: 75%;
+		word-break: break-word;
+	}
+
+	@media (max-width: 1355px) {
+		.meta {
+			display: none;
+		}
+	}
+</style>

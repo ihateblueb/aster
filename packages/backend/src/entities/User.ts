@@ -46,6 +46,9 @@ export class User {
 	@Column({ default: false })
 	automated: boolean;
 
+	@Column({ default: false })
+	sensitive: boolean;
+
 	@Column({ nullable: true })
 	bio: string;
 
@@ -72,9 +75,6 @@ export class User {
 
 	@Column({ nullable: true })
 	bannerAlt: string;
-
-	@Column({ default: false })
-	sensitive: string;
 
 	@Column({ type: 'jsonb', nullable: true })
 	metadata: string;

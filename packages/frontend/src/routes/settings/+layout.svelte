@@ -103,6 +103,6 @@
 		margin: -12px;
 		margin-bottom: 12px;
 
-		background-color: var(--bg3-25);
+		border-bottom: 1px solid var(--bg3);
 	}
 </style>

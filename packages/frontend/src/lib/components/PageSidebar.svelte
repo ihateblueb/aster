@@ -5,16 +5,17 @@
 	import MetaWidget from '$lib/components/widget/MetaWidget.svelte';
 
 	import localstore from '$lib/localstore';
+	import NavigationWidget from '$lib/components/widget/NavigationWidget.svelte';
 
 	export let left = false;
 	export let right = false;
 
 	let widgets;
-	if (left) localstore.get('sidebarLeft');
-	if (right) localstore.get('sidebarRight');
+	if (left) widgets = localstore.get('sidebarLeft');
+	if (right) widgets = localstore.get('sidebarRight');
 </script>
 
-{#snippet component(type: string)}
+{#snippet component(type)}
 	{#if type === 'account'}
 		<AccountWidget />
 	{:else if type === 'compose'}
@@ -23,6 +24,8 @@
 		<DevelopmentWidget />
 	{:else if type === 'meta'}
 		<MetaWidget />
+	{:else if type === 'navigation'}
+		<NavigationWidget />
 	{/if}
 {/snippet}
 
@@ -48,20 +51,10 @@
 </div>
 
 <style lang="scss" scoped>
-	@media (max-width: 750px) {
-		.pageSidebar {
-			max-width: none !important;
-			display: none;
-		}
-	}
-
-	@media (max-width: 1355px) {
-		.pageSidebar {
-			max-width: 75px;
-		}
-	}
-
 	.pageSidebar {
+		width: 100%;
+		max-width: 350px;
+
 		.body {
 			display: flex;
 			flex-direction: column;
@@ -91,6 +84,19 @@
 				margin-top: auto;
 				bottom: 0;
 			}
+		}
+	}
+
+	@media (max-width: 750px) {
+		.pageSidebar {
+			max-width: none !important;
+			display: none;
+		}
+	}
+
+	@media (max-width: 1355px) {
+		.pageSidebar {
+			max-width: 75px;
 		}
 	}
 </style>

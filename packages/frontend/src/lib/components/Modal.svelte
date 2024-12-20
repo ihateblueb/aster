@@ -73,7 +73,7 @@
 			min-width: 345px;
 			min-height: 135px;
 
-			max-width: 375px;
+			max-width: 450px;
 
 			margin: auto;
 			padding: 26px 20px;
@@ -98,6 +98,7 @@
 
 			.slot {
 				margin-top: 10px;
+				width: 100%;
 			}
 
 			.buttons {

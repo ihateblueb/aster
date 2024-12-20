@@ -7,15 +7,18 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import {
+		IconBan,
 		IconCake,
 		IconMapPin,
 		IconPin,
-		IconUserCircle
+		IconUserCircle,
+		IconVolumeOff
 	} from '@tabler/icons-svelte';
 	import lookupUser from '$lib/api/user/lookup.js';
 	import Button from '$lib/components/Button.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import queryClient from '$lib/queryclient.js';
+	import Toggle from '$lib/components/Toggle.svelte';
 
 	let props = $props();
 
@@ -27,6 +30,11 @@
 		queryKey: ['user'],
 		retry: false,
 		queryFn: async () => await lookupUser('@' + props.data.userid)
+	});
+
+	let show = $state(true);
+	query.subscribe((e) => {
+		if (e.data?.sensitive) show = false;
 	});
 </script>
 
@@ -63,103 +71,178 @@
 			retry={() => $query.refetch()}
 		/>
 	{:else if $query.isSuccess}
-		<div class="header">
-			<img
-				class="banner"
-				src={$query.data.banner ??
-					'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg=='}
-				alt={$query.data.bannerAlt}
-			/>
-			<div class="float">
-				<div class="left">
-					<Avatar size="65px" user={$query.data} />
-					<div class="names">
-						<p class="top">
-							{$query.data.displayName
-								? $query.data.displayName
-								: $query.data.username}
-						</p>
-						<p class="bottom">
-							@{$query.data
-								.username}{#if !$query.data.local}@{$query.data
-									.host}{/if}
-						</p>
+		{#if show}
+			<div class="header">
+				<img
+					class="banner"
+					src={$query.data.banner ??
+						'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg=='}
+					alt={$query.data.bannerAlt}
+				/>
+				<div class="float">
+					<div class="left">
+						<Avatar size="65px" user={$query.data} />
+						<div class="names">
+							<p class="top">
+								{$query.data.displayName
+									? $query.data.displayName
+									: $query.data.username}
+							</p>
+							<p class="bottom">
+								@{$query.data
+									.username}{#if !$query.data.local}@{$query
+										.data.host}{/if}
+							</p>
+						</div>
+					</div>
+					<div class="right">
+						<Button secondary nm>Follow</Button>
 					</div>
 				</div>
-				<div class="right">
-					<Button secondary nm>Follow</Button>
-				</div>
 			</div>
-		</div>
-		<div class="lower">
-			<p class="description">
-				{#if $query.data.bio}
-					<Mfm content={$query.data.bio} />
-				{:else}
-					<span class="missing"
-						>This user hasn't written a bio yet.</span
-					>
-				{/if}
-			</p>
-			{#if $query.data.birthday || $query.data.location}
-				<div class="pairs">
-					{#if $query.data.birthday}
-						<p class="pair">
-							<span class="key">
-								<IconCake size="var(--fs-lg)" />
-							</span>
-							<span class="val">
-								{new Date($query.data.birthday).toLocaleString(
-									undefined,
-									{
+			<div class="lower">
+				<p class="description">
+					{#if $query.data.bio}
+						<Mfm content={$query.data.bio} />
+					{:else}
+						<span class="missing"
+							>This user hasn't written a bio yet.</span
+						>
+					{/if}
+				</p>
+				{#if $query.data.birthday || $query.data.location}
+					<div class="pairs">
+						{#if $query.data.birthday}
+							<p class="pair">
+								<span class="key">
+									<IconCake size="var(--fs-lg)" />
+								</span>
+								<span class="val">
+									{new Date(
+										$query.data.birthday
+									).toLocaleString(undefined, {
 										month: 'long',
 										day: 'numeric',
 										year: 'numeric'
-									}
-								)}
-							</span>
-						</p>
-					{/if}
-					{#if $query.data.location}
-						<p class="pair">
-							<span class="key"
-								><IconMapPin size="var(--fs-lg)" /></span
-							>
-							<span class="val">{$query.data.location}</span>
-						</p>
+									})}
+								</span>
+							</p>
+						{/if}
+						{#if $query.data.location}
+							<p class="pair">
+								<span class="key"
+									><IconMapPin size="var(--fs-lg)" /></span
+								>
+								<span class="val">{$query.data.location}</span>
+							</p>
+						{/if}
+					</div>
+				{/if}
+				<p class="joinedOn">
+					Joined {new Date($query.data.createdAt).toLocaleTimeString(
+						undefined,
+						{
+							weekday: 'long',
+							month: 'long',
+							day: 'numeric',
+							year: 'numeric',
+							hour: 'numeric',
+							minute: '2-digit',
+							second: '2-digit'
+						}
+					)}
+				</p>
+				<div class="counts">
+					<span class="count">
+						<b>0</b> notes
+					</span>
+					<span class="count">
+						<b>0</b> following
+					</span>
+					<span class="count">
+						<b>0</b> followers
+					</span>
+				</div>
+			</div>
+		{:else}
+			<div class="sensitive">
+				<div class="top">
+					<p>This user's profile may be sensitive.</p>
+				</div>
+				<div class="mid">
+					{#if $query.data.bio}
+						<Mfm content={$query.data.bio} />
+					{:else}
+						<span class="missing">
+							This user hasn't written a bio yet.
+						</span>
 					{/if}
 				</div>
-			{/if}
-			<p class="joinedOn">
-				Joined {new Date($query.data.createdAt).toLocaleTimeString(
-					undefined,
-					{
-						weekday: 'long',
-						month: 'long',
-						day: 'numeric',
-						year: 'numeric',
-						hour: 'numeric',
-						minute: '2-digit',
-						second: '2-digit'
-					}
-				)}
-			</p>
-			<div class="counts">
-				<span class="count">
-					<b>0</b> notes
-				</span>
-				<span class="count">
-					<b>0</b> following
-				</span>
-				<span class="count">
-					<b>0</b> followers
-				</span>
+				<div class="btm">
+					<Toggle label="Don't ask again for this user" />
+					<div class="btns">
+						<Button danger>
+							<IconBan size="var(--fs-lg)" />
+							Block
+						</Button>
+						<Button danger>
+							<IconVolumeOff size="var(--fs-lg)" />
+							Mute
+						</Button>
+						<Button
+							on:click={() => {
+								show = true;
+							}}>Continue</Button
+						>
+					</div>
+				</div>
 			</div>
-		</div>
+		{/if}
 	{/if}
 </PageWrapper>
 
 <style lang="scss" scoped>
+	.sensitive {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+		height: 100%;
+		box-sizing: border-box;
+
+		gap: 10px;
+		padding: 22px;
+
+		.top {
+			p {
+				font-size: var(--fs-lg);
+				font-weight: 600;
+				margin-bottom: 10px;
+			}
+		}
+
+		.mid {
+			.missing {
+				color: var(--tx3);
+				font-style: italic;
+			}
+		}
+
+		.btm {
+			display: flex;
+			align-items: center;
+			flex-direction: column;
+
+			margin-top: 10px;
+			gap: 5px;
+
+			.btns {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+			}
+		}
+	}
 	.header {
 		position: relative;
 		margin: -8px -8px 0 -8px;

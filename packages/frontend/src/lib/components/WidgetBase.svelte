@@ -1,14 +1,23 @@
-<div class="widget">
+<script lang="ts">
+	export let transparent = false;
+</script>
+
+<div class={'widget' + (transparent ? ' transparent' : '')}>
 	<slot />
 </div>
 
 <style lang="scss" scoped>
 	.widget {
-		width: 300px;
+		width: 100%;
+		max-width: 325px;
+
+		box-sizing: border-box;
 
 		padding: 12px 16px;
 
-		background: var(--bg2);
-		border-radius: var(--br-lg);
+		&:not(.transparent) {
+			background: var(--bg2);
+			border-radius: var(--br-lg);
+		}
 	}
 </style>

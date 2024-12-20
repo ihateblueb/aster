@@ -5,6 +5,8 @@
 	import { page } from '$app/stores';
 	import localstore from '$lib/localstore';
 	import store from '$lib/store';
+	import Modal from '$lib/components/Modal.svelte';
+	import Compose from '$lib/components/Compose.svelte';
 
 	let loggedIn = false;
 	if (localstore.get('token')) loggedIn = true;
@@ -19,14 +21,19 @@
 	let showWelcome = false;
 	if (!loggedIn && $page.url.pathname === '/') showWelcome = true;
 
-	let showCompose = false;
+	let compose: Modal;
+
 	store.showCompose.subscribe((e) => {
-		showCompose = e;
+		if (e) compose.open();
 	});
 </script>
 
 <QueryClientProvider client={queryClient}>
-	<!-- todo: modal shown on store change -->
+	{#if loggedIn}
+		<Modal bind:this={compose}>
+			<Compose />
+		</Modal>
+	{/if}
 
 	{#if loggedIn}
 		<PageSidebar left />

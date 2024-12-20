@@ -6,6 +6,7 @@
 	export let tertiary: boolean = false; // --bg3
 	export let quaternary: boolean = false; // --bg4
 	export let accent: boolean = false;
+	export let accentLight: boolean = false;
 	export let success: boolean = false;
 	export let warn: boolean = false;
 	export let danger: boolean = false;
@@ -13,6 +14,7 @@
 	export let rounded: boolean = false;
 	export let centered: boolean = false;
 	export let nav: boolean = false;
+	export let circle: boolean = false;
 	export let wide: boolean = false;
 	export let nm: boolean = false;
 
@@ -24,6 +26,7 @@
 				tertiary ||
 				quaternary ||
 				accent ||
+				accentLight ||
 				success ||
 				warn ||
 				danger ||
@@ -39,12 +42,14 @@
 			(tertiary ? ' tertiary' : '') +
 			(quaternary ? ' quaternary' : '') +
 			(accent ? ' accent' : '') +
+			(accentLight ? ' accentLight' : '') +
 			(success ? ' success' : '') +
 			(warn ? ' warn' : '') +
 			(danger ? ' danger' : '') +
 			(transparent ? ' transparent' : '') +
 			(rounded ? ' rounded' : '') +
 			(nav ? ' nav' : '') +
+			(circle ? ' circle' : '') +
 			(centered ? ' centered' : '') +
 			(wide ? ' wide' : '') +
 			(nm ? ' nm' : '')
@@ -92,10 +97,6 @@
 			outline-offset: 1px;
 		}
 
-		&.nm {
-			margin: 0;
-		}
-
 		&.primary {
 			color: var(--tx1);
 			background-color: var(--bg1);
@@ -141,6 +142,15 @@
 				background-color: var(--ac1-75);
 			}
 		}
+		&.accentLight {
+			color: var(--ac1);
+			background-color: var(--ac1-25);
+
+			&:hover {
+				color: var(--tx1);
+				background-color: var(--ac1-50);
+			}
+		}
 		&.success {
 			color: var(--tx1);
 			background-color: var(--success);
@@ -179,14 +189,31 @@
 			}
 		}
 
+		&.nm {
+			margin: 0;
+		}
 		&.wide {
 			width: 100%;
 		}
-		&.nav {
-			width: 100%;
+		&.circle {
 			height: 50px;
+			width: 50px;
 			justify-content: center;
 			border-radius: var(--br-mx);
+		}
+		&.nav {
+			width: 100%;
+			height: 35px;
+
+			box-shadow: none;
+			background: none;
+			transition: 0.1s;
+
+			&:hover {
+				color: var(--ac1);
+				background: var(--ac1-25);
+				box-shadow: var(--funky-effect);
+			}
 		}
 		&.centered {
 			justify-content: center;

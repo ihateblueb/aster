@@ -97,7 +97,7 @@
 					transparent
 					centered
 					nm
-					on:click={() => visibilityDropdown.open()}
+					on:click={(e) => visibilityDropdown.open(e)}
 				>
 					<Visibility visibility={note.visibility} />
 				</Button>
@@ -144,7 +144,12 @@
 
 	<div class="btm">
 		<div class="left">
-			<Button transparent centered nm on:click={() => addDropdown.open()}>
+			<Button
+				transparent
+				centered
+				nm
+				on:click={(e) => addDropdown.open(e)}
+			>
 				<IconPlus size="var(--fs-lg)" />
 			</Button>
 			<Button transparent centered nm>
@@ -163,32 +168,40 @@
 
 <Dropdown bind:this={visibilityDropdown}>
 	<DropdownItem on:click={() => note.visibility === 'public'}>
-		<p>
-			<IconWorld size="var(--fs-lg)" />
-			Public
-		</p>
-		<p>Shown on all timelines</p>
+		<div class="visibilityOption">
+			<p>
+				<IconWorld size="var(--fs-lg)" />
+				Public
+			</p>
+			<p>Shown on all timelines</p>
+		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => note.visibility === 'unlisted'}>
-		<p>
-			<IconHome size="var(--fs-lg)" />
-			Unlisted
-		</p>
-		<p>Only shown on the home timeline of followers</p>
+		<div class="visibilityOption">
+			<p>
+				<IconHome size="var(--fs-lg)" />
+				Unlisted
+			</p>
+			<p>Only shown on the home timeline of followers</p>
+		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => note.visibility === 'followers'}>
-		<p>
-			<IconLock size="var(--fs-lg)" />
-			Followers
-		</p>
-		<p>Only shown to your followers</p>
+		<div class="visibilityOption">
+			<p>
+				<IconLock size="var(--fs-lg)" />
+				Followers
+			</p>
+			<p>Only shown to your followers</p>
+		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => note.visibility === 'direct'}>
-		<p>
-			<IconMail size="var(--fs-lg)" />
-			Direct
-		</p>
-		<p>Only shown to those mentioned</p>
+		<div class="visibilityOption">
+			<p>
+				<IconMail size="var(--fs-lg)" />
+				Direct
+			</p>
+			<p>Only shown to those mentioned</p>
+		</div>
 	</DropdownItem>
 </Dropdown>
 
@@ -241,6 +254,25 @@
 			.right {
 				display: flex;
 				align-items: center;
+			}
+		}
+	}
+
+	.visibilityOption {
+		display: flex;
+		align-items: start;
+		text-align: left;
+		flex-direction: column;
+
+		p {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+
+			&:last-child {
+				margin-top: 4px;
+				color: var(--tx3);
+				font-size: var(--fs-sm);
 			}
 		}
 	}
