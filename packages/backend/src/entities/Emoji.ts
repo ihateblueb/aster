@@ -2,7 +2,6 @@ import typeorm, {
 	Column,
 	Entity,
 	JoinColumn,
-	ManyToOne,
 	OneToOne,
 	PrimaryColumn
 } from 'typeorm';
@@ -15,13 +14,13 @@ export class Emoji {
 	id: string;
 
 	@Column({ select: false })
-	driveFileId: string;
+	fileId: string;
 
 	@OneToOne(() => DriveFile, (driveFile) => driveFile, {
 		onDelete: 'CASCADE'
 	})
-	@JoinColumn({ name: 'driveFileId' })
-	driveFile: typeorm.Relation<DriveFile>;
+	@JoinColumn({ name: 'fileId' })
+	file: typeorm.Relation<DriveFile>;
 
 	@Column()
 	createdAt: string;

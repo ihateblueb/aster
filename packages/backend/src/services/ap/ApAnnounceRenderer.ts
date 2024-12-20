@@ -10,7 +10,7 @@ class ApAnnounceRenderer {
 		actor: GenericId,
 		visibility: string,
 		activity: ObjectLiteral
-	) {
+	): Promise<ApObject> {
 		const announce = {
 			'@context': context,
 

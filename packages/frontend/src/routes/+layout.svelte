@@ -26,7 +26,18 @@
 	store.showCompose.subscribe((e) => {
 		if (e) compose.open();
 	});
+
+	function handleKeydown(e: KeyboardEvent) {
+		switch (e.key) {
+			case 'p':
+				if (!showCompose) store.showCompose.set(true);
+				break;
+		}
+		console.log(e);
+	}
 </script>
+
+<svelte:window on:keydown={(e) => handleKeydown(e)} />
 
 <QueryClientProvider client={queryClient}>
 	{#if loggedIn}

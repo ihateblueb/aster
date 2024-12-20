@@ -4,7 +4,6 @@ import AuthService from '../../../services/AuthService.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 import oapi from '../../../utils/apidoc.js';
-import db from '../../../utils/database.js';
 import locale from '../../../utils/locale.js';
 
 const router = express.Router();
@@ -18,9 +17,7 @@ router.get(
 			200: {
 				description: 'Return a note.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Note'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },

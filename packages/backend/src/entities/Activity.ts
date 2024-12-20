@@ -7,6 +7,8 @@ import { Column, Entity, PrimaryColumn } from 'typeorm';
  * (e.g. follow requests, which require an Accept of Reject
  * response that include the original activity. this can't be
  * instantly accepted or rejected sometimes, so it has to be stored)
+ *
+ * i do need to make some activities resolvable.
  */
 
 @Entity()

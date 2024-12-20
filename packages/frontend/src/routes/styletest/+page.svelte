@@ -9,11 +9,15 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Modal from '$lib/components/Modal.svelte';
 	import Toggle from '$lib/components/Toggle.svelte';
+	import Avatar from '$lib/components/Avatar.svelte';
+	import UserDropdown from '$lib/components/dropdowns/UserDropdown.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
 
 	let inputtest = '';
 	let switchtest = false;
 
 	let modal: Modal;
+	let userDropdown: Dropdown;
 </script>
 
 <PageHeader title="Style Testing Page">
@@ -29,6 +33,8 @@
 	<h6>Header 6</h6>
 	<p>Paragraph</p>
 	<small>Small</small>
+
+	<Avatar user={{ local: true, username: 'test' }} />
 
 	<Switch bind:checked={switchtest}></Switch>
 
@@ -58,7 +64,7 @@
 
 	<Mfm content={inputtest}></Mfm>
 
-	<Button on:click={() => modal.open()}>
+	<Button on:click={(e) => userDropdown.open(e)}>
 		<IconCube size="var(--fs-lg)" />
 		Sample Button (default)
 	</Button>
@@ -116,6 +122,8 @@
 
 	<Loading />
 </PageWrapper>
+
+<UserDropdown bind={userDropdown} user={{ username: 'test' }} />
 
 <style lang="scss" scoped>
 	.brTest {

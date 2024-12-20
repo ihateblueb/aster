@@ -22,6 +22,8 @@ note:
     contentWarningTooLong: 'Content warning too long'
     replyTargetNotFound: 'Reply target not found'
     repeatTargetNotFound: 'Repeat target not found'
+    cannotReplyToNote: 'Cannot reply to note'
+    cannotRepeatNote: 'Cannot repeat note'
 
     notSpecified: "Note wasn't specified"
     notFound: "Note couldn't be found"

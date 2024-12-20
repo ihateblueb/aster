@@ -1,10 +1,8 @@
-import { ObjectLiteral } from 'typeorm';
-
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
 
 class ApFollowRenderer {
-	public render(id: GenericId, actor: GenericId, object: ApId) {
+	public render(id: GenericId, actor: GenericId, object: ApId): ApObject {
 		return {
 			'@context': context,
 

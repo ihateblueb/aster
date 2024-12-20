@@ -1,10 +1,12 @@
-import { ObjectLiteral } from 'typeorm';
-
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
 
 class ApRejectRenderer {
-	public render(id: GenericId, actor: GenericId, activity: ObjectLiteral) {
+	public render(
+		id: GenericId,
+		actor: GenericId,
+		activity: ApObject
+	): ApObject {
 		return {
 			'@context': context,
 

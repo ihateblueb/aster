@@ -14,21 +14,49 @@ import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
 
 class ApDeliverService {
-	public async deliverToFollowers(body, as: GenericId) {
-		const relationships = await RelationshipService.getFollowers(as);
-
-		for (const i in relationships) {
-			const follower = relationships[i].from;
-
+	public async deliverToInboxes(
+		body: ApObject,
+		inboxes: ApId[],
+		as: GenericId
+	) {
+		for (const inbox of inboxes) {
 			await QueueService.deliver.add(IdService.generate(), {
 				as: as,
-				inbox: follower.inbox,
+				inbox: inbox,
 				body: body
 			});
 		}
 	}
 
-	public async deliver(data) {
+	public async deliverToFollowers(body: ApObject, as: GenericId) {
+		const relationships = await RelationshipService.getFollowers(as);
+
+		const inboxes: ApId[] = [];
+
+		for (const follower of relationships) {
+			inboxes.push(follower.inbox);
+		}
+
+		await this.deliverToInboxes(body, inboxes, as);
+	}
+
+	public async deliverToPeers(body: ApObject, as: GenericId) {
+		const peers = await db.getRepository('instance').find();
+
+		const inboxes: ApId[] = [];
+
+		for (const peer of peers) {
+			const user = await UserService.get({
+				host: peer.host
+			});
+
+			if (user) inboxes.push(user.inbox);
+		}
+
+		await this.deliverToInboxes(body, inboxes, as);
+	}
+
+	public async deliver(data: { body: ApObject; inbox: ApId; as: GenericId }) {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
 

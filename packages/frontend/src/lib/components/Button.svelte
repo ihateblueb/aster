@@ -134,12 +134,12 @@
 			}
 		}
 		&.accent {
-			color: var(--tx1);
-			background-color: var(--ac1);
+			color: var(--ac1);
+			background-color: var(--ac1-25);
 
 			&:hover {
 				color: var(--tx1);
-				background-color: var(--ac1-75);
+				background-color: var(--ac1-50);
 			}
 		}
 		&.accentLight {
@@ -152,30 +152,30 @@
 			}
 		}
 		&.success {
-			color: var(--tx1);
-			background-color: var(--success);
+			color: var(--success);
+			background-color: var(--success-25);
 
 			&:hover {
 				color: var(--tx1);
-				background-color: var(--success-75);
+				background-color: var(--success-50);
 			}
 		}
 		&.warn {
-			color: var(--tx1);
-			background-color: var(--warn);
+			color: var(--warn);
+			background-color: var(--warn-25);
 
 			&:hover {
 				color: var(--tx1);
-				background-color: var(--warn-75);
+				background-color: var(--warn-50);
 			}
 		}
 		&.danger {
-			color: var(--tx1);
-			background-color: var(--danger);
+			color: var(--danger);
+			background-color: var(--danger-25);
 
 			&:hover {
 				color: var(--tx1);
-				background-color: var(--danger-75);
+				background-color: var(--danger-50);
 			}
 		}
 		&.transparent {

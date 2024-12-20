@@ -26,7 +26,7 @@ export class TypeormLogger implements Logger {
 		logger.info('db', message);
 	}
 
-	log(level: 'info' | 'warn' | 'log', message: any) {
+	log(level: 'info' | 'warn' | 'log', message: string) {
 		if (
 			!message.startsWith('All classes found using provided glob pattern')
 		) {

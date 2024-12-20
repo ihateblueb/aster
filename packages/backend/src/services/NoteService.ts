@@ -288,6 +288,13 @@ class NoteService {
 					message: locale.note.replyTargetNotFound
 				};
 
+			if (!(await VisibilityService.canISee(replyingToNote, user)))
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.cannotReplyToNote
+				};
+
 			note['replyingToId'] = replyingToNote.id;
 		}
 
@@ -305,6 +312,13 @@ class NoteService {
 					error: true,
 					status: 400,
 					message: locale.note.repeatTargetNotFound
+				};
+
+			if (!(await VisibilityService.canISee(repeatedNote, user)))
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.cannotRepeatNote
 				};
 
 			note['repeatId'] = repeatedNote.id;
@@ -343,8 +357,6 @@ class NoteService {
 			await ApDeliverService.deliverToFollowers(announce, user);
 		} else {
 			const create = ApCreateRenderer.render(
-				IdService.generate(),
-				user,
 				await ApNoteRenderer.render(await this.get({ id: note.id }))
 			);
 
@@ -363,8 +375,7 @@ class NoteService {
 				id: user
 			});
 
-			for (const i in localFollowers) {
-				const follower = localFollowers[i];
+			for (const follower of localFollowers) {
 				WebsocketService.userEmitter.emit(follower.id, {
 					type: 'timeline:add',
 					timeline: 'home',

@@ -25,6 +25,7 @@
 		"@tanstack/svelte-query": "^5.62.3",
 		"mfm-js": "^0.24.0",
 		"sass": "^1.82.0",
+		"svelte-check": "^4.1.1",
 		"svelte-preprocess": "^6.0.3",
 		"uuid": "^10.0.0",
 		"vite-plugin-dynamic-import": "^1.6.0"

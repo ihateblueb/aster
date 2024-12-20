@@ -1,13 +1,10 @@
 import express from 'express';
 
-import ApNoteRenderer from '../../services/ap/ApNoteRenderer.js';
-import AuthorizedFetchService from '../../services/AuthorizedFetchService.js';
-import CacheService from '../../services/CacheService.js';
-import MetricsService from '../../services/MetricsService.js';
-import NoteService from '../../services/NoteService.js';
-import oapi from '../../utils/apidoc.js';
-import config from '../../utils/config.js';
-import locale from '../../utils/locale.js';
+import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
+import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
+import NoteService from '../../../services/NoteService.js';
+import oapi from '../../../utils/apidoc.js';
+import locale from '../../../utils/locale.js';
 
 const router = express.Router();
 

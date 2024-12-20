@@ -1,10 +1,7 @@
 import express from 'express';
-import { parse } from 'yaml';
 
 import AuthService from '../../../../../services/AuthService.js';
 import ModeratedInstanceService from '../../../../../services/ModeratedInstanceService.js';
-import SanitizerService from '../../../../../services/SanitizerService.js';
-import ValidationService from '../../../../../services/ValidationService.js';
 import oapi from '../../../../../utils/apidoc.js';
 import locale from '../../../../../utils/locale.js';
 

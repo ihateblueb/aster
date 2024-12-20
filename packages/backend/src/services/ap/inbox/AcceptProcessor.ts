@@ -1,11 +1,10 @@
-import { Notification } from '../../../entities/Notification.js';
 import NotificationService from '../../NotificationService.js';
 import RelationshipService from '../../RelationshipService.js';
 import UserService from '../../UserService.js';
 import ApActorService from '../ApActorService.js';
 
 class AcceptProcessor {
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		if (!body.actor) return false;
 		if (!body.object && !body.object.type) return false;
 

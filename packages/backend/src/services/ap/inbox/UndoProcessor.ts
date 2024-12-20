@@ -1,18 +1,18 @@
 class UndoProcessor {
-	private async undoAnnounce(body): Promise<boolean> {
+	private async undoAnnounce(body: ApObject): Promise<boolean> {
 		return false;
 	}
-	private async undoCreate(body): Promise<boolean> {
+	private async undoCreate(body: ApObject): Promise<boolean> {
 		return false;
 	}
-	private async undoFollow(body): Promise<boolean> {
+	private async undoFollow(body: ApObject): Promise<boolean> {
 		return false;
 	}
-	private async undoLike(body): Promise<boolean> {
+	private async undoLike(body: ApObject): Promise<boolean> {
 		return false;
 	}
 
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		// todo: Undo types
 		// Create, Announce, Follow, Like
 		// Add and Remove once I figure out where it's used

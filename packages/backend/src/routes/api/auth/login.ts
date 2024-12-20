@@ -53,7 +53,7 @@ router.post(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	(req, res, next) => {
+	(req, res) => {
 		const bodyValidation = ValidationService.validateApiBody(req.body);
 
 		if (bodyValidation.error)

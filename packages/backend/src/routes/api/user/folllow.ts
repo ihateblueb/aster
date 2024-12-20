@@ -1,8 +1,6 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
-import NoteService from '../../../services/NoteService.js';
-import RelationshipService from '../../../services/RelationshipService.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
@@ -19,9 +17,7 @@ router.post(
 				description:
 					'Return the relationship for a user after trying to follow them.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/User'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },

@@ -3,8 +3,8 @@
 	"version": "1.0.0",
 	"type": "module",
 	"scripts": {
-		"build": "swc src -d built --strip-leading-paths",
-		"build-dev": "swc src -d built --strip-leading-paths --watch",
+		"build": "swc src -d built --strip-leading-paths --delete-dir-on-start",
+		"build-dev": "swc src -d built --strip-leading-paths --delete-dir-on-start --watch",
 		"dev": "npm-run-all --parallel build-dev start-dev",
 		"migrate": "pnpm exec typeorm migration:run -d ./built/utils/database.js",
 		"revert": "pnpm exec typeorm migration:revert -d ./built/utils/database.js",

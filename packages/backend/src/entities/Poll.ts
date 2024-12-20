@@ -1,12 +1,4 @@
-import typeorm, {
-	Column,
-	Entity,
-	JoinColumn,
-	ManyToOne,
-	PrimaryColumn
-} from 'typeorm';
-
-import { Note } from './Note.js';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class Poll {

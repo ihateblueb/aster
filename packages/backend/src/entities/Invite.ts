@@ -14,6 +14,6 @@ export class Invite {
 	@Column({ nullable: true })
 	usedBy: string;
 
-	@Column()
+	@Column({ unique: true })
 	invite: string;
 }

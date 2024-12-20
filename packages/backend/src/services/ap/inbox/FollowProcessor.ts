@@ -2,7 +2,7 @@ import RelationshipService from '../../RelationshipService.js';
 import UserService from '../../UserService.js';
 
 class FollowProcessor {
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		if (!body.actor) return false;
 		if (!body.object) return false;
 

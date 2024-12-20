@@ -12,7 +12,7 @@ import UndoProcessor from './inbox/UndoProcessor.js';
 import UpdateProcessor from './inbox/UpdateProcessor.js';
 
 class ApInboxService {
-	public async process(body) {
+	public async process(body: ApObject) {
 		if (body.type === 'Accept') {
 			await AcceptProcessor.process(body);
 		} else if (body.type === 'Add') {
@@ -42,11 +42,11 @@ class ApInboxService {
 					body.type +
 					' that has no processor'
 			);
+
+			return 'Unprocessed';
 		}
 
-		return {
-			status: 202
-		};
+		return 202;
 	}
 }
 

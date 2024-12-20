@@ -1,7 +1,6 @@
 import express from 'express';
 
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
-import AuthorizedFetchService from '../../services/AuthorizedFetchService.js';
 import CacheService from '../../services/CacheService.js';
 import MetricsService from '../../services/MetricsService.js';
 import UserService from '../../services/UserService.js';

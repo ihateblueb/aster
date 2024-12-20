@@ -11,7 +11,8 @@ import ap_followers from '../routes/ap/followers.js';
 import ap_following from '../routes/ap/following.js';
 import ap_inbox from '../routes/ap/inbox.js';
 import nodeinfo from '../routes/ap/nodeinfo.js';
-import ap_note from '../routes/ap/note.js';
+import ap_note_activity from '../routes/ap/note/activity.js';
+import ap_note_get from '../routes/ap/note/get.js';
 import ap_user from '../routes/ap/user.js';
 import wellknown from '../routes/ap/wellknown.js';
 import admin_federation_rules_get from '../routes/api/admin/federation/rules/get.js';
@@ -47,7 +48,6 @@ import AuthService from './AuthService.js';
 import IdService from './IdService.js';
 import MetricsService from './MetricsService.js';
 import QueueService from './QueueService.js';
-import UserService from './UserService.js';
 
 const router = express.Router();
 
@@ -211,7 +211,8 @@ router.use('/', ap_followers);
 router.use('/', ap_following);
 router.use('/', ap_inbox);
 router.use('/', nodeinfo);
-router.use('/', ap_note);
+router.use('/', ap_note_activity);
+router.use('/', ap_note_get);
 router.use('/', ap_user);
 router.use('/', wellknown);
 

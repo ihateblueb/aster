@@ -26,24 +26,24 @@ export class Bookmark {
 	// bookmark a user, or a note
 
 	@Column({ select: false, nullable: true })
-	userId: string | null;
+	userId: string;
 
 	@ManyToOne(() => User, (user) => user, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
 	@JoinColumn({ name: 'userId' })
-	user: typeorm.Relation<User> | null;
+	user: typeorm.Relation<User>;
 
 	@Column({ select: false, nullable: true })
-	noteId: string | null;
+	noteId: string;
 
 	@ManyToOne(() => Note, (note) => note, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
 	@JoinColumn({ name: 'noteId' })
-	note: typeorm.Relation<Note> | null;
+	note: typeorm.Relation<Note>;
 
 	@Column()
 	createdAt: string;

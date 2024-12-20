@@ -1,6 +1,5 @@
 import crypto from 'crypto';
 
-import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import UserService from './UserService.js';
 

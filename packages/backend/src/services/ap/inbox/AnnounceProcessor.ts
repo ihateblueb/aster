@@ -5,7 +5,7 @@ import ApNoteService from '../ApNoteService.js';
 import ApVisibilityService from '../ApVisibilityService.js';
 
 class AnnounceProcessor {
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		if (!body.object) return false;
 		if (!body.actor) return false;
 

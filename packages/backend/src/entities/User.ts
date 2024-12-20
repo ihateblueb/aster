@@ -1,6 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-
-import { Note } from './Note.js';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -10,7 +8,7 @@ export class User {
 	@Column({ unique: true })
 	apId: string;
 
-	@Column({ nullable: true })
+	@Column()
 	inbox: string;
 
 	@Column({ nullable: true })

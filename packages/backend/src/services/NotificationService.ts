@@ -1,5 +1,4 @@
 import db from '../utils/database.js';
-import logger from '../utils/logger.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
