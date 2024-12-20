@@ -19,7 +19,7 @@
 	export let user;
 </script>
 
-<Dropdown bind:this>
+<Dropdown bind:this={bind}>
 	<DropdownItem>
 		<IconCopy size="var(-fs-lg)" />
 		Copy username
