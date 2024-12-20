@@ -7,6 +7,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
+import QueueService from '../QueueService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import WebsocketService from '../WebsocketService.js';
@@ -80,14 +81,36 @@ class ApNoteService {
 			});
 
 		let replyingTo;
-
-		if (body.inReplyTo)
+		
+		if (body.inReplyTo) {
 			replyingTo = await this.get(
 				body.inReplyTo,
 				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
 			);
 
-		if (replyingTo) note['replyingToId'] = replyingTo.id;
+			if (!replyingTo)
+				return await QueueService.backfill
+					.add(IdService.generate(), {
+						object: body.inReplyTo,
+						type: 'reply',
+						addTo: body.id
+					})
+					.then(() => {
+						logger.debug(
+							'backfill',
+							'added ' + body.replyingTo + ' to backfill queue'
+						);
+					})
+					.catch((err) => {
+						console.log(err);
+						logger.error(
+							'backfill',
+							'failed to add ' +
+								body.replyingTo +
+								' to backfill queue'
+						);
+					});
+		}
 
 		let quote;
 
@@ -106,6 +129,33 @@ class ApNoteService {
 				body._misskey_quote,
 				getRelatedNotesAs ? getRelatedNotesAs.id : undefined
 			);
+
+		if (body.quoteUrl || body.quoteUri || body._misskey_quote)
+			if (!quote)
+				return await QueueService.backfill
+					.add(IdService.generate(), {
+						object:
+							body.quoteUrl ??
+							body.quoteUri ??
+							body._misskey_quote,
+						type: 'quote',
+						addTo: body.id
+					})
+					.then(() => {
+						logger.debug(
+							'backfill',
+							'added ' + body.replyingTo + ' to backfill queue'
+						);
+					})
+					.catch((err) => {
+						console.log(err);
+						logger.error(
+							'backfill',
+							'failed to add ' +
+								body.replyingTo +
+								' to backfill queue'
+						);
+					});
 
 		if (quote) note['repeatId'] = quote.id;
 
