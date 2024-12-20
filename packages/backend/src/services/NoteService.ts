@@ -343,8 +343,6 @@ class NoteService {
 			await ApDeliverService.deliverToFollowers(announce, user);
 		} else {
 			const create = ApCreateRenderer.render(
-				IdService.generate(),
-				user,
 				await ApNoteRenderer.render(await this.get({ id: note.id }))
 			);
 

@@ -1,4 +1,13 @@
+<script lang="ts">
+	export let header;
+</script>
+
 <div class="widget">
+	{#if header}
+		<div class="header">
+			<slot name="header" />
+		</div>
+	{/if}
 	<slot />
 </div>
 
@@ -10,5 +19,15 @@
 
 		background: var(--bg2);
 		border-radius: var(--br-lg);
+
+		.header {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			padding: 6px 8px;
+
+			background-color: var(--bg3);
+		}
 	}
 </style>

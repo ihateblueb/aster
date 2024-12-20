@@ -100,7 +100,6 @@ Activities Processed:
 
 - handle robots.txt from backend, generate from config
 - favicon
-- try using typeof for some types of validation
 - use backfill queue (reply, quote)
 
 ## Development
