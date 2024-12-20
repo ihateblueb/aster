@@ -19,12 +19,6 @@ import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteService {
 	public async get(apId: ApId, as?: GenericId) {
-		const url = new URL(apId);
-
-		// why is this here? this is for notes
-		//const actor = await UserService.get({ apId: apId });
-		//if (actor) return actor;
-
 		const existingNote = await NoteService.get({ apId: apId });
 		if (existingNote) return existingNote;
 

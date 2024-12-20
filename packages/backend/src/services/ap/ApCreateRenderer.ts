@@ -1,10 +1,7 @@
-import { ObjectLiteral } from 'typeorm';
-
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
 
 class ApCreateRenderer {
-	public render(note: ObjectLiteral) {
+	public render(note: ApObject): ApObject {
 		return {
 			'@context': context,
 

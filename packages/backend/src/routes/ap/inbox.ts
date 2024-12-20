@@ -34,7 +34,7 @@ router.post(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	async (req, res, next) => {
+	async (req, res) => {
 		try {
 			if (!ApValidationService.validBody(JSON.parse(req.body)))
 				return res

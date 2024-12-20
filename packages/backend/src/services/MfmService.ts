@@ -7,7 +7,7 @@ class MfmService {
 	}
 
 	public toHtml(content: string) {
-		const parsed = this.parse(content, true);
+		//const parsed = this.parse(content, true);
 	}
 
 	public localize(content: string) {

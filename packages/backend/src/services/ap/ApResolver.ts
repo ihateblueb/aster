@@ -1,6 +1,7 @@
+import crypto from 'node:crypto';
 import * as punycode from 'node:punycode';
 
-import crypto from 'crypto';
+import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import config from '../../utils/config.js';
@@ -25,8 +26,8 @@ class ApResolver {
 			return false;
 		}
 
-		let actor;
-		let actorPrivate;
+		let actor: ObjectLiteral;
+		let actorPrivate: ObjectLiteral;
 
 		if (as) {
 			actor = await UserService.get({ id: as });

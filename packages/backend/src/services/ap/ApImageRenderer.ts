@@ -1,5 +1,5 @@
 class ApImageRenderer {
-	public render(src: string, sensitive?: boolean, alt?: string) {
+	public render(src: string, sensitive?: boolean, alt?: string): ApObject {
 		const apImage = {
 			type: 'Image',
 			url: src,

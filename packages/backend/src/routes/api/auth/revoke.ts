@@ -5,7 +5,6 @@ import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
 import db from '../../../utils/database.js';
 import locale from '../../../utils/locale.js';
-import logger from '../../../utils/logger.js';
 
 const router = express.Router();
 
@@ -36,7 +35,7 @@ router.post(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
-	async (req, res, next) => {
+	async (req, res) => {
 		const auth = await AuthService.verify(req.headers.authorization);
 
 		if (auth.error)

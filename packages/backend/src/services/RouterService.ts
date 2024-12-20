@@ -48,7 +48,6 @@ import AuthService from './AuthService.js';
 import IdService from './IdService.js';
 import MetricsService from './MetricsService.js';
 import QueueService from './QueueService.js';
-import UserService from './UserService.js';
 
 const router = express.Router();
 

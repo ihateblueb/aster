@@ -1,10 +1,8 @@
-import { ObjectLiteral } from 'typeorm';
-
 import context from '../../static/context.js';
 import config from '../../utils/config.js';
 
 class ApLikeRenderer {
-	public render(id: GenericId, actor: GenericId, object: GenericId) {
+	public render(id: GenericId, actor: GenericId, object: GenericId): ApObject {
 		return {
 			'@context': context,
 

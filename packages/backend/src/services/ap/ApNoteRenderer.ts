@@ -1,9 +1,8 @@
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
-	public async render(note) {
+	public async render(note): Promise<ApObject> {
 		const apNote = {
 			'@context': context,
 

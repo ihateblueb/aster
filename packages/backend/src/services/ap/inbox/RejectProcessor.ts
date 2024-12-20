@@ -1,5 +1,5 @@
 class RejectProcessor {
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		return false;
 	}
 }

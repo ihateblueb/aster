@@ -9,7 +9,7 @@ class ApOrderedCollectionRenderer {
 		base: string,
 		cursor: string,
 		items: ObjectLiteral[]
-	) {
+	): ApObject {
 		let apOrderedCollection;
 
 		if (first) {

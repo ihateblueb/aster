@@ -5,7 +5,7 @@ import config from '../../utils/config.js';
 import ApImageRenderer from './ApImageRenderer.js';
 
 class ApActorRenderer {
-	public render(user: ObjectLiteral) {
+	public render(user: ObjectLiteral): ApObject {
 		const apActor = {
 			'@context': context,
 

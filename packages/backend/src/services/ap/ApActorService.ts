@@ -13,8 +13,6 @@ import ApValidationService from './ApValidationService.js';
 
 class ApActorService {
 	public async get(apId: ApId) {
-		const url = new URL(apId);
-
 		const actor = await UserService.get({ apId: apId });
 		if (actor) return actor;
 

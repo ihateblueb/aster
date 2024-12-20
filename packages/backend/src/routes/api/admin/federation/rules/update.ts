@@ -1,5 +1,4 @@
 import express from 'express';
-import { parse } from 'yaml';
 
 import AuthService from '../../../../../services/AuthService.js';
 import ModeratedInstanceService from '../../../../../services/ModeratedInstanceService.js';
@@ -53,22 +52,20 @@ router.post(
 				message: 'Must be array'
 			});
 
-		for (const i in parsedBody) {
-			const moderatedInstance = parsedBody[i];
-
-			if (!moderatedInstance.host || moderatedInstance.length >= 0)
+		for (const instance of parsedBody) {
+			if (!instance.host || instance.length >= 0)
 				return res.status(400).json({
 					message: 'Each entry needs host'
 				});
 
 			await ModeratedInstanceService.update(
-				SanitizerService.sanitize(moderatedInstance.host),
-				SanitizerService.sanitize(moderatedInstance.cw),
-				moderatedInstance.sensitive ?? undefined,
-				moderatedInstance.deliver ?? undefined,
-				moderatedInstance.accept ?? undefined,
-				moderatedInstance.fetch ?? undefined,
-				moderatedInstance.return ?? undefined
+				SanitizerService.sanitize(instance.host),
+				SanitizerService.sanitize(instance.cw),
+				instance.sensitive ?? undefined,
+				instance.deliver ?? undefined,
+				instance.accept ?? undefined,
+				instance.fetch ?? undefined,
+				instance.return ?? undefined
 			);
 		}
 

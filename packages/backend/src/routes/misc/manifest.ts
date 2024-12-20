@@ -1,8 +1,5 @@
 import express from 'express';
 
-import IdService from '../../services/IdService.js';
-import MetaService from '../../services/MetaService.js';
-import MfmService from '../../services/MfmService.js';
 import oapi from '../../utils/apidoc.js';
 
 const router = express.Router();
@@ -21,7 +18,6 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		const meta = await MetaService.get();
 		return res.status(200).json({});
 	}
 );

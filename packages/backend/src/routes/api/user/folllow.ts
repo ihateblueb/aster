@@ -1,8 +1,6 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
-import NoteService from '../../../services/NoteService.js';
-import RelationshipService from '../../../services/RelationshipService.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';

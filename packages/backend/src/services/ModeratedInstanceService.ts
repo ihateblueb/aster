@@ -1,7 +1,6 @@
 import punycode from 'node:punycode';
 
 import db from '../utils/database.js';
-import locale from '../utils/locale.js';
 import reduceSubdomain from '../utils/reduceSubdomain.js';
 import IdService from './IdService.js';
 

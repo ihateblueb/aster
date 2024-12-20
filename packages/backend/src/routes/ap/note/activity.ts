@@ -3,11 +3,8 @@ import express from 'express';
 import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
 import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
-import CacheService from '../../../services/CacheService.js';
-import MetricsService from '../../../services/MetricsService.js';
 import NoteService from '../../../services/NoteService.js';
 import oapi from '../../../utils/apidoc.js';
-import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
 
 const router = express.Router();
@@ -15,7 +12,7 @@ const router = express.Router();
 router.get(
 	'/notes/:id',
 	oapi.path({
-		description: 'Fetch a note',
+		description: "Fetch a note's Create activity",
 		tags: ['Federation'],
 		requestBody: {
 			content: {
@@ -24,7 +21,7 @@ router.get(
 		},
 		responses: {
 			200: {
-				description: 'Return specified note.',
+				description: "Return specified note's create activity.",
 				content: {
 					'application/activity+json': {}
 				}

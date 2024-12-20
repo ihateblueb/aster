@@ -2,7 +2,7 @@ import ApActorService from '../ApActorService.js';
 import ApNoteService from '../ApNoteService.js';
 
 class CreateProcessor {
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		if (body.object.type === 'Note') {
 			await ApNoteService.register(body.object);
 			return true;

@@ -24,7 +24,7 @@ const deliver = new Worker(
 const backfill = new Worker(
 	'{backfill}',
 	async (job) => {
-		throw Error('processing not implemented');
+		throw new Error('processing not implemented');
 	},
 	{ connection: redis, concurrency: Number(config.backfill.concurrency) }
 );

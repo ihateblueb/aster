@@ -3,7 +3,7 @@ import NoteService from '../../NoteService.js';
 import UserService from '../../UserService.js';
 
 class DeleteProcessor {
-	private async findAndDelete(as: string, apId: string): Promise<boolean> {
+	private async findAndDelete(as: GenericId, apId: ApId): Promise<boolean> {
 		const actor = await UserService.get({ apId: as });
 		if (!actor) return false;
 
@@ -24,7 +24,7 @@ class DeleteProcessor {
 		return false;
 	}
 
-	public async process(body): Promise<boolean> {
+	public async process(body: ApObject): Promise<boolean> {
 		if (!body.actor) return false;
 		if (!body.object) return false;
 

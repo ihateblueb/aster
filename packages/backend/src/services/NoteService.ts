@@ -375,8 +375,7 @@ class NoteService {
 				id: user
 			});
 
-			for (const i in localFollowers) {
-				const follower = localFollowers[i];
+			for (const follower of localFollowers) {
 				WebsocketService.userEmitter.emit(follower.id, {
 					type: 'timeline:add',
 					timeline: 'home',
