@@ -288,6 +288,13 @@ class NoteService {
 					message: locale.note.replyTargetNotFound
 				};
 
+			if (!(await VisibilityService.canISee(replyingToNote, user)))
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.cannotReplyToNote
+				};
+
 			note['replyingToId'] = replyingToNote.id;
 		}
 
@@ -305,6 +312,13 @@ class NoteService {
 					error: true,
 					status: 400,
 					message: locale.note.repeatTargetNotFound
+				};
+
+			if (!(await VisibilityService.canISee(repeatedNote, user)))
+				return {
+					error: true,
+					status: 400,
+					message: locale.note.cannotRepeatNote
 				};
 
 			note['repeatId'] = repeatedNote.id;

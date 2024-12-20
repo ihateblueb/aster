@@ -81,7 +81,7 @@ class ApNoteService {
 			});
 
 		let replyingTo;
-		
+
 		if (body.inReplyTo) {
 			replyingTo = await this.get(
 				body.inReplyTo,

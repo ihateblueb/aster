@@ -21,6 +21,15 @@ class ModeratedInstanceService {
 	public async delete(where: where) {
 		return await db.getRepository('moderated_instance').delete(where);
 	}
+
+	private async alertBrokenRelationships(host: string) {
+		/*
+		 *	how can this be done?
+		 *	hosts are reduced, but arent on relationship.user.host
+		 */
+		return;
+	}
+
 	public async update(
 		host: string,
 		cw: string,
@@ -74,6 +83,9 @@ class ModeratedInstanceService {
 				fetch: fetch,
 				return: return_
 			};
+
+			if (!deliver || !accept || !fetch || !return_)
+				this.alertBrokenRelationships(host);
 
 			return await db
 				.getRepository('moderated_instance')
