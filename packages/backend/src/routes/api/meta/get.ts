@@ -14,9 +14,7 @@ router.get(
 			200: {
 				description: 'Return instance metadata.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Meta'
-					}
+					'application/json': {}
 				}
 			},
 			500: { $ref: '#/components/responses/error-500' }

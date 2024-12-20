@@ -17,7 +17,7 @@
 	"scripts": {
 		"start": "./scripts/greet.sh && pnpm --filter=backend start",
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
-		"build-be": "pnpm clean-be && pnpm --filter=backend build",
+		"build-be": "pnpm --filter=backend build",
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
 		"dev": "pnpm build && npm-run-all --parallel dev-fe dev-be",
 		"dev-be": "pnpm --filter=backend dev",

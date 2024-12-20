@@ -33,9 +33,7 @@ router.post(
 			200: {
 				description: 'Return the created note.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Note'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },

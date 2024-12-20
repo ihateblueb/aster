@@ -20,9 +20,7 @@ router.patch(
 			200: {
 				description: 'Return an updated user.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/User'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },

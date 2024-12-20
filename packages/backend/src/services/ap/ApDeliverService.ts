@@ -14,7 +14,11 @@ import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
 
 class ApDeliverService {
-	public async deliverToInboxes(body: ApObject, inboxes: ApId[], as: GenericId) {
+	public async deliverToInboxes(
+		body: ApObject,
+		inboxes: ApId[],
+		as: GenericId
+	) {
 		for (const inbox of inboxes) {
 			await QueueService.deliver.add(IdService.generate(), {
 				as: as,
@@ -45,18 +49,14 @@ class ApDeliverService {
 			const user = await UserService.get({
 				host: peer.host
 			});
-			
+
 			if (user) inboxes.push(user.inbox);
 		}
 
 		await this.deliverToInboxes(body, inboxes, as);
 	}
 
-	public async deliver(data: {
-		body: ApObject,
-		inbox: ApId,
-		as: GenericId
-	}) {
+	public async deliver(data: { body: ApObject; inbox: ApId; as: GenericId }) {
 		if (!data.body) throw new Error('cannot deliver with no body');
 		if (!data.inbox) throw new Error('cannot deliver with to nobody');
 

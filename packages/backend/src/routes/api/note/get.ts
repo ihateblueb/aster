@@ -17,9 +17,7 @@ router.get(
 			200: {
 				description: 'Return a note.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/Note'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },

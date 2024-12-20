@@ -43,7 +43,7 @@ class ApInboxService {
 					' that has no processor'
 			);
 
-			return 'Unprocessed'
+			return 'Unprocessed';
 		}
 
 		return 202;

@@ -15,9 +15,7 @@ router.get(
 			200: {
 				description: 'Return a user.',
 				content: {
-					'application/json': {
-						$ref: '#/components/schemas/User'
-					}
+					'application/json': {}
 				}
 			},
 			400: { $ref: '#/components/responses/error-400' },
