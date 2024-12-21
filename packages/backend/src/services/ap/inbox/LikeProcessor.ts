@@ -18,7 +18,7 @@ class LikeProcessor {
 			console.log(body.tag);
 		}
 
-		return await NoteService.like(note.id, actor.id, false)
+		return await NoteService.like(note.id, actor.id, false, body.id)
 			.then((e) => {
 				console.log(e);
 				return true;

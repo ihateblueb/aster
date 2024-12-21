@@ -9,6 +9,7 @@ import AuthorizedFetchService from '../services/AuthorizedFetchService.js';
  * have extra checks for visibility. They still use the AFS,
  * though. Just with their own handling.
  * */
+
 export default async function (req, res, next) {
 	const afs = await AuthorizedFetchService.try(req);
 

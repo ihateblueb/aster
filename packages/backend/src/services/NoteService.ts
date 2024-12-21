@@ -9,6 +9,7 @@ import ApAnnounceRenderer from './ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from './ap/ApCreateRenderer.js';
 import ApDeleteRenderer from './ap/ApDeleteRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
+import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
@@ -135,7 +136,12 @@ class NoteService {
 		return db.getRepository('note').delete(where);
 	}
 
-	public async like(noteId: GenericId, as: GenericId, toggle?: boolean) {
+	public async like(
+		noteId: GenericId,
+		as: GenericId,
+		toggle?: boolean,
+		apId?: ApId
+	) {
 		const id = IdService.generate();
 
 		const user = await UserService.get({ id: as });
@@ -189,6 +195,7 @@ class NoteService {
 		} else {
 			const like = {
 				id: id,
+				apId: apId ?? new URL(config.url).href + 'like/' + id,
 				userId: user.id,
 				noteId: noteId,
 				createdAt: new Date().toISOString()
@@ -198,6 +205,19 @@ class NoteService {
 				.getRepository('note_like')
 				.insert(like)
 				.then(async () => {
+					if (user.local) {
+						const activity = ApLikeRenderer.render(
+							new URL(config.url).href + 'like/' + like.id,
+							user.id,
+							note.apId
+						);
+
+						await ApDeliverService.deliverToFollowers(
+							activity,
+							user.id
+						);
+					}
+
 					await NotificationService.create(
 						note.user.id,
 						user.id,

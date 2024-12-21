@@ -14,6 +14,9 @@ export class NoteLike {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
+	@Column({ unique: true })
+	apId: string;
+
 	@Column({ select: false })
 	userId: string;
 

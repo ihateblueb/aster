@@ -23,6 +23,7 @@
 	import localstore from '$lib/localstore.js';
 	import deleteNote from '$lib/api/note/delete.js';
 	import { page } from '$app/stores';
+	import likeNote from '$lib/api/note/like.js';
 
 	let self;
 	function updateSelf() {
@@ -44,7 +45,9 @@
 	function quote() {
 		store.draft_repeat.set(note?.id);
 	}
-	function like() {}
+	function like() {
+		likeNote(note?.id);
+	}
 	function react() {}
 
 	let repeatDropdown: Dropdown;
