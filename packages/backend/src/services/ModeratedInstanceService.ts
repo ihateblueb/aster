@@ -21,6 +21,42 @@ class ModeratedInstanceService {
 		return await db.getRepository('moderated_instance').delete(where);
 	}
 
+	public async allowAccept(host: string) {
+		const instance = await this.get({
+			host: punycode.toASCII(reduceSubdomain(host))
+		});
+
+		if (instance && !instance.accept) return false;
+		return true;
+	}
+
+	public async allowDeliver(host: string) {
+		const instance = await this.get({
+			host: punycode.toASCII(reduceSubdomain(host))
+		});
+
+		if (instance && !instance.deliver) return false;
+		return true;
+	}
+
+	public async allowFetch(host: string) {
+		const instance = await this.get({
+			host: punycode.toASCII(reduceSubdomain(host))
+		});
+
+		if (instance && !instance.fetch) return false;
+		return true;
+	}
+
+	public async allowReturn(host: string) {
+		const instance = await this.get({
+			host: punycode.toASCII(reduceSubdomain(host))
+		});
+
+		if (instance && !instance.return) return false;
+		return true;
+	}
+
 	private async alertBrokenRelationships(host: string) {
 		/*
 		 *	how can this be done?

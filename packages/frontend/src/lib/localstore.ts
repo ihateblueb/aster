@@ -21,7 +21,7 @@ let defaults = {
 		bottom: ['account']
 	},
 	sidebarRight: {
-		top: ['compose', 'notifications'],
+		top: ['compose', 'notifications', 'development'],
 		bottom: ['meta']
 	},
 

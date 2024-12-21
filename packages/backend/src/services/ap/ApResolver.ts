@@ -8,20 +8,13 @@ import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
 
 class ApResolver {
 	public async resolveSigned(apId: ApId, as?: GenericId) {
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: punycode.toASCII(reduceSubdomain(new URL(apId).host))
-				}
-			});
-
-		if (moderatedInstance && !moderatedInstance.fetch) {
+		if (!(await ModeratedInstanceService.allowFetch(new URL(apId).host))) {
 			logger.info('resolver', 'blocked fetch of ');
 			return false;
 		}

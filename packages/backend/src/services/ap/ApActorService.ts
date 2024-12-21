@@ -6,6 +6,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
+import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import ApResolver from './ApResolver.js';
@@ -40,13 +41,9 @@ class ApActorService {
 			activated: true
 		};
 
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: punycode.toASCII(reduceSubdomain(user.host))
-				}
-			});
+		const moderatedInstance = await ModeratedInstanceService.get({
+			host: punycode.toASCII(reduceSubdomain(user.host))
+		});
 
 		if (!body.preferredUsername) return false;
 		user['username'] = SanitizerService.sanitize(body.preferredUsername);

@@ -9,6 +9,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
+import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
@@ -64,15 +65,7 @@ class ApDeliverService {
 			reduceSubdomain(new URL(data.inbox).host)
 		);
 
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: deliverHost
-				}
-			});
-
-		if (moderatedInstance && !moderatedInstance.deliver)
+		if (!(await ModeratedInstanceService.allowDeliver(deliverHost)))
 			return 'cannot deliver to no deliver instance ' + deliverHost;
 
 		let as: ObjectLiteral;

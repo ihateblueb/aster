@@ -8,6 +8,7 @@
 	import Visibility from '$lib/components/Visibility.svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
 
 	export let note;
 	export let expanded = false;
@@ -19,11 +20,11 @@
 	<div class="content">
 		{#if data.cw}
 			{#key cwOpen}
-				<div class="cw">
+				<div class={'cw' + (cwOpen ? ' open' : '')}>
 					<span>{data.cw}</span>
-					<button on:click={() => (cwOpen = !cwOpen)}
-						>{!cwOpen ? 'Show' : 'Hide'}</button
-					>
+					<Button thin nm on:click={() => (cwOpen = !cwOpen)}
+						>{!cwOpen ? 'Show content' : 'Hide content'}
+					</Button>
 				</div>
 				{#if cwOpen}
 					<Mfm
@@ -118,46 +119,14 @@
 
 			.cw {
 				display: flex;
-				align-items: center;
+				align-items: start;
+				flex-direction: column;
+				gap: 4px;
+
 				width: 100%;
-				color: var(--ac1);
-				font-weight: 500;
-				background-color: var(--ac1-25);
-				border-radius: var(--br-md);
-				padding: 6px 10px;
-				box-shadow: var(--funky-effect);
-				box-sizing: border-box;
-				margin-bottom: 10px;
 
-				button {
-					display: flex;
-					align-items: center;
-					box-sizing: border-box;
-					border: none;
-					border-radius: var(--br-md);
-					padding: 6px 10px;
-					font-family: var(--font);
-					font-feature-settings: var(--font-features);
-					font-size: var(--fs-md);
-					font-weight: 400;
-					text-decoration: none;
-					transition:
-						0.1s,
-						width 0s,
-						height 0s,
-						outline 0s;
-					color: var(--tx1);
-					background-color: transparent;
-
-					&:hover {
-						color: var(--tx1);
-						background-color: var(--ac1-25);
-						box-shadow: var(--funky-effect);
-					}
-				}
-
-				span {
-					flex-grow: 1;
+				&.open {
+					margin-bottom: 5px;
 				}
 			}
 		}

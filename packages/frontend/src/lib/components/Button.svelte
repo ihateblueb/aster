@@ -16,6 +16,7 @@
 	export let nav: boolean = false;
 	export let circle: boolean = false;
 	export let wide: boolean = false;
+	export let thin: boolean = false;
 	export let nm: boolean = false;
 
 	function calculateClass() {
@@ -52,6 +53,7 @@
 			(circle ? ' circle' : '') +
 			(centered ? ' centered' : '') +
 			(wide ? ' wide' : '') +
+			(thin ? ' thin' : '') +
 			(nm ? ' nm' : '')
 		);
 	}
@@ -194,6 +196,10 @@
 		}
 		&.wide {
 			width: 100%;
+		}
+		&.thin {
+			min-height: 25px;
+			padding: 6px 10px;
 		}
 		&.circle {
 			height: 50px;

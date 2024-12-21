@@ -7,6 +7,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import IdService from '../IdService.js';
+import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
@@ -50,13 +51,9 @@ class ApNoteService {
 		if (!author) return false;
 		note['userId'] = author.id;
 
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: punycode.toASCII(reduceSubdomain(author.host))
-				}
-			});
+		const moderatedInstance = await ModeratedInstanceService.get({
+			host: punycode.toASCII(reduceSubdomain(author.host))
+		});
 
 		note['createdAt'] = body.published
 			? new Date(body.published).toISOString()

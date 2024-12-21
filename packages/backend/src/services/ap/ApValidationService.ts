@@ -8,6 +8,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
+import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {
@@ -91,34 +92,27 @@ class ApValidationService {
 				valid: false
 			};
 
-		const moderatedInstance = await db
-			.getRepository('moderated_instance')
-			.findOne({
-				where: {
-					host: punycode.toASCII(reduceSubdomain(actorApId.host))
-				}
-			});
-
-		if (moderatedInstance) {
-			if (req.method === 'POST' && !moderatedInstance.accept) {
-				logger.info(
-					'ap',
-					'blocked activity from ' + new URL(actorApId).host
-				);
-				return {
-					valid: false,
-					blocked: true
-				};
-			} else if (req.method === 'GET' && !moderatedInstance.return) {
-				logger.info(
-					'ap',
-					'blocked fetch from ' + new URL(actorApId).host
-				);
-				return {
-					valid: false,
-					blocked: true
-				};
-			}
+		if (
+			req.method === 'POST' &&
+			!(await ModeratedInstanceService.allowAccept(actorApId.host))
+		) {
+			logger.info(
+				'ap',
+				'blocked activity from ' + new URL(actorApId).host
+			);
+			return {
+				valid: false,
+				blocked: true
+			};
+		} else if (
+			req.method === 'GET' &&
+			!(await ModeratedInstanceService.allowReturn(actorApId.host))
+		) {
+			logger.info('ap', 'blocked fetch from ' + new URL(actorApId).host);
+			return {
+				valid: false,
+				blocked: true
+			};
 		}
 
 		const actor = await ApActorService.get(actorApId.toString());
