@@ -6,24 +6,22 @@ import ApVisibilityService from './ApVisibilityService.js';
 
 class ApAnnounceRenderer {
 	public async render(
-		id: GenericId,
-		actor: GenericId,
-		visibility: string,
-		activity: ObjectLiteral
+		note: ObjectLiteral,
+		activity: ObjectLiteral | string
 	): Promise<ApObject> {
-		const announce = {
+		let announce = {
 			'@context': context,
 
 			type: 'Announce',
-			id: new URL(config.url).href + 'activities/' + id,
-			actor: new URL(config.url).href + 'users/' + actor,
+			id: note.apId + '/activity',
+			actor: note.user.apId,
 			object: activity,
 			published: new Date().toISOString(),
 
-			visibility: visibility
+			visibility: note.visibility
 		};
 
-		const tocc = await ApVisibilityService.render(actor, announce);
+		const tocc = await ApVisibilityService.render(note.user, announce);
 
 		announce['to'] = tocc.to;
 		announce['cc'] = tocc.cc;

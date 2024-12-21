@@ -262,7 +262,7 @@ class NoteService {
 
 		const id = IdService.generate();
 
-		const note = {
+		let note = {
 			id: id,
 			apId: instanceUrl.href + 'notes/' + id,
 			userId: user,
@@ -346,9 +346,7 @@ class NoteService {
 
 		if (repeat && repeatedNote && !content) {
 			const announce = await ApAnnounceRenderer.render(
-				IdService.generate(),
-				user,
-				note.visibility,
+				note,
 				repeatedNote.local
 					? await ApNoteRenderer.render(repeatedNote)
 					: repeatedNote.apId

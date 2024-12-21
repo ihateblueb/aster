@@ -33,7 +33,12 @@ class MetaService {
 			.createQueryBuilder('note')
 			.leftJoinAndSelect('note.user', 'user')
 			.where({
-				'user.local': true,
+				user: {
+					username: Not('instanceactor'),
+					local: true,
+					activated: true,
+					suspended: false
+				},
 				visibility: In(['public', 'unlisted'])
 			})
 			.getCount();

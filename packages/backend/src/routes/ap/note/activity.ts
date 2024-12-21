@@ -1,5 +1,6 @@
 import express from 'express';
 
+import ApAnnounceRenderer from '../../../services/ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
 import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
@@ -84,9 +85,20 @@ router.get(
 						message: afs.message
 					});
 
-				const rendered = ApCreateRenderer.render(
-					await ApNoteRenderer.render(note)
-				);
+				let rendered: ApObject;
+
+				if (note.repeat && !note.content) {
+					rendered = await ApAnnounceRenderer.render(
+						note,
+						note.repeat.local
+							? await ApNoteRenderer.render(note.repeat)
+							: note.repeat.apId
+					);
+				} else {
+					rendered = ApCreateRenderer.render(
+						await ApNoteRenderer.render(note)
+					);
+				}
 
 				/*if (config.cache.ap)
 					await CacheService.set(

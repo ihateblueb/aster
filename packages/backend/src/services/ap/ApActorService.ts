@@ -33,7 +33,7 @@ class ApActorService {
 
 		const id = IdService.generate();
 
-		const user = {
+		let user = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
 			host: punycode.toASCII(new URL(body.id).host),

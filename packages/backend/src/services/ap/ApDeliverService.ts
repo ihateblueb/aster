@@ -32,10 +32,10 @@ class ApDeliverService {
 	public async deliverToFollowers(body: ApObject, as: GenericId) {
 		const relationships = await RelationshipService.getFollowers(as);
 
-		const inboxes: ApId[] = [];
+		let inboxes: ApId[] = [];
 
-		for (const follower of relationships) {
-			inboxes.push(follower.inbox);
+		for (const relationship of relationships) {
+			inboxes.push(relationship.from.inbox);
 		}
 
 		await this.deliverToInboxes(body, inboxes, as);
@@ -44,7 +44,7 @@ class ApDeliverService {
 	public async deliverToPeers(body: ApObject, as: GenericId) {
 		const peers = await db.getRepository('instance').find();
 
-		const inboxes: ApId[] = [];
+		let inboxes: ApId[] = [];
 
 		for (const peer of peers) {
 			const user = await UserService.get({

@@ -3,7 +3,7 @@ import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
 	public async render(note): Promise<ApObject> {
-		const apNote = {
+		let apNote = {
 			'@context': context,
 
 			type: 'Note',

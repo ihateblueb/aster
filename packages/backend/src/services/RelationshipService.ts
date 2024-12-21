@@ -136,7 +136,8 @@ class RelationshipService {
 			});
 	}
 
-	public async registerFollow(body) {
+	// ApRelationshipService?
+	public async registerFollow(body: ApObject) {
 		const to = await UserService.get({ apId: body.object });
 		if (!to) return false;
 

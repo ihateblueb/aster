@@ -73,7 +73,7 @@ class NotificationService {
 
 		const id = IdService.generate();
 
-		const notification = {
+		let notification = {
 			id: id,
 			toId: recipient.id,
 			fromId: sender.id,
