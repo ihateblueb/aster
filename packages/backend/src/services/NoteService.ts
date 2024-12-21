@@ -11,6 +11,7 @@ import ApDeleteRenderer from './ap/ApDeleteRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
+import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
@@ -172,7 +173,24 @@ class NoteService {
 					.delete({
 						id: existingLike.id
 					})
-					.then(() => {
+					.then(async () => {
+						if (user.local) {
+							const activity = ApUndoRenderer.render(
+								ApLikeRenderer.render(
+									new URL(config.url).href +
+										'like/' +
+										existingLike.id,
+									user.id,
+									note.apId
+								)
+							);
+
+							await ApDeliverService.deliverToFollowers(
+								activity,
+								user.id
+							);
+						}
+
 						return {
 							status: 200,
 							message: 'Removed like'

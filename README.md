@@ -61,6 +61,8 @@ Activities Sent:
     - Note
 - Announce
     - Note
+- Undo
+	- Like
 
 I'm thinking of sending Create(Actor()) to instances with followers to local since I process that
 
