@@ -50,16 +50,31 @@
 		{#key error}
 			<p>{errorMsg}</p>
 		{/key}
-		<Input placeholder="Username" bind:value={username} />
-		<Input placeholder="Password" bind:value={password} />
-		<div class="btns">
-			<div class="left">
-				<Button accent on:click={async () => login()}>Login</Button>
+		<form>
+			<Input
+				type="username"
+				placeholder="Username"
+				bind:value={username}
+				required
+			/>
+			<Input
+				type="password"
+				placeholder="Password"
+				bind:value={password}
+				required
+			/>
+
+			<div class="btns">
+				<div class="left">
+					<Button submit accent on:click={() => login()}>
+						Login
+					</Button>
+				</div>
+				<div class="right">
+					<a href="/forgot-password">Forgot password</a>
+				</div>
 			</div>
-			<div class="right">
-				<a href="/forgot-password">Forgot password</a>
-			</div>
-		</div>
+		</form>
 	</div>
 </PageWrapper>
 

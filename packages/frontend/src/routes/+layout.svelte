@@ -7,37 +7,18 @@
 	import store from '$lib/store';
 	import Modal from '$lib/components/Modal.svelte';
 	import Compose from '$lib/components/Compose.svelte';
+	import Welcome from '$lib/components/Welcome.svelte';
 
 	let loggedIn = false;
 	if (localstore.get('token')) loggedIn = true;
 
-	let showPage = true;
-	if (
-		!loggedIn &&
-		($page.url.pathname === '/' || $page.url.pathname === '/settings')
-	)
-		showPage = false;
-
-	let showWelcome = false;
-	if (!loggedIn && $page.url.pathname === '/') showWelcome = true;
-
 	let compose: Modal;
 
+	// todo: this doesnt get toggled off when the modal closes
 	store.showCompose.subscribe((e) => {
 		if (e) compose.open();
 	});
-
-	function handleKeydown(e: KeyboardEvent) {
-		switch (e.key) {
-			case 'p':
-				if (!showCompose) store.showCompose.set(true);
-				break;
-		}
-		console.log(e);
-	}
 </script>
-
-<svelte:window on:keydown={(e) => handleKeydown(e)} />
 
 <QueryClientProvider client={queryClient}>
 	{#if loggedIn}
@@ -50,14 +31,13 @@
 		<PageSidebar left />
 	{/if}
 
-	<main>
-		{#if showPage}
+	{#if loggedIn || !($page.url.pathname === '/')}
+		<main>
 			<slot />
-		{/if}
-		{#if showWelcome}
-			Welcome in progress
-		{/if}
-	</main>
+		</main>
+	{:else if !loggedIn && $page.url.pathname === '/'}
+		<Welcome />
+	{/if}
 
 	{#if loggedIn}
 		<PageSidebar right />

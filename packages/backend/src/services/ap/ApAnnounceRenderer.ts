@@ -7,7 +7,7 @@ import ApVisibilityService from './ApVisibilityService.js';
 class ApAnnounceRenderer {
 	public async render(
 		note: ObjectLiteral,
-		activity: ObjectLiteral | string
+		activity: ApId
 	): Promise<ApObject> {
 		let announce = {
 			'@context': context,

@@ -63,6 +63,8 @@
 		left: 0;
 		box-sizing: border-box;
 
+		z-index: 10;
+
 		.modal {
 			display: flex;
 
@@ -75,8 +77,8 @@
 
 			max-width: 450px;
 
-			margin: auto;
-			padding: 26px 20px;
+			margin: auto/10px;
+			padding: 20px;
 
 			color: var(--tx1);
 			background: var(--bg2);

@@ -9,9 +9,12 @@
 	import {
 		IconBan,
 		IconCake,
+		IconLock,
 		IconMapPin,
 		IconPin,
+		IconPlus,
 		IconUserCircle,
+		IconUserPlus,
 		IconVolumeOff
 	} from '@tabler/icons-svelte';
 	import lookupUser from '$lib/api/user/lookup.js';
@@ -19,6 +22,7 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import queryClient from '$lib/queryclient.js';
 	import Toggle from '$lib/components/Toggle.svelte';
+	import FollowButton from '$lib/components/FollowButton.svelte';
 
 	let props = $props();
 
@@ -96,7 +100,7 @@
 						</div>
 					</div>
 					<div class="right">
-						<Button secondary nm>Follow</Button>
+						<FollowButton user={$query.data} />
 					</div>
 				</div>
 			</div>

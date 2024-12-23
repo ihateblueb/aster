@@ -61,9 +61,13 @@
 			box-sizing: border-box;
 			gap: 10px;
 
-			margin-top: 38px;
-			padding: 12px;
-			height: calc((100vh - 38px));
+			margin-top: 38px + 12px;
+			margin-bottom: 12px;
+			padding: 0 12px;
+			height: calc((100vh - (38px + (12px * 2))));
+
+			overflow-y: scroll;
+			overflow-x: hidden;
 
 			.top {
 				display: flex;
@@ -72,17 +76,19 @@
 
 				margin-bottom: auto;
 				top: 0;
-
-				overflow-y: scroll;
 			}
 
 			.bottom {
+				position: sticky;
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
 
 				margin-top: auto;
 				bottom: 0;
+
+				background: var(--bg1);
+				padding: 12px 12px 0 12px;
 			}
 		}
 	}

@@ -3,7 +3,7 @@
 	import Time from '$lib/components/Time.svelte';
 
 	export let user;
-	export let time;
+	export let time = undefined;
 </script>
 
 <div class="userCard">
@@ -24,7 +24,9 @@
 			{/if}
 		</a>
 	</div>
-	<Time {time} />
+	{#if time}
+		<Time {time} />
+	{/if}
 </div>
 
 <style lang="scss" scoped>

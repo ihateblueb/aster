@@ -4,10 +4,12 @@
 	export let value = '';
 	export let placeholder = '';
 	export let label = '';
+	export let type = '';
 
 	export let big: boolean = false;
 	export let nm: boolean = false;
 	export let wide: boolean = false;
+	export let required: boolean = false;
 
 	const id = uuid.v4();
 
@@ -25,9 +27,17 @@
 	<label for={id} class="lbl">{label}</label>
 {/if}
 {#if big}
-	<textarea {id} {placeholder} class={calculateClass()} bind:value></textarea>
+	<textarea {id} {placeholder} {required} class={calculateClass()} bind:value
+	></textarea>
 {:else}
-	<input {id} {placeholder} class={calculateClass()} bind:value />
+	<input
+		{type}
+		{id}
+		{placeholder}
+		{required}
+		class={calculateClass()}
+		bind:value
+	/>
 {/if}
 
 <style lang="scss" scoped>

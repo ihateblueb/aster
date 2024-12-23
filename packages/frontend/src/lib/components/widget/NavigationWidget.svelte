@@ -1,9 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import WidgetBase from '$lib/components/WidgetBase.svelte';
 	import {
 		IconBell,
-		IconBook,
 		IconBookmark,
 		IconCloud,
 		IconDashboard,

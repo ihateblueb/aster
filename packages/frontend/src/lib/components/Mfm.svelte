@@ -47,10 +47,10 @@
 				if (foundEmoji) {
 					return `<img class="mfm-customEmoji" src="${foundEmoji.url}" title=":${foundEmoji.shortcode}:" />`;
 				} else {
-					return `:${object.props.shortcode}:`;
+					return `:${object.props.name}:`;
 				}
 			} else {
-				return `<span class="mfm-customEmoji">:${object.props.shortcode}:</span>`;
+				return `<span class="mfm-customEmoji">:${object.props.name}:</span>`;
 			}
 		} else if (object.type === 'unicodeEmoji') {
 			return `${object.props.emoji}`;

@@ -13,6 +13,7 @@
 		IconQuote,
 		IconRepeat,
 		IconStar,
+		IconStarFilled,
 		IconTrash
 	} from '@tabler/icons-svelte';
 	import store from '$lib/store';
@@ -57,6 +58,25 @@
 	function moreDelete() {
 		deleteNote(note?.id);
 	}
+
+	// todo: doesnt work lol
+
+	let didIRepeat = false;
+	/*
+	if (
+		note.repeats &&
+		note.repeats.some((repeat) => repeat?.user?.id === self?.id)
+	) {
+		didIRepeat = true;
+	}
+	* */
+
+	let didILike = false;
+	/*
+	if (note.likes && note.likes.some((like) => like?.user?.id === self?.id)) {
+		didILike = true;
+	}
+	* */
 </script>
 
 <footer>
@@ -70,7 +90,7 @@
 			{/if}
 		</button>
 	</div>
-	<div class="item">
+	<div class={'item' + (didIRepeat ? ' repeated' : '')}>
 		<button on:click={(e) => repeatDropdown.open(e)}>
 			<span class="icon">
 				<IconRepeat size="20px" />
@@ -80,10 +100,14 @@
 			{/if}
 		</button>
 	</div>
-	<div class="item">
+	<div class={'item' + (didILike ? ' liked' : '')}>
 		<button on:click={() => like()}>
 			<span class="icon">
-				<IconStar size="20px" />
+				{#if didILike}
+					<IconStarFilled size="20px" />
+				{:else}
+					<IconStar size="20px" />
+				{/if}
 			</span>
 			{#if note.likes && note.likes.length > 0}
 				<span class="counter">{note.likes.length}</span>
@@ -215,6 +239,26 @@
 				.counter {
 					font-size: var(--fs-sm);
 					padding: 0 2px;
+				}
+			}
+
+			&.repeated {
+				button {
+					color: var(--repeat);
+
+					&:hover {
+						background: var(--repeat-05);
+					}
+				}
+			}
+
+			&.liked {
+				button {
+					color: var(--like);
+
+					&:hover {
+						background: var(--like-05);
+					}
 				}
 			}
 		}

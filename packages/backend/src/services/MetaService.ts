@@ -5,6 +5,7 @@ import config from '../utils/config.js';
 import db from '../utils/database.js';
 import CacheService from './CacheService.js';
 import MetricsService from './MetricsService.js';
+import UserService from './UserService.js';
 
 class MetaService {
 	public async get() {
@@ -43,14 +44,22 @@ class MetaService {
 			})
 			.getCount();
 
+		const admins = await UserService.getMany({
+			admin: true
+		});
+
 		const meta = {
 			software: pkg.name,
 			version: pkg.version,
 			registrations: config.registrations,
+			name: 'aster dev instance',
+			description:
+				"welcome to the $[tada a]$[tada s]$[tada t]$[tada e]$[tada r] $[tada d]$[tada e]$[tada v] $[tada i]$[tada n]$[tada s]$[tada t]$[tada a]$[tada n]$[tada c]$[tada e]!\nfor now, this description isn't editable, but that will come later.",
 			stats: {
 				user: userCount,
 				note: noteCount
-			}
+			},
+			admins: admins
 		};
 
 		if (config.cache.meta)

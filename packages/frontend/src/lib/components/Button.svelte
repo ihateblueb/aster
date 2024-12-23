@@ -1,5 +1,6 @@
 <script lang="ts">
-	export let to = '';
+	export let to: string = '';
+	export let submit: boolean = false;
 
 	export let primary: boolean = false; // --bg1
 	export let secondary: boolean = false; // --bg2
@@ -18,6 +19,7 @@
 	export let wide: boolean = false;
 	export let thin: boolean = false;
 	export let nm: boolean = false;
+	export let blur: boolean = false;
 
 	function calculateClass() {
 		if (
@@ -54,7 +56,8 @@
 			(centered ? ' centered' : '') +
 			(wide ? ' wide' : '') +
 			(thin ? ' thin' : '') +
-			(nm ? ' nm' : '')
+			(nm ? ' nm' : '') +
+			(blur ? ' blur' : '')
 		);
 	}
 </script>
@@ -64,7 +67,11 @@
 		<slot></slot>
 	</a>
 {:else}
-	<button class={calculateClass()} on:click>
+	<button
+		type={submit ? 'submit' : 'button'}
+		class={calculateClass()}
+		on:click
+	>
 		<slot></slot>
 	</button>
 {/if}
@@ -226,6 +233,9 @@
 		}
 		&.rounded {
 			border-radius: var(--br-mx);
+		}
+		&.blur {
+			backdrop-filter: blur(10px);
 		}
 	}
 </style>

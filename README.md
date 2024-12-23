@@ -77,6 +77,9 @@ Activities Processed:
     - Note
 - Announce
     - Note
+- Delete
+  - User
+  - Note
 
 ### Federation
 
