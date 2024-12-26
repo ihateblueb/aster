@@ -5,7 +5,7 @@ let defaults = {
 
 	homeTab: 'public',
 	exploreTab: 'local',
-	notificationsTab: 'all',
+	notificationsTab: '',
 
 	locale: 'en_US',
 	colorScheme: '',

@@ -124,12 +124,20 @@ class NoteService {
 
 	public async delete(where: where) {
 		const note = await this.get(where);
-		if (note && note.local && note.repeat && !note.content) {
-			const del = ApUndoRenderer.render(
+		console.log(note);
+
+		if (!note) return;
+
+		if (
+			note.user.local &&
+			note.repeat &&
+			(!note.content || note.content.length >= 0)
+		) {
+			const undo = ApUndoRenderer.render(
 				await ApAnnounceRenderer.render(note, note.repeat.apId)
 			);
 
-			await ApDeliverService.deliverToFollowers(del, note.user.id);
+			await ApDeliverService.deliverToFollowers(undo, note.user.id);
 		} else {
 			const del = ApDeleteRenderer.render(
 				IdService.generate(),

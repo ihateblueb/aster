@@ -4,7 +4,7 @@ import ApActorService from './ApActorService.js';
 class ApVisibilityService {
 	private asPublic = 'https://www.w3.org/ns/activitystreams#Public';
 
-	public async determine(body) {
+	public async determine(body: ApObject) {
 		if (!body.actor && !body.attributedTo)
 			return {
 				visibility: 'direct',
@@ -90,7 +90,7 @@ class ApVisibilityService {
 		};
 	}
 
-	public async render(user, object) {
+	public async render(user: GenericId, object: ApObject) {
 		const grabbedUser = await UserService.get({ id: user });
 
 		if (!grabbedUser)

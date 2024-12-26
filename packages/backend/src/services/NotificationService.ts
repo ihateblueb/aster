@@ -1,4 +1,5 @@
 import db from '../utils/database.js';
+import UserMini from '../utils/entities/UserMini.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
@@ -28,7 +29,11 @@ class NotificationService {
 			.getRepository('notification')
 			.createQueryBuilder('notification')
 			.leftJoinAndSelect('notification.user', 'user')
+
 			.leftJoinAndSelect('notification.note', 'note')
+			.leftJoin('note.user', 'note_user')
+			.addSelect(UserMini('note_user'))
+
 			.leftJoinAndSelect('notification.relationship', 'relationship')
 			.where(where)
 			.orWhere(orWhere ?? where)

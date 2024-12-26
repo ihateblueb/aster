@@ -21,7 +21,7 @@ class ApAnnounceRenderer {
 			visibility: note.visibility
 		};
 
-		const tocc = await ApVisibilityService.render(note.user, announce);
+		const tocc = await ApVisibilityService.render(note.user.id, announce);
 
 		announce['to'] = tocc.to;
 		announce['cc'] = tocc.cc;

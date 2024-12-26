@@ -7,6 +7,7 @@ import cors from 'cors';
 import express from 'express';
 import * as feHandler from 'frontend/build/handler.js';
 
+import ap_context from '../routes/ap/context.js';
 import ap_followers from '../routes/ap/followers.js';
 import ap_following from '../routes/ap/following.js';
 import ap_inbox from '../routes/ap/inbox.js';
@@ -60,11 +61,11 @@ router.use((req, res, next) => {
 	res.setHeader('TDM-Reservation', '1');
 
 	// uploads have 1 day cache
-	if (req.path.startsWith('/uploads')) {
+	if (req.path.startsWith('/uploads'))
 		res.setHeader('Cache-Control', 'public, max-age=86400');
-	}
 
 	if (
+		req.headers['user-agent'] &&
 		req.headers['user-agent'].match(
 			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
 		)
@@ -208,6 +209,7 @@ router.use('/', misc_ping);
 router.use('/', misc_uploads);
 
 // ap
+router.use('/', ap_context);
 router.use('/', ap_followers);
 router.use('/', ap_following);
 router.use('/', ap_inbox);

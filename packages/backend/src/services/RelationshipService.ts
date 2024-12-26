@@ -96,7 +96,7 @@ class RelationshipService {
 		id: GenericId,
 		to: GenericId,
 		from: GenericId,
-		body
+		body: ApObject
 	) {
 		const deliver = ApAcceptRenderer.render(id, to, body);
 
