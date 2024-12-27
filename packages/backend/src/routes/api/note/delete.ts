@@ -14,6 +14,7 @@ router.delete(
 	oapi.path({
 		description: 'Delete a note',
 		tags: ['Note'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {},
 			400: { $ref: '#/components/responses/error-400' },

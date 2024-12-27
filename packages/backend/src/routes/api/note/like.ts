@@ -12,6 +12,7 @@ router.post(
 	oapi.path({
 		description: 'Like a note',
 		tags: ['Note'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {},
 			400: { $ref: '#/components/responses/error-400' },

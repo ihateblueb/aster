@@ -14,6 +14,7 @@ router.post(
 	oapi.path({
 		description: 'Repeat a note',
 		tags: ['Note'],
+		security: [{ auth: [] }],
 		requestBody: {
 			content: {
 				'application/json': {

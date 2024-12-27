@@ -14,7 +14,7 @@ class AcceptProcessor {
 			const to = await ApActorService.get(body.actor);
 			const from = await UserService.get({ apId: body.object.actor });
 
-			if (!to) return false;
+			if (!to) throw new Error('Actor not found');
 
 			await RelationshipService.update(
 				{

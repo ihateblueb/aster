@@ -15,14 +15,15 @@
 	let compose: Modal;
 
 	// todo: this doesnt get toggled off when the modal closes
-	store.showCompose.subscribe((e) => {
-		if (e) compose.open();
+	store.showCompose.subscribe(async (e) => {
+		if (e) await compose.open();
+		if (!e) compose.close();
 	});
 </script>
 
 <QueryClientProvider client={queryClient}>
 	{#if loggedIn}
-		<Modal bind:this={compose}>
+		<Modal wide compose bind:this={compose}>
 			<Compose />
 		</Modal>
 	{/if}

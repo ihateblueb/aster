@@ -1,34 +1,38 @@
 <script>
 	import Button from '$lib/components/Button.svelte';
 	import { IconUserMinus, IconUserPlus } from '@tabler/icons-svelte';
+	import { createQuery } from '@tanstack/svelte-query';
+	import getUserRelationship from '$lib/api/user/relationship';
+	import Loading from '$lib/components/Loading.svelte';
 
 	export let user;
-	let following = false;
+	export let query;
 </script>
 
 {#if user}
-	{#if following}
-		<Button danger blur nm>
-			<span class="content">
+	<Button
+		danger={$query.data?.to.type === 'follow' || $query.data?.to.pending}
+		blur
+		nm
+	>
+		<span class="content">
+			{#if $query.isLoading}
+				<Loading size="var(--fs-lg)" />
+			{:else if $query.data?.to?.type === 'follow' && !$query.data?.to?.pending}
 				<IconUserMinus size="var(--fs-lg)" />
 				<span class="label">Unfollow</span>
-			</span>
-		</Button>
-	{:else if user.locked}
-		<Button accent blur nm>
-			<span class="content">
+			{:else if $query.data?.to?.type === 'follow' && $query.data?.to?.pending}
+				<IconUserMinus size="var(--fs-lg)" />
+				<span class="label">Cancel request</span>
+			{:else if user.locked}
 				<IconUserPlus size="var(--fs-lg)" />
 				<span class="label">Follow request</span>
-			</span>
-		</Button>
-	{:else}
-		<Button accent blur nm>
-			<span class="content">
+			{:else}
 				<IconUserPlus size="var(--fs-lg)" />
 				<span class="label">Follow</span>
-			</span>
-		</Button>
-	{/if}
+			{/if}
+		</span>
+	</Button>
 {/if}
 
 <style lang="scss" scoped>

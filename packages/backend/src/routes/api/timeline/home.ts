@@ -17,6 +17,7 @@ router.get(
 		description:
 			'Fetch a timeline of all notes visible to the authenticated user',
 		tags: ['Timeline'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return a timeline.'

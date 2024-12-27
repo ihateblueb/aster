@@ -10,8 +10,8 @@ class LikeProcessor {
 		const actor = await ApActorService.get(body.actor);
 		const note = await ApNoteService.get(body.object);
 
-		if (!actor) return false;
-		if (!note) return false;
+		if (!actor) throw new Error('Actor not found');
+		if (!note) throw new Error('Note not found');
 
 		if (body._misskey_content) {
 			logger.warn('like', 'appears to be a react. tag:');

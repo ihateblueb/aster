@@ -12,6 +12,7 @@ router.get(
 	oapi.path({
 		description: 'Get federation rules',
 		tags: ['Admin'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return federation rules.'

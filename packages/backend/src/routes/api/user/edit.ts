@@ -9,6 +9,7 @@ router.patch(
 	oapi.path({
 		description: 'Update a user',
 		tags: ['User'],
+		security: [{ auth: [] }],
 		requestBody: {
 			content: {
 				'application/json': {

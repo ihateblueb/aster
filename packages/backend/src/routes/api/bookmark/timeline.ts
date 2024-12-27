@@ -10,6 +10,7 @@ router.get(
 	oapi.path({
 		description: 'Fetch a timeline of bookmarks',
 		tags: ['Bookmarks'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return a timeline.'

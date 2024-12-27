@@ -346,7 +346,7 @@
 	}
 </script>
 
-<span class="mfm" on:click>
+<span class={'mfm' + (simple ? ' simple' : '')} on:click>
 	{#if content}
 		{@html renderTree()}
 	{:else}
@@ -363,6 +363,7 @@
 		text-wrap-mode: wrap;
 		white-space-collapse: preserve;
 		line-height: 1.35em;
+		unicode-bidi: isolate;
 
 		&.simple {
 			display: inline;
@@ -385,11 +386,15 @@
 		}
 
 		.mfm-quote {
-			margin: 8px 6px;
-			color: var(--txt-tertiary);
-			padding-left: 10px;
-			border-left: var(--border-width-m) solid var(--txt-tertiary);
+			margin: 8px 0;
+
+			color: var(--tx2);
+			border-left: 2px solid var(--tx3);
+			background-color: var(--bg4-25);
 			opacity: 75%;
+
+			border-radius: var(--br-xs);
+			padding: 8px 0 8px 10px;
 		}
 
 		.mfm-blur {

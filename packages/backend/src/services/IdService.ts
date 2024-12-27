@@ -153,6 +153,8 @@ class IdService {
 	}
 
 	public generate(): string {
+		console.log(this.aidxCounter, this.aidCounter);
+
 		if (config.id === 'uuidv4') {
 			return this.generateUuidv4();
 		} else if (config.id === 'uuidv7') {

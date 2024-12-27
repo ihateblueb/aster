@@ -1,11 +1,14 @@
 <script lang="ts">
 	import { tick } from 'svelte';
 	import { scale, fade } from 'svelte/transition';
+	import store from '$lib/store';
 
 	let dialog: HTMLDialogElement;
 	let target: EventTarget;
 
 	let show = false;
+	export let wide = false;
+	export let compose = false;
 
 	export async function open() {
 		if (!show) {
@@ -21,6 +24,8 @@
 
 	export function close() {
 		dialog.close();
+		show = false;
+		if (compose) store.showCompose.set(false);
 	}
 </script>
 
@@ -29,9 +34,9 @@
 {#if show}
 	<div class="modalCtn">
 		<dialog
-			class={'modal' + (show ? ' show' : '')}
+			class={'modal' + (show ? ' show' : '') + (wide ? ' wide' : '')}
 			bind:this={dialog}
-			on:close={() => (show = false)}
+			on:close={() => close()}
 			transition:scale={{ duration: 180, start: 0.85 }}
 		>
 			<div class="text">
@@ -77,7 +82,7 @@
 
 			max-width: 450px;
 
-			margin: auto/10px;
+			margin: auto;
 			padding: 20px;
 
 			color: var(--tx1);
@@ -108,8 +113,15 @@
 				gap: 8px;
 			}
 
+			&.wide {
+				max-width: 525px;
+				// 20px inner padding * 2 + 20px for 10px buffer between screen edge
+				width: calc(100vw - (20px * 3));
+			}
+
 			&::backdrop {
 				display: none;
+				pointer-events: none;
 			}
 		}
 
@@ -117,7 +129,10 @@
 			width: 100%;
 			height: 100%;
 
+			pointer-events: auto;
+
 			background-color: var(--bg1-75);
+			backdrop-filter: blur(var(--blur-sm));
 		}
 	}
 </style>

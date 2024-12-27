@@ -1,22 +1,22 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
+import RelationshipService from '../../../services/RelationshipService.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 
 const router = express.Router();
 
-router.post(
-	'/api/user/:id/follow',
+router.get(
+	'/api/user/:id/relationship',
 	oapi.path({
-		description: 'Follow a user',
+		description: 'Fetch the relationship between you and a user.',
 		tags: ['User'],
 		security: [{ auth: [] }],
 		responses: {
 			200: {
-				description:
-					'Return the relationship for a user after trying to follow them.',
+				description: 'Return the relationship between you and a user.',
 				content: {
 					'application/json': {}
 				}
@@ -25,7 +25,6 @@ router.post(
 			401: { $ref: '#/components/responses/error-401' },
 			403: { $ref: '#/components/responses/error-403' },
 			404: { $ref: '#/components/responses/error-404' },
-			413: { $ref: '#/components/responses/error-413' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
@@ -42,13 +41,36 @@ router.post(
 				message: auth.message
 			});
 
-		return await UserService.follow(req.params.id, auth.user.id, true)
-			.then((e) => {
-				return res.status(e.status).json({ message: e.message });
-			})
-			.catch(() => {
-				return res.status(500).send();
+		const user = await UserService.get({ id: req.params.id });
+
+		if (user) {
+			if (user.suspended)
+				return res.status(403).json({
+					message: locale.user.suspended
+				});
+			if (!user.activated)
+				return res.status(403).json({
+					message: locale.user.notActivated
+				});
+
+			const relationshipTo = await RelationshipService.get({
+				to: { id: auth.user.id },
+				from: { id: req.params.id }
 			});
+			const relationshipFrom = await RelationshipService.get({
+				to: { id: req.params.id },
+				from: { id: auth.user.id }
+			});
+
+			return res.status(200).json({
+				to: relationshipTo,
+				from: relationshipFrom
+			});
+		} else {
+			return res.status(404).json({
+				message: locale.user.notFound
+			});
+		}
 	}
 );
 

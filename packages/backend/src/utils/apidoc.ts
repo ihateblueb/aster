@@ -144,4 +144,9 @@ oapi.response('error-500', {
 	}
 });
 
+oapi.securitySchemes('auth', {
+	type: 'http',
+	scheme: 'bearer'
+});
+
 export default oapi;

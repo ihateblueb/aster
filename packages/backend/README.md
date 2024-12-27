@@ -59,3 +59,5 @@ avoid creating things here. very generic things like config, db, and redis exist
 
 The `ObjectLiteral` type is very useful. use it for direct database output that needs to be passed, like an argument on a Renderer service type.
 For smaller entities in relations, you can make something like `UserMini(alias?: string)` in `utils/entities`. See how a the NoteService.get() join is for the user of a like.
+
+when using returned value of an Ap service (e.g. ApActorService) in a queue job worker, throw an error if the values return null. it may have just improperly fetched, and the job might be processable at a later time.

@@ -11,8 +11,14 @@ class NotificationService {
 		return await db
 			.getRepository('notification')
 			.createQueryBuilder('notification')
+			.leftJoinAndSelect('notification.to', 'to')
+			.leftJoinAndSelect('notification.from', 'from')
 			.leftJoinAndSelect('notification.user', 'user')
+
 			.leftJoinAndSelect('notification.note', 'note')
+			.leftJoin('note.user', 'note_user')
+			.addSelect(UserMini('note_user'))
+
 			.leftJoinAndSelect('notification.relationship', 'relationship')
 			.where(where)
 			.getOne();
@@ -28,6 +34,8 @@ class NotificationService {
 		return await db
 			.getRepository('notification')
 			.createQueryBuilder('notification')
+			.leftJoinAndSelect('notification.to', 'to')
+			.leftJoinAndSelect('notification.from', 'from')
 			.leftJoinAndSelect('notification.user', 'user')
 
 			.leftJoinAndSelect('notification.note', 'note')
@@ -50,6 +58,15 @@ class NotificationService {
 		user?: GenericId,
 		relationship?: GenericId
 	) {
+		console.log({
+			to: to,
+			from: from,
+			type: type,
+			note: note,
+			user: user,
+			relationship: relationship
+		});
+
 		const sender = await UserService.get({ id: from });
 		const recipient = await UserService.get({ id: to });
 
@@ -87,17 +104,23 @@ class NotificationService {
 			createdAt: new Date().toISOString()
 		};
 
-		const grabbedNote = await NoteService.get({ id: note });
-		if (grabbedNote) notification['noteId'] = grabbedNote.id;
+		if (note) {
+			const grabbedNote = await NoteService.get({ id: note });
+			if (grabbedNote) notification['noteId'] = grabbedNote.id;
+		}
 
-		const grabbedUser = await UserService.get({ id: user });
-		if (grabbedUser) notification['userId'] = grabbedUser.id;
+		if (user) {
+			const grabbedUser = await UserService.get({ id: user });
+			if (grabbedUser) notification['userId'] = grabbedUser.id;
+		}
 
-		const grabbedRelationship = await RelationshipService.get({
-			id: relationship
-		});
-		if (grabbedRelationship)
-			notification['relationshipId'] = grabbedRelationship.id;
+		if (relationship) {
+			const grabbedRelationship = await RelationshipService.get({
+				id: relationship
+			});
+			if (grabbedRelationship)
+				notification['relationshipId'] = grabbedRelationship.id;
+		}
 
 		await db
 			.getRepository('notification')

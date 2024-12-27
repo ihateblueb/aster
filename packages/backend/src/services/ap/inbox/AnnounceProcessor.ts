@@ -15,8 +15,8 @@ class AnnounceProcessor {
 		const visibility = (await ApVisibilityService.determine(body))
 			.visibility;
 
-		if (!actor) return false;
-		if (!note) return false;
+		if (!actor) throw new Error('Actor not found');
+		if (!note) throw new Error('Note not found');
 
 		logger.debug(
 			'announce',

@@ -13,6 +13,7 @@ router.post(
 	oapi.path({
 		description: 'Revoke a valid auth token',
 		tags: ['Auth'],
+		security: [{ auth: [] }],
 		requestBody: {
 			content: {
 				'application/json': {

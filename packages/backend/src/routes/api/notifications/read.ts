@@ -9,6 +9,7 @@ router.post(
 	oapi.path({
 		description: 'Read notifications',
 		tags: ['Notification'],
+		security: [{ auth: [] }],
 		requestBody: {
 			content: {
 				'application/json': {

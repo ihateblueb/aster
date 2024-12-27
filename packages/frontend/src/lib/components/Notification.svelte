@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { IconRepeat, IconStar, IconUserPlus } from '@tabler/icons-svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	export let notification;
 </script>
@@ -12,19 +13,29 @@
 		<IconRepeat size="var(--fs-lg)" />
 	{:else if notification.type === 'acceptedFollow'}
 		<IconUserPlus size="var(--fs-lg)" />
+	{:else if notification.type === 'follow'}
+		<IconUserPlus size="var(--fs-lg)" />
 	{/if}
+{/snippet}
+
+{#snippet name(user)}
+	<a
+		class="name"
+		href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
+	>
+		<Mfm simple content={user.displayName ?? user.username} />
+	</a>
 {/snippet}
 
 {#snippet title()}
 	{#if notification.type === 'like'}
-		<b>{notification.user.displayName ?? notification.user.username}</b> liked
-		your note
+		{@render name(notification?.from)} liked your note
 	{:else if notification.type === 'repeat'}
-		<b>{notification.user.displayName ?? notification.user.username}</b> repeated
-		your note
+		{@render name(notification?.from)} repeated your note
 	{:else if notification.type === 'acceptedFollow'}
-		<b>{notification.user.displayName ?? notification.user.username}</b> followed
-		you
+		{@render name(notification?.from)} accepted your follow request
+	{:else if notification.type === 'follow'}
+		{@render name(notification?.from)} followed you
 	{/if}
 {/snippet}
 
@@ -62,6 +73,14 @@
 			display: flex;
 			align-items: start;
 			gap: 10px;
+		}
+
+		.title {
+			.name {
+				font-weight: bold;
+				color: var(--tx2);
+				text-decoration: none;
+			}
 		}
 	}
 </style>

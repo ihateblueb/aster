@@ -133,6 +133,12 @@
 		misc
 	*/
 
+	--blur-xs: 2px;
+	--blur-sm: 4px;
+	--blur-md: 8px;
+	--blur-lg: 12px;
+	--blur-xl: 20px;
+
 	// trying rem? maybe it'll help the effect looking drastically different on some screens
 	--funky-effect: inset 0 -0.1rem 2.5px #00000020,
 		inset 0 0.035rem 1px #ffffff05, inset 0 0.055rem 2.5px #ffffff05;

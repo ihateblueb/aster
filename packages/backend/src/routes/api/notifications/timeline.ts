@@ -15,6 +15,7 @@ router.get(
 	oapi.path({
 		description: 'Fetch a timeline of notifications',
 		tags: ['Notification'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return a timeline of notifications.'

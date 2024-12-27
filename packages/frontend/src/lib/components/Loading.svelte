@@ -1,10 +1,12 @@
 <script>
 	import { IconLoader2 } from '@tabler/icons-svelte';
+
+	export let size = '38px';
 </script>
 
 <div class="loading">
 	<div class="spinner">
-		<IconLoader2 size="38px" />
+		<IconLoader2 {size} />
 	</div>
 </div>
 

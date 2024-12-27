@@ -14,6 +14,7 @@ router.post(
 	oapi.path({
 		description: 'Update federation rules',
 		tags: ['Admin'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return the new federation rules.'

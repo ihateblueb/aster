@@ -10,6 +10,7 @@ router.post(
 	oapi.path({
 		description: 'Create a bookmark',
 		tags: ['Bookmarks'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return a bookmark.'

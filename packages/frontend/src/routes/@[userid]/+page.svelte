@@ -7,6 +7,10 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import {
+		IconArrowLeft,
+		IconArrowLeftRight,
+		IconArrowRight,
+		IconArrowsLeftRight,
 		IconBan,
 		IconCake,
 		IconLock,
@@ -23,6 +27,7 @@
 	import queryClient from '$lib/queryclient.js';
 	import Toggle from '$lib/components/Toggle.svelte';
 	import FollowButton from '$lib/components/FollowButton.svelte';
+	import getUserRelationship from '$lib/api/user/relationship.js';
 
 	let props = $props();
 
@@ -34,6 +39,14 @@
 		queryKey: ['user'],
 		retry: false,
 		queryFn: async () => await lookupUser('@' + props.data.userid)
+	});
+
+	// this should only be used once the query finishes, so it's safe to use tha data in it!
+	const relationshipQuery = createQuery({
+		queryKey: ['relationship'],
+		retry: false,
+		queryFn: async () =>
+			await getUserRelationship($query.data.id ?? undefined)
 	});
 
 	let show = $state(true);
@@ -91,6 +104,31 @@
 								{$query.data.displayName
 									? $query.data.displayName
 									: $query.data.username}
+
+								{#if $relationshipQuery.isSuccess && $relationshipQuery.data}
+									{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
+										<span class="relationship">
+											<IconArrowsLeftRight
+												size="var(--fs-md)"
+											/>
+											Mutuals
+										</span>
+									{:else if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type !== 'follow' && !$relationshipQuery.data.from?.pending}
+										<span class="relationship">
+											<IconArrowLeft
+												size="var(--fs-md)"
+											/>
+											Following
+										</span>
+									{:else if $relationshipQuery.data.to?.type !== 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
+										<span class="relationship">
+											<IconArrowRight
+												size="var(--fs-md)"
+											/>
+											Follows you
+										</span>
+									{/if}
+								{/if}
 							</p>
 							<p class="bottom">
 								@{$query.data
@@ -100,7 +138,10 @@
 						</div>
 					</div>
 					<div class="right">
-						<FollowButton user={$query.data} />
+						<FollowButton
+							user={$query.data}
+							query={relationshipQuery}
+						/>
 					</div>
 				</div>
 			</div>
@@ -275,6 +316,19 @@
 			background-color: var(--bg3-50);
 		}
 
+		.relationship {
+			display: inline-flex;
+			align-items: center;
+
+			padding: 4px 8px;
+			gap: 4px;
+
+			font-size: var(--fs-sm);
+			font-weight: normal;
+			border-radius: var(--br-md);
+			background: var(--bg1-75);
+		}
+
 		.float {
 			display: flex;
 			position: absolute;
@@ -311,6 +365,7 @@
 					&.top {
 						font-size: var(--fs-xl);
 						font-weight: bold;
+						margin-bottom: 4px;
 					}
 				}
 			}
