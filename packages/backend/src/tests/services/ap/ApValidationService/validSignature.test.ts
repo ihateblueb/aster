@@ -10,7 +10,6 @@ await db.initialize();
 
 const url = new URL(config.url);
 
-// eslint-disable-next-line prefer-const
 let req = express().request;
 req.url = new URL(url).href + 'inbox';
 

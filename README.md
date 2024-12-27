@@ -62,7 +62,7 @@ Activities Sent:
 - Announce
     - Note
 - Undo
-	- Like
+    - Like
 
 I'm thinking of sending Create(Actor()) to instances with followers to local since I process that
 
@@ -78,8 +78,8 @@ Activities Processed:
 - Announce
     - Note
 - Delete
-  - User
-  - Note
+    - User
+    - Note
 
 ### Federation
 
