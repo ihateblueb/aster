@@ -102,24 +102,30 @@ class ConfigService {
 			public enabled: boolean = Boolean(
 				parsedConfig.cache.ap.enabled ?? true
 			);
-			public expiration: boolean = Boolean(
-				parsedConfig.cache.ap.expiration ?? 150
+			public expiration: number = NumberMinMax(
+				parsedConfig.cache.ap.expiration ?? 150,
+				1,
+				10000
 			);
 		})();
 		public api = new (class ApiCacheConfig {
 			public enabled: boolean = Boolean(
 				parsedConfig.cache.api.enabled ?? true
 			);
-			public expiration: boolean = Boolean(
-				parsedConfig.cache.api.expiration ?? 30
+			public expiration: number = NumberMinMax(
+				parsedConfig.cache.api.expiration ?? 150,
+				1,
+				10000
 			);
 		})();
 		public meta = new (class MetaCacheConfig {
 			public enabled: boolean = Boolean(
 				parsedConfig.cache.meta.enabled ?? true
 			);
-			public expiration: boolean = Boolean(
-				parsedConfig.cache.meta.expiration ?? 300
+			public expiration: number = NumberMinMax(
+				parsedConfig.cache.meta.expiration ?? 150,
+				1,
+				10000
 			);
 		})();
 	})();
