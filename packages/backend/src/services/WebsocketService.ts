@@ -41,8 +41,8 @@ wss.on('connection', async (ws, request, auth) => {
 			ws.send(JSON.stringify(data));
 		}
 	});
-	globalEmitter.on('timeline:global', (data) => {
-		if (subscriptions.includes('timeline:global')) {
+	globalEmitter.on('timeline:public', (data) => {
+		if (subscriptions.includes('timeline:public')) {
 			ws.send(JSON.stringify(data));
 		}
 	});

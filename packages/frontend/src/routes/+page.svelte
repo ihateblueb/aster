@@ -18,7 +18,13 @@
 	import Button from '$lib/components/Button.svelte';
 	import queryclient from '$lib/queryclient';
 	import store from '$lib/store';
-	let timeline: string;
+
+	let timeline: string = $state('');
+
+	let ws: WebSocket;
+	store.websocket.subscribe((e) => {
+		if (e) ws = e;
+	});
 
 	let localstoreTimeline = localstore.get('homeTab');
 	if (localstoreTimeline) {
@@ -39,9 +45,35 @@
 		}
 	});
 
+	let additionalNotes = $state([]);
+
+	if (ws) ws.send(`sub timeline:${timeline}`);
+	if (ws)
+		ws.onmessage = (e) => {
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
+
+			if (
+				message &&
+				message.type === 'timeline:add' &&
+				message.timeline === timeline &&
+				message.note
+			) {
+				console.log('[timeline] received ws note');
+				additionalNotes.unshift(message.note);
+			}
+		};
+
 	function updateTimeline(to: string) {
+		if (ws) ws.send(`unsub timeline:${timeline}`);
 		timeline = to;
+		if (ws) ws.send(`sub timeline:${timeline}`);
 		localstore.set('homeTab', to);
+
+		// clear timeline
+		additionalNotes = [];
 		queryclient.clear();
 		$query.refetch();
 	}
@@ -115,6 +147,9 @@
 			retry={() => $query.refetch()}
 		/>
 	{:else if $query.isSuccess}
+		{#each additionalNotes as note}
+			<Note {note} />
+		{/each}
 		{#each $query.data.pages as results}
 			{#each results as note}
 				<Note {note} />

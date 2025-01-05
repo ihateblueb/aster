@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 
 const appReload = writable(false);
 const selfRefresh = writable(false);
@@ -10,6 +10,8 @@ const activeRequests = writable(0);
 const draft_replyingTo = writable('');
 const draft_repeat = writable('');
 
+const websocket: Writable<WebSocket | undefined> = writable();
+
 class Store {
 	public appReload = appReload; // full browser reload
 	public selfRefresh = selfRefresh; // refresh self widgets
@@ -20,6 +22,8 @@ class Store {
 
 	public draft_replyingTo = draft_replyingTo;
 	public draft_repeat = draft_repeat;
+
+	public websocket = websocket;
 }
 
 export default new Store();

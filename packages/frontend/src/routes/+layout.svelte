@@ -28,11 +28,12 @@
 		ws.onopen = () => {
 			console.log('[ws] opened');
 			ws.send('ping');
+			store.websocket.set(ws);
 		};
 
 		ws.onclose = () => {
 			console.log('[ws] closed');
-			ws.send('ping');
+			store.websocket.set(undefined);
 		};
 
 		ws.onmessage = (e) => {
@@ -45,6 +46,8 @@
 
 			if (message) {
 				if (message.type === 'greet') {
+					// connected, say something back!
+					ws.send('sub timeline:public');
 				}
 			}
 		};

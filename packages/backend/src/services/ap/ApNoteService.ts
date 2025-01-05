@@ -229,9 +229,9 @@ class ApNoteService {
 			});
 		}
 
-		WebsocketService.globalEmitter.emit('timeline:global', {
+		WebsocketService.globalEmitter.emit('timeline:public', {
 			type: 'timeline:add',
-			timeline: 'global',
+			timeline: 'public',
 			note: grabbedNote
 		});
 
