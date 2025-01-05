@@ -15,7 +15,21 @@ import ApValidationService from './ApValidationService.js';
 class ApActorService {
 	public async get(apId: ApId) {
 		const actor = await UserService.get({ apId: apId });
-		if (actor) return actor;
+
+		if (actor) {
+			const resolvedActor = await ApResolver.resolveSigned(apId);
+			console.log(resolvedActor);
+
+			if (!resolvedActor) return false;
+			if (
+				!['Person', 'Service', 'Application'].includes(
+					resolvedActor.type
+				)
+			)
+				return false;
+
+			return await this.update(resolvedActor);
+		}
 
 		const resolvedActor = await ApResolver.resolveSigned(apId);
 
@@ -130,6 +144,121 @@ class ApActorService {
 			});
 
 		return await UserService.get({ id: id });
+	}
+
+	//todo: deduplicate
+	public async update(body: ObjectLiteral) {
+		if (!ApValidationService.validBody(body)) return false;
+
+		let originalUser = await UserService.get({ id: body.id });
+		let updatedUser = {};
+
+		const moderatedInstance = await ModeratedInstanceService.get({
+			host: punycode.toASCII(reduceSubdomain(new URL(body.id).host))
+		});
+
+		updatedUser['updatedAt'] = new Date().toISOString();
+
+		if (!body.preferredUsername) return false;
+		updatedUser['username'] = SanitizerService.sanitize(
+			body.preferredUsername
+		);
+
+		if (body.name)
+			updatedUser['displayName'] = SanitizerService.sanitize(body.name);
+
+		if (body.summary)
+			updatedUser['bio'] = SanitizerService.sanitize(body.summary);
+		if (body._misskey_summary)
+			updatedUser['bio'] = SanitizerService.sanitize(
+				body._misskey_summary
+			);
+
+		if (body['vcard:Address'])
+			updatedUser['location'] = SanitizerService.sanitize(
+				body['vcard:Address']
+			);
+
+		try {
+			if (body['vcard:bday'])
+				updatedUser['birthday'] = new Date(
+					body['vcard:birthday']
+				).toISOString();
+		} catch (err) {
+			console.log(err);
+		}
+
+		// todo: false positives?
+		if (body.sensitive) updatedUser['sensitive'] = true;
+		if (moderatedInstance && !moderatedInstance.sensitive)
+			updatedUser['sensitive'] = true;
+
+		if (body.discoverable) updatedUser['discoverable'] = true;
+		if (body.manuallyApprovesFollowers) updatedUser['locked'] = true;
+		if (body.noindex) updatedUser['indexable'] = false;
+		if (body.isCat) updatedUser['isCat'] = true;
+		if (body.speakAsCat) updatedUser['speakAsCat'] = true;
+
+		if (body.published)
+			updatedUser['createdAt'] = new Date(body.published).toISOString();
+
+		if (body.icon && body.icon.url)
+			updatedUser['avatar'] = SanitizerService.sanitize(body.icon.url);
+		if (body.icon && body.icon.description)
+			updatedUser['avatarAlt'] = SanitizerService.sanitize(
+				body.icon.description
+			);
+		if (body.icon && body.icon.name)
+			updatedUser['avatarAlt'] = SanitizerService.sanitize(
+				body.icon.name
+			);
+
+		if (body.image && body.image.url)
+			updatedUser['banner'] = SanitizerService.sanitize(body.image.url);
+		if (body.image && body.image.description)
+			updatedUser['bannerAlt'] = SanitizerService.sanitize(
+				body.image.description
+			);
+		if (body.image && body.image.name)
+			updatedUser['bannerAlt'] = SanitizerService.sanitize(
+				body.image.name
+			);
+
+		if (body.inbox)
+			updatedUser['inbox'] = SanitizerService.sanitize(body.inbox);
+		if (body.sharedInbox)
+			updatedUser['inbox'] = SanitizerService.sanitize(body.sharedInbox);
+		if (body.endpoints && body.endpoints.sharedInbox)
+			updatedUser['inbox'] = SanitizerService.sanitize(
+				body.endpoints.sharedInbox
+			);
+
+		if (body.outbox)
+			updatedUser['outbox'] = SanitizerService.sanitize(body.outbox);
+
+		if (body.followers)
+			updatedUser['followersUrl'] = SanitizerService.sanitize(
+				body.followers
+			);
+		if (body.following)
+			updatedUser['followingUrl'] = SanitizerService.sanitize(
+				body.following
+			);
+
+		await db
+			.getRepository('user')
+			.update(
+				{
+					apId: body.id
+				},
+				updatedUser
+			)
+			.catch((err) => {
+				console.log(err);
+				logger.error('ap', 'failed to update remote user');
+			});
+
+		return await UserService.get({ apId: body.id });
 	}
 }
 

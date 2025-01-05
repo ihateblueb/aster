@@ -13,14 +13,14 @@ Development instance (sometimes) available at https://dev.aster.pages.gay/. It's
 - NodeJS
 - pnpm
 - PostgreSQL
-- DragonflyDB
+- Redis or DragonflyDB
 
-Latest of all of these are best
+Latest of all of these are best, haven't tested for minimum versions.
 
 ## Setup
 
 Install dependencies with `pnpm i` and then build with `pnpm build`.\
-Afterward, copy `./config/example.ini` to `./config/production.ini` and update it to your liking.\
+Afterward, copy `./config/example.yaml` to `./config/production.yaml` and update it to your liking.\
 It is recommended you set the logging to fancy during initial setup.\
 After configuration, run `pnpm migrate` to set up your database, and then you're good to go!\
 Run `pnpm start` and your instance will start up.
@@ -98,6 +98,7 @@ Activities Processed:
 - Login
 - Get user
 - Get instance metadata
+- Refetch user from remote
 - Moderate remote instances (admin)
 - Get moderated remote instances (admin)
 

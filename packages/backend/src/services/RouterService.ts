@@ -38,6 +38,7 @@ import user_edit from '../routes/api/user/edit.js';
 import user_follow from '../routes/api/user/folllow.js';
 import user_get from '../routes/api/user/get.js';
 import user_lookup from '../routes/api/user/lookup.js';
+import user_refetch from '../routes/api/user/refetch.js';
 import user_relationship from '../routes/api/user/relationship.js';
 import misc_manifest from '../routes/misc/manifest.js';
 import misc_metrics from '../routes/misc/metrics.js';
@@ -203,6 +204,7 @@ router.use('/', user_edit);
 router.use('/', user_follow);
 router.use('/', user_get);
 router.use('/', user_lookup);
+router.use('/', user_refetch);
 router.use('/', user_relationship);
 
 router.use('/', misc_manifest);

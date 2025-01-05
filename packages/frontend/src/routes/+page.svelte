@@ -19,7 +19,7 @@
 	import queryclient from '$lib/queryclient';
 	import store from '$lib/store';
 
-	let timeline: string = $state('');
+	let timeline: string = $state('home');
 
 	let ws: WebSocket;
 	store.websocket.subscribe((e) => {
@@ -29,8 +29,6 @@
 	let localstoreTimeline = localstore.get('homeTab');
 	if (localstoreTimeline) {
 		timeline = localstoreTimeline;
-	} else {
-		timeline = 'home';
 	}
 
 	const query = createInfiniteQuery({
