@@ -53,11 +53,16 @@ router.get(
 					message: locale.user.notActivated
 				});
 
-			const relationshipTo = await RelationshipService.get({
+			/*
+			 * 'to' means to the user from the user seeing it. otherwise,
+			 * it looks like a follow from someone is actually you following them
+			 * */
+
+			const relationshipFrom = await RelationshipService.get({
 				to: { id: auth.user.id },
 				from: { id: req.params.id }
 			});
-			const relationshipFrom = await RelationshipService.get({
+			const relationshipTo = await RelationshipService.get({
 				to: { id: req.params.id },
 				from: { id: auth.user.id }
 			});

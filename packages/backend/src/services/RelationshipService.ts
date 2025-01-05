@@ -4,6 +4,7 @@ import ApAcceptRenderer from './ap/ApAcceptRenderer.js';
 import ApActorService from './ap/ApActorService.js';
 import ApRejectRenderer from './ap/ApRejectRenderer.js';
 import IdService from './IdService.js';
+import NotificationService from './NotificationService.js';
 import QueueService from './QueueService.js';
 import UserService from './UserService.js';
 
@@ -95,7 +96,7 @@ class RelationshipService {
 	public async acceptFollow(
 		id: GenericId,
 		to: GenericId,
-		from: GenericId,
+		from: Inbox,
 		body: ApObject
 	) {
 		const deliver = ApAcceptRenderer.render(id, to, body);
@@ -212,6 +213,15 @@ class RelationshipService {
 
 			if (!insertedRelationship) return false;
 
+			await NotificationService.create(
+				to.id,
+				from.id,
+				'follow',
+				undefined,
+				undefined,
+				id
+			);
+
 			return true;
 		} else {
 			const id = IdService.generate();
@@ -231,6 +241,15 @@ class RelationshipService {
 					logger.error('inbox', 'failed to insert relationship');
 					throw new Error('failed to insert relationship');
 				});
+
+			await NotificationService.create(
+				to.id,
+				from.id,
+				'follow',
+				undefined,
+				undefined,
+				id
+			);
 
 			await this.acceptFollow(id, to.id, from.inbox, body);
 

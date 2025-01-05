@@ -10,6 +10,8 @@ type ApObject = {
 	[key: string]: any;
 };
 
+type Inbox = ApId;
+
 type Visibility = 'public' | 'unlisted' | 'followers' | 'direct';
 type RelationshipType = 'follow' | 'block' | 'mute';
 type NotificationType =
