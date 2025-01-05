@@ -1,17 +1,17 @@
 import { Queue } from 'bullmq';
 
-import config from '../utils/config.js';
 import redis from '../utils/redis.js';
+import ConfigService from './ConfigService.js';
 
 const inbox = new Queue('{inbox}', {
 	connection: redis,
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
-		attempts: config.inbox.attempts,
+		attempts: ConfigService.queue.inbox.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: config.inbox.backoff
+			delay: ConfigService.queue.inbox.backoff
 		}
 	}
 });
@@ -21,10 +21,10 @@ const deliver = new Queue('{deliver}', {
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
-		attempts: config.deliver.attempts,
+		attempts: ConfigService.queue.deliver.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: config.deliver.backoff
+			delay: ConfigService.queue.deliver.backoff
 		}
 	}
 });
@@ -34,10 +34,10 @@ const backfill = new Queue('{backfill}', {
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
-		attempts: config.backfill.attempts,
+		attempts: ConfigService.queue.backfill.attempts,
 		backoff: {
 			type: 'exponential',
-			delay: config.backfill.backoff
+			delay: ConfigService.queue.backfill.backoff
 		}
 	}
 });

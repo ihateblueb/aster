@@ -1,7 +1,7 @@
 import chalk from 'chalk';
 import cluster from 'cluster';
 
-import config from './config.js';
+import ConfigService from '../services/ConfigService.js';
 
 type Level =
 	| 'sql'
@@ -17,7 +17,7 @@ type Message = string | string[] | number | boolean | object | Error;
 
 class logger {
 	private log(level: Level, context: string, message: Message) {
-		if (config.logging.type === 'json') {
+		if (ConfigService.logging.type === 'json') {
 			console.log({
 				level: level,
 				worker: cluster.isPrimary ? 0 : cluster.worker.id,
@@ -25,7 +25,7 @@ class logger {
 				context: context.toLowerCase(),
 				message: message
 			});
-		} else if (config.logging.type === 'fancy') {
+		} else if (ConfigService.logging.type === 'fancy') {
 			let string = chalk.bold(
 				cluster.isPrimary ? '*' : cluster.worker.id
 			);
@@ -65,19 +65,19 @@ class logger {
 	}
 
 	public sql(context: string, message: Message) {
-		if (config.logging.sql) {
+		if (ConfigService.logging.sql) {
 			this.log('sql', context, message);
 		}
 	}
 
 	public http(context: string, message: Message) {
-		if (config.logging.http) {
+		if (ConfigService.logging.http) {
 			this.log('http', context, message);
 		}
 	}
 
 	public debug(context: string, message: Message) {
-		if (config.logging.debug) {
+		if (ConfigService.logging.debug) {
 			this.log('debug', context, message);
 		}
 	}

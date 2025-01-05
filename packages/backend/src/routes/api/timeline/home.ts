@@ -2,10 +2,10 @@ import express from 'express';
 import { ArrayContains, In, LessThan } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
+import ConfigService from '../../../services/ConfigService.js';
 import RelationshipService from '../../../services/RelationshipService.js';
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
-import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
@@ -60,9 +60,9 @@ router.get(
 		if (req.query.reverse === 'true') orderDirection = 'ASC';
 
 		take =
-			take <= config.timeline.maxObjects
+			take <= ConfigService.timeline.maxObjects
 				? take
-				: config.timeline.maxObjects;
+				: ConfigService.timeline.maxObjects;
 
 		return await TimelineService.get(
 			'note',

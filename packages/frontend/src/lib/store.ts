@@ -5,7 +5,6 @@ const selfRefresh = writable(false);
 const viewRefresh = writable(false);
 
 const showCompose = writable(false);
-
 const activeRequests = writable(0);
 
 const draft_replyingTo = writable('');
@@ -17,7 +16,6 @@ class Store {
 	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or user page component
 
 	public showCompose = showCompose;
-
 	public activeRequests = activeRequests;
 
 	public draft_replyingTo = draft_replyingTo;

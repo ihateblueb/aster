@@ -1,7 +1,6 @@
 import { ObjectLiteral } from 'typeorm';
 
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApAnnounceRenderer {

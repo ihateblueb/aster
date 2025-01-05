@@ -1,9 +1,9 @@
 import express from 'express';
 import { In, LessThan } from 'typeorm';
 
+import ConfigService from '../../../services/ConfigService.js';
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
-import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
@@ -46,15 +46,15 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		if (!config.bubbleTimeline)
+		if (!ConfigService.bubbleTimeline.enabled)
 			return res.status(409).json({
 				message: locale.error.featureNotEnabled
 			});
 
-		const bubbleInstances = config.bubbleInstances;
+		const bubbleInstances = ConfigService.bubbleTimeline.instances;
 
 		if (req.query.local === 'true')
-			bubbleInstances.push(new URL(config.url).host);
+			bubbleInstances.push(new URL(ConfigService.url).host);
 
 		const where = {
 			user: { host: In(bubbleInstances) },
@@ -69,9 +69,9 @@ router.get(
 		if (req.query.reverse === 'true') orderDirection = 'ASC';
 
 		take =
-			take <= config.timeline.maxObjects
+			take <= ConfigService.timeline.maxObjects
 				? take
-				: config.timeline.maxObjects;
+				: ConfigService.timeline.maxObjects;
 
 		return await TimelineService.get(
 			'note',

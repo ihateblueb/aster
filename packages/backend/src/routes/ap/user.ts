@@ -2,11 +2,11 @@ import express from 'express';
 
 import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
 import CacheService from '../../services/CacheService.js';
+import ConfigService from '../../services/ConfigService.js';
 import MetricsService from '../../services/MetricsService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
 import authorizedFetch from '../../utils/authorizedFetch.js';
-import config from '../../utils/config.js';
 import locale from '../../utils/locale.js';
 
 const router = express.Router();
@@ -51,7 +51,7 @@ router.get(
 				message: locale.user.notSpecified
 			});
 
-		if (config.cache.ap) {
+		if (ConfigService.cache.ap.enabled) {
 			const cachedUser = await CacheService.get(
 				'ap_user_' + req.params.id
 			);
@@ -82,11 +82,11 @@ router.get(
 
 			const rendered = ApActorRenderer.render(user);
 
-			if (config.cache.ap)
+			if (ConfigService.cache.ap.enabled)
 				await CacheService.set(
 					'ap_user_' + req.params.id,
 					JSON.stringify(rendered),
-					Number(config.cache.apExpiration)
+					Number(ConfigService.cache.ap.expiration)
 				);
 
 			return res.status(200).json(rendered);

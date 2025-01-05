@@ -1,7 +1,7 @@
-import config from '../utils/config.js';
+import ConfigService from '../services/ConfigService.js';
 
 export default [
 	'https://www.w3.org/ns/activitystreams',
 	'https://w3id.org/security/v1',
-	new URL(config.url).href + 'context.json'
+	ConfigService.url.href + 'context.json'
 ];

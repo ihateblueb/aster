@@ -3,8 +3,7 @@ import { customAlphabet } from 'nanoid';
 import { ulid } from 'ulid';
 import * as uuid from 'uuid';
 
-import config from '../utils/config.js';
-import logger from '../utils/logger.js';
+import ConfigService from './ConfigService.js';
 
 class IdService {
 	private aidCounter = crypto.randomBytes(2).readUInt16LE(0);
@@ -153,27 +152,22 @@ class IdService {
 	}
 
 	public generate(): string {
-		console.log(this.aidxCounter, this.aidCounter);
-
-		if (config.id === 'uuidv4') {
+		if (ConfigService.id === 'uuidv4') {
 			return this.generateUuidv4();
-		} else if (config.id === 'uuidv7') {
+		} else if (ConfigService.id === 'uuidv7') {
 			return this.generateUuidv7();
-		} else if (config.id === 'aid') {
+		} else if (ConfigService.id === 'aid') {
 			return this.generateAid();
-		} else if (config.id === 'aidx') {
+		} else if (ConfigService.id === 'aidx') {
 			return this.generateAidx();
-		} else if (config.id === 'meid') {
+		} else if (ConfigService.id === 'meid') {
 			return this.generateMeid();
-		} else if (config.id === 'meidg') {
+		} else if (ConfigService.id === 'meidg') {
 			return this.generateMeidg();
-		} else if (config.id === 'object-id') {
+		} else if (ConfigService.id === 'object-id') {
 			return this.generateObjectId();
-		} else if (config.id === 'ulid') {
+		} else if (ConfigService.id === 'ulid') {
 			return this.generateUlid();
-		} else {
-			logger.warn('id', 'cannot determine type of id to use, using aidx');
-			return this.generateAidx();
 		}
 	}
 }

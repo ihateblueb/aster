@@ -1,13 +1,10 @@
 import crypto from 'node:crypto';
-import * as punycode from 'node:punycode';
 
 import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import ConfigService from '../ConfigService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
@@ -43,7 +40,7 @@ class ApResolver {
 			.sign('sha256', Buffer.from(stringToSign), actorPrivate.privateKey)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.url}users/${actor.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signature}"`;
+		const signatureHeader = `keyId="${ConfigService.url.href}users/${actor.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date accept",signature="${signature}"`;
 
 		// todo: make sure this is safe
 		return await fetch(url, {

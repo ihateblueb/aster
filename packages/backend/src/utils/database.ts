@@ -1,6 +1,6 @@
 import { DataSource, Logger } from 'typeorm';
 
-import config from './config.js';
+import ConfigService from '../services/ConfigService.js';
 import logger from './logger.js';
 
 export class TypeormLogger implements Logger {
@@ -43,11 +43,11 @@ export class TypeormLogger implements Logger {
 
 const db = new DataSource({
 	type: 'postgres',
-	host: config.database.host,
-	port: config.database.port,
-	username: config.database.user,
-	password: config.database.pass,
-	database: config.database.name,
+	host: ConfigService.database.host,
+	port: ConfigService.database.port,
+	username: ConfigService.database.user,
+	password: ConfigService.database.pass,
+	database: ConfigService.database.name,
 	entities: ['./built/entities/*.js'],
 	migrations: ['./built/migrations/*.js'],
 	logger: new TypeormLogger()

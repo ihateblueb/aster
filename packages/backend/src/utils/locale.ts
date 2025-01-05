@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 
 import { parse } from 'yaml';
 
-import config from './config.js';
+import ConfigService from '../services/ConfigService.js';
 
 const localeText = await readFile(
-	`../../locale/${config.locale ? config.locale : 'en_US'}.yml`,
+	`../../locale/${ConfigService.locale ? ConfigService.locale : 'en_US'}.yml`,
 	{
 		encoding: 'utf-8'
 	}

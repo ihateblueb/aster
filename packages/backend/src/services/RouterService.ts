@@ -44,10 +44,10 @@ import misc_metrics from '../routes/misc/metrics.js';
 import misc_ping from '../routes/misc/ping.js';
 import misc_uploads from '../routes/misc/uploads.js';
 import oapi from '../utils/apidoc.js';
-import config from '../utils/config.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import AuthService from './AuthService.js';
+import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import MetricsService from './MetricsService.js';
 import QueueService from './QueueService.js';
@@ -68,7 +68,7 @@ router.use((req, res, next) => {
 	if (
 		req.headers['user-agent'] &&
 		req.headers['user-agent'].match(
-			new RegExp(config.security.blockedUserAgents.join('|'), 'i')
+			new RegExp(ConfigService.security.blockedUserAgents.join('|'), 'i')
 		)
 	) {
 		logger.info(
@@ -119,7 +119,7 @@ router.use((req, res, next) => {
 
 // bull board
 
-if (config.frontends.queue) {
+if (ConfigService.router.queue) {
 	const serverAdapter = new ExpressAdapter();
 	serverAdapter.setBasePath('/queue');
 
@@ -171,8 +171,8 @@ if (config.frontends.queue) {
 
 // regular routes
 
-if (config.frontends.oapi) router.use(oapi);
-if (config.frontends.swagger) router.use('/swagger', oapi.swaggerui());
+if (ConfigService.router.oapi) router.use(oapi);
+if (ConfigService.router.swagger) router.use('/swagger', oapi.swaggerui());
 
 // api
 
@@ -206,7 +206,7 @@ router.use('/', user_lookup);
 router.use('/', user_relationship);
 
 router.use('/', misc_manifest);
-if (config.metrics.enabled) router.use('/', misc_metrics);
+if (ConfigService.metrics.enabled) router.use('/', misc_metrics);
 router.use('/', misc_ping);
 router.use('/', misc_uploads);
 
@@ -223,7 +223,7 @@ router.use('/', ap_user);
 router.use('/', wellknown);
 
 // packages/frontend
-if (config.frontends.enable) {
+if (ConfigService.router.frontend) {
 	router.get('/admin*', async (req, res, next) => {
 		const auth = await AuthService.verify(req.cookies.as_token);
 

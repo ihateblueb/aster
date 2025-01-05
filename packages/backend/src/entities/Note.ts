@@ -2,6 +2,8 @@ import typeorm, {
 	Column,
 	Entity,
 	JoinColumn,
+	JoinTable,
+	ManyToMany,
 	ManyToOne,
 	OneToMany,
 	OneToOne,
@@ -62,6 +64,10 @@ export class Note {
 	@Column({ array: true, nullable: true })
 	to: string;
 
+	// resolved, received as Create, received as Announce, etc.
+	@Column({ nullable: true })
+	origin: string;
+
 	@Column()
 	createdAt: string;
 
@@ -81,11 +87,21 @@ export class Note {
 	@Column({ array: true, select: false, nullable: true })
 	attachmentIds: string;
 
-	@OneToMany(() => DriveFile, (driveFile) => driveFile, {
+	@ManyToMany(() => DriveFile, (driveFile) => driveFile, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
-	@JoinColumn({ name: 'attachmentIds' })
+	@JoinTable({
+		name: 'note_attachments',
+		joinColumn: {
+			name: 'noteId',
+			referencedColumnName: 'id'
+		},
+		inverseJoinColumn: {
+			name: 'attachmentId',
+			referencedColumnName: 'id'
+		}
+	})
 	attachments: typeorm.Relation<DriveFile>;
 
 	/*

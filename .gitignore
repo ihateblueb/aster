@@ -1,4 +1,4 @@
-config/production.ini
+config/production.yaml
 /logs
 
 build

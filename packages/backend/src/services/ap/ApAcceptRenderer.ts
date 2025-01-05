@@ -1,7 +1,7 @@
 import { ObjectLiteral } from 'typeorm';
 
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 
 class ApAcceptRenderer {
 	public render(
@@ -13,8 +13,8 @@ class ApAcceptRenderer {
 			'@context': context,
 
 			type: 'Accept',
-			id: new URL(config.url).href + 'activities/' + id,
-			actor: new URL(config.url).href + 'users/' + actor,
+			id: ConfigService.url.href + 'activities/' + id,
+			actor: ConfigService.url.href + 'users/' + actor,
 			object: activity
 		};
 	}

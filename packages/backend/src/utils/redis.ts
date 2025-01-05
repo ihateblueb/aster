@@ -1,17 +1,15 @@
-import config from './config.js';
-import logger from './logger.js';
-
-if (!config.redis.host) logger.fatal('redis', 'no redis host configured');
-if (!config.redis.port) logger.fatal('redis', 'no redis port configured');
+import ConfigService from '../services/ConfigService.js';
 
 const connection = {
-	host: config.redis.host,
-	port: config.redis.port
+	host: ConfigService.redis.host,
+	port: ConfigService.redis.port
 };
 
-if (config.redis.prefix) connection['keyPrefix'] = config.redis.prefix;
-if (config.redis.database) connection['db'] = config.redis.database;
-if (config.redis.user) connection['username'] = config.redis.user;
-if (config.redis.pass) connection['password'] = config.redis.pass;
+if (ConfigService.redis.prefix)
+	connection['keyPrefix'] = ConfigService.redis.prefix;
+if (ConfigService.redis.database)
+	connection['db'] = ConfigService.redis.database;
+if (ConfigService.redis.user) connection['username'] = ConfigService.redis.user;
+if (ConfigService.redis.pass) connection['password'] = ConfigService.redis.pass;
 
 export default connection;

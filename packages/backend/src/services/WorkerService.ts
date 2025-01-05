@@ -1,16 +1,19 @@
 import { Worker } from 'bullmq';
 
-import config from '../utils/config.js';
 import redis from '../utils/redis.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApInboxService from './ap/ApInboxService.js';
+import ConfigService from './ConfigService.js';
 
 const inbox = new Worker(
 	'{inbox}',
 	async (job) => {
 		return await ApInboxService.process(job.data);
 	},
-	{ connection: redis, concurrency: Number(config.inbox.concurrency) }
+	{
+		connection: redis,
+		concurrency: ConfigService.queue.inbox.concurrency
+	}
 );
 
 const deliver = new Worker(
@@ -18,7 +21,10 @@ const deliver = new Worker(
 	async (job) => {
 		return await ApDeliverService.deliver(job.data);
 	},
-	{ connection: redis, concurrency: Number(config.deliver.concurrency) }
+	{
+		connection: redis,
+		concurrency: ConfigService.queue.deliver.concurrency
+	}
 );
 
 const backfill = new Worker(
@@ -26,7 +32,10 @@ const backfill = new Worker(
 	async (job) => {
 		throw new Error('processing not implemented');
 	},
-	{ connection: redis, concurrency: Number(config.backfill.concurrency) }
+	{
+		connection: redis,
+		concurrency: ConfigService.queue.backfill.concurrency
+	}
 );
 
 class WorkerService {

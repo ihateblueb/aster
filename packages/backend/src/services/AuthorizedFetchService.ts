@@ -1,15 +1,15 @@
 import { ObjectLiteral } from 'typeorm';
 
-import config from '../utils/config.js';
 import locale from '../utils/locale.js';
 import ApValidationService from './ap/ApValidationService.js';
+import ConfigService from './ConfigService.js';
 import VisibilityService from './VisibilityService.js';
 
 class AuthorizedFetchService {
 	public async try(req, note?: ObjectLiteral) {
 		const apvs = await ApValidationService.validSignature(req);
 
-		if (config.authorizedFetch) {
+		if (ConfigService.authorizedFetch) {
 			if (apvs.blocked)
 				return {
 					error: true,

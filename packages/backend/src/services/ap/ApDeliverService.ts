@@ -4,10 +4,10 @@ import crypto from 'crypto';
 import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
@@ -81,7 +81,7 @@ class ApDeliverService {
 				user: as.id
 			});
 
-		if (new URL(data.inbox).host === new URL(config.url).host) return;
+		if (new URL(data.inbox).host === ConfigService.url.host) return;
 
 		const inboxUrl = new URL(data.inbox);
 		const sendDate = new Date().toUTCString();
@@ -97,7 +97,7 @@ class ApDeliverService {
 			.sign('sha256', Buffer.from(stringToSign), asPrivate.privateKey)
 			.toString('base64');
 
-		const signatureHeader = `keyId="${config.url}users/${as.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signature}"`;
+		const signatureHeader = `keyId="${ConfigService.url.href}users/${as.id}#main-key",algorithm="rsa-sha256",headers="(request-target) host date algorithm digest",signature="${signature}"`;
 
 		return await fetch(inboxUrl, {
 			method: 'POST',

@@ -3,12 +3,12 @@ import express from 'express';
 import { expect, test } from 'vitest';
 
 import ApValidationService from '../../../../services/ap/ApValidationService.js';
-import config from '../../../../utils/config.js';
+import ConfigService from '../../../../services/ConfigService.js';
 import db from '../../../../utils/database.js';
 
 await db.initialize();
 
-const url = new URL(config.url);
+const url = ConfigService.url;
 
 let req = express().request;
 req.url = new URL(url).href + 'inbox';
@@ -27,7 +27,7 @@ test('request with invalid host is not valid', async () => {
 });
 
 test('request without digest is not valid', async () => {
-	req.headers.host = new URL(config.url).host;
+	req.headers.host = ConfigService.url.host;
 	expect(await ApValidationService.validSignature(req)).toStrictEqual({
 		valid: false
 	});

@@ -1,6 +1,5 @@
 import { ObjectLiteral } from 'typeorm';
 
-import config from '../utils/config.js';
 import db from '../utils/database.js';
 import UserMini from '../utils/entities/UserMini.js';
 import locale from '../utils/locale.js';
@@ -12,6 +11,7 @@ import ApDeliverService from './ap/ApDeliverService.js';
 import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
+import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
@@ -62,7 +62,7 @@ class NoteService {
 			.addSelect(UserMini('likes_user'))
 
 			// attachments
-			//.leftJoinAndSelect('note.attachments', 'attachments')
+			.leftJoinAndSelect('note.attachments', 'attachments')
 
 			.where(where)
 			.orWhere(orWhere ?? where)
@@ -191,7 +191,7 @@ class NoteService {
 						if (user.local) {
 							const activity = ApUndoRenderer.render(
 								ApLikeRenderer.render(
-									new URL(config.url).href +
+									ConfigService.url.href +
 										'like/' +
 										existingLike.id,
 									user.id,
@@ -227,7 +227,7 @@ class NoteService {
 		} else {
 			const like = {
 				id: id,
-				apId: apId ?? new URL(config.url).href + 'like/' + id,
+				apId: apId ?? ConfigService.url.href + 'like/' + id,
 				userId: user.id,
 				noteId: noteId,
 				createdAt: new Date().toISOString()
@@ -239,7 +239,7 @@ class NoteService {
 				.then(async () => {
 					if (user.local) {
 						const activity = ApLikeRenderer.render(
-							new URL(config.url).href + 'like/' + like.id,
+							ConfigService.url.href + 'like/' + like.id,
 							user.id,
 							note.apId
 						);
@@ -289,14 +289,14 @@ class NoteService {
 				message: locale.note.contentTooShort
 			};
 
-		if (cw && cw.length > config.limits.soft.cw)
+		if (cw && cw.length > ConfigService.limits.soft.cw)
 			return {
 				error: true,
 				status: 400,
 				message: locale.note.contentWarningTooLong
 			};
 
-		if (!repeat && content.length > config.limits.soft.note)
+		if (!repeat && content.length > ConfigService.limits.soft.note)
 			return {
 				error: true,
 				status: 400,
@@ -310,7 +310,7 @@ class NoteService {
 				message: locale.note.visibilityInvalid
 			};
 
-		const instanceUrl = new URL(config.url);
+		const instanceUrl = ConfigService.url;
 
 		const id = IdService.generate();
 
@@ -439,7 +439,7 @@ class NoteService {
 				note: await this.get({ id: note.id })
 			});
 
-			if (config.bubbleTimeline) {
+			if (ConfigService.bubbleTimeline.enabled) {
 				WebsocketService.globalEmitter.emit('timeline:bubble', {
 					type: 'timeline:add',
 					timeline: 'bubble',

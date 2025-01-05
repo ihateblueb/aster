@@ -1,8 +1,8 @@
 import express from 'express';
 
+import ConfigService from '../../services/ConfigService.js';
 import UserService from '../../services/UserService.js';
 import oapi from '../../utils/apidoc.js';
-import config from '../../utils/config.js';
 import logger from '../../utils/logger.js';
 
 const router = express.Router();
@@ -39,11 +39,11 @@ router.get(
 			links: [
 				{
 					rel: 'http://nodeinfo.diaspora.software/ns/schema/2.1',
-					href: new URL(config.url).href + 'nodeinfo/2.1'
+					href: new URL(ConfigService.url).href + 'nodeinfo/2.1'
 				},
 				{
 					rel: 'http://nodeinfo.diaspora.software/ns/schema/2.0',
-					href: new URL(config.url).href + 'nodeinfo/2.0'
+					href: new URL(ConfigService.url).href + 'nodeinfo/2.0'
 				}
 			]
 		});
@@ -76,7 +76,7 @@ router.get(
 			res.setHeader('Content-Type', 'application/xrd+xml');
 			return res.status(200).send(
 				`<XRD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-					<Link rel="lrdd" template="${new URL(config.url).href}.well-known/webfinger?resource={uri}" />
+					<Link rel="lrdd" template="${new URL(ConfigService.url).href}.well-known/webfinger?resource={uri}" />
 				</XRD>`
 			);
 		} else {
@@ -87,7 +87,7 @@ router.get(
 						rel: 'lrdd',
 						type: 'application/jrd+json',
 						template:
-							new URL(config.url).href +
+							new URL(ConfigService.url).href +
 							'.well-known/webfinger?resource={uri}'
 					}
 				]
@@ -128,7 +128,7 @@ router.get(
 			.toString()
 			.replace('acct:@', '')
 			.replace('acct:', '')
-			.replace('@' + new URL(config.url).host, '')
+			.replace('@' + new URL(ConfigService.url).host, '')
 			.replace('@', '');
 
 		logger.debug('webfinger', 'resource: ' + resource);
@@ -150,32 +150,32 @@ router.get(
 
 			return res.status(200).send(
 				`<XRD xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://docs.oasis-open.org/ns/xri/xrd-1.0">
-					<Subject>acct:${user.username}@${new URL(config.url).host}</Subject>
-					<Alias>${new URL(config.url).href}users/${user.id}</Alias>
-					<Alias>${new URL(config.url).href}@${user.username}</Alias>
-					<Link rel="self" type="application/activity+json" href="${new URL(config.url).href}users/${user.id}" />
-					<Link rel="http://webfinger.net/rel/profile-page" type="text/html" href="${new URL(config.url).href}users/${user.id}" />
+					<Subject>acct:${user.username}@${new URL(ConfigService.url).host}</Subject>
+					<Alias>${new URL(ConfigService.url).href}users/${user.id}</Alias>
+					<Alias>${new URL(ConfigService.url).href}@${user.username}</Alias>
+					<Link rel="self" type="application/activity+json" href="${ConfigService.url.href}users/${user.id}" />
+					<Link rel="http://webfinger.net/rel/profile-page" type="text/html" href="${ConfigService.url.href}users/${user.id}" />
 				</XRD>`
 			);
 		} else {
 			res.setHeader('Content-Type', 'application/jrd+json');
 
 			return res.status(200).json({
-				subject: `acct:${user.username}@${new URL(config.url).host}`,
+				subject: `acct:${user.username}@${new URL(ConfigService.url).host}`,
 				aliases: [
-					`${new URL(config.url).href}users/${user.id}`,
-					`${new URL(config.url).href}@${user.username}`
+					`${new URL(ConfigService.url).href}users/${user.id}`,
+					`${new URL(ConfigService.url).href}@${user.username}`
 				],
 				links: [
 					{
 						rel: 'self',
 						type: 'application/activity+json',
-						href: `${new URL(config.url).href}users/${user.id}`
+						href: `${new URL(ConfigService.url).href}users/${user.id}`
 					},
 					{
 						rel: 'http://webfinger.net/rel/profile-page',
 						type: 'text/html',
-						href: `${new URL(config.url).href}users/${user.id}`
+						href: `${new URL(ConfigService.url).href}users/${user.id}`
 					}
 				]
 			});

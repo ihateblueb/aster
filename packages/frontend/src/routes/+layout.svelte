@@ -16,9 +16,39 @@
 
 	// todo: this doesnt get toggled off when the modal closes
 	store.showCompose.subscribe(async (e) => {
-		if (e) await compose.open();
+		if (e && loggedIn) await compose.open();
 		if (!e) compose.close();
 	});
+
+	if (loggedIn) {
+		let ws = new WebSocket(
+			$page.url.href + 'api/streaming?token=' + localstore.get('token')
+		);
+
+		ws.onopen = () => {
+			console.log('[ws] opened');
+			ws.send('ping');
+		};
+
+		ws.onclose = () => {
+			console.log('[ws] closed');
+			ws.send('ping');
+		};
+
+		ws.onmessage = (e) => {
+			console.log('[ws] server: ' + e.data);
+
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
+
+			if (message) {
+				if (message.type === 'greet') {
+				}
+			}
+		};
+	}
 </script>
 
 <QueryClientProvider client={queryClient}>

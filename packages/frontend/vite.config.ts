@@ -6,7 +6,7 @@ import tablerWidthHeightStyleAdder from './vite-add-style-for-tabler.js';
 
 const apiurl = process.env.ASTERFE_API_URL
 	? process.env.ASTERFE_API_URL
-	: `https://dev.aster.pages.gay/`;
+	: `http://localhost:9972/`;
 
 export default defineConfig({
 	plugins: [
@@ -20,6 +20,12 @@ export default defineConfig({
 			'/api': {
 				target: apiurl,
 				changeOrigin: true
+			},
+			'/api/streaming': {
+				target: apiurl,
+				changeOrigin: true,
+				rewriteWsOrigin: true,
+				ws: true
 			},
 			'/oauth': {
 				target: apiurl,

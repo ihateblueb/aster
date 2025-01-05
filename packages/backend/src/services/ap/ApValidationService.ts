@@ -1,13 +1,9 @@
-import * as punycode from 'node:punycode';
-
 import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
 
-import config from '../../utils/config.js';
-import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
-import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
+import ConfigService from '../ConfigService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import ApActorService from './ApActorService.js';
 
@@ -28,7 +24,7 @@ class ApValidationService {
 			};
 		}
 
-		if (req.headers.host !== new URL(config.url).host) {
+		if (req.headers.host !== ConfigService.url.host) {
 			logger.debug('ap', 'host header did not match configuration');
 			return {
 				valid: false

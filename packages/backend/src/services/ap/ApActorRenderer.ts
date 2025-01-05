@@ -1,7 +1,7 @@
 import { ObjectLiteral } from 'typeorm';
 
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 import ApImageRenderer from './ApImageRenderer.js';
 
 class ApActorRenderer {
@@ -15,7 +15,7 @@ class ApActorRenderer {
 
 			preferredUsername: user.username,
 			name: user.displayName,
-			url: new URL(config.url).href + '@' + user.username,
+			url: ConfigService.url.href + '@' + user.username,
 
 			summary: user.bio,
 			_misskey_summary: user.bio,
@@ -47,9 +47,9 @@ class ApActorRenderer {
 
 			inbox: user.inbox,
 			outbox: user.outbox,
-			sharedInbox: new URL(config.url).href + 'inbox',
+			sharedInbox: ConfigService.url.href + 'inbox',
 			endpoints: {
-				sharedInbox: new URL(config.url).href + 'inbox'
+				sharedInbox: ConfigService.url.href + 'inbox'
 			},
 
 			followers: user.followersUrl,

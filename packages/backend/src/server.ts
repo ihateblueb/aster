@@ -4,12 +4,12 @@ import cluster from 'cluster';
 import express from 'express';
 
 import pkg from '../../../package.json' with { type: 'json' };
+import ConfigService from './services/ConfigService.js';
 import MetricsService from './services/MetricsService.js';
 import RouterService from './services/RouterService.js';
 import SetupService from './services/SetupService.js';
 import WebsocketService from './services/WebsocketService.js';
 import WorkerService from './services/WorkerService.js';
-import config from './utils/config.js';
 import db from './utils/database.js';
 import logger from './utils/logger.js';
 
@@ -23,7 +23,7 @@ await db.initialize().catch((e) => {
 
 await SetupService.try();
 
-if (config.metrics.enabled) MetricsService.registerMetrics();
+if (ConfigService.metrics.enabled) MetricsService.registerMetrics();
 
 WorkerService.inbox.on('completed', (job) => {
 	logger.done('inbox', 'job ' + job.id + ' completed');
@@ -56,12 +56,12 @@ server.on('upgrade', (request, socket, head) =>
 	WebsocketService.server(request, socket, head)
 );
 
-server.listen(config.port, () => {
+server.listen(ConfigService.port, () => {
 	logger.done(
 		'boot',
 		'worker ' +
 			(cluster.isPrimary ? '*' : cluster.worker.id) +
 			' listening on ' +
-			config.port
+			ConfigService.port
 	);
 });

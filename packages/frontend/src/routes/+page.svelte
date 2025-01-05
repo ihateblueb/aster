@@ -16,7 +16,8 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import Button from '$lib/components/Button.svelte';
-	import queryclient from '$lib/queryclient.js';
+	import queryclient from '$lib/queryclient';
+	import store from '$lib/store';
 	let timeline: string;
 
 	let localstoreTimeline = localstore.get('homeTab');

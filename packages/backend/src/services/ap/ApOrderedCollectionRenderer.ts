@@ -1,7 +1,7 @@
 import { ObjectLiteral } from 'typeorm';
 
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 
 class ApOrderedCollectionRenderer {
 	public render(
@@ -16,14 +16,14 @@ class ApOrderedCollectionRenderer {
 			apOrderedCollection = {
 				'@context': context,
 
-				id: new URL(config.url).href + base,
+				id: ConfigService.url.href + base,
 				type: 'OrderedCollection',
 				totalItems: items.length
 			};
 
 			if (items.length > 0)
 				apOrderedCollection['first'] =
-					new URL(config.url).href + base + '?page=true';
+					ConfigService.url.href + base + '?page=true';
 		} else {
 			let orderedItems;
 
@@ -36,12 +36,12 @@ class ApOrderedCollectionRenderer {
 				'@context': context,
 
 				id:
-					new URL(config.url).href +
+					ConfigService.url.href +
 					base +
 					'?page=true' +
 					(cursor ? '&cursor=' + cursor : ''),
 				type: 'OrderedCollection',
-				partOf: new URL(config.url).href + base,
+				partOf: ConfigService.url.href + base,
 				totalItems: items.length,
 
 				orderedItems: orderedItems
@@ -49,7 +49,7 @@ class ApOrderedCollectionRenderer {
 
 			if (items.length > 0)
 				apOrderedCollection['next'] =
-					new URL(config.url).href +
+					ConfigService.url.href +
 					base +
 					'?page=true&cursor=' +
 					apOrderedCollection.orderedItems.at(-1);

@@ -1,10 +1,10 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
+import ConfigService from '../../../services/ConfigService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
-import config from '../../../utils/config.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
@@ -78,9 +78,7 @@ router.post(
 				message: locale.user.passwordRequired
 			});
 
-		const registrations = config.registrations
-			? config.registrations
-			: 'closed';
+		const registrations = ConfigService.registrations;
 
 		if (registrations === 'open') {
 			await UserService.register(parsedBody.username, parsedBody.password)

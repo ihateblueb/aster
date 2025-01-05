@@ -1,8 +1,8 @@
 import redis from 'redis';
 
-import config from '../utils/config.js';
 import logger from '../utils/logger.js';
 import connection from '../utils/redis.js';
+import ConfigService from './ConfigService.js';
 
 const client = await redis
 	.createClient({
@@ -10,9 +10,9 @@ const client = await redis
 			host: connection.host,
 			port: connection.port
 		},
-		database: config.redis.database,
-		name: config.redis.user,
-		password: config.redis.pass
+		database: ConfigService.redis.database,
+		name: ConfigService.redis.user,
+		password: ConfigService.redis.pass
 	})
 	.on('error', (err) => {
 		console.log(err);
@@ -24,21 +24,23 @@ class CacheService {
 	public async get(key: string) {
 		logger.debug(
 			'cache',
-			'getting ' + (config.redis.prefix + 'asterCache_' + key)
+			'getting ' + (ConfigService.redis.prefix + 'asterCache_' + key)
 		);
-		return await this.client.get(config.redis.prefix + 'asterCache_' + key);
+		return await this.client.get(
+			ConfigService.redis.prefix + 'asterCache_' + key
+		);
 	}
 	public async set(key: string, val: string, expire?: number) {
 		logger.debug(
 			'cache',
 			'setting ' +
-				(config.redis.prefix + 'asterCache_' + key) +
+				(ConfigService.redis.prefix + 'asterCache_' + key) +
 				' to ' +
 				val +
 				(expire ? ' expiring in ' + expire : '')
 		);
 		return await this.client.set(
-			config.redis.prefix + 'asterCache_' + key,
+			ConfigService.redis.prefix + 'asterCache_' + key,
 			val,
 			{
 				EX: expire

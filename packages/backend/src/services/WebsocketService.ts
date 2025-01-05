@@ -1,5 +1,7 @@
 import { EventEmitter } from 'node:events';
 
+import { IncomingMessage } from 'http';
+import { Duplex } from 'stream';
 import { WebSocketServer } from 'ws';
 
 import logger from '../utils/logger.js';
@@ -65,22 +67,21 @@ class WebsocketService {
 	public userEmitter: EventEmitter = userEmitter;
 	public globalEmitter: EventEmitter = globalEmitter;
 
-	public async server(request, socket, head) {
-		const { pathname } = new URL(request.url, 'wss://base.url');
+	public async server(
+		request: IncomingMessage,
+		socket: Duplex,
+		head: Buffer<ArrayBufferLike>
+	) {
+		const url = new URL(request.url, 'wss://base.url');
 
-		const auth = await AuthService.verify(request.headers.authorization);
+		const auth = await AuthService.verify(url.searchParams.get('token'));
 
 		if (auth.error) {
 			socket.write(`HTTP/1.1 ${auth.status}\r\n\r\n`);
-			socket.send(
-				JSON.stringify({
-					message: auth.message
-				})
-			);
 			socket.destroy();
 		}
 
-		if (pathname === '/api/streaming') {
+		if (url.pathname === '/api/streaming') {
 			wss.handleUpgrade(request, socket, head, (ws) => {
 				wss.emit('connection', ws, request, auth);
 			});

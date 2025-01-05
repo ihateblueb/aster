@@ -17,10 +17,10 @@
 
 	console.log(props.data);
 
-	if (props.data.userid) queryClient.clear();
+	if (props.data.noteid) queryClient.clear();
 
 	const query = createQuery({
-		queryKey: ['user'],
+		queryKey: ['note'],
 		retry: false,
 		queryFn: async () => await getNote(props.data.noteid)
 	});

@@ -1,11 +1,11 @@
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 
-import config from '../utils/config.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApFollowRenderer from './ap/ApFollowRenderer.js';
+import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import QueueService from './QueueService.js';
 import RelationshipService from './RelationshipService.js';
@@ -139,21 +139,21 @@ class UserService {
 				message: locale.user.registration.passwordTooShort
 			};
 
-		if (username.length > config.limits.soft.username)
+		if (username.length > ConfigService.limits.soft.username)
 			return {
 				error: true,
 				status: 400,
 				message: locale.user.registration.usernameTooLong
 			};
 
-		if (password.length > config.limits.soft.password)
+		if (password.length > ConfigService.limits.soft.password)
 			return {
 				error: true,
 				status: 400,
 				message: locale.user.registration.passwordTooLong
 			};
 
-		const instanceUrl = new URL(config.url);
+		const instanceUrl = ConfigService.url;
 
 		const id = IdService.generate();
 		const privateId = IdService.generate();

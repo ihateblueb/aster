@@ -15,9 +15,10 @@
 			{$query.data?.software ?? 'aster'}
 			{$query.data?.version ?? 'unknown version'}
 		</p>
-		<p>
-			<a href="/about">About</a> <a href="/source">Source code</a>
-			<a>link</a>
+		<p class="links">
+			<a href="/about">About</a>
+			<a href="/source">Source code</a>
+			<a href="steam://rungameid/220">_</a>
 		</p>
 	{/if}
 </div>
@@ -26,6 +27,11 @@
 	p {
 		opacity: 75%;
 		word-break: break-word;
+
+		&.links {
+			display: flex;
+			gap: 6px;
+		}
 	}
 
 	@media (max-width: 1355px) {

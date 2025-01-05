@@ -19,7 +19,7 @@
 		"build": "pnpm clean && pnpm --filter=frontend build && pnpm --filter=backend build",
 		"build-be": "pnpm --filter=backend build",
 		"build-fe": "pnpm clean-fe && pnpm --filter=frontend build",
-		"dev": "pnpm build && npm-run-all --parallel dev-fe dev-be",
+		"dev": "pnpm clean && pnpm build && npm-run-all --parallel dev-fe dev-be",
 		"dev-be": "pnpm --filter=backend dev",
 		"dev-fe": "pnpm --filter=frontend dev",
 		"format": "pnpm lint-fix-be && prettier --config .prettierrc --ignore-path .prettierignore '**' --write",

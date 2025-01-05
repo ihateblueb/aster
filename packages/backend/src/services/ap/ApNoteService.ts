@@ -2,10 +2,10 @@ import punycode from 'node:punycode';
 
 import { In } from 'typeorm';
 
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
@@ -37,8 +37,7 @@ class ApNoteService {
 		console.log(body); //todo: remove
 
 		const id = IdService.generate();
-
-		const note = {
+		let note = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
 			local: false,
@@ -72,7 +71,6 @@ class ApNoteService {
 			});
 
 		let replyingTo;
-
 		if (body.inReplyTo) {
 			replyingTo = await this.get(
 				body.inReplyTo,
@@ -172,7 +170,7 @@ class ApNoteService {
 				if (iterations <= 12) {
 					if (!attachment.url) return;
 
-					const driveFile = {
+					let driveFile = {
 						id: IdService.generate(),
 						src: attachment.url,
 						userId: note['userId'],
@@ -221,8 +219,8 @@ class ApNoteService {
 		const grabbedNote = await NoteService.get({ id: id });
 
 		if (
-			config.bubbleTimeline &&
-			config.bubbleInstances.includes(author.host)
+			ConfigService.bubbleTimeline.enabled &&
+			ConfigService.bubbleTimeline.instances.includes(author.host)
 		) {
 			WebsocketService.globalEmitter.emit('timeline:bubble', {
 				type: 'timeline:add',

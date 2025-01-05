@@ -1,9 +1,9 @@
 import express from 'express';
 
 import ApLikeRenderer from '../../services/ap/ApLikeRenderer.js';
+import ConfigService from '../../services/ConfigService.js';
 import oapi from '../../utils/apidoc.js';
 import authorizedFetch from '../../utils/authorizedFetch.js';
-import config from '../../utils/config.js';
 import db from '../../utils/database.js';
 import locale from '../../utils/locale.js';
 
@@ -71,7 +71,7 @@ router.get(
 				});
 			} else {
 				const rendered = ApLikeRenderer.render(
-					new URL(config.url).href + 'like/' + req.params.id,
+					new URL(ConfigService.url).href + 'like/' + req.params.id,
 					like.user.id,
 					like.note.apId
 				);

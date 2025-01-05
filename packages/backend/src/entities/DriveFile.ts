@@ -2,10 +2,12 @@ import typeorm, {
 	Column,
 	Entity,
 	JoinColumn,
+	ManyToMany,
 	ManyToOne,
 	PrimaryColumn
 } from 'typeorm';
 
+import { Note } from './Note.js';
 import { User } from './User.js';
 
 @Entity()

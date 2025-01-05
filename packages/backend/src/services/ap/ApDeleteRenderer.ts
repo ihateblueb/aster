@@ -1,5 +1,5 @@
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 
 class ApDeleteRenderer {
 	public render(id: GenericId, actor: GenericId, object: ApObject): ApObject {
@@ -7,8 +7,8 @@ class ApDeleteRenderer {
 			'@context': context,
 
 			type: 'Delete',
-			id: new URL(config.url).href + 'activities/' + id,
-			actor: new URL(config.url).href + 'users/' + actor,
+			id: ConfigService.url.href + 'activities/' + id,
+			actor: ConfigService.url.href + 'users/' + actor,
 			object: object
 		};
 	}

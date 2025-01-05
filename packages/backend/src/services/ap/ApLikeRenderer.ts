@@ -1,5 +1,5 @@
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 
 class ApLikeRenderer {
 	public render(id: ApId, actor: GenericId, object: ApId): ApObject {
@@ -8,7 +8,7 @@ class ApLikeRenderer {
 
 			type: 'Like',
 			id: id,
-			actor: new URL(config.url).href + 'users/' + actor,
+			actor: ConfigService.url.href + 'users/' + actor,
 			object: object
 		};
 	}

@@ -1,5 +1,5 @@
 import context from '../../static/context.js';
-import config from '../../utils/config.js';
+import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
 
 class ApUndoRenderer {
@@ -8,7 +8,7 @@ class ApUndoRenderer {
 			'@context': context,
 
 			type: 'Undo',
-			id: new URL(config.url).href + 'activities/' + IdService.generate(),
+			id: ConfigService.url.href + 'activities/' + IdService.generate(),
 			object: object
 		};
 
