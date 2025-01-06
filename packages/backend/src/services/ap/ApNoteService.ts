@@ -31,6 +31,32 @@ class ApNoteService {
 		return await this.register(resolvedNote);
 	}
 
+	private async addToBackfillQueue(
+		item: ApId,
+		parent: GenericId,
+		type: 'reply' | 'quote'
+	) {
+		await QueueService.backfill
+			.add(IdService.generate(), {
+				object: item,
+				type: type,
+				addTo: parent
+			})
+			.then(() => {
+				logger.debug(
+					'backfill',
+					'added ' + item + ' to backfill queue'
+				);
+			})
+			.catch((err) => {
+				console.log(err);
+				logger.error(
+					'backfill',
+					'failed to add ' + item + ' to backfill queue'
+				);
+			});
+	}
+
 	public async register(body) {
 		if (!ApValidationService.validBody(body)) return false;
 
@@ -78,27 +104,7 @@ class ApNoteService {
 			);
 
 			if (!replyingTo)
-				return await QueueService.backfill
-					.add(IdService.generate(), {
-						object: body.inReplyTo,
-						type: 'reply',
-						addTo: body.id
-					})
-					.then(() => {
-						logger.debug(
-							'backfill',
-							'added ' + body.replyingTo + ' to backfill queue'
-						);
-					})
-					.catch((err) => {
-						console.log(err);
-						logger.error(
-							'backfill',
-							'failed to add ' +
-								body.replyingTo +
-								' to backfill queue'
-						);
-					});
+				await this.addToBackfillQueue(body.inReplyTo, body.id, 'reply');
 		}
 
 		let quote;
@@ -121,30 +127,11 @@ class ApNoteService {
 
 		if (body.quoteUrl || body.quoteUri || body._misskey_quote)
 			if (!quote)
-				return await QueueService.backfill
-					.add(IdService.generate(), {
-						object:
-							body.quoteUrl ??
-							body.quoteUri ??
-							body._misskey_quote,
-						type: 'quote',
-						addTo: body.id
-					})
-					.then(() => {
-						logger.debug(
-							'backfill',
-							'added ' + body.replyingTo + ' to backfill queue'
-						);
-					})
-					.catch((err) => {
-						console.log(err);
-						logger.error(
-							'backfill',
-							'failed to add ' +
-								body.replyingTo +
-								' to backfill queue'
-						);
-					});
+				await this.addToBackfillQueue(
+					body.quoteUrl ?? body.quoteUri ?? body._misskey_quote,
+					body.id,
+					'quote'
+				);
 
 		if (quote) note['repeatId'] = quote.id;
 
@@ -202,6 +189,24 @@ class ApNoteService {
 						'note',
 						'hit iteration limit on attachments, ignoring rest'
 					);
+				}
+			}
+		}
+
+		if (body.replies) {
+			console.log('12984984930872');
+			if (body.replies.orderedItems || body.replies.items) {
+				for (const item of body.replies.orderedItems ??
+					body.replies.items) {
+					await this.addToBackfillQueue(item, body.id, 'reply');
+				}
+			} else {
+				let replies = await ApResolver.resolveSigned(body.replies);
+
+				if (replies && replies.orderedItems) {
+					for (const item of replies.orderedItems) {
+						await this.addToBackfillQueue(item, body.id, 'reply');
+					}
 				}
 			}
 		}

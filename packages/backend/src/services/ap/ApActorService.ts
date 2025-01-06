@@ -19,10 +19,10 @@ class ApActorService {
 
 		if (actor) {
 			// if actorUpdatedAt greater than an hour ago
-			console.log('THE THING 2', Number(new Date(actor.updatedAt)));
-			console.log('THE THING 3', Date.now() - 1000 * 60 * 60);
+			/*
 			if (Number(new Date(actor.updatedAt)) > Date.now() - 1000 * 60 * 60)
 				return await this.refetch(apId);
+			*/
 
 			return actor;
 		}
