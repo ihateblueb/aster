@@ -17,6 +17,7 @@ import ApActorService from './ApActorService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
 import ApVisibilityService from './ApVisibilityService.js';
+import RelationshipService from '../RelationshipService.js';
 
 class ApNoteService {
 	public async get(apId: ApId, as?: GenericId) {
@@ -57,7 +58,10 @@ class ApNoteService {
 			});
 	}
 
-	public async register(body) {
+	// todo: This Thing
+	public async apNoteToNote(body: ApObject) {}
+
+	public async register(body: ApObject) {
 		if (!ApValidationService.validBody(body)) return false;
 
 		console.log(body); //todo: remove
@@ -222,6 +226,16 @@ class ApNoteService {
 			});
 
 		const grabbedNote = await NoteService.get({ id: id });
+
+		const localFollowers = await RelationshipService.getFollowers(author.id);
+
+		for (const follower of localFollowers) {
+			WebsocketService.userEmitter.emit(follower.id, {
+				type: 'timeline:add',
+				timeline: 'home',
+				note: grabbedNote
+			})
+		}
 
 		if (
 			ConfigService.bubbleTimeline.enabled &&

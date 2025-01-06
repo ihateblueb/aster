@@ -26,7 +26,11 @@ wss.on('connection', async (ws, request, auth) => {
 	);
 
 	userEmitter.on(auth.user.id, (data) => {
-		ws.send(JSON.stringify(data));
+		if (data.type === 'timeline:add' && data.timeline === 'home' && subscriptions.includes('timeline:home')) {
+			ws.send(JSON.stringify(data));
+		} else {
+			ws.send(JSON.stringify(data));
+		}
 	});
 
 	let subscriptions = [];
