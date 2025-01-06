@@ -7,8 +7,10 @@ import ApActorService from '../ApActorService.js';
 
 class UpdateProcessor {
 	public async updateActor(body: ApObject) {
-		await ApActorService.actorToUser(body);
-		return true;
+		let user = await ApActorService.update(body);
+
+		if (user) return true;
+		return false;
 	}
 
 	public async process(body: ApObject): Promise<boolean> {

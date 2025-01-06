@@ -54,7 +54,7 @@ class ApActorService {
 		base?: ObjectLiteral
 	): Promise<ObjectLiteral> {
 		// todo: make more tolerant of weird responses.
-		let user = base;
+		let user = base ?? {};
 
 		user['updatedAt'] = new Date().toISOString();
 
