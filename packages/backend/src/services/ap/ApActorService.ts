@@ -113,11 +113,11 @@ class ApActorService {
 			);
 		if (body.icon && body.icon.name)
 			user['avatarAlt'] = SanitizerService.sanitize(body.icon.name);
-		if (body.icon && !body.icon.url && tryUrl(body.icon))
+		if (body.icon && !body.icon.url)
 			user['avatar'] = SanitizerService.sanitize(body.icon);
 
 		/* banner */
-		if (body.image && body.image.url && tryUrl(body.image.url))
+		if (body.image && body.image.url)
 			user['banner'] = SanitizerService.sanitize(body.image.url);
 		if (body.image && body.image.description)
 			user['bannerAlt'] = SanitizerService.sanitize(
@@ -125,13 +125,12 @@ class ApActorService {
 			);
 		if (body.image && body.image.name)
 			user['bannerAlt'] = SanitizerService.sanitize(body.image.name);
-		if (body.image && !body.image.url && tryUrl(body.image))
+		if (body.image && !body.image.url)
 			user['banner'] = SanitizerService.sanitize(body.image);
 
-		if (body.inbox && tryUrl(body.inbox))
-			user['inbox'] = SanitizerService.sanitize(body.inbox);
+		if (body.inbox) user['inbox'] = SanitizerService.sanitize(body.inbox);
 
-		if (body.sharedInbox && tryUrl(body.sharedInbox))
+		if (body.sharedInbox)
 			user['inbox'] = SanitizerService.sanitize(body.sharedInbox);
 
 		if (
@@ -143,12 +142,12 @@ class ApActorService {
 				body.endpoints.sharedInbox
 			);
 
-		if (body.outbox && tryUrl(body.outbox))
+		if (body.outbox)
 			user['outbox'] = SanitizerService.sanitize(body.outbox);
 
-		if (body.followers && tryUrl(body.followers))
+		if (body.followers)
 			user['followersUrl'] = SanitizerService.sanitize(body.followers);
-		if (body.following && tryUrl(body.following))
+		if (body.following)
 			user['followingUrl'] = SanitizerService.sanitize(body.following);
 
 		return user;

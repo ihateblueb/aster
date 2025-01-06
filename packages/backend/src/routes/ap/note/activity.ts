@@ -11,7 +11,7 @@ import locale from '../../../utils/locale.js';
 const router = express.Router();
 
 router.get(
-	'/notes/:id',
+	'/notes/:id/activity',
 	oapi.path({
 		description: "Fetch a note's Create activity",
 		tags: ['Federation'],
@@ -34,14 +34,6 @@ router.get(
 		}
 	}),
 	async (req, res, next) => {
-		if (
-			!req.headers ||
-			!req.headers.accept ||
-			(!req.headers.accept.includes('application/activity+json') &&
-				!req.headers.accept.includes('application/ld+json'))
-		)
-			return next();
-
 		res.setHeader('Content-Type', 'application/activity+json');
 
 		if (!req.params.id)

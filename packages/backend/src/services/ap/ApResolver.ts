@@ -16,7 +16,10 @@ class ApResolver {
 			return false;
 		}
 
-		let [actor, actorPrivate] = await UserService.getFull(as ? { id: as } : { username: 'instanceactor' });
+		let [actor, actorPrivate] = await UserService.getFull(
+			as ? { id: as } : { username: 'instanceactor' }
+		);
+		if (!actor || !actorPrivate) throw Error("couldn't get actor");
 
 		if (!ValidationService.validUrl(apId)) return;
 

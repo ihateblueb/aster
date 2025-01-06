@@ -5,6 +5,7 @@ import { In } from 'typeorm';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
+import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
@@ -12,6 +13,7 @@ import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
+import ValidationService from '../ValidationService.js';
 import WebsocketService from '../WebsocketService.js';
 import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
@@ -204,7 +206,7 @@ class ApNoteService {
 					body.replies.items) {
 					await this.addToBackfillQueue(item, body.id, 'reply');
 				}
-			} else {
+			} else if (ValidationService.validUrl(body.replies)) {
 				let replies = await ApResolver.resolveSigned(body.replies);
 
 				if (replies && replies.orderedItems) {

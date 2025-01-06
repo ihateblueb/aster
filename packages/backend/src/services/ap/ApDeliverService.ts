@@ -68,7 +68,10 @@ class ApDeliverService {
 		if (!(await ModeratedInstanceService.allowDeliver(deliverHost)))
 			return 'cannot deliver to no deliver instance ' + deliverHost;
 
-		let [as, asPrivate] = await UserService.getFull(data.as ? { id: data.as } : { username: 'instanceactor' });
+		let [as, asPrivate] = await UserService.getFull(
+			data.as ? { id: data.as } : { username: 'instanceactor' }
+		);
+		if (!as || !asPrivate) throw Error("couldn't get as actor");
 
 		if (new URL(data.inbox).host === ConfigService.url.host) return;
 
