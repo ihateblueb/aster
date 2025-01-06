@@ -24,6 +24,18 @@ class UserService {
 		return await db.getRepository('user_private').findOne({ where: where });
 	}
 
+	public async getPrivateMany(where: where) {
+		return await db.getRepository('user_private').find({ where: where });
+	}
+
+	public async getFull(where: where) {
+		let user = await this.get(where);
+		return [
+			user,
+			await this.getPrivate({ user: user.id })
+		]
+	}
+
 	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
 	}

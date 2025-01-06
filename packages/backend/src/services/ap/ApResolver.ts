@@ -16,18 +16,7 @@ class ApResolver {
 			return false;
 		}
 
-		let actor: ObjectLiteral;
-		let actorPrivate: ObjectLiteral;
-
-		if (as) {
-			actor = await UserService.get({ id: as });
-			actorPrivate = await UserService.getPrivate({ id: as });
-		} else {
-			actor = await UserService.get({ username: 'instanceactor' });
-			actorPrivate = await UserService.getPrivate({
-				user: actor.id
-			});
-		}
+		let [actor, actorPrivate] = await UserService.getFull(as ? { id: as } : { username: 'instanceactor' });
 
 		if (!ValidationService.validUrl(apId)) return;
 

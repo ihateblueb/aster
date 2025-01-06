@@ -17,7 +17,7 @@ import UserService from '../UserService.js';
 class ApDeliverService {
 	public async deliverToInboxes(
 		body: ApObject,
-		inboxes: ApId[],
+		inboxes: Inbox[],
 		as: GenericId
 	) {
 		for (const inbox of inboxes) {
@@ -32,7 +32,7 @@ class ApDeliverService {
 	public async deliverToFollowers(body: ApObject, as: GenericId) {
 		const relationships = await RelationshipService.getFollowers(as);
 
-		let inboxes: ApId[] = [];
+		let inboxes: Inbox[] = [];
 
 		for (const relationship of relationships) {
 			inboxes.push(relationship.from.inbox);
@@ -44,7 +44,7 @@ class ApDeliverService {
 	public async deliverToPeers(body: ApObject, as: GenericId) {
 		const peers = await db.getRepository('instance').find();
 
-		let inboxes: ApId[] = [];
+		let inboxes: Inbox[] = [];
 
 		for (const peer of peers) {
 			const user = await UserService.get({
@@ -68,18 +68,7 @@ class ApDeliverService {
 		if (!(await ModeratedInstanceService.allowDeliver(deliverHost)))
 			return 'cannot deliver to no deliver instance ' + deliverHost;
 
-		let as: ObjectLiteral;
-		let asPrivate: ObjectLiteral;
-
-		if (data.as) as = await UserService.get({ id: data.as });
-		if (data.as)
-			asPrivate = await UserService.getPrivate({ user: data.as });
-
-		if (!data.as) as = await UserService.get({ username: 'instanceactor' });
-		if (!data.as)
-			asPrivate = await UserService.getPrivate({
-				user: as.id
-			});
+		let [as, asPrivate] = await UserService.getFull(data.as ? { id: data.as } : { username: 'instanceactor' });
 
 		if (new URL(data.inbox).host === ConfigService.url.host) return;
 
