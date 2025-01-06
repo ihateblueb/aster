@@ -4,12 +4,12 @@ import crypto from 'crypto';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import ApBlockRenderer from './ap/ApBlockRenderer.js';
 import ApFollowRenderer from './ap/ApFollowRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import QueueService from './QueueService.js';
 import RelationshipService from './RelationshipService.js';
-import ApBlockRenderer from './ap/ApBlockRenderer.js';
 
 class UserService {
 	public async get(where: where) {
@@ -27,7 +27,6 @@ class UserService {
 	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
 	}
-
 
 	/* todo: this.follow & this.block, is this how this should be done? could this be made less complicated? could this be moved elsewhere? */
 

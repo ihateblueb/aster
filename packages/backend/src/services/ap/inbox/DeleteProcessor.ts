@@ -34,7 +34,7 @@ class DeleteProcessor {
 			return await this.findAndDelete(body.actor, body.object.id);
 		}
 
-		return false
+		return false;
 	}
 }
 

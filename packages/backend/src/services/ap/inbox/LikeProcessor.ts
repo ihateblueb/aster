@@ -25,7 +25,9 @@ class LikeProcessor {
 			})
 			.catch((err) => {
 				console.log(err);
-				throw new Error('failed to like '+note.apId+' for '+actor.apId)
+				throw new Error(
+					'failed to like ' + note.apId + ' for ' + actor.apId
+				);
 			});
 	}
 }

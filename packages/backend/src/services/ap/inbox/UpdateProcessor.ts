@@ -1,9 +1,9 @@
 // https://dev.aster.pages.gay/queue/queue/%7Binbox%7D/1477
 // https://dev.aster.pages.gay/queue/queue/%7Binbox%7D/1478
 
-import logger from '../../../utils/logger';
-import UserService from '../../UserService';
-import ApActorService from '../ApActorService';
+import logger from '../../../utils/logger.js';
+import UserService from '../../UserService.js';
+import ApActorService from '../ApActorService.js';
 
 class UpdateProcessor {
 	public async updateActor(body: ApObject) {
