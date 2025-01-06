@@ -57,6 +57,9 @@
 			retry={() => $query.refetch()}
 		/>
 	{:else if $query.isSuccess}
+		{#if $query.data.replyingTo}
+			<Note note={$query.data.replyingTo} />
+		{/if}
 		<Note note={$query.data} expanded />
 		<div class="tabs">
 			<Tab

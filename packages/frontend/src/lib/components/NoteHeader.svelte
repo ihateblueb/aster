@@ -8,8 +8,8 @@
 
 <header>
 	{#if note.user}
+		<Avatar user={note.user} />
 		<div class="left">
-			<Avatar user={note.user} />
 			<div class="names">
 				<a
 					class="top"

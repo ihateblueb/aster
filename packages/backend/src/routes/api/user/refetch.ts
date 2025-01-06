@@ -50,8 +50,7 @@ router.post(
 				message: locale.user.notFound
 			});
 
-		// ApActorService will always refetch
-		return await ApActorService.get(user.apId)
+		return await ApActorService.refetch(user.apId)
 			.then((e) => {
 				if (e) return res.status(200).json(e);
 				return res.status(500).json({

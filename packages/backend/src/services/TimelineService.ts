@@ -36,7 +36,8 @@ class TimelineService {
 
 	public sort(timeline: ObjectLiteral[], take: number) {
 		timeline.sort(
-			(x, y) => +new Date(y.createdAt) - +new Date(x.createdAt)
+			(x, y) =>
+				Number(new Date(y.createdAt)) - Number(new Date(x.createdAt))
 		);
 
 		if (timeline.length > take) {

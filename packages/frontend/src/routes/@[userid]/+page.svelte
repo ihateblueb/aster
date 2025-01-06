@@ -98,7 +98,7 @@
 				/>
 				<div class="float">
 					<div class="left">
-						<Avatar size="65px" user={$query.data} />
+						<Avatar large size="65px" user={$query.data} />
 						<div class="names">
 							<p class="top">
 								{$query.data.displayName
