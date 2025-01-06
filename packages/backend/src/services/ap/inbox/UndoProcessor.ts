@@ -1,3 +1,4 @@
+import logger from '../../../utils/logger.js';
 import RelationshipService from '../../RelationshipService.js';
 import UserService from '../../UserService.js';
 import ApActorService from '../ApActorService.js';
@@ -40,6 +41,11 @@ class UndoProcessor {
 
 		if (body.object.type === 'Follow') {
 			return await this.undoFollow(body.object);
+		} else {
+			logger.warn(
+				'update',
+				'unprocessed update object type ' + body.object.type
+			);
 		}
 
 		return false;

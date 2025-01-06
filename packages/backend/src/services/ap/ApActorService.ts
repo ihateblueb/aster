@@ -49,7 +49,7 @@ class ApActorService {
 		return await this.update(resolvedActor);
 	}
 
-	private async bodyToUser(
+	public async actorToUser(
 		body: ApObject,
 		base?: ObjectLiteral
 	): Promise<ObjectLiteral> {
@@ -172,7 +172,7 @@ class ApActorService {
 				body.publicKey.publicKeyPem
 			);
 
-		user = await this.bodyToUser(body, user);
+		user = await this.actorToUser(body, user);
 
 		await db
 			.getRepository('user')
@@ -188,7 +188,7 @@ class ApActorService {
 	public async update(body: ApObject) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		let updatedUser = await this.bodyToUser(body);
+		let updatedUser = await this.actorToUser(body);
 
 		await db
 			.getRepository('user')

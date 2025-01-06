@@ -13,40 +13,27 @@ import UpdateProcessor from './inbox/UpdateProcessor.js';
 
 class ApInboxService {
 	public async process(body: ApObject) {
-		if (body.type === 'Accept') {
-			await AcceptProcessor.process(body);
-		} else if (body.type === 'Add') {
-			await AddProcessor.process(body);
-		} else if (body.type === 'Announce') {
-			await AnnounceProcessor.process(body);
-		} else if (body.type === 'Create') {
-			await CreateProcessor.process(body);
-		} else if (body.type === 'Delete') {
-			await DeleteProcessor.process(body);
-		} else if (body.type === 'Follow') {
-			await FollowProcessor.process(body);
-		} else if (body.type === 'Like') {
-			await LikeProcessor.process(body);
-		} else if (body.type === 'Reject') {
-			await RejectProcessor.process(body);
-		} else if (body.type === 'Remove') {
-			await RemoveProcessor.process(body);
-		} else if (body.type === 'Undo') {
-			await UndoProcessor.process(body);
-		} else if (body.type === 'Update') {
-			await UpdateProcessor.process(body);
-		} else {
-			logger.warn(
-				'inbox',
-				'received activity of type ' +
-					body.type +
-					' that has no processor'
-			);
+		if (body.type === 'Accept') return await AcceptProcessor.process(body);
+		if (body.type === 'Add') return await AddProcessor.process(body);
+		if (body.type === 'Announce')
+			return await AnnounceProcessor.process(body);
+		// if (body.type === 'Block') return await BlockProcessor.process(body);
+		if (body.type === 'Create') return await CreateProcessor.process(body);
+		if (body.type === 'Delete') return await DeleteProcessor.process(body);
+		// if (body.type === 'Flag') return await FlagProcessor.process(body);
+		if (body.type === 'Follow') return await FollowProcessor.process(body);
+		if (body.type === 'Like') return await LikeProcessor.process(body);
+		if (body.type === 'Reject') return await RejectProcessor.process(body);
+		if (body.type === 'Remove') return await RemoveProcessor.process(body);
+		if (body.type === 'Undo') return await UndoProcessor.process(body);
+		if (body.type === 'Update') return await UpdateProcessor.process(body);
 
-			return 'Unprocessed';
-		}
+		logger.warn(
+			'inbox',
+			'received activity of type ' + body.type + ' that has no processor'
+		);
 
-		return 202;
+		return 'Unprocessed';
 	}
 }
 
