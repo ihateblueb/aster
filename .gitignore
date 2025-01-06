@@ -1,3 +1,4 @@
+config/production.*
 config/production.yaml
 /logs
 

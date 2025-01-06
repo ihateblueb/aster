@@ -7,9 +7,12 @@ import localeIndex from '../../../../locale/index.json' assert { type: 'json' };
 import logger from '../utils/logger.js';
 import tryUrl from '../utils/tryUrl.js';
 
-let textConfig = await readFile(`../../config/production.yaml`, {
-	encoding: 'utf-8'
-});
+let textConfig = await readFile(
+	`../../config/${process.env.NODE_ENV === 'development' ? 'development' : 'production'}.yaml`,
+	{
+		encoding: 'utf-8'
+	}
+);
 const parsedConfig = yaml.parse(textConfig);
 
 function ValidUrl(url: string): URL {
