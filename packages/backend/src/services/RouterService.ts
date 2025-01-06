@@ -34,6 +34,7 @@ import timeline_bubble from '../routes/api/timeline/bubble.js';
 import timeline_home from '../routes/api/timeline/home.js';
 import timeline_local from '../routes/api/timeline/local.js';
 import timeline_public from '../routes/api/timeline/public.js';
+import user_block from '../routes/api/user/block.js';
 import user_edit from '../routes/api/user/edit.js';
 import user_follow from '../routes/api/user/folllow.js';
 import user_get from '../routes/api/user/get.js';
@@ -200,6 +201,7 @@ router.use('/', timeline_home);
 router.use('/', timeline_local);
 router.use('/', timeline_public);
 
+router.use('/', user_block);
 router.use('/', user_edit);
 router.use('/', user_follow);
 router.use('/', user_get);

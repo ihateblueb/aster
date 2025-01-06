@@ -9,6 +9,7 @@ import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import QueueService from './QueueService.js';
 import RelationshipService from './RelationshipService.js';
+import ApBlockRenderer from './ap/ApBlockRenderer.js';
 
 class UserService {
 	public async get(where: where) {
@@ -26,6 +27,9 @@ class UserService {
 	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
 	}
+
+
+	/* todo: this.follow & this.block, is this how this should be done? could this be made less complicated? could this be moved elsewhere? */
 
 	public async follow(user: GenericId, as: GenericId, toggle?: boolean) {
 		const id = IdService.generate();
@@ -69,7 +73,7 @@ class UserService {
 						logger.error('user', 'follow delete failed');
 						return {
 							status: 500,
-							message: 'Failed to remove follow'
+							message: 'Internal server error'
 						};
 					});
 			} else {
@@ -113,7 +117,97 @@ class UserService {
 					logger.error('user', 'follow failed');
 					return {
 						status: 500,
-						message: 'Failed to add follow'
+						message: 'Internal server error'
+					};
+				});
+		}
+	}
+
+	public async block(user: GenericId, as: GenericId, toggle?: boolean) {
+		const id = IdService.generate();
+
+		const to = await this.get({ id: user });
+		const from = await this.get({ id: as });
+
+		if (!to || !from) {
+			return {
+				status: 404,
+				message: 'User not found'
+			};
+		}
+
+		if (to.id === from.id) {
+			return {
+				status: 400,
+				message: "You can't block yourself"
+			};
+		}
+
+		const existingBlock = await RelationshipService.get({
+			to: { id: user },
+			from: { id: from.id },
+			type: 'block'
+		});
+
+		if (existingBlock) {
+			if (toggle) {
+				return RelationshipService.delete({
+					id: existingBlock.id
+				})
+					.then(() => {
+						return {
+							status: 200,
+							message: 'Removed block'
+						};
+					})
+					.catch((err) => {
+						console.error(err);
+						logger.error('user', 'block delete failed');
+						return {
+							status: 500,
+							message: 'Internal server error'
+						};
+					});
+			} else {
+				return {
+					status: 409,
+					message: 'Block already exists'
+				};
+			}
+		} else {
+			const block = {
+				id: id,
+				toId: user,
+				fromId: as,
+				type: 'block',
+				createdAt: new Date().toISOString()
+			};
+
+			if (!to.local) {
+				const activity = ApBlockRenderer.render(id, from.id, to.apId);
+
+				await QueueService.deliver.add(IdService.generate(), {
+					as: from.id,
+					inbox: to.inbox,
+					body: activity
+				});
+			}
+
+			return await db
+				.getRepository('relationship')
+				.insert(block)
+				.then(() => {
+					return {
+						status: 200,
+						message: 'Added block'
+					};
+				})
+				.catch((err) => {
+					console.error(err);
+					logger.error('user', 'block failed');
+					return {
+						status: 500,
+						message: 'Internal server error'
 					};
 				});
 		}
@@ -257,7 +351,7 @@ class UserService {
 				return {
 					error: true,
 					status: 500,
-					message: locale.user.failedCreate
+					message: 'Internal server error'
 				};
 			});
 
@@ -273,7 +367,7 @@ class UserService {
 				return {
 					error: true,
 					status: 500,
-					message: locale.user.failedCreatePrivate
+					message: 'Internal server error'
 				};
 			});
 

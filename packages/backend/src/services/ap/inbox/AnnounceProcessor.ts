@@ -29,7 +29,7 @@ class AnnounceProcessor {
 			})
 			.catch((err) => {
 				console.log(err);
-				return false;
+				throw new Error('failed to repeat '+note.apId+' for '+actor.apId)
 			});
 	}
 }

@@ -30,9 +30,11 @@ class DeleteProcessor {
 
 		if (!body.object.type) {
 			return await this.findAndDelete(body.actor, body.object);
-		} else {
+		} else if (body.object.id) {
 			return await this.findAndDelete(body.actor, body.object.id);
 		}
+
+		return false
 	}
 }
 
