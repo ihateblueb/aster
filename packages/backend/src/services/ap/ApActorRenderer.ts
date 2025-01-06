@@ -3,6 +3,7 @@ import { ObjectLiteral } from 'typeorm';
 import context from '../../static/context.js';
 import ConfigService from '../ConfigService.js';
 import ApImageRenderer from './ApImageRenderer.js';
+import ApKeyRenderer from './ApKeyRenderer.js';
 
 class ApActorRenderer {
 	public render(user: ObjectLiteral): ApObject {
@@ -55,12 +56,7 @@ class ApActorRenderer {
 			followers: user.followersUrl,
 			following: user.followingUrl,
 
-			publicKey: {
-				id: user.apId + '#main-key',
-				type: 'Key',
-				owner: user.apId,
-				publicKeyPem: user.publicKey
-			}
+			publicKey: ApKeyRenderer.render(user.apId, user.publicKey)
 		};
 
 		return apActor;

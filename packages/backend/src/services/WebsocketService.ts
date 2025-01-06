@@ -26,7 +26,11 @@ wss.on('connection', async (ws, request, auth) => {
 	);
 
 	userEmitter.on(auth.user.id, (data) => {
-		if (data.type === 'timeline:add' && data.timeline === 'home' && subscriptions.includes('timeline:home')) {
+		if (
+			data.type === 'timeline:add' &&
+			data.timeline === 'home' &&
+			subscriptions.includes('timeline:home')
+		) {
 			ws.send(JSON.stringify(data));
 		} else {
 			ws.send(JSON.stringify(data));
@@ -74,7 +78,7 @@ class WebsocketService {
 	public async server(
 		request: IncomingMessage,
 		socket: Duplex,
-		head: Buffer<ArrayBufferLike>
+		head: Buffer
 	) {
 		const url = new URL(request.url, 'wss://base.url');
 

@@ -9,6 +9,7 @@ import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
+import RelationshipService from '../RelationshipService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
 import WebsocketService from '../WebsocketService.js';
@@ -17,7 +18,6 @@ import ApActorService from './ApActorService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
 import ApVisibilityService from './ApVisibilityService.js';
-import RelationshipService from '../RelationshipService.js';
 
 class ApNoteService {
 	public async get(apId: ApId, as?: GenericId) {
@@ -227,14 +227,16 @@ class ApNoteService {
 
 		const grabbedNote = await NoteService.get({ id: id });
 
-		const localFollowers = await RelationshipService.getFollowers(author.id);
+		const localFollowers = await RelationshipService.getFollowers(
+			author.id
+		);
 
 		for (const follower of localFollowers) {
 			WebsocketService.userEmitter.emit(follower.id, {
 				type: 'timeline:add',
 				timeline: 'home',
 				note: grabbedNote
-			})
+			});
 		}
 
 		if (

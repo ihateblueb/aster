@@ -91,13 +91,11 @@ class ConfigService {
 		public port: number =
 			NumberMinMax(parsedConfig.redis.port, 0, 65535) ?? 6379;
 
-		public prefix: string | undefined =
-			parsedConfig.redis.prefix ?? undefined;
-		public database: number | undefined =
-			parsedConfig.redis.database ?? undefined;
+		public prefix: string = parsedConfig.redis.prefix;
+		public database: number = parsedConfig.redis.database;
 
-		public user: string | undefined = parsedConfig.redis.user ?? undefined;
-		public pass: string | undefined = parsedConfig.redis.pass ?? undefined;
+		public user: string = parsedConfig.redis.user;
+		public pass: string = parsedConfig.redis.pass;
 	})();
 
 	public cache = new (class CacheConfig {
