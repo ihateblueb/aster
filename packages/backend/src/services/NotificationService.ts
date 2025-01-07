@@ -16,8 +16,7 @@ class NotificationService {
 			.leftJoinAndSelect('notification.user', 'user')
 
 			.leftJoinAndSelect('notification.note', 'note')
-			.leftJoin('note.user', 'note_user')
-			.addSelect(UserMini('note_user'))
+			.leftJoinAndSelect('note.user', 'note_user')
 
 			.leftJoinAndSelect('notification.relationship', 'relationship')
 			.where(where)
