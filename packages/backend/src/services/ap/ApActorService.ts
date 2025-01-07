@@ -104,6 +104,8 @@ class ApActorService {
 			/* ignore */
 		}
 
+		if (!user.createdAt) user['createdAt'] = new Date().toISOString();
+
 		/* avatar */
 		if (body.icon && body.icon.url)
 			user['avatar'] = SanitizerService.sanitize(body.icon.url);

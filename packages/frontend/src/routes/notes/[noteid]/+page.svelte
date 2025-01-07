@@ -9,7 +9,6 @@
 	import getNote from '$lib/api/note/get.js';
 	import Note from '$lib/components/Note.svelte';
 	import Tab from '$lib/components/Tab.svelte';
-	import NoteHeader from '$lib/components/NoteHeader.svelte';
 	import UserCard from '$lib/components/UserCard.svelte';
 	import queryClient from '$lib/queryclient.js';
 
@@ -65,23 +64,27 @@
 			<Tab
 				selected={selectedTab === 'replies'}
 				on:click={() => updateTab('replies')}
-				short>Replies</Tab
 			>
+				Replies
+			</Tab>
 			<Tab
 				selected={selectedTab === 'repeats'}
 				on:click={() => updateTab('repeats')}
-				short>Repeats</Tab
 			>
+				Repeats
+			</Tab>
 			<Tab
 				selected={selectedTab === 'likes'}
 				on:click={() => updateTab('likes')}
-				short>Likes</Tab
 			>
+				Likes
+			</Tab>
 			<Tab
 				selected={selectedTab === 'reactions'}
 				on:click={() => updateTab('reactions')}
-				short>Reactions</Tab
 			>
+				Reactions
+			</Tab>
 		</div>
 		<div class="bottom">
 			{#if selectedTab === 'replies'}

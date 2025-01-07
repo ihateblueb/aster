@@ -68,7 +68,7 @@
 					selectedTab = 1;
 					goto('/settings/account');
 				}}
-				title="Account"
+				title="General"
 			></Tab>
 			<Tab
 				selected={$page.route.id === '/settings/account/privacy'}
@@ -88,7 +88,9 @@
 			></Tab>
 		{/if}
 	</div>
-	<slot></slot>
+	<div class="body">
+		<slot></slot>
+	</div>
 </PageWrapper>
 
 <style lang="scss" scoped>
@@ -104,5 +106,9 @@
 		margin-bottom: 12px;
 
 		border-bottom: 1px solid var(--bg3);
+	}
+
+	.body {
+		padding: 6px;
 	}
 </style>

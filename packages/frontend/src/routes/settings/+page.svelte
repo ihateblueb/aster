@@ -20,16 +20,49 @@
 	checked={value('warnNoAlt')}
 	on:change={(e) => changeToggle('warnNoAlt', e.target?.checked)}
 />
-<h2>Note Appearance</h2>
+<br />
+<h2>Appearance</h2>
+<Switch
+	label="Use system font"
+	checked={value('useSystemFont')}
+	on:change={(e) => changeToggle('useSystemFont', e.target?.checked)}
+/>
+<Switch
+	label="Use rounded avatars"
+	checked={value('activeRequestsSpinner')}
+	on:change={(e) => changeToggle('activeRequestsSpinner', e.target?.checked)}
+/>
+<Switch
+	label="Show when there are API requests are active"
+	checked={value('useRoundedAvatars')}
+	on:change={(e) => changeToggle('useRoundedAvatars', e.target?.checked)}
+/>
+<br />
+<h2>Timeline</h2>
+<Switch
+	label="Live update timelines and notifications"
+	checked={value('liveUpdateTimelines')}
+	on:change={(e) => changeToggle('liveUpdateTimelines', e.target?.checked)}
+/>
+<Switch
+	label="Automatically fetch more on scroll"
+	checked={value('fetchMoreOnScroll')}
+	on:change={(e) => changeToggle('fetchMoreOnScroll', e.target?.checked)}
+/>
+<Switch
+	label="Enable cat speak"
+	checked={value('catSpeak')}
+	on:change={(e) => changeToggle('catSpeak', e.target?.checked)}
+/>
 <Switch
 	label="Render more than basic formatting"
 	checked={value('renderAdvancedMfm')}
 	on:change={(e) => changeToggle('renderAdvancedMfm', e.target?.checked)}
 />
 <Switch
-	label="Enable cat speak"
-	checked={value('catSpeak')}
-	on:change={(e) => changeToggle('catSpeak', e.target?.checked)}
+	label="Enable animated MFM"
+	checked={value('animatedMfm')}
+	on:change={(e) => changeToggle('animatedMfm', e.target?.checked)}
 />
 <Switch
 	label="Always collapse content warnings"

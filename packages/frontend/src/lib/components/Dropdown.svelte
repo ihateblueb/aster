@@ -98,7 +98,7 @@
 
 		margin: 0;
 		padding: 6px;
-		min-width: 225px;
+		min-width: 200px;
 
 		text-align: left;
 

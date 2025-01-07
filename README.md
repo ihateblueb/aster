@@ -34,18 +34,20 @@ Endpoints done:
 - /user/:id
 - /user/:id/inbox
 - /note/:id
+- /note/:id/activity
+- /like/:id
 
 Endpoints in progress:
 
-- /user/:id/followers (OrderedCollection of following actors)
-- /user/:id/following (OrderedCollection of followed actors)
-- /user/:id/outbox (OrderedCollection of recently sent public activities. Do I even do this? Does anyone even use it?)
+- /user/:id/followers (Collection of following actors)
+- /user/:id/following (Collection of followed actors)
+- /user/:id/outbox (Collection of recently sent public activities. Do I even do this? Does anyone even use it?)
 
 Endpoints needed:
 
-- /note/:id/replies (OrderedCollection of Links to Note objects\*)
-- /note/:id/likes (OrderedCollection of Links to Like activities\*)
-- /note/:id/shares (OrderedCollection of Links to Announce activities\*)
+- /note/:id/replies (Collection of Links to Note objects\*)
+- /note/:id/likes (Collection of Links to Like activities\*)
+- /note/:id/shares (Collection of Links to Announce activities\*)
 
 \*or entire object with LD signature, to save time on the fetching end. I need to look into the best way to implement this further.
 
@@ -80,6 +82,22 @@ Activities Processed:
 - Delete
     - User
     - Note
+- Undo
+  - Follow
+- Update
+  - User
+
+Activities that should be processed in the future:
+- Undo
+  - Like
+- Update
+  - Note
+- Flag
+- Block
+- Reject
+  - Follow
+- Add
+- Remove
 
 ### Federation
 

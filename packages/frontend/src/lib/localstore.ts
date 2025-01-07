@@ -26,6 +26,14 @@ let defaults = {
 	},
 
 	warnNoAlt: true,
+
+	useSystemFont: false,
+	useRoundedAvatars: false,
+	activeRequestsSpinner: true,
+
+	liveUpdateTimelines: true,
+	fetchMoreOnScroll: true,
+	animatedMfm: false,
 	renderAdvancedMfm: true,
 	catSpeak: true,
 	uncollapseCws: false,

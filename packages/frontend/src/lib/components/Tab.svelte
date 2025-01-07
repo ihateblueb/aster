@@ -1,6 +1,6 @@
 <script>
 	export let short = false;
-	export let selected;
+	export let selected = false;
 	export let title = '';
 </script>
 
@@ -21,6 +21,9 @@
 		background: none;
 		border: none;
 		color: inherit;
+
+		font-family: var(--font);
+		font-size: 13px;
 
 		height: 50px;
 
