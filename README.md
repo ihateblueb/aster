@@ -83,19 +83,20 @@ Activities Processed:
     - User
     - Note
 - Undo
-  - Follow
+    - Follow
 - Update
-  - User
+    - User
 
 Activities that should be processed in the future:
+
 - Undo
-  - Like
+    - Like
 - Update
-  - Note
+    - Note
 - Flag
 - Block
 - Reject
-  - Follow
+    - Follow
 - Add
 - Remove
 

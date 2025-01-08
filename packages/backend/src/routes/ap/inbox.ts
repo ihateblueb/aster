@@ -60,7 +60,7 @@ router.post(
 
 		if (apvs.valid)
 			return await QueueService.inbox
-				.add(IdService.generate(), JSON.parse(req.body))
+				.add(IdService.generate() + ':' + (JSON.parse(req.body).type ?? 'unknown'), JSON.parse(req.body))
 				.then(() => {
 					return res.status(202).send();
 				})

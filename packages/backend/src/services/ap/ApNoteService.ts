@@ -8,6 +8,7 @@ import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
 import IdService from '../IdService.js';
+import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
@@ -141,26 +142,37 @@ class ApNoteService {
 
 		if (quote) note['repeatId'] = quote.id;
 
-		if (body.summary) note['cw'] = SanitizerService.sanitize(body.summary);
+		if (body.summary)
+			note['cw'] = SanitizerService.sanitize(
+				MfmService.localize(body.summary, author.host)
+			);
 		if (body._misskey_summary)
-			note['cw'] = SanitizerService.sanitize(body._misskey_summary);
+			note['cw'] = SanitizerService.sanitize(
+				MfmService.localize(body._misskey_summary, author.host)
+			);
 
 		if (moderatedInstance && moderatedInstance.cw && !note['cw'])
 			note['cw'] = moderatedInstance.cw;
 
 		if (body.content)
-			note['content'] = SanitizerService.sanitize(body.content);
+			note['content'] = SanitizerService.sanitize(
+				MfmService.localize(body.content, author.host)
+			);
 		if (body.source && body.source.content)
-			note['content'] = SanitizerService.sanitize(body.source.content);
+			note['content'] = SanitizerService.sanitize(
+				MfmService.localize(body.source.content, author.host)
+			);
 		if (body._misskey_content)
-			note['content'] = SanitizerService.sanitize(body._misskey_content);
+			note['content'] = SanitizerService.sanitize(
+				MfmService.localize(body._misskey_content, author.host)
+			);
 
 		if (body.attachment) {
 			let iterations = 0;
 
 			for (const attachment of body.attachment) {
 				iterations++;
-				if (iterations <= 12) {
+				if (iterations < 12) {
 					if (!attachment.url) return;
 
 					let driveFile = {

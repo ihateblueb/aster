@@ -7,6 +7,7 @@ import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
 import IdService from '../IdService.js';
+import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
@@ -52,9 +53,11 @@ class ApActorService {
 	public async actorToUser(
 		body: ApObject,
 		base?: ObjectLiteral
-	): Promise<ObjectLiteral> {
+	): Promise<Partial<ObjectLiteral>> {
 		// todo: make more tolerant of weird responses.
-		let user = base ?? {};
+		let user = base ?? {
+			host: new URL(body.id).host
+		};
 
 		user['updatedAt'] = new Date().toISOString();
 
@@ -69,11 +72,18 @@ class ApActorService {
 
 		user['username'] = SanitizerService.sanitize(body.preferredUsername);
 
-		user['displayName'] = SanitizerService.sanitize(body.name);
+		user['displayName'] = SanitizerService.sanitize(
+			MfmService.localize(body.name, user.host)
+		);
 
-		if (body.summary) user['bio'] = SanitizerService.sanitize(body.summary);
+		if (body.summary)
+			user['bio'] = SanitizerService.sanitize(
+				MfmService.localize(body.summary, user.host)
+			);
 		if (body._misskey_summary)
-			user['bio'] = SanitizerService.sanitize(body._misskey_summary);
+			user['bio'] = SanitizerService.sanitize(
+				MfmService.localize(body._misskey_summary, user.host)
+			);
 
 		if (body['vcard:Address'])
 			user['location'] = SanitizerService.sanitize(body['vcard:Address']);

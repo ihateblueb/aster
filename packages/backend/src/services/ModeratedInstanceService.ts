@@ -65,18 +65,18 @@ class ModeratedInstanceService {
 		 * 1: bad
 		 * return every follow/follower
 		 * for loop over both arrays and do if (host.includes(follow.user.host))
-		 * this will get everyone, but looping over every follow/follower 
+		 * this will get everyone, but looping over every follow/follower
 		 * on every single instance moderation action for every user would be a Lot
-		 * 
+		 *
 		 * 2: worse
 		 * RelationshipService.getFollowers where host Like(host)
 		 * this would be very bad and cause false positives.
-		 * 
+		 *
 		 * 3: decent
-		 * postgres function that reduces the host like the moderated instance service 
+		 * postgres function that reduces the host like the moderated instance service
 		 * does. look into how to do that with typeorm because that is probably the ideal
 		 * way to do it.
-		 * 
+		 *
 		 * also! this should not be one notification for each relationship. flooding
 		 * notifications would be really annoying
 		 */

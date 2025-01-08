@@ -30,10 +30,7 @@ class UserService {
 
 	public async getFull(where: where) {
 		let user = await this.get(where);
-		return [
-			user,
-			await this.getPrivate({ user: user.id })
-		]
+		return [user, await this.getPrivate({ user: user.id })];
 	}
 
 	public async delete(where: where) {
