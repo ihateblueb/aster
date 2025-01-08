@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
+import { ObjectLiteral } from 'typeorm';
 
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
@@ -31,6 +32,10 @@ class UserService {
 	public async getFull(where: where) {
 		let user = await this.get(where);
 		return [user, await this.getPrivate({ user: user.id })];
+	}
+
+	public async update(where: where, user: Partial<ObjectLiteral>) {
+		return await db.getRepository('user').update(where, user);
 	}
 
 	public async delete(where: where) {
