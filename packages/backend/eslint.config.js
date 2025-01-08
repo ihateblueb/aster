@@ -18,6 +18,7 @@ export default [
 			'prefer-const': 'off',
 			'simple-import-sort/imports': 'warn',
 			'simple-import-sort/exports': 'warn',
+			'@typescript-eslint/no-deprecated': 'warn',
 
 			// i cant do anything about typeorm
 			'no-class-assign': 'off',

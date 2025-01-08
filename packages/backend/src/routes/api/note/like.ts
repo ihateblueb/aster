@@ -1,9 +1,9 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
-import NoteService from '../../../services/NoteService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
+import LikeService from '../../../services/LikeService.js';
 
 const router = express.Router();
 
@@ -35,7 +35,7 @@ router.post(
 				message: auth.message
 			});
 
-		return await NoteService.like(req.params.id, auth.user.id, true)
+		return await LikeService.create(req.params.id, auth.user.id, true)
 			.then((e) => {
 				return res.status(e.status).json({ message: e.message });
 			})

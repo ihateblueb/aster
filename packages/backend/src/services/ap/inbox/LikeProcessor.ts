@@ -1,4 +1,5 @@
 import logger from '../../../utils/logger.js';
+import LikeService from '../../LikeService.js';
 import NoteService from '../../NoteService.js';
 import ApActorService from '../ApActorService.js';
 import ApNoteService from '../ApNoteService.js';
@@ -18,7 +19,7 @@ class LikeProcessor {
 			console.log(body.tag);
 		}
 
-		return await NoteService.like(note.id, actor.id, false, body.id)
+		return await LikeService.create(note.id, actor.id, false, body.id)
 			.then((e) => {
 				console.log(e);
 				return true;

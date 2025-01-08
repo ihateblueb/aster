@@ -73,7 +73,7 @@ class NoteService {
 		where: where,
 		take?: number,
 		order?: string,
-		orderDirection?: 'ASC' | 'DESC',
+		direction?: 'ASC' | 'DESC',
 		orWhere?: where
 	) {
 		return await db
@@ -118,7 +118,7 @@ class NoteService {
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.take(take)
-			.orderBy(order, orderDirection)
+			.orderBy(order, direction)
 			.getMany();
 	}
 
@@ -149,128 +149,6 @@ class NoteService {
 		}
 
 		return db.getRepository('note').delete(where);
-	}
-
-	public async like(
-		noteId: GenericId,
-		as: GenericId,
-		toggle?: boolean,
-		apId?: ApId
-	) {
-		const id = IdService.generate();
-
-		const user = await UserService.get({ id: as });
-		const note = await this.get({ id: noteId });
-
-		if (
-			!(await VisibilityService.canISee(
-				await this.get({ id: noteId }),
-				as
-			))
-		)
-			return {
-				status: 404,
-				message: locale.note.notFound
-			};
-
-		const existingLike = await db.getRepository('note_like').findOne({
-			where: {
-				userId: user.id,
-				noteId: noteId
-			}
-		});
-
-		if (existingLike) {
-			if (toggle) {
-				return await db
-					.getRepository('note_like')
-					.delete({
-						id: existingLike.id
-					})
-					.then(async () => {
-						if (user.local) {
-							const activity = ApUndoRenderer.render(
-								ApLikeRenderer.render(
-									ConfigService.url.href +
-										'like/' +
-										existingLike.id,
-									user.id,
-									note.apId
-								)
-							);
-
-							await ApDeliverService.deliverToFollowers(
-								activity,
-								user.id
-							);
-						}
-
-						return {
-							status: 200,
-							message: 'Removed like'
-						};
-					})
-					.catch((err) => {
-						console.error(err);
-						logger.error('note', 'like delete failed');
-						return {
-							status: 500,
-							message: 'Failed to remove like'
-						};
-					});
-			} else {
-				return {
-					status: 409,
-					message: 'Like already exists'
-				};
-			}
-		} else {
-			const like = {
-				id: id,
-				apId: apId ?? ConfigService.url.href + 'like/' + id,
-				userId: user.id,
-				noteId: noteId,
-				createdAt: new Date().toISOString()
-			};
-
-			return await db
-				.getRepository('note_like')
-				.insert(like)
-				.then(async () => {
-					if (user.local) {
-						const activity = ApLikeRenderer.render(
-							ConfigService.url.href + 'like/' + like.id,
-							user.id,
-							note.apId
-						);
-
-						await ApDeliverService.deliverToFollowers(
-							activity,
-							user.id
-						);
-					}
-
-					await NotificationService.create(
-						note.user.id,
-						user.id,
-						'like',
-						note.id
-					);
-
-					return {
-						status: 200,
-						message: 'Added like'
-					};
-				})
-				.catch((err) => {
-					console.error(err);
-					logger.error('note', 'like failed');
-					return {
-						status: 500,
-						message: 'Failed to add like'
-					};
-				});
-		}
 	}
 
 	public async create(
@@ -468,9 +346,12 @@ class NoteService {
 		return result;
 	}
 
-	/*  for use strictly for a plain repeat
-		these toggle(ish), quotes do not
-	*/
+	/*  
+	 *	for use strictly for a plain repeat
+	 *	these toggle(ish), quotes do not
+	 *	this is only okay as apart of the NoteService because it's
+	 *	basically just a note with a different attribute added on
+	 */
 	public async repeat(
 		noteId: GenericId,
 		as: GenericId,
