@@ -1,7 +1,7 @@
 import express from 'express';
 
-import MetaService from '../../services/MetaService.js';
 import oapi from '../../utils/apidoc.js';
+import NodeinfoService from '../../services/NodeinfoService.js';
 
 const router = express.Router();
 
@@ -25,23 +25,7 @@ router.get(
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
-		const meta = await MetaService.get();
-
-		return res.status(200).json({
-			version: '2.0',
-			software: {
-				name: meta.software,
-				version: meta.version
-			},
-			protocols: ['activitypub'],
-			openRegistrations: Boolean(meta.registrations === 'open'),
-			usage: {
-				users: {
-					total: meta.stats.user
-				},
-				localPosts: meta.stats.note
-			}
-		});
+		return res.status(200).json(await NodeinfoService.render('2.0'));
 	}
 );
 
@@ -65,23 +49,7 @@ router.get(
 	async (req, res) => {
 		res.setHeader('Content-Type', 'application/activity+json');
 
-		const meta = await MetaService.get();
-
-		return res.status(200).json({
-			version: '2.1',
-			software: {
-				name: meta.software,
-				version: meta.version
-			},
-			protocols: ['activitypub'],
-			openRegistrations: Boolean(meta.registrations === 'open'),
-			usage: {
-				users: {
-					total: meta.stats.user
-				},
-				localPosts: meta.stats.note
-			}
-		});
+		return res.status(200).json(await NodeinfoService.render('2.1'));
 	}
 );
 

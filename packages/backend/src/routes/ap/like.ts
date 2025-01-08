@@ -6,6 +6,7 @@ import oapi from '../../utils/apidoc.js';
 import authorizedFetch from '../../utils/authorizedFetch.js';
 import db from '../../utils/database.js';
 import locale from '../../utils/locale.js';
+import LikeService from '../../services/LikeService.js';
 
 const router = express.Router();
 
@@ -49,12 +50,7 @@ router.get(
 				message: 'Like not specified'
 			});
 
-		const like = await db
-			.getRepository('note_like')
-			.createQueryBuilder('note_like')
-			.leftJoinAndSelect('note_like.user', 'user')
-			.leftJoinAndSelect('note_like.note', 'note')
-			.getOne();
+		const like = await LikeService.get({ id: req.params.id })
 
 		if (like) {
 			if (!like.user.local) {
