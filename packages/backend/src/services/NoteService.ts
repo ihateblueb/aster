@@ -346,7 +346,7 @@ class NoteService {
 		return result;
 	}
 
-	/*  
+	/*
 	 *	for use strictly for a plain repeat
 	 *	these toggle(ish), quotes do not
 	 *	this is only okay as apart of the NoteService because it's

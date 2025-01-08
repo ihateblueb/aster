@@ -2,11 +2,11 @@ import express from 'express';
 
 import ApLikeRenderer from '../../services/ap/ApLikeRenderer.js';
 import ConfigService from '../../services/ConfigService.js';
+import LikeService from '../../services/LikeService.js';
 import oapi from '../../utils/apidoc.js';
 import authorizedFetch from '../../utils/authorizedFetch.js';
 import db from '../../utils/database.js';
 import locale from '../../utils/locale.js';
-import LikeService from '../../services/LikeService.js';
 
 const router = express.Router();
 
@@ -50,7 +50,7 @@ router.get(
 				message: 'Like not specified'
 			});
 
-		const like = await LikeService.get({ id: req.params.id })
+		const like = await LikeService.get({ id: req.params.id });
 
 		if (like) {
 			if (!like.user.local) {

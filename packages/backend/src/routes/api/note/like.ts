@@ -1,9 +1,9 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
+import LikeService from '../../../services/LikeService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
-import LikeService from '../../../services/LikeService.js';
 
 const router = express.Router();
 

@@ -1,7 +1,7 @@
 import express from 'express';
 
-import oapi from '../../utils/apidoc.js';
 import NodeinfoService from '../../services/NodeinfoService.js';
+import oapi from '../../utils/apidoc.js';
 
 const router = express.Router();
 
