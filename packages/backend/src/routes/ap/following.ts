@@ -47,27 +47,14 @@ router.get(
 
 		res.setHeader('Content-Type', 'application/activity+json');
 
-		return res.status(404).send();
-
 		if (!req.params.id)
 			return res.status(400).json({
 				message: locale.user.notSpecified
 			});
 
-		let first = false;
-		if (!req.query.page) first = true;
-
-		let cursor = '';
-		if (req.query.cursor) cursor = req.query.cursor.toString();
-
 		if (ConfigService.cache.ap.enabled) {
 			const cachedUserFollowing = await CacheService.get(
-				'ap_user_following_first-' +
-					first +
-					'_cursor-' +
-					cursor +
-					'_' +
-					req.params.id
+				'ap_user_following_' + req.params.id
 			);
 
 			if (cachedUserFollowing) {
@@ -98,23 +85,22 @@ router.get(
 					req.params.id
 				);
 
+				let sortedItems: ApId[] = [];
+
+				for (const item of items) {
+					if (item.apId) sortedItems.push(item.apId);
+				}
+
 				const rendered = ApOrderedCollectionRenderer.render(
-					first,
 					'users/' + req.params.id + '/following',
-					cursor,
-					items
+					sortedItems
 				);
 
 				if (ConfigService.cache.ap.enabled)
 					await CacheService.set(
-						'ap_user_following_first-' +
-							first +
-							'_cursor-' +
-							cursor +
-							'_' +
-							req.params.id,
+						'ap_user_following_' + req.params.id,
 						JSON.stringify(rendered),
-						Number(ConfigService.cache.ap.expiration)
+						ConfigService.cache.ap.expiration
 					);
 
 				return res.status(200).json(rendered);

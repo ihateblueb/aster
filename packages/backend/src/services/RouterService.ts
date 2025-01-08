@@ -15,7 +15,8 @@ import ap_like from '../routes/ap/like.js';
 import nodeinfo from '../routes/ap/nodeinfo.js';
 import ap_note_activity from '../routes/ap/note/activity.js';
 import ap_note_get from '../routes/ap/note/get.js';
-import ap_user from '../routes/ap/user.js';
+import ap_user_get from '../routes/ap/user/get.js';
+import ap_user_outbox from '../routes/ap/user/outbox.js';
 import wellknown from '../routes/ap/wellknown.js';
 import admin_federation_rules_get from '../routes/api/admin/federation/rules/get.js';
 import admin_federation_rules_update from '../routes/api/admin/federation/rules/update.js';
@@ -223,7 +224,8 @@ router.use('/', ap_like);
 router.use('/', nodeinfo);
 router.use('/', ap_note_activity);
 router.use('/', ap_note_get);
-router.use('/', ap_user);
+router.use('/', ap_user_get);
+router.use('/', ap_user_outbox);
 router.use('/', wellknown);
 
 // packages/frontend

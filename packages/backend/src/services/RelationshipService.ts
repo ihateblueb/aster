@@ -44,7 +44,7 @@ class RelationshipService {
 	}
 
 	// specific get types
-	public async getFollowing(from: where) {
+	public async getFollowing(from: GenericId) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')

@@ -41,7 +41,8 @@ Endpoints in progress:
 
 - /user/:id/followers (Collection of following actors)
 - /user/:id/following (Collection of followed actors)
-- /user/:id/outbox (Collection of recently sent public activities. Do I even do this? Does anyone even use it?)
+
+- /user/:id/outbox (Collection of recently sent public activities. Do I even do this? Does anyone even use it? may be good for backfill of notes. maybe just get past public notes and throw /activity at the end so it's all of a user's public Create and Announce activities? like is also fetchable, could do those also)
 
 Endpoints needed:
 

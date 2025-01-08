@@ -21,4 +21,8 @@ export class UserPreferences {
 	})
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User>;
+
+	// todo: if false, only deliver to note author 
+	@Column({ default: true })
+	makeLikesPublic: boolean;
 }

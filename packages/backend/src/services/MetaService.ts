@@ -66,7 +66,7 @@ class MetaService {
 			await CacheService.set(
 				'meta',
 				JSON.stringify(meta),
-				Number(ConfigService.cache.meta.expiration)
+				ConfigService.cache.meta.expiration
 			);
 
 		return meta;
