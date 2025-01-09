@@ -43,6 +43,34 @@ class RelationshipService {
 		return await db.getRepository('relationship').delete(where);
 	}
 
+	public async create(
+		to: GenericId,
+		from: GenericId,
+		type: RelationshipType,
+		pending: boolean,
+		responseActivity?: GenericId
+	) {
+		return await db
+			.getRepository('relationship')
+			.insert({
+				id: IdService.generate(),
+				toId: to,
+				fromId: from,
+				type: type,
+				pending: pending,
+				responseActivityId: responseActivity,
+				createdAt: new Date().toISOString()
+			})
+			.then(() => {
+				return true;
+			})
+			.catch((err) => {
+				console.log(err);
+				logger.error('inbox', 'failed to insert relationship');
+				return false;
+			});
+	}
+
 	// specific get types
 	public async getFollowing(from: GenericId) {
 		return await db
@@ -191,17 +219,13 @@ class RelationshipService {
 
 			if (!insertedActivity) return false;
 
-			const insertedRelationship = await db
-				.getRepository('relationship')
-				.insert({
-					id: id,
-					toId: to.id,
-					fromId: from.id,
-					type: 'follow',
-					pending: true,
-					responseActivityId: aId,
-					createdAt: new Date().toISOString()
-				})
+			const insertedRelationship = await this.create(
+				to.id,
+				from.id,
+				'follow',
+				true,
+				aId
+			)
 				.then(() => {
 					return true;
 				})
@@ -226,21 +250,11 @@ class RelationshipService {
 		} else {
 			const id = IdService.generate();
 
-			await db
-				.getRepository('relationship')
-				.insert({
-					id: id,
-					toId: to.id,
-					fromId: from.id,
-					type: 'follow',
-					pending: false,
-					createdAt: new Date().toISOString()
-				})
-				.catch((err) => {
-					console.log(err);
-					logger.error('inbox', 'failed to insert relationship');
-					throw new Error('failed to insert relationship');
-				});
+			await this.create(to.id, from.id, 'follow', false).catch((err) => {
+				console.log(err);
+				logger.error('inbox', 'failed to insert relationship');
+				throw new Error('failed to insert relationship');
+			});
 
 			await NotificationService.create(
 				to.id,

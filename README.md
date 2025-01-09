@@ -73,6 +73,7 @@ Activities Processed:
 
 - Accept
     - Follow
+- Block
 - Create
     - Note
     - Actor
@@ -95,7 +96,6 @@ Activities that should be processed in the future:
 - Update
     - Note
 - Flag
-- Block
 - Reject
     - Follow
 - Add
@@ -117,7 +117,13 @@ Activities that should be processed in the future:
 - Register
 - Login
 - Get user
+- Follow user
+- Block user
+- Get relationship to/from user
+- Refetch remote user
 - Get instance metadata
+- Get notifications
+- Read notifications
 - Refetch user from remote
 - Moderate remote instances (admin)
 - Get moderated remote instances (admin)
@@ -126,7 +132,6 @@ Activities that should be processed in the future:
 
 - handle robots.txt from backend, generate from config
 - favicon
-- use backfill queue (reply, quote)
 
 ## Development
 
