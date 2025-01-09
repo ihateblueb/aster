@@ -93,14 +93,19 @@ Activities Processed:
 - Update
     - User
 
+Activities that should be processed before first prerelease:
+
+- Update
+    - Note
+- Like (with content)
+- EmojiReact
+
 Activities that should be processed in the future:
 
 - Undo
     - Accept ?
         - Follow ??
     - Announce
-- Update
-    - Note
 - Add
 - Remove
 
@@ -116,7 +121,10 @@ Activities that should be processed in the future:
 - Get note
 - Create notes
 - Create notes with replies or quotes
+- Like notes
+- Delete notes
 - Create repeats
+- Delete repeats (same as deleting a note)
 - Register
 - Login
 - Get user
@@ -127,11 +135,23 @@ Activities that should be processed in the future:
 - Get instance metadata
 - Get notifications
 - Read notifications
+- Get timelines
+    - home
+    - local
+    - bubble
+    - global
 - Refetch user from remote
 - Moderate remote instances (admin)
+    - toggle accept, return, fetch, and deliver
 - Get moderated remote instances (admin)
 
 ## TODO
+
+- Processing of incoming emoji
+
+- Emoji on entities (emoji array on Note, User, Poll that joins?? ManyToMany?)
+
+- Fix note attachment joins. Cant it just be a left join?? have i been overthinking it?
 
 - handle robots.txt from backend, generate from config
 - favicon
