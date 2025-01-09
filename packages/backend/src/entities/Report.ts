@@ -3,16 +3,14 @@ import typeorm, {
 	Entity,
 	JoinColumn,
 	ManyToOne,
-	OneToOne,
 	PrimaryColumn
 } from 'typeorm';
 
-import { Emoji } from './Emoji.js';
 import { Note } from './Note.js';
 import { User } from './User.js';
 
 @Entity()
-export class NoteReact {
+export class Report {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
@@ -20,31 +18,36 @@ export class NoteReact {
 	apId: string;
 
 	@Column({ select: false })
-	userId: string;
+	fromId: string;
 
 	@ManyToOne(() => User, (user) => user, {
 		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'fromId' })
+	from: typeorm.Relation<User>;
+
+	@Column({ select: false })
+	userId: string;
+
+	@ManyToOne(() => User, (user) => user, {
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User>;
 
 	@Column({ select: false })
-	emojiId: string;
-
-	@ManyToOne(() => Emoji, (emoji) => emoji, {
-		onDelete: 'CASCADE'
-	})
-	@JoinColumn({ name: 'Emoji' })
-	emoji: typeorm.Relation<Emoji>;
-
-	@Column({ select: false })
 	noteId: string;
 
-	@OneToOne(() => Note, (note) => note, {
-		onDelete: 'CASCADE'
+	@ManyToOne(() => Note, (note) => note, {
+		onDelete: 'CASCADE',
+		nullable: true
 	})
 	@JoinColumn({ name: 'noteId' })
 	note: typeorm.Relation<Note>;
+
+	@Column({ nullable: true })
+	content: string;
 
 	@Column()
 	createdAt: string;
