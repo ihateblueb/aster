@@ -1,6 +1,5 @@
 import logger from '../../../utils/logger.js';
 import LikeService from '../../LikeService.js';
-import NoteService from '../../NoteService.js';
 import ApActorService from '../ApActorService.js';
 import ApNoteService from '../ApNoteService.js';
 

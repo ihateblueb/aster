@@ -34,8 +34,8 @@ class UserService {
 		return [user, await this.getPrivate({ user: user.id })];
 	}
 
-	public async update(where: where, user: Partial<ObjectLiteral>) {
-		return await db.getRepository('user').update(where, user);
+	public async update(where: where, entity: Partial<ObjectLiteral>) {
+		return await db.getRepository('user').update(where, entity);
 	}
 
 	public async delete(where: where) {

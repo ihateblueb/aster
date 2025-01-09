@@ -8,8 +8,9 @@ class BlockProcessor {
 		if (!body.object) return false;
 
 		const actor = await ApActorService.get(body.actor);
-		const object = await UserService.get({ apId: body.object });
 		if (!actor) return false;
+
+		const object = await UserService.get({ apId: body.object });
 		if (!object) return false;
 		if (!object.local) return false;
 

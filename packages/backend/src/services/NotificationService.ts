@@ -51,10 +51,8 @@ class NotificationService {
 			.getMany();
 	}
 
-	public async update(where: where, notification: Partial<ObjectLiteral>) {
-		return await db
-			.getRepository('notification')
-			.update(where, notification);
+	public async update(where: where, entity: Partial<ObjectLiteral>) {
+		return await db.getRepository('notification').update(where, entity);
 	}
 
 	public async read(id: GenericId) {

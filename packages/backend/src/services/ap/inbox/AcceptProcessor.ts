@@ -28,7 +28,7 @@ class AcceptProcessor {
 				console.log(err);
 			});
 
-			await NotificationService.create(
+			return await NotificationService.create(
 				from.id,
 				to.id,
 				'acceptedFollow',
@@ -40,9 +40,9 @@ class AcceptProcessor {
 						from: { id: from.id }
 					})
 				).id
-			);
-
-			return true;
+			).then(() => {
+				return true;
+			});
 		}
 	}
 }

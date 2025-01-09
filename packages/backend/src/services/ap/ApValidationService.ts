@@ -5,6 +5,7 @@ import logger from '../../utils/logger.js';
 import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
+import ValidationService from '../ValidationService.js';
 import ApActorService from './ApActorService.js';
 
 class ApValidationService {
@@ -174,7 +175,7 @@ class ApValidationService {
 	public validBody(body): boolean {
 		if (!body) return false;
 		if (!body.id) return false;
-		if (!tryUrl(body.id)) return false;
+		if (!ValidationService.validUrl(body.id)) return false;
 		if (!body.type) return false;
 
 		logger.debug('validation', 'ap object type is ' + body.type);

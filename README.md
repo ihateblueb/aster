@@ -73,17 +73,20 @@ Activities Processed:
 
 - Accept
     - Follow
+- Announce
+    - Note
 - Block
 - Create
     - Note
     - Actor
-- Like
-    - Note
-- Announce
-    - Note
 - Delete
     - User
     - Note
+- Flag
+- Like
+    - Note
+- Reject
+    - Follow
 - Undo
     - Follow
 - Update
@@ -95,9 +98,6 @@ Activities that should be processed in the future:
     - Like
 - Update
     - Note
-- Flag
-- Reject
-    - Follow
 - Add
 - Remove
 

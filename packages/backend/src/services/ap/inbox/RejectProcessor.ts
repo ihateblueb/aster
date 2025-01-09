@@ -1,6 +1,27 @@
+import RelationshipService from '../../RelationshipService';
+import UserService from '../../UserService';
+import ApActorService from '../ApActorService';
+
 class RejectProcessor {
 	public async process(body: ApObject): Promise<boolean> {
-		return false;
+		if (!body.actor) return false;
+		if (!body.object && !body.object.type) return false;
+
+		if (body.object.type === 'Follow') {
+			if (!body.object.actor || !body.object.object) return false;
+
+			const to = await ApActorService.get(body.actor);
+			const from = await UserService.get({ apId: body.object.actor });
+
+			if (!to) throw new Error('Actor not found');
+
+			return await RelationshipService.delete({
+				to: { id: to.id },
+				from: { id: from.id }
+			}).then(() => {
+				return true;
+			});
+		}
 	}
 }
 
