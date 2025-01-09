@@ -1,5 +1,8 @@
 import express from 'express';
 
+import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
+import ApDeliverService from '../../../services/ap/ApDeliverService.js';
+import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
 import AuthService from '../../../services/AuthService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
@@ -53,19 +56,145 @@ router.patch(
 
 		const parsedBody = bodyValidation.body;
 
-		let user = req.params.id ?? auth.user.id;
-		if (user !== auth.user.id && !auth.user.admin)
+		let user = await UserService.get({ id: req.params.id ?? auth.user.id });
+		if (user.id !== auth.user.id && !auth.user.admin)
 			return res
 				.status(403)
 				.json({ message: 'You cannot edit this user' });
 
 		let updated;
+
 		if (parsedBody.username)
 			updated['username'] = SanitizerService.sanitize(
 				parsedBody.username
 			);
 
-		return res.status(501).send();
+		if (parsedBody.displayName)
+			updated['displayName'] = SanitizerService.sanitize(
+				parsedBody.displayName
+			);
+
+		if ('locked' in parsedBody) {
+			if (parsedBody.automated) {
+				updated['locked'] = true;
+			} else {
+				updated['locked'] = false;
+			}
+		}
+
+		if ('indexable' in parsedBody) {
+			if (parsedBody.indexable) {
+				updated['indexable'] = true;
+			} else {
+				updated['indexable'] = false;
+			}
+		}
+
+		if ('automated' in parsedBody) {
+			if (parsedBody.automated) {
+				updated['automated'] = true;
+			} else {
+				updated['automated'] = false;
+			}
+		}
+
+		if ('sensitive' in parsedBody) {
+			if (parsedBody.sensitive) {
+				updated['sensitive'] = true;
+			} else {
+				updated['sensitive'] = false;
+			}
+		}
+
+		if (parsedBody.bio)
+			updated['bio'] = SanitizerService.sanitize(parsedBody.bio);
+
+		if (parsedBody.location)
+			updated['location'] = SanitizerService.sanitize(
+				parsedBody.location
+			);
+
+		if (parsedBody.birthday)
+			updated['birthday'] = SanitizerService.sanitize(
+				parsedBody.birthday
+			);
+
+		if ('isCat' in parsedBody) {
+			if (parsedBody.isCat) {
+				updated['isCat'] = true;
+			} else {
+				updated['isCat'] = false;
+			}
+		}
+
+		if ('speakAsCat' in parsedBody) {
+			if (parsedBody.speakAsCat) {
+				updated['speakAsCat'] = true;
+			} else {
+				updated['speakAsCat'] = false;
+			}
+		}
+
+		if (parsedBody.avatar && ValidationService.validUrl(parsedBody.avatar))
+			updated['avatar'] = SanitizerService.sanitize(parsedBody.avatar);
+
+		if (parsedBody.avatarAlt)
+			updated['avatarAlt'] = SanitizerService.sanitize(
+				parsedBody.avatarAlt
+			);
+
+		if (parsedBody.banner && ValidationService.validUrl(parsedBody.banner))
+			updated['banner'] = SanitizerService.sanitize(parsedBody.banner);
+
+		if (parsedBody.bannerAlt)
+			updated['bannerAlt'] = SanitizerService.sanitize(
+				parsedBody.bannerAlt
+			);
+
+		updated['updatedAt'] = new Date().toISOString();
+
+		// todo: profile metadata. Yikes!
+
+		if (auth.user.admin) {
+			if ('admin' in parsedBody) {
+				if (parsedBody.admin) {
+					updated['admin'] = true;
+				} else {
+					updated['admin'] = false;
+				}
+			}
+		}
+
+		return await UserService.update(
+			{
+				id: user.id
+			},
+			updated
+		)
+			.then(async () => {
+				const newUser = await UserService.get({ id: user.id });
+
+				if (user.local) {
+					let activity = ApUpdateRenderer.render(
+						ApActorRenderer.render(newUser)
+					);
+
+					await ApDeliverService.deliverToFollowers(
+						activity,
+						user.id
+					);
+				}
+
+				return res.status(200).send({
+					message: 'Updated',
+					user: newUser
+				});
+			})
+			.catch(() => {
+				return res
+					.status(500)
+					.send({ message: 'Internal server error' });
+			});
 	}
 );
 

@@ -1,5 +1,6 @@
 import express from 'express';
 
+import authorizedFetch from '../../../middleware/authorizedFetch.js';
 import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApOrderedCollectionRenderer from '../../../services/ap/ApOrderedCollectionRenderer.js';
 import CacheService from '../../../services/CacheService.js';
@@ -9,7 +10,6 @@ import MetricsService from '../../../services/MetricsService.js';
 import NoteService from '../../../services/NoteService.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
-import authorizedFetch from '../../../utils/authorizedFetch.js';
 import locale from '../../../utils/locale.js';
 
 const router = express.Router();

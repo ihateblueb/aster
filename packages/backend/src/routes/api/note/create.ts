@@ -1,5 +1,6 @@
 import express from 'express';
 
+import userAuth from '../../../middleware/userAuth.js';
 import AuthService from '../../../services/AuthService.js';
 import NoteService from '../../../services/NoteService.js';
 import ValidationService from '../../../services/ValidationService.js';
@@ -44,13 +45,10 @@ router.post(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
+	await userAuth,
 	async (req, res) => {
-		const auth = await AuthService.verify(req.headers.authorization);
-
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
-			});
+		// todo: test userAuth middleware
+		const auth = res.locals.asAuth;
 
 		const bodyValidation = ValidationService.validateApiBody(req.body);
 
