@@ -1,6 +1,5 @@
-import NoteService from './NoteService';
-import TimelineService from './TimelineService';
-import UserService from './UserService';
+import NoteService from './NoteService.js';
+import UserService from './UserService.js';
 
 class SearchService {
 	public createQuery(search: string) {

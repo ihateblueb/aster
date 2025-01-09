@@ -1,7 +1,7 @@
-import logger from '../../../utils/logger';
-import NoteService from '../../NoteService';
-import ReportService from '../../ReportService';
-import UserService from '../../UserService';
+import logger from '../../../utils/logger.js';
+import NoteService from '../../NoteService.js';
+import ReportService from '../../ReportService.js';
+import UserService from '../../UserService.js';
 
 class FlagProcessor {
 	public async process(body: ApObject): Promise<boolean> {

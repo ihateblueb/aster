@@ -1,6 +1,6 @@
-import RelationshipService from '../../RelationshipService';
-import UserService from '../../UserService';
-import ApActorService from '../ApActorService';
+import RelationshipService from '../../RelationshipService.js';
+import UserService from '../../UserService.js';
+import ApActorService from '../ApActorService.js';
 
 class RejectProcessor {
 	public async process(body: ApObject): Promise<boolean> {

@@ -96,6 +96,8 @@ Activities Processed:
 Activities that should be processed in the future:
 
 - Undo
+    - Accept ?
+        - Follow ??
     - Announce
 - Update
     - Note
