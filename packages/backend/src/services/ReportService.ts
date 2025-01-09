@@ -13,11 +13,20 @@ class ReportService {
 			.getOne();
 	}
 
-	public async getMany(where: where) {
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		orderDirection?: 'ASC' | 'DESC',
+		orWhere?: where
+	) {
 		return await db
 			.getRepository('report')
 			.createQueryBuilder('report')
 			.where(where)
+			.orWhere(orWhere ?? where)
+			.take(take)
+			.orderBy(order, orderDirection)
 			.getMany();
 	}
 

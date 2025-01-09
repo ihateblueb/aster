@@ -18,8 +18,10 @@ import ap_note_get from '../routes/ap/note/get.js';
 import ap_user_get from '../routes/ap/user/get.js';
 import ap_user_outbox from '../routes/ap/user/outbox.js';
 import wellknown from '../routes/ap/wellknown.js';
+import admin_federation_rules_edit from '../routes/api/admin/federation/rules/edit.js';
 import admin_federation_rules_get from '../routes/api/admin/federation/rules/get.js';
-import admin_federation_rules_update from '../routes/api/admin/federation/rules/update.js';
+import admin_report_get from '../routes/api/admin/report/get.js';
+import admin_reports_get from '../routes/api/admin/reports/get.js';
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
@@ -180,7 +182,9 @@ if (ConfigService.router.swagger) router.use('/swagger', oapi.swaggerui());
 // api
 
 router.use('/', admin_federation_rules_get);
-router.use('/', admin_federation_rules_update);
+router.use('/', admin_federation_rules_edit);
+router.use('/', admin_report_get);
+router.use('/', admin_reports_get);
 
 router.use('/', auth_login);
 router.use('/', auth_register);

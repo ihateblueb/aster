@@ -2,6 +2,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
+import ReportService from './ReportService.js';
 
 class TimelineService {
 	public async get(
@@ -24,6 +25,14 @@ class TimelineService {
 			);
 		if (type === 'notification')
 			timelineObjects = await NotificationService.getMany(
+				where,
+				take,
+				order,
+				orderDirection,
+				orWhere
+			);
+		if (type === 'report')
+			timelineObjects = await ReportService.getMany(
 				where,
 				take,
 				order,

@@ -153,6 +153,13 @@ Activities that should be processed in the future:
 
 - Fix note attachment joins. Cant it just be a left join?? have i been overthinking it?
 
+- bookmarks
+- bookmark timeline
+- drive endpoints
+- drive upload
+
+- report frontend and endpoints
+
 - handle robots.txt from backend, generate from config
 - favicon
 
