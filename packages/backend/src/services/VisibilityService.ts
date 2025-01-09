@@ -4,7 +4,7 @@ import RelationshipService from './RelationshipService.js';
 
 class VisibilityService {
 	public async canISee(note: ObjectLiteral, as?: string) {
-		if (!note.visibility) return false;
+		if (!note || !note.visibility) return false;
 
 		if (['public', 'unlisted'].includes(note.visibility)) return true;
 

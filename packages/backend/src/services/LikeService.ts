@@ -1,11 +1,12 @@
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
-import logger from '../utils/logger';
+import logger from '../utils/logger.js';
 import ApDeliverService from './ap/ApDeliverService.js';
-import ApLikeRenderer from './ap/ApLikeRenderer';
-import ApUndoRenderer from './ap/ApUndoRenderer';
+import ApLikeRenderer from './ap/ApLikeRenderer.js';
+import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
+import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
@@ -18,7 +19,7 @@ class LikeService {
 			.leftJoinAndSelect('note_like.user', 'user')
 			.leftJoinAndSelect('note_like.note', 'note')
 			.where(where)
-			.orWhere(orWhere)
+			.orWhere(orWhere ?? where)
 			.getOne();
 	}
 
@@ -51,11 +52,12 @@ class LikeService {
 		const id = IdService.generate();
 
 		const user = await UserService.get({ id: as });
-		const note = await this.get({ id: noteId });
+		const note = await NoteService.get({ id: noteId });
 
 		if (
+			(user.local || note.user.local) &&
 			!(await VisibilityService.canISee(
-				await this.get({ id: noteId }),
+				await NoteService.get({ id: noteId }),
 				as
 			))
 		)

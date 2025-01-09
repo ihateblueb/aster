@@ -61,9 +61,9 @@ router.post(
 		if (apvs.valid)
 			return await QueueService.inbox
 				.add(
-					IdService.generate() +
-						':' +
-						(JSON.parse(req.body).type ?? 'unknown'),
+					(JSON.parse(req.body).type.toLowerCase() ?? 'unknown') +
+						'::' +
+						IdService.generate(),
 					JSON.parse(req.body)
 				)
 				.then(() => {
