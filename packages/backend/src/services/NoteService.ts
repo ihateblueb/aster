@@ -8,7 +8,6 @@ import ApAnnounceRenderer from './ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from './ap/ApCreateRenderer.js';
 import ApDeleteRenderer from './ap/ApDeleteRenderer.js';
 import ApDeliverService from './ap/ApDeliverService.js';
-import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
@@ -16,7 +15,6 @@ import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
-import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
 import WebsocketService from './WebsocketService.js';
 

@@ -43,6 +43,17 @@ class LikeService {
 			.getMany();
 	}
 
+	public async delete(where: where) {
+		return db
+			.getRepository('note_like')
+			.createQueryBuilder('note_like')
+			.leftJoinAndSelect('note_like.user', 'user')
+			.leftJoinAndSelect('note_like.note', 'note')
+
+			.where(where)
+			.delete();
+	}
+
 	public async create(
 		noteId: GenericId,
 		as: GenericId,

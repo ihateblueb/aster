@@ -89,13 +89,14 @@ Activities Processed:
     - Follow
 - Undo
     - Follow
+    - Like
 - Update
     - User
 
 Activities that should be processed in the future:
 
 - Undo
-    - Like
+    - Announce
 - Update
     - Note
 - Add
