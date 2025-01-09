@@ -34,7 +34,7 @@ class ConfigService {
 	public port: number = NumberMinMax(parsedConfig.port, 0, 65535) ?? 9972;
 
 	public registrations: string =
-		StringIncluding(parsedConfig.closed, [
+		StringIncluding(parsedConfig.registrations, [
 			'open',
 			'approval',
 			'invite',
@@ -216,6 +216,8 @@ class ConfigService {
 			public note: number =
 				NumberMinMax(parsedConfig.limits.soft.note, 1, 1000000) ??
 				20000;
+			public alt: number =
+				NumberMinMax(parsedConfig.limits.soft.alt, 1, 1000000) ?? 35000;
 
 			public username: number =
 				NumberMinMax(parsedConfig.limits.soft.username, 1, 1000) ?? 500;
@@ -248,6 +250,9 @@ class ConfigService {
 				NumberMinMax(parsedConfig.limits.soft.cw, 1, 50000) ?? 50000;
 			public note: number =
 				NumberMinMax(parsedConfig.limits.soft.note, 1, 1000000) ??
+				100000;
+			public alt: number =
+				NumberMinMax(parsedConfig.limits.soft.alt, 1, 1000000) ??
 				100000;
 
 			public username: number =

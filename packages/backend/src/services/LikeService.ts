@@ -148,7 +148,7 @@ class LikeService {
 					);
 
 					return {
-						status: 200,
+						status: 201,
 						message: 'Added like'
 					};
 				})

@@ -33,13 +33,27 @@ class ValidationService {
 
 		try {
 			urlTest = new URL(url);
-		} catch (err) {
+		} catch (_) {
 			return false;
 		}
 
 		if (!['http:', 'https:'].includes(urlTest.protocol)) return false;
 
 		urlTest = undefined;
+
+		return true;
+	}
+
+	public validDate(date: string) {
+		let dateTest: Date;
+
+		try {
+			dateTest = new Date(date);
+		} catch (_) {
+			return false;
+		}
+
+		dateTest = undefined;
 
 		return true;
 	}

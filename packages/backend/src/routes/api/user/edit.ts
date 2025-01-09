@@ -4,6 +4,7 @@ import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
 import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
 import AuthService from '../../../services/AuthService.js';
+import ConfigService from '../../../services/ConfigService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
@@ -12,7 +13,7 @@ import oapi from '../../../utils/apidoc.js';
 const router = express.Router();
 
 router.patch(
-	['/api/user', '/api/user/:id'],
+	['/api/user', '/api/user/:id?'],
 	oapi.path({
 		description: 'Update a user',
 		tags: ['User'],
@@ -56,26 +57,35 @@ router.patch(
 
 		const parsedBody = bodyValidation.body;
 
-		let user = await UserService.get({ id: req.params.id ?? auth.user.id });
+		const user = await UserService.get({
+			id: req.params.id ?? auth.user.id
+		});
 		if (user.id !== auth.user.id && !auth.user.admin)
 			return res
 				.status(403)
 				.json({ message: 'You cannot edit this user' });
 
-		let updated;
+		let updated = {};
 
-		if (parsedBody.username)
+		if (
+			parsedBody.username &&
+			parsedBody.username.length <= ConfigService.limits.soft.username
+		)
 			updated['username'] = SanitizerService.sanitize(
 				parsedBody.username
 			);
 
-		if (parsedBody.displayName)
+		if (
+			parsedBody.displayName &&
+			parsedBody.displayName.length <=
+				ConfigService.limits.soft.displayName
+		)
 			updated['displayName'] = SanitizerService.sanitize(
 				parsedBody.displayName
 			);
 
 		if ('locked' in parsedBody) {
-			if (parsedBody.automated) {
+			if (parsedBody.locked) {
 				updated['locked'] = true;
 			} else {
 				updated['locked'] = false;
@@ -106,17 +116,27 @@ router.patch(
 			}
 		}
 
-		if (parsedBody.bio)
+		if (
+			parsedBody.bio &&
+			parsedBody.bio.length <= ConfigService.limits.soft.bio
+		)
 			updated['bio'] = SanitizerService.sanitize(parsedBody.bio);
 
-		if (parsedBody.location)
+		if (
+			parsedBody.location &&
+			parsedBody.location.length <= ConfigService.limits.soft.location
+		)
 			updated['location'] = SanitizerService.sanitize(
 				parsedBody.location
 			);
 
-		if (parsedBody.birthday)
+		if (
+			parsedBody.birthday &&
+			ValidationService.validDate(parsedBody.birthday) &&
+			parsedBody.birthday.length <= ConfigService.limits.soft.birthday
+		)
 			updated['birthday'] = SanitizerService.sanitize(
-				parsedBody.birthday
+				new Date(parsedBody.birthday).toISOString()
 			);
 
 		if ('isCat' in parsedBody) {
@@ -135,18 +155,32 @@ router.patch(
 			}
 		}
 
-		if (parsedBody.avatar && ValidationService.validUrl(parsedBody.avatar))
+		if (
+			parsedBody.avatar &&
+			ValidationService.validUrl(parsedBody.avatar) &&
+			parsedBody.avatar.length <= ConfigService.limits.hard.url
+		)
 			updated['avatar'] = SanitizerService.sanitize(parsedBody.avatar);
 
-		if (parsedBody.avatarAlt)
+		if (
+			parsedBody.avatarAlt &&
+			parsedBody.avatarAlt.length <= ConfigService.limits.soft.alt
+		)
 			updated['avatarAlt'] = SanitizerService.sanitize(
 				parsedBody.avatarAlt
 			);
 
-		if (parsedBody.banner && ValidationService.validUrl(parsedBody.banner))
+		if (
+			parsedBody.banner &&
+			ValidationService.validUrl(parsedBody.banner) &&
+			parsedBody.banner.length <= ConfigService.limits.hard.url
+		)
 			updated['banner'] = SanitizerService.sanitize(parsedBody.banner);
 
-		if (parsedBody.bannerAlt)
+		if (
+			parsedBody.bannerAlt &&
+			parsedBody.bannerAlt.length <= ConfigService.limits.soft.alt
+		)
 			updated['bannerAlt'] = SanitizerService.sanitize(
 				parsedBody.bannerAlt
 			);

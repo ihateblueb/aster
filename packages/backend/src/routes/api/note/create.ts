@@ -73,7 +73,7 @@ router.post(
 						message: e.message
 					});
 				} else {
-					return res.status(200).json(e.note);
+					return res.status(201).json(e.note);
 				}
 			})
 			.catch((e) => {

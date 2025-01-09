@@ -1,7 +1,6 @@
 import express from 'express';
 
 import ApActorService from '../../../services/ap/ApActorService.js';
-import ApResolver from '../../../services/ap/ApResolver.js';
 import AuthService from '../../../services/AuthService.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';

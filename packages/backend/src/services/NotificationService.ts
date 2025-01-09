@@ -1,3 +1,5 @@
+import { ObjectLiteral } from 'typeorm';
+
 import db from '../utils/database.js';
 import UserMini from '../utils/entities/UserMini.js';
 import IdService from './IdService.js';
@@ -47,6 +49,23 @@ class NotificationService {
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();
+	}
+
+	public async update(where: where, notification: Partial<ObjectLiteral>) {
+		return await db
+			.getRepository('notification')
+			.update(where, notification);
+	}
+
+	public async read(id: GenericId) {
+		return this.update(
+			{
+				id: id
+			},
+			{
+				read: true
+			}
+		);
 	}
 
 	public async create(
