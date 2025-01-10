@@ -11,7 +11,7 @@ class LikeProcessor {
 		const note = await ApNoteService.get(body.object);
 
 		if (!actor) throw new Error('Actor ' + body.actor + ' not found');
-		if (!note) throw new Error('Note ' + body.object + ' not found');
+		if (!note) return false;
 
 		if (body._misskey_content) {
 			logger.warn('like', 'appears to be a react. tag:');

@@ -12,6 +12,7 @@ router.get(
 	oapi.path({
 		description: 'Fetch a report',
 		tags: ['Admin'],
+		security: [{ auth: [] }],
 		responses: {
 			200: {
 				description: 'Return a report.',
