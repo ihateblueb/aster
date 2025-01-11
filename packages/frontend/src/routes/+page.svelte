@@ -18,6 +18,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import queryclient from '$lib/queryclient';
 	import store from '$lib/store';
+	import { getContext } from 'svelte';
 
 	let timeline: string = $state('home');
 
@@ -35,7 +36,7 @@
 		queryKey: ['timeline'],
 		retry: false,
 		queryFn: async ({ pageParam }) =>
-			await getTimeline(timeline, pageParam),
+			await getTimeline($state.snapshot(timeline), pageParam),
 		initialPageParam: undefined,
 		getNextPageParam: (lastPage) => {
 			console.log('lastNote', lastPage.at(-1).createdAt);

@@ -5,6 +5,7 @@ import AnnounceProcessor from './inbox/AnnounceProcessor.js';
 import BlockProcessor from './inbox/BlockProcessor.js';
 import CreateProcessor from './inbox/CreateProcessor.js';
 import DeleteProcessor from './inbox/DeleteProcessor.js';
+import FlagProcessor from './inbox/FlagProcessor.js';
 import FollowProcessor from './inbox/FollowProcessor.js';
 import LikeProcessor from './inbox/LikeProcessor.js';
 import RejectProcessor from './inbox/RejectProcessor.js';
@@ -21,7 +22,7 @@ class ApInboxService {
 		if (body.type === 'Block') return await BlockProcessor.process(body);
 		if (body.type === 'Create') return await CreateProcessor.process(body);
 		if (body.type === 'Delete') return await DeleteProcessor.process(body);
-		// if (body.type === 'Flag') return await FlagProcessor.process(body);
+		if (body.type === 'Flag') return await FlagProcessor.process(body);
 		if (body.type === 'Follow') return await FollowProcessor.process(body);
 		if (body.type === 'Like') return await LikeProcessor.process(body);
 		if (body.type === 'Reject') return await RejectProcessor.process(body);

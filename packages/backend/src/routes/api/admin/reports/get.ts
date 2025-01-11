@@ -42,19 +42,20 @@ router.get(
 			});
 
 		let includeResolved = false;
-		let includeOutgoing = false;
+		//let includeOutgoing = false;
 
 		if (req.query.resolved === 'true') includeResolved = true;
-		if (req.query.outgoing === 'true') includeOutgoing = true;
+		//if (req.query.outgoing === 'true') includeOutgoing = true;
 
 		const where = {
 			resolved: includeResolved
 		};
 
+		/*
 		if (!includeOutgoing) {
 			where['user'] = { local: false };
 			where['note'] = { user: { local: false } };
-		}
+		}*/
 
 		let take;
 		let orderDirection;
@@ -68,6 +69,14 @@ router.get(
 				? take
 				: ConfigService.timeline.maxObjects;
 
+		console.log([
+			'report',
+			where,
+			take,
+			'report.createdAt',
+			orderDirection ? orderDirection : 'DESC'
+		]);
+
 		return await TimelineService.get(
 			'report',
 			where,
@@ -76,7 +85,7 @@ router.get(
 			orderDirection ? orderDirection : 'DESC'
 		)
 			.then((e) => {
-				if (e) return res.status(200).json(e);
+				if (e && e.length > 0) return res.status(200).json(e);
 				return res.status(204).send();
 			})
 			.catch((err) => {

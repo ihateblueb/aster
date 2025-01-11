@@ -74,15 +74,6 @@ class NotificationService {
 		user?: GenericId,
 		relationship?: GenericId
 	) {
-		console.log({
-			to: to,
-			from: from,
-			type: type,
-			note: note,
-			user: user,
-			relationship: relationship
-		});
-
 		const sender = await UserService.get({ id: from });
 		const recipient = await UserService.get({ id: to });
 
@@ -137,6 +128,8 @@ class NotificationService {
 			if (grabbedRelationship)
 				notification['relationshipId'] = grabbedRelationship.id;
 		}
+
+		console.log(notification);
 
 		return await db
 			.getRepository('notification')

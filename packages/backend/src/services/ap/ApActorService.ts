@@ -72,9 +72,10 @@ class ApActorService {
 
 		user['username'] = SanitizerService.sanitize(body.preferredUsername);
 
-		user['displayName'] = SanitizerService.sanitize(
-			MfmService.localize(body.name, user.host)
-		);
+		if (body.name)
+			user['displayName'] = SanitizerService.sanitize(
+				MfmService.localize(body.name, user.host)
+			);
 
 		if (body.summary)
 			user['bio'] = SanitizerService.sanitize(

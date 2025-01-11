@@ -26,7 +26,7 @@ export class Report {
 	@JoinColumn({ name: 'fromId' })
 	from: typeorm.Relation<User>;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	userId: string;
 
 	@ManyToOne(() => User, (user) => user, {
@@ -36,7 +36,7 @@ export class Report {
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User>;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	noteId: string;
 
 	@ManyToOne(() => Note, (note) => note, {
@@ -48,6 +48,9 @@ export class Report {
 
 	@Column({ nullable: true })
 	content: string;
+
+	@Column({ default: false })
+	resolved: boolean;
 
 	@Column()
 	createdAt: string;

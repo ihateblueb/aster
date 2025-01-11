@@ -9,6 +9,11 @@ class ReportService {
 		return await db
 			.getRepository('report')
 			.createQueryBuilder('report')
+
+			.leftJoinAndSelect('report.from', 'from')
+			.leftJoinAndSelect('report.user', 'user')
+			.leftJoinAndSelect('report.note', 'note')
+
 			.where(where)
 			.getOne();
 	}
@@ -23,6 +28,11 @@ class ReportService {
 		return await db
 			.getRepository('report')
 			.createQueryBuilder('report')
+
+			.leftJoinAndSelect('report.from', 'from')
+			.leftJoinAndSelect('report.user', 'user')
+			.leftJoinAndSelect('report.note', 'note')
+
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.take(take)

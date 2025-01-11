@@ -12,6 +12,8 @@ class FlagProcessor {
 		const user = await UserService.get({ apId: body.object });
 		const note = await NoteService.get({ apId: body.object });
 
+		if (!user && !note) return false;
+
 		return await ReportService.create(
 			actor.id,
 			body.summary ?? undefined,

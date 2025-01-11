@@ -14,10 +14,9 @@
 
 	let compose: Modal;
 
-	// todo: this doesnt get toggled off when the modal closes
 	store.showCompose.subscribe(async (e) => {
 		if (e && loggedIn) await compose.open();
-		if (!e) compose.close();
+		if (!e && compose) compose.close();
 	});
 
 	if (loggedIn) {

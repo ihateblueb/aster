@@ -81,7 +81,7 @@ router.get(
 			orderDirection ? orderDirection : 'DESC'
 		)
 			.then((e) => {
-				if (e) return res.status(200).json(e);
+				if (e && e.length > 0) return res.status(200).json(e);
 				return res.status(204).send();
 			})
 			.catch((err) => {

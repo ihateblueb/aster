@@ -274,7 +274,7 @@ class NoteService {
 
 		const newNote = await this.get({ id: note.id });
 
-		if (repeat && repeatedNote && !content) {
+		if (repeat && repeatedNote && repeatedNote.user.local && !content) {
 			const announce = await ApAnnounceRenderer.render(
 				newNote,
 				repeatedNote.apId

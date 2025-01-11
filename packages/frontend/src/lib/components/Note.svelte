@@ -100,12 +100,14 @@
 				align-items: center;
 				gap: 10px;
 				flex-grow: 1;
+
 				a {
 					font-weight: 600;
 					color: var(--tx2);
 					text-decoration: none;
 				}
 			}
+
 			.right {
 				display: flex;
 				align-items: center;
