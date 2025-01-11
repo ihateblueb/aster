@@ -7,7 +7,7 @@ import ApKeyRenderer from './ApKeyRenderer.js';
 
 class ApActorRenderer {
 	public render(user: ObjectLiteral): ApObject {
-		const apActor = {
+		return {
 			'@context': context,
 
 			type: user.automated ? 'Service' : 'Person',
@@ -58,8 +58,6 @@ class ApActorRenderer {
 
 			publicKey: ApKeyRenderer.render(user.apId, user.publicKey)
 		};
-
-		return apActor;
 	}
 }
 

@@ -9,7 +9,6 @@ type AsLink = string;
 type AsObject = {
 	/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 	[key: string]: any;
-	id: ApId;
 };
 
 type ApObject = AsObject;

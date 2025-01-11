@@ -138,7 +138,7 @@ class ModeratedInstanceService {
 			};
 
 			if (!deliver || !accept || !fetch || !return_)
-				this.alertBrokenRelationships(host);
+				await this.alertBrokenRelationships(host);
 
 			return await db
 				.getRepository('moderated_instance')

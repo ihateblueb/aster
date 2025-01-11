@@ -4,15 +4,13 @@ import IdService from '../IdService.js';
 
 class ApUpdateRenderer {
 	public render(object: ApObject): ApObject {
-		let undo = {
+		return {
 			'@context': context,
 
 			type: 'Update',
 			id: ConfigService.url.href + 'activities/' + IdService.generate(),
 			object: object
 		};
-
-		return undo;
 	}
 }
 

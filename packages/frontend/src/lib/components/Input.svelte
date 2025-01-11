@@ -23,22 +23,29 @@
 	}
 </script>
 
-{#if label}
-	<label for={id} class="lbl">{label}</label>
-{/if}
-{#if big}
-	<textarea {id} {placeholder} {required} class={calculateClass()} bind:value
-	></textarea>
-{:else}
-	<input
-		{type}
-		{id}
-		{placeholder}
-		{required}
-		class={calculateClass()}
-		bind:value
-	/>
-{/if}
+<span>
+	{#if label}
+		<label for={id} class="lbl">{label}</label>
+	{/if}
+	{#if big}
+		<textarea
+			{id}
+			{placeholder}
+			{required}
+			class={calculateClass()}
+			bind:value
+		></textarea>
+	{:else}
+		<input
+			{type}
+			{id}
+			{placeholder}
+			{required}
+			class={calculateClass()}
+			bind:value
+		/>
+	{/if}
+</span>
 
 <style lang="scss" scoped>
 	.lbl {

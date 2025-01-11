@@ -2,6 +2,7 @@
 	import { IconRepeat, IconStar, IconUserPlus } from '@tabler/icons-svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
+	import Time from '$lib/components/Time.svelte';
 
 	export let notification;
 </script>
@@ -41,16 +42,21 @@
 
 <div class="notification">
 	<div class="top">
-		<div class="icon">
-			{@render icon()}
+		<div class="left">
+			<div class="icon">
+				{@render icon()}
+			</div>
+			<div class="title">
+				{@render title()}
+			</div>
 		</div>
-		<div class="title">
-			{@render title()}
+		<div class="right">
+			<Time time={notification.createdAt} />
 		</div>
 	</div>
 	<div class="body">
 		{#if notification.note}
-			<NoteSimple note={notification.note} />
+			<NoteSimple note={notification.note} nomargin />
 		{/if}
 	</div>
 </div>
@@ -71,8 +77,14 @@
 
 		.top {
 			display: flex;
-			align-items: start;
-			gap: 10px;
+
+			.left {
+				display: flex;
+				align-items: start;
+				gap: 10px;
+
+				flex-grow: 1;
+			}
 		}
 
 		.title {

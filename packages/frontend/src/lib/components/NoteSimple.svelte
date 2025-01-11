@@ -7,9 +7,12 @@
 
 	export let note;
 	export let nobg = false;
+	export let nomargin = false;
 </script>
 
-<div class={'noteSimple' + (nobg ? ' nobg' : '')}>
+<div
+	class={'noteSimple' + (nobg ? ' nobg' : '') + (nomargin ? ' nomargin' : '')}
+>
 	<div class="header">
 		<div class="left">
 			<Avatar user={note.user} size="25px" small />
@@ -67,6 +70,10 @@
 			&:hover {
 				background: none;
 			}
+		}
+
+		&.nomargin {
+			margin-bottom: 0;
 		}
 
 		.header {

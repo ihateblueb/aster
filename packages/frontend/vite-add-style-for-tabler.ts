@@ -9,11 +9,10 @@ export default function tablerWidthHeightStyleAdder(): import('vite').Plugin {
 			const re = /Icon.*?size:.*?"(.*?)".*?}\);/gs;
 
 			ms.replace(re, (match, size: string) => {
-				let toreturn = match.replaceAll(
+				return match.replaceAll(
 					`size: "${size}"`,
 					`size: "${size}", style: "width:${size};height:${size};"`
 				);
-				return toreturn;
 			});
 
 			if (ms.hasChanged()) {

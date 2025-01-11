@@ -1,14 +1,4 @@
-import typeorm, {
-	Column,
-	Entity,
-	JoinColumn,
-	ManyToMany,
-	ManyToOne,
-	PrimaryColumn
-} from 'typeorm';
-
-import { Note } from './Note.js';
-import { User } from './User.js';
+import { Column, Entity, PrimaryColumn } from 'typeorm';
 
 @Entity()
 export class DriveFile {
@@ -16,16 +6,6 @@ export class DriveFile {
 	id: string;
 
 	// nullable because i dont want to assign remote media not posted by users to users (e.g. emoji)
-
-	@Column({ select: false, nullable: true })
-	userId: string;
-
-	@ManyToOne(() => User, (user) => user, {
-		onDelete: 'CASCADE',
-		nullable: true
-	})
-	@JoinColumn({ name: 'userId' })
-	user: typeorm.Relation<User>;
 
 	@Column({ default: false })
 	sensitive: boolean;

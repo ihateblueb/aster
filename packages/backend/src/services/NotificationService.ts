@@ -138,17 +138,19 @@ class NotificationService {
 				notification['relationshipId'] = grabbedRelationship.id;
 		}
 
-		await db
+		return await db
 			.getRepository('notification')
 			.insert(notification)
 			.catch((err) => {
 				console.log(err);
+			})
+			.then(async () => {
+				WebsocketService.userEmitter.emit(to, {
+					type: 'notification:add',
+					notification: await this.get({ id: id })
+				});
+				return true;
 			});
-
-		WebsocketService.userEmitter.emit(to, {
-			type: 'notification:add',
-			notification: await this.get({ id: id })
-		});
 	}
 }
 

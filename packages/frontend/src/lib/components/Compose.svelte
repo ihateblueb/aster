@@ -25,7 +25,7 @@
 	let addDropdown: Dropdown;
 	let visibilityDropdown: Dropdown;
 
-	let self;
+	let self: any;
 	function updateSelf() {
 		let grabbedSelf = localstore.get('self');
 		if (grabbedSelf) {
@@ -38,14 +38,17 @@
 	let note = {
 		cw: '',
 		content: '',
-		visibility: localstore.get('defaultVisibility'),
+		visibility: 'public',
 		repeat: '',
 		replyingTo: ''
 	};
 
+	note.visibility = localstore.get('defaultVisibility');
+
 	async function post() {
 		if (note.content.length >= 1) {
 			result = await createNote(note);
+			note.visibility = localstore.get('defaultVisibility');
 			console.log(result);
 		}
 	}
@@ -92,7 +95,7 @@
 			<Avatar user={self} size="35px" />
 		</div>
 		<div class="right">
-			{#key note.visibility}
+			{#key note}
 				<Button
 					transparent
 					centered
