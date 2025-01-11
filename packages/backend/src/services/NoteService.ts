@@ -155,7 +155,8 @@ class NoteService {
 		content: string,
 		visibility?: string,
 		repeat?: GenericId,
-		replyingTo?: GenericId
+		replyingTo?: GenericId,
+		apId?: ApId
 	) {
 		// if repeat, missing content is allowed. if content, it's a quote.
 		if (!repeat && content && content.length <= 0)
@@ -192,7 +193,7 @@ class NoteService {
 
 		let note = {
 			id: id,
-			apId: instanceUrl.href + 'notes/' + id,
+			apId: apId ?? instanceUrl.href + 'notes/' + id,
 			userId: user,
 			cw: SanitizerService.sanitize(cw),
 			content: SanitizerService.sanitize(content),
@@ -205,25 +206,27 @@ class NoteService {
 		if (replyingTo) {
 			replyingToNote = await this.get({ id: replyingTo });
 
-			if (visibility !== replyingToNote.visibility) {
-				note.visibility = replyingToNote.visibility;
+			if (replyingToNote) {
+				if (visibility !== replyingToNote.visibility) {
+					note.visibility = replyingToNote.visibility;
+				}
+
+				if (!replyingToNote)
+					return {
+						error: true,
+						status: 400,
+						message: locale.note.replyTargetNotFound
+					};
+
+				if (!(await VisibilityService.canISee(replyingToNote, user)))
+					return {
+						error: true,
+						status: 400,
+						message: locale.note.cannotReplyToNote
+					};
+
+				note['replyingToId'] = replyingToNote.id;
 			}
-
-			if (!replyingToNote)
-				return {
-					error: true,
-					status: 400,
-					message: locale.note.replyTargetNotFound
-				};
-
-			if (!(await VisibilityService.canISee(replyingToNote, user)))
-				return {
-					error: true,
-					status: 400,
-					message: locale.note.cannotReplyToNote
-				};
-
-			note['replyingToId'] = replyingToNote.id;
 		}
 
 		let repeatedNote: ObjectLiteral;
@@ -231,25 +234,27 @@ class NoteService {
 		if (repeat) {
 			repeatedNote = await this.get({ id: repeat });
 
-			if (visibility !== repeatedNote.visibility) {
-				note.visibility = repeatedNote.visibility;
+			if (repeatedNote) {
+				if (visibility !== repeatedNote.visibility) {
+					note.visibility = repeatedNote.visibility;
+				}
+
+				if (!repeatedNote)
+					return {
+						error: true,
+						status: 400,
+						message: locale.note.repeatTargetNotFound
+					};
+
+				if (!(await VisibilityService.canISee(repeatedNote, user)))
+					return {
+						error: true,
+						status: 400,
+						message: locale.note.cannotRepeatNote
+					};
+
+				note['repeatId'] = repeatedNote.id;
 			}
-
-			if (!repeatedNote)
-				return {
-					error: true,
-					status: 400,
-					message: locale.note.repeatTargetNotFound
-				};
-
-			if (!(await VisibilityService.canISee(repeatedNote, user)))
-				return {
-					error: true,
-					status: 400,
-					message: locale.note.cannotRepeatNote
-				};
-
-			note['repeatId'] = repeatedNote.id;
 		}
 
 		const result = await db
@@ -354,7 +359,8 @@ class NoteService {
 		noteId: GenericId,
 		as: GenericId,
 		toggle?: boolean,
-		visibility?: string
+		visibility?: string,
+		apId?: ApId
 	) {
 		if (
 			!(await VisibilityService.canISee(
@@ -391,7 +397,14 @@ class NoteService {
 					};
 				});
 		} else {
-			return await this.create(as, '', '', visibility ?? 'public', noteId)
+			return await this.create(
+				as,
+				'',
+				'',
+				visibility ?? 'public',
+				noteId,
+				apId
+			)
 				.then((e) => {
 					if (e.error) {
 						logger.debug('repeat', 'failed to create');

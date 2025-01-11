@@ -10,7 +10,13 @@ class AnnounceProcessor {
 		if (!body.actor) return false;
 
 		const actor = await ApActorService.get(body.actor);
-		const note = await ApNoteService.get(body.object);
+
+		let note;
+		if (body.object.id) {
+			note = await ApNoteService.get(body.object.id);
+		} else {
+			note = await ApNoteService.get(body.object);
+		}
 
 		const visibility = (await ApVisibilityService.determine(body))
 			.visibility;
@@ -23,7 +29,13 @@ class AnnounceProcessor {
 			'by ' + actor.apId + ' targeting ' + note.id + ' vis ' + visibility
 		);
 
-		return await NoteService.repeat(note.id, actor.id, false, visibility)
+		return await NoteService.repeat(
+			note.id,
+			actor.id,
+			false,
+			visibility,
+			body.object
+		)
 			.then(() => {
 				return true;
 			})
