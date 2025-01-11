@@ -91,7 +91,7 @@ class ConfigService {
 		public port: number =
 			NumberMinMax(parsedConfig.redis.port, 0, 65535) ?? 6379;
 
-		public prefix: string = parsedConfig.redis.prefix;
+		public prefix: string = parsedConfig.redis.prefix ?? '';
 		public database: number = parsedConfig.redis.database;
 
 		public user: string = parsedConfig.redis.user;

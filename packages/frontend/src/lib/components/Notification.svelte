@@ -4,7 +4,17 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Time from '$lib/components/Time.svelte';
 
-	let { notification } = $props();
+	import {
+		blur,
+		crossfade,
+		draw,
+		fade,
+		fly,
+		scale,
+		slide
+	} from 'svelte/transition';
+
+	let { notification, small } = $props();
 </script>
 
 {#snippet icon()}
@@ -40,7 +50,10 @@
 	{/if}
 {/snippet}
 
-<div class="notification">
+<div
+	class={'notification' + (small ? ' small' : '')}
+	transition:fly={{ x: small ? 250 : 0 }}
+>
 	<div class="top">
 		<div class="left">
 			<div class="icon">
@@ -50,28 +63,34 @@
 				{@render title()}
 			</div>
 		</div>
-		<div class="right">
-			<Time time={notification.createdAt} />
-		</div>
-	</div>
-	<div class="body">
-		{#if notification.note}
-			<NoteSimple note={notification.note} nomargin />
+		{#if !small}
+			<div class="right">
+				<Time time={notification.createdAt} />
+			</div>
 		{/if}
 	</div>
+	{#if notification.note}
+		<div class="body">
+			{#if small}
+				{notification.note.content}
+			{:else}
+				<NoteSimple note={notification.note} nomargin />
+			{/if}
+		</div>
+	{/if}
 </div>
 
 <style lang="scss" scoped>
 	.notification {
 		display: flex;
 		flex-direction: column;
-		gap: 10px;
 
 		padding: 16px;
 		transition: 0.1s;
 
+		border-radius: var(--br-md);
+
 		&:hover {
-			border-radius: var(--br-md);
 			background-color: var(--bg3-25);
 		}
 
@@ -101,7 +120,23 @@
 		}
 
 		.body {
-			position: relative;
+			margin-top: 10px;
+		}
+
+		&.small {
+			background-color: var(--bg4-25);
+			backdrop-filter: blur(var(--blur-md));
+
+			max-width: 250px;
+			min-width: 200px;
+
+			.body {
+				margin-top: 2px;
+
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
 		}
 	}
 </style>

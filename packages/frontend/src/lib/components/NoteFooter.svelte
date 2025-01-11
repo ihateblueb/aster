@@ -25,6 +25,7 @@
 	import deleteNote from '$lib/api/note/delete.js';
 	import { page } from '$app/stores';
 	import likeNote from '$lib/api/note/like.js';
+	import playSound from '$lib/sounds.js';
 
 	let self: any = $state();
 	function updateSelf() {
@@ -43,6 +44,8 @@
 		store.draft_replyingTo.set(note?.id);
 	}
 	function repeat() {
+		if (!didIRepeat) playSound('newNote');
+		if (didIRepeat) playSound('uninteract');
 		repeatNote(note?.id).then(() => {
 			didIRepeat = !didIRepeat;
 		});
@@ -51,6 +54,8 @@
 		store.draft_repeat.set(note?.id);
 	}
 	function like() {
+		if (!didILike) playSound('interact');
+		if (didILike) playSound('uninteract');
 		likeNote(note?.id).then(() => {
 			didILike = !didILike;
 		});
