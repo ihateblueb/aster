@@ -11,6 +11,7 @@ import SetupService from './services/SetupService.js';
 import WebsocketService from './services/WebsocketService.js';
 import WorkerService from './services/WorkerService.js';
 import db from './utils/database.js';
+import database from './utils/database.js';
 import logger from './utils/logger.js';
 
 const processId = cluster.isPrimary ? 'Main' : 'Worker ' + cluster.worker.id;
@@ -65,3 +66,27 @@ server.listen(ConfigService.port, () => {
 			ConfigService.port
 	);
 });
+
+async function shutdown() {
+	logger.info('exit', 'shutting down');
+
+	WebsocketService.globalEmitter.removeAllListeners();
+	WebsocketService.userEmitter.removeAllListeners();
+	logger.debug('exit', 'websocket events closed');
+
+	server.closeAllConnections();
+	logger.debug('exit', 'http server closed');
+
+	await WorkerService.inbox.close();
+	await WorkerService.deliver.close();
+	await WorkerService.backfill.close();
+	logger.debug('exit', 'queue workers closed');
+
+	await database.destroy();
+	logger.debug('exit', 'db connection closed');
+
+	process.exit();
+}
+
+process.on('SIGINT', shutdown);
+process.on('SIGTERM', shutdown);

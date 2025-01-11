@@ -5,90 +5,80 @@
 	import Button from '$lib/components/Button.svelte';
 	import { IconDeviceFloppy } from '@tabler/icons-svelte';
 
-	let self = localstore.get('self');
-	let newSelf: any = {};
+	let self: any = $state({});
+	let newSelf: any = $state({});
 
-	if (self) {
+	let rawSelf = localstore.get('self');
+	if (rawSelf) {
 		try {
-			self = JSON.parse(self);
-			newSelf = JSON.parse(self);
+			self = JSON.parse(rawSelf);
+			newSelf = JSON.parse(rawSelf);
 		} catch (err) {
 			console.error(err);
 		}
 	}
+
+	console.log(self);
+	console.log(newSelf);
 </script>
 
-{#key self}
-	<div class="header">
-		<div class="left"></div>
-		<div class="right">
-			<Button accent>
-				<IconDeviceFloppy size="var(--fs-lg)" />
-				Save
-			</Button>
-		</div>
+<div class="header">
+	<div class="left"></div>
+	<div class="right">
+		<Button accent={$state.snapshot(self) !== $state.snapshot(newSelf)}>
+			<IconDeviceFloppy size="var(--fs-lg)" />
+			Save
+		</Button>
 	</div>
-	<br />
+</div>
+<br />
 
-	<div class="form">
-		<div class="left">
-			<Input
-				label="Display name"
-				placeholder={self.displayName ?? self.username}
-				bind:value={newSelf.displayName}
-				wide
-			/>
-			<Input
-				label="Bio"
-				placeholder={self.bio}
-				bind:value={newSelf.bio}
-				wide
-				big
-			/>
-		</div>
-		<div class="right">
-			<Input
-				label="Location"
-				placeholder={self.location}
-				bind:value={newSelf.location}
-				wide
-			/>
-			<Input
-				label="Birthday"
-				placeholder={self.birthday}
-				bind:value={newSelf.birthday}
-				wide
-			/>
-		</div>
+<div class="form">
+	<div class="left">
+		<Input
+			label="Display name"
+			placeholder={self.displayName ?? self.username}
+			bind:value={newSelf.displayName}
+			wide
+		/>
+		<Input
+			label="Bio"
+			placeholder={self.bio}
+			bind:value={newSelf.bio}
+			wide
+			big
+		/>
 	</div>
+	<div class="right">
+		<Input
+			label="Location"
+			placeholder={self.location}
+			bind:value={newSelf.location}
+			wide
+		/>
+		<Input
+			label="Birthday"
+			placeholder={self.birthday}
+			bind:value={newSelf.birthday}
+			wide
+		/>
+	</div>
+</div>
 
-	<div class="form">
-		<div class="left">
-			<Toggle
-				label="Require follows to be approved"
-				checked={newSelf.locked}
-			/>
-			<Toggle
-				label="Allow notes to be indexed"
-				checked={newSelf.indexable}
-			/>
-			<Toggle
-				label="Mark account as automated"
-				checked={newSelf.automated}
-			/>
-			<Toggle
-				label="Mark account as sensitive"
-				checked={newSelf.sensitive}
-			/>
-			<Toggle
-				label="Add cat ears to your account"
-				checked={newSelf.isCat}
-			/>
-			<Toggle label="Speak as cat" checked={newSelf.speakAsCat} />
-		</div>
-		<div class="right"></div>
+<div class="form">
+	<div class="left">
+		<Toggle
+			label="Require follows to be approved"
+			checked={newSelf.locked}
+		/>
+		<Toggle label="Allow notes to be indexed" checked={newSelf.indexable} />
+		<Toggle label="Mark account as automated" checked={newSelf.automated} />
+		<Toggle label="Mark account as sensitive" checked={newSelf.sensitive} />
+		<Toggle label="Add cat ears to your account" checked={newSelf.isCat} />
+		<Toggle label="Speak as cat" checked={newSelf.speakAsCat} />
 	</div>
-{/key}
+	<div class="right"></div>
+</div>
 
 <style lang="scss">
 	.header {

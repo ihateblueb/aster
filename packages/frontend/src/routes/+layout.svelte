@@ -27,7 +27,10 @@
 
 	if (loggedIn) {
 		let ws = new WebSocket(
-			$page.url.href + 'api/streaming?token=' + localstore.get('token')
+			($page.url.protocol === 'https:' ? 'wss://' : 'ws://') +
+				$page.url.host +
+				'/api/streaming?token=' +
+				localstore.get('token')
 		);
 
 		ws.onopen = () => {
