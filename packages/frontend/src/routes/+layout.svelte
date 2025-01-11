@@ -12,7 +12,6 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import playSound from '$lib/sounds.js';
 	import Notification from '$lib/components/Notification.svelte';
-	import { type Writable, writable } from 'svelte/store';
 
 	let loggedIn = $state(false);
 	if (localstore.get('token')) loggedIn = true;
@@ -72,16 +71,23 @@
 			if (message) {
 				if (message.type === 'greet') {
 					// connected, say something back!
-					ws.send('sub timeline:public');
-				}
-				if (message.type === 'notification:add') {
+					ws.send('sub timeline:home');
+				} else if (message.type === 'notification:add') {
 					addNotification(message.notification);
 				}
+
+				/*
+				*  else if (message.type === 'echo') {
+					addNotification({
+						id: uuid.v4(),
+						type: 'debug',
+						note: { content: 'echo ' + message?.data }
+					});
+				}
+				* */
 			}
 		};
 	}
-
-	console.debug(notifications);
 </script>
 
 <QueryClientProvider client={queryClient}>

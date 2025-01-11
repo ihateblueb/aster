@@ -1,5 +1,10 @@
 <script lang="ts">
-	import { IconRepeat, IconStar, IconUserPlus } from '@tabler/icons-svelte';
+	import {
+		IconBug,
+		IconRepeat,
+		IconStar,
+		IconUserPlus
+	} from '@tabler/icons-svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Time from '$lib/components/Time.svelte';
@@ -18,7 +23,9 @@
 </script>
 
 {#snippet icon()}
-	{#if notification.type === 'like'}
+	{#if notification.type === 'debug'}
+		<IconBug size="var(--fs-lg)" color="var(--ac1)" />
+	{:else if notification.type === 'like'}
 		<IconStar size="var(--fs-lg)" color="var(--like)" />
 	{:else if notification.type === 'repeat'}
 		<IconRepeat size="var(--fs-lg)" color="var(--repeat" />
@@ -39,7 +46,9 @@
 {/snippet}
 
 {#snippet title()}
-	{#if notification.type === 'like'}
+	{#if notification.type === 'debug'}
+		Debug
+	{:else if notification.type === 'like'}
 		{@render name(notification?.from)} liked your note
 	{:else if notification.type === 'repeat'}
 		{@render name(notification?.from)} repeated your note

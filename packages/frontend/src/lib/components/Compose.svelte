@@ -25,7 +25,7 @@
 	let addDropdown: Dropdown;
 	let visibilityDropdown: Dropdown;
 
-	let self: any;
+	let self: any = $state({});
 	function updateSelf() {
 		let grabbedSelf = localstore.get('self');
 		if (grabbedSelf) {
@@ -34,26 +34,26 @@
 	}
 	updateSelf();
 
-	let result;
-	let note = {
+	let note = $state({
 		cw: '',
 		content: '',
 		visibility: 'public',
 		repeat: '',
 		replyingTo: ''
-	};
+	});
 
 	note.visibility = localstore.get('defaultVisibility');
 
 	async function post() {
 		if (note.content.length >= 1) {
-			result = await createNote(note);
-			note.visibility = localstore.get('defaultVisibility');
-			console.log(result);
+			await createNote(note).then(() => {
+				[note.cw, note.content, note.repeat, note.replyingTo] = '';
+				note.visibility = localstore.get('defaultVisibility');
+			});
 		}
 	}
 
-	let replyingToNote: any;
+	let replyingToNote: any = $state({});
 
 	store.draft_replyingTo.subscribe(async (e) => {
 		note.replyingTo = e;
@@ -72,7 +72,7 @@
 		replyingToNote = undefined;
 	}
 
-	let quotingNote: any;
+	let quotingNote: any = $state({});
 
 	store.draft_repeat.subscribe(async (e) => {
 		note.repeat = e;
@@ -87,6 +87,10 @@
 		store.draft_repeat.set('');
 		quotingNote = undefined;
 	}
+
+	function setVisibility(visibility: string) {
+		note.visibility = visibility;
+	}
 </script>
 
 <div class="compose">
@@ -95,16 +99,14 @@
 			<Avatar user={self} size="35px" />
 		</div>
 		<div class="right">
-			{#key note}
-				<Button
-					transparent
-					centered
-					nm
-					on:click={(e) => visibilityDropdown.open(e)}
-				>
-					<Visibility visibility={note.visibility} />
-				</Button>
-			{/key}
+			<Button
+				transparent
+				centered
+				nm
+				on:click={(e) => visibilityDropdown.open(e)}
+			>
+				<Visibility visibility={note.visibility} />
+			</Button>
 		</div>
 	</div>
 
@@ -170,7 +172,7 @@
 </div>
 
 <Dropdown bind:this={visibilityDropdown}>
-	<DropdownItem on:click={() => note.visibility === 'public'}>
+	<DropdownItem on:click={() => setVisibility('public')}>
 		<div class="visibilityOption">
 			<p>
 				<IconWorld size="var(--fs-lg)" />
@@ -179,7 +181,7 @@
 			<p>Shown on all timelines</p>
 		</div>
 	</DropdownItem>
-	<DropdownItem on:click={() => note.visibility === 'unlisted'}>
+	<DropdownItem on:click={() => setVisibility('unlisted')}>
 		<div class="visibilityOption">
 			<p>
 				<IconHome size="var(--fs-lg)" />
@@ -188,7 +190,7 @@
 			<p>Only shown on the home timeline of followers</p>
 		</div>
 	</DropdownItem>
-	<DropdownItem on:click={() => note.visibility === 'followers'}>
+	<DropdownItem on:click={() => setVisibility('followers')}>
 		<div class="visibilityOption">
 			<p>
 				<IconLock size="var(--fs-lg)" />
@@ -197,7 +199,7 @@
 			<p>Only shown to your followers</p>
 		</div>
 	</DropdownItem>
-	<DropdownItem on:click={() => note.visibility === 'direct'}>
+	<DropdownItem on:click={() => setVisibility('direct')}>
 		<div class="visibilityOption">
 			<p>
 				<IconMail size="var(--fs-lg)" />

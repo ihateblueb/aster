@@ -44,6 +44,13 @@
 		}
 	});
 
+	store.viewRefresh.subscribe((e) => {
+		if (e) {
+			$query.refetch();
+			store.viewRefresh.set(false);
+		}
+	});
+
 	let additionalNotes = $state([]);
 
 	if (ws) ws.send(`sub timeline:${timeline}`);

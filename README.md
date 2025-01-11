@@ -56,16 +56,20 @@ Activities Sent:
 
 - Accept
     - Follow
-- Reject
-    - Follow
+- Announce
+	- Note
+- Block
 - Create
     - Note
+- Delete
+	- Note
 - Like
     - Note
-- Announce
-    - Note
+- Reject
+	- Follow
 - Undo
     - Like
+    - Follow
 
 I'm thinking of sending Create(Actor()) to instances with followers to local since I process that
 

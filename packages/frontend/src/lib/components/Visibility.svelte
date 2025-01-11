@@ -6,7 +6,7 @@
 		IconWorld
 	} from '@tabler/icons-svelte';
 
-	export let visibility;
+	let { visibility } = $props();
 </script>
 
 <div class="visibility">

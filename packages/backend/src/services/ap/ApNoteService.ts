@@ -256,22 +256,24 @@ class ApNoteService {
 			});
 		}
 
-		if (
-			ConfigService.bubbleTimeline.enabled &&
-			ConfigService.bubbleTimeline.instances.includes(author.host)
-		) {
-			WebsocketService.globalEmitter.emit('timeline:bubble', {
+		if (grabbedNote.visibility === 'public') {
+			if (
+				ConfigService.bubbleTimeline.enabled &&
+				ConfigService.bubbleTimeline.instances.includes(author.host)
+			) {
+				WebsocketService.globalEmitter.emit('timeline:bubble', {
+					type: 'timeline:add',
+					timeline: 'bubble',
+					note: grabbedNote
+				});
+			}
+
+			WebsocketService.globalEmitter.emit('timeline:public', {
 				type: 'timeline:add',
-				timeline: 'bubble',
+				timeline: 'public',
 				note: grabbedNote
 			});
 		}
-
-		WebsocketService.globalEmitter.emit('timeline:public', {
-			type: 'timeline:add',
-			timeline: 'public',
-			note: grabbedNote
-		});
 
 		return grabbedNote;
 	}

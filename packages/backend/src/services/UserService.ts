@@ -7,6 +7,7 @@ import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApBlockRenderer from './ap/ApBlockRenderer.js';
 import ApFollowRenderer from './ap/ApFollowRenderer.js';
+import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import QueueService from './QueueService.js';
@@ -75,7 +76,22 @@ class UserService {
 				return RelationshipService.delete({
 					id: existingFollow.id
 				})
-					.then(() => {
+					.then(async () => {
+						if (!to.local) {
+							const activity = ApUndoRenderer.render(
+								ApFollowRenderer.render(id, from.id, to.apId)
+							);
+
+							await QueueService.deliver.add(
+								IdService.generate(),
+								{
+									as: from.id,
+									inbox: to.inbox,
+									body: activity
+								}
+							);
+						}
+
 						return {
 							status: 200,
 							message: 'Removed follow'
@@ -104,7 +120,7 @@ class UserService {
 				createdAt: new Date().toISOString()
 			};
 
-			follow['pending'] = !to.locked;
+			follow['pending'] = to.locked;
 
 			if (!to.local) {
 				const activity = ApFollowRenderer.render(id, from.id, to.apId);

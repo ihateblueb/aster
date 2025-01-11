@@ -1,3 +1,5 @@
+import localstore from '$lib/localstore';
+
 type SoundType =
 	| 'notification'
 	| 'interact'
@@ -13,7 +15,8 @@ import meow5 from '$lib/sounds/meow_5.wav';
 import meow6 from '$lib/sounds/meow_6.wav';
 
 export default function playSound(type: SoundType) {
-	let volume = 0.15;
+	let enabled = Boolean(localstore.get('enableSounds'));
+	let volume = localstore.get('soundVolume');
 
 	let one = new Audio(meow1);
 	let two = new Audio(meow2);
@@ -29,9 +32,11 @@ export default function playSound(type: SoundType) {
 	five.volume = volume;
 	six.volume = volume;
 
-	if (type === 'notification') four.play();
-	if (type === 'interact') three.play();
-	if (type === 'uninteract') five.play();
-	if (type === 'newNote') six.play();
-	if (type === 'timelineUpdate') one.play();
+	if (enabled) {
+		if (type === 'notification') four.play();
+		if (type === 'interact') three.play();
+		if (type === 'uninteract') five.play();
+		if (type === 'newNote') six.play();
+		if (type === 'timelineUpdate') one.play();
+	}
 }

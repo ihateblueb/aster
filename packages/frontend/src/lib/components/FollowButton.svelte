@@ -4,16 +4,24 @@
 	import { createQuery } from '@tanstack/svelte-query';
 	import getUserRelationship from '$lib/api/user/relationship';
 	import Loading from '$lib/components/Loading.svelte';
+	import followUser from '$lib/api/user/follow';
 
 	export let user;
 	export let query;
+
+	function follow() {
+		followUser(user.id).then(() => {
+			$query.refetch();
+		});
+	}
 </script>
 
 {#if user}
 	<Button
-		danger={$query.data?.to.type === 'follow' || $query.data?.to.pending}
+		danger={$query.data?.to?.type === 'follow' || $query.data?.to?.pending}
 		blur
 		nm
+		on:click={() => follow()}
 	>
 		<span class="content">
 			{#if $query.isLoading}

@@ -30,11 +30,14 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		padding: 5px;
 
 		&.massive {
 			width: 100%;
 			height: 100%;
+		}
+
+		&:not(.massive) {
+			padding: 5px;
 		}
 	}
 

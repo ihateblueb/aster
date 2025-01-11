@@ -37,7 +37,10 @@ let defaults = {
 	renderAdvancedMfm: true,
 	catSpeak: true,
 	uncollapseCws: false,
-	hideAllMedia: false
+	hideAllMedia: false,
+
+	enableSounds: true,
+	soundVolume: 0.25
 };
 
 class LocalStore {
