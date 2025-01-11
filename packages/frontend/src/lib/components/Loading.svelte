@@ -2,9 +2,14 @@
 	import { IconLoader2 } from '@tabler/icons-svelte';
 
 	export let size = '38px';
+	export let color = 'var(--tx1)';
+	export let massive = true;
 </script>
 
-<div class="loading">
+<div
+	class={'loading' + (massive ? ' massive' : '')}
+	style={'color:' + color + ';'}
+>
 	<div class="spinner">
 		<IconLoader2 {size} />
 	</div>
@@ -25,8 +30,12 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		width: 100%;
-		height: 100%;
+		padding: 5px;
+
+		&.massive {
+			width: 100%;
+			height: 100%;
+		}
 	}
 
 	.spinner {

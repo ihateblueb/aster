@@ -11,6 +11,9 @@
 		style={`height:${size};width:${size};`}
 		src={user?.avatar ?? '/fallback/avatar.png'}
 		alt={user?.avatarAlt}
+		on:error={(e) => {
+			if (e && e.target) e.target.src = '/fallback/avatar.png';
+		}}
 	/>
 	{#if user.isCat}
 		<div class="ears">

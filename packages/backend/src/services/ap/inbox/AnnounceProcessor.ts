@@ -10,6 +10,7 @@ class AnnounceProcessor {
 		if (!body.actor) return false;
 
 		const actor = await ApActorService.get(body.actor);
+		if (!actor) throw new Error('Actor not found');
 
 		let note;
 		if (body.object.id) {
@@ -17,12 +18,10 @@ class AnnounceProcessor {
 		} else {
 			note = await ApNoteService.get(body.object);
 		}
+		if (!note) return false;
 
 		const visibility = (await ApVisibilityService.determine(body))
 			.visibility;
-
-		if (!actor) throw new Error('Actor not found');
-		if (!note) throw new Error('Note not found');
 
 		logger.debug(
 			'announce',

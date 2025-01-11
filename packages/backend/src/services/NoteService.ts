@@ -260,12 +260,12 @@ class NoteService {
 		const result = await db
 			.getRepository('note')
 			.insert(note)
-			.then(() => {
+			.then(async () => {
 				return {
 					error: false,
-					status: 200,
+					status: 201,
 					message: locale.note.created,
-					note: note
+					note: await this.get({ id: note.id })
 				};
 			})
 			.catch((e) => {
@@ -408,18 +408,10 @@ class NoteService {
 				.then((e) => {
 					if (e.error) {
 						logger.debug('repeat', 'failed to create');
-						return {
-							error: e.error,
-							status: e.status,
-							message: e.message
-						};
+						return e;
 					} else {
 						logger.debug('repeat', 'created');
-						return {
-							error: false,
-							status: 200,
-							message: locale.note.created
-						};
+						return e;
 					}
 				})
 				.catch((err) => {

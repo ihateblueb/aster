@@ -4,18 +4,18 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import Time from '$lib/components/Time.svelte';
 
-	export let notification;
+	let { notification } = $props();
 </script>
 
 {#snippet icon()}
 	{#if notification.type === 'like'}
-		<IconStar size="var(--fs-lg)" />
+		<IconStar size="var(--fs-lg)" color="var(--like)" />
 	{:else if notification.type === 'repeat'}
-		<IconRepeat size="var(--fs-lg)" />
+		<IconRepeat size="var(--fs-lg)" color="var(--repeat" />
 	{:else if notification.type === 'acceptedFollow'}
-		<IconUserPlus size="var(--fs-lg)" />
+		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
 	{:else if notification.type === 'follow'}
-		<IconUserPlus size="var(--fs-lg)" />
+		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
 	{/if}
 {/snippet}
 
@@ -85,6 +85,11 @@
 
 				flex-grow: 1;
 			}
+
+			.right {
+				display: flex;
+				align-items: center;
+			}
 		}
 
 		.title {
@@ -93,6 +98,10 @@
 				color: var(--tx2);
 				text-decoration: none;
 			}
+		}
+
+		.body {
+			position: relative;
 		}
 	}
 </style>

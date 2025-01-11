@@ -26,7 +26,7 @@
 	import { page } from '$app/stores';
 	import likeNote from '$lib/api/note/like.js';
 
-	let self;
+	let self: any = $state();
 	function updateSelf() {
 		let grabbedSelf = localstore.get('self');
 		if (grabbedSelf) {
@@ -35,19 +35,25 @@
 	}
 	updateSelf();
 
-	export let note;
+	let { note } = $props();
+	let didIRepeat = $state(false);
+	let didILike = $state(false);
 
 	function reply() {
 		store.draft_replyingTo.set(note?.id);
 	}
 	function repeat() {
-		repeatNote(note?.id);
+		repeatNote(note?.id).then(() => {
+			didIRepeat = !didIRepeat;
+		});
 	}
 	function quote() {
 		store.draft_repeat.set(note?.id);
 	}
 	function like() {
-		likeNote(note?.id);
+		likeNote(note?.id).then(() => {
+			didILike = !didILike;
+		});
 	}
 	function react() {}
 
@@ -58,77 +64,68 @@
 	function moreDelete() {
 		deleteNote(note?.id);
 	}
-
-	// todo: doesnt work lol
-
-	let didIRepeat = false;
-	/*
-	if (
-		note.repeats &&
-		note.repeats.some((repeat) => repeat?.user?.id === self?.id)
-	) {
-		didIRepeat = true;
-	}
-	* */
-
-	let didILike = false;
-	/*
-	if (note.likes && note.likes.some((like) => like?.user?.id === self?.id)) {
-		didILike = true;
-	}
-	* */
 </script>
 
-<footer>
-	<div class="item">
-		<button on:click={() => reply()}>
-			<span class="icon">
-				<IconArrowBackUp size="20px" />
-			</span>
-			{#if note.replies && note.replies.length > 0}
-				<span class="counter">{note.replies.length}</span>
-			{/if}
-		</button>
-	</div>
-	<div class={'item' + (didIRepeat ? ' repeated' : '')}>
-		<button on:click={(e) => repeatDropdown.open(e)}>
-			<span class="icon">
-				<IconRepeat size="20px" />
-			</span>
-			{#if note.repeats && note.repeats.length > 0}
-				<span class="counter">{note.repeats.length}</span>
-			{/if}
-		</button>
-	</div>
-	<div class={'item' + (didILike ? ' liked' : '')}>
-		<button on:click={() => like()}>
-			<span class="icon">
-				{#if didILike}
-					<IconStarFilled size="20px" />
-				{:else}
-					<IconStar size="20px" />
+{#key note}
+	<footer>
+		<div class={'item' + (self ? '' : ' loggedOut')}>
+			<button on:click={() => reply()}>
+				<span class="icon">
+					<IconArrowBackUp size="20px" />
+				</span>
+				{#if note.replies && note.replies.length > 0}
+					<span class="counter">{note.replies.length}</span>
 				{/if}
-			</span>
-			{#if note.likes && note.likes.length > 0}
-				<span class="counter">{note.likes.length}</span>
-			{/if}
-		</button>
-	</div>
-	<div class="item">
-		<button on:click={(e) => reactDropdown.open(e)}>
-			<span class="icon">
-				<IconPlus size="20px" />
-			</span>
-		</button>
-	</div>
-	<div class="item">
-		<button on:click={(e) => moreDropdown.open(e)}>
-			<span class="icon">
-				<IconDots size="20px" />
-			</span>
-		</button>
-	</div>
-</footer>
+			</button>
+		</div>
+		<div
+			class={'item' +
+				(self ? '' : ' loggedOut') +
+				(didIRepeat ? ' repeated' : '')}
+		>
+			<button on:click={(e) => repeatDropdown.open(e)}>
+				<span class="icon">
+					<IconRepeat size="20px" />
+				</span>
+				{#if note.repeats && note.repeats.length > 0}
+					<span class="counter">{note.repeats.length}</span>
+				{/if}
+			</button>
+		</div>
+		<div
+			class={'item' +
+				(self ? '' : ' loggedOut') +
+				(didILike ? ' liked' : '')}
+		>
+			<button on:click={() => like()}>
+				<span class="icon">
+					{#if didILike}
+						<IconStarFilled size="20px" />
+					{:else}
+						<IconStar size="20px" />
+					{/if}
+				</span>
+				{#if note.likes && note.likes.length > 0}
+					<span class="counter">{note.likes.length}</span>
+				{/if}
+			</button>
+		</div>
+		<div class={'item' + (self ? '' : ' loggedOut')}>
+			<button on:click={(e) => reactDropdown.open(e)}>
+				<span class="icon">
+					<IconPlus size="20px" />
+				</span>
+			</button>
+		</div>
+		<div class="item">
+			<button on:click={(e) => moreDropdown.open(e)}>
+				<span class="icon">
+					<IconDots size="20px" />
+				</span>
+			</button>
+		</div>
+	</footer>
+{/key}
 
 <!-- Repeat Dropdown -->
 <Dropdown bind:this={repeatDropdown}>
@@ -260,6 +257,10 @@
 						background: var(--like-05);
 					}
 				}
+			}
+
+			&.loggedOut {
+				opacity: 50%;
 			}
 		}
 	}

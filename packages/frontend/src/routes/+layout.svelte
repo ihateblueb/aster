@@ -8,11 +8,17 @@
 	import Modal from '$lib/components/Modal.svelte';
 	import Compose from '$lib/components/Compose.svelte';
 	import Welcome from '$lib/components/Welcome.svelte';
+	import Loading from '$lib/components/Loading.svelte';
 
 	let loggedIn = false;
 	if (localstore.get('token')) loggedIn = true;
 
 	let compose: Modal;
+
+	let activeRequests = 0;
+	store.activeRequests.subscribe((e) => {
+		activeRequests = e;
+	});
 
 	store.showCompose.subscribe(async (e) => {
 		if (e && loggedIn) await compose.open();
@@ -54,6 +60,12 @@
 </script>
 
 <QueryClientProvider client={queryClient}>
+	{#if activeRequests > 0}
+		<div class="activeRequests">
+			<Loading size="24px" color="var(--ac1)" massive={false} />
+		</div>
+	{/if}
+
 	{#if loggedIn}
 		<Modal wide compose bind:this={compose}>
 			<Compose />
@@ -79,4 +91,10 @@
 
 <style lang="scss" global>
 	@use '../app.scss';
+
+	.activeRequests {
+		position: absolute;
+		top: 0;
+		right: 0;
+	}
 </style>
