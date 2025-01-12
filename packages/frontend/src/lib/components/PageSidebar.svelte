@@ -7,10 +7,10 @@
 	import localstore from '$lib/localstore';
 	import NavigationWidget from '$lib/components/widget/NavigationWidget.svelte';
 
-	export let left = false;
-	export let right = false;
+	let { left = false, right = false } = $props();
 
-	let widgets;
+	let widgets = $state(undefined);
+
 	if (left) widgets = localstore.get('sidebarLeft');
 	if (right) widgets = localstore.get('sidebarRight');
 </script>
@@ -44,9 +44,7 @@
 
 <div class="pageSidebar">
 	<div class="body">
-		{#key widgets}
-			{@render body()}
-		{/key}
+		{@render body()}
 	</div>
 </div>
 

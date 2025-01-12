@@ -2,8 +2,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Time from '$lib/components/Time.svelte';
 
-	export let user;
-	export let time = undefined;
+	let { user, time = undefined } = $props();
 </script>
 
 <div class="userCard">

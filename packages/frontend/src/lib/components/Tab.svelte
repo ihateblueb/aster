@@ -1,7 +1,5 @@
 <script>
-	export let short = false;
-	export let selected = false;
-	export let title = '';
+	let { short = false, selected = false, title = '' } = $props();
 </script>
 
 <button class={'tab' + (short ? ' short' : '')} on:click>

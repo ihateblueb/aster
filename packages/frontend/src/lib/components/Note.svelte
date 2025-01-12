@@ -10,30 +10,28 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 
-	export let note;
-	export let expanded = false;
-	let cwOpen = false;
+	let { note, expanded = false } = $props();
+
+	let cwOpen = $state(false);
 </script>
 
 {#snippet renderNote(data, quote)}
 	<NoteHeader note={data} />
 	<div class="content">
 		{#if data.cw}
-			{#key cwOpen}
-				<div class={'cw' + (cwOpen ? ' open' : '')}>
-					<span>{data.cw}</span>
-					<Button thin nm on:click={() => (cwOpen = !cwOpen)}
-						>{!cwOpen ? 'Show content' : 'Hide content'}
-					</Button>
-				</div>
-				{#if cwOpen}
-					<Mfm
-						content={data.content}
-						on:click={() =>
-							!expanded ? goto('/notes/' + data.id) : () => {}}
-					/>
-				{/if}
-			{/key}
+			<div class={'cw' + (cwOpen ? ' open' : '')}>
+				<span>{data.cw}</span>
+				<Button thin nm on:click={() => (cwOpen = !cwOpen)}
+					>{!cwOpen ? 'Show content' : 'Hide content'}
+				</Button>
+			</div>
+			{#if cwOpen}
+				<Mfm
+					content={data.content}
+					on:click={() =>
+						!expanded ? goto('/notes/' + data.id) : () => {}}
+				/>
+			{/if}
 		{:else}
 			<Mfm
 				content={data.content}

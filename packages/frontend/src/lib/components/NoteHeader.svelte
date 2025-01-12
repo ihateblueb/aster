@@ -3,7 +3,7 @@
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Time from '$lib/components/Time.svelte';
 
-	export let note;
+	let { note } = $props();
 </script>
 
 <header>

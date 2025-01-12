@@ -1,22 +1,16 @@
 <script lang="ts">
-	export let danger = false;
-	export let warn = false;
+	let { to = '', danger = false, warn = false } = $props();
 
-	export let to = '';
-
-	function calculateClass() {
-		return (
-			'dropdownItem' + (danger ? ' danger' : '') + (warn ? ' warn' : '')
-		);
-	}
+	let dropdownItemClass =
+		'dropdownItem' + (danger ? ' danger' : '') + (warn ? ' warn' : '');
 </script>
 
 {#if to && to.length > 0}
-	<a class={calculateClass()} href={to}>
+	<a class={dropdownItemClass} href={to}>
 		<slot></slot>
 	</a>
 {:else}
-	<button class={calculateClass()} on:click>
+	<button class={dropdownItemClass} on:click>
 		<slot></slot>
 	</button>
 {/if}

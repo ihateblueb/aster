@@ -6,8 +6,7 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import followUser from '$lib/api/user/follow';
 
-	export let user;
-	export let query;
+	let { user, query } = $props();
 
 	function follow() {
 		followUser(user.id).then(() => {

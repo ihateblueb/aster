@@ -1,11 +1,7 @@
 <script lang="ts">
 	import * as uuid from 'uuid';
 
-	export let label = '';
-	export let min = 0;
-	export let max = 100;
-	export let step = 5;
-	export let value = 50;
+	let { label = '', min = 0, max = 100, step = 5, value = 50 } = $props();
 
 	const id = uuid.v4();
 </script>

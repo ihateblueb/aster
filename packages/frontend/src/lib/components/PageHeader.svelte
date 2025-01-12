@@ -1,20 +1,20 @@
 <script>
 	import { IconArrowLeft } from '@tabler/icons-svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import IconWrapper from '$lib/components/IconWrapper.svelte';
 	import { goto } from '$app/navigation';
 
-	export let title;
+	let { title } = $props();
 
-	console.log($page);
+	console.log(page);
 
-	let showBack = false;
+	let showBack = $state(false);
 
-	if ($page.url.pathname !== '/' && history.length > 2) showBack = true;
+	if (page.url.pathname !== '/' && history.length > 2) showBack = true;
 </script>
 
 <svelte:head>
-	<title>{title + (title ? ' - ' : '') + $page.url.host}</title>
+	<title>{title + (title ? ' - ' : '') + page.url.host}</title>
 </svelte:head>
 
 <div class="pageHeader">

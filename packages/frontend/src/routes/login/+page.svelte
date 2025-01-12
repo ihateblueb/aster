@@ -11,11 +11,11 @@
 
 	// todo: use svelte query for this
 
-	let error = false;
-	let errorMsg = '';
+	let error = $state(false);
+	let errorMsg = $state('');
 
-	let username = '';
-	let password = '';
+	let username = $state('');
+	let password = $state('');
 
 	async function login() {
 		await tryLogin(username, password)
@@ -47,9 +47,7 @@
 <PageWrapper centered>
 	<div class="ctn">
 		<h1>Login</h1>
-		{#key error}
-			<p>{errorMsg}</p>
-		{/key}
+		<p>{errorMsg}</p>
 		<form>
 			<Input
 				type="username"

@@ -4,12 +4,12 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import { IconSettings } from '@tabler/icons-svelte';
 	import Button from '$lib/components/Button.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 
 	let selectedTab = 0;
 
-	if ($page.route.id?.startsWith('/settings/account')) selectedTab = 1;
+	if (page.route.id?.startsWith('/settings/account')) selectedTab = 1;
 </script>
 
 <PageHeader title="Settings">
@@ -38,7 +38,7 @@
 	<div class="subheader">
 		{#if selectedTab === 0}
 			<Tab
-				selected={$page.route.id === '/settings'}
+				selected={page.route.id === '/settings'}
 				on:click={() => {
 					selectedTab = 0;
 					goto('/settings');
@@ -46,7 +46,7 @@
 				title="General"
 			></Tab>
 			<Tab
-				selected={$page.route.id === '/settings/themes'}
+				selected={page.route.id === '/settings/themes'}
 				on:click={() => {
 					selectedTab = 0;
 					goto('/settings/themes');
@@ -54,7 +54,7 @@
 				title="Themes"
 			></Tab>
 			<Tab
-				selected={$page.route.id === '/settings/sounds'}
+				selected={page.route.id === '/settings/sounds'}
 				on:click={() => {
 					selectedTab = 0;
 					goto('/settings/sounds');
@@ -63,7 +63,7 @@
 			></Tab>
 		{:else}
 			<Tab
-				selected={$page.route.id === '/settings/account'}
+				selected={page.route.id === '/settings/account'}
 				on:click={() => {
 					selectedTab = 1;
 					goto('/settings/account');
@@ -71,7 +71,7 @@
 				title="General"
 			></Tab>
 			<Tab
-				selected={$page.route.id === '/settings/account/privacy'}
+				selected={page.route.id === '/settings/account/privacy'}
 				on:click={() => {
 					selectedTab = 1;
 					goto('/settings/account/privacy');
@@ -79,7 +79,7 @@
 				title="Privacy"
 			></Tab>
 			<Tab
-				selected={$page.route.id === '/settings/account/security'}
+				selected={page.route.id === '/settings/account/security'}
 				on:click={() => {
 					selectedTab = 1;
 					goto('/settings/account/security');

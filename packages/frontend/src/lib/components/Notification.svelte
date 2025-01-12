@@ -20,7 +20,7 @@
 		slide
 	} from 'svelte/transition';
 
-	let { notification, small } = $props();
+	let { notification, small = false } = $props();
 </script>
 
 {#snippet icon()}

@@ -23,7 +23,7 @@
 	import repeatNote from '$lib/api/note/repeat.js';
 	import localstore from '$lib/localstore.js';
 	import deleteNote from '$lib/api/note/delete.js';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import likeNote from '$lib/api/note/like.js';
 	import playSound from '$lib/sounds.js';
 
@@ -37,6 +37,7 @@
 	updateSelf();
 
 	let { note } = $props();
+
 	let didIRepeat = $state(false);
 	let didILike = $state(false);
 
@@ -71,66 +72,62 @@
 	}
 </script>
 
-{#key note}
-	<footer>
-		<div class={'item' + (self ? '' : ' loggedOut')}>
-			<button on:click={() => reply()}>
-				<span class="icon">
-					<IconArrowBackUp size="20px" />
-				</span>
-				{#if note.replies && note.replies.length > 0}
-					<span class="counter">{note.replies.length}</span>
+<footer>
+	<div class={'item' + (self ? '' : ' loggedOut')}>
+		<button on:click={() => reply()}>
+			<span class="icon">
+				<IconArrowBackUp size="20px" />
+			</span>
+			{#if note.replies && note.replies.length > 0}
+				<span class="counter">{note.replies.length}</span>
+			{/if}
+		</button>
+	</div>
+	<div
+		class={'item' +
+			(self ? '' : ' loggedOut') +
+			(didIRepeat ? ' repeated' : '')}
+	>
+		<button on:click={(e) => repeatDropdown.open(e)}>
+			<span class="icon">
+				<IconRepeat size="20px" />
+			</span>
+			{#if note.repeats && note.repeats.length > 0}
+				<span class="counter">{note.repeats.length}</span>
+			{/if}
+		</button>
+	</div>
+	<div
+		class={'item' + (self ? '' : ' loggedOut') + (didILike ? ' liked' : '')}
+	>
+		<button on:click={() => like()}>
+			<span class="icon">
+				{#if didILike}
+					<IconStarFilled size="20px" />
+				{:else}
+					<IconStar size="20px" />
 				{/if}
-			</button>
-		</div>
-		<div
-			class={'item' +
-				(self ? '' : ' loggedOut') +
-				(didIRepeat ? ' repeated' : '')}
-		>
-			<button on:click={(e) => repeatDropdown.open(e)}>
-				<span class="icon">
-					<IconRepeat size="20px" />
-				</span>
-				{#if note.repeats && note.repeats.length > 0}
-					<span class="counter">{note.repeats.length}</span>
-				{/if}
-			</button>
-		</div>
-		<div
-			class={'item' +
-				(self ? '' : ' loggedOut') +
-				(didILike ? ' liked' : '')}
-		>
-			<button on:click={() => like()}>
-				<span class="icon">
-					{#if didILike}
-						<IconStarFilled size="20px" />
-					{:else}
-						<IconStar size="20px" />
-					{/if}
-				</span>
-				{#if note.likes && note.likes.length > 0}
-					<span class="counter">{note.likes.length}</span>
-				{/if}
-			</button>
-		</div>
-		<div class={'item' + (self ? '' : ' loggedOut')}>
-			<button on:click={(e) => reactDropdown.open(e)}>
-				<span class="icon">
-					<IconPlus size="20px" />
-				</span>
-			</button>
-		</div>
-		<div class="item">
-			<button on:click={(e) => moreDropdown.open(e)}>
-				<span class="icon">
-					<IconDots size="20px" />
-				</span>
-			</button>
-		</div>
-	</footer>
-{/key}
+			</span>
+			{#if note.likes && note.likes.length > 0}
+				<span class="counter">{note.likes.length}</span>
+			{/if}
+		</button>
+	</div>
+	<div class={'item' + (self ? '' : ' loggedOut')}>
+		<button on:click={(e) => reactDropdown.open(e)}>
+			<span class="icon">
+				<IconPlus size="20px" />
+			</span>
+		</button>
+	</div>
+	<div class="item">
+		<button on:click={(e) => moreDropdown.open(e)}>
+			<span class="icon">
+				<IconDots size="20px" />
+			</span>
+		</button>
+	</div>
+</footer>
 
 <!-- Repeat Dropdown -->
 <Dropdown bind:this={repeatDropdown}>
@@ -160,7 +157,7 @@
 	</DropdownItem>
 	<DropdownItem
 		on:click={() =>
-			navigator.clipboard.writeText($page.url.href + 'notes/' + note.id)}
+			navigator.clipboard.writeText(page.url.href + 'notes/' + note.id)}
 	>
 		<IconLink size="var(--fs-lg)" />
 		<span>Copy link</span>

@@ -3,12 +3,11 @@
 	import { scale, fade } from 'svelte/transition';
 	import store from '$lib/store';
 
-	let dialog: HTMLDialogElement;
-	let target: EventTarget;
+	let dialog: undefined | HTMLDialogElement = $state();
 
-	let show = false;
-	export let wide = false;
-	export let compose = false;
+	let show = $state(false);
+
+	let { wide = false, compose = false } = $props();
 
 	export async function open() {
 		if (!show) {
@@ -17,13 +16,13 @@
 			await tick();
 
 			tick().then(() => {
-				dialog.showModal();
+				if (dialog) dialog.showModal();
 			});
 		}
 	}
 
 	export function close() {
-		dialog.close();
+		if (dialog) dialog.close();
 		show = false;
 		if (compose) store.showCompose.set(false);
 	}
@@ -131,7 +130,7 @@
 
 			pointer-events: auto;
 
-			background-color: var(--bg1-75);
+			background-color: #00000050;
 			backdrop-filter: blur(var(--blur-sm));
 		}
 	}

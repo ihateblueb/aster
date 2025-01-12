@@ -5,9 +5,7 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import { goto } from '$app/navigation';
 
-	export let note;
-	export let nobg = false;
-	export let nomargin = false;
+	let { note, nobg, nomargin } = $props();
 </script>
 
 <div

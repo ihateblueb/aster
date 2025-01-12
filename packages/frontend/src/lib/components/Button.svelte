@@ -1,77 +1,53 @@
 <script lang="ts">
-	export let to: string = '';
-	export let submit: boolean = false;
+	let {
+		to = '',
+		submit = false,
+		primary = false,
+		secondary = false,
+		quaternary = false,
+		accent = false,
+		accentLight = false,
+		success = false,
+		warn = false,
+		danger = false,
+		transparent = false,
+		rounded = false,
+		centered = false,
+		nav = false,
+		circle = false,
+		wide = false,
+		thin = false,
+		nm = false,
+		blur = false
+	} = $props();
 
-	export let primary: boolean = false; // --bg1
-	export let secondary: boolean = false; // --bg2
-	export let tertiary: boolean = false; // --bg3
-	export let quaternary: boolean = false; // --bg4
-	export let accent: boolean = false;
-	export let accentLight: boolean = false;
-	export let success: boolean = false;
-	export let warn: boolean = false;
-	export let danger: boolean = false;
-	export let transparent: boolean = false;
-	export let rounded: boolean = false;
-	export let centered: boolean = false;
-	export let nav: boolean = false;
-	export let circle: boolean = false;
-	export let wide: boolean = false;
-	export let thin: boolean = false;
-	export let nm: boolean = false;
-	export let blur: boolean = false;
-
-	function calculateClass() {
-		if (
-			!(
-				primary ||
-				secondary ||
-				tertiary ||
-				quaternary ||
-				accent ||
-				accentLight ||
-				success ||
-				warn ||
-				danger ||
-				transparent
-			)
-		) {
-			tertiary = true;
-		}
-		return (
-			'btn' +
-			(primary ? ' primary' : '') +
-			(secondary ? ' secondary' : '') +
-			(tertiary ? ' tertiary' : '') +
-			(quaternary ? ' quaternary' : '') +
-			(accent ? ' accent' : '') +
-			(accentLight ? ' accentLight' : '') +
-			(success ? ' success' : '') +
-			(warn ? ' warn' : '') +
-			(danger ? ' danger' : '') +
-			(transparent ? ' transparent' : '') +
-			(rounded ? ' rounded' : '') +
-			(nav ? ' nav' : '') +
-			(circle ? ' circle' : '') +
-			(centered ? ' centered' : '') +
-			(wide ? ' wide' : '') +
-			(thin ? ' thin' : '') +
-			(nm ? ' nm' : '') +
-			(blur ? ' blur' : '')
-		);
-	}
+	let btnClass =
+		'btn' +
+		(primary ? ' primary' : '') +
+		(secondary ? ' secondary' : '') +
+		(quaternary ? ' quaternary' : '') +
+		(accent ? ' accent' : '') +
+		(accentLight ? ' accentLight' : '') +
+		(success ? ' success' : '') +
+		(warn ? ' warn' : '') +
+		(danger ? ' danger' : '') +
+		(transparent ? ' transparent' : '') +
+		(rounded ? ' rounded' : '') +
+		(nav ? ' nav' : '') +
+		(circle ? ' circle' : '') +
+		(centered ? ' centered' : '') +
+		(wide ? ' wide' : '') +
+		(thin ? ' thin' : '') +
+		(nm ? ' nm' : '') +
+		(blur ? ' blur' : '');
 </script>
 
 {#if to}
-	<a href={to} class={calculateClass()}>
+	<a href={to} class={btnClass}>
 		<slot></slot>
 	</a>
 {:else}
-	<button
-		type={submit ? 'submit' : 'button'}
-		class={calculateClass()}
-		on:click
-	>
+	<button type={submit ? 'submit' : 'button'} class={btnClass} on:click>
 		<slot></slot>
 	</button>
 {/if}
@@ -124,15 +100,15 @@
 				background-color: var(--bg2-75);
 			}
 		}
-		&.tertiary {
-			color: var(--tx1);
-			background-color: var(--bg3);
 
-			&:hover {
-				color: var(--tx1);
-				background-color: var(--bg3-75);
-			}
+		color: var(--tx1);
+		background-color: var(--bg3);
+
+		&:hover {
+			color: var(--tx1);
+			background-color: var(--bg3-75);
 		}
+
 		&.quaternary {
 			color: var(--tx1);
 			background-color: var(--bg4);

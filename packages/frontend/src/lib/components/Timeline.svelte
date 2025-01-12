@@ -55,13 +55,13 @@
 		sineOut
 	} from 'svelte/easing';
 
-	export let type;
-	export let queryKey;
-	export let queryFn;
-
-	export let query;
-
-	export let timeline: string;
+	let {
+		type,
+		queryKey,
+		queryFn,
+		query = $bindable(),
+		timeline = $bindable()
+	} = $props();
 
 	query = createInfiniteQuery({
 		queryKey: [queryKey],
@@ -76,6 +76,34 @@
 			return lastPage ? lastPage.at(-1).createdAt : undefined;
 		}
 	});
+
+	let ws: undefined | WebSocket;
+	store.websocket.subscribe((e) => {
+		if (e) ws = e;
+	});
+
+	let additionalNotes: any[] = $state([]);
+
+	if (ws && queryKey === 'timeline') {
+		ws.send(`sub timeline:${timeline}`);
+
+		ws.onmessage = (e) => {
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
+
+			if (
+				message &&
+				message.type === 'timeline:add' &&
+				message.timeline === timeline &&
+				message.note
+			) {
+				console.log('[timeline] received ws note');
+				additionalNotes.unshift(message.note);
+			}
+		};
+	}
 </script>
 
 {#if $query.isLoading}
@@ -90,11 +118,23 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
+	{#each additionalNotes as note}
+		<div
+			in:fly|global={{
+				y: -10,
+				duration: 350,
+				easing: backOut
+			}}
+		>
+			<Note {note} />
+		</div>
+	{/each}
+
 	{#each $query.data.pages as results}
 		{#each results as object}
 			<div
-				transition:fly|global={{
-					y: -15,
+				in:fly|global={{
+					y: -10,
 					duration: 350,
 					easing: backOut
 				}}

@@ -1,16 +1,16 @@
 <script>
 	import PageHeader from '$lib/components/PageHeader.svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { IconDashboard, IconSettings } from '@tabler/icons-svelte';
 	import Tab from '$lib/components/Tab.svelte';
 
 	let selectedTab = 0;
-	if ($page.route.id?.startsWith('/admin/general')) selectedTab = 1;
-	if ($page.route.id?.startsWith('/admin/users')) selectedTab = 2;
-	if ($page.route.id?.startsWith('/admin/emoji')) selectedTab = 3;
-	if ($page.route.id?.startsWith('/admin/rules')) selectedTab = 4;
-	if ($page.route.id?.startsWith('/admin/reports')) selectedTab = 5;
+	if (page.route.id?.startsWith('/admin/general')) selectedTab = 1;
+	if (page.route.id?.startsWith('/admin/users')) selectedTab = 2;
+	if (page.route.id?.startsWith('/admin/emoji')) selectedTab = 3;
+	if (page.route.id?.startsWith('/admin/rules')) selectedTab = 4;
+	if (page.route.id?.startsWith('/admin/reports')) selectedTab = 5;
 </script>
 
 <PageHeader title="Dashboard">

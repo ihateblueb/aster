@@ -11,7 +11,7 @@
 		IconSettings,
 		IconUserPlus
 	} from '@tabler/icons-svelte';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let innerWidth: number;
 </script>
@@ -21,8 +21,8 @@
 {#if innerWidth > 1355}
 	<div class="navBtns">
 		<Button
-			accentLight={$page.url.pathname === '/'}
-			transparent={$page.url.pathname !== '/'}
+			accentLight={page.url.pathname === '/'}
+			transparent={page.url.pathname !== '/'}
 			wide
 			nm
 			to="/"
@@ -31,8 +31,8 @@
 			Home
 		</Button>
 		<Button
-			accentLight={$page.url.pathname === '/notifications'}
-			transparent={$page.url.pathname !== '/notifications'}
+			accentLight={page.url.pathname === '/notifications'}
+			transparent={page.url.pathname !== '/notifications'}
 			wide
 			nm
 			to="/notifications"
@@ -41,8 +41,8 @@
 			Notifications
 		</Button>
 		<Button
-			accentLight={$page.url.pathname === '/follow-requests'}
-			transparent={$page.url.pathname !== '/follow-requests'}
+			accentLight={page.url.pathname === '/follow-requests'}
+			transparent={page.url.pathname !== '/follow-requests'}
 			wide
 			nm
 			to="/follow-requests"
@@ -52,8 +52,8 @@
 		</Button>
 		<hr />
 		<Button
-			accentLight={$page.url.pathname === '/search'}
-			transparent={$page.url.pathname !== '/search'}
+			accentLight={page.url.pathname === '/search'}
+			transparent={page.url.pathname !== '/search'}
 			wide
 			nm
 			to="/search"
@@ -62,8 +62,8 @@
 			Search
 		</Button>
 		<Button
-			accentLight={$page.url.pathname === '/explore'}
-			transparent={$page.url.pathname !== '/explore'}
+			accentLight={page.url.pathname === '/explore'}
+			transparent={page.url.pathname !== '/explore'}
 			wide
 			nm
 			to="/explore"
@@ -73,8 +73,8 @@
 		</Button>
 		<hr />
 		<Button
-			accentLight={$page.url.pathname === '/drive'}
-			transparent={$page.url.pathname !== '/drive'}
+			accentLight={page.url.pathname === '/drive'}
+			transparent={page.url.pathname !== '/drive'}
 			wide
 			nm
 			to="/drive"
@@ -83,8 +83,8 @@
 			Drive
 		</Button>
 		<Button
-			accentLight={$page.url.pathname === '/bookmarks'}
-			transparent={$page.url.pathname !== '/bookmarks'}
+			accentLight={page.url.pathname === '/bookmarks'}
+			transparent={page.url.pathname !== '/bookmarks'}
 			wide
 			nm
 			to="/drive"
@@ -94,8 +94,8 @@
 		</Button>
 		<hr />
 		<Button
-			accentLight={$page.url.pathname.startsWith('/settings')}
-			transparent={!$page.url.pathname.startsWith('/settings')}
+			accentLight={page.url.pathname.startsWith('/settings')}
+			transparent={!page.url.pathname.startsWith('/settings')}
 			wide
 			nm
 			to="/settings"
@@ -104,8 +104,8 @@
 			Settings
 		</Button>
 		<Button
-			accentLight={$page.url.pathname.startsWith('/admin')}
-			transparent={!$page.url.pathname.startsWith('/admin')}
+			accentLight={page.url.pathname.startsWith('/admin')}
+			transparent={!page.url.pathname.startsWith('/admin')}
 			wide
 			nm
 			to="/admin"
@@ -118,8 +118,8 @@
 	<div class="navBtns thin">
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/'}
-			transparent={$page.url.pathname !== '/'}
+			accentLight={page.url.pathname === '/'}
+			transparent={page.url.pathname !== '/'}
 			nm
 			to="/"
 		>
@@ -127,8 +127,8 @@
 		</Button>
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/notifications'}
-			transparent={$page.url.pathname !== '/notifications'}
+			accentLight={page.url.pathname === '/notifications'}
+			transparent={page.url.pathname !== '/notifications'}
 			nm
 			to="/notifications"
 		>
@@ -136,8 +136,8 @@
 		</Button>
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/follow-requests'}
-			transparent={$page.url.pathname !== '/follow-requests'}
+			accentLight={page.url.pathname === '/follow-requests'}
+			transparent={page.url.pathname !== '/follow-requests'}
 			nm
 			to="/follow-requests"
 		>
@@ -146,8 +146,8 @@
 		<hr />
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/search'}
-			transparent={$page.url.pathname !== '/search'}
+			accentLight={page.url.pathname === '/search'}
+			transparent={page.url.pathname !== '/search'}
 			nm
 			to="/search"
 		>
@@ -155,8 +155,8 @@
 		</Button>
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/explore'}
-			transparent={$page.url.pathname !== '/explore'}
+			accentLight={page.url.pathname === '/explore'}
+			transparent={page.url.pathname !== '/explore'}
 			nm
 			to="/explore"
 		>
@@ -165,8 +165,8 @@
 		<hr />
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/drive'}
-			transparent={$page.url.pathname !== '/drive'}
+			accentLight={page.url.pathname === '/drive'}
+			transparent={page.url.pathname !== '/drive'}
 			nm
 			to="/drive"
 		>
@@ -174,8 +174,8 @@
 		</Button>
 		<Button
 			circle
-			accentLight={$page.url.pathname === '/bookmarks'}
-			transparent={$page.url.pathname !== '/bookmarks'}
+			accentLight={page.url.pathname === '/bookmarks'}
+			transparent={page.url.pathname !== '/bookmarks'}
 			nm
 			to="/drive"
 		>
@@ -184,8 +184,8 @@
 		<hr />
 		<Button
 			circle
-			accentLight={$page.url.pathname.startsWith('/settings')}
-			transparent={!$page.url.pathname.startsWith('/settings')}
+			accentLight={page.url.pathname.startsWith('/settings')}
+			transparent={!page.url.pathname.startsWith('/settings')}
 			nm
 			to="/settings"
 		>
@@ -193,8 +193,8 @@
 		</Button>
 		<Button
 			circle
-			accentLight={$page.url.pathname.startsWith('/admin')}
-			transparent={!$page.url.pathname.startsWith('/admin')}
+			accentLight={page.url.pathname.startsWith('/admin')}
+			transparent={!page.url.pathname.startsWith('/admin')}
 			nm
 			to="/admin"
 		>

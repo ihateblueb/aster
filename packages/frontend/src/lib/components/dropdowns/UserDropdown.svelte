@@ -13,10 +13,10 @@
 	import Toggle from '../Toggle.svelte';
 	import Input from '../Input.svelte';
 
-	let blockModal: Modal;
+	let reportModal: undefined | Modal = $state();
+	let blockModal: undefined | Modal = $state();
 
-	export let bind: Dropdown;
-	export let user;
+	let { user, bind = $bindable() } = $props();
 </script>
 
 <Dropdown bind:this={bind}>
@@ -29,17 +29,17 @@
 		View on remote
 	</DropdownItem>
 	<DropdownDivider />
-	<DropdownItem>
+	<DropdownItem on:click={() => reportModal?.open()}>
 		<IconFlag size="var(--fs-lg)" />
 		Report
 	</DropdownItem>
-	<DropdownItem on:click={() => blockModal.open()}>
+	<DropdownItem on:click={() => blockModal?.open()}>
 		<IconBan size="var(--fs-lg)" />
 		Block
 	</DropdownItem>
 </Dropdown>
 
-<Modal bind:this={blockModal}>
+<Modal bind:this={reportModal}>
 	<svelte:fragment slot="text">
 		<h2>Report on {user.displayName ?? user.username ?? 'this user'}</h2>
 	</svelte:fragment>
@@ -48,7 +48,7 @@
 		<Toggle label="Forward report to remote instance" />
 		<div>
 			<Button accent>Submit</Button>
-			<Button on:click={() => blockModal.close()}>Cancel</Button>
+			<Button on:click={() => reportModal?.close()}>Cancel</Button>
 		</div>
 	</svelte:fragment>
 </Modal>
@@ -63,6 +63,6 @@
 	</svelte:fragment>
 	<svelte:fragment slot="buttons">
 		<Button danger>Block</Button>
-		<Button on:click={() => blockModal.close()}>Cancel</Button>
+		<Button on:click={() => blockModal?.close()}>Cancel</Button>
 	</svelte:fragment>
 </Modal>

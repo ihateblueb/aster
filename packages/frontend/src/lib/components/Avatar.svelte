@@ -1,8 +1,5 @@
 <script>
-	export let user;
-	export let size = '45px';
-	export let small = false;
-	export let large = false;
+	let { user, size = '45px', small = false, large = false } = $props();
 </script>
 
 <a href={'/@' + user.username + (user.local ? '' : '@' + user.host)}>

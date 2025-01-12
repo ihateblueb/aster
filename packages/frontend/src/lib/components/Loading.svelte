@@ -1,9 +1,7 @@
 <script>
 	import { IconLoader2 } from '@tabler/icons-svelte';
 
-	export let size = '38px';
-	export let color = 'var(--tx1)';
-	export let massive = true;
+	let { size = '38px', color = 'var(--tx1)', massive = true } = $props();
 </script>
 
 <div

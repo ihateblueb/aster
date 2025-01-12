@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import Button from '$lib/components/Button.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import UserCard from '$lib/components/UserCard.svelte';
@@ -24,7 +24,7 @@
 <div class="welcome">
 	<div class="first">
 		{#if $meta.data}
-			<h1>{$meta.data.name ?? $page.url.host}</h1>
+			<h1>{$meta.data.name ?? page.url.host}</h1>
 		{/if}
 
 		<div class="bio">

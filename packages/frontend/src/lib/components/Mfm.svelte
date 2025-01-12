@@ -1,21 +1,19 @@
-<script>
+<script lang="ts">
 	import * as mfm from 'mfm-js';
 
-	export let content;
-	export let simple;
-	export let emojis;
+	let { content, simple = false, emojis = undefined } = $props();
 
 	let mfmTree;
 
-	function renderEachChild(objChild, scale) {
+	function renderEachChild(objChild: any, scale: number) {
 		let collectedChildren = '';
-		objChild.forEach((child) => {
+		for (const child of objChild) {
 			collectedChildren = collectedChildren + render(child, scale);
-		});
+		}
 		return collectedChildren;
 	}
 
-	function render(object, scale) {
+	function render(object: any, scale?: number) {
 		if (!scale) {
 			scale = 1;
 		}
@@ -42,7 +40,7 @@
 		} else if (object.type === 'emojiCode') {
 			if (emojis && emojis.length > 0) {
 				let foundEmoji = emojis.find(
-					(e) => e.shortcode === object.props.name
+					(e: any) => e.shortcode === object.props.name
 				);
 				if (foundEmoji) {
 					return `<img class="mfm-customEmoji" src="${foundEmoji.url}" title=":${foundEmoji.shortcode}:" />`;

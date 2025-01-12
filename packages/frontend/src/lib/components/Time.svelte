@@ -1,7 +1,7 @@
 <script>
-	export let time;
+	let { time } = $props();
 
-	let timer = 0;
+	let timer = $state(0);
 
 	function timeAgo(time) {
 		// TODO: rewrite this. it sucks. its stolen from masto-aster
@@ -49,9 +49,7 @@
 </script>
 
 <time class="time" title={new Date(time).toLocaleString()}>
-	{#key timer}
-		<span>{timeAgo(time)}</span>
-	{/key}
+	<span>{timeAgo(time)}</span>
 </time>
 
 <style lang="scss" scoped>

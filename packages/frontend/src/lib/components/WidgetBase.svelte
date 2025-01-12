@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let transparent = false;
+	let { transparent = false } = $props();
 </script>
 
 <div class={'widget' + (transparent ? ' transparent' : '')}>

@@ -2,10 +2,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import { IconReload } from '@tabler/icons-svelte';
 
-	export let status: number = 0;
-	export let message: string = '';
-	export let server: boolean = false;
-	export let retry;
+	let { status = 0, message = '', server = false, retry } = $props();
 </script>
 
 <div class="error">

@@ -11,18 +11,18 @@
 
 	import { scale } from 'svelte/transition';
 
-	export let width = '200px';
+	let { width = '200px' } = $props();
 
-	let dialog: HTMLDialogElement;
-	let target: EventTarget;
+	let dialog: undefined | HTMLDialogElement = $state();
+	let target: undefined | EventTarget = $state();
 
-	let top: Number;
-	let left: Number;
+	let top: Number = $state(0);
+	let left: Number = $state(0);
 
-	let maxWidth: Number;
-	let maxHeight: Number;
+	let maxWidth: Number = $state(0);
+	let maxHeight: Number = $state(0);
 
-	let show = false;
+	let show = $state(false);
 
 	export async function open(e: MouseEvent) {
 		if (!show && e.target) {
@@ -34,7 +34,7 @@
 			updatePosition();
 
 			tick().then(() => {
-				dialog.showModal();
+				if (dialog) dialog.showModal();
 			});
 		}
 	}
@@ -61,7 +61,7 @@
 	}
 
 	export function close() {
-		dialog.close();
+		if (dialog) dialog.close();
 	}
 </script>
 

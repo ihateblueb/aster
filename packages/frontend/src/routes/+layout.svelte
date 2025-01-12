@@ -3,7 +3,7 @@
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
 	import queryClient from '$lib/queryclient';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 	import localstore from '$lib/localstore';
 	import store from '$lib/store';
 	import Modal from '$lib/components/Modal.svelte';
@@ -43,8 +43,8 @@
 
 	if (loggedIn) {
 		let ws = new WebSocket(
-			($page.url.protocol === 'https:' ? 'wss://' : 'ws://') +
-				$page.url.host +
+			(page.url.protocol === 'https:' ? 'wss://' : 'ws://') +
+				page.url.host +
 				'/api/streaming?token=' +
 				localstore.get('token')
 		);
@@ -115,11 +115,11 @@
 		<PageSidebar left />
 	{/if}
 
-	{#if loggedIn || !($page.url.pathname === '/')}
+	{#if loggedIn || !(page.url.pathname === '/')}
 		<main>
 			<slot />
 		</main>
-	{:else if !loggedIn && $page.url.pathname === '/'}
+	{:else if !loggedIn && page.url.pathname === '/'}
 		<Welcome />
 	{/if}
 

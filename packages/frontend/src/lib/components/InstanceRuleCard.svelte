@@ -5,21 +5,16 @@
 	import Button from '$lib/components/Button.svelte';
 	import updateAdminFederationRules from '$lib/api/admin/federation/rules/update';
 
-	export let instanceRule;
-	let newInstanceRule;
+	let { instanceRule } = $props();
 
-	let editing = false;
-	let deleted = false;
-
-	newInstanceRule = instanceRule;
+	let editing = $state(false);
+	let deleted = $state(false);
 
 	function toggleEdit() {
 		if (editing) {
-			newInstanceRule = instanceRule;
 			editing = false;
-			updateAdminFederationRules([newInstanceRule]);
+			updateAdminFederationRules([instanceRule]);
 		} else {
-			newInstanceRule = instanceRule;
 			editing = true;
 		}
 	}

@@ -1,26 +1,21 @@
 <script lang="ts">
 	import * as uuid from 'uuid';
 
-	export let value = '';
-	export let placeholder = '';
-	export let label = '';
-	export let type = '';
-
-	export let big: boolean = false;
-	export let nm: boolean = false;
-	export let wide: boolean = false;
-	export let required: boolean = false;
+	let {
+		value = $bindable(),
+		placeholder = $bindable(),
+		label = $bindable(),
+		type = $bindable(),
+		big = false,
+		nm = false,
+		wide = false,
+		required = false
+	} = $props();
 
 	const id = uuid.v4();
 
-	function calculateClass() {
-		return (
-			'ipt' +
-			(big ? ' big' : '') +
-			(nm ? ' nm' : '') +
-			(wide ? ' wide' : '')
-		);
-	}
+	let iptClass =
+		'ipt' + (big ? ' big' : '') + (nm ? ' nm' : '') + (wide ? ' wide' : '');
 </script>
 
 <span>
@@ -28,12 +23,7 @@
 		<label for={id} class="lbl">{label}</label>
 	{/if}
 	{#if big}
-		<textarea
-			{id}
-			{placeholder}
-			{required}
-			class={calculateClass()}
-			bind:value
+		<textarea {id} {placeholder} {required} class={iptClass} bind:value
 		></textarea>
 	{:else}
 		<input
@@ -41,7 +31,7 @@
 			{id}
 			{placeholder}
 			{required}
-			class={calculateClass()}
+			class={iptClass}
 			bind:value
 		/>
 	{/if}

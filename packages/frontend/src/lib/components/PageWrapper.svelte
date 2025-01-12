@@ -1,7 +1,5 @@
 <script lang="ts">
-	export let nm: Boolean = false;
-	export let tl: Boolean = false;
-	export let centered: Boolean = false;
+	let { nm = false, tl = false, centered = false } = $props();
 </script>
 
 <div
@@ -10,7 +8,7 @@
 		(tl ? ' tl' : '') +
 		(centered ? ' centered' : '')}
 >
-	<slot />
+	<slot></slot>
 </div>
 
 <style lang="scss" scoped>

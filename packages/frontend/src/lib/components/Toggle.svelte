@@ -1,8 +1,7 @@
 <script lang="ts">
 	import * as uuid from 'uuid';
 
-	export let checked = false;
-	export let label = '';
+	let { label = '', checked = $bindable(false) } = $props();
 
 	const id = uuid.v4();
 </script>
