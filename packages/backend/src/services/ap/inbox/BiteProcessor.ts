@@ -1,3 +1,4 @@
+import NoteService from '../../NoteService.js';
 import NotificationService from '../../NotificationService.js';
 import UserService from '../../UserService.js';
 import ApActorService from '../ApActorService.js';
@@ -10,13 +11,17 @@ class BiteProcessor {
 		if (!actor) throw new Error('Actor not found');
 
 		const user = await UserService.get({ apId: body.target });
-		if (!user) return false;
+		const note = await NoteService.get({ apId: body.target });
+		if (!user && !note) return false;
 
-		return await NotificationService.create(user.id, actor.id, 'bite').then(
-			() => {
-				return true;
-			}
-		);
+		return await NotificationService.create(
+			user ? user.id : note.user.id,
+			actor.id,
+			'bite',
+			note ? note.id : undefined
+		).then(() => {
+			return true;
+		});
 	}
 }
 

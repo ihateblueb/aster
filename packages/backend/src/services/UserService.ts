@@ -5,11 +5,14 @@ import { ObjectLiteral } from 'typeorm';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
+import ApBiteRenderer from './ap/ApBiteRenderer.js';
 import ApBlockRenderer from './ap/ApBlockRenderer.js';
+import ApDeliverService from './ap/ApDeliverService.js';
 import ApFollowRenderer from './ap/ApFollowRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
+import NotificationService from './NotificationService.js';
 import QueueService from './QueueService.js';
 import RelationshipService from './RelationshipService.js';
 
@@ -239,6 +242,51 @@ class UserService {
 						message: 'Internal server error'
 					};
 				});
+		}
+	}
+
+	public async bite(user: GenericId, as: GenericId) {
+		const to = await this.get({ id: user });
+		const from = await this.get({ id: as });
+
+		if (!to || !from) {
+			return {
+				status: 404,
+				message: 'User not found'
+			};
+		}
+
+		if (to.id === from.id) {
+			return {
+				status: 400,
+				message: "You can't bite yourself"
+			};
+		}
+
+		if (to.local) {
+			return await NotificationService.create(
+				to.id,
+				from.id,
+				'bite'
+			).then(() => {
+				return {
+					status: 200,
+					message: 'Bit user'
+				};
+			});
+		} else {
+			let activity = ApBiteRenderer.render(from.id, to.apId);
+
+			await QueueService.deliver.add(IdService.generate(), {
+				body: activity,
+				inbox: to.inbox,
+				as: from.id
+			});
+
+			return {
+				status: 200,
+				message: 'Bit user'
+			};
 		}
 	}
 

@@ -59,8 +59,10 @@
 		{@render name(notification?.from)} accepted your follow request
 	{:else if notification.type === 'follow'}
 		{@render name(notification?.from)} followed you
-	{:else if notification.type === 'bite'}
+	{:else if notification.type === 'bite' && !notification.note}
 		{@render name(notification?.from)} bit you
+	{:else if notification.type === 'bite' && notification.note}
+		{@render name(notification?.from)} bit your note
 	{/if}
 {/snippet}
 

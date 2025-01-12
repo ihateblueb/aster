@@ -58,6 +58,8 @@ Activities Sent:
     - Follow
 - Announce
 	- Note
+- Bite
+  - User
 - Block
 - Create
     - Note
@@ -81,6 +83,7 @@ Activities Processed:
     - Note
 - Bite
   - User
+  - Note
 - Block
 - Create
     - Note

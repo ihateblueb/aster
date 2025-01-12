@@ -34,6 +34,8 @@ export default [
 		// firefish
 		firefish: 'https://joinfirefish.org/ns#',
 		speakAsCat: 'firefish:speakAsCat',
+		// bite
+		Bite: 'https://ns.mia.jetzt/as#Bite',
 		// aster
 		aster: 'https://blueb.pages.gay/ns#',
 		visibility: 'aster:visibility'
