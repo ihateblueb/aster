@@ -27,6 +27,13 @@ class AcceptProcessor {
 				}
 			);
 
+			const relationship = await RelationshipService.get({
+				to: { id: to.id },
+				from: { id: from.id }
+			});
+
+			if (!relationship) return false;
+
 			return await RelationshipService.update(
 				{
 					to: { id: to.id },
@@ -43,12 +50,7 @@ class AcceptProcessor {
 						'acceptedFollow',
 						undefined,
 						undefined,
-						(
-							await RelationshipService.get({
-								to: { id: to.id },
-								from: { id: from.id }
-							})
-						).id
+						relationship ? relationship.id : undefined
 					);
 
 					return true;

@@ -1,3 +1,5 @@
+import { ObjectLiteral } from 'typeorm';
+
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import ApAcceptRenderer from './ap/ApAcceptRenderer.js';
@@ -33,16 +35,8 @@ class RelationshipService {
 			.getMany();
 	}
 
-	public async update(where: where, update: object) {
-		return db
-			.getRepository('relationship')
-			.createQueryBuilder('relationship')
-
-			.leftJoinAndSelect('relationship.to', 'to')
-			.leftJoinAndSelect('relationship.from', 'from')
-
-			.where(where)
-			.update(update);
+	public async update(where: where, entity: Partial<ObjectLiteral>) {
+		return await db.getRepository('relationship').update(where, entity);
 	}
 
 	public async delete(where: where) {
