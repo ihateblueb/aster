@@ -21,9 +21,12 @@
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Dropdown from './Dropdown.svelte';
 	import DropdownItem from './DropdownItem.svelte';
+	import playSound from '$lib/sounds.js';
 
-	let addDropdown: Dropdown;
-	let visibilityDropdown: Dropdown;
+	let addDropdown: undefined | Dropdown = $state();
+	let visibilityDropdown: undefined | Dropdown = $state();
+
+	// self state
 
 	let self: any = $state({});
 	function updateSelf() {
@@ -34,6 +37,8 @@
 	}
 	updateSelf();
 
+	// note state
+
 	let note = $state({
 		cw: '',
 		content: '',
@@ -42,54 +47,73 @@
 		replyingTo: ''
 	});
 
-	note.visibility = localstore.get('defaultVisibility');
+	function resetVisibility() {
+		note.visibility = localstore.get('defaultVisibility');
+	}
+
+	function resetNote() {
+		[note.cw, note.content, note.repeat, note.replyingTo] = '';
+		resetVisibility();
+	}
+
+	function setVisibility(visibility: string) {
+		note.visibility = visibility;
+	}
+
+	// actual post
 
 	async function post() {
 		if (note.content.length >= 1) {
 			await createNote(note).then(() => {
-				[note.cw, note.content, note.repeat, note.replyingTo] = '';
-				note.visibility = localstore.get('defaultVisibility');
+				playSound('newNote');
+				resetNote();
 			});
 		}
 	}
 
-	let replyingToNote: any = $state({});
+	// other notes
+
+	let replyingToNote: any = $state();
 
 	store.draft_replyingTo.subscribe(async (e) => {
 		note.replyingTo = e;
 
 		if (e.length > 0) {
 			let grabbedNote = await getNote(e);
-			if (grabbedNote) replyingToNote = grabbedNote;
+			if (grabbedNote) {
+				replyingToNote = grabbedNote;
+				note.visibility = grabbedNote.visibility;
+			}
 
-			if (note.content.length >= 0)
-				note.content += `@${grabbedNote.user.username}${grabbedNote.user.local ? '' : '@' + grabbedNote.user.host} `;
+			if (note.content.length <= 0)
+				note.content = `@${grabbedNote.user.username}${grabbedNote.user.local ? '' : '@' + grabbedNote.user.host} `;
 		}
 	});
 
 	function clearReply() {
 		store.draft_replyingTo.set('');
 		replyingToNote = undefined;
+		resetVisibility();
 	}
 
-	let quotingNote: any = $state({});
+	let quotingNote: any = $state();
 
 	store.draft_repeat.subscribe(async (e) => {
 		note.repeat = e;
 
 		if (e.length > 0) {
 			let grabbedNote = await getNote(e);
-			if (grabbedNote) quotingNote = grabbedNote;
+			if (grabbedNote) {
+				quotingNote = grabbedNote;
+				note.visibility = grabbedNote.visibility;
+			}
 		}
 	});
 
 	function clearQuote() {
 		store.draft_repeat.set('');
 		quotingNote = undefined;
-	}
-
-	function setVisibility(visibility: string) {
-		note.visibility = visibility;
+		resetVisibility();
 	}
 </script>
 

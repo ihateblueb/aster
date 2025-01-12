@@ -12,11 +12,12 @@ class AcceptProcessor {
 			if (!body.object.actor || !body.object.object) return false;
 
 			const to = await ApActorService.get(body.actor);
-			const from = await UserService.get({ apId: body.object.actor });
-
 			if (!to) throw new Error('Actor not found');
 
-			await RelationshipService.update(
+			const from = await UserService.get({ apId: body.object.actor });
+			if (!from) return false;
+
+			console.log(
 				{
 					to: { id: to.id },
 					from: { id: from.id }
@@ -24,25 +25,38 @@ class AcceptProcessor {
 				{
 					pending: false
 				}
-			).catch((err) => {
-				console.log(err);
-			});
+			);
 
-			return await NotificationService.create(
-				from.id,
-				to.id,
-				'acceptedFollow',
-				undefined,
-				undefined,
-				(
-					await RelationshipService.get({
-						to: { id: to.id },
-						from: { id: from.id }
-					})
-				).id
-			).then(() => {
-				return true;
-			});
+			return await RelationshipService.update(
+				{
+					to: { id: to.id },
+					from: { id: from.id }
+				},
+				{
+					pending: false
+				}
+			)
+				.then(async () => {
+					await NotificationService.create(
+						from.id,
+						to.id,
+						'acceptedFollow',
+						undefined,
+						undefined,
+						(
+							await RelationshipService.get({
+								to: { id: to.id },
+								from: { id: from.id }
+							})
+						).id
+					);
+
+					return true;
+				})
+				.catch((err) => {
+					console.log(err);
+					return false;
+				});
 		}
 	}
 }

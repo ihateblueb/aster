@@ -79,6 +79,8 @@ Activities Processed:
     - Follow
 - Announce
     - Note
+- Bite
+  - User
 - Block
 - Create
     - Note

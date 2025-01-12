@@ -24,4 +24,5 @@ type NotificationType =
 	| 'follow'
 	| 'acceptedFollow'
 	| 'brokenFollow'
-	| 'report';
+	| 'report'
+	| 'bite';

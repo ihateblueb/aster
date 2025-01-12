@@ -5,17 +5,18 @@
 	import Input from '../Input.svelte';
 	import Button from '../Button.svelte';
 
-	let ckey: String;
-	let cval: String;
+	let ckey: undefined | String = $state();
+	let cval: undefined | String = $state();
 
 	function setCookie() {
 		document.cookie = ckey + '=' + cval + ';';
 	}
 
-	let sActiveRequests: Number;
-	let sAppReload: Boolean;
-	let sViewRefresh: Boolean;
-	let sSelfRefresh: Boolean;
+	let sActiveRequests: undefined | Number = $state();
+	let sAppReload: undefined | Boolean = $state();
+	let sViewRefresh: undefined | Boolean = $state();
+	let sSelfRefresh: undefined | Boolean = $state();
+	let ws: undefined | WebSocket = $state();
 
 	Store.activeRequests.subscribe((e) => {
 		sActiveRequests = e;
@@ -29,6 +30,20 @@
 	Store.selfRefresh.subscribe((e) => {
 		sSelfRefresh = e;
 	});
+	Store.websocket.subscribe((e) => {
+		if (e) ws = e;
+	});
+
+	function wsStateToString() {
+		if (ws) {
+			if (ws.readyState === ws.CONNECTING) return 'connecting';
+			if (ws.readyState === ws.OPEN) return 'open';
+			if (ws.readyState === ws.CLOSED) return 'closed';
+			if (ws.readyState === ws.CLOSING) return 'closing';
+		}
+
+		return 'unknown';
+	}
 </script>
 
 <WidgetBase>
@@ -37,8 +52,11 @@
 	<Input bind:value={ckey} wide placeholder="key" />
 	<Input bind:value={cval} wide placeholder="val" />
 	<Button on:click={() => setCookie()}>set</Button>
-	<br /><br />
-	<b>stores</b>
+	<br />
+	<p>
+		websocket {wsStateToString()}
+	</p>
+	<br />
 	<p>
 		activeRequests: {sActiveRequests}
 		<button on:click={() => Store.activeRequests.set(sActiveRequests + 1)}

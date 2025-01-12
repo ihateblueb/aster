@@ -2,6 +2,7 @@ import logger from '../../utils/logger.js';
 import AcceptProcessor from './inbox/AcceptProcessor.js';
 import AddProcessor from './inbox/AddProcessor.js';
 import AnnounceProcessor from './inbox/AnnounceProcessor.js';
+import BiteProcessor from './inbox/BiteProcessor.js';
 import BlockProcessor from './inbox/BlockProcessor.js';
 import CreateProcessor from './inbox/CreateProcessor.js';
 import DeleteProcessor from './inbox/DeleteProcessor.js';
@@ -19,6 +20,7 @@ class ApInboxService {
 		if (body.type === 'Add') return await AddProcessor.process(body);
 		if (body.type === 'Announce')
 			return await AnnounceProcessor.process(body);
+		if (body.type === 'Bite') return await BiteProcessor.process(body);
 		if (body.type === 'Block') return await BlockProcessor.process(body);
 		if (body.type === 'Create') return await CreateProcessor.process(body);
 		if (body.type === 'Delete') return await DeleteProcessor.process(body);

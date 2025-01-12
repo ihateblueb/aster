@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
 		IconBug,
+		IconDental,
 		IconRepeat,
 		IconStar,
 		IconUserPlus
@@ -33,6 +34,8 @@
 		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
 	{:else if notification.type === 'follow'}
 		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
+	{:else if notification.type === 'bite'}
+		<IconDental size="var(--fs-lg)" color="var(--ac1)" />
 	{/if}
 {/snippet}
 
@@ -56,6 +59,8 @@
 		{@render name(notification?.from)} accepted your follow request
 	{:else if notification.type === 'follow'}
 		{@render name(notification?.from)} followed you
+	{:else if notification.type === 'bite'}
+		{@render name(notification?.from)} bit you
 	{/if}
 {/snippet}
 

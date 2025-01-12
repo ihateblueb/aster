@@ -22,15 +22,12 @@
 
 	let timeline: string = $state('home');
 
-	let ws: WebSocket;
+	let ws: undefined | WebSocket = $state();
 	store.websocket.subscribe((e) => {
 		if (e) ws = e;
 	});
 
-	let localstoreTimeline = localstore.get('homeTab');
-	if (localstoreTimeline) {
-		timeline = localstoreTimeline;
-	}
+	timeline = localstore.get('homeTab');
 
 	const query = createInfiniteQuery({
 		queryKey: ['timeline'],
@@ -51,10 +48,11 @@
 		}
 	});
 
-	let additionalNotes = $state([]);
+	let additionalNotes: any[] = $state([]);
 
-	if (ws) ws.send(`sub timeline:${timeline}`);
-	if (ws)
+	if (ws) {
+		ws.send(`sub timeline:${timeline}`);
+
 		ws.onmessage = (e) => {
 			let message;
 			try {
@@ -71,6 +69,7 @@
 				additionalNotes.unshift(message.note);
 			}
 		};
+	}
 
 	function updateTimeline(to: string) {
 		if (ws) ws.send(`unsub timeline:${timeline}`);

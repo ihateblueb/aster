@@ -13,8 +13,10 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
+
 			.where(where)
 			.getOne();
 	}
@@ -23,8 +25,10 @@ class RelationshipService {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
+
 			.where(where)
 			.getMany();
 	}
@@ -33,8 +37,10 @@ class RelationshipService {
 		return db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
+
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
+
 			.where(where)
 			.update(update);
 	}
