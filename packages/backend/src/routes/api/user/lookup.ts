@@ -33,10 +33,14 @@ router.get(
 
 		const splitHandle = req.params.handle.split('@');
 
-		const user = await UserService.get({
-			username: splitHandle[1],
-			host: splitHandle[2]
-		});
+		let where = {
+			username: splitHandle[1]
+		};
+
+		if (splitHandle[2]) where['host'] = splitHandle[2];
+		if (!splitHandle[2]) where['local'] = true;
+
+		const user = await UserService.get(where);
 
 		if (user) {
 			if (user.suspended)
