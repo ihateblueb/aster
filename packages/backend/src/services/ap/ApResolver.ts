@@ -4,6 +4,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import logger from '../../utils/logger.js';
+import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import ConfigService from '../ConfigService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import UserService from '../UserService.js';
@@ -11,7 +12,13 @@ import ValidationService from '../ValidationService.js';
 
 class ApResolver {
 	public async resolveSigned(apId: ApId, as?: GenericId) {
-		if (!(await ModeratedInstanceService.allowFetch(new URL(apId).host))) {
+		if (!ValidationService.validUrl(apId)) return;
+
+		if (
+			!(await ModeratedInstanceService.allowFetch(
+				reduceSubdomain(new URL(apId).host)
+			))
+		) {
 			logger.info('resolver', 'blocked fetch of ');
 			return false;
 		}
@@ -20,8 +27,6 @@ class ApResolver {
 			as ? { id: as } : { username: 'instanceactor' }
 		);
 		if (!actor || !actorPrivate) throw Error("couldn't get actor");
-
-		if (!ValidationService.validUrl(apId)) return;
 
 		const url = new URL(apId);
 		const sendDate = new Date(Date.now()).toUTCString();
@@ -62,6 +67,15 @@ class ApResolver {
 
 	public async resolve(apId: ApId): Promise<object | boolean> {
 		if (!ValidationService.validUrl(apId)) return;
+
+		if (
+			!(await ModeratedInstanceService.allowFetch(
+				reduceSubdomain(new URL(apId).host)
+			))
+		) {
+			logger.info('resolver', 'blocked fetch of ');
+			return false;
+		}
 
 		const request = await fetch(apId, {
 			method: 'GET',
