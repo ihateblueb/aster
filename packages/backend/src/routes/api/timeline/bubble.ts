@@ -27,10 +27,6 @@ router.get(
 			{
 				name: 'reverse',
 				in: 'reverse'
-			},
-			{
-				name: 'local',
-				in: 'local'
 			}
 		],
 		responses: {

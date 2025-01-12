@@ -37,24 +37,15 @@ router.get(
 			id: req.params.id
 		});
 
-		if (note) {
-			if (!note.user) {
-				return res.status(404).json({
-					message: locale.note.authorNotFound
-				});
-			} else {
-				const auth = await AuthService.verify(
-					req.headers.authorization
-				);
+		if ((note && !note.user) || !note)
+			return res.status(404).json({
+				message: locale.note.notFound
+			});
 
-				if (await VisibilityService.canISee(note, auth.user?.id)) {
-					return res.status(200).json(note);
-				} else {
-					return res.status(404).json({
-						message: locale.note.notFound
-					});
-				}
-			}
+		const auth = await AuthService.verify(req.headers.authorization);
+
+		if (await VisibilityService.canISee(note, auth.user?.id)) {
+			return res.status(200).json(note);
 		} else {
 			return res.status(404).json({
 				message: locale.note.notFound

@@ -333,7 +333,7 @@
 			mfmTree = mfm.parse(content);
 		}
 
-		console.log('[Mfm Tree]', mfmTree);
+		console.debug('[Mfm Tree]', mfmTree);
 
 		let rendered = '';
 
@@ -341,7 +341,7 @@
 			if (node) rendered += render(node);
 		}
 
-		console.log('[Mfm Render]', rendered);
+		console.debug('[Mfm Render]', rendered);
 		return rendered;
 	}
 </script>

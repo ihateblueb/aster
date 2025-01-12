@@ -1,0 +1,131 @@
+<script lang="ts">
+	import localstore from '$lib/localstore.js';
+	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import getNotifications from '$lib/api/notifications/get.js';
+	import queryclient from '$lib/queryclient.js';
+	import Error from '$lib/components/Error.svelte';
+	import PageWrapper from '$lib/components/PageWrapper.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Loading from '$lib/components/Loading.svelte';
+	import Notification from '$lib/components/Notification.svelte';
+	import Note from '$lib/components/Note.svelte';
+	import store from '$lib/store.js';
+
+	import {
+		blur,
+		crossfade,
+		draw,
+		fade,
+		fly,
+		scale,
+		slide
+	} from 'svelte/transition';
+
+	import {
+		backIn,
+		backInOut,
+		backOut,
+		bounceIn,
+		bounceInOut,
+		bounceOut,
+		circIn,
+		circInOut,
+		circOut,
+		cubicIn,
+		cubicInOut,
+		cubicOut,
+		elasticIn,
+		elasticInOut,
+		elasticOut,
+		expoIn,
+		expoInOut,
+		expoOut,
+		linear,
+		quadIn,
+		quadInOut,
+		quadOut,
+		quartIn,
+		quartInOut,
+		quartOut,
+		quintIn,
+		quintInOut,
+		quintOut,
+		sineIn,
+		sineInOut,
+		sineOut
+	} from 'svelte/easing';
+
+	export let type;
+	export let queryKey;
+	export let queryFn;
+
+	export let query;
+
+	export let timeline: string;
+
+	query = createInfiniteQuery({
+		queryKey: [queryKey],
+		retry: false,
+		queryFn: async ({ pageParam }) => await queryFn(timeline, pageParam),
+		initialPageParam: undefined,
+		getNextPageParam: (lastPage) => {
+			console.log(
+				'[' + queryKey + '] lastTlObj',
+				lastPage.at(-1).createdAt
+			);
+			return lastPage ? lastPage.at(-1).createdAt : undefined;
+		}
+	});
+</script>
+
+{#if $query.isLoading}
+	<Loading />
+{:else if $query.isRefetching}
+	<Loading />
+{:else if $query.isError}
+	<Error
+		status={$query.error.status}
+		message={$query.error.message}
+		server={Boolean($query.error.status)}
+		retry={() => $query.refetch()}
+	/>
+{:else if $query.isSuccess}
+	{#each $query.data.pages as results}
+		{#each results as object}
+			<div
+				transition:fly|global={{
+					y: -15,
+					duration: 350,
+					easing: backOut
+				}}
+			>
+				{#if type === 'note'}
+					<Note note={object} />
+				{:else if type === 'notification'}
+					<Notification notification={object} />
+				{/if}
+			</div>
+		{/each}
+	{/each}
+
+	<div class="fetchMore">
+		<Button centered on:click={() => $query.fetchNextPage()}>
+			{#if $query.isFetching}
+				<Loading size="var(--fs-lg)" />
+			{:else if $query.hasNextPage}
+				Load More
+			{:else}
+				No more
+			{/if}
+		</Button>
+	</div>
+{/if}
+
+<style lang="scss">
+	.fetchMore {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 8px;
+	}
+</style>

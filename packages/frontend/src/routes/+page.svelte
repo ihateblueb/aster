@@ -19,33 +19,16 @@
 	import queryclient from '$lib/queryclient';
 	import store from '$lib/store';
 	import { getContext } from 'svelte';
+	import Timeline from '$lib/components/Timeline.svelte';
+
+	let query: any = $state();
 
 	let timeline: string = $state('home');
+	timeline = localstore.get('homeTab');
 
 	let ws: undefined | WebSocket = $state();
 	store.websocket.subscribe((e) => {
 		if (e) ws = e;
-	});
-
-	timeline = localstore.get('homeTab');
-
-	const query = createInfiniteQuery({
-		queryKey: ['timeline'],
-		retry: false,
-		queryFn: async ({ pageParam }) =>
-			await getTimeline($state.snapshot(timeline), pageParam),
-		initialPageParam: undefined,
-		getNextPageParam: (lastPage) => {
-			console.log('lastNote', lastPage.at(-1).createdAt);
-			return lastPage ? lastPage.at(-1).createdAt : undefined;
-		}
-	});
-
-	store.viewRefresh.subscribe((e) => {
-		if (e) {
-			$query.refetch();
-			store.viewRefresh.set(false);
-		}
 	});
 
 	let additionalNotes: any[] = $state([]);
@@ -142,35 +125,11 @@
 </PageHeader>
 
 <PageWrapper tl>
-	{#if $query.isLoading}
-		<Loading />
-	{:else if $query.isError}
-		<Error
-			status={$query.error.status}
-			message={$query.error.message}
-			server={Boolean($query.error.status)}
-			retry={() => $query.refetch()}
-		/>
-	{:else if $query.isSuccess}
-		{#each additionalNotes as note}
-			<Note {note} />
-		{/each}
-		{#each $query.data.pages as results}
-			{#each results as note}
-				<Note {note} />
-			{/each}
-		{/each}
-		<Button
-			on:click={() => $query.fetchNextPage()}
-			disabled={!$query.hasNextPage || $query.isFetchingNextPage}
-		>
-			{#if $query.isFetching}
-				Loading more...
-			{:else if $query.hasNextPage}
-				Load More
-			{:else}
-				Nothing more to load
-			{/if}
-		</Button>
-	{/if}
+	<Timeline
+		type="note"
+		queryKey="timeline"
+		queryFn={getTimeline}
+		bind:timeline
+		bind:query
+	/>
 </PageWrapper>

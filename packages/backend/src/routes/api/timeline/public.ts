@@ -15,6 +15,21 @@ router.get(
 		description:
 			'Fetch a timeline of all public notes known by this instance',
 		tags: ['Timeline'],
+
+		parameters: [
+			{
+				name: 'take',
+				in: 'take'
+			},
+			{
+				name: 'since',
+				in: 'since'
+			},
+			{
+				name: 'reverse',
+				in: 'reverse'
+			}
+		],
 		responses: {
 			200: {
 				description: 'Return a timeline.'

@@ -12,8 +12,6 @@
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import localstore from '$lib/localstore';
-	import getTimeline from '$lib/api/timeline';
-	import Note from '$lib/components/Note.svelte';
 	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
 	import Error from '$lib/components/Error.svelte';
 	import Tab from '$lib/components/Tab.svelte';
@@ -22,26 +20,12 @@
 	import queryclient from '$lib/queryclient.js';
 	import getNotifications from '$lib/api/notifications/get.js';
 	import Notification from '$lib/components/Notification.svelte';
-	let timeline: string;
+	import Timeline from '$lib/components/Timeline.svelte';
 
-	let localstoreTimeline = localstore.get('notificationsTab');
-	if (localstoreTimeline) {
-		timeline = localstoreTimeline;
-	} else {
-		timeline = '';
-	}
+	let query: any = $state();
 
-	const query = createInfiniteQuery({
-		queryKey: ['notifications'],
-		retry: false,
-		queryFn: async ({ pageParam }) =>
-			await getNotifications(timeline, pageParam),
-		initialPageParam: undefined,
-		getNextPageParam: (lastPage) => {
-			console.log('lastNote', lastPage.at(-1).createdAt);
-			return lastPage ? lastPage.at(-1).createdAt : undefined;
-		}
-	});
+	let timeline: string = $state('');
+	timeline = localstore.get('notificationsTab');
 
 	function updateTimeline(to: string) {
 		timeline = to;
@@ -83,32 +67,11 @@
 </PageHeader>
 
 <PageWrapper tl>
-	{#if $query.isLoading}
-		<Loading />
-	{:else if $query.isError}
-		<Error
-			status={$query.error.status}
-			message={$query.error.message}
-			server={Boolean($query.error.status)}
-			retry={() => $query.refetch()}
-		/>
-	{:else if $query.isSuccess}
-		{#each $query.data.pages as results}
-			{#each results as notification}
-				<Notification {notification} />
-			{/each}
-		{/each}
-		<Button
-			on:click={() => $query.fetchNextPage()}
-			disabled={!$query.hasNextPage || $query.isFetchingNextPage}
-		>
-			{#if $query.isFetching}
-				Loading more...
-			{:else if $query.hasNextPage}
-				Load More
-			{:else}
-				Nothing more to load
-			{/if}
-		</Button>
-	{/if}
+	<Timeline
+		type="notification"
+		queryKey="notifications"
+		queryFn={getNotifications}
+		bind:timeline
+		bind:query
+	/>
 </PageWrapper>

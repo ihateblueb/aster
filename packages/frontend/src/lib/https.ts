@@ -24,8 +24,21 @@ class https {
 	}
 	private async end(res: Response) {
 		this.count(-1);
-		if (!res.ok) throw new ApiError(res.status, (await res.json()).message);
-		return await res.json();
+
+		let apiRes = undefined;
+		try {
+			apiRes = await res.json();
+		} catch {}
+
+		if (!res.ok)
+			throw new ApiError(
+				res.status,
+				apiRes?.message ?? 'Something went wrong'
+			);
+
+		console.log(apiRes);
+
+		return apiRes ?? undefined;
 	}
 
 	public async get(url: string, auth?: boolean) {

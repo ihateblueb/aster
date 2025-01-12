@@ -42,21 +42,12 @@ router.get(
 
 		const user = await UserService.get(where);
 
-		if (user) {
-			if (user.suspended)
-				return res.status(403).json({
-					message: locale.user.notSpecified
-				});
-			if (!user.activated)
-				return res.status(403).json({
-					message: locale.user.notActivated
-				});
-			return res.status(200).json(user);
-		} else {
+		if ((user && (!user.activated || user.suspended)) || !user)
 			return res.status(404).json({
 				message: locale.user.notFound
 			});
-		}
+
+		return res.status(200).json(user);
 	}
 );
 

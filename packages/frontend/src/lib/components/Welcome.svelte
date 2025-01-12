@@ -10,6 +10,7 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import Note from '$lib/components/Note.svelte';
 	import getMeta from '$lib/api/meta/get.js';
+	import Timeline from '$lib/components/Timeline.svelte';
 
 	const meta = createQuery({
 		queryKey: ['meta'],
@@ -17,16 +18,7 @@
 		queryFn: async () => await getMeta()
 	});
 
-	const query = createInfiniteQuery({
-		queryKey: ['welcome-timeline'],
-		retry: false,
-		queryFn: async ({ pageParam }) => await getTimeline('local', pageParam),
-		initialPageParam: undefined,
-		getNextPageParam: (lastPage) => {
-			console.log('lastNote', lastPage.at(-1).createdAt);
-			return lastPage ? lastPage.at(-1).createdAt : undefined;
-		}
-	});
+	let query: any = $state();
 </script>
 
 <div class="welcome">
@@ -69,34 +61,13 @@
 		</div>
 	</div>
 	<div class="second">
-		{#if $query.isLoading}
-			<Loading />
-		{:else if $query.isError}
-			<Error
-				status={$query.error.status}
-				message={$query.error.message}
-				server={Boolean($query.error.status)}
-				retry={() => $query.refetch()}
-			/>
-		{:else if $query.isSuccess}
-			{#each $query.data.pages as results}
-				{#each results as note}
-					<Note {note} />
-				{/each}
-			{/each}
-			<Button
-				on:click={() => $query.fetchNextPage()}
-				disabled={!$query.hasNextPage || $query.isFetchingNextPage}
-			>
-				{#if $query.isFetching}
-					Loading more...
-				{:else if $query.hasNextPage}
-					Load More
-				{:else}
-					Nothing more to load
-				{/if}
-			</Button>
-		{/if}
+		<Timeline
+			type="note"
+			queryKey="welcome-timeline"
+			queryFn={getTimeline}
+			timeline="local"
+			bind:query
+		/>
 	</div>
 </div>
 

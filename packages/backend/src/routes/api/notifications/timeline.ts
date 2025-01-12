@@ -1,5 +1,5 @@
 import express from 'express';
-import { LessThan } from 'typeorm';
+import { ArrayContains, LessThan } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
@@ -16,6 +16,28 @@ router.get(
 		description: 'Fetch a timeline of notifications',
 		tags: ['Notification'],
 		security: [{ auth: [] }],
+		parameters: [
+			{
+				name: 'take',
+				in: 'take'
+			},
+			{
+				name: 'since',
+				in: 'since'
+			},
+			{
+				name: 'reverse',
+				in: 'reverse'
+			},
+			{
+				name: 'mentions',
+				in: 'mentions'
+			},
+			{
+				name: 'direct',
+				in: 'direct'
+			}
+		],
 		responses: {
 			200: {
 				description: 'Return a timeline of notifications.'
@@ -39,14 +61,21 @@ router.get(
 			to: { id: auth.user.id }
 		};
 
-		console.log(where);
-
 		let take;
 		let orderDirection;
 
 		if (req.query.since) where['createdAt'] = LessThan(req.query.since);
 		if (req.query.take) take = Number(req.query.take);
 		if (req.query.reverse === 'true') orderDirection = 'ASC';
+
+		if (req.query.mentions === 'true') where['type'] = 'mention';
+		if (req.query.direct === 'true')
+			where['note'] = {
+				visibility: 'direct',
+				to: ArrayContains([auth.user.id])
+			};
+
+		console.log(where);
 
 		take =
 			take <= ConfigService.timeline.maxObjects
@@ -62,9 +91,7 @@ router.get(
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);
-				return res.status(500).json({
-					message: locale.error.internalServer
-				});
+				return res.status(204).send();
 			})
 			.catch((err) => {
 				console.log(err);

@@ -5,7 +5,17 @@ export default async function getNotifications(
 	since?: string
 ) {
 	return await https.get(
-		'/api/notifications/' + timeline + (since ? '?since=' + since : ''),
+		'/api/notifications' +
+			(timeline
+				? timeline === 'mentions'
+					? '?mentions=true'
+					: '?direct=true'
+				: '') +
+			(since
+				? timeline === 'direct' || timeline === 'mentions'
+					? '&since=' + since
+					: '?since=' + since
+				: ''),
 		true
 	);
 }

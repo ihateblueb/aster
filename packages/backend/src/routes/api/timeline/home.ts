@@ -17,6 +17,20 @@ router.get(
 		description:
 			'Fetch a timeline of all notes visible to the authenticated user',
 		tags: ['Timeline'],
+		parameters: [
+			{
+				name: 'take',
+				in: 'take'
+			},
+			{
+				name: 'since',
+				in: 'since'
+			},
+			{
+				name: 'reverse',
+				in: 'reverse'
+			}
+		],
 		security: [{ auth: [] }],
 		responses: {
 			200: {
