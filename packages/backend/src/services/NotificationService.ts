@@ -30,7 +30,8 @@ class NotificationService {
 		take?: number,
 		order?: string,
 		orderDirection?: 'ASC' | 'DESC',
-		orWhere?: where
+		orWhere?: where,
+		andWhere?: where
 	) {
 		return await db
 			.getRepository('notification')
@@ -46,6 +47,7 @@ class NotificationService {
 			.leftJoinAndSelect('notification.relationship', 'relationship')
 			.where(where)
 			.orWhere(orWhere ?? where)
+			.andWhere(andWhere ?? where)
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();

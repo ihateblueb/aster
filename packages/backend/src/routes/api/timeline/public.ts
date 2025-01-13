@@ -42,7 +42,9 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		const where = {
+		// todo: blocking check
+
+		let where = {
 			visibility: 'public'
 		};
 

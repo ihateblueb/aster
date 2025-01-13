@@ -1,5 +1,5 @@
 import express from 'express';
-import { ArrayContains, In, LessThan } from 'typeorm';
+import { ArrayContains, In, LessThan, Not } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
@@ -58,12 +58,22 @@ router.get(
 			followingIds.push(user.to.id);
 		}
 
+		const blocking = await RelationshipService.getBlocking(auth.user.id);
+
+		const blockingIds: string[] = [];
+		for (const user of blocking) {
+			blockingIds.push(user.to.id);
+		}
+
 		// todo: and where Not(blockingIds + mutingIds)
-		const where = {
+		let where = {
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])
 		};
-		const orWhere = {
+		let andWhere = {
+			user: { id: Not(blockingIds) }
+		};
+		let orWhere = {
 			to: ArrayContains([auth.user.id])
 		};
 
@@ -85,7 +95,8 @@ router.get(
 			take,
 			'note.createdAt',
 			orderDirection ? orderDirection : 'DESC',
-			orWhere
+			orWhere,
+			andWhere
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);

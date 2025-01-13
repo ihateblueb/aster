@@ -6,6 +6,7 @@ import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
+import RelationshipService from '../../../services/RelationshipService.js';
 
 const router = express.Router();
 
@@ -52,7 +53,9 @@ router.get(
 		if (req.query.local === 'true')
 			bubbleInstances.push(new URL(ConfigService.url).host);
 
-		const where = {
+		// todo: block check
+
+		let where = {
 			user: { host: In(bubbleInstances) },
 			visibility: 'public'
 		};

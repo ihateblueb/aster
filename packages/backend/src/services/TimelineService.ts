@@ -11,7 +11,8 @@ class TimelineService {
 		take: number,
 		order: string,
 		orderDirection: 'ASC' | 'DESC',
-		orWhere?: where
+		orWhere?: where,
+		andWhere?: where
 	) {
 		let timelineObjects;
 
@@ -21,7 +22,8 @@ class TimelineService {
 				take,
 				order,
 				orderDirection,
-				orWhere
+				orWhere,
+				andWhere
 			);
 		if (type === 'notification')
 			timelineObjects = await NotificationService.getMany(
@@ -29,7 +31,8 @@ class TimelineService {
 				take,
 				order,
 				orderDirection,
-				orWhere
+				orWhere,
+				andWhere
 			);
 		if (type === 'report')
 			timelineObjects = await ReportService.getMany(
@@ -37,7 +40,8 @@ class TimelineService {
 				take,
 				order,
 				orderDirection,
-				orWhere
+				orWhere,
+				andWhere
 			);
 
 		return this.sort(timelineObjects, take);

@@ -23,7 +23,8 @@ class ReportService {
 		take?: number,
 		order?: string,
 		orderDirection?: 'ASC' | 'DESC',
-		orWhere?: where
+		orWhere?: where,
+		andWhere?: where
 	) {
 		return await db
 			.getRepository('report')
@@ -35,6 +36,7 @@ class ReportService {
 
 			.where(where)
 			.orWhere(orWhere ?? where)
+			.andWhere(andWhere ?? where)
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();

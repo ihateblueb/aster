@@ -40,7 +40,9 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		const where = {
+		// todo: blocking check
+
+		let where = {
 			user: { local: true },
 			visibility: 'public'
 		};

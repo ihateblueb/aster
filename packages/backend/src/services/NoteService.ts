@@ -72,7 +72,8 @@ class NoteService {
 		take?: number,
 		order?: string,
 		direction?: 'ASC' | 'DESC',
-		orWhere?: where
+		orWhere?: where,
+		andWhere?: where
 	) {
 		return await db
 			.getRepository('note')
@@ -115,6 +116,7 @@ class NoteService {
 
 			.where(where)
 			.orWhere(orWhere ?? where)
+			.andWhere(andWhere ?? where)
 			.take(take)
 			.orderBy(order, direction)
 			.getMany();
