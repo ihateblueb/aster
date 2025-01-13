@@ -100,6 +100,12 @@ class NotificationService {
 				message: 'Cannot send notification to non-local user'
 			};
 
+		if (!(await RelationshipService.canInteract(recipient.id, sender.id)))
+			return {
+				error: true,
+				message: 'Cannot interact with this user'
+			};
+
 		const id = IdService.generate();
 
 		let notification = {

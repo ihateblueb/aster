@@ -246,6 +246,7 @@ class NoteService {
 						message: locale.note.repeatTargetNotFound
 					};
 
+				// covers blocks
 				if (!(await VisibilityService.canISee(repeatedNote, user)))
 					return {
 						error: true,

@@ -58,6 +58,7 @@ router.get(
 			followingIds.push(user.to.id);
 		}
 
+		// todo: and where Not(blockingIds + mutingIds)
 		const where = {
 			user: { id: In(followingIds) },
 			visibility: In(['public', 'unlisted', 'followers'])

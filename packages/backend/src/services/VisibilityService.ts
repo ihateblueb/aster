@@ -9,9 +9,7 @@ class VisibilityService {
 		if (['public', 'unlisted'].includes(note.visibility)) return true;
 
 		if (as) {
-			if (await RelationshipService.isBlocking(note.user.id, as))
-				return false;
-			if (await RelationshipService.isBlocking(as, note.user.id))
+			if (!(await RelationshipService.canInteract(note.user.id, as)))
 				return false;
 
 			if (note.replyingTo) {
@@ -32,19 +30,7 @@ class VisibilityService {
 			}
 
 			if (note.repeat) {
-				if (
-					await RelationshipService.isBlocking(
-						note.repeat.user.id,
-						as
-					)
-				)
-					return false;
-				if (
-					await RelationshipService.isBlocking(
-						as,
-						note.repeat.user.id
-					)
-				)
+				if (!(await RelationshipService.canInteract(note.user.id, as)))
 					return false;
 			}
 

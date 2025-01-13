@@ -100,6 +100,32 @@ class RelationshipService {
 			.getMany();
 	}
 
+	public async getMuting(from: GenericId) {
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where({
+				from: { id: from },
+				type: 'mute'
+			})
+			.getMany();
+	}
+
+	public async getBlocking(from: GenericId) {
+		return await db
+			.getRepository('relationship')
+			.createQueryBuilder('relationship')
+			.leftJoinAndSelect('relationship.to', 'to')
+			.leftJoinAndSelect('relationship.from', 'from')
+			.where({
+				from: { id: from },
+				type: 'block'
+			})
+			.getMany();
+	}
+
 	public async isFollowing(to: GenericId, from: GenericId) {
 		return Boolean(
 			await this.get({
@@ -119,6 +145,13 @@ class RelationshipService {
 				type: 'block'
 			})
 		);
+	}
+
+	// todo: rename eitherBlocking
+	public async canInteract(to: GenericId, from: GenericId) {
+		if (this.isBlocking(to, from) || this.isBlocking(from, to))
+			return false;
+		return true;
 	}
 
 	public async acceptFollow(
