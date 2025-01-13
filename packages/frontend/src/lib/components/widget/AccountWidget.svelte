@@ -29,7 +29,7 @@
 		<Avatar
 			user={self}
 			size={(innerWidth.current ?? 0) > 1355 ? '40px' : '50px'}
-			large
+			large={!((innerWidth.current ?? 0) > 1355)}
 		/>
 		<a
 			class="names"

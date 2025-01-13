@@ -6,6 +6,7 @@
 
 	import localstore from '$lib/localstore';
 	import NavigationWidget from '$lib/components/widget/NavigationWidget.svelte';
+	import NotificationsWidget from '$lib/components/widget/NotificationsWidget.svelte';
 
 	let { left = false, right = false } = $props();
 
@@ -26,6 +27,8 @@
 		<MetaWidget />
 	{:else if type === 'navigation'}
 		<NavigationWidget />
+	{:else if type === 'notifications'}
+		<NotificationsWidget />
 	{/if}
 {/snippet}
 

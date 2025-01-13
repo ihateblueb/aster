@@ -149,7 +149,10 @@ class RelationshipService {
 
 	// todo: rename eitherBlocking
 	public async canInteract(to: GenericId, from: GenericId) {
-		if (this.isBlocking(to, from) || this.isBlocking(from, to))
+		if (
+			(await this.isBlocking(to, from)) ||
+			(await this.isBlocking(from, to))
+		)
 			return false;
 		return true;
 	}
