@@ -33,6 +33,9 @@
 				/>
 			{/if}
 		{:else}
+			{#if note.replyingTo}
+				<p>Replying to user</p>
+			{/if}
 			<Mfm
 				content={data.content}
 				on:click={() =>

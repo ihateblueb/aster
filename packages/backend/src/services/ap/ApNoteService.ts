@@ -116,7 +116,7 @@ class ApNoteService {
 				await this.addToBackfillQueue(body.inReplyTo, body.id, 'reply');
 
 		// todo: can i see
-		if (replyingTo) note['replyingTo'] = replyingTo.id;
+		if (replyingTo) note['replyingToId'] = replyingTo.id;
 
 		let quote;
 

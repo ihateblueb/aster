@@ -20,7 +20,7 @@
 
 {#snippet renderChild(object)}
 	{#if object.type === 'text'}
-		{object.props.text.replace(/(\r\n|\n|\r)/g, '\n')}
+		{@html object.props.text.replace(/(\r\n|\n|\r)/g, '\n')}
 	{:else if object.type === 'bold'}
 		<b>
 			{@render renderChildren(object.children)}
@@ -77,7 +77,7 @@
 	{:else if object.type === 'unicodeEmoji'}
 		{object.props.emoji}
 	{:else if object.type === 'mention'}
-		<div style="disply: inline-block;">
+		<div style="display: inline-block;">
 			<a href={'/' + object.props.acct}>
 				{object.props.acct}
 			</a>
