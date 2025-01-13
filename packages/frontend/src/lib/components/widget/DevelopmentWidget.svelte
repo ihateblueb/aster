@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import Input from '../Input.svelte';
 	import Button from '../Button.svelte';
+	import { IconCode } from '@tabler/icons-svelte';
 
 	let ckey: undefined | String = $state();
 	let cval: undefined | String = $state();
@@ -46,7 +47,12 @@
 	}
 </script>
 
-<WidgetBase>
+<WidgetBase header>
+	<svelte:fragment slot="header">
+		<IconCode size="var(--fs-lg)" />
+		Development
+	</svelte:fragment>
+
 	<b>cookie setter</b>
 	<br />
 	<Input bind:value={ckey} wide placeholder="key" />

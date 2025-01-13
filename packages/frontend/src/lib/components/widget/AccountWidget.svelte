@@ -1,11 +1,13 @@
 <script lang="ts">
+	import { innerWidth } from 'svelte/reactivity/window';
 	import localstore from '$lib/localstore';
 	import store from '$lib/store.js';
 	import Button from '$lib/components/Button.svelte';
 	import { IconLogin, IconUserPlus } from '@tabler/icons-svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
+	import Mfm from '../Mfm.svelte';
 
-	let self;
+	let self: any = $state();
 
 	function updateSelf() {
 		let grabbedSelf = localstore.get('self');
@@ -20,21 +22,26 @@
 	store.selfRefresh.subscribe((e) => {
 		updateSelf();
 	});
-
-	let innerWidth: number; // sorry, this sucks, but i cant figure it out with css right now
 </script>
-
-<svelte:window bind:innerWidth />
 
 <div class="accountWidget">
 	{#if self}
-		<Avatar user={self} size={innerWidth > 1355 ? '40px' : '50px'} />
+		<Avatar
+			user={self}
+			size={(innerWidth.current ?? 0) > 1355 ? '40px' : '50px'}
+			large
+		/>
 		<a
 			class="names"
 			href={'/@' + self.username + (self.local ? '' : '@' + self.host)}
 		>
 			<span class="top">
-				{self.displayName ? self.displayName : self.username}
+				<Mfm
+					simple
+					content={self.displayName
+						? self.displayName
+						: self.username}
+				/>
 			</span>
 			<span class="bottom">
 				@{self.username}

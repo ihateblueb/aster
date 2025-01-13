@@ -2,6 +2,7 @@
 	import Visibility from '$lib/components/Visibility.svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Time from '$lib/components/Time.svelte';
+	import Mfm from './Mfm.svelte';
 
 	let { note } = $props();
 </script>
@@ -17,9 +18,12 @@
 						note.user.username +
 						(note.user.local ? '' : '@' + note.user.host)}
 				>
-					{note.user.displayName
-						? note.user.displayName
-						: note.user.username}
+					<Mfm
+						simple
+						content={note.user.displayName
+							? note.user.displayName
+							: note.user.username}
+					/>
 				</a>
 				<a
 					class="bottom"

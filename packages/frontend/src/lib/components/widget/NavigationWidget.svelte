@@ -87,7 +87,7 @@
 			transparent={page.url.pathname !== '/bookmarks'}
 			wide
 			nm
-			to="/drive"
+			to="/bookmarks"
 		>
 			<IconBookmark size="var(--fs-lg)" />
 			Bookmarks
@@ -177,7 +177,7 @@
 			accentLight={page.url.pathname === '/bookmarks'}
 			transparent={page.url.pathname !== '/bookmarks'}
 			nm
-			to="/drive"
+			to="/bookmarks"
 		>
 			<IconBookmark size="var(--fs-lg)" />
 		</Button>
