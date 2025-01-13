@@ -93,6 +93,13 @@
 				message = JSON.parse(e.data);
 			} catch {}
 
+			console.log(
+				message &&
+					message.type === 'timeline:add' &&
+					message.timeline === timeline &&
+					message.note
+			);
+
 			if (
 				message &&
 				message.type === 'timeline:add' &&
@@ -104,6 +111,13 @@
 			}
 		};
 	}
+
+	$effect(() => {
+		console.log(
+			'[timeline] clearing additional notes, new timeline ' + timeline
+		);
+		additionalNotes = [];
+	});
 </script>
 
 {#if $query.isLoading}

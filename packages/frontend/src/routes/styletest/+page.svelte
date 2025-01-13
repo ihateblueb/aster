@@ -13,8 +13,8 @@
 	import UserDropdown from '$lib/components/dropdowns/UserDropdown.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 
-	let inputtest = '';
-	let switchtest = false;
+	let inputtest = $state('');
+	let switchtest = $state(false);
 
 	let modal: Modal;
 	let userDropdown: Dropdown;

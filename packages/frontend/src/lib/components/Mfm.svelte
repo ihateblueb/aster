@@ -7,9 +7,11 @@
 
 	function renderEachChild(objChild: any, scale: number) {
 		let collectedChildren = '';
+
 		for (const child of objChild) {
 			collectedChildren = collectedChildren + render(child, scale);
 		}
+
 		return collectedChildren;
 	}
 
@@ -53,7 +55,7 @@
 		} else if (object.type === 'unicodeEmoji') {
 			return `${object.props.emoji}`;
 		} else if (object.type === 'mention') {
-			return `<a class="mfm-mention" href='/${object.props.acct}'>${object.props.acct}</a>`;
+			return mention(object, scale);
 		} else if (object.type === 'hashtag') {
 			return `${object.props.hashtag}`;
 		} else if (object.type === 'inlineCode') {
@@ -324,7 +326,7 @@
 		}
 	}
 
-	function renderTree() {
+	function treeGetter() {
 		if (simple) {
 			mfmTree = mfm.parseSimple(content);
 		} else {
@@ -333,20 +335,86 @@
 
 		console.debug('[Mfm Tree]', mfmTree);
 
-		let rendered = '';
-
-		for (const node of mfmTree) {
-			if (node) rendered += render(node);
-		}
-
-		console.debug('[Mfm Render]', rendered);
-		return rendered;
+		return mfmTree;
 	}
 </script>
 
+{#snippet renderChild(object)}
+	{#if object.type === 'text'}
+		{object.props.text.replace(/(\r\n|\n|\r)/g, '\n')}
+	{:else if object.type === 'bold'}
+		<b>
+			{@render renderChildren(object.children)}
+		</b>
+	{:else if object.type === 'strike'}
+		<s>
+			{@render renderChildren(object.children)}
+		</s>
+	{:else if object.type === 'italic'}
+		<i>
+			{@render renderChildren(object.children)}
+		</i>
+	{:else if object.type === 'plain'}
+		<span style="display: inline-block;">
+			{@render renderChildren(object.children)}
+		</span>
+	{:else if object.type === 'small'}
+		<small>
+			{@render renderChildren(object.children)}
+		</small>
+	{:else if object.type === 'center'}
+		<div style="text-align: center;">
+			{@render renderChildren(object.children)}
+		</div>
+	{:else if object.type === 'url'}
+		<a href={object.props.url} rel="nofollow noopener">
+			{object.props.url}
+		</a>
+	{:else if object.type === 'url'}
+		<a href={object.props.url} rel="nofollow noopener">
+			{@render renderChildren(object.children)}
+		</a>
+	{:else if object.type === 'quote'}
+		<blockquote class="mfm-quote">
+			{@render renderChildren(object.children)}
+		</blockquote>
+	{:else if object.type === 'emojiCode'}
+		{@const foundEmoji = emojis
+			? emojis.find((e) => e.shortcode === object.props.name)
+			: undefined}
+
+		{#if foundEmoji}
+			<img
+				class="mfm-customEmoji"
+				src={foundEmoji.url}
+				title=":{foundEmoji.shortcode}:"
+			/>
+		{:else}
+			<span class="mfm-customEmoji">
+				:{object.props.name}:
+			</span>
+		{/if}
+	{:else}
+		{@render renderChildren(object.children)}
+	{/if}
+{/snippet}
+
+{#snippet renderChildren(children)}
+	{#each children as child}
+		{@render renderChild(child)}
+	{/each}
+{/snippet}
+
+{#snippet renderTree()}
+	{@const tree = treeGetter()}
+	{#each tree as object}
+		{@render renderChild(object)}
+	{/each}
+{/snippet}
+
 <span class={'mfm' + (simple ? ' simple' : '')} on:click>
 	{#if content}
-		{@html renderTree()}
+		{@render renderTree()}
 	{:else}
 		<p></p>
 	{/if}

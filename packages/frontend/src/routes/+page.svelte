@@ -31,29 +31,6 @@
 		if (e) ws = e;
 	});
 
-	let additionalNotes: any[] = $state([]);
-
-	if (ws) {
-		ws.send(`sub timeline:${timeline}`);
-
-		ws.onmessage = (e) => {
-			let message;
-			try {
-				message = JSON.parse(e.data);
-			} catch {}
-
-			if (
-				message &&
-				message.type === 'timeline:add' &&
-				message.timeline === timeline &&
-				message.note
-			) {
-				console.log('[timeline] received ws note');
-				additionalNotes.unshift(message.note);
-			}
-		};
-	}
-
 	function updateTimeline(to: string) {
 		if (ws) ws.send(`unsub timeline:${timeline}`);
 		timeline = to;
@@ -61,7 +38,6 @@
 		localstore.set('homeTab', to);
 
 		// clear timeline
-		additionalNotes = [];
 		queryclient.clear();
 		$query.refetch();
 	}
