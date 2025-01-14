@@ -70,6 +70,13 @@ wss.on('connection', async (ws, request, auth) => {
 
 		ws.send(JSON.stringify({ type: 'echo', data: data.toString() }));
 	});
+
+	ws.on('close', () => {
+		userEmitter.off(auth.user.id, () => {});
+		globalEmitter.off('timeline:local', () => {});
+		globalEmitter.off('timeline:bubble', () => {});
+		globalEmitter.off('timeline:public', () => {});
+	});
 });
 
 class WebsocketService {
