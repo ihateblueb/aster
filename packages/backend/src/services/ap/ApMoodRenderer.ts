@@ -1,4 +1,5 @@
 import { ObjectLiteral } from 'typeorm';
+
 import context from '../../static/context.js';
 import ConfigService from '../ConfigService.js';
 import ApVisibilityService from './ApVisibilityService.js';

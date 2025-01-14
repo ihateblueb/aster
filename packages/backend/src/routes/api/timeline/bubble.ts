@@ -2,11 +2,11 @@ import express from 'express';
 import { In, LessThan } from 'typeorm';
 
 import ConfigService from '../../../services/ConfigService.js';
+import RelationshipService from '../../../services/RelationshipService.js';
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
-import RelationshipService from '../../../services/RelationshipService.js';
 
 const router = express.Router();
 
