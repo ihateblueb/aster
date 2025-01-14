@@ -4,6 +4,7 @@ class NodeinfoService {
 	public async render(version: '2.0' | '2.1') {
 		const meta = await MetaService.get();
 
+		// todo: list admin here
 		return {
 			version: version,
 			software: {
