@@ -289,7 +289,7 @@ class NoteService {
 			);
 
 			await ApDeliverService.deliverToFollowers(announce, user);
-		} else {
+		} else if (newNote.user.local) {
 			const create = ApCreateRenderer.render(
 				await ApNoteRenderer.render(newNote)
 			);
