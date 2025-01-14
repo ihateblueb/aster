@@ -1,5 +1,5 @@
 import express from 'express';
-import { In, LessThan } from 'typeorm';
+import { In, LessThan, Not } from 'typeorm';
 
 import ConfigService from '../../../services/ConfigService.js';
 import TimelineService from '../../../services/TimelineService.js';
@@ -7,6 +7,7 @@ import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 import RelationshipService from '../../../services/RelationshipService.js';
+import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -53,7 +54,23 @@ router.get(
 		if (req.query.local === 'true')
 			bubbleInstances.push(new URL(ConfigService.url).host);
 
-		// todo: block check
+		let andWhere;
+		const auth = await AuthService.verify(req.headers.authorization);
+
+		if (auth) {
+			const blocking = await RelationshipService.getBlocking(
+				auth.user.id
+			);
+
+			const blockingIds: string[] = [];
+			for (const user of blocking) {
+				blockingIds.push(user.to.id);
+			}
+
+			andWhere = {
+				user: { id: Not(blockingIds) }
+			};
+		}
 
 		let where = {
 			user: { host: In(bubbleInstances) },
@@ -77,7 +94,9 @@ router.get(
 			where,
 			take,
 			'note.createdAt',
-			orderDirection ? orderDirection : 'DESC'
+			orderDirection ? orderDirection : 'DESC',
+			undefined,
+			andWhere
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);
