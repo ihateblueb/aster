@@ -54,9 +54,11 @@
 		sineInOut,
 		sineOut
 	} from 'svelte/easing';
+	import NoteSimple from '$lib/components/NoteSimple.svelte';
 
 	let {
 		type,
+		smallItems = false,
 		queryKey,
 		queryFn,
 		query = $bindable(),
@@ -154,9 +156,13 @@
 				}}
 			>
 				{#if type === 'note'}
-					<Note note={object} />
+					{#if smallItems}
+						<NoteSimple note={object} nomargin nobg />
+					{:else}
+						<Note note={object} />
+					{/if}
 				{:else if type === 'notification'}
-					<Notification notification={object} />
+					<Notification notification={object} small={smallItems} />
 				{/if}
 			</div>
 		{/each}

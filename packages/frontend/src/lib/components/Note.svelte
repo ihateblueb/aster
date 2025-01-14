@@ -33,8 +33,19 @@
 				/>
 			{/if}
 		{:else}
-			{#if note.replyingTo}
-				<p>Replying to user</p>
+			{#if !expanded && note.replyingTo}
+				<p class="replyingToUser">
+					<IconArrowBackUp size="var(--fs-lg)" />
+					Replying to
+					<a
+						href={'/@' +
+							note.user.username +
+							(note.user.local ? '' : '@' + note.user.host)}
+						>{'@' +
+							note.user.username +
+							(note.user.local ? '' : '@' + note.user.host)}
+					</a>
+				</p>
 			{/if}
 			<Mfm
 				content={data.content}
@@ -130,6 +141,23 @@
 
 				&.open {
 					margin-bottom: 5px;
+				}
+			}
+
+			.replyingToUser {
+				display: flex;
+				align-items: center;
+
+				margin-bottom: 4px;
+				gap: 4px;
+
+				color: var(--ac1);
+
+				font-size: var(--fs-sm);
+				font-weight: 500;
+
+				a {
+					color: inherit;
 				}
 			}
 		}

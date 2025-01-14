@@ -39,6 +39,7 @@ wss.on('connection', async (ws, request, auth) => {
 
 	let subscriptions = [];
 
+	// todo: make this not create a listener on every connection. yikes!!
 	globalEmitter.on('timeline:local', (data) => {
 		if (subscriptions.includes('timeline:local')) {
 			ws.send(JSON.stringify(data));

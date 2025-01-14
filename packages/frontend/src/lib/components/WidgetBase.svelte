@@ -1,50 +1,51 @@
 <script lang="ts">
 	import { innerWidth } from 'svelte/reactivity/window';
 
-	let { transparent = false, header = false } = $props();
+	let { transparent = false, tl = false, header = false } = $props();
 </script>
 
-<div class={'widget' + (transparent ? ' transparent' : '')}>
+<div>
 	{#if header && (innerWidth.current ?? 0) > 1355}
 		<div class="header">
 			<slot name="header"></slot>
 		</div>
 	{/if}
-	<slot />
+	<div
+		class={'widget' +
+			(transparent ? ' transparent' : '') +
+			(tl ? ' tl' : '')}
+	>
+		<slot />
+	</div>
 </div>
 
 <style lang="scss" scoped>
+	.header {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+
+		padding: 14px 18px;
+		font-weight: 500;
+	}
+
 	.widget {
 		width: 100%;
-		max-width: 325px;
-
 		box-sizing: border-box;
 
+		max-width: 325px;
+		max-height: 400px;
+		overflow-y: scroll;
+
 		padding: 12px 16px;
+
+		&.tl {
+			padding: 8px;
+		}
 
 		&:not(.transparent) {
 			background: var(--bg2);
 			border-radius: var(--br-lg);
-		}
-
-		.header {
-			display: flex;
-			align-items: center;
-			gap: 5px;
-
-			position: sticky;
-			top: 0;
-
-			padding: 10px 12px;
-			margin: -12px -16px;
-			margin-bottom: 12px;
-
-			font-weight: 600;
-			border-radius: var(--br-lg) var(--br-lg) 0 0;
-			backdrop-filter: blur(var(--blur-md));
-			background-color: var(--bg2-75);
-
-			width: 100%;
 		}
 	}
 </style>

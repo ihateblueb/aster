@@ -99,7 +99,7 @@
 
 	<div class="notifications">
 		{#each notifications as notification}
-			<Notification {notification} small />
+			<Notification {notification} floating />
 		{/each}
 	</div>
 

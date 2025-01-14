@@ -20,7 +20,7 @@
 		slide
 	} from 'svelte/transition';
 
-	let { notification, small = false } = $props();
+	let { notification, floating = false, small = false } = $props();
 </script>
 
 {#snippet icon()}
@@ -67,8 +67,10 @@
 {/snippet}
 
 <div
-	class={'notification' + (small ? ' small' : '')}
-	transition:fly={{ x: small ? 250 : 0 }}
+	class={'notification' +
+		(small ? ' small' : '') +
+		(floating ? ' floating' : '')}
+	transition:fly={{ x: floating ? 250 : 0 }}
 >
 	<div class="top">
 		<div class="left">
@@ -79,7 +81,7 @@
 				{@render title()}
 			</div>
 		</div>
-		{#if !small}
+		{#if !floating}
 			<div class="right">
 				<Time time={notification.createdAt} />
 			</div>
@@ -87,7 +89,7 @@
 	</div>
 	{#if notification.note}
 		<div class="body">
-			{#if small}
+			{#if floating}
 				{notification.note.content}
 			{:else}
 				<NoteSimple note={notification.note} nomargin />
@@ -112,6 +114,7 @@
 
 		.top {
 			display: flex;
+			gap: 4px;
 
 			.left {
 				display: flex;
@@ -139,7 +142,7 @@
 			margin-top: 10px;
 		}
 
-		&.small {
+		&.floating {
 			background-color: var(--bg4-25);
 			backdrop-filter: blur(var(--blur-md));
 
@@ -153,6 +156,10 @@
 				white-space: nowrap;
 				overflow: hidden;
 			}
+		}
+
+		&.small {
+			padding: 12px;
 		}
 	}
 </style>

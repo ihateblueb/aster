@@ -90,6 +90,8 @@
 
 				background: var(--bg1);
 				padding: 12px 12px 0 12px;
+
+				box-shadow: 0px -5px 10px var(--bg1);
 			}
 		}
 	}
