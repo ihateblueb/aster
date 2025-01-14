@@ -26,6 +26,10 @@ import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
 import meta_get from '../routes/api/meta/get.js';
+import mood_create from '../routes/api/mood/create.js';
+import mood_delete from '../routes/api/mood/delete.js';
+import mood_get from '../routes/api/mood/get.js';
+import mood_timeline from '../routes/api/mood/timeline.js';
 import note_create from '../routes/api/note/create.js';
 import note_delete from '../routes/api/note/delete.js';
 import note_get from '../routes/api/note/get.js';
@@ -192,6 +196,11 @@ router.use('/', auth_register);
 router.use('/', auth_revoke);
 
 router.use('/', meta_get);
+
+router.use('/', mood_create);
+router.use('/', mood_delete);
+router.use('/', mood_get);
+router.use('/', mood_timeline);
 
 router.use('/', note_create);
 router.use('/', note_delete);
