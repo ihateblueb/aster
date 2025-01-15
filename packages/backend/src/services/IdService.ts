@@ -5,10 +5,10 @@ import * as uuid from 'uuid';
 
 import ConfigService from './ConfigService.js';
 
-class IdService {
-	private aidCounter = crypto.randomBytes(2).readUInt16LE(0);
-	private aidxCounter = 0;
+let aidCounter = crypto.randomBytes(2).readUInt16LE(0);
+let aidxCounter = 0;
 
+class IdService {
 	private aidxNodeId = customAlphabet(
 		'0123456789abcdefghijklmnopqrstuvwxyz',
 		4
@@ -35,11 +35,11 @@ class IdService {
 		time = +now - time2000;
 		if (time < 0) time = 0;
 
-		this.aidCounter++;
+		aidCounter++;
 
 		id += time.toString(36).padStart(8, '0');
 		id += this.aidxNodeId;
-		id += this.aidCounter.toString(36).padStart(2, '0').slice(-2);
+		id += aidCounter.toString(36).padStart(2, '0').slice(-2);
 
 		return id;
 	}
@@ -53,11 +53,11 @@ class IdService {
 		time = +now - time2000;
 		if (time < 0) time = 0;
 
-		this.aidxCounter++;
+		aidxCounter++;
 
 		id += time.toString(36).padStart(8, '0');
 		id += this.aidxNodeId;
-		id += this.aidxCounter.toString(36).padStart(4, '0').slice(-4);
+		id += aidxCounter.toString(36).padStart(4, '0').slice(-4);
 
 		return id;
 	}

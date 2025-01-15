@@ -1,11 +1,13 @@
 import express from 'express';
-import { LessThan } from 'typeorm';
+import { LessThan, Not } from 'typeorm';
 
 import ConfigService from '../../../services/ConfigService.js';
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
+import AuthService from '../../../services/AuthService.js';
+import RelationshipService from '../../../services/RelationshipService.js';
 
 const router = express.Router();
 
@@ -42,7 +44,23 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		// todo: blocking check
+		let andWhere;
+		const auth = await AuthService.verify(req.headers.authorization);
+
+		if (auth) {
+			const blocking = await RelationshipService.getBlocking(
+				auth.user.id
+			);
+
+			const blockingIds: string[] = [];
+			for (const user of blocking) {
+				blockingIds.push(user.to.id);
+			}
+
+			andWhere = {
+				user: { id: Not(blockingIds) }
+			};
+		}
 
 		let where = {
 			visibility: 'public'
@@ -65,7 +83,9 @@ router.get(
 			where,
 			take,
 			'note.createdAt',
-			orderDirection ? orderDirection : 'DESC'
+			orderDirection ? orderDirection : 'DESC',
+			undefined,
+			andWhere
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);

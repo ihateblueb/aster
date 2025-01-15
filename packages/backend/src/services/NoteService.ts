@@ -140,7 +140,7 @@ class NoteService {
 			);
 
 			await ApDeliverService.deliverToFollowers(undo, note.user.id);
-		} else {
+		} else if (note.user.local) {
 			const del = ApDeleteRenderer.render(
 				IdService.generate(),
 				note.user.id,
@@ -291,7 +291,7 @@ class NoteService {
 			);
 
 			await ApDeliverService.deliverToFollowers(announce, user);
-		} else {
+		} else if (newNote.user.local) {
 			const create = ApCreateRenderer.render(
 				await ApNoteRenderer.render(newNote)
 			);

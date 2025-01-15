@@ -296,6 +296,8 @@ class UserService {
 		approval?: boolean,
 		invite?: string
 	) {
+		// todo: check if username is available
+
 		if (username.length <= 0)
 			return {
 				error: true,
