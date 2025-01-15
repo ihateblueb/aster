@@ -1,13 +1,13 @@
 import express from 'express';
 import { In, LessThan, Not } from 'typeorm';
 
+import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
+import RelationshipService from '../../../services/RelationshipService.js';
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
-import RelationshipService from '../../../services/RelationshipService.js';
-import AuthService from '../../../services/AuthService.js';
 
 const router = express.Router();
 
@@ -57,7 +57,7 @@ router.get(
 		let andWhere;
 		const auth = await AuthService.verify(req.headers.authorization);
 
-		if (auth) {
+		if (auth.user) {
 			const blocking = await RelationshipService.getBlocking(
 				auth.user.id
 			);
