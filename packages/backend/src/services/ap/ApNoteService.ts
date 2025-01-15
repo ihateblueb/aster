@@ -183,7 +183,6 @@ class ApNoteService {
 					let driveFile = {
 						id: IdService.generate(),
 						src: attachment.url,
-						userId: note['userId'],
 						createdAt: new Date().toISOString()
 					};
 

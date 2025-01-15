@@ -1,11 +1,19 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import typeorm, {
+	Column,
+	Entity,
+	JoinColumn,
+	JoinTable,
+	ManyToMany,
+	ManyToOne,
+	PrimaryColumn
+} from 'typeorm';
+
+import { Note } from './Note.js';
 
 @Entity()
 export class DriveFile {
 	@PrimaryColumn({ unique: true })
 	id: string;
-
-	// nullable because i dont want to assign remote media not posted by users to users (e.g. emoji)
 
 	@Column({ default: false })
 	sensitive: boolean;

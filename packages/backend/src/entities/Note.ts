@@ -87,12 +87,12 @@ export class Note {
 	@Column({ array: true, select: false, nullable: true })
 	attachmentIds: string;
 
-	@ManyToOne(() => DriveFile, (driveFile) => driveFile, {
+	@ManyToMany(() => DriveFile, (driveFile) => driveFile, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
 	@JoinTable({
-		name: 'attachmentIds'
+		name: 'note_attachments'
 	})
 	attachments: typeorm.Relation<DriveFile>;
 
