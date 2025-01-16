@@ -17,13 +17,18 @@ class ApAnnounceRenderer {
 			object: activity,
 			published: new Date().toISOString(),
 
-			visibility: note.visibility
+			visibility: note.visibility,
+			to: [],
+			cc: []
 		};
 
-		const tocc = await ApVisibilityService.render(note.user.id, announce);
+		const { to, cc } = await ApVisibilityService.render(
+			note.user.id,
+			announce
+		);
 
-		announce['to'] = tocc.to;
-		announce['cc'] = tocc.cc;
+		announce.to = to;
+		announce.cc = cc;
 
 		return announce;
 	}
