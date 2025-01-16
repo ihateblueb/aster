@@ -70,6 +70,7 @@
 		retry: false,
 		queryFn: async ({ pageParam }) => await queryFn(timeline, pageParam),
 		initialPageParam: undefined,
+		refetchOnWindowFocus: false,
 		getNextPageParam: (lastPage) => {
 			console.log(
 				'[' + queryKey + '] lastTlObj',
@@ -108,7 +109,7 @@
 				message.timeline === timeline &&
 				message.note
 			) {
-				console.log('[timeline] received ws note');
+				console.log('[' + queryKey + '] received ws note');
 				additionalNotes.unshift(message.note);
 			}
 		};
@@ -116,7 +117,10 @@
 
 	$effect(() => {
 		console.log(
-			'[timeline] clearing additional notes, new timeline ' + timeline
+			'[' +
+				queryKey +
+				'] clearing additional notes, new timeline ' +
+				timeline
 		);
 		additionalNotes = [];
 	});

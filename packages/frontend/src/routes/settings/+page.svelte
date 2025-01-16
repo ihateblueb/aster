@@ -3,13 +3,11 @@
 	import localstore from '$lib/localstore';
 
 	function changeToggle(key: string, val: string) {
-		console.log('set:', key, val);
 		localstore.set(key, val);
 	}
 
 	function value(key: string): boolean {
 		let toReturn = localstore.get(key);
-		console.log('get:', key, Boolean(toReturn));
 		return Boolean(toReturn);
 	}
 </script>
@@ -73,4 +71,11 @@
 	label="Hide all media"
 	checked={value('hideAllMedia')}
 	on:change={(e) => changeToggle('hideAllMedia', e.target?.checked)}
+/>
+<br />
+<h2>Debug</h2>
+<Switch
+	label="Debug mode"
+	checked={value('debug')}
+	on:change={(e) => changeToggle('debug', e.target?.checked)}
 />

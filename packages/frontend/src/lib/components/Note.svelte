@@ -151,13 +151,13 @@
 				margin-bottom: 4px;
 				gap: 4px;
 
-				color: var(--ac1);
+				color: var(--tx3);
 
 				font-size: var(--fs-sm);
 				font-weight: 500;
 
 				a {
-					color: inherit;
+					color: var(--ac1);
 				}
 			}
 		}

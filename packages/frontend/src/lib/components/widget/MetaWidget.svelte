@@ -5,6 +5,7 @@
 	const query = createQuery({
 		queryKey: ['meta'],
 		retry: false,
+		refetchOnWindowFocus: false,
 		queryFn: async () => await getMeta()
 	});
 </script>
