@@ -57,18 +57,18 @@ Activities Sent:
 - Accept
     - Follow
 - Announce
-	- Note
+    - Note
 - Bite
-  - User
+    - User
 - Block
 - Create
     - Note
 - Delete
-	- Note
+    - Note
 - Like
     - Note
 - Reject
-	- Follow
+    - Follow
 - Undo
     - Like
     - Follow
@@ -82,8 +82,8 @@ Activities Processed:
 - Announce
     - Note
 - Bite
-  - User
-  - Note
+    - User
+    - Note
 - Block
 - Create
     - Note
@@ -109,7 +109,7 @@ Activities that should be processed in the future:
         - Follow ??
     - Announce
 - Update
-	- Note
+    - Note
 - Like (with content)
 - EmojiReact
 - Add
