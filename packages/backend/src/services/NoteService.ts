@@ -367,15 +367,19 @@ class NoteService {
 		visibility?: string,
 		apId?: ApId
 	) {
-		if (
-			!(await VisibilityService.canISee(
-				await this.get({ id: noteId }),
-				as
-			))
-		)
+		let note = await this.get({ id: noteId });
+
+		if (!(await VisibilityService.canISee(note, as)))
 			return {
 				status: 404,
 				message: 'Note not found'
+			};
+
+		// todo: right code seems it should be 403 maybe
+		if (note.visibility !== 'direct' || note.visibility !== 'followers')
+			return {
+				status: 400,
+				message: 'Cannot repeat'
 			};
 
 		const existingRepeat = await this.get({

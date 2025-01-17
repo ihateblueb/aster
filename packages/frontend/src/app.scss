@@ -162,7 +162,7 @@ body {
 
 	color: var(--tx2);
 	background-color: var(--bg1);
-
+	
 	.app {
 		display: flex;
 		justify-content: center;
@@ -182,6 +182,19 @@ body {
 			max-width: none;
 		}
 	}
+}
+
+*::-webkit-scrollbar {
+	width: 5px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background-color: var(--bg4);
+	border-radius: var(--br-md);
 }
 
 ::selection {

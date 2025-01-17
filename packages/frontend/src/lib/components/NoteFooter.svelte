@@ -12,6 +12,7 @@
 		IconPlus,
 		IconQuote,
 		IconRepeat,
+		IconRepeatOff,
 		IconStar,
 		IconStarFilled,
 		IconTrash
@@ -70,6 +71,10 @@
 	function moreDelete() {
 		deleteNote(note?.id);
 	}
+
+	let repeatable =
+		!(note.visibility === 'followers' || note.visibility === 'direct') &&
+		self.id !== note.user.id;
 </script>
 
 <footer>
@@ -86,11 +91,18 @@
 	<div
 		class={'item' +
 			(self ? '' : ' loggedOut') +
-			(didIRepeat ? ' repeated' : '')}
+			(didIRepeat ? ' repeated' : '') +
+			(repeatable ? '' : ' unrepeatable')}
 	>
-		<button on:click={(e) => repeatDropdown.open(e)}>
+		<button
+			on:click={(e) => (!repeatable ? repeatDropdown.open(e) : undefined)}
+		>
 			<span class="icon">
-				<IconRepeat size="20px" />
+				{#if repeatable}
+					<IconRepeat size="20px" />
+				{:else}
+					<IconRepeatOff size="20px" />
+				{/if}
 			</span>
 			{#if note.repeats && note.repeats.length > 0}
 				<span class="counter">{note.repeats.length}</span>
@@ -247,6 +259,16 @@
 
 					&:hover {
 						background: var(--repeat-05);
+					}
+				}
+			}
+
+			&.unrepeatable {
+				button {
+					color: var(--tx3);
+
+					&:hover {
+						background: none;
 					}
 				}
 			}
