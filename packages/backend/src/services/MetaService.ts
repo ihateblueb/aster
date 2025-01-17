@@ -52,9 +52,8 @@ class MetaService {
 			software: pkg.name,
 			version: pkg.version,
 			registrations: ConfigService.registrations,
-			name: 'aster dev instance',
-			description:
-				"welcome to the $[tada a]$[tada s]$[tada t]$[tada e]$[tada r] $[tada d]$[tada e]$[tada v] $[tada i]$[tada n]$[tada s]$[tada t]$[tada a]$[tada n]$[tada c]$[tada e]!\nfor now, this description isn't editable, but that will come later.",
+			name: 'aster',
+			description: 'todo',
 			stats: {
 				user: userCount,
 				note: noteCount

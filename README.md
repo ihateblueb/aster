@@ -102,19 +102,16 @@ Activities Processed:
 - Update
     - User
 
-Activities that should be processed before first prerelease:
-
-- Update
-    - Note
-- Like (with content)
-- EmojiReact
-
 Activities that should be processed in the future:
 
 - Undo
     - Accept ?
         - Follow ??
     - Announce
+- Update
+	- Note
+- Like (with content)
+- EmojiReact
 - Add
 - Remove
 
@@ -139,6 +136,7 @@ Activities that should be processed in the future:
 - Get user
 - Follow user
 - Block user
+- Bite user
 - Get relationship to/from user
 - Refetch remote user
 - Get instance metadata
