@@ -162,7 +162,7 @@ body {
 
 	color: var(--tx2);
 	background-color: var(--bg1);
-	
+
 	.app {
 		display: flex;
 		justify-content: center;
@@ -185,7 +185,8 @@ body {
 }
 
 *::-webkit-scrollbar {
-	width: 5px;
+	max-width: 5px;
+	max-height: 5px;
 }
 
 *::-webkit-scrollbar-track {

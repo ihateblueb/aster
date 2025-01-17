@@ -54,13 +54,15 @@
 	</time>
 {/snippet}
 
-{#if to}
-	<a class="timeLink" href={to}>
+{#key timer}
+	{#if to}
+		<a class="timeLink" href={to}>
+			{@render body()}
+		</a>
+	{:else}
 		{@render body()}
-	</a>
-{:else}
-	{@render body()}
-{/if}
+	{/if}
+{/key}
 
 <style lang="scss" scoped>
 	.timeLink {

@@ -12,6 +12,7 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import playSound from '$lib/sounds.js';
 	import Notification from '$lib/components/Notification.svelte';
+	import { shortcut } from '@svelte-put/shortcut';
 
 	let loggedIn = $state(false);
 	if (localstore.get('token')) loggedIn = true;
@@ -89,6 +90,27 @@
 		};
 	}
 </script>
+
+<svelte:window
+	use:shortcut={{
+		trigger: [
+			{
+				key: 'p',
+				modifier: undefined,
+				callback: () => {
+					store.showCompose.set(true);
+				}
+			},
+			{
+				key: 'r',
+				modifier: undefined,
+				callback: () => {
+					console.log('[shortcut] r');
+				}
+			}
+		]
+	}}
+/>
 
 <QueryClientProvider client={queryClient}>
 	{#if activeRequests > 0}

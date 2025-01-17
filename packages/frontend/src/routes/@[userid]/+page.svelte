@@ -13,6 +13,7 @@
 		IconArrowsLeftRight,
 		IconBan,
 		IconCake,
+		IconDotsVertical,
 		IconLock,
 		IconMapPin,
 		IconPin,
@@ -28,6 +29,8 @@
 	import Toggle from '$lib/components/Toggle.svelte';
 	import FollowButton from '$lib/components/FollowButton.svelte';
 	import getUserRelationship from '$lib/api/user/relationship.js';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import UserDropdown from '$lib/components/dropdowns/UserDropdown.svelte';
 
 	let props = $props();
 
@@ -53,6 +56,8 @@
 	query.subscribe((e) => {
 		if (e.data?.sensitive) show = false;
 	});
+
+	let dropdown: Dropdown;
 </script>
 
 <PageHeader
@@ -75,6 +80,10 @@
 			<IconUserCircle size="var(--fs-lg)" />
 		{/if}
 	</svelte:fragment>
+
+	<Button header on:click={(e) => dropdown.open(e)}>
+		<IconDotsVertical size="var(--fs-lg)" />
+	</Button>
 </PageHeader>
 
 <PageWrapper tl>
@@ -245,6 +254,10 @@
 		{/if}
 	{/if}
 </PageWrapper>
+
+<Dropdown bind:this={dropdown}>
+	<UserDropdown user={$query.data} />
+</Dropdown>
 
 <style lang="scss" scoped>
 	.sensitive {
