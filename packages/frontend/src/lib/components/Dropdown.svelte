@@ -14,7 +14,7 @@
 	let { width = '200px' } = $props();
 
 	let dialog: undefined | HTMLDialogElement = $state();
-	let target: undefined | EventTarget = $state();
+	let target: undefined | null | EventTarget = $state();
 
 	let top: Number = $state(0);
 	let left: Number = $state(0);
@@ -25,9 +25,9 @@
 	let show = $state(false);
 
 	export async function open(e: MouseEvent) {
-		if (!show && e.target) {
+		if (!show && e.currentTarget) {
 			show = true;
-			target = e.target;
+			target = e.currentTarget;
 
 			await tick();
 

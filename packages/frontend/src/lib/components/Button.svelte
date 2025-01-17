@@ -17,6 +17,7 @@
 		circle = false,
 		wide = false,
 		thin = false,
+		header = false,
 		nm = false,
 		blur = false
 	} = $props();
@@ -38,6 +39,7 @@
 		(centered ? ' centered' : '') +
 		(wide ? ' wide' : '') +
 		(thin ? ' thin' : '') +
+		(header ? ' header' : '') +
 		(nm ? ' nm' : '') +
 		(blur ? ' blur' : '');
 </script>
@@ -183,6 +185,15 @@
 		&.thin {
 			min-height: 25px;
 			padding: 6px 10px;
+		}
+		&.header {
+			padding: 0;
+			background: none;
+			box-shadow: none;
+
+			&:hover {
+				opacity: 75%;
+			}
 		}
 		&.circle {
 			height: 50px;

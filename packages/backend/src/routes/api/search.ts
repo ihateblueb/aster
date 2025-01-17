@@ -7,7 +7,7 @@ import oapi from '../../utils/apidoc.js';
 
 const router = express.Router();
 
-router.patch(
+router.get(
 	'/api/search',
 	oapi.path({
 		description: 'Search for notes or a user',

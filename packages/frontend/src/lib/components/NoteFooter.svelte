@@ -168,12 +168,12 @@
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem>
-		<IconBookmark size="var(--fs-lg)" />
-		<span>Bookmark</span>
-	</DropdownItem>
-	<DropdownItem>
 		<IconBellOff size="var(--fs-lg)" />
 		<span>Mute thread</span>
+	</DropdownItem>
+	<DropdownItem>
+		<IconBookmark size="var(--fs-lg)" />
+		<span>Bookmark</span>
 	</DropdownItem>
 	<DropdownItem>
 		<IconAlertCircle size="var(--fs-lg)" />

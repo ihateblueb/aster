@@ -1,8 +1,12 @@
 <script lang="ts">
 	import {
 		IconChartBubble,
+		IconDots,
+		IconDotsVertical,
 		IconHome,
 		IconPlanet,
+		IconRelationManyToMany,
+		IconReload,
 		IconUsers
 	} from '@tabler/icons-svelte';
 
@@ -20,6 +24,8 @@
 	import store from '$lib/store';
 	import { getContext } from 'svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import DropdownItem from '$lib/components/DropdownItem.svelte';
 
 	let query: any = $state();
 
@@ -41,6 +47,8 @@
 		queryclient.clear();
 		$query.refetch();
 	}
+
+	let dropdown: Dropdown;
 </script>
 
 <PageHeader
@@ -98,6 +106,10 @@
 			color={timeline === 'public' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
+	<hr class="vertical" />
+	<Button header on:click={(e) => dropdown.open(e)}>
+		<IconDotsVertical size="var(--fs-lg)" />
+	</Button>
 </PageHeader>
 
 <PageWrapper tl>
@@ -109,3 +121,10 @@
 		bind:query
 	/>
 </PageWrapper>
+
+<Dropdown bind:this={dropdown}>
+	<DropdownItem on:click={() => $query.refetch()}>
+		<IconReload size="var(--fs-lg)" />
+		Refresh timeline
+	</DropdownItem>
+</Dropdown>

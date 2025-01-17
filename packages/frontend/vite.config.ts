@@ -42,6 +42,10 @@ export default defineConfig({
 			'/queue': {
 				target: apiurl,
 				changeOrigin: true
+			},
+			'/identicon': {
+				target: apiurl,
+				changeOrigin: true
 			}
 		}
 	},

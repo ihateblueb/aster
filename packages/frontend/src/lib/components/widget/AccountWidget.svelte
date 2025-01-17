@@ -3,9 +3,17 @@
 	import localstore from '$lib/localstore';
 	import store from '$lib/store.js';
 	import Button from '$lib/components/Button.svelte';
-	import { IconLogin, IconUserPlus } from '@tabler/icons-svelte';
+	import {
+		IconLogin,
+		IconLogout,
+		IconReload,
+		IconUser,
+		IconUserPlus
+	} from '@tabler/icons-svelte';
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Mfm from '../Mfm.svelte';
+	import Dropdown from '$lib/components/Dropdown.svelte';
+	import DropdownItem from '$lib/components/DropdownItem.svelte';
 
 	let self: any = $state();
 
@@ -22,19 +30,18 @@
 	store.selfRefresh.subscribe((e) => {
 		updateSelf();
 	});
+
+	let dropdown: Dropdown;
 </script>
 
-<div class="accountWidget">
-	{#if self}
+{#if self}
+	<button class="accountWidget" on:click={(e) => dropdown.open(e)}>
 		<Avatar
 			user={self}
 			size={(innerWidth.current ?? 0) > 1355 ? '40px' : '50px'}
 			large={!((innerWidth.current ?? 0) > 1355)}
 		/>
-		<a
-			class="names"
-			href={'/@' + self.username + (self.local ? '' : '@' + self.host)}
-		>
+		<span class="names">
 			<span class="top">
 				<Mfm
 					simple
@@ -46,8 +53,10 @@
 			<span class="bottom">
 				@{self.username}
 			</span>
-		</a>
-	{:else}
+		</span>
+	</button>
+{:else}
+	<div class="accountWidget">
 		<div class="btns">
 			<Button to="/login" accent centered wide nm>
 				<IconLogin size="var(--fs-lg)" />
@@ -58,8 +67,21 @@
 				Register
 			</Button>
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}
+
+<Dropdown bind:this={dropdown}>
+	<DropdownItem
+		to={'/@' + self.username + (self.local ? '' : '@' + self.host)}
+	>
+		<IconUser size="var(--fs-lg)" />
+		Profile
+	</DropdownItem>
+	<DropdownItem danger>
+		<IconLogout size="var(--fs-lg)" />
+		Logout
+	</DropdownItem>
+</Dropdown>
 
 <style lang="scss" scoped>
 	@media (max-width: 1355px) {
@@ -75,6 +97,12 @@
 	.accountWidget {
 		display: flex;
 		align-items: center;
+
+		font-size: var(--fs-md);
+		font-family: var(--font);
+
+		background: none;
+		border: none;
 
 		.btns {
 			display: flex;

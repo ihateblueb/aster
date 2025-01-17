@@ -1,5 +1,5 @@
 <script>
-	let { time } = $props();
+	let { time, to = '' } = $props();
 
 	let timer = $state(0);
 
@@ -30,7 +30,7 @@
 		];
 		let seconds = (+new Date() - time) / 1000,
 			list_choice = 1;
-		if (seconds === 0) {
+		if (seconds <= 5) {
 			return 'now';
 		}
 		let i = 0,
@@ -48,11 +48,26 @@
 	}, 5000);
 </script>
 
-<time class="time" title={new Date(time).toLocaleString()}>
-	<span>{timeAgo(time)}</span>
-</time>
+{#snippet body()}
+	<time class="time" title={new Date(time).toLocaleString()}>
+		<span>{timeAgo(time)}</span>
+	</time>
+{/snippet}
+
+{#if to}
+	<a class="timeLink" href={to}>
+		{@render body()}
+	</a>
+{:else}
+	{@render body()}
+{/if}
 
 <style lang="scss" scoped>
+	.timeLink {
+		color: var(--tx2);
+		text-decoration: none;
+	}
+
 	.time {
 		font-size: var(--font-s);
 	}

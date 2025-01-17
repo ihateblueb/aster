@@ -216,7 +216,7 @@ p {
 	font-size: var(--fs-md);
 }
 
-h5s {
+h5 {
 	font-size: var(--fs-sm);
 }
 
@@ -259,4 +259,11 @@ button {
 small {
 	color: var(--tx3);
 	font-size: var(--fs-xs);
+}
+
+hr.vertical {
+	height: calc(100% - (2px * 2));
+	margin: 2px 4px;
+	border: none;
+	border-left: 1px solid var(--bg4);
 }

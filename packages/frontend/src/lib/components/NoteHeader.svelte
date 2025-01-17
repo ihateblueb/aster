@@ -39,7 +39,7 @@
 		</div>
 		<div class="right">
 			<Visibility visibility={note.visibility} />
-			<Time time={note.createdAt} />
+			<Time time={note.createdAt} to={'/notes/' + note.id} />
 		</div>
 	{/if}
 </header>
