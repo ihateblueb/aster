@@ -1,6 +1,6 @@
 import punycode from 'node:punycode';
 
-import { In } from 'typeorm';
+import { In, ObjectLiteral } from 'typeorm';
 
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
@@ -62,26 +62,16 @@ class ApNoteService {
 	}
 
 	// todo: This Thing
-	public async apNoteToNote(body: ApObject) {}
-
-	public async register(body: ApObject) {
-		if (!ApValidationService.validBody(body)) return false;
-
-		console.log(body); //todo: remove
-
-		const id = IdService.generate();
-		let note = {
-			id: id,
-			apId: SanitizerService.sanitize(body.id),
-			local: false,
-			attachmentIds: []
-		};
+	public async apNoteToNote(
+		body: ApObject,
+		base?: ObjectLiteral
+	): Promise<Partial<ObjectLiteral>> {
+		let note = base ?? {};
 
 		const author = await ApActorService.get(
 			body.attributedTo ?? body.actor
 		);
-		if (!author) return false;
-		note['userId'] = author.id;
+		if (!author) return note;
 
 		const moderatedInstance = await ModeratedInstanceService.get({
 			host: punycode.toASCII(reduceSubdomain(author.host))
@@ -91,15 +81,15 @@ class ApNoteService {
 			? new Date(body.published).toISOString()
 			: new Date().toISOString();
 
-		const determinedVisibility = await ApVisibilityService.determine(body);
+		const { visibility, to } = await ApVisibilityService.determine(body);
 
-		note['visibility'] = determinedVisibility.visibility;
-		note['to'] = determinedVisibility.to;
+		note['visibility'] = visibility;
+		note['to'] = to;
 
 		let getRelatedNotesAs;
-		if (determinedVisibility.to)
+		if (to)
 			getRelatedNotesAs = await UserService.get({
-				id: In(determinedVisibility.to),
+				id: In(to),
 				local: true
 			});
 
@@ -172,49 +162,6 @@ class ApNoteService {
 				MfmService.localize(body._misskey_content, author.host)
 			);
 
-		if (body.attachment) {
-			let iterations = 0;
-
-			for (const attachment of body.attachment) {
-				iterations++;
-				if (iterations < 12) {
-					if (!attachment.url) return;
-
-					let driveFile = {
-						id: IdService.generate(),
-						src: attachment.url,
-						createdAt: new Date().toISOString()
-					};
-
-					if (attachment.name) driveFile['alt'] = attachment.name;
-					if (attachment.summary)
-						driveFile['alt'] = attachment.summary;
-
-					if (attachment.sensitive)
-						driveFile['sensitive'] = Boolean(attachment.sensitive);
-
-					await db
-						.getRepository('drive_file')
-						.insert(driveFile)
-						.then(() => {
-							note.attachmentIds.push(driveFile.id);
-						})
-						.catch((err) => {
-							console.log(err);
-							logger.error(
-								'ap',
-								'failed to insert remote note attachment'
-							);
-						});
-				} else {
-					logger.debug(
-						'note',
-						'hit iteration limit on attachments, ignoring rest'
-					);
-				}
-			}
-		}
-
 		if (body.replies) {
 			console.log('12984984930872');
 			if (body.replies.orderedItems || body.replies.items) {
@@ -233,7 +180,28 @@ class ApNoteService {
 			}
 		}
 
-		console.log(note); //todo: remove
+		return note;
+	}
+
+	public async register(body: ApObject) {
+		if (!ApValidationService.validBody(body)) return false;
+
+		console.log(body); //todo: remove
+
+		const id = IdService.generate();
+		let note: ObjectLiteral = {
+			id: id,
+			apId: SanitizerService.sanitize(body.id),
+			local: false
+		};
+
+		const author = await ApActorService.get(
+			body.attributedTo ?? body.actor
+		);
+		if (!author) return false;
+		note['userId'] = author.id;
+
+		note = await this.apNoteToNote(body, note);
 
 		await db
 			.getRepository('note')
@@ -277,6 +245,29 @@ class ApNoteService {
 		}
 
 		return grabbedNote;
+	}
+
+	public async update(body: ApObject) {
+		if (!ApValidationService.validBody(body)) return false;
+
+		let updatedNote = await this.apNoteToNote(body, {
+			updatedAt: new Date().toISOString()
+		});
+
+		await db
+			.getRepository('note')
+			.update(
+				{
+					apId: body.id
+				},
+				updatedNote
+			)
+			.catch((err) => {
+				console.log(err);
+				logger.error('ap', 'failed to update remote note');
+			});
+
+		return await NoteService.get({ apId: body.id });
 	}
 }
 

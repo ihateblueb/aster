@@ -59,8 +59,6 @@ class ApActorService {
 			host: new URL(body.id).host
 		};
 
-		user['updatedAt'] = new Date().toISOString();
-
 		if (!body.id) throw new Error('no apId present');
 
 		const moderatedInstance = await ModeratedInstanceService.get({
@@ -200,7 +198,9 @@ class ApActorService {
 	public async update(body: ApObject) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		let updatedUser = await this.actorToUser(body);
+		let updatedUser = await this.actorToUser(body, {
+			updatedAt: new Date().toISOString()
+		});
 
 		await db
 			.getRepository('user')

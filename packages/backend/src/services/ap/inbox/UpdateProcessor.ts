@@ -2,14 +2,23 @@
 // https://dev.aster.pages.gay/queue/queue/%7Binbox%7D/1478
 
 import logger from '../../../utils/logger.js';
+import NoteService from '../../NoteService.js';
 import UserService from '../../UserService.js';
 import ApActorService from '../ApActorService.js';
+import ApNoteService from '../ApNoteService.js';
 
 class UpdateProcessor {
 	public async updateActor(body: ApObject) {
 		let user = await ApActorService.update(body);
 
 		if (user) return true;
+		return false;
+	}
+
+	public async updateNote(body: ApObject) {
+		let note = await ApNoteService.update(body);
+
+		if (note) return true;
 		return false;
 	}
 
@@ -32,6 +41,15 @@ class UpdateProcessor {
 			// any actor from an instance is assumed to have permission to modify other actors from their instance
 			if (actor.host === object.host)
 				return await this.updateActor(body.object);
+		} else if (body.object.type === 'Note') {
+			if (!body.object.id) return false;
+
+			const object = await NoteService.get({ apId: body.object.id });
+
+			if (!object) return false;
+			// any actor from an instance is assumed to have permission to modify other actors from their instance
+			if (actor.host === object.user.host)
+				return await this.updateNote(body.object);
 		} else {
 			logger.warn(
 				'update',

@@ -39,7 +39,16 @@
 		</div>
 		<div class="right">
 			<Visibility visibility={note.visibility} />
-			<Time time={note.createdAt} to={'/notes/' + note.id} />
+			{#if note.updatedAt}
+				<span>
+					<Time time={note.createdAt} to={'/notes/' + note.id} /><span
+						title={'Updated at ' +
+							new Date(note.updatedAt).toLocaleString()}>*</span
+					>
+				</span>
+			{:else}
+				<Time time={note.createdAt} to={'/notes/' + note.id} />
+			{/if}
 		</div>
 	{/if}
 </header>
