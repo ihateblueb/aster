@@ -74,7 +74,7 @@
 
 	let repeatable =
 		!(note.visibility === 'followers' || note.visibility === 'direct') &&
-		self.id !== note.user.id;
+		self?.id !== note.user.id;
 </script>
 
 <footer>

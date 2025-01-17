@@ -21,8 +21,9 @@ Latest of all of these are best, haven't tested for minimum versions.
 
 Install dependencies with `pnpm i` and then build with `pnpm build`.\
 Afterward, copy `./config/example.yaml` to `./config/production.yaml` and update it to your liking.\
+Make sure your url set in the config is right. If it isn't, your instance actor will be generated wrong, and you won't be able to federate.\
 It is recommended you set the logging to fancy during initial setup.\
-After configuration, run `pnpm migrate` to set up your database, and then you're good to go!\
+After configuration, run `pnpm migrate` to set up your database\
 Run `pnpm start` and your instance will start up.
 
 ## Project Status
@@ -99,17 +100,16 @@ Activities Processed:
 - Undo
     - Follow
     - Like
+    - Announce
 - Update
     - User
+    - Note
 
 Activities that should be processed in the future:
 
 - Undo
     - Accept ?
         - Follow ??
-    - Announce
-- Update
-    - Note
 - Like (with content)
 - EmojiReact
 - Add
