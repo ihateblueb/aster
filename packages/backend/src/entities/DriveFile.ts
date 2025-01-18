@@ -15,14 +15,14 @@ export class DriveFile {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-	@Column({ default: false })
-	sensitive: boolean;
+	@Column()
+	src: string;
 
 	@Column({ nullable: true })
 	alt: string;
 
-	@Column()
-	src: string;
+	@Column({ default: false })
+	sensitive: boolean;
 
 	@Column()
 	createdAt: string;

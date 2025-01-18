@@ -114,7 +114,7 @@
 
 		.top {
 			display: flex;
-			gap: 4px;
+			gap: 10px;
 
 			.left {
 				display: flex;
@@ -126,7 +126,6 @@
 
 			.right {
 				display: flex;
-				align-items: center;
 			}
 		}
 

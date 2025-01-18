@@ -7,6 +7,7 @@ import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
+import DriveService from '../DriveService.js';
 import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
@@ -192,7 +193,7 @@ class ApNoteService {
 		let note: ObjectLiteral = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
-			local: false
+			attachmentIds: []
 		};
 
 		const author = await ApActorService.get(
@@ -202,6 +203,23 @@ class ApNoteService {
 		note['userId'] = author.id;
 
 		note = await this.apNoteToNote(body, note);
+
+		if (body.attachment) {
+			let iterations = 0;
+
+			for (const attachment of body.attachment) {
+				if (iterations >= 12) return;
+				if (!attachment.url && !attachment.src) return;
+
+				await DriveService.create(
+					attachment.url ?? attachment.src,
+					attachment.summary ?? attachment.name,
+					Boolean(attachment.sensitive)
+				).then((e) => {
+					if (e) note.attachmentIds.push(e.id);
+				});
+			}
+		}
 
 		await db
 			.getRepository('note')
