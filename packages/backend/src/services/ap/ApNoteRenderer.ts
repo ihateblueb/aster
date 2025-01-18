@@ -1,4 +1,6 @@
 import context from '../../static/context.js';
+import MfmService from '../MfmService.js';
+import UserService from '../UserService.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
@@ -21,6 +23,8 @@ class ApNoteRenderer {
 
 			published: note.createdAt,
 
+			tag: [],
+
 			visibility: note.visibility,
 			to: [],
 			cc: []
@@ -34,6 +38,28 @@ class ApNoteRenderer {
 			apNote['quoteUrl'] = note.repeat.apId;
 			apNote['quoteUri'] = note.repeat.apId;
 			apNote['_misskey_quote'] = note.repeat.apId;
+		}
+
+		let mentions = MfmService.extractMentions(note.content);
+
+		for (let mention of mentions) {
+			let splitHandle = mention.split('@');
+
+			let where = {
+				username: splitHandle[1]
+			};
+
+			if (splitHandle[2]) where['host'] = splitHandle[2];
+			if (!splitHandle[2]) where['local'] = true;
+
+			let user = await UserService.get(where);
+
+			if (user)
+				apNote.tag.push({
+					type: 'Mention',
+					name: mention,
+					href: user.apId
+				});
 		}
 
 		const visibility = await ApVisibilityService.render(note.user.id, note);

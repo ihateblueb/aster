@@ -12,6 +12,19 @@ class MfmService {
 		//const parsed = this.parse(content, true);
 	}
 
+	public extractMentions(content: string) {
+		let parse = this.parse(content);
+		let mentions = [];
+
+		for (let node of parse) {
+			if (node.type === 'mention' && node.props.acct) {
+				mentions.push(node.props.acct);
+			}
+		}
+
+		return mentions;
+	}
+
 	// turn  mentions from remote with no host into mentions usable here
 	public localize(content: string, host: string) {
 		let parse = this.parse(content);
