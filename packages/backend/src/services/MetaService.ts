@@ -1,4 +1,4 @@
-import { In, Not } from 'typeorm';
+import { In, Not, ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../package.json' with { type: 'json' };
 import db from '../utils/database.js';
@@ -8,8 +8,8 @@ import MetricsService from './MetricsService.js';
 import UserService from './UserService.js';
 
 class MetaService {
-	public async get() {
-		if (ConfigService.cache.meta.enabled) {
+	public async get(noCache?: boolean) {
+		if (ConfigService.cache.meta.enabled && !noCache) {
 			const cachedMeta = await CacheService.get('meta');
 
 			if (cachedMeta) {
@@ -19,6 +19,10 @@ class MetaService {
 				MetricsService.metaCacheMisses.inc(1);
 			}
 		}
+
+		const entity = await db.getRepository('meta').findOne({
+			where: {}
+		});
 
 		const userCount = await db.getRepository('user').count({
 			where: {
@@ -52,8 +56,10 @@ class MetaService {
 			software: pkg.name,
 			version: pkg.version,
 			registrations: ConfigService.registrations,
-			name: 'aster',
-			description: 'todo',
+			name: entity.name ?? 'Aster',
+			description:
+				entity.description ??
+				'An instance on the fediverse running Aster',
 			stats: {
 				user: userCount,
 				note: noteCount
@@ -69,6 +75,10 @@ class MetaService {
 			);
 
 		return meta;
+	}
+
+	public async update(entity: ObjectLiteral) {
+		return await db.getRepository('meta').update({}, entity);
 	}
 }
 

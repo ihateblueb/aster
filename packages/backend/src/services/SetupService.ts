@@ -1,5 +1,6 @@
 import crypto from 'crypto';
 
+import db from '../utils/database.js';
 import logger from '../utils/logger.js';
 import UserService from './UserService.js';
 
@@ -28,6 +29,26 @@ class SetupService {
 				.catch((err) => {
 					console.log(err);
 					logger.error('setup', 'failed to generate instance actor');
+				});
+		}
+
+		const meta = await db.getRepository('meta').findOne({
+			where: {}
+		});
+
+		if (!meta) {
+			await db
+				.getRepository('meta')
+				.insert({})
+				.then(() => {
+					logger.info('setup', 'generated instance metadata');
+				})
+				.catch((err) => {
+					console.log(err);
+					logger.error(
+						'setup',
+						'failed to generate instance metadata'
+					);
 				});
 		}
 	}

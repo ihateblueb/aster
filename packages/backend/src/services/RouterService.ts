@@ -25,6 +25,7 @@ import admin_reports_get from '../routes/api/admin/reports/get.js';
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
+import meta_edit from '../routes/api/meta/edit.js';
 import meta_get from '../routes/api/meta/get.js';
 import note_create from '../routes/api/note/create.js';
 import note_delete from '../routes/api/note/delete.js';
@@ -191,6 +192,7 @@ router.use('/', auth_login);
 router.use('/', auth_register);
 router.use('/', auth_revoke);
 
+router.use('/', meta_edit);
 router.use('/', meta_get);
 
 router.use('/', note_create);
