@@ -5,8 +5,10 @@
 	import Button from '$lib/components/Button.svelte';
 	import { IconDeviceFloppy } from '@tabler/icons-svelte';
 
-	let self: any = $state({});
-	let newSelf: any = $state({});
+	let self: any = $state();
+	let newSelf: any = $state();
+
+	let updated: boolean = $state(false);
 
 	let rawSelf = localstore.get('self');
 	if (rawSelf) {
@@ -18,14 +20,13 @@
 		}
 	}
 
-	console.log(self);
-	console.log(newSelf);
+	console.log('self', self);
 </script>
 
 <div class="header">
 	<div class="left"></div>
 	<div class="right">
-		<Button accent={$state.snapshot(self) !== $state.snapshot(newSelf)}>
+		<Button accent={updated}>
 			<IconDeviceFloppy size="var(--fs-lg)" />
 			Save
 		</Button>
@@ -37,7 +38,7 @@
 	<div class="left">
 		<Input
 			label="Display name"
-			placeholder={self.displayName ?? self.username}
+			placeholder={self.displayName ?? newSelf.username}
 			bind:value={newSelf.displayName}
 			wide
 		/>
@@ -69,13 +70,25 @@
 	<div class="left">
 		<Toggle
 			label="Require follows to be approved"
-			checked={newSelf.locked}
+			bind:checked={newSelf.locked}
 		/>
-		<Toggle label="Allow notes to be indexed" checked={newSelf.indexable} />
-		<Toggle label="Mark account as automated" checked={newSelf.automated} />
-		<Toggle label="Mark account as sensitive" checked={newSelf.sensitive} />
-		<Toggle label="Add cat ears to your account" checked={newSelf.isCat} />
-		<Toggle label="Speak as cat" checked={newSelf.speakAsCat} />
+		<Toggle
+			label="Allow notes to be indexed"
+			bind:checked={newSelf.indexable}
+		/>
+		<Toggle
+			label="Mark account as automated"
+			bind:checked={newSelf.automated}
+		/>
+		<Toggle
+			label="Mark account as sensitive"
+			bind:checked={newSelf.sensitive}
+		/>
+		<Toggle
+			label="Add cat ears to your account"
+			bind:checked={newSelf.isCat}
+		/>
+		<Toggle label="Speak as cat" bind:checked={newSelf.speakAsCat} />
 	</div>
 	<div class="right"></div>
 </div>

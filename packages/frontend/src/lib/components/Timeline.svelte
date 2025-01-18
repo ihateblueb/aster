@@ -55,6 +55,7 @@
 		sineOut
 	} from 'svelte/easing';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
+	import Report from '$lib/components/Report.svelte';
 
 	let {
 		type,
@@ -167,6 +168,8 @@
 					{/if}
 				{:else if type === 'notification'}
 					<Notification notification={object} small={smallItems} />
+				{:else if type === 'report'}
+					<Report report={object} />
 				{/if}
 			</div>
 		{/each}
