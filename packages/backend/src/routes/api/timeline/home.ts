@@ -1,5 +1,5 @@
 import express from 'express';
-import { ArrayContains, In, LessThan, Not } from 'typeorm';
+import { And, ArrayContains, In, LessThan, Not } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
@@ -67,11 +67,8 @@ router.get(
 
 		// todo: and where Not(blockingIds + mutingIds)
 		let where = {
-			user: { id: In(followingIds) },
+			user: { id: And(In(followingIds), Not(In(blockingIds))) },
 			visibility: In(['public', 'unlisted', 'followers'])
-		};
-		let andWhere = {
-			user: { id: Not(blockingIds) }
 		};
 		let orWhere = {
 			to: ArrayContains([auth.user.id])
@@ -95,8 +92,7 @@ router.get(
 			take,
 			'note.createdAt',
 			orderDirection ? orderDirection : 'DESC',
-			orWhere,
-			andWhere
+			orWhere
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);

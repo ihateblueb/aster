@@ -72,9 +72,10 @@
 		deleteNote(note?.id);
 	}
 
-	let repeatable =
-		!(note.visibility === 'followers' || note.visibility === 'direct') &&
-		self?.id !== note.user.id;
+	let repeatable = !(
+		(note.visibility === 'followers' || note.visibility === 'direct') &&
+		self?.id !== note.user.id
+	);
 </script>
 
 <footer>

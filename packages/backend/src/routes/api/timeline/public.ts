@@ -1,5 +1,5 @@
 import express from 'express';
-import { LessThan, Not } from 'typeorm';
+import { In, LessThan, Not } from 'typeorm';
 
 import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
@@ -44,8 +44,11 @@ router.get(
 		}
 	}),
 	async (req, res) => {
-		let andWhere;
 		const auth = await AuthService.verify(req.headers.authorization);
+
+		let where = {
+			visibility: 'public'
+		};
 
 		if (auth.user) {
 			const blocking = await RelationshipService.getBlocking(
@@ -57,14 +60,8 @@ router.get(
 				blockingIds.push(user.to.id);
 			}
 
-			andWhere = {
-				user: { id: Not(blockingIds) }
-			};
+			where['user'] = { id: Not(In(blockingIds)) };
 		}
-
-		let where = {
-			visibility: 'public'
-		};
 
 		let take;
 		let orderDirection;
@@ -84,8 +81,7 @@ router.get(
 			take,
 			'note.createdAt',
 			orderDirection ? orderDirection : 'DESC',
-			undefined,
-			andWhere
+			undefined
 		)
 			.then((e) => {
 				if (e && e.length > 0) return res.status(200).json(e);
