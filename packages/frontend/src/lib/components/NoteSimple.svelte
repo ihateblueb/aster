@@ -4,8 +4,11 @@
 	import Time from '$lib/components/Time.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 	import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
 
 	let { note, nobg, nomargin } = $props();
+
+	let cwOpen = $state(false);
 </script>
 
 <div
@@ -41,13 +44,28 @@
 			<Visibility visibility={note.visibility} />
 		</div>
 	</div>
-	<p>
-		<Mfm
-			content={note.content}
-			simple
-			on:click={() => goto('/notes/' + note.id)}
-		/>
-	</p>
+	<div class="body">
+		{#if note.cw}
+			<div class={'cw' + (cwOpen ? ' open' : '')}>
+				<span>{note.cw}</span>
+				<Button thin nm on:click={() => (cwOpen = !cwOpen)}>
+					{!cwOpen ? 'Show content' : 'Hide content'}
+				</Button>
+			</div>
+			{#if cwOpen}
+				<Mfm
+					content={note.content}
+					on:click={() => goto('/notes/' + note.id)}
+				/>
+			{/if}
+		{:else}
+			<Mfm
+				content={note.content}
+				simple
+				on:click={() => goto('/notes/' + note.id)}
+			/>
+		{/if}
+	</div>
 </div>
 
 <style lang="scss" scoped>
@@ -111,6 +129,21 @@
 				align-items: center;
 				gap: 5px;
 				font-size: var(--fs-sm);
+			}
+		}
+
+		.body {
+			.cw {
+				display: flex;
+				align-items: start;
+				flex-direction: column;
+				gap: 4px;
+
+				width: 100%;
+
+				&.open {
+					margin-bottom: 5px;
+				}
 			}
 		}
 	}
