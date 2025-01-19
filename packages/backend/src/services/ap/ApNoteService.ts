@@ -193,7 +193,8 @@ class ApNoteService {
 		let note: ObjectLiteral = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
-			attachmentIds: []
+			attachmentIds: [],
+			receivedAt: new Date().toISOString()
 		};
 
 		const author = await ApActorService.get(

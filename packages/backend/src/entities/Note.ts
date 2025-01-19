@@ -64,9 +64,8 @@ export class Note {
 	@Column({ array: true, nullable: true })
 	to: string;
 
-	// resolved, received as Create, received as Announce, etc.
 	@Column({ nullable: true })
-	origin: string;
+	receivedAt: string;
 
 	@Column()
 	createdAt: string;

@@ -88,6 +88,7 @@
 					text-overflow: inherit;
 					overflow: inherit;
 				}
+
 				.bottom {
 					display: block;
 					color: var(--tx2);

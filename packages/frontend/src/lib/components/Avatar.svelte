@@ -41,6 +41,7 @@
 			display: flex;
 			align-items: center;
 
+			object-fit: cover;
 			border-radius: var(--br-md);
 			user-select: none;
 
