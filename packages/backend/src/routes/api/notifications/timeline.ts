@@ -17,26 +17,11 @@ router.get(
 		tags: ['Notification'],
 		security: [{ auth: [] }],
 		parameters: [
-			{
-				name: 'take',
-				in: 'take'
-			},
-			{
-				name: 'since',
-				in: 'since'
-			},
-			{
-				name: 'reverse',
-				in: 'reverse'
-			},
-			{
-				name: 'mentions',
-				in: 'mentions'
-			},
-			{
-				name: 'direct',
-				in: 'direct'
-			}
+			{ $ref: '#/components/parameters/take' },
+			{ $ref: '#/components/parameters/since' },
+			{ $ref: '#/components/parameters/reverse' },
+			{ $ref: '#/components/parameters/mentions' },
+			{ $ref: '#/components/parameters/direct' }
 		],
 		responses: {
 			200: {

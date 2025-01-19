@@ -144,6 +144,57 @@ oapi.response('error-500', {
 	}
 });
 
+oapi.component('parameters', 'take', {
+	name: 'take',
+	in: 'query',
+	schema: {
+		type: 'number'
+	}
+});
+oapi.component('parameters', 'since', {
+	name: 'since',
+	in: 'query',
+	schema: {
+		type: 'string'
+	}
+});
+oapi.component('parameters', 'reverse', {
+	name: 'reverse',
+	in: 'query',
+	schema: {
+		type: 'boolean'
+	}
+});
+oapi.component('parameters', 'local', {
+	name: 'local',
+	in: 'query',
+	schema: {
+		type: 'boolean'
+	}
+});
+oapi.component('parameters', 'mentions', {
+	name: 'mentions',
+	in: 'query',
+	schema: {
+		type: 'boolean'
+	}
+});
+oapi.component('parameters', 'direct', {
+	name: 'direct',
+	in: 'query',
+	schema: {
+		type: 'boolean'
+	}
+});
+// for webfinger
+oapi.component('parameters', 'resource', {
+	name: 'resource',
+	in: 'query',
+	schema: {
+		type: 'string'
+	}
+});
+
 oapi.securitySchemes('auth', {
 	type: 'http',
 	scheme: 'bearer'

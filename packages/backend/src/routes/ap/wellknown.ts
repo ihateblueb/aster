@@ -101,12 +101,7 @@ router.get(
 	oapi.path({
 		description: 'Fetch apId of user from handle',
 		tags: ['Federation'],
-		parameters: [
-			{
-				name: 'resource',
-				in: 'query'
-			}
-		],
+		parameters: [{ $ref: '#/components/parameters/resource' }],
 		responses: {
 			200: {
 				description: 'Return apId of user.',

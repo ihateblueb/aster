@@ -22,9 +22,7 @@ router.patch(
 		security: [{ auth: [] }],
 		requestBody: {
 			content: {
-				'application/json': {
-					type: 'object'
-				}
+				'application/json': {}
 			}
 		},
 		responses: {

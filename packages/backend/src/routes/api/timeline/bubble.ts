@@ -18,18 +18,10 @@ router.get(
 			'Fetch a timeline of public notes from instances in the local bubble',
 		tags: ['Timeline'],
 		parameters: [
-			{
-				name: 'take',
-				in: 'take'
-			},
-			{
-				name: 'since',
-				in: 'since'
-			},
-			{
-				name: 'reverse',
-				in: 'reverse'
-			}
+			{ $ref: '#/components/parameters/take' },
+			{ $ref: '#/components/parameters/since' },
+			{ $ref: '#/components/parameters/reverse' },
+			{ $ref: '#/components/parameters/local' }
 		],
 		responses: {
 			200: {

@@ -6,6 +6,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import express from 'express';
 import * as feHandler from 'frontend/build/handler.js';
+import swaggerUi from 'swagger-ui-express';
 
 import ap_context from '../routes/ap/context.js';
 import ap_followers from '../routes/ap/followers.js';
@@ -182,7 +183,16 @@ if (ConfigService.router.queue) {
 // regular routes
 
 if (ConfigService.router.oapi) router.use(oapi);
-if (ConfigService.router.swagger) router.use('/swagger', oapi.swaggerui());
+if (ConfigService.router.swagger) {
+	let options = {
+		swaggerOptions: {
+			url: '/openapi.json',
+			persistAuthorization: true
+		}
+	};
+
+	router.use('/api-doc', swaggerUi.serve, swaggerUi.setup(null, options));
+}
 
 // api
 

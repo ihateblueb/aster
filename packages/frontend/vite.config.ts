@@ -35,7 +35,7 @@ export default defineConfig({
 				target: apiurl,
 				changeOrigin: true
 			},
-			'/swagger': {
+			'/api-doc': {
 				target: apiurl,
 				changeOrigin: true
 			},
