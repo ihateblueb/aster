@@ -193,8 +193,7 @@ class ApNoteService {
 		let note: ObjectLiteral = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
-			attachmentIds: [],
-			receivedAt: new Date().toISOString()
+			attachments: []
 		};
 
 		const author = await ApActorService.get(
@@ -217,7 +216,7 @@ class ApNoteService {
 					attachment.summary ?? attachment.name,
 					Boolean(attachment.sensitive)
 				).then((e) => {
-					if (e) note.attachmentIds.push(e.id);
+					if (e) note.attachments.push(e.id);
 				});
 			}
 		}

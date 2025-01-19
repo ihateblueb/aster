@@ -35,6 +35,13 @@ export class DriveFile {
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User>;
 
+	@ManyToMany(() => Note, (note) => note.attachments, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinTable({ name: 'note_attachments' })
+	notes: typeorm.Relation<Note>[];
+
 	@Column()
 	createdAt: string;
 

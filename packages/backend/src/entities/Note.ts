@@ -64,9 +64,6 @@ export class Note {
 	@Column({ array: true, nullable: true })
 	to: string;
 
-	@Column({ nullable: true })
-	receivedAt: string;
-
 	@Column()
 	createdAt: string;
 
@@ -83,15 +80,12 @@ export class Note {
 	@JoinColumn({ name: 'pollId' })
 	poll: typeorm.Relation<Poll>;
 
-	@Column({ array: true, select: false, nullable: true })
-	attachmentIds: string;
-
-	@OneToMany(() => DriveFile, (driveFile) => driveFile, {
+	@ManyToMany(() => DriveFile, (driveFile) => driveFile.notes, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
-	@JoinColumn({ name: 'attachmentIds' })
-	attachments: typeorm.Relation<DriveFile>;
+	@JoinTable({ name: 'note_attachments' })
+	attachments: typeorm.Relation<DriveFile>[];
 
 	/*
 		TODO (later): add emojis relation for emojis in post content
