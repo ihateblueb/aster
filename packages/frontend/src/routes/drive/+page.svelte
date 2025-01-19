@@ -4,6 +4,10 @@
 	import { IconCloud, IconPlus } from '@tabler/icons-svelte';
 	import Button from '$lib/components/Button.svelte';
 	import upload from '$lib/api/upload';
+	import Timeline from '$lib/components/Timeline.svelte';
+	import getDrive from '$lib/api/drive/get';
+
+	let query = $state();
 
 	let fileInput = $state();
 
@@ -41,4 +45,6 @@
 	</Button>
 </PageHeader>
 
-<PageWrapper></PageWrapper>
+<PageWrapper tl>
+	<Timeline type="drive" queryKey="drive" queryFn={getDrive} bind:query />
+</PageWrapper>

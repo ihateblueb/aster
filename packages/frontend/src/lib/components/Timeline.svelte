@@ -56,6 +56,7 @@
 	} from 'svelte/easing';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Report from '$lib/components/Report.svelte';
+	import DriveFile from '$lib/components/DriveFile.svelte';
 
 	let {
 		type,
@@ -170,6 +171,8 @@
 					<Notification notification={object} small={smallItems} />
 				{:else if type === 'report'}
 					<Report report={object} />
+				{:else if type === 'drive'}
+					<DriveFile file={object} />
 				{/if}
 			</div>
 		{/each}
