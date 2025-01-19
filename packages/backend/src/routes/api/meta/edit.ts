@@ -10,6 +10,7 @@ import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 
 const router = express.Router();
 
@@ -41,6 +42,7 @@ router.patch(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
+	bodyparser,
 	async (req, res) => {
 		const auth = await AuthService.verify(req.headers.authorization);
 

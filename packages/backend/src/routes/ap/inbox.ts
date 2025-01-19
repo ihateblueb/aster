@@ -4,6 +4,7 @@ import ApValidationService from '../../services/ap/ApValidationService.js';
 import IdService from '../../services/IdService.js';
 import QueueService from '../../services/QueueService.js';
 import oapi from '../../utils/apidoc.js';
+import bodyparser from '../../utils/bodyparser.js';
 import locale from '../../utils/locale.js';
 import logger from '../../utils/logger.js';
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post(
 	['/inbox', '/users/:id/inbox'],
+	bodyparser,
 	oapi.path({
 		description: 'Send an activity to the instance',
 		tags: ['Federation'],

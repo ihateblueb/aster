@@ -3,12 +3,14 @@ import express from 'express';
 import AuthService from '../../../services/AuthService.js';
 import LikeService from '../../../services/LikeService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 import locale from '../../../utils/locale.js';
 
 const router = express.Router();
 
 router.post(
 	'/api/note/:id/like',
+	bodyparser,
 	oapi.path({
 		description: 'Like a note',
 		tags: ['Note'],

@@ -43,7 +43,11 @@ export default defineConfig({
 				target: apiurl,
 				changeOrigin: true
 			},
-			'/identicon': {
+			'/upload': {
+				target: apiurl,
+				changeOrigin: true
+			},
+			'/uploads': {
 				target: apiurl,
 				changeOrigin: true
 			}

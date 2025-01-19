@@ -13,12 +13,22 @@ class DriveService {
 			.getOne();
 	}
 
-	public async getMany(where: where, orWhere?: where) {
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		orderDirection?: 'ASC' | 'DESC',
+		orWhere?: where,
+		andWhere?: where
+	) {
 		return await db
 			.getRepository('drive_file')
 			.createQueryBuilder('drive_file')
 			.where(where)
 			.orWhere(orWhere ?? where)
+			.andWhere(andWhere ?? where)
+			.take(take)
+			.orderBy(order, orderDirection)
 			.getMany();
 	}
 
@@ -33,7 +43,8 @@ class DriveService {
 	public async create(
 		src: string,
 		alt?: string,
-		sensitive?: boolean
+		sensitive?: boolean,
+		user?: GenericId
 	): Promise<false | ObjectLiteral> {
 		const id = IdService.generate();
 
@@ -41,6 +52,7 @@ class DriveService {
 			id: id,
 			src: src,
 			alt: alt,
+			userId: user,
 			sensitive: sensitive,
 			createdAt: new Date().toISOString()
 		};

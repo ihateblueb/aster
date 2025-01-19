@@ -4,6 +4,7 @@ import AuthService from '../../../services/AuthService.js';
 import NoteService from '../../../services/NoteService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
@@ -11,6 +12,7 @@ const router = express.Router();
 
 router.post(
 	'/api/note/:id/repeat',
+	bodyparser,
 	oapi.path({
 		description: 'Repeat a note',
 		tags: ['Note'],

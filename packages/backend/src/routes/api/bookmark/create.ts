@@ -2,11 +2,13 @@ import express from 'express';
 
 import TimelineService from '../../../services/TimelineService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 
 const router = express.Router();
 
 router.post(
 	'/api/bookmark',
+	bodyparser,
 	oapi.path({
 		description: 'Create a bookmark',
 		tags: ['Bookmarks'],

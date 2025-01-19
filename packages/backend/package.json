@@ -45,7 +45,8 @@
 		"ulid": "^2.3.0",
 		"uuid": "^11.0.4",
 		"ws": "^8.18.0",
-		"yaml": "^2.6.1"
+		"yaml": "^2.6.1",
+		"formidable": "^3.5.2"
 	},
 	"devDependencies": {
 		"@swc/cli": "0.6.0",
@@ -55,6 +56,7 @@
 		"@types/cookie-parser": "^1.4.8",
 		"@types/cors": "^2.8.17",
 		"@types/express": "^5.0.0",
+		"@types/formidable": "^3.4.5",
 		"@types/jsdom": "^21.1.7",
 		"@types/uuid": "^10.0.0",
 		"@vitest/ui": "^2.1.8",

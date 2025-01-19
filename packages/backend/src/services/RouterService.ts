@@ -25,6 +25,10 @@ import admin_reports_get from '../routes/api/admin/reports/get.js';
 import auth_login from '../routes/api/auth/login.js';
 import auth_register from '../routes/api/auth/register.js';
 import auth_revoke from '../routes/api/auth/revoke.js';
+import drive_file_delete from '../routes/api/drive/file/delete.js';
+import drive_file_edit from '../routes/api/drive/file/edit.js';
+import drive_file_get from '../routes/api/drive/file/get.js';
+import drive_timeline from '../routes/api/drive/timeline.js';
 import meta_edit from '../routes/api/meta/edit.js';
 import meta_get from '../routes/api/meta/get.js';
 import note_create from '../routes/api/note/create.js';
@@ -49,6 +53,7 @@ import user_relationship from '../routes/api/user/relationship.js';
 import misc_manifest from '../routes/misc/manifest.js';
 import misc_metrics from '../routes/misc/metrics.js';
 import misc_ping from '../routes/misc/ping.js';
+import misc_upload from '../routes/misc/upload.js';
 import misc_uploads from '../routes/misc/uploads.js';
 import oapi from '../utils/apidoc.js';
 import locale from '../utils/locale.js';
@@ -61,11 +66,12 @@ import QueueService from './QueueService.js';
 
 const router = express.Router();
 
-router.use(bodyParser.raw({ type: '*/*' }));
 router.use(cookieParser());
 router.use(cors());
 
 router.use((req, res, next) => {
+	const id = IdService.generate();
+	res.setHeader('As-Request-Id', id);
 	res.setHeader('TDM-Reservation', '1');
 
 	// uploads have 1 day cache
@@ -85,9 +91,6 @@ router.use((req, res, next) => {
 
 		return res.status(401).send();
 	}
-
-	const id = IdService.generate();
-	res.setHeader('As-Request-Id', id);
 
 	const end = MetricsService.requestResponseTime.startTimer();
 
@@ -192,6 +195,11 @@ router.use('/', auth_login);
 router.use('/', auth_register);
 router.use('/', auth_revoke);
 
+router.use('/', drive_timeline);
+router.use('/', drive_file_delete);
+router.use('/', drive_file_edit);
+router.use('/', drive_file_get);
+
 router.use('/', meta_edit);
 router.use('/', meta_get);
 
@@ -221,6 +229,7 @@ router.use('/', user_relationship);
 router.use('/', misc_manifest);
 if (ConfigService.metrics.enabled) router.use('/', misc_metrics);
 router.use('/', misc_ping);
+router.use('/', misc_upload);
 router.use('/', misc_uploads);
 
 // ap

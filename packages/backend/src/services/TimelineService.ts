@@ -1,5 +1,6 @@
 import { ObjectLiteral } from 'typeorm';
 
+import DriveService from './DriveService.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 import ReportService from './ReportService.js';
@@ -36,6 +37,15 @@ class TimelineService {
 			);
 		if (type === 'report')
 			timelineObjects = await ReportService.getMany(
+				where,
+				take,
+				order,
+				orderDirection,
+				orWhere,
+				andWhere
+			);
+		if (type === 'drive')
+			timelineObjects = await DriveService.getMany(
 				where,
 				take,
 				order,

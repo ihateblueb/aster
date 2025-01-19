@@ -3,6 +3,7 @@ import express from 'express';
 import AuthService from '../../../services/AuthService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 import db from '../../../utils/database.js';
 import locale from '../../../utils/locale.js';
 
@@ -10,6 +11,7 @@ const router = express.Router();
 
 router.post(
 	'/api/auth/revoke',
+	bodyparser,
 	oapi.path({
 		description: 'Revoke a valid auth token',
 		tags: ['Auth'],

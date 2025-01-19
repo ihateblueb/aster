@@ -9,6 +9,7 @@ import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 
 const router = express.Router();
 
@@ -40,6 +41,7 @@ router.patch(
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
+	bodyparser,
 	async (req, res) => {
 		const auth = await AuthService.verify(req.headers.authorization);
 
@@ -60,6 +62,12 @@ router.patch(
 		const user = await UserService.get({
 			id: req.params.id ?? auth.user.id
 		});
+
+		if (!user)
+			return res.status(404).json({
+				message: 'Not found'
+			});
+
 		if (user.id !== auth.user.id && !auth.user.admin)
 			return res
 				.status(403)
@@ -219,10 +227,7 @@ router.patch(
 					);
 				}
 
-				return res.status(200).send({
-					message: 'Updated',
-					user: newUser
-				});
+				return res.status(200).send(newUser);
 			})
 			.catch(() => {
 				return res

@@ -1,23 +1,21 @@
 import express from 'express';
 
-import AuthService from '../../../services/AuthService.js';
-import UserService from '../../../services/UserService.js';
-import oapi from '../../../utils/apidoc.js';
-import bodyparser from '../../../utils/bodyparser.js';
-import locale from '../../../utils/locale.js';
+import AuthService from '../../../../services/AuthService.js';
+import DriveService from '../../../../services/DriveService.js';
+import oapi from '../../../../utils/apidoc.js';
+import locale from '../../../../utils/locale.js';
 
 const router = express.Router();
 
-router.post(
-	'/api/user/:id/bite',
-	bodyparser,
+router.get(
+	'/api/drive/file/:id',
 	oapi.path({
-		description: 'Bite a user',
-		tags: ['User'],
+		description: 'Fetch a drive file',
+		tags: ['Drive'],
 		security: [{ auth: [] }],
 		responses: {
 			200: {
-				description: 'Bite a user.',
+				description: 'Return a drive file.',
 				content: {
 					'application/json': {}
 				}
@@ -26,14 +24,13 @@ router.post(
 			401: { $ref: '#/components/responses/error-401' },
 			403: { $ref: '#/components/responses/error-403' },
 			404: { $ref: '#/components/responses/error-404' },
-			413: { $ref: '#/components/responses/error-413' },
 			500: { $ref: '#/components/responses/error-500' }
 		}
 	}),
 	async (req, res) => {
 		if (!req.params.id)
 			return res.status(400).json({
-				message: locale.user.notSpecified
+				message: locale.error.notSpecified
 			});
 
 		const auth = await AuthService.verify(req.headers.authorization);
@@ -43,13 +40,19 @@ router.post(
 				message: auth.message
 			});
 
-		return await UserService.bite(req.params.id, auth.user.id)
-			.then((e) => {
-				return res.status(e.status).json({ message: e.message });
-			})
-			.catch(() => {
-				return res.status(500).send();
+		const file = await DriveService.get({ id: req.params.id });
+
+		if (!file)
+			return res.status(404).json({
+				message: 'Not found'
 			});
+
+		if ((!file.user || file.user.id !== auth.user.id) && !auth.user.admin)
+			return res
+				.status(403)
+				.json({ message: 'You cannot view this file' });
+
+		return res.status(200).json(file);
 	}
 );
 

@@ -9,6 +9,7 @@ import typeorm, {
 } from 'typeorm';
 
 import { Note } from './Note.js';
+import { User } from './User.js';
 
 @Entity()
 export class DriveFile {
@@ -23,6 +24,16 @@ export class DriveFile {
 
 	@Column({ default: false })
 	sensitive: boolean;
+
+	@Column({ select: false, nullable: true })
+	userId: string;
+
+	@ManyToOne(() => User, (user) => user, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinColumn({ name: 'userId' })
+	user: typeorm.Relation<User>;
 
 	@Column()
 	createdAt: string;

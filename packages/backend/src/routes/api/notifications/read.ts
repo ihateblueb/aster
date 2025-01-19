@@ -4,11 +4,13 @@ import AuthService from '../../../services/AuthService.js';
 import NotificationService from '../../../services/NotificationService.js';
 import ValidationService from '../../../services/ValidationService.js';
 import oapi from '../../../utils/apidoc.js';
+import bodyparser from '../../../utils/bodyparser.js';
 
 const router = express.Router();
 
 router.post(
 	'/api/notifications/read',
+	bodyparser,
 	oapi.path({
 		description: 'Read notifications',
 		tags: ['Notification'],
