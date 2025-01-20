@@ -23,6 +23,18 @@ class NoteBuilder {
 
 		return note;
 	}
+
+	public async buildMany(notes: ObjectLiteral[]) {
+		let built: ObjectLiteral[] = [];
+
+		for (const note of notes) {
+			await this.build(note).then((e) => {
+				built.push(e);
+			});
+		}
+
+		return built;
+	}
 }
 
 export default new NoteBuilder();
