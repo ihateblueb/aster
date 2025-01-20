@@ -1,6 +1,7 @@
 import express from 'express';
 
 import AuthService from '../../../services/AuthService.js';
+import NoteBuilder from '../../../services/builders/NoteBuilder.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 import oapi from '../../../utils/apidoc.js';
@@ -45,7 +46,7 @@ router.get(
 		const auth = await AuthService.verify(req.headers.authorization);
 
 		if (await VisibilityService.canISee(note, auth.user?.id)) {
-			return res.status(200).json(note);
+			return res.status(200).json(await NoteBuilder.build(note));
 		} else {
 			return res.status(404).json({
 				message: locale.note.notFound

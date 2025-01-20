@@ -80,12 +80,8 @@ export class Note {
 	@JoinColumn({ name: 'pollId' })
 	poll: typeorm.Relation<Poll>;
 
-	@ManyToMany(() => DriveFile, (driveFile) => driveFile.notes, {
-		onDelete: 'CASCADE',
-		nullable: true
-	})
-	@JoinTable({ name: 'note_attachments' })
-	attachments: typeorm.Relation<DriveFile>[];
+	@Column({ array: true, nullable: true })
+	attachments: string;
 
 	/*
 		TODO (later): add emojis relation for emojis in post content

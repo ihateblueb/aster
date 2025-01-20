@@ -180,7 +180,7 @@ if (ConfigService.router.queue) {
 	router.use('/queue', serverAdapter.getRouter());
 }
 
-// regular routes
+// extra routes
 
 if (ConfigService.router.oapi) router.use(oapi);
 if (ConfigService.router.swagger) {

@@ -59,9 +59,6 @@ class NoteService {
 			.leftJoin('note_likes.user', 'likes_user')
 			.addSelect(UserMini('likes_user'))
 
-			// attachments
-			//.leftJoinAndSelect('note.attachments', 'attachment')
-
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.getOne();
@@ -113,9 +110,6 @@ class NoteService {
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(UserMini('like_user'))
-
-			// attachments
-			//.leftJoinAndSelect('note.attachments', 'attachment')
 
 			.where(where)
 			.orWhere(orWhere ?? where)
