@@ -42,6 +42,7 @@ class DriveService {
 
 	public async create(
 		src: string,
+		type?: string,
 		alt?: string,
 		sensitive?: boolean,
 		user?: GenericId
@@ -52,6 +53,7 @@ class DriveService {
 			id: id,
 			src: src,
 			alt: alt,
+			type: type,
 			userId: user,
 			sensitive: sensitive,
 			createdAt: new Date().toISOString()

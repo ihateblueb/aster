@@ -22,6 +22,9 @@ export class DriveFile {
 	@Column({ nullable: true })
 	alt: string;
 
+	@Column({ nullable: true })
+	type: string;
+
 	@Column({ default: false })
 	sensitive: boolean;
 

@@ -235,7 +235,7 @@
 </Dropdown>
 
 <Dropdown bind:this={addDropdown}>
-	<DropdownItem>
+	<DropdownItem on:click={() => store.showDrive.set(true)}>
 		<IconPaperclip size="var(--fs-lg)" />
 		Add file
 	</DropdownItem>

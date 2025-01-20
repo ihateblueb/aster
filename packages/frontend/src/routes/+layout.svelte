@@ -13,11 +13,13 @@
 	import playSound from '$lib/sounds.js';
 	import Notification from '$lib/components/Notification.svelte';
 	import { shortcut } from '@svelte-put/shortcut';
+	import Drive from '$lib/components/Drive.svelte';
 
 	let loggedIn = $state(false);
 	if (localstore.get('token')) loggedIn = true;
 
 	let compose: undefined | Modal = $state(undefined);
+	let drive: undefined | Modal = $state(undefined);
 
 	let activeRequests = $state(0);
 	store.activeRequests.subscribe((e) => {
@@ -27,6 +29,10 @@
 	store.showCompose.subscribe(async (e) => {
 		if (e && compose && loggedIn) await compose.open();
 		if (!e && compose) compose.close();
+	});
+	store.showDrive.subscribe(async (e) => {
+		if (e && drive && loggedIn) await drive.open();
+		if (!e && drive) drive.close();
 	});
 
 	let notifications: any[] = $state([]);
@@ -89,6 +95,25 @@
 			}
 		};
 	}
+
+	function onShortcut(event) {
+		const keyboardEvent = event.detail.originalEvent;
+
+		if (
+			(keyboardEvent.target as HTMLElement)?.tagName === 'INPUT' ||
+			(keyboardEvent.target as HTMLElement)?.tagName === 'TEXTAREA'
+		) {
+			return;
+		}
+
+		console.log(keyboardEvent);
+
+		// p
+		if (keyboardEvent.key === 'p') {
+			console.log('[keys] p');
+			store.showCompose.set(true);
+		}
+	}
 </script>
 
 <svelte:window
@@ -96,20 +121,11 @@
 		trigger: [
 			{
 				key: 'p',
-				modifier: undefined,
-				callback: () => {
-					store.showCompose.set(true);
-				}
-			},
-			{
-				key: 'r',
-				modifier: undefined,
-				callback: () => {
-					console.log('[shortcut] r');
-				}
+				modifier: undefined
 			}
 		]
 	}}
+	onshortcut={onShortcut}
 />
 
 <QueryClientProvider client={queryClient}>
@@ -126,7 +142,19 @@
 	</div>
 
 	{#if loggedIn}
-		<Modal wide compose bind:this={compose}>
+		<Modal
+			wide
+			smallerPadding
+			afterClose={() => store.showDrive.set(false)}
+			bind:this={drive}
+		>
+			<Drive />
+		</Modal>
+		<Modal
+			wide
+			afterClose={() => store.showCompose.set(false)}
+			bind:this={compose}
+		>
 			<Compose />
 		</Modal>
 	{/if}

@@ -5,10 +5,13 @@ const selfRefresh = writable(false);
 const viewRefresh = writable(false);
 
 const showCompose = writable(false);
+const showDrive = writable(false);
 const activeRequests = writable(0);
 
 const draft_replyingTo = writable('');
 const draft_repeat = writable('');
+
+const selectedFiles: Writable<any[]> = writable([]);
 
 const websocket: Writable<WebSocket | undefined> = writable();
 
@@ -18,10 +21,13 @@ class Store {
 	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or user page component
 
 	public showCompose = showCompose;
+	public showDrive = showDrive;
 	public activeRequests = activeRequests;
 
 	public draft_replyingTo = draft_replyingTo;
 	public draft_repeat = draft_repeat;
+
+	public selectedFiles = selectedFiles;
 
 	public websocket = websocket;
 }

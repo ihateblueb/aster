@@ -20,11 +20,21 @@
 					</button>
 				</div>
 			</div>
-			<img
-				src={attachment.src}
-				alt={attachment.alt}
-				title={attachment.alt}
-			/>
+			{#if attachment.type && attachment.type.startsWith('video')}
+				<video src={attachment.src} title={attachment.alt}>
+					<meta itemprop="description" content={attachment.alt} />
+				</video>
+			{:else if attachment.type && attachment.type.startsWith('audio')}
+				<audio src={attachment.src} title={attachment.alt}>
+					<meta itemprop="description" content={attachment.alt} />
+				</audio>
+			{:else}
+				<img
+					src={attachment.src}
+					alt={attachment.alt}
+					title={attachment.alt}
+				/>
+			{/if}
 		{:else}
 			<div class="hidden">
 				<Button thin on:click={() => (show = !show)}>Show media</Button>

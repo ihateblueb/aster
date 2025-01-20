@@ -7,7 +7,11 @@
 
 	let show = $state(false);
 
-	let { wide = false, compose = false } = $props();
+	let {
+		wide = false,
+		smallerPadding = false,
+		afterClose = () => {}
+	} = $props();
 
 	export async function open() {
 		if (!show) {
@@ -24,7 +28,7 @@
 	export function close() {
 		if (dialog) dialog.close();
 		show = false;
-		if (compose) store.showCompose.set(false);
+		afterClose();
 	}
 </script>
 
@@ -33,9 +37,12 @@
 {#if show}
 	<div class="modalCtn">
 		<dialog
-			class={'modal' + (show ? ' show' : '') + (wide ? ' wide' : '')}
+			class={'modal' +
+				(show ? ' show' : '') +
+				(smallerPadding ? ' smallerPadding' : '') +
+				(wide ? ' wide' : '')}
 			bind:this={dialog}
-			on:close={() => close()}
+			onclose={() => close()}
 			transition:scale={{ duration: 180, start: 0.85 }}
 		>
 			<div class="text">
@@ -50,7 +57,7 @@
 		</dialog>
 		<div
 			class="backdrop"
-			on:click={() => close()}
+			onclick={() => close()}
 			transition:fade={{ duration: 100 }}
 		></div>
 	</div>
@@ -62,10 +69,11 @@
 
 		width: 100%;
 		height: 100%;
+		max-height: 100%;
+		box-sizing: border-box;
 
 		top: 0;
 		left: 0;
-		box-sizing: border-box;
 
 		z-index: 10;
 
@@ -80,6 +88,8 @@
 			min-height: 135px;
 
 			max-width: 450px;
+			max-height: 100%;
+			box-sizing: border-box;
 
 			margin: auto;
 			padding: 20px;
@@ -103,7 +113,6 @@
 			}
 
 			.slot {
-				margin-top: 10px;
 				width: 100%;
 			}
 
@@ -113,9 +122,13 @@
 			}
 
 			&.wide {
-				max-width: 525px;
+				max-width: 625px;
 				// 20px inner padding * 2 + 20px for 10px buffer between screen edge
 				width: calc(100vw - (20px * 3));
+			}
+
+			&.smallerPadding {
+				padding: 6px !important;
 			}
 
 			&::backdrop {

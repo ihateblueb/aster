@@ -77,6 +77,7 @@ router.post(
 
 				await DriveService.create(
 					fileSrc,
+					file.mimetype,
 					undefined,
 					false,
 					auth.user.id

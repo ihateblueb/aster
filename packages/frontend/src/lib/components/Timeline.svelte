@@ -61,6 +61,7 @@
 	let {
 		type,
 		smallItems = false,
+		select = false,
 		queryKey,
 		queryFn,
 		query = $bindable(),
@@ -172,7 +173,7 @@
 				{:else if type === 'report'}
 					<Report report={object} />
 				{:else if type === 'drive'}
-					<DriveFile file={object} />
+					<DriveFile file={object} {select} />
 				{/if}
 			</div>
 		{/each}

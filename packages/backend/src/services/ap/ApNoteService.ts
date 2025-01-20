@@ -213,6 +213,7 @@ class ApNoteService {
 
 				await DriveService.create(
 					attachment.url ?? attachment.src,
+					attachment.mediaType ?? attachment.type,
 					attachment.summary ?? attachment.name,
 					Boolean(attachment.sensitive)
 				).then((e) => {
