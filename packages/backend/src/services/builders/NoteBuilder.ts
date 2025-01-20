@@ -7,16 +7,13 @@ class NoteBuilder {
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];
 
-			let fileIds: string[] = [];
 			for (const id of note.attachments) {
-				fileIds.push(id);
+				await DriveService.get({
+					id: id
+				}).then((e) => {
+					if (e) attachments.push(e);
+				});
 			}
-
-			await DriveService.get({
-				id: In(fileIds)
-			}).then((e) => {
-				attachments.push(e);
-			});
 
 			note['attachments'] = attachments;
 		}
@@ -29,7 +26,7 @@ class NoteBuilder {
 
 		for (const note of notes) {
 			await this.build(note).then((e) => {
-				built.push(e);
+				if (e) built.push(e);
 			});
 		}
 

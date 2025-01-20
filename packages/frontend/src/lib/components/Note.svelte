@@ -9,11 +9,29 @@
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
+	import NoteAttachment from '$lib/components/NoteAttachment.svelte';
 
 	let { note, expanded = false } = $props();
 
 	let cwOpen = $state(false);
 </script>
+
+{#snippet noteContent(data)}
+	<Mfm
+		content={data.content}
+		on:click={() => (!expanded ? goto('/notes/' + data.id) : () => {})}
+	/>
+	{#if note.attachments && note.attachments.length > 0}
+		<div
+			class={'attachments' +
+				(note.attachments.length > 1 ? ' multiple' : '')}
+		>
+			{#each note.attachments as attachment}
+				<NoteAttachment {attachment} />
+			{/each}
+		</div>
+	{/if}
+{/snippet}
 
 {#snippet renderNote(data, quote)}
 	<NoteHeader note={data} />
@@ -26,11 +44,7 @@
 				</Button>
 			</div>
 			{#if cwOpen}
-				<Mfm
-					content={data.content}
-					on:click={() =>
-						!expanded ? goto('/notes/' + data.id) : () => {}}
-				/>
+				{@render noteContent(data)}
 			{/if}
 		{:else}
 			{#if !expanded && note.replyingTo}
@@ -47,11 +61,7 @@
 					</a>
 				</p>
 			{/if}
-			<Mfm
-				content={data.content}
-				on:click={() =>
-					!expanded ? goto('/notes/' + data.id) : () => {}}
-			/>
+			{@render noteContent(data)}
 		{/if}
 	</div>
 	{#if quote}
@@ -158,6 +168,19 @@
 
 				a {
 					color: var(--ac1);
+				}
+			}
+
+			.attachments {
+				display: grid;
+
+				gap: 4px;
+				margin-top: 10px;
+				border-radius: var(--br-md);
+				overflow: clip;
+
+				&.multiple {
+					grid-template-columns: repeat(2, 50%);
 				}
 			}
 		}
