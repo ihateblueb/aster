@@ -26,12 +26,12 @@
 	on:change={(e) => changeToggle('useSystemFont', e.target?.checked)}
 />
 <Switch
-	label="Use rounded avatars"
+	label="Show when there are API requests are active"
 	checked={value('activeRequestsSpinner')}
 	on:change={(e) => changeToggle('activeRequestsSpinner', e.target?.checked)}
 />
 <Switch
-	label="Show when there are API requests are active"
+	label="Use rounded avatars"
 	checked={value('useRoundedAvatars')}
 	on:change={(e) => changeToggle('useRoundedAvatars', e.target?.checked)}
 />

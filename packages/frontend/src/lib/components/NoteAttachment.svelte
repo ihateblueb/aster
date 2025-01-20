@@ -1,11 +1,13 @@
 <script>
 	import { IconEyeOff } from '@tabler/icons-svelte';
 	import Button from '$lib/components/Button.svelte';
+	import localstore from '$lib/localstore';
 
 	let { attachment } = $props();
 
 	let show = $state(true);
 	if (attachment.sensitive) show = false;
+	if (localstore.get('hideAllMedia') === 'true') show = false;
 </script>
 
 {#if attachment}
@@ -37,7 +39,7 @@
 		position: relative;
 		justify-content: center;
 		align-items: center;
-		background-color: var(--bg1);
+		background-color: var(--bg1-50);
 
 		a,
 		img {

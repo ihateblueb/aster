@@ -10,10 +10,12 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import NoteAttachment from '$lib/components/NoteAttachment.svelte';
+	import localstore from '$lib/localstore';
 
 	let { note, expanded = false } = $props();
 
 	let cwOpen = $state(false);
+	if (localstore.get('uncollapseCws') === 'true') cwOpen = true;
 </script>
 
 {#snippet noteContent(data)}

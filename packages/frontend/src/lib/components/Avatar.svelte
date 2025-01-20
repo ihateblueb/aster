@@ -1,10 +1,17 @@
 <script>
+	import localstore from '$lib/localstore';
+
 	let { user, size = '45px', small = false, large = false } = $props();
+
+	let rounded = localstore.get('useRoundedAvatars') === 'true';
 </script>
 
 <a href={'/@' + user.username + (user.local ? '' : '@' + user.host)}>
 	<img
-		class={'avatar' + (small ? ' small' : '') + (large ? ' large' : '')}
+		class={'avatar' +
+			(rounded ? ' rounded' : '') +
+			(small ? ' small' : '') +
+			(large ? ' large' : '')}
 		style={`height:${size};width:${size};`}
 		src={user?.avatar ?? '/fallback/avatar.png'}
 		alt={user?.avatarAlt}
@@ -46,6 +53,10 @@
 			user-select: none;
 
 			z-index: 2;
+
+			&.rounded {
+				border-radius: 100%;
+			}
 
 			&.small {
 				border-radius: var(--br-sm);
