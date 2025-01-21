@@ -130,7 +130,7 @@
 			background-color: var(--bg2);
 			font-size: var(--fs-md);
 
-			padding: 10px 10px max(10px, env(safe-area-inset-bottom)) 10px !important;
+			padding: 12px 12px calc(12px + env(safe-area-inset-bottom)) 12px !important;
 			border-radius: var(--br-lg) var(--br-lg) 0 0 !important;
 
 			&::backdrop {

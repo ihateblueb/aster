@@ -13,8 +13,6 @@ const draft_repeat = writable('');
 
 const selectedFiles: Writable<any[]> = writable([]);
 
-const websocket: Writable<WebSocket | undefined> = writable();
-
 class Store {
 	public appReload = appReload; // full browser reload
 	public selfRefresh = selfRefresh; // refresh self widgets
@@ -28,8 +26,6 @@ class Store {
 	public draft_repeat = draft_repeat;
 
 	public selectedFiles = selectedFiles;
-
-	public websocket = websocket;
 }
 
 export default new Store();

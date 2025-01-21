@@ -27,8 +27,8 @@
 		}
 
 		&.tl {
-			height: calc((100vh - 50px));
-			padding: 0px;
+			height: calc((100vh - 50px) - (8px * 2));
+			padding: 8px;
 		}
 
 		&.centered {

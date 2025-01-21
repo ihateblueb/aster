@@ -43,6 +43,11 @@
 			background: var(--ac1-25);
 		}
 
+		&:focus-visible {
+			outline: 2px solid var(--ac1-50);
+			outline-offset: 1px;
+		}
+
 		&.danger {
 			color: var(--danger);
 
@@ -57,6 +62,12 @@
 			&:hover {
 				background: var(--warn-25);
 			}
+		}
+	}
+
+	@media screen and (max-width: 650px) {
+		.dropdownItem {
+			padding: 10px 12px;
 		}
 	}
 </style>

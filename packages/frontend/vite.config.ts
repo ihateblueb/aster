@@ -50,6 +50,10 @@ export default defineConfig({
 			'/uploads': {
 				target: apiurl,
 				changeOrigin: true
+			},
+			'/manifest.json': {
+				target: apiurl,
+				changeOrigin: true
 			}
 		}
 	},

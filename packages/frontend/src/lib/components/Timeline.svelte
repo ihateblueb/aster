@@ -14,6 +14,7 @@
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Report from '$lib/components/Report.svelte';
 	import DriveFile from '$lib/components/DriveFile.svelte';
+	import ws from '$lib/websocket.svelte';
 
 	let {
 		type,
@@ -30,7 +31,6 @@
 		retry: false,
 		queryFn: async ({ pageParam }) => await queryFn(timeline, pageParam),
 		initialPageParam: undefined,
-		refetchOnWindowFocus: false,
 		getNextPageParam: (lastPage) => {
 			console.log(
 				'[' + queryKey + '] lastTlObj',
@@ -40,45 +40,40 @@
 		}
 	});
 
-	let ws: undefined | WebSocket;
-	store.websocket.subscribe((e) => {
-		if (e) ws = e;
-	});
-
 	let additionalNotes: any[] = $state([]);
 
-	if (ws && queryKey === 'timeline') {
-		ws.send(`sub timeline:${timeline}`);
+	if (ws && ws.readyState === ws.OPEN && queryKey === 'timeline') {
+		try {
+			ws.send(`sub timeline:${timeline}`);
 
-		ws.onmessage = (e) => {
-			let message;
-			try {
-				message = JSON.parse(e.data);
-			} catch {}
+			ws.onmessage = (e) => {
+				let message;
+				try {
+					message = JSON.parse(e.data);
+				} catch {}
 
-			console.log(
-				message &&
+				console.log(
+					message &&
+						message.type === 'timeline:add' &&
+						message.timeline === timeline &&
+						message.note
+				);
+
+				if (
+					message &&
 					message.type === 'timeline:add' &&
 					message.timeline === timeline &&
 					message.note
-			);
-
-			if (
-				message &&
-				message.type === 'timeline:add' &&
-				message.timeline === timeline &&
-				message.note
-			) {
-				console.log('[' + queryKey + '] received ws note');
-				additionalNotes.unshift(message.note);
-			}
-		};
+				) {
+					console.log('[' + queryKey + '] received ws note');
+					additionalNotes.unshift(message.note);
+				}
+			};
+		} catch {}
 	}
 </script>
 
 {#if $query.isLoading}
-	<Loading />
-{:else if $query.isRefetching}
 	<Loading />
 {:else if $query.isError}
 	<Error
@@ -88,8 +83,20 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
-	<div class="scroller">
-		{#each additionalNotes as note}
+	{#each additionalNotes as note}
+		<div
+			in:fly|global={{
+				y: -10,
+				duration: 350,
+				easing: backOut
+			}}
+		>
+			<Note {note} />
+		</div>
+	{/each}
+
+	{#each $query.data.pages as results}
+		{#each results as object}
 			<div
 				in:fly|global={{
 					y: -10,
@@ -97,50 +104,33 @@
 					easing: backOut
 				}}
 			>
-				<Note {note} />
+				{#if type === 'note'}
+					{#if smallItems}
+						<NoteSimple note={object} nomargin nobg />
+					{:else}
+						<Note note={object} />
+					{/if}
+				{:else if type === 'notification'}
+					<Notification notification={object} small={smallItems} />
+				{:else if type === 'report'}
+					<Report report={object} />
+				{:else if type === 'drive'}
+					<DriveFile file={object} {select} />
+				{/if}
 			</div>
 		{/each}
+	{/each}
 
-		{#each $query.data.pages as results}
-			{#each results as object}
-				<div
-					in:fly|global={{
-						y: -10,
-						duration: 350,
-						easing: backOut
-					}}
-				>
-					{#if type === 'note'}
-						{#if smallItems}
-							<NoteSimple note={object} nomargin nobg />
-						{:else}
-							<Note note={object} />
-						{/if}
-					{:else if type === 'notification'}
-						<Notification
-							notification={object}
-							small={smallItems}
-						/>
-					{:else if type === 'report'}
-						<Report report={object} />
-					{:else if type === 'drive'}
-						<DriveFile file={object} {select} />
-					{/if}
-				</div>
-			{/each}
-		{/each}
-
-		<div class="fetchMore">
-			<Button centered on:click={() => $query.fetchNextPage()}>
-				{#if $query.isFetching}
-					<Loading size="var(--fs-lg)" />
-				{:else if $query.hasNextPage}
-					Load More
-				{:else}
-					No more
-				{/if}
-			</Button>
-		</div>
+	<div class="fetchMore">
+		<Button centered on:click={() => $query.fetchNextPage()}>
+			{#if $query.isFetching}
+				<Loading size="var(--fs-lg)" />
+			{:else if $query.hasNextPage}
+				Load More
+			{:else}
+				No more
+			{/if}
+		</Button>
 	</div>
 {/if}
 
@@ -150,7 +140,6 @@
 		width: 100%;
 		overflow: auto;
 		box-sizing: border-box;
-		padding: 8px;
 	}
 
 	.fetchMore {

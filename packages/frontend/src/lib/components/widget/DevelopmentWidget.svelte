@@ -17,7 +17,6 @@
 	let sAppReload: undefined | Boolean = $state();
 	let sViewRefresh: undefined | Boolean = $state();
 	let sSelfRefresh: undefined | Boolean = $state();
-	let ws: undefined | WebSocket = $state();
 
 	Store.activeRequests.subscribe((e) => {
 		sActiveRequests = e;
@@ -31,20 +30,6 @@
 	Store.selfRefresh.subscribe((e) => {
 		sSelfRefresh = e;
 	});
-	Store.websocket.subscribe((e) => {
-		if (e) ws = e;
-	});
-
-	function wsStateToString() {
-		if (ws) {
-			if (ws.readyState === ws.CONNECTING) return 'connecting';
-			if (ws.readyState === ws.OPEN) return 'open';
-			if (ws.readyState === ws.CLOSED) return 'closed';
-			if (ws.readyState === ws.CLOSING) return 'closing';
-		}
-
-		return 'unknown';
-	}
 </script>
 
 <WidgetBase header>
@@ -58,10 +43,6 @@
 	<Input bind:value={ckey} wide placeholder="key" />
 	<Input bind:value={cval} wide placeholder="val" />
 	<Button on:click={() => setCookie()}>set</Button>
-	<br />
-	<p>
-		websocket {wsStateToString()}
-	</p>
 	<br />
 	<p>
 		activeRequests: {sActiveRequests}

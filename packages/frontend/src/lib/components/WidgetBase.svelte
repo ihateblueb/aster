@@ -40,7 +40,7 @@
 		padding: 12px 16px;
 
 		&.tl {
-			padding: 0px;
+			padding: 8px;
 		}
 
 		&:not(.transparent) {

@@ -14,6 +14,7 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import { shortcut } from '@svelte-put/shortcut';
 	import Drive from '$lib/components/Drive.svelte';
+	import ws from '$lib/websocket.svelte';
 
 	let loggedIn = $state(false);
 	if (localstore.get('token')) loggedIn = true;
@@ -46,54 +47,6 @@
 		setTimeout(() => {
 			notifications = notifications.filter((e) => e.id !== object.id);
 		}, 5000);
-	}
-
-	if (loggedIn) {
-		let ws = new WebSocket(
-			(page.url.protocol === 'https:' ? 'wss://' : 'ws://') +
-				page.url.host +
-				'/api/streaming?token=' +
-				localstore.get('token')
-		);
-
-		ws.onopen = () => {
-			console.log('[ws] opened');
-			ws.send('ping');
-			store.websocket.set(ws);
-		};
-
-		ws.onclose = () => {
-			console.log('[ws] closed');
-			store.websocket.set(undefined);
-		};
-
-		ws.onmessage = (e) => {
-			console.log('[ws] server: ' + e.data);
-
-			let message;
-			try {
-				message = JSON.parse(e.data);
-			} catch {}
-
-			if (message) {
-				if (message.type === 'greet') {
-					// connected, say something back!
-					ws.send('sub timeline:home');
-				} else if (message.type === 'notification:add') {
-					addNotification(message.notification);
-				}
-
-				/*
-				*  else if (message.type === 'echo') {
-					addNotification({
-						id: uuid.v4(),
-						type: 'debug',
-						note: { content: 'echo ' + message?.data }
-					});
-				}
-				* */
-			}
-		};
 	}
 
 	function onShortcut(event) {

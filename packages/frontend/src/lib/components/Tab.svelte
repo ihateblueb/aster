@@ -13,7 +13,6 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
-
 		position: relative;
 
 		background: none;
@@ -24,6 +23,7 @@
 		font-size: 13px;
 
 		height: 50px;
+		width: max-content;
 
 		&.short {
 			height: 45px;

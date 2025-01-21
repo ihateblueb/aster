@@ -26,16 +26,12 @@
 	import Timeline from '$lib/components/Timeline.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
+	import ws from '$lib/websocket.svelte';
 
 	let query: any = $state();
 
 	let timeline: string = $state('home');
 	timeline = localstore.get('homeTab');
-
-	let ws: undefined | WebSocket = $state();
-	store.websocket.subscribe((e) => {
-		if (e) ws = e;
-	});
 
 	function updateTimeline(to: string) {
 		if (ws) ws.send(`unsub timeline:${timeline}`);
