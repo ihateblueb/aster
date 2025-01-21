@@ -16,6 +16,7 @@ import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
+import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
 import WebsocketService from './WebsocketService.js';
 
@@ -203,10 +204,14 @@ class NoteService {
 
 		const id = IdService.generate();
 
+		const author = await UserService.get({
+			id: user
+		});
+
 		let note = {
 			id: id,
 			apId: apId ?? instanceUrl.href + 'notes/' + id,
-			userId: user,
+			userId: author.id,
 			cw: SanitizerService.sanitize(cw),
 			content: SanitizerService.sanitize(content),
 			visibility: visibility,
@@ -312,24 +317,21 @@ class NoteService {
 
 		const newNote = await this.get({ id: note.id });
 
-		if (
-			repeat &&
-			repeatedNote &&
-			repeatedNote.user.local &&
-			(!content || !attachments)
-		) {
-			const announce = await ApAnnounceRenderer.render(
-				newNote,
-				repeatedNote.apId
-			);
+		if (author.local) {
+			if (repeat && repeatedNote && (!content || !attachments)) {
+				const announce = await ApAnnounceRenderer.render(
+					newNote,
+					repeatedNote.apId
+				);
 
-			await ApDeliverService.deliverToFollowers(announce, user);
-		} else if (newNote.user.local) {
-			const create = ApCreateRenderer.render(
-				await ApNoteRenderer.render(newNote)
-			);
+				await ApDeliverService.deliverToFollowers(announce, user);
+			} else if (newNote.user.local) {
+				const create = ApCreateRenderer.render(
+					await ApNoteRenderer.render(newNote)
+				);
 
-			await ApDeliverService.deliverToFollowers(create, user);
+				await ApDeliverService.deliverToFollowers(create, user);
+			}
 		}
 
 		if (note.visibility !== 'direct') {

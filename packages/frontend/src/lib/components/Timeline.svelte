@@ -9,51 +9,11 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Note from '$lib/components/Note.svelte';
-	import store from '$lib/store.js';
+	import store from '$lib/store';
 
-	import {
-		blur,
-		crossfade,
-		draw,
-		fade,
-		fly,
-		scale,
-		slide
-	} from 'svelte/transition';
+	import { fly } from 'svelte/transition';
+	import { backOut } from 'svelte/easing';
 
-	import {
-		backIn,
-		backInOut,
-		backOut,
-		bounceIn,
-		bounceInOut,
-		bounceOut,
-		circIn,
-		circInOut,
-		circOut,
-		cubicIn,
-		cubicInOut,
-		cubicOut,
-		elasticIn,
-		elasticInOut,
-		elasticOut,
-		expoIn,
-		expoInOut,
-		expoOut,
-		linear,
-		quadIn,
-		quadInOut,
-		quadOut,
-		quartIn,
-		quartInOut,
-		quartOut,
-		quintIn,
-		quintInOut,
-		quintOut,
-		sineIn,
-		sineInOut,
-		sineOut
-	} from 'svelte/easing';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Report from '$lib/components/Report.svelte';
 	import DriveFile from '$lib/components/DriveFile.svelte';

@@ -96,7 +96,7 @@
 			(repeatable ? '' : ' unrepeatable')}
 	>
 		<button
-			on:click={(e) => (!repeatable ? repeatDropdown.open(e) : undefined)}
+			on:click={(e) => (repeatable ? repeatDropdown.open(e) : undefined)}
 		>
 			<span class="icon">
 				{#if repeatable}
