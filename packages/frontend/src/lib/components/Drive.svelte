@@ -81,6 +81,8 @@
 		.body {
 			height: 500px;
 			overflow-y: scroll;
+
+			padding: 0 6px;
 		}
 	}
 </style>

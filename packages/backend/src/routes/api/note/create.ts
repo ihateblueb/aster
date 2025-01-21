@@ -67,7 +67,8 @@ router.post(
 			parsedBody.content,
 			parsedBody.visibility,
 			parsedBody.repeat,
-			parsedBody.replyingTo
+			parsedBody.replyingTo,
+			parsedBody.attachments
 		)
 			.then(async (e) => {
 				if (e.error) {

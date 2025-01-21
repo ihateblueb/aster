@@ -13,8 +13,6 @@
 	let selected = $state(false);
 
 	let selectedFiles = get(store.selectedFiles);
-	console.log(selectedFiles);
-
 	if (selectedFiles.some((e) => e.id === file.id)) selected = true;
 </script>
 
@@ -30,10 +28,9 @@
 
 				selected = true;
 			} else if (selected) {
-				store.selectedFiles.update((e) => {
-					e.filter((f) => f.id !== file.id);
-					return e;
-				});
+				store.selectedFiles.update((e) =>
+					e.filter((f) => f.id !== file.id)
+				);
 
 				selected = false;
 			}
@@ -69,6 +66,7 @@
 		background: none;
 		border: none;
 		border-radius: var(--br-md);
+		width: 100%;
 
 		text-align: left;
 		font-family: var(--font);

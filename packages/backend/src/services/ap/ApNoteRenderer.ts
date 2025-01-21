@@ -1,10 +1,14 @@
+import { ObjectLiteral } from 'typeorm';
+
 import context from '../../static/context.js';
+import DriveService from '../DriveService.js';
 import MfmService from '../MfmService.js';
 import UserService from '../UserService.js';
+import ApDocumentRenderer from './ApDocumentRenderer.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
-	public async render(note): Promise<ApObject> {
+	public async render(note: ObjectLiteral): Promise<ApObject> {
 		let apNote = {
 			'@context': context,
 
@@ -21,9 +25,10 @@ class ApNoteRenderer {
 			content: note.content,
 			_misskey_content: note.content,
 
-			published: note.createdAt,
-
+			attachment: [],
 			tag: [],
+
+			published: note.createdAt,
 
 			visibility: note.visibility,
 			to: [],
@@ -62,10 +67,26 @@ class ApNoteRenderer {
 				});
 		}
 
-		const visibility = await ApVisibilityService.render(note.user.id, note);
+		if (note.attachments) {
+			for (let attachment of note.attachments) {
+				let file = await DriveService.get({ id: attachment });
 
-		apNote.to = visibility.to;
-		apNote.cc = visibility.cc;
+				if (file)
+					apNote.attachment.push(
+						ApDocumentRenderer.render(
+							file.src,
+							file.type,
+							file.alt,
+							file.sensitive
+						)
+					);
+			}
+		}
+
+		const { to, cc } = await ApVisibilityService.render(note.user.id, note);
+
+		apNote.to = to;
+		apNote.cc = cc;
 
 		return apNote;
 	}

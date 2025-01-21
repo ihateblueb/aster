@@ -11,6 +11,7 @@ import ApDeliverService from './ap/ApDeliverService.js';
 import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
+import DriveService from './DriveService.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
@@ -155,14 +156,26 @@ class NoteService {
 		visibility?: string,
 		repeat?: GenericId,
 		replyingTo?: GenericId,
+		attachments?: GenericId[],
 		apId?: ApId
 	) {
 		// if repeat, missing content is allowed. if content, it's a quote.
-		if (!repeat && content && content.length <= 0)
+		if (
+			(!repeat || (attachments && attachments.length > 0)) &&
+			content &&
+			content.length <= 0
+		)
 			return {
 				error: true,
 				status: 400,
 				message: locale.note.contentTooShort
+			};
+
+		if (attachments && attachments.length > 12)
+			return {
+				error: true,
+				status: 400,
+				message: 'Too many attachments'
 			};
 
 		if (cw && cw.length > ConfigService.limits.soft.cw)
@@ -197,7 +210,8 @@ class NoteService {
 			cw: SanitizerService.sanitize(cw),
 			content: SanitizerService.sanitize(content),
 			visibility: visibility,
-			createdAt: new Date().toISOString()
+			createdAt: new Date().toISOString(),
+			attachments: []
 		};
 
 		let replyingToNote: ObjectLiteral;
@@ -257,6 +271,25 @@ class NoteService {
 			}
 		}
 
+		console.log(attachments);
+
+		if (attachments && attachments.length > 0) {
+			for (const attachment of attachments) {
+				let file = await DriveService.get({
+					id: attachment
+				});
+
+				if (!file)
+					return {
+						error: true,
+						status: 400,
+						message: 'File ' + attachment + ' not found'
+					};
+
+				note.attachments.push(file.id);
+			}
+		}
+
 		const result = await db
 			.getRepository('note')
 			.insert(note)
@@ -279,7 +312,12 @@ class NoteService {
 
 		const newNote = await this.get({ id: note.id });
 
-		if (repeat && repeatedNote && repeatedNote.user.local && !content) {
+		if (
+			repeat &&
+			repeatedNote &&
+			repeatedNote.user.local &&
+			(!content || !attachments)
+		) {
 			const announce = await ApAnnounceRenderer.render(
 				newNote,
 				repeatedNote.apId
@@ -370,10 +408,9 @@ class NoteService {
 				message: 'Note not found'
 			};
 
-		// todo: right code seems it should be 403 maybe
 		if (note.visibility !== 'direct' || note.visibility !== 'followers')
 			return {
-				status: 400,
+				status: 403,
 				message: 'Cannot repeat'
 			};
 
@@ -407,6 +444,8 @@ class NoteService {
 				'',
 				visibility ?? 'public',
 				noteId,
+				undefined,
+				undefined,
 				apId
 			)
 				.then((e) => {

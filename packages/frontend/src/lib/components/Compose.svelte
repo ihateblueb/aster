@@ -22,6 +22,7 @@
 	import Dropdown from './Dropdown.svelte';
 	import DropdownItem from './DropdownItem.svelte';
 	import playSound from '$lib/sounds.js';
+	import NoteAttachment from '$lib/components/NoteAttachment.svelte';
 
 	let addDropdown: undefined | Dropdown = $state();
 	let visibilityDropdown: undefined | Dropdown = $state();
@@ -44,8 +45,11 @@
 		content: '',
 		visibility: 'public',
 		repeat: '',
-		replyingTo: ''
+		replyingTo: '',
+		attachments: ['']
 	});
+
+	let attatchments: string[] = $state([]);
 
 	function resetVisibility() {
 		note.visibility = localstore.get('defaultVisibility');
@@ -53,6 +57,8 @@
 
 	function resetNote() {
 		[note.cw, note.content, note.repeat, note.replyingTo] = '';
+		note.attachments = [''];
+		attatchments = [];
 		resetVisibility();
 	}
 
@@ -115,6 +121,19 @@
 		quotingNote = undefined;
 		resetVisibility();
 	}
+
+	store.selectedFiles.subscribe(async (e) => {
+		if (e) {
+			attatchments = e;
+			note.attachments = e.map((f) => {
+				return f.id;
+			});
+		}
+	});
+
+	function removeAttachment(id: string) {
+		store.selectedFiles.update((e) => e.filter((f) => f.id !== id));
+	}
 </script>
 
 <div class="compose">
@@ -154,6 +173,30 @@
 	<Input placeholder="Content warning" bind:value={note.cw} wide></Input>
 	<Input placeholder="What's going on?" bind:value={note.content} wide big
 	></Input>
+
+	{#if attatchments && attatchments.length > 0}
+		<div class="attachments">
+			{#each attatchments as attachment}
+				<!--
+				{#if attachment.type && attachment.type.startsWith('video')}
+					video
+				{:else if attachment.type && attachment.type.startsWith('audio')}
+					audio
+				{:else}
+
+				{/if}
+				-->
+				<NoteAttachment small {attachment}>
+					<button
+						class="removeAttachment"
+						on:click={() => removeAttachment(attachment.id)}
+					>
+						<IconX size="var(--fs-lg)" />
+					</button>
+				</NoteAttachment>
+			{/each}
+		</div>
+	{/if}
 
 	{#if note.repeat && quotingNote}
 		<div class="quoteBox">
@@ -265,6 +308,16 @@
 				}
 			}
 		}
+
+		.attachments {
+			display: flex;
+			flex-direction: column;
+			gap: 4px;
+			margin-top: 10px;
+			border-radius: var(--br-md);
+			overflow: clip;
+		}
+
 		.btm,
 		.quoteBox {
 			margin-top: 10px;
@@ -303,6 +356,26 @@
 				color: var(--tx3);
 				font-size: var(--fs-sm);
 			}
+		}
+	}
+
+	.removeAttachment {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		border: none;
+		background-color: var(--danger-25);
+		backdrop-filter: blur(var(--blur-sm));
+		border-radius: var(--br-sm);
+		color: var(--danger);
+		padding: 4px;
+
+		transition: 0.1s;
+		cursor: pointer;
+
+		&:hover {
+			color: var(--danger-50);
 		}
 	}
 </style>

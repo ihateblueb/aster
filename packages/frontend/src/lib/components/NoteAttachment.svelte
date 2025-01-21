@@ -3,7 +3,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import localstore from '$lib/localstore';
 
-	let { attachment } = $props();
+	let { attachment, small = false } = $props();
 
 	let show = $state(true);
 	if (attachment.sensitive) show = false;
@@ -11,7 +11,7 @@
 </script>
 
 {#if attachment}
-	<div class="attachment">
+	<div class={'attachment' + (small ? ' small' : '')}>
 		{#if show}
 			<div class="float">
 				<div class="left">
@@ -19,13 +19,16 @@
 						<IconEyeOff size="var(--fs-lg)" />
 					</button>
 				</div>
+				<div class="right">
+					<slot></slot>
+				</div>
 			</div>
 			{#if attachment.type && attachment.type.startsWith('video')}
-				<video src={attachment.src} title={attachment.alt}>
+				<video src={attachment.src} title={attachment.alt} controls>
 					<meta itemprop="description" content={attachment.alt} />
 				</video>
 			{:else if attachment.type && attachment.type.startsWith('audio')}
-				<audio src={attachment.src} title={attachment.alt}>
+				<audio src={attachment.src} title={attachment.alt} controls>
 					<meta itemprop="description" content={attachment.alt} />
 				</audio>
 			{:else}
@@ -52,12 +55,27 @@
 		background-color: var(--bg1-50);
 
 		a,
-		img {
+		img,
+		video,
+		audio {
 			width: 100%;
 			height: 100%;
 			max-height: 350px;
 			min-height: 100px;
 			object-fit: contain;
+		}
+
+		&.small {
+			background-color: var(--bg3-25);
+
+			a,
+			img {
+				max-height: 100px;
+			}
+
+			.hidden {
+				height: 100px;
+			}
 		}
 
 		.hidden {
@@ -88,11 +106,17 @@
 					padding: 4px;
 
 					transition: 0.1s;
+					cursor: pointer;
 
 					&:hover {
 						color: var(--tx3);
 					}
 				}
+			}
+			.right {
+				position: absolute;
+				top: 4px;
+				right: 4px;
 			}
 		}
 	}
