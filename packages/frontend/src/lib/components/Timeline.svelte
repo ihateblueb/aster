@@ -6,7 +6,6 @@
 	import Loading from '$lib/components/Loading.svelte';
 	import Notification from '$lib/components/Notification.svelte';
 	import Note from '$lib/components/Note.svelte';
-	import store from '$lib/store';
 
 	import { fly } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
@@ -43,33 +42,32 @@
 	let additionalNotes: any[] = $state([]);
 
 	if (ws && ws.readyState === ws.OPEN && queryKey === 'timeline') {
-		try {
-			ws.send(`sub timeline:${timeline}`);
+		ws.send(`sub timeline:${timeline}`);
 
-			ws.onmessage = (e) => {
-				let message;
-				try {
-					message = JSON.parse(e.data);
-				} catch {}
+		ws.onmessage = (e) => {
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
 
-				console.log(
-					message &&
-						message.type === 'timeline:add' &&
-						message.timeline === timeline &&
-						message.note
-				);
-
-				if (
-					message &&
+			console.log(
+				'add to tl ',
+				message &&
 					message.type === 'timeline:add' &&
 					message.timeline === timeline &&
 					message.note
-				) {
-					console.log('[' + queryKey + '] received ws note');
-					additionalNotes.unshift(message.note);
-				}
-			};
-		} catch {}
+			);
+
+			if (
+				message &&
+				message.type === 'timeline:add' &&
+				message.timeline === timeline &&
+				message.note
+			) {
+				console.log('[' + queryKey + '] received ws note');
+				additionalNotes.unshift(message.note);
+			}
+		};
 	}
 </script>
 

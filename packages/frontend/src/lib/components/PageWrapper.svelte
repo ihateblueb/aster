@@ -13,22 +13,37 @@
 
 <style lang="scss" scoped>
 	.pageWrapper {
-		height: calc(100vh - 50px);
+		display: block;
+		position: relative;
+		box-sizing: border-box;
+
+		--viewHeight: 100vh;
+		--pageHeader: 50px;
+		--safeArea: env(safe-area-inset-bottom);
+		--padding: 12px;
+
+		/*
+			iphone with notch:
+			this creates too big of a bottom gap, but it sits a bit above the home bar.
+
+			firefox, desktop:
+			looks just fine
+		*/
+		--removed: (var(--pageHeader) + var(--safeArea));
+
+		padding: var(--padding);
+		height: calc(var(--viewHeight) - var(--removed));
 		overflow-y: scroll;
 
 		background: var(--bg2);
-
 		border-radius: var(--br-lg) var(--br-lg) 0 0;
 
-		&:not(.nm) {
-			// minus PageHeader, minus top and bottom padding
-			height: calc((100vh - 50px) - (12px * 2));
-			padding: 12px;
+		&.nm {
+			--padding: 0px;
 		}
 
 		&.tl {
-			height: calc((100vh - 50px) - (8px * 2));
-			padding: 8px;
+			--padding: 8px;
 		}
 
 		&.centered {

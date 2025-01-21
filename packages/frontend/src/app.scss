@@ -163,11 +163,8 @@ body {
 	color: var(--tx2);
 	background-color: var(--bg1);
 
-	.app {
-		display: flex;
-		justify-content: center;
-		width: 100%;
-	}
+	width: 100%;
+	height: 100%;
 
 	main {
 		min-width: 200px;

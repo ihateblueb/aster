@@ -1,11 +1,9 @@
 <script lang="ts">
 	import {
 		IconChartBubble,
-		IconDots,
 		IconDotsVertical,
 		IconHome,
 		IconPlanet,
-		IconRelationManyToMany,
 		IconReload,
 		IconUsers
 	} from '@tabler/icons-svelte';
@@ -14,15 +12,9 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import localstore from '$lib/localstore';
 	import getTimeline from '$lib/api/timeline';
-	import Note from '$lib/components/Note.svelte';
-	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
-	import Error from '$lib/components/Error.svelte';
 	import Tab from '$lib/components/Tab.svelte';
-	import Loading from '$lib/components/Loading.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import queryclient from '$lib/queryclient';
-	import store from '$lib/store';
-	import { getContext } from 'svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
