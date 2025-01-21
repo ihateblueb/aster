@@ -208,13 +208,13 @@
 				</p>
 				<div class="counts">
 					<span class="count">
-						<b>0</b> notes
+						<b>{$query?.data?.stats?.noteCount ?? 0}</b> notes
 					</span>
 					<span class="count">
-						<b>0</b> following
+						<b>{$query?.data?.stats?.followingCount ?? 0}</b> following
 					</span>
 					<span class="count">
-						<b>0</b> followers
+						<b>{$query?.data?.stats?.followersCount ?? 0}</b> followers
 					</span>
 				</div>
 			</div>

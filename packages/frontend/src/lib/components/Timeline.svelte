@@ -1,10 +1,7 @@
 <script lang="ts">
-	import localstore from '$lib/localstore.js';
 	import { createInfiniteQuery } from '@tanstack/svelte-query';
-	import getNotifications from '$lib/api/notifications/get.js';
-	import queryclient from '$lib/queryclient.js';
+
 	import Error from '$lib/components/Error.svelte';
-	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Loading from '$lib/components/Loading.svelte';
 	import Notification from '$lib/components/Notification.svelte';
@@ -77,16 +74,6 @@
 			}
 		};
 	}
-
-	$effect(() => {
-		console.log(
-			'[' +
-				queryKey +
-				'] clearing additional notes, new timeline ' +
-				timeline
-		);
-		additionalNotes = [];
-	});
 </script>
 
 {#if $query.isLoading}
@@ -101,20 +88,8 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
-	{#each additionalNotes as note}
-		<div
-			in:fly|global={{
-				y: -10,
-				duration: 350,
-				easing: backOut
-			}}
-		>
-			<Note {note} />
-		</div>
-	{/each}
-
-	{#each $query.data.pages as results}
-		{#each results as object}
+	<div class="scroller">
+		{#each additionalNotes as note}
 			<div
 				in:fly|global={{
 					y: -10,
@@ -122,37 +97,62 @@
 					easing: backOut
 				}}
 			>
-				{#if type === 'note'}
-					{#if smallItems}
-						<NoteSimple note={object} nomargin nobg />
-					{:else}
-						<Note note={object} />
-					{/if}
-				{:else if type === 'notification'}
-					<Notification notification={object} small={smallItems} />
-				{:else if type === 'report'}
-					<Report report={object} />
-				{:else if type === 'drive'}
-					<DriveFile file={object} {select} />
-				{/if}
+				<Note {note} />
 			</div>
 		{/each}
-	{/each}
 
-	<div class="fetchMore">
-		<Button centered on:click={() => $query.fetchNextPage()}>
-			{#if $query.isFetching}
-				<Loading size="var(--fs-lg)" />
-			{:else if $query.hasNextPage}
-				Load More
-			{:else}
-				No more
-			{/if}
-		</Button>
+		{#each $query.data.pages as results}
+			{#each results as object}
+				<div
+					in:fly|global={{
+						y: -10,
+						duration: 350,
+						easing: backOut
+					}}
+				>
+					{#if type === 'note'}
+						{#if smallItems}
+							<NoteSimple note={object} nomargin nobg />
+						{:else}
+							<Note note={object} />
+						{/if}
+					{:else if type === 'notification'}
+						<Notification
+							notification={object}
+							small={smallItems}
+						/>
+					{:else if type === 'report'}
+						<Report report={object} />
+					{:else if type === 'drive'}
+						<DriveFile file={object} {select} />
+					{/if}
+				</div>
+			{/each}
+		{/each}
+
+		<div class="fetchMore">
+			<Button centered on:click={() => $query.fetchNextPage()}>
+				{#if $query.isFetching}
+					<Loading size="var(--fs-lg)" />
+				{:else if $query.hasNextPage}
+					Load More
+				{:else}
+					No more
+				{/if}
+			</Button>
+		</div>
 	</div>
 {/if}
 
 <style lang="scss">
+	.scroller {
+		height: 100%;
+		width: 100%;
+		overflow: auto;
+		box-sizing: border-box;
+		padding: 8px;
+	}
+
 	.fetchMore {
 		display: flex;
 		align-items: center;

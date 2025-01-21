@@ -40,16 +40,23 @@
 
 	// note state
 
-	let note = $state({
+	let note: {
+		cw: string;
+		content: string;
+		visibility: string;
+		repeat: string;
+		replyingTo: string;
+		attachments: string[];
+	} = $state({
 		cw: '',
 		content: '',
 		visibility: 'public',
 		repeat: '',
 		replyingTo: '',
-		attachments: ['']
+		attachments: []
 	});
 
-	let attatchments: string[] = $state([]);
+	let attachments: string[] = $state([]);
 
 	function resetVisibility() {
 		note.visibility = localstore.get('defaultVisibility');
@@ -57,8 +64,8 @@
 
 	function resetNote() {
 		[note.cw, note.content, note.repeat, note.replyingTo] = '';
-		note.attachments = [''];
-		attatchments = [];
+		note.attachments = [];
+		attachments = [];
 		resetVisibility();
 	}
 
@@ -124,7 +131,7 @@
 
 	store.selectedFiles.subscribe(async (e) => {
 		if (e) {
-			attatchments = e;
+			attachments = e;
 			note.attachments = e.map((f) => {
 				return f.id;
 			});
@@ -133,6 +140,7 @@
 
 	function removeAttachment(id: string) {
 		store.selectedFiles.update((e) => e.filter((f) => f.id !== id));
+		attachments = attachments.filter((f) => f !== id);
 	}
 </script>
 
@@ -174,9 +182,9 @@
 	<Input placeholder="What's going on?" bind:value={note.content} wide big
 	></Input>
 
-	{#if attatchments && attatchments.length > 0}
+	{#if attachments && attachments.length > 0}
 		<div class="attachments">
-			{#each attatchments as attachment}
+			{#each attachments as attachment}
 				<!--
 				{#if attachment.type && attachment.type.startsWith('video')}
 					video

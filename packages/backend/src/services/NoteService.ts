@@ -121,6 +121,12 @@ class NoteService {
 			.getMany();
 	}
 
+	public async count(where: where) {
+		return await db.getRepository('note').count({
+			where: where
+		});
+	}
+
 	public async delete(where: where) {
 		const note = await this.get(where);
 		console.log(note);

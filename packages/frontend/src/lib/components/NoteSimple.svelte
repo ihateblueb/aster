@@ -6,7 +6,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 
-	let { note, nobg, nomargin } = $props();
+	let { note, nobg = false, nomargin = false } = $props();
 
 	let cwOpen = $state(false);
 </script>

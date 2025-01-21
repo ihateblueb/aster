@@ -1,5 +1,6 @@
 import express from 'express';
 
+import UserBuilder from '../../../services/builders/UserBuilder.js';
 import UserService from '../../../services/UserService.js';
 import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
@@ -40,7 +41,7 @@ router.get(
 				message: locale.user.notFound
 			});
 
-		return res.status(200).json(user);
+		return res.status(200).json(await UserBuilder.build(user));
 	}
 );
 
