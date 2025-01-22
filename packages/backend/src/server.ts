@@ -1,12 +1,20 @@
 import * as http from 'node:http';
+import path from 'node:path';
 
+import accepts from '@fastify/accepts';
+import auth from '@fastify/auth';
+import autoload from '@fastify/autoload';
+import cors from '@fastify/cors';
+import ratelimit from '@fastify/rate-limit';
+import swagger from '@fastify/swagger';
+import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
-import express from 'express';
+import Fastify from 'fastify';
 
 import pkg from '../../../package.json' with { type: 'json' };
+import AuthService from './services/AuthService.js';
 import ConfigService from './services/ConfigService.js';
 import MetricsService from './services/MetricsService.js';
-import RouterService from './services/RouterService.js';
 import SetupService from './services/SetupService.js';
 import WebsocketService from './services/WebsocketService.js';
 import WorkerService from './services/WorkerService.js';
@@ -47,24 +55,57 @@ WorkerService.backfill.on('failed', (job) => {
 	logger.error('backfill', 'job ' + job.id + ' failed');
 });
 
-const app = express();
+const fastify = Fastify({
+	logger: true
+});
 
-app.use('/', RouterService);
+await fastify
+	.register(accepts)
+	.register(cors)
+	.register(ratelimit, {
+		max: 100,
+		timeWindow: '1 minute'
+	})
+	// docs
+	.register(swagger, {
+		openapi: {
+			info: {
+				title: 'Aster Route Reference',
+				version: pkg.version
+			}
+		}
+	})
+	.register(apidoc, {
+		routePrefix: '/api-doc'
+	})
+	// auth
+	.addHook('preParsing', async (req) => {
+		req['auth'] = {
+			user: undefined
+		};
+	})
+	.decorate('requireAuth', async (req, reply) => {
+		let auth = await AuthService.verify(req.headers.authorization);
+		if (auth.error) throw new Error(auth.message);
+		req.auth = auth;
+	})
+	.decorate('optionalAuth', async (req, reply, done) => {
+		let auth = await AuthService.verify(req.headers.authorization);
+		req.auth = auth;
+	})
+	.register(auth)
+	// routes
+	.register(autoload, {
+		dir: path.join(process.cwd(), 'built', 'routes')
+	});
 
-const server = http.createServer(app);
+await fastify.ready();
 
-server.on('upgrade', (request, socket, head) =>
-	WebsocketService.server(request, socket, head)
-);
-
-server.listen(ConfigService.port, () => {
-	logger.done(
-		'boot',
-		'worker ' +
-			(cluster.isPrimary ? '*' : cluster.worker.id) +
-			' listening on ' +
-			ConfigService.port
-	);
+fastify.listen({ port: ConfigService.port }, function (err, address) {
+	if (err) {
+		fastify.log.error(err);
+		process.exit(1);
+	}
 });
 
 async function shutdown() {
@@ -74,7 +115,7 @@ async function shutdown() {
 	WebsocketService.userEmitter.removeAllListeners();
 	logger.debug('exit', 'websocket events closed');
 
-	server.closeAllConnections();
+	fastify.server.closeAllConnections();
 	logger.debug('exit', 'http server closed');
 
 	await WorkerService.inbox.close();
