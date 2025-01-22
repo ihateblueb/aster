@@ -3,7 +3,6 @@ import { FromSchema } from 'json-schema-to-ts';
 import { ArrayContains, LessThan } from 'typeorm';
 
 import ConfigService from '../../../services/ConfigService.js';
-import NotificationService from '../../../services/NotificationService.js';
 import TimelineService from '../../../services/TimelineService.js';
 
 export default plugin(async (fastify) => {

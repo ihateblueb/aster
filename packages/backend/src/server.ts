@@ -73,6 +73,14 @@ await fastify
 			info: {
 				title: 'Aster Route Reference',
 				version: pkg.version
+			},
+			components: {
+				securitySchemes: {
+					header: {
+						type: 'http',
+						scheme: 'bearer'
+					}
+				}
 			}
 		}
 	})
