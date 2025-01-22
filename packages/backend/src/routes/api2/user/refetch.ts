@@ -1,7 +1,9 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
+import ApActorService from '../../../services/ap/ApActorService.js';
 import UserService from '../../../services/UserService.js';
+import locale from '../../../utils/locale.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -18,17 +20,20 @@ export default plugin(async (fastify) => {
 	fastify.post<{
 		Params: FromSchema<typeof schema.params>;
 	}>(
-		'/api/user/:id/bite',
+		'/api/user/:id/refetch',
 		{
 			schema: schema,
 			preHandler: fastify.auth([fastify.requireAuth])
 		},
 		async (req, reply) => {
-			return await UserService.bite(req.params.id, req.auth.user.id).then(
-				(e) => {
-					return reply.status(e.status).send({ message: e.message });
-				}
-			);
+			const user = await UserService.get({ id: req.params.id });
+
+			if (!user) return reply.status(404).send();
+
+			return await ApActorService.refetch(user.apId).then((e) => {
+				if (e) return reply.status(200).send(e);
+				return reply.status(500).send();
+			});
 		}
 	);
 });

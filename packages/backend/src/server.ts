@@ -10,6 +10,7 @@ import swagger from '@fastify/swagger';
 import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
 import Fastify from 'fastify';
+import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import AuthService from './services/AuthService.js';
