@@ -36,7 +36,7 @@ export default plugin(async (fastify) => {
 				req.auth.user.id,
 				true,
 				req.body.visibility
-			).then(async (e) => {
+			).then((e) => {
 				if (e.error) return reply.status(e.status).send();
 				return reply.status(200).send(e);
 			});

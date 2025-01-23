@@ -22,7 +22,7 @@ export default plugin(async (fastify) => {
 		'/api/note/:id',
 		{
 			schema: schema,
-			preHandler: fastify.auth([fastify.requireAuth])
+			preHandler: fastify.auth([fastify.optionalAuth])
 		},
 		async (req, reply) => {
 			const note = await NoteService.get({ id: req.params.id });
