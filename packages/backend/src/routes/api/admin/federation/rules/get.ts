@@ -1,47 +1,24 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
-import AuthService from '../../../../../services/AuthService.js';
 import ModeratedInstanceService from '../../../../../services/ModeratedInstanceService.js';
-import oapi from '../../../../../utils/apidoc.js';
-import locale from '../../../../../utils/locale.js';
 
-const router = express.Router();
+export default plugin(async (fastify) => {
+	const schema = {
+		tags: ['Admin']
+	} as const;
 
-router.get(
-	'/api/admin/federation/rules',
-	oapi.path({
-		description: 'Get federation rules',
-		tags: ['Admin'],
-		security: [{ auth: [] }],
-		responses: {
-			200: {
-				description: 'Return federation rules.'
-			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			500: { $ref: '#/components/responses/error-500' }
+	fastify.get(
+		'/api/admin/federation/rules',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
+		},
+		async (req, reply) => {
+			if (!req.auth.user.admin) return reply.status(403).send();
+
+			const instances = await ModeratedInstanceService.getMany();
+			return reply.status(200).send(instances);
 		}
-	}),
-	async (req, res) => {
-		const auth = await AuthService.verify(req.headers.authorization);
-
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
-			});
-
-		if (!auth.user && !auth.user.admin)
-			return res.status(403).json({
-				message: locale.auth.insufficientPermissions
-			});
-
-		const instances = await ModeratedInstanceService.getMany();
-
-		if (instances) return res.status(200).json(instances);
-		return res.status(500).json({ message: locale.error.internalServer });
-	}
-);
-
-export default router;
+	);
+});

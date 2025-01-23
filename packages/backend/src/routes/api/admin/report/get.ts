@@ -1,59 +1,39 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
+import { In, LessThan, Not } from 'typeorm';
 
-import AuthService from '../../../../services/AuthService.js';
+import ConfigService from '../../../../services/ConfigService.js';
 import ReportService from '../../../../services/ReportService.js';
-import oapi from '../../../../utils/apidoc.js';
-import locale from '../../../../utils/locale.js';
+import TimelineService from '../../../../services/TimelineService.js';
 
-const router = express.Router();
-
-router.get(
-	'/api/admin/report/:id',
-	oapi.path({
-		description: 'Fetch a report',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Admin'],
-		security: [{ auth: [] }],
-		responses: {
-			200: {
-				description: 'Return a report.',
-				content: {
-					'application/json': {}
-				}
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' }
 			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			500: { $ref: '#/components/responses/error-500' }
+			required: ['id']
 		}
-	}),
-	async (req, res) => {
-		if (!req.params.id)
-			return res.status(400).json({
-				message: locale.error.notSpecified
-			});
+	} as const;
 
-		const auth = await AuthService.verify(req.headers.authorization);
+	fastify.get<{
+		Params: FromSchema<typeof schema.params>;
+	}>(
+		'/api/report/:id',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
+		},
+		async (req, reply) => {
+			if (!req.auth.user.admin) return reply.status(403).send();
 
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
-			});
+			const report = await ReportService.get({ id: req.params.id });
 
-		if (!auth.user && !auth.user.admin)
-			return res.status(403).json({
-				message: locale.auth.insufficientPermissions
-			});
+			if (!report) return reply.status(404).send();
 
-		const report = await ReportService.get({ id: req.params.id });
-
-		if (!report)
-			return res.status(404).json({
-				message: 'Not found'
-			});
-
-		return res.status(200).json(report);
-	}
-);
-
-export default router;
+			return reply.status(200).send(report);
+		}
+	);
+});

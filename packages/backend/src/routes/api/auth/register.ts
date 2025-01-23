@@ -84,7 +84,7 @@ export default plugin(async (fastify) => {
 					});
 			} else if (registrations === 'invite') {
 				if (!req.body.invite)
-					return res.status(400).send({
+					return reply.status(400).send({
 						message: locale.user.registration.inviteRequired
 					});
 
