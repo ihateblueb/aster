@@ -9,6 +9,7 @@ import swagger from '@fastify/swagger';
 import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
 import Fastify from 'fastify';
+import { handler } from 'frontend/build/handler.js';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import AuthService from './services/AuthService.js';
@@ -61,7 +62,7 @@ const fastify = Fastify({
 	requestIdHeader: 'As-Request-Id'
 });
 
-await fastify
+fastify
 	.register(accepts)
 	.register(cors)
 	.register(ratelimit, {
@@ -103,6 +104,9 @@ await fastify
 	// routes
 	.register(autoload, {
 		dir: path.join(process.cwd(), 'built', 'routes')
+	})
+	.get('/*', (req, reply) => {
+		handler(req.raw, reply.raw, () => {});
 	});
 
 await fastify.ready();

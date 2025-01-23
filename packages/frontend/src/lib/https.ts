@@ -61,7 +61,8 @@ class https {
 		let req = await fetch(url, {
 			method: 'POST',
 			headers: {
-				Authorization: 'Bearer ' + localstore.get('token')
+				Authorization: 'Bearer ' + localstore.get('token'),
+				'Content-Type': raw ? '' : 'application/json'
 			},
 			body: raw ? body : JSON.stringify(body)
 		});

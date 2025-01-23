@@ -31,19 +31,21 @@ export default plugin(async (fastify) => {
 			preHandler: fastify.auth([fastify.optionalAuth])
 		},
 		async (req, reply) => {
-			const blocking = await RelationshipService.getBlocking(
-				req.auth.user.id
-			);
-
-			const blockingIds: string[] = [];
-			for (const user of blocking) {
-				blockingIds.push(user.to.id);
-			}
-
 			let andWhere;
-			andWhere = {
-				user: { id: Not(blockingIds) }
-			};
+
+			if (req.auth.user) {
+				const blocking = await RelationshipService.getBlocking(
+					req.auth.user.id
+				);
+
+				const blockingIds: string[] = [];
+				for (const user of blocking) {
+					blockingIds.push(user.to.id);
+				}
+				andWhere = {
+					user: { id: Not(blockingIds) }
+				};
+			}
 
 			let where = {
 				user: { local: true },
