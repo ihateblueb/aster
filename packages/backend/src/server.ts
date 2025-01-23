@@ -1,4 +1,3 @@
-import * as http from 'node:http';
 import path from 'node:path';
 
 import accepts from '@fastify/accepts';
@@ -10,11 +9,11 @@ import swagger from '@fastify/swagger';
 import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
 import Fastify from 'fastify';
-import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import AuthService from './services/AuthService.js';
 import ConfigService from './services/ConfigService.js';
+import IdService from './services/IdService.js';
 import MetricsService from './services/MetricsService.js';
 import SetupService from './services/SetupService.js';
 import WebsocketService from './services/WebsocketService.js';
@@ -57,7 +56,9 @@ WorkerService.backfill.on('failed', (job) => {
 });
 
 const fastify = Fastify({
-	logger: true
+	logger: true,
+	genReqId: () => IdService.generate(),
+	requestIdHeader: 'As-Request-Id'
 });
 
 await fastify

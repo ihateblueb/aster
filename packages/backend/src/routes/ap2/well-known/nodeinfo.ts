@@ -1,9 +1,6 @@
 import plugin from 'fastify-plugin';
-import { FromSchema } from 'json-schema-to-ts';
 
 import ConfigService from '../../../services/ConfigService.js';
-import UserService from '../../../services/UserService.js';
-import logger from '../../../utils/logger.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
