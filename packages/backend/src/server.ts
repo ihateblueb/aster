@@ -85,14 +85,10 @@ await fastify
 		}
 	})
 	.register(apidoc, {
-		routePrefix: '/api-doc'
+		routePrefix: '/api-doc',
+		configuration: {}
 	})
 	// auth
-	.addHook('preParsing', async (req) => {
-		req['auth'] = {
-			user: undefined
-		};
-	})
 	.decorate('requireAuth', async (req, reply) => {
 		let auth = await AuthService.verify(req.headers.authorization);
 		if (auth.error) throw new Error(auth.message);
