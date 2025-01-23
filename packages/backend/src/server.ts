@@ -5,7 +5,9 @@ import auth from '@fastify/auth';
 import autoload from '@fastify/autoload';
 import cors from '@fastify/cors';
 import ratelimit from '@fastify/rate-limit';
+import staticdir from '@fastify/static';
 import swagger from '@fastify/swagger';
+import websocket from '@fastify/websocket';
 import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
 import Fastify from 'fastify';
@@ -71,6 +73,7 @@ fastify
 		max: 100,
 		timeWindow: '1 minute'
 	})
+	.register(websocket)
 	// docs
 	.register(swagger, {
 		openapi: {
@@ -106,6 +109,10 @@ fastify
 	.register(autoload, {
 		dir: path.join(process.cwd(), 'built', 'routes')
 	})
+	.register(staticdir, {
+		root: path.resolve(process.cwd(), '..', '..', 'uploads'),
+		prefix: '/uploads'
+	})
 	.get('/*', (req, reply) => {
 		handler(req.raw, reply.raw, () => {});
 	});
@@ -134,19 +141,57 @@ fastify.addContentTypeParser(
 	parser
 );
 
+/*
+* todo: convert
+	res.setHeader('TDM-Reservation', '1');
+
+	if (req.path.startsWith('/uploads'))
+		res.setHeader('Cache-Control', 'public, max-age=86400');
+
+	if (
+		req.headers['user-agent'] &&
+		req.headers['user-agent'].match(
+			new RegExp(ConfigService.security.blockedUserAgents.join('|'), 'i')
+		)
+	) {
+		logger.info(
+			'security',
+			'blocked request from useragent ' + req.headers['user-agent']
+		);
+
+		return res.status(401).send();
+	}
+* */
+
 fastify
 	.addHook('preHandler', (req, reply, done) => {
-		logger.http(
-			'-->',
-			`${req.method.toLowerCase()} ${req.url} ${logger.formatHttpId(req.id)}`
-		);
+		if (
+			req.url &&
+			!req.url.startsWith('/_app') &&
+			!req.url.startsWith('/api/queues') &&
+			!req.url.startsWith('/queue/api') &&
+			!req.url.startsWith('/queue/static') &&
+			!req.url.startsWith('/metrics')
+		)
+			logger.http(
+				'-->',
+				`${req.method.toLowerCase()} ${req.url} ${logger.formatHttpId(req.id)}`
+			);
 		done();
 	})
 	.addHook('onResponse', (req, reply, done) => {
-		logger.http(
-			'<--',
-			`${req.method.toLowerCase()} ${req.url} ${logger.formatStatus(reply.statusCode)} ${logger.formatHttpId(req.id)}`
-		);
+		if (
+			req.url &&
+			!req.url.startsWith('/_app') &&
+			!req.url.startsWith('/api/queues') &&
+			!req.url.startsWith('/queue/api') &&
+			!req.url.startsWith('/queue/static') &&
+			!req.url.startsWith('/metrics')
+		)
+			logger.http(
+				'<--',
+				`${req.method.toLowerCase()} ${req.url} ${logger.formatStatus(reply.statusCode)} ${logger.formatHttpId(req.id)}`
+			);
 		done();
 	});
 

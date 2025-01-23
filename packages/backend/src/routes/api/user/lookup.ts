@@ -19,7 +19,7 @@ export default plugin(async (fastify) => {
 	fastify.get<{
 		Params: FromSchema<typeof schema.params>;
 	}>(
-		'/api/lookup/:handle',
+		'/api/user/lookup/:handle',
 		{
 			schema: schema
 		},
