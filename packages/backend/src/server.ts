@@ -10,6 +10,7 @@ import apidoc from '@scalar/fastify-api-reference';
 import cluster from 'cluster';
 import Fastify from 'fastify';
 import { handler } from 'frontend/build/handler.js';
+import secureJson from 'secure-json-parse';
 
 import pkg from '../../../package.json' with { type: 'json' };
 import AuthService from './services/AuthService.js';
@@ -57,12 +58,13 @@ WorkerService.backfill.on('failed', (job) => {
 });
 
 const fastify = Fastify({
-	logger: true,
+	logger: false,
 	genReqId: () => IdService.generate(),
-	requestIdHeader: 'As-Request-Id'
+	requestIdHeader: 'X-Request-Id'
 });
 
 fastify
+	// misc
 	.register(accepts)
 	.register(cors)
 	.register(ratelimit, {
@@ -97,8 +99,7 @@ fastify
 		req.auth = auth;
 	})
 	.decorate('optionalAuth', async (req, reply, done) => {
-		let auth = await AuthService.verify(req.headers.authorization);
-		req.auth = auth;
+		req.auth = await AuthService.verify(req.headers.authorization);
 	})
 	.register(auth)
 	// routes
@@ -109,13 +110,54 @@ fastify
 		handler(req.raw, reply.raw, () => {});
 	});
 
+const parser = (req, rawBody, done) => {
+	try {
+		const json = secureJson.parse(rawBody.toString('utf8'), null, {
+			protoAction: 'ignore',
+			constructorAction: 'ignore'
+		});
+		done(null, json);
+	} catch (err) {
+		err.statusCode = 400;
+		return done(err);
+	}
+};
+
+fastify.addContentTypeParser(
+	'application/activity+json',
+	{ parseAs: 'buffer' },
+	parser
+);
+fastify.addContentTypeParser(
+	'application/ld+json',
+	{ parseAs: 'buffer' },
+	parser
+);
+
+fastify
+	.addHook('preHandler', (req, reply, done) => {
+		logger.http(
+			'-->',
+			`${req.method.toLowerCase()} ${req.url} ${logger.formatHttpId(req.id)}`
+		);
+		done();
+	})
+	.addHook('onResponse', (req, reply, done) => {
+		logger.http(
+			'<--',
+			`${req.method.toLowerCase()} ${req.url} ${logger.formatStatus(reply.statusCode)} ${logger.formatHttpId(req.id)}`
+		);
+		done();
+	});
+
 await fastify.ready();
 
-fastify.listen({ port: ConfigService.port }, function (err, address) {
+fastify.listen({ port: ConfigService.port }, function (err, addr) {
 	if (err) {
 		fastify.log.error(err);
 		process.exit(1);
 	}
+	logger.done('boot', 'started on ' + addr);
 });
 
 async function shutdown() {

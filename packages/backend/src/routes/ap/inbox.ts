@@ -1,12 +1,9 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApActorRenderer from '../../services/ap/ApActorRenderer.js';
 import ApValidationService from '../../services/ap/ApValidationService.js';
 import IdService from '../../services/IdService.js';
 import QueueService from '../../services/QueueService.js';
-import UserService from '../../services/UserService.js';
-import locale from '../../utils/locale.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
