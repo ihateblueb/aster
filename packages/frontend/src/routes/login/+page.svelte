@@ -9,8 +9,6 @@
 	import { goto } from '$app/navigation';
 	import getUser from '$lib/api/user/get';
 
-	// todo: use svelte query for this
-
 	let error = $state(false);
 	let errorMsg = $state('');
 
@@ -21,7 +19,10 @@
 		await tryLogin(username, password)
 			.then(async (e) => {
 				console.log(e);
+
 				localstore.set('token', e.token);
+				document.cookie =
+					'authorization=Bearer ' + e.token + '; path=/';
 
 				await getUser(e.id)
 					.then((self) => {
@@ -34,6 +35,8 @@
 
 				store.selfRefresh.set(true);
 				await goto('/');
+
+				store.appReload.set(true);
 			})
 			.catch((err) => {
 				error = true;

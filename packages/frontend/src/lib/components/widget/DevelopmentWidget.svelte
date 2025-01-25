@@ -10,7 +10,7 @@
 	let cval: undefined | String = $state();
 
 	function setCookie() {
-		document.cookie = ckey + '=' + cval + ';';
+		document.cookie = ckey + '=' + cval + '; path=/';
 	}
 
 	let sActiveRequests: undefined | Number = $state();

@@ -55,7 +55,21 @@ class https {
 
 		return await this.end(req);
 	}
-	public async post(url: string, body?: any, raw?: boolean) {
+	public async post(url: string, body?: any) {
+		await this.start();
+
+		let req = await fetch(url, {
+			method: 'POST',
+			headers: {
+				Authorization: 'Bearer ' + localstore.get('token'),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
+		});
+
+		return await this.end(req);
+	}
+	public async postRaw(url: string, body?: any) {
 		await this.start();
 
 		let req = await fetch(url, {
@@ -63,7 +77,7 @@ class https {
 			headers: {
 				Authorization: 'Bearer ' + localstore.get('token')
 			},
-			body: raw ? body : JSON.stringify(body)
+			body: body
 		});
 
 		return await this.end(req);

@@ -77,7 +77,7 @@
 		<IconUser size="var(--fs-lg)" />
 		Profile
 	</DropdownItem>
-	<DropdownItem danger>
+	<DropdownItem to="/logout" danger>
 		<IconLogout size="var(--fs-lg)" />
 		Logout
 	</DropdownItem>

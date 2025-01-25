@@ -70,6 +70,10 @@ class LocalStore {
 
 		return;
 	}
+
+	public delete(key: string) {
+		if (browser) localStorage.removeItem('aster_' + key);
+	}
 }
 
 export default new LocalStore();
