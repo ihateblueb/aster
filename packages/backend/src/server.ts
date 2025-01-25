@@ -1,8 +1,12 @@
 import path from 'node:path';
 
+import { createBullBoard } from '@bull-board/api';
+import { BullMQAdapter } from '@bull-board/api/bullMQAdapter.js';
+import { FastifyAdapter } from '@bull-board/fastify';
 import accepts from '@fastify/accepts';
 import auth from '@fastify/auth';
 import autoload from '@fastify/autoload';
+import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import multipart from '@fastify/multipart';
 import ratelimit from '@fastify/rate-limit';
@@ -20,6 +24,7 @@ import AuthService from './services/AuthService.js';
 import ConfigService from './services/ConfigService.js';
 import IdService from './services/IdService.js';
 import MetricsService from './services/MetricsService.js';
+import QueueService from './services/QueueService.js';
 import SetupService from './services/SetupService.js';
 import WebsocketService from './services/WebsocketService.js';
 import WorkerService from './services/WorkerService.js';
@@ -39,27 +44,6 @@ await SetupService.try();
 
 if (ConfigService.metrics.enabled) MetricsService.registerMetrics();
 
-WorkerService.inbox.on('completed', (job) => {
-	logger.done('inbox', 'job ' + job.id + ' completed');
-});
-WorkerService.inbox.on('failed', (job) => {
-	logger.error('inbox', 'job ' + job.id + ' failed');
-});
-
-WorkerService.deliver.on('completed', (job) => {
-	logger.done('deliver', 'job ' + job.id + ' completed');
-});
-WorkerService.deliver.on('failed', (job) => {
-	logger.error('deliver', 'job ' + job.id + ' failed');
-});
-
-WorkerService.backfill.on('completed', (job) => {
-	logger.done('backfill', 'job ' + job.id + ' completed');
-});
-WorkerService.backfill.on('failed', (job) => {
-	logger.error('backfill', 'job ' + job.id + ' failed');
-});
-
 const fastify = Fastify({
 	logger: false,
 	genReqId: () => IdService.generate(),
@@ -70,6 +54,7 @@ fastify
 	// misc
 	.register(accepts)
 	.register(cors)
+	.register(cookie)
 	.register(ratelimit, {
 		max: 100,
 		timeWindow: '1 minute'
@@ -120,10 +105,11 @@ fastify
 		prefix: '/uploads'
 	})
 	.get('/*', (req, reply) => {
-		handler(req.raw, reply.raw, () => {});
+		if (ConfigService.router.frontend)
+			handler(req.raw, reply.raw, () => {});
 	});
 
-const parser = (req, rawBody, done) => {
+const jsonParser = (req, rawBody, done) => {
 	try {
 		const json = secureJson.parse(rawBody.toString('utf8'), null, {
 			protoAction: 'ignore',
@@ -139,67 +125,110 @@ const parser = (req, rawBody, done) => {
 fastify.addContentTypeParser(
 	'application/activity+json',
 	{ parseAs: 'buffer' },
-	parser
+	jsonParser
 );
 fastify.addContentTypeParser(
 	'application/ld+json',
 	{ parseAs: 'buffer' },
-	parser
+	jsonParser
 );
-
-/*
-* todo: convert
-	res.setHeader('TDM-Reservation', '1');
-
-	if (req.path.startsWith('/uploads'))
-		res.setHeader('Cache-Control', 'public, max-age=86400');
-
-	if (
-		req.headers['user-agent'] &&
-		req.headers['user-agent'].match(
-			new RegExp(ConfigService.security.blockedUserAgents.join('|'), 'i')
-		)
-	) {
-		logger.info(
-			'security',
-			'blocked request from useragent ' + req.headers['user-agent']
-		);
-
-		return res.status(401).send();
-	}
-* */
 
 fastify
 	.addHook('preHandler', (req, reply, done) => {
+		reply.header('TDM-Reservation', '1');
+
+		if (
+			req.headers['user-agent'] &&
+			req.headers['user-agent'].match(
+				new RegExp(
+					ConfigService.security.blockedUserAgents.join('|'),
+					'i'
+				)
+			)
+		) {
+			logger.info(
+				'security',
+				'blocked request from useragent ' + req.headers['user-agent']
+			);
+
+			return reply.status(401).send();
+		}
+
 		if (
 			req.url &&
 			!req.url.startsWith('/_app') &&
-			!req.url.startsWith('/api/queues') &&
-			!req.url.startsWith('/queue/api') &&
-			!req.url.startsWith('/queue/static') &&
-			!req.url.startsWith('/metrics')
+			!req.url.startsWith('/admin/queue') &&
+			!req.url.startsWith('/metrics') &&
+			!req.url.startsWith('/uploads')
 		)
 			logger.http(
 				'-->',
 				`${req.method.toLowerCase()} ${req.url} ${logger.formatHttpId(req.id)}`
 			);
+
 		done();
+	})
+	.addHook('preHandler', async (req, reply) => {
+		if (req.url.startsWith('/admin')) {
+			const authCookie = req.cookies.authorization;
+			if (!authCookie) reply.status(401).send();
+
+			let auth = await AuthService.verify(req.cookies.authorization);
+			if (auth.error) throw new Error(auth.message);
+		}
 	})
 	.addHook('onResponse', (req, reply, done) => {
 		if (
 			req.url &&
 			!req.url.startsWith('/_app') &&
-			!req.url.startsWith('/api/queues') &&
-			!req.url.startsWith('/queue/api') &&
-			!req.url.startsWith('/queue/static') &&
-			!req.url.startsWith('/metrics')
+			!req.url.startsWith('/admin/queue') &&
+			!req.url.startsWith('/metrics') &&
+			!req.url.startsWith('/uploads')
 		)
 			logger.http(
 				'<--',
 				`${req.method.toLowerCase()} ${req.url} ${logger.formatStatus(reply.statusCode)} ${logger.formatHttpId(req.id)}`
 			);
+
 		done();
 	});
+
+if (ConfigService.router.queue) {
+	const serverAdapter = new FastifyAdapter();
+	serverAdapter.setBasePath('/admin/queue');
+
+	createBullBoard({
+		queues: [
+			new BullMQAdapter(QueueService.inbox),
+			new BullMQAdapter(QueueService.deliver),
+			new BullMQAdapter(QueueService.backfill)
+		],
+		// @ts-expect-error unsure why this errors but there's nothing wrong here
+		serverAdapter,
+		options: {
+			uiConfig: {
+				boardTitle: 'Queue Dashboard',
+				boardLogo: {
+					path: '/favicon.ico',
+					width: 0,
+					height: 0
+				},
+				miscLinks: [
+					{ text: 'Back to Aster', url: '/' },
+					{ text: 'Logout', url: '/logout' }
+				],
+				favIcon: {
+					default: '/favicon.ico',
+					alternative: '/favicon.ico'
+				}
+			}
+		}
+	});
+
+	fastify.register(serverAdapter.registerPlugin(), {
+		prefix: '/admin/queue'
+	});
+}
 
 await fastify.ready();
 
@@ -209,6 +238,27 @@ fastify.listen({ port: ConfigService.port }, function (err, addr) {
 		process.exit(1);
 	}
 	logger.done('boot', 'started on ' + addr);
+});
+
+WorkerService.inbox.on('completed', (job) => {
+	logger.done('inbox', 'job ' + job.id + ' completed');
+});
+WorkerService.inbox.on('failed', (job) => {
+	logger.error('inbox', 'job ' + job.id + ' failed');
+});
+
+WorkerService.deliver.on('completed', (job) => {
+	logger.done('deliver', 'job ' + job.id + ' completed');
+});
+WorkerService.deliver.on('failed', (job) => {
+	logger.error('deliver', 'job ' + job.id + ' failed');
+});
+
+WorkerService.backfill.on('completed', (job) => {
+	logger.done('backfill', 'job ' + job.id + ' completed');
+});
+WorkerService.backfill.on('failed', (job) => {
+	logger.error('backfill', 'job ' + job.id + ' failed');
 });
 
 async function shutdown() {
