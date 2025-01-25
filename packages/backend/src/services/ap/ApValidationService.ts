@@ -3,7 +3,6 @@ import crypto from 'crypto';
 import { FastifyRequest } from 'fastify';
 
 import logger from '../../utils/logger.js';
-import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import ValidationService from '../ValidationService.js';
