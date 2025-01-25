@@ -2,8 +2,6 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
 import NoteService from '../../../services/NoteService.js';
-import locale from '../../../utils/locale.js';
-import logger from '../../../utils/logger.js';
 
 export default plugin(async (fastify) => {
 	const schema = {

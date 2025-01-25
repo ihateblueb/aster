@@ -5,7 +5,6 @@ import { In, LessThan, Not } from 'typeorm';
 import ConfigService from '../../../services/ConfigService.js';
 import RelationshipService from '../../../services/RelationshipService.js';
 import TimelineService from '../../../services/TimelineService.js';
-import locale from '../../../utils/locale.js';
 
 export default plugin(async (fastify) => {
 	const schema = {

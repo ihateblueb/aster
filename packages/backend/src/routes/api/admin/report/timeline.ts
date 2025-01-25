@@ -1,6 +1,6 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
-import { In, LessThan, Not } from 'typeorm';
+import { LessThan } from 'typeorm';
 
 import ConfigService from '../../../../services/ConfigService.js';
 import TimelineService from '../../../../services/TimelineService.js';

@@ -1,10 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
-import { In, LessThan, Not } from 'typeorm';
 
-import ConfigService from '../../../../services/ConfigService.js';
 import ReportService from '../../../../services/ReportService.js';
-import TimelineService from '../../../../services/TimelineService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {

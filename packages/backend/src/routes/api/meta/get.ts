@@ -10,8 +10,7 @@ export default plugin(async (fastify) => {
 	fastify.get(
 		'/api/meta',
 		{
-			schema: schema,
-			preHandler: fastify.auth([fastify.optionalAuth])
+			schema: schema
 		},
 		async (req, reply) => {
 			return reply.status(200).send(await MetaService.get());

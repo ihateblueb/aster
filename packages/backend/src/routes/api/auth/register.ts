@@ -32,56 +32,41 @@ export default plugin(async (fastify) => {
 			const registrations = ConfigService.registrations;
 
 			if (registrations === 'open') {
-				await UserService.register(req.body.username, req.body.password)
-					.then(async (e) => {
-						if (e.error) {
-							return reply.status(e.status).send({
-								message: e.message
-							});
-						} else {
-							const token = await AuthService.generateToken(
-								e.user.id
-							);
-
-							return reply.status(200).send({
-								id: e.user.id,
-								token: token
-							});
-						}
-					})
-					.catch((e) => {
-						console.log(e);
-						logger.error('registration', 'failed to register user');
-
-						return reply.status(500).send({
-							message: locale.error.internalServer
+				await UserService.register(
+					req.body.username,
+					req.body.password
+				).then(async (e) => {
+					if (e.error) {
+						return reply.status(e.status).send({
+							message: e.message
 						});
-					});
+					} else {
+						const token = await AuthService.generateToken(
+							e.user.id
+						);
+
+						return reply.status(200).send({
+							id: e.user.id,
+							token: token
+						});
+					}
+				});
 			} else if (registrations === 'approval') {
 				await UserService.register(
 					req.body.username,
 					req.body.password,
 					true
-				)
-					.then(async (e) => {
-						if (e.error) {
-							return reply.status(e.status).send({
-								message: e.message
-							});
-						} else {
-							return reply.status(200).send({
-								id: e.user.id
-							});
-						}
-					})
-					.catch((e) => {
-						console.log(e);
-						logger.error('registration', 'failed to register user');
-
-						return reply.status(500).send({
-							message: locale.error.internalServer
+				).then(async (e) => {
+					if (e.error) {
+						return reply.status(e.status).send({
+							message: e.message
 						});
-					});
+					} else {
+						return reply.status(200).send({
+							id: e.user.id
+						});
+					}
+				});
 			} else if (registrations === 'invite') {
 				if (!req.body.invite)
 					return reply.status(400).send({
@@ -93,31 +78,22 @@ export default plugin(async (fastify) => {
 					req.body.password,
 					false,
 					req.body.invite
-				)
-					.then(async (e) => {
-						if (e.error) {
-							return reply.status(e.status).send({
-								message: e.message
-							});
-						} else {
-							const token = await AuthService.generateToken(
-								e.user.id
-							);
-
-							return reply.status(200).send({
-								id: e.user.id,
-								token: token
-							});
-						}
-					})
-					.catch((e) => {
-						console.log(e);
-						logger.error('registration', 'failed to register user');
-
-						return reply.status(500).send({
-							message: locale.error.internalServer
+				).then(async (e) => {
+					if (e.error) {
+						return reply.status(e.status).send({
+							message: e.message
 						});
-					});
+					} else {
+						const token = await AuthService.generateToken(
+							e.user.id
+						);
+
+						return reply.status(200).send({
+							id: e.user.id,
+							token: token
+						});
+					}
+				});
 			} else {
 				return reply.status(401).send({
 					message: locale.user.registration.closed

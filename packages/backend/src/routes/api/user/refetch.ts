@@ -3,7 +3,6 @@ import { FromSchema } from 'json-schema-to-ts';
 
 import ApActorService from '../../../services/ap/ApActorService.js';
 import UserService from '../../../services/UserService.js';
-import locale from '../../../utils/locale.js';
 
 export default plugin(async (fastify) => {
 	const schema = {

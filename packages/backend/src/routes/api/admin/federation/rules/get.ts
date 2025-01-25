@@ -1,5 +1,4 @@
 import plugin from 'fastify-plugin';
-import { FromSchema } from 'json-schema-to-ts';
 
 import ModeratedInstanceService from '../../../../../services/ModeratedInstanceService.js';
 
