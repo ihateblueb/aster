@@ -166,7 +166,18 @@ fastify
 				`${req.method.toLowerCase()} ${req.url} ${logger.formatHttpId(req.id)}`
 			);
 
-		done();
+		// the note ap endpoint and frontend route collide, so this makes sure the frontend still works
+		const accept = req.headers.accept;
+		if (
+			ConfigService.router.frontend &&
+			req.url.startsWith('/notes') &&
+			accept &&
+			(accept === 'text/html' || accept.includes('text/html'))
+		) {
+			handler(req.raw, reply.raw, () => {});
+		} else {
+			done();
+		}
 	})
 	.addHook('preHandler', async (req, reply) => {
 		if (req.url.startsWith('/admin')) {
