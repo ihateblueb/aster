@@ -4,6 +4,7 @@ import accepts from '@fastify/accepts';
 import auth from '@fastify/auth';
 import autoload from '@fastify/autoload';
 import cors from '@fastify/cors';
+import multipart from '@fastify/multipart';
 import ratelimit from '@fastify/rate-limit';
 import staticdir from '@fastify/static';
 import swagger from '@fastify/swagger';
@@ -108,6 +109,11 @@ fastify
 	// routes
 	.register(autoload, {
 		dir: path.join(process.cwd(), 'built', 'routes')
+	})
+	.register(multipart, {
+		limits: {
+			files: 12
+		}
 	})
 	.register(staticdir, {
 		root: path.resolve(process.cwd(), '..', '..', 'uploads'),

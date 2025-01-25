@@ -1,4 +1,14 @@
+import * as fs from 'node:fs';
+import * as stream from 'node:stream';
+import * as util from 'node:util';
+
 import plugin from 'fastify-plugin';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+import ConfigService from '../services/ConfigService.js';
+import DriveService from '../services/DriveService.js';
+import logger from '../utils/logger.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -8,54 +18,43 @@ export default plugin(async (fastify) => {
 	fastify.post(
 		'/upload',
 		{
-			schema: schema
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
 		},
 		async (req, reply) => {
-			/*
-		const auth = await AuthService.verify(req.headers.authorization);
+			const pump = util.promisify(stream.pipeline);
 
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
-			});
+			const __dirname = dirname(fileURLToPath(import.meta.url));
+			const dir = __dirname + '/../../../../uploads/' + req.auth.user.id;
 
-		const dir = __dirname + '/../../../../../uploads/' + auth.user.id;
+			if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
 
-		if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-		if (!fs.existsSync(tmpdir)) fs.mkdirSync(tmpdir, { recursive: true });
-
-		const form = formidable({
-			uploadDir: dir,
-			encoding: 'utf-8',
-			keepExtensions: true,
-			multiples: true
-		});
-
-		const [fields, files] = await form.parse(req);
-
-		if (files && files.files)
-			for (const file of files.files) {
+			const parts = req.files();
+			for await (const part of parts) {
 				let fileSrc =
 					ConfigService.url.href +
 					'uploads/' +
-					auth.user.id +
+					req.auth.user.id +
 					'/' +
-					file.newFilename;
+					part.filename;
 
 				logger.debug('upload', 'created file ' + fileSrc);
 
 				await DriveService.create(
 					fileSrc,
-					file.mimetype,
+					part.mimetype,
 					undefined,
 					false,
-					auth.user.id
+					req.auth.user.id
+				);
+
+				await pump(
+					part.file,
+					fs.createWriteStream(dir + '/' + part.filename)
 				);
 			}
 
-		return res.status(200).send();
-		*/
-			return reply.status(501).send();
+			return reply.status(200).send();
 		}
 	);
 });
