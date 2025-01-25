@@ -77,6 +77,9 @@ export class User {
 	@Column({ type: 'jsonb', nullable: true })
 	metadata: string;
 
+	@Column({ array: true, nullable: true })
+	emojis: string;
+
 	// TODO (later): add emojis relation for emojis in displayname, bio, or metadata
 
 	@Column()

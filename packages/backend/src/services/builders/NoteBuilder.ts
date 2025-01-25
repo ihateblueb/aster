@@ -1,10 +1,13 @@
 import { In, ObjectLiteral } from 'typeorm';
 
 import DriveService from '../DriveService.js';
+import EmojiService from '../EmojiService.js';
 import UserBuilder from './UserBuilder.js';
 
 class NoteBuilder {
 	public async build(note: ObjectLiteral) {
+		if (note.user) note.user = await UserBuilder.build(note.user);
+
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];
 
@@ -17,6 +20,20 @@ class NoteBuilder {
 			}
 
 			note['attachments'] = attachments;
+		}
+
+		if (note && note.emojis) {
+			let emojis: ObjectLiteral[] = [];
+
+			for (const id of note.emojis) {
+				await EmojiService.get({
+					id: id
+				}).then((e) => {
+					if (e) emojis.push(e);
+				});
+			}
+
+			note['emojis'] = emojis;
 		}
 
 		if (note.replyingTo)

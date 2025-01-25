@@ -66,7 +66,7 @@
 			<!-- svelte-ignore a11y_missing_attribute -->
 			<img
 				class="mfm-customEmoji"
-				src={foundEmoji.url}
+				src={foundEmoji.file.src}
 				title=":{foundEmoji.shortcode}:"
 			/>
 		{:else}
@@ -437,14 +437,14 @@
 			line-height: normal;
 
 			.mfm-customEmoji {
-				height: 1.4em !important;
+				height: 1.4rem !important;
 			}
 		}
 
 		.mfm-emoji {
 			display: inline;
 			vertical-align: middle;
-			height: 1.2em;
+			height: 1.2rem;
 			transition: 0.1s;
 
 			&:hover {

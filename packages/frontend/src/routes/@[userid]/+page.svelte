@@ -110,9 +110,13 @@
 						<Avatar large size="65px" user={$query.data} />
 						<div class="names">
 							<p class="top">
-								{$query.data.displayName
-									? $query.data.displayName
-									: $query.data.username}
+								<Mfm
+									simple
+									content={$query.data.displayName
+										? $query.data.displayName
+										: $query.data.username}
+									emojis={$query.data.emojis}
+								/>
 
 								{#if $relationshipQuery.isSuccess && $relationshipQuery.data}
 									{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
@@ -225,7 +229,10 @@
 				</div>
 				<div class="mid">
 					{#if $query.data.bio}
-						<Mfm content={$query.data.bio} />
+						<Mfm
+							content={$query.data.bio}
+							emojis={$query.data.emojis}
+						/>
 					{:else}
 						<span class="missing">
 							This user hasn't written a bio yet.

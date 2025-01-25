@@ -23,6 +23,7 @@
 						content={note.user.displayName
 							? note.user.displayName
 							: note.user.username}
+						emojis={note.user.emojis}
 					/>
 				</a>
 				<a

@@ -1,10 +1,25 @@
 import { ObjectLiteral } from 'typeorm';
 
+import EmojiService from '../EmojiService.js';
 import NoteService from '../NoteService.js';
 import RelationshipService from '../RelationshipService.js';
 
 class UserBuilder {
 	public async build(user: ObjectLiteral) {
+		if (user && user.emojis) {
+			let emojis: ObjectLiteral[] = [];
+
+			for (const id of user.emojis) {
+				await EmojiService.get({
+					id: id
+				}).then((e) => {
+					if (e) emojis.push(e);
+				});
+			}
+
+			user['emojis'] = emojis;
+		}
+
 		user['stats'] = {
 			noteCount: await NoteService.count({
 				user: { id: user.id }

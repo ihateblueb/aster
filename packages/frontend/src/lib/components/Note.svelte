@@ -21,6 +21,7 @@
 {#snippet noteContent(data)}
 	<Mfm
 		content={data.content}
+		emojis={data.emojis}
 		on:click={() => (!expanded ? goto('/notes/' + data.id) : () => {})}
 	/>
 	{#if note.attachments && note.attachments.length > 0}

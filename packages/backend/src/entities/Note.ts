@@ -10,7 +10,6 @@ import typeorm, {
 	PrimaryColumn
 } from 'typeorm';
 
-import { DriveFile } from './DriveFile.js';
 import { NoteLike } from './NoteLike.js';
 import { Poll } from './Poll.js';
 import { User } from './User.js';
@@ -57,6 +56,9 @@ export class Note {
 
 	@Column({ nullable: true })
 	content: string;
+
+	@Column({ array: true, nullable: true })
+	emojis: string;
 
 	@Column({ default: 'public' })
 	visibility: string;

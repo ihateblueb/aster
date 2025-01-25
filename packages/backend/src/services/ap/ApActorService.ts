@@ -11,6 +11,7 @@ import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import SanitizerService from '../SanitizerService.js';
 import UserService from '../UserService.js';
+import ApEmojiService from './ApEmojiService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
 
@@ -160,6 +161,24 @@ class ApActorService {
 			user['followersUrl'] = SanitizerService.sanitize(body.followers);
 		if (body.following)
 			user['followingUrl'] = SanitizerService.sanitize(body.following);
+
+		user['emojis'] = [];
+
+		if (body.tag) {
+			for (const tag of body.tag) {
+				if (tag.type === 'Emoji' && tag.id) {
+					let emoji = await ApEmojiService.get(tag.id);
+
+					if (emoji) {
+						user.emojis.push(emoji.id);
+					} else {
+						await ApEmojiService.register(tag).then((e) => {
+							if (e) user.emojis.push(e.id);
+						});
+					}
+				}
+			}
+		}
 
 		return user;
 	}

@@ -5,7 +5,6 @@ import { In, ObjectLiteral } from 'typeorm';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
-import tryUrl from '../../utils/tryUrl.js';
 import ConfigService from '../ConfigService.js';
 import DriveService from '../DriveService.js';
 import IdService from '../IdService.js';
@@ -19,6 +18,7 @@ import ValidationService from '../ValidationService.js';
 import WebsocketService from '../WebsocketService.js';
 import NoteService from './../NoteService.js';
 import ApActorService from './ApActorService.js';
+import ApEmojiService from './ApEmojiService.js';
 import ApResolver from './ApResolver.js';
 import ApValidationService from './ApValidationService.js';
 import ApVisibilityService from './ApVisibilityService.js';
@@ -62,7 +62,6 @@ class ApNoteService {
 			});
 	}
 
-	// todo: This Thing
 	public async apNoteToNote(
 		body: ApObject,
 		base?: ObjectLiteral
@@ -193,6 +192,7 @@ class ApNoteService {
 		let note: ObjectLiteral = {
 			id: id,
 			apId: SanitizerService.sanitize(body.id),
+			emojis: [],
 			attachments: []
 		};
 
@@ -219,6 +219,24 @@ class ApNoteService {
 				).then((e) => {
 					if (e) note.attachments.push(e.id);
 				});
+			}
+		}
+
+		if (body.tag) {
+			for (const tag of body.tag) {
+				if (tag.type === 'Emoji' && tag.id) {
+					let emoji = await ApEmojiService.get(tag.id);
+
+					if (emoji) {
+						note.emojis.push(emoji.id);
+					} else {
+						await ApEmojiService.register(tag).then((e) => {
+							if (e) note.emojis.push(e.id);
+						});
+					}
+				} else if (tag.type === 'Mention') {
+					// todo: create mention notif
+				}
 			}
 		}
 
