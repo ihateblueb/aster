@@ -82,14 +82,16 @@ class https {
 
 		return await this.end(req);
 	}
-	public async patch(url: string) {
+	public async patch(url: string, body: any) {
 		await this.start();
 
 		let req = await fetch(url, {
 			method: 'PATCH',
 			headers: {
-				Authorization: 'Bearer ' + localstore.get('token')
-			}
+				Authorization: 'Bearer ' + localstore.get('token'),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(body)
 		});
 
 		return await this.end(req);

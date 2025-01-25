@@ -1,5 +1,4 @@
 <script lang="ts">
-	import * as uuid from 'uuid';
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
 	import queryClient from '$lib/queryclient';
 	import { QueryClientProvider } from '@tanstack/svelte-query';
@@ -14,7 +13,7 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import { shortcut } from '@svelte-put/shortcut';
 	import Drive from '$lib/components/Drive.svelte';
-	import ws from '$lib/websocket.svelte';
+	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
 	let loggedIn = $state(false);
 	if (localstore.get('token')) loggedIn = true;
@@ -82,6 +81,8 @@
 />
 
 <QueryClientProvider client={queryClient}>
+	<SvelteQueryDevtools />
+
 	{#if activeRequests > 0}
 		<div class="activeRequests">
 			<Loading size="24px" color="var(--ac1)" massive={false} />

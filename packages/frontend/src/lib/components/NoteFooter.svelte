@@ -230,6 +230,7 @@
 				border: none;
 
 				color: var(--tx3);
+				font-family: var(--font);
 				padding: 4px 6px;
 				gap: 2px;
 

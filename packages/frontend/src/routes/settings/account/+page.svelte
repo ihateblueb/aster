@@ -4,29 +4,52 @@
 	import Toggle from '$lib/components/Toggle.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import { IconDeviceFloppy } from '@tabler/icons-svelte';
+	import editUser from '$lib/api/user/edit.js';
+	import getUser from '$lib/api/user/get.js';
 
 	let self: any = $state();
 	let newSelf: any = $state();
 
-	let updated: boolean = $state(false);
+	updateSelf();
+	fetchSelf();
 
-	let rawSelf = localstore.get('self');
-	if (rawSelf) {
-		try {
-			self = JSON.parse(rawSelf);
-			newSelf = JSON.parse(rawSelf);
-		} catch (err) {
-			console.error(err);
+	function updateSelf() {
+		let rawSelf = localstore.get('self');
+		if (rawSelf) {
+			try {
+				self = JSON.parse(rawSelf);
+				newSelf = JSON.parse(rawSelf);
+			} catch (err) {
+				console.error(err);
+			}
 		}
 	}
 
-	console.log('self', self);
+	function fetchSelf() {
+		getUser(newSelf.id)
+			.then((self) => {
+				localstore.set('self', JSON.stringify(self));
+				updateSelf();
+			})
+			.catch((err) => {
+				console.log('failed to fetch new self');
+				console.error(err);
+			});
+	}
+
+	async function update() {
+		console.log(self, newSelf);
+
+		await editUser(newSelf, newSelf.id);
+
+		fetchSelf();
+	}
 </script>
 
 <div class="header">
 	<div class="left"></div>
 	<div class="right">
-		<Button accent={updated}>
+		<Button on:click={() => update()}>
 			<IconDeviceFloppy size="var(--fs-lg)" />
 			Save
 		</Button>
@@ -38,7 +61,7 @@
 	<div class="left">
 		<Input
 			label="Display name"
-			placeholder={self.displayName ?? newSelf.username}
+			placeholder={self.displayName}
 			bind:value={newSelf.displayName}
 			wide
 		/>
@@ -67,7 +90,7 @@
 </div>
 
 <div class="form">
-	<div class="left">
+	<div class="left nogap">
 		<Toggle
 			label="Require follows to be approved"
 			bind:checked={newSelf.locked}
@@ -120,7 +143,10 @@
 			flex-grow: 1;
 			display: flex;
 			flex-direction: column;
-			gap: 4px;
+
+			&:not(.nogap) {
+				gap: 4px;
+			}
 		}
 	}
 </style>
