@@ -66,13 +66,14 @@ export default plugin(async (fastify) => {
 
 			let updated = {};
 
-			if (
+			/*
+			* if (
 				req.body.username &&
 				req.body.username.length <= ConfigService.limits.soft.username
 			)
 				updated['username'] = SanitizerService.sanitize(
 					req.body.username
-				);
+				);*/
 
 			if (
 				req.body.displayName &&

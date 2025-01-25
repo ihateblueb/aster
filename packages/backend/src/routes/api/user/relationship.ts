@@ -16,7 +16,7 @@ export default plugin(async (fastify) => {
 		}
 	} as const;
 
-	fastify.post<{
+	fastify.get<{
 		Params: FromSchema<typeof schema.params>;
 	}>(
 		'/api/user/:id/relationship',
