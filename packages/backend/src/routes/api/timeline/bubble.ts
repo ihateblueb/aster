@@ -1,107 +1,84 @@
-import express from 'express';
-import { In, LessThan, Not } from 'typeorm';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
+import { In, LessThan } from 'typeorm';
 
-import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import RelationshipService from '../../../services/RelationshipService.js';
 import TimelineService from '../../../services/TimelineService.js';
-import oapi from '../../../utils/apidoc.js';
 import locale from '../../../utils/locale.js';
-import logger from '../../../utils/logger.js';
 
-const router = express.Router();
-
-router.get(
-	'/api/timeline/bubble',
-	oapi.path({
-		description:
-			'Fetch a timeline of public notes from instances in the local bubble',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Timeline'],
-		parameters: [
-			{ $ref: '#/components/parameters/take' },
-			{ $ref: '#/components/parameters/since' },
-			{ $ref: '#/components/parameters/reverse' },
-			{ $ref: '#/components/parameters/local' }
-		],
-		responses: {
-			200: {
-				description: 'Return a timeline.'
-			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			409: { $ref: '#/components/responses/error-409' },
-			500: { $ref: '#/components/responses/error-500' }
+		querystring: {
+			type: 'object',
+			properties: {
+				since: { type: 'string', nullable: true },
+				take: { type: 'number', nullable: true },
+				reverse: { type: 'boolean', nullable: true },
+				local: { type: 'boolean', nullable: true }
+			}
 		}
-	}),
-	async (req, res) => {
-		if (!ConfigService.bubbleTimeline.enabled)
-			return res.status(409).json({
-				message: locale.error.featureNotEnabled
-			});
+	} as const;
 
-		const bubbleInstances = ConfigService.bubbleTimeline.instances;
+	fastify.get<{
+		Querystring: FromSchema<typeof schema.querystring>;
+	}>(
+		'/api/timeline/bubble',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.optionalAuth])
+		},
+		async (req, reply) => {
+			if (!ConfigService.bubbleTimeline.enabled)
+				return reply.status(409).send({
+					message: locale.error.featureNotEnabled
+				});
 
-		if (req.query.local === 'true')
-			bubbleInstances.push(new URL(ConfigService.url).host);
+			const bubbleInstances = ConfigService.bubbleTimeline.instances;
 
-		let andWhere;
-		const auth = await AuthService.verify(req.headers.authorization);
+			if (req.query.local)
+				bubbleInstances.push(new URL(ConfigService.url).host);
 
-		if (auth.user) {
-			const blocking = await RelationshipService.getBlocking(
-				auth.user.id
-			);
+			if (req.auth.user) {
+				const blocking = await RelationshipService.getBlocking(
+					req.auth.user.id
+				);
 
-			const blockingIds: string[] = [];
-			for (const user of blocking) {
-				blockingIds.push(user.to.id);
+				const blockingIds: string[] = [];
+				for (const user of blocking) {
+					blockingIds.push(user.to.id);
+				}
 			}
 
-			andWhere = {
-				user: { id: Not(blockingIds) }
+			let where = {
+				user: { host: In(bubbleInstances) },
+				visibility: 'public'
 			};
-		}
 
-		let where = {
-			user: { host: In(bubbleInstances) },
-			visibility: 'public'
-		};
+			let take;
+			let orderDirection;
 
-		let take;
-		let orderDirection;
+			if (req.query.since) where['createdAt'] = LessThan(req.query.since);
+			if (req.query.take) take = req.query.take;
+			if (req.query.reverse) orderDirection = 'ASC';
 
-		if (req.query.since) where['createdAt'] = LessThan(req.query.since);
-		if (req.query.take) take = Number(req.query.take);
-		if (req.query.reverse === 'true') orderDirection = 'ASC';
+			take =
+				take <= ConfigService.timeline.maxObjects
+					? take
+					: ConfigService.timeline.maxObjects;
 
-		take =
-			take <= ConfigService.timeline.maxObjects
-				? take
-				: ConfigService.timeline.maxObjects;
-
-		return await TimelineService.get(
-			'note',
-			where,
-			take,
-			'note.createdAt',
-			orderDirection ? orderDirection : 'DESC',
-			undefined,
-			andWhere
-		)
-			.then((e) => {
-				if (e && e.length > 0) return res.status(200).json(e);
-				return res.status(204).send();
-			})
-			.catch((err) => {
-				console.log(err);
-				logger.error('timeline', 'failed to generate timeline');
-				return res.status(500).json({
-					message: locale.error.internalServer
-				});
+			return await TimelineService.get(
+				'note',
+				where,
+				take,
+				'note.createdAt',
+				orderDirection ? orderDirection : 'DESC',
+				undefined
+			).then((e) => {
+				if (e && e.length > 0) return reply.status(200).send(e);
+				return reply.status(204).send();
 			});
-	}
-);
-
-export default router;
+		}
+	);
+});

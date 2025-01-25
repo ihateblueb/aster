@@ -1,92 +1,43 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
 import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import UserService from '../../../services/UserService.js';
-import ValidationService from '../../../services/ValidationService.js';
-import oapi from '../../../utils/apidoc.js';
-import bodyparser from '../../../utils/bodyparser.js';
 import locale from '../../../utils/locale.js';
 import logger from '../../../utils/logger.js';
 
-const router = express.Router();
-
-router.post(
-	'/api/auth/register',
-	bodyparser,
-	oapi.path({
-		description: 'Register a new user',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Auth'],
-		requestBody: {
-			content: {
-				'application/json': {
-					schema: {
-						type: 'object',
-						properties: {
-							username: { type: 'string' },
-							password: { type: 'string' },
-							invite: { type: 'string' }
-						}
-					}
-				}
-			}
-		},
-		responses: {
-			200: {
-				description: 'User registered',
-				content: {
-					'application/json': {
-						schema: {
-							type: 'object',
-							properties: {
-								id: {
-									type: 'string',
-									description:
-										"Newly registered account's id."
-								},
-								token: {
-									type: 'string',
-									description:
-										'Token for the newly registered user.'
-								}
-							}
-						}
-					}
-				}
+		body: {
+			type: 'object',
+			properties: {
+				username: { type: 'string' },
+				password: { type: 'string' },
+				invite: { type: 'string', nullable: true }
 			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			500: { $ref: '#/components/responses/error-500' }
+			required: ['username', 'password']
 		}
-	}),
-	async (req, res) => {
-		const bodyValidation = ValidationService.validateApiBody(req.body);
+	} as const;
 
-		if (bodyValidation.error)
-			return res.status(bodyValidation.status).json({
-				message: bodyValidation.message
-			});
+	fastify.post<{
+		Body: FromSchema<typeof schema.body>;
+	}>(
+		'/api/auth/register',
+		{
+			schema: schema
+		},
+		async (req, reply) => {
+			const registrations = ConfigService.registrations;
 
-		const parsedBody = bodyValidation.body;
-
-		if (!parsedBody.username)
-			return res.status(400).json({
-				message: locale.user.usernameRequired
-			});
-
-		if (!parsedBody.password)
-			return res.status(400).json({
-				message: locale.user.passwordRequired
-			});
-
-		const registrations = ConfigService.registrations;
-
-		if (registrations === 'open') {
-			await UserService.register(parsedBody.username, parsedBody.password)
-				.then(async (e) => {
+			if (registrations === 'open') {
+				await UserService.register(
+					req.body.username,
+					req.body.password
+				).then(async (e) => {
 					if (e.error) {
-						return res.status(e.status).json({
+						return reply.status(e.status).send({
 							message: e.message
 						});
 					} else {
@@ -94,60 +45,42 @@ router.post(
 							e.user.id
 						);
 
-						return res.status(200).json({
+						return reply.status(200).send({
 							id: e.user.id,
 							token: token
 						});
 					}
-				})
-				.catch((e) => {
-					console.log(e);
-					logger.error('registration', 'failed to register user');
-
-					return res.status(500).json({
-						message: locale.error.internalServer
-					});
 				});
-		} else if (registrations === 'approval') {
-			await UserService.register(
-				parsedBody.username,
-				parsedBody.password,
-				true
-			)
-				.then(async (e) => {
+			} else if (registrations === 'approval') {
+				await UserService.register(
+					req.body.username,
+					req.body.password,
+					true
+				).then(async (e) => {
 					if (e.error) {
-						return res.status(e.status).json({
+						return reply.status(e.status).send({
 							message: e.message
 						});
 					} else {
-						return res.status(200).json({
+						return reply.status(200).send({
 							id: e.user.id
 						});
 					}
-				})
-				.catch((e) => {
-					console.log(e);
-					logger.error('registration', 'failed to register user');
-
-					return res.status(500).json({
-						message: locale.error.internalServer
+				});
+			} else if (registrations === 'invite') {
+				if (!req.body.invite)
+					return reply.status(400).send({
+						message: locale.user.registration.inviteRequired
 					});
-				});
-		} else if (registrations === 'invite') {
-			if (!parsedBody.invite)
-				return res.status(400).json({
-					message: locale.user.registration.inviteRequired
-				});
 
-			await UserService.register(
-				parsedBody.username,
-				parsedBody.password,
-				false,
-				parsedBody.invite
-			)
-				.then(async (e) => {
+				await UserService.register(
+					req.body.username,
+					req.body.password,
+					false,
+					req.body.invite
+				).then(async (e) => {
 					if (e.error) {
-						return res.status(e.status).json({
+						return reply.status(e.status).send({
 							message: e.message
 						});
 					} else {
@@ -155,32 +88,17 @@ router.post(
 							e.user.id
 						);
 
-						return res.status(200).json({
+						return reply.status(200).send({
 							id: e.user.id,
 							token: token
 						});
 					}
-				})
-				.catch((e) => {
-					console.log(e);
-					logger.error('registration', 'failed to register user');
-
-					return res.status(500).json({
-						message: locale.error.internalServer
-					});
 				});
-		} else {
-			if (registrations !== 'closed')
-				logger.warn(
-					'config',
-					'"security.registrations" seems misconfigured. falling back to closed.'
-				);
-
-			return res.status(401).json({
-				message: locale.user.registration.closed
-			});
+			} else {
+				return reply.status(401).send({
+					message: locale.user.registration.closed
+				});
+			}
 		}
-	}
-);
-
-export default router;
+	);
+});

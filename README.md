@@ -1,179 +1,41 @@
 # Aster
 
-[![Translate Aster](https://weblate.git.gay/widget/aster/locales/svg-badge.svg?native=1)](https://weblate.git.gay/projects/aster/locales/)
+Aster is a work in progress federated social networking software.
 
-Aster is a federated microblogging software (heavily in development) intending to include the fun features of software like Misskey and also the practical features of software like Mastodon.
+## Features
+- Notes can quote other notes
+- Notes can include up to 12 attachments
+- Notes can contain MFM, a markdown used by Misskey that allows for a lot of customization.
+- More advanced instance moderation, no "blocked" or "silenced"
+  - Every note from an instance can have a specified content warning applied to it
+  - Every user from an instance can be marked sensitive automatically
+  - Admins can toggle if an instance...
+    - can have activities delivered to it
+    - if activities from that instance should be accepted
+    - if URIs from that instance should be able to be fetched
+    - if their instance should return data the other
+- Admins can enable a "bubble timeline" that has all the public notes from a list of instances
+- Files uploaded by users are always accessible by the Drive
+- Users can be marked sensitive
+- Users can bite eachother
 
-I also intend to have a somewhat good quality codebase with limited repetition and similar style throughout.
-
-Development instance (sometimes) available at https://dev.aster.pages.gay/. It's run through a Cloudflare tunnel and is on my computer, so it's only up when I'm working on it.
-
-## Requirements
-
-- NodeJS
-- pnpm
-- PostgreSQL
-- Redis or DragonflyDB
-
-Latest of all of these are best, haven't tested for minimum versions.
+## Goals
+- Support for emoji reactions
+- Users being able to bookmark both notes and users
 
 ## Setup
 
-Install dependencies with `pnpm i` and then build with `pnpm build`.\
-Afterward, copy `./config/example.yaml` to `./config/production.yaml` and update it to your liking.\
-Make sure your url set in the config is right. If it isn't, your instance actor will be generated wrong, and you won't be able to federate.\
-It is recommended you set the logging to fancy during initial setup.\
-After configuration, run `pnpm migrate` to set up your database\
-Run `pnpm start` and your instance will start up.
+Aster is **not** ready for production. If you use it in production, good luck!
+If you're looking for development environment setup, look at the contributing section.
 
-## Project Status
+- Install dependencies with `pnpm i`
+- Copy config from `config/example.yaml` to `config/production.yaml`
+- Update config so that the URL, postgres, and redis connection are right
+- Run `pnpm migrate`, `pnpm build`, and then `pnpm start`
 
-### AP
+You can use something like pm2 or make a systemd service to keep it running in the background.
 
-Endpoints done:
+## Contributing
 
-- /user/:id
-- /user/:id/inbox
-- /note/:id
-- /note/:id/activity
-- /like/:id
+I try to make issues to keep what I've got going on public. If you'd like to contribute, that's a good place to start. There's a more in depth guide in CONTRIBUTING.md.
 
-Endpoints in progress:
-
-- /user/:id/followers (Collection of following actors)
-- /user/:id/following (Collection of followed actors)
-
-- /user/:id/outbox (Collection of recently sent public activities. Do I even do this? Does anyone even use it? may be good for backfill of notes. maybe just get past public notes and throw /activity at the end so it's all of a user's public Create and Announce activities? like is also fetchable, could do those also)
-
-Endpoints needed:
-
-- /note/:id/replies (Collection of Links to Note objects\*)
-- /note/:id/likes (Collection of Links to Like activities\*)
-- /note/:id/shares (Collection of Links to Announce activities\*)
-
-\*or entire object with LD signature, to save time on the fetching end. I need to look into the best way to implement this further.
-
-Activities Sent:
-
-- Accept
-    - Follow
-- Announce
-    - Note
-- Bite
-    - User
-- Block
-- Create
-    - Note
-- Delete
-    - Note
-- Like
-    - Note
-- Reject
-    - Follow
-- Undo
-    - Like
-    - Follow
-
-I'm thinking of sending Create(Actor()) to instances with followers to local since I process that
-
-Activities Processed:
-
-- Accept
-    - Follow
-- Announce
-    - Note
-- Bite
-    - User
-    - Note
-- Block
-- Create
-    - Note
-    - Actor
-- Delete
-    - User
-    - Note
-- Flag
-- Like
-    - Note
-- Reject
-    - Follow
-- Undo
-    - Follow
-    - Like
-    - Announce
-- Update
-    - User
-    - Note
-
-Activities that should be processed in the future:
-
-- Undo
-    - Accept ?
-        - Follow ??
-- Like (with content)
-- EmojiReact
-- Add
-- Remove
-
-### Federation
-
-- Supports nodeinfo 2.0 and 2.1
-- host-meta works neatly
-- webfinger implemented, and has high tolerance of formatting (eg. resource can be @user@host, user, @user, user@host, etc.)
-- json and xml supported! for the most part!
-
-### API
-
-- Get note
-- Create notes
-- Create notes with replies or quotes
-- Like notes
-- Delete notes
-- Create repeats
-- Delete repeats (same as deleting a note)
-- Register
-- Login
-- Get user
-- Follow user
-- Block user
-- Bite user
-- Get relationship to/from user
-- Refetch remote user
-- Get instance metadata
-- Get notifications
-- Read notifications
-- Get timelines
-    - home
-    - local
-    - bubble
-    - global
-- Refetch user from remote
-- Moderate remote instances (admin)
-    - toggle accept, return, fetch, and deliver
-- Get moderated remote instances (admin)
-
-## TODO
-
-- Processing of incoming emoji
-
-- Emoji on entities (emoji array on Note, User, Poll that joins?? ManyToMany?)
-
-- Fix note attachment joins. Cant it just be a left join?? have i been overthinking it?
-
-- bookmarks
-- bookmark timeline
-- drive endpoints
-- drive upload
-
-- report frontend and endpoints
-
-- handle robots.txt from backend, generate from config
-- favicon
-
-## Development
-
-`devenv up` automatically starts a fresh postgres instance, creates a database and user with the correct permissions, and a redis instance.
-
-`devenv shell` opens a shell with helpful aliases and automatically adjusts which config is used by aster, so you don't have to modify the config to start.
-
-you can use direnv to automatically start the devenv shell when in aster

@@ -1,5 +1,3 @@
-// These types are more so to improve readability of code and suggestions.
-
 type where = object;
 
 type GenericId = string;

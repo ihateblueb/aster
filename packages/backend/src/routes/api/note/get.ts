@@ -1,58 +1,41 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
-import AuthService from '../../../services/AuthService.js';
 import NoteBuilder from '../../../services/builders/NoteBuilder.js';
 import NoteService from '../../../services/NoteService.js';
-import VisibilityService from '../../../services/VisibilityService.js';
-import oapi from '../../../utils/apidoc.js';
-import locale from '../../../utils/locale.js';
 
-const router = express.Router();
-
-router.get(
-	'/api/note/:id',
-	oapi.path({
-		description: 'Fetch a note',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Note'],
-		responses: {
-			200: {
-				description: 'Return a note.',
-				content: {
-					'application/json': {}
-				}
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' }
 			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			500: { $ref: '#/components/responses/error-500' }
+			required: ['id']
 		}
-	}),
-	async (req, res) => {
-		if (!req.params.id)
-			return res.status(400).json({
-				message: locale.note.notSpecified
-			});
+	} as const;
 
-		const note = await NoteService.get({
-			id: req.params.id
-		});
+	fastify.get<{
+		Params: FromSchema<typeof schema.params>;
+	}>(
+		'/api/note/:id',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.optionalAuth])
+		},
+		async (req, reply) => {
+			const note = await NoteService.get({ id: req.params.id });
 
-		if ((note && !note.user) || !note)
-			return res.status(404).json({
-				message: locale.note.notFound
-			});
+			if (
+				!note ||
+				!note.user ||
+				!note.user.activated ||
+				note.user.suspended
+			)
+				return reply.status(404).send();
 
-		const auth = await AuthService.verify(req.headers.authorization);
-
-		if (await VisibilityService.canISee(note, auth.user?.id)) {
-			return res.status(200).json(await NoteBuilder.build(note));
-		} else {
-			return res.status(404).json({
-				message: locale.note.notFound
-			});
+			return await NoteBuilder.build(note);
 		}
-	}
-);
-
-export default router;
+	);
+});

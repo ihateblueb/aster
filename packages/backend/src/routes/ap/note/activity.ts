@@ -1,112 +1,70 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
 import ApAnnounceRenderer from '../../../services/ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
+import ApLikeRenderer from '../../../services/ap/ApLikeRenderer.js';
 import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
+import ConfigService from '../../../services/ConfigService.js';
+import LikeService from '../../../services/LikeService.js';
 import NoteService from '../../../services/NoteService.js';
-import oapi from '../../../utils/apidoc.js';
-import locale from '../../../utils/locale.js';
 
-const router = express.Router();
-
-router.get(
-	'/notes/:id/activity',
-	oapi.path({
-		description: "Fetch a note's Create activity",
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Federation'],
-		requestBody: {
-			content: {
-				'application/activity+json': {}
-			}
-		},
-		responses: {
-			200: {
-				description: "Return specified note's create activity.",
-				content: {
-					'application/activity+json': {}
-				}
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' }
 			},
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			500: { $ref: '#/components/responses/error-500' }
+			required: ['id']
 		}
-	}),
-	async (req, res, next) => {
-		res.setHeader('Content-Type', 'application/activity+json');
+	} as const;
 
-		if (!req.params.id)
-			return res.status(400).json({
-				message: locale.note.notSpecified
-			});
+	fastify.get<{
+		Params: FromSchema<typeof schema.params>;
+	}>(
+		'/notes/:id/activity',
+		{
+			schema: schema
+		},
+		async (req, reply) => {
+			const note = await NoteService.get({ id: req.params.id });
 
-		const note = await NoteService.get({ id: req.params.id });
+			if (
+				!note ||
+				!note.user.local ||
+				note.user.suspended ||
+				!note.user.activated
+			)
+				return reply.status(404).send();
 
-		/*if (config.cache.ap) {
-			const cachedNoteActivity = await CacheService.get(
-				'ap_note_activity_' + req.params.id
-			);
+			const afs = await AuthorizedFetchService.try(req, note);
 
-			if (cachedNoteActivity) {
-				MetricsService.apNoteCacheHits.inc(1);
-				note = JSON.parse(cachedNoteActivity);
+			if (afs.error)
+				return reply.status(afs.status).send({
+					message: afs.message
+				});
+
+			let rendered: ApObject;
+			if (note.repeat && !note.content) {
+				rendered = await ApAnnounceRenderer.render(
+					note,
+					note.repeat.local
+						? await ApNoteRenderer.render(note.repeat)
+						: note.repeat.apId
+				);
 			} else {
-				MetricsService.apNoteCacheMisses.inc(1);
+				rendered = ApCreateRenderer.render(
+					await ApNoteRenderer.render(note)
+				);
 			}
-		}*/
 
-		if (note) {
-			if (!note.user.local) {
-				return res.status(404).json({
-					message: locale.user.notFound
-				});
-			} else if (note.user.suspended) {
-				return res.status(403).json({
-					message: locale.user.suspended
-				});
-			} else if (!note.user.activated) {
-				return res.status(403).json({
-					message: locale.user.notActivated
-				});
-			} else {
-				const afs = await AuthorizedFetchService.try(req, note);
-
-				if (afs.error)
-					return res.status(afs.status).json({
-						message: afs.message
-					});
-
-				let rendered: ApObject;
-
-				if (note.repeat && !note.content) {
-					rendered = await ApAnnounceRenderer.render(
-						note,
-						note.repeat.local
-							? await ApNoteRenderer.render(note.repeat)
-							: note.repeat.apId
-					);
-				} else {
-					rendered = ApCreateRenderer.render(
-						await ApNoteRenderer.render(note)
-					);
-				}
-
-				/*if (config.cache.ap)
-					await CacheService.set(
-						'ap_note_activity_' + req.params.id,
-						JSON.stringify(rendered),
-						Number(config.cache.apExpiration)
-					);*/
-
-				return res.status(200).json(rendered);
-			}
-		} else {
-			return res.status(404).json({
-				message: locale.note.notFound
-			});
+			return reply
+				.status(200)
+				.header('Content-Type', 'application/activity+json')
+				.send(rendered);
 		}
-	}
-);
-
-export default router;
+	);
+});

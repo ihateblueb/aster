@@ -1,59 +1,40 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
-import AuthService from '../../../../services/AuthService.js';
 import DriveService from '../../../../services/DriveService.js';
-import oapi from '../../../../utils/apidoc.js';
-import locale from '../../../../utils/locale.js';
 
-const router = express.Router();
-
-router.get(
-	'/api/drive/file/:id',
-	oapi.path({
-		description: 'Fetch a drive file',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['Drive'],
-		security: [{ auth: [] }],
-		responses: {
-			200: {
-				description: 'Return a drive file.',
-				content: {
-					'application/json': {}
-				}
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' }
 			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			500: { $ref: '#/components/responses/error-500' }
+			required: ['id']
 		}
-	}),
-	async (req, res) => {
-		if (!req.params.id)
-			return res.status(400).json({
-				message: locale.error.notSpecified
-			});
+	} as const;
 
-		const auth = await AuthService.verify(req.headers.authorization);
+	fastify.get<{
+		Params: FromSchema<typeof schema.params>;
+	}>(
+		'/api/drive/file/:id',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
+		},
+		async (req, reply) => {
+			const file = await DriveService.get({ id: req.params.id });
 
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
-			});
+			if (!file) return reply.status(404).send();
 
-		const file = await DriveService.get({ id: req.params.id });
+			if (
+				(!file.user || file.user.id !== req.auth.user.id) &&
+				!req.auth.user.admin
+			)
+				return reply.status(403).send();
 
-		if (!file)
-			return res.status(404).json({
-				message: 'Not found'
-			});
-
-		if ((!file.user || file.user.id !== auth.user.id) && !auth.user.admin)
-			return res
-				.status(403)
-				.json({ message: 'You cannot view this file' });
-
-		return res.status(200).json(file);
-	}
-);
-
-export default router;
+			return reply.status(200).send(file);
+		}
+	);
+});

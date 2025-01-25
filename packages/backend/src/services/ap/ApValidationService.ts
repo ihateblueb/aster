@@ -1,5 +1,6 @@
 import httpSignature from '@peertube/http-signature';
 import crypto from 'crypto';
+import { FastifyRequest } from 'fastify';
 
 import logger from '../../utils/logger.js';
 import tryUrl from '../../utils/tryUrl.js';
@@ -10,7 +11,7 @@ import ApActorService from './ApActorService.js';
 
 class ApValidationService {
 	public async validSignature(
-		req,
+		req: FastifyRequest,
 		type?: string
 	): Promise<{
 		valid: boolean;
@@ -167,8 +168,10 @@ class ApValidationService {
 
 	public validDigest(req, digest): boolean {
 		return (
-			crypto.createHash('sha256').update(req.body).digest('base64') ===
-			digest
+			crypto
+				.createHash('sha256')
+				.update(JSON.stringify(req.body))
+				.digest('base64') === digest
 		);
 	}
 

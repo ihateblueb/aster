@@ -1,217 +1,194 @@
-import express from 'express';
+import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
 import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
 import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
-import AuthService from '../../../services/AuthService.js';
+import UserBuilder from '../../../services/builders/UserBuilder.js';
 import ConfigService from '../../../services/ConfigService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
-import oapi from '../../../utils/apidoc.js';
-import bodyparser from '../../../utils/bodyparser.js';
 
-const router = express.Router();
-
-router.patch(
-	['/api/user', '/api/user/:id?'],
-	oapi.path({
-		description: 'Update a user',
+export default plugin(async (fastify) => {
+	const schema = {
 		tags: ['User'],
-		security: [{ auth: [] }],
-		requestBody: {
-			content: {
-				'application/json': {}
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string', nullable: true }
 			}
 		},
-		responses: {
-			200: {
-				description: 'Return an updated user.',
-				content: {
-					'application/json': {}
-				}
-			},
-			400: { $ref: '#/components/responses/error-400' },
-			401: { $ref: '#/components/responses/error-401' },
-			403: { $ref: '#/components/responses/error-403' },
-			404: { $ref: '#/components/responses/error-404' },
-			413: { $ref: '#/components/responses/error-413' },
-			500: { $ref: '#/components/responses/error-500' }
+		body: {
+			type: 'object',
+			properties: {
+				username: { type: 'string', nullable: true },
+				displayName: { type: 'string', nullable: true },
+				locked: { type: 'boolean', nullable: true },
+				indexable: { type: 'boolean', nullable: true },
+				automated: { type: 'boolean', nullable: true },
+				sensitive: { type: 'boolean', nullable: true },
+				bio: { type: 'string', nullable: true },
+				location: { type: 'string', nullable: true },
+				birthday: { type: 'string', nullable: true },
+				isCat: { type: 'boolean', nullable: true },
+				speakAsCat: { type: 'boolean', nullable: true },
+				avatar: { type: 'string', nullable: true },
+				avatarAlt: { type: 'string', nullable: true },
+				banner: { type: 'string', nullable: true },
+				bannerAlt: { type: 'string', nullable: true },
+				admin: { type: 'boolean', nullable: true }
+			}
 		}
-	}),
-	bodyparser,
-	async (req, res) => {
-		const auth = await AuthService.verify(req.headers.authorization);
+	} as const;
 
-		if (auth.error)
-			return res.status(auth.status).json({
-				message: auth.message
+	fastify.patch<{
+		Params: FromSchema<typeof schema.params>;
+		Body: FromSchema<typeof schema.body>;
+	}>(
+		'/api/user/:id',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
+		},
+		async (req, reply) => {
+			const user = await UserService.get({
+				id: req.params.id ?? req.auth.user.id
 			});
 
-		const bodyValidation = ValidationService.validateApiBody(req.body);
+			if (!user)
+				return reply.status(404).send({
+					message: 'Not found'
+				});
 
-		if (bodyValidation.error)
-			return res.status(bodyValidation.status).json({
-				message: bodyValidation.message
-			});
+			if (user.id !== req.auth.user.id && !req.auth.user.admin)
+				return reply.status(403).send();
 
-		const parsedBody = bodyValidation.body;
+			let updated = {};
 
-		const user = await UserService.get({
-			id: req.params.id ?? auth.user.id
-		});
+			/*
+			* if (
+				req.body.username &&
+				req.body.username.length <= ConfigService.limits.soft.username
+			)
+				updated['username'] = SanitizerService.sanitize(
+					req.body.username
+				);*/
 
-		if (!user)
-			return res.status(404).json({
-				message: 'Not found'
-			});
+			if (
+				req.body.displayName &&
+				req.body.displayName.length <=
+					ConfigService.limits.soft.displayName
+			)
+				updated['displayName'] = SanitizerService.sanitize(
+					req.body.displayName
+				);
 
-		if (user.id !== auth.user.id && !auth.user.admin)
-			return res
-				.status(403)
-				.json({ message: 'You cannot edit this user' });
-
-		let updated = {};
-
-		if (
-			parsedBody.username &&
-			parsedBody.username.length <= ConfigService.limits.soft.username
-		)
-			updated['username'] = SanitizerService.sanitize(
-				parsedBody.username
-			);
-
-		if (
-			parsedBody.displayName &&
-			parsedBody.displayName.length <=
-				ConfigService.limits.soft.displayName
-		)
-			updated['displayName'] = SanitizerService.sanitize(
-				parsedBody.displayName
-			);
-
-		if ('locked' in parsedBody) {
-			if (parsedBody.locked) {
-				updated['locked'] = true;
-			} else {
-				updated['locked'] = false;
+			if ('locked' in req.body) {
+				updated['locked'] = !!req.body.locked;
 			}
-		}
 
-		if ('indexable' in parsedBody) {
-			if (parsedBody.indexable) {
-				updated['indexable'] = true;
-			} else {
-				updated['indexable'] = false;
+			if ('indexable' in req.body) {
+				updated['indexable'] = !!req.body.indexable;
 			}
-		}
 
-		if ('automated' in parsedBody) {
-			if (parsedBody.automated) {
-				updated['automated'] = true;
-			} else {
-				updated['automated'] = false;
+			if ('automated' in req.body) {
+				updated['automated'] = !!req.body.automated;
 			}
-		}
 
-		if ('sensitive' in parsedBody) {
-			if (parsedBody.sensitive) {
-				updated['sensitive'] = true;
-			} else {
-				updated['sensitive'] = false;
+			if ('sensitive' in req.body) {
+				updated['sensitive'] = !!req.body.sensitive;
 			}
-		}
 
-		if (
-			parsedBody.bio &&
-			parsedBody.bio.length <= ConfigService.limits.soft.bio
-		)
-			updated['bio'] = SanitizerService.sanitize(parsedBody.bio);
+			if (
+				req.body.bio &&
+				req.body.bio.length <= ConfigService.limits.soft.bio
+			)
+				updated['bio'] = SanitizerService.sanitize(req.body.bio);
 
-		if (
-			parsedBody.location &&
-			parsedBody.location.length <= ConfigService.limits.soft.location
-		)
-			updated['location'] = SanitizerService.sanitize(
-				parsedBody.location
-			);
+			if (
+				req.body.location &&
+				req.body.location.length <= ConfigService.limits.soft.location
+			)
+				updated['location'] = SanitizerService.sanitize(
+					req.body.location
+				);
 
-		if (
-			parsedBody.birthday &&
-			ValidationService.validDate(parsedBody.birthday) &&
-			parsedBody.birthday.length <= ConfigService.limits.soft.birthday
-		)
-			updated['birthday'] = SanitizerService.sanitize(
-				new Date(parsedBody.birthday).toISOString()
-			);
+			if (
+				req.body.birthday &&
+				ValidationService.validDate(req.body.birthday) &&
+				req.body.birthday.length <= ConfigService.limits.soft.birthday
+			)
+				updated['birthday'] = SanitizerService.sanitize(
+					new Date(req.body.birthday).toISOString()
+				);
 
-		if ('isCat' in parsedBody) {
-			if (parsedBody.isCat) {
-				updated['isCat'] = true;
-			} else {
-				updated['isCat'] = false;
-			}
-		}
-
-		if ('speakAsCat' in parsedBody) {
-			if (parsedBody.speakAsCat) {
-				updated['speakAsCat'] = true;
-			} else {
-				updated['speakAsCat'] = false;
-			}
-		}
-
-		if (
-			parsedBody.avatar &&
-			ValidationService.validUrl(parsedBody.avatar) &&
-			parsedBody.avatar.length <= ConfigService.limits.hard.url
-		)
-			updated['avatar'] = SanitizerService.sanitize(parsedBody.avatar);
-
-		if (
-			parsedBody.avatarAlt &&
-			parsedBody.avatarAlt.length <= ConfigService.limits.soft.alt
-		)
-			updated['avatarAlt'] = SanitizerService.sanitize(
-				parsedBody.avatarAlt
-			);
-
-		if (
-			parsedBody.banner &&
-			ValidationService.validUrl(parsedBody.banner) &&
-			parsedBody.banner.length <= ConfigService.limits.hard.url
-		)
-			updated['banner'] = SanitizerService.sanitize(parsedBody.banner);
-
-		if (
-			parsedBody.bannerAlt &&
-			parsedBody.bannerAlt.length <= ConfigService.limits.soft.alt
-		)
-			updated['bannerAlt'] = SanitizerService.sanitize(
-				parsedBody.bannerAlt
-			);
-
-		updated['updatedAt'] = new Date().toISOString();
-
-		// todo: profile metadata. Yikes!
-
-		if (auth.user.admin) {
-			if ('admin' in parsedBody) {
-				if (parsedBody.admin) {
-					updated['admin'] = true;
+			if ('isCat' in req.body) {
+				if (req.body.isCat) {
+					updated['isCat'] = true;
 				} else {
-					updated['admin'] = false;
+					updated['isCat'] = false;
 				}
 			}
-		}
 
-		return await UserService.update(
-			{
-				id: user.id
-			},
-			updated
-		)
-			.then(async () => {
+			if ('speakAsCat' in req.body) {
+				if (req.body.speakAsCat) {
+					updated['speakAsCat'] = true;
+				} else {
+					updated['speakAsCat'] = false;
+				}
+			}
+
+			if (
+				req.body.avatar &&
+				ValidationService.validUrl(req.body.avatar) &&
+				req.body.avatar.length <= ConfigService.limits.hard.url
+			)
+				updated['avatar'] = SanitizerService.sanitize(req.body.avatar);
+
+			if (
+				req.body.avatarAlt &&
+				req.body.avatarAlt.length <= ConfigService.limits.soft.alt
+			)
+				updated['avatarAlt'] = SanitizerService.sanitize(
+					req.body.avatarAlt
+				);
+
+			if (
+				req.body.banner &&
+				ValidationService.validUrl(req.body.banner) &&
+				req.body.banner.length <= ConfigService.limits.hard.url
+			)
+				updated['banner'] = SanitizerService.sanitize(req.body.banner);
+
+			if (
+				req.body.bannerAlt &&
+				req.body.bannerAlt.length <= ConfigService.limits.soft.alt
+			)
+				updated['bannerAlt'] = SanitizerService.sanitize(
+					req.body.bannerAlt
+				);
+
+			updated['updatedAt'] = new Date().toISOString();
+
+			// todo: profile metadata. Yikes!
+
+			if (req.auth.user.admin) {
+				if ('admin' in req.body) {
+					if (req.body.admin) {
+						updated['admin'] = true;
+					} else {
+						updated['admin'] = false;
+					}
+				}
+			}
+
+			return await UserService.update(
+				{
+					id: user.id
+				},
+				updated
+			).then(async () => {
 				const newUser = await UserService.get({ id: user.id });
 
 				if (user.local) {
@@ -225,14 +202,8 @@ router.patch(
 					);
 				}
 
-				return res.status(200).send(newUser);
-			})
-			.catch(() => {
-				return res
-					.status(500)
-					.send({ message: 'Internal server error' });
+				return reply.status(200).send(await UserBuilder.build(newUser));
 			});
-	}
-);
-
-export default router;
+		}
+	);
+});
