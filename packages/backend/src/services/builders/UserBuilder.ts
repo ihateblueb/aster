@@ -1,4 +1,4 @@
-import { ObjectLiteral } from 'typeorm';
+import { In, ObjectLiteral } from 'typeorm';
 
 import EmojiService from '../EmojiService.js';
 import NoteService from '../NoteService.js';
@@ -9,13 +9,14 @@ class UserBuilder {
 		if (user && user.emojis) {
 			let emojis: ObjectLiteral[] = [];
 
-			for (const id of user.emojis) {
-				await EmojiService.get({
-					id: id
-				}).then((e) => {
-					if (e) emojis.push(e);
-				});
-			}
+			await EmojiService.getMany({
+				id: In(user.emojis)
+			}).then((e) => {
+				if (e)
+					for (const f of e) {
+						emojis.push(f);
+					}
+			});
 
 			user['emojis'] = emojis;
 		}
