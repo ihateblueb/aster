@@ -30,7 +30,9 @@ class ApEmojiService {
 		};
 
 		if (!body.name) return false;
-		emoji['shortcode'] = SanitizerService.sanitize(body.name);
+		emoji['shortcode'] = SanitizerService.sanitize(
+			body.name.replaceAll(':', '')
+		);
 
 		emoji['host'] = new URL(body.id).host;
 

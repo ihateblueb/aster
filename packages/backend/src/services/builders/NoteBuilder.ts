@@ -38,6 +38,7 @@ class NoteBuilder {
 
 		if (note.replyingTo)
 			note.replyingTo = await this.build(note.replyingTo);
+
 		if (note.repeat) note.repeat = await this.build(note.repeat);
 
 		return note;

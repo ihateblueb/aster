@@ -161,7 +161,10 @@
 			<div class="lower">
 				<p class="description">
 					{#if $query.data.bio}
-						<Mfm content={$query.data.bio} />
+						<Mfm
+							content={$query.data.bio}
+							emojis={$query.data.emojis}
+						/>
 					{:else}
 						<span class="missing"
 							>This user hasn't written a bio yet.</span
