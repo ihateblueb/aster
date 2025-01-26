@@ -5,6 +5,7 @@ export default function UserMini(alias?: string) {
 		alias + 'username',
 		alias + 'host',
 		alias + 'displayName',
+		alias + 'emojis',
 		alias + 'avatar',
 		alias + 'avatarAlt',
 		alias + 'banner',
