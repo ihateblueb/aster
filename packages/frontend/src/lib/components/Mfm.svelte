@@ -83,7 +83,7 @@
 			</a>
 		</div>
 	{:else if object.type === 'hashtag'}
-		#{object.props.hashtag}
+		<a href={'/tag/' + object.props.hashtag}>#{object.props.hashtag}</a>
 	{:else if object.type === 'inlineCode'}
 		<code class="mfm-inlineCode">{object.props.code}</code>
 	{:else if object.type === 'blockCode'}
@@ -429,7 +429,7 @@
 		white-space: preserve;
 		text-wrap-mode: wrap;
 		white-space-collapse: preserve;
-		line-height: 1.35em;
+		line-height: 1.35rem;
 		unicode-bidi: isolate;
 
 		&.simple {
@@ -452,7 +452,8 @@
 			}
 		}
 
-		.mfm-quote {
+		.mfm-quote,
+		blockquote {
 			margin: 8px 0;
 
 			color: var(--tx2);
@@ -492,7 +493,7 @@
 		.mfm-customEmoji {
 			display: inline;
 			vertical-align: middle;
-			height: 2em;
+			height: 2rem;
 			transition: 0.1s;
 
 			&:hover {

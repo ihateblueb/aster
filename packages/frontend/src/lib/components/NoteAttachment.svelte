@@ -84,7 +84,7 @@
 			justify-content: center;
 			flex-direction: column;
 			gap: 2px;
-			height: 325px;
+			height: 350px;
 		}
 
 		.float {

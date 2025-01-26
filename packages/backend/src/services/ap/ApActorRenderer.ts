@@ -7,7 +7,7 @@ import ApKeyRenderer from './ApKeyRenderer.js';
 
 class ApActorRenderer {
 	public render(user: ObjectLiteral): ApObject {
-		return {
+		let actor = {
 			'@context': context,
 
 			type: user.automated ? 'Service' : 'Person',
@@ -53,11 +53,21 @@ class ApActorRenderer {
 				sharedInbox: ConfigService.url.href + 'inbox'
 			},
 
+			attachment: [],
+
 			followers: user.followersUrl,
 			following: user.followingUrl,
 
 			publicKey: ApKeyRenderer.render(user.apId, user.publicKey)
 		};
+
+		if (user.pronouns)
+			actor.attachment.push({
+				type: 'Pronouns',
+				name: user.pronouns
+			});
+
+		return actor;
 	}
 }
 

@@ -11,13 +11,14 @@ class NoteBuilder {
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];
 
-			for (const id of note.attachments) {
-				await DriveService.get({
-					id: id
-				}).then((e) => {
-					if (e) attachments.push(e);
-				});
-			}
+			await DriveService.getMany({
+				id: In(note.attachments)
+			}).then((e) => {
+				if (e)
+					for (const f of e) {
+						attachments.push(f);
+					}
+			});
 
 			note['attachments'] = attachments;
 		}
@@ -25,13 +26,14 @@ class NoteBuilder {
 		if (note && note.emojis) {
 			let emojis: ObjectLiteral[] = [];
 
-			for (const id of note.emojis) {
-				await EmojiService.get({
-					id: id
-				}).then((e) => {
-					if (e) emojis.push(e);
-				});
-			}
+			await EmojiService.getMany({
+				id: In(note.emojis)
+			}).then((e) => {
+				if (e)
+					for (const f of e) {
+						emojis.push(f);
+					}
+			});
 
 			note['emojis'] = emojis;
 		}

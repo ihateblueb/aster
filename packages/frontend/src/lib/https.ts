@@ -58,12 +58,14 @@ class https {
 	public async post(url: string, body?: any) {
 		await this.start();
 
+		let headers: any = {
+			Authorization: 'Bearer ' + localstore.get('token')
+		};
+		if (body) headers['content-type'] = 'application/json';
+
 		let req = await fetch(url, {
 			method: 'POST',
-			headers: {
-				Authorization: 'Bearer ' + localstore.get('token'),
-				'Content-Type': 'application/json'
-			},
+			headers: headers,
 			body: JSON.stringify(body)
 		});
 
@@ -85,12 +87,14 @@ class https {
 	public async patch(url: string, body: any) {
 		await this.start();
 
+		let headers: any = {
+			Authorization: 'Bearer ' + localstore.get('token')
+		};
+		if (body) headers['content-type'] = 'application/json';
+
 		let req = await fetch(url, {
 			method: 'PATCH',
-			headers: {
-				Authorization: 'Bearer ' + localstore.get('token'),
-				'Content-Type': 'application/json'
-			},
+			headers: headers,
 			body: JSON.stringify(body)
 		});
 

@@ -16,6 +16,7 @@
 		IconDotsVertical,
 		IconLock,
 		IconMapPin,
+		IconMessageCircleUser,
 		IconPin,
 		IconPlus,
 		IconUserCircle,
@@ -171,8 +172,18 @@
 						>
 					{/if}
 				</p>
-				{#if $query.data.birthday || $query.data.location}
+				{#if $query.data.pronouns || $query.data.birthday || $query.data.location}
 					<div class="pairs">
+						{#if $query.data.pronouns}
+							<p class="pair">
+								<span class="key">
+									<IconMessageCircleUser
+										size="var(--fs-lg)"
+									/>
+								</span>
+								<span class="val">{$query.data.pronouns}</span>
+							</p>
+						{/if}
 						{#if $query.data.birthday}
 							<p class="pair">
 								<span class="key">
@@ -191,9 +202,9 @@
 						{/if}
 						{#if $query.data.location}
 							<p class="pair">
-								<span class="key"
-									><IconMapPin size="var(--fs-lg)" /></span
-								>
+								<span class="key">
+									<IconMapPin size="var(--fs-lg)" />
+								</span>
 								<span class="val">{$query.data.location}</span>
 							</p>
 						{/if}
@@ -275,11 +286,10 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		height: 100%;
 		box-sizing: border-box;
 
 		gap: 10px;
-		padding: 22px;
+		padding: 44px 22px;
 
 		.top {
 			p {

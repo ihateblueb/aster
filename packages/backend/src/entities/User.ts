@@ -51,6 +51,9 @@ export class User {
 	bio: string;
 
 	@Column({ nullable: true })
+	pronouns: string;
+
+	@Column({ nullable: true })
 	location: string;
 
 	@Column({ nullable: true })

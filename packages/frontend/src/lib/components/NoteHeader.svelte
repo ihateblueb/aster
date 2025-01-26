@@ -25,6 +25,11 @@
 							: note.user.username}
 						emojis={note.user.emojis}
 					/>
+					{#if note.user.pronouns}
+						<span class="pronouns">
+							{note.user.pronouns}
+						</span>
+					{/if}
 				</a>
 				<a
 					class="bottom"
@@ -88,6 +93,14 @@
 					white-space: inherit;
 					text-overflow: inherit;
 					overflow: inherit;
+
+					.pronouns {
+						font-weight: normal;
+						font-size: var(--fs-sm);
+
+						color: var(--tx3);
+						padding: 0 4px;
+					}
 				}
 
 				.bottom {

@@ -29,6 +29,7 @@ export default plugin(async (fastify) => {
 				automated: { type: 'boolean', nullable: true },
 				sensitive: { type: 'boolean', nullable: true },
 				bio: { type: 'string', nullable: true },
+				pronouns: { type: 'string', nullable: true },
 				location: { type: 'string', nullable: true },
 				birthday: { type: 'string', nullable: true },
 				isCat: { type: 'boolean', nullable: true },
@@ -105,6 +106,14 @@ export default plugin(async (fastify) => {
 				req.body.bio.length <= ConfigService.limits.soft.bio
 			)
 				updated['bio'] = SanitizerService.sanitize(req.body.bio);
+
+			if (
+				req.body.pronouns &&
+				req.body.pronouns.length <= ConfigService.limits.soft.pronouns
+			)
+				updated['pronouns'] = SanitizerService.sanitize(
+					req.body.pronouns
+				);
 
 			if (
 				req.body.location &&

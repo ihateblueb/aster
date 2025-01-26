@@ -227,6 +227,9 @@ class ConfigService {
 
 			public bio: number =
 				NumberMinMax(parsedConfig.limits.soft.bio, 1, 1000000) ?? 20000;
+			public pronouns: number =
+				NumberMinMax(parsedConfig.limits.soft.pronouns, 1, 20000) ??
+				1000;
 			public location: number =
 				NumberMinMax(parsedConfig.limits.soft.location, 1, 20000) ??
 				1000;
