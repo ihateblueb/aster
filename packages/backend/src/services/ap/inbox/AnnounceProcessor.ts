@@ -33,9 +33,11 @@ class AnnounceProcessor {
 			actor.id,
 			false,
 			visibility,
-			body.object
+			body.id
 		)
-			.then(() => {
+			.then((e) => {
+				console.log(e);
+				if (e.error) return false;
 				return true;
 			})
 			.catch((err) => {

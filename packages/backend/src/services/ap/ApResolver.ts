@@ -57,7 +57,7 @@ class ApResolver {
 				);
 				return e.json();
 			})
-			.catch(() => {
+			.catch((e) => {
 				logger.error(
 					'resolver',
 					'failed to fetch ' + url + ' as @' + actor.username

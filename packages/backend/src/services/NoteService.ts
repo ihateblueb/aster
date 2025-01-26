@@ -410,13 +410,15 @@ class NoteService {
 	) {
 		let note = await this.get({ id: noteId });
 
-		if (!(await VisibilityService.canISee(note, as)))
+		let canISee = await VisibilityService.canISee(note, as);
+
+		if (!canISee)
 			return {
 				status: 404,
 				message: 'Note not found'
 			};
 
-		if (note.visibility !== 'direct' || note.visibility !== 'followers')
+		if (note.visibility === 'direct' || note.visibility === 'followers')
 			return {
 				status: 403,
 				message: 'Cannot repeat'
