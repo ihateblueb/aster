@@ -13,7 +13,6 @@
 	function toggleEdit() {
 		if (editing) {
 			editing = false;
-			updateAdminFederationRules([instanceRule]);
 		} else {
 			editing = true;
 		}
@@ -56,103 +55,64 @@
 				</Button>
 			</div>
 		</div>
-		{#if !editing}
-			<div class="btm">
-				<div
-					class={'state ' + instanceRule.sensitive}
-					title="Whether or not users from this instance will be marked as sensitive"
-				>
-					<p>Sensitive</p>
-					{#if instanceRule.sensitive}
-						<IconCheck size="var(--fs-md)" />
-					{:else}
-						<IconX size="var(--fs-md)" />
-					{/if}
-				</div>
-				<div
-					class={'state ' + instanceRule.deliver}
-					title="Whether or not activities wil be delivered to this instance"
-				>
-					<p>Delivering</p>
-					{#if instanceRule.deliver}
-						<IconCheck size="var(--fs-md)" />
-					{:else}
-						<IconX size="var(--fs-md)" />
-					{/if}
-				</div>
-				<div
-					class={'state ' + instanceRule.accept}
-					title="Whether or not activities will be accepted from this instance"
-				>
-					<p>Accepting</p>
-					{#if instanceRule.accept}
-						<IconCheck size="var(--fs-md)" />
-					{:else}
-						<IconX size="var(--fs-md)" />
-					{/if}
-				</div>
-				<div
-					class={'state ' + instanceRule.fetch}
-					title="Whether or not to try fetching content from this instance"
-				>
-					<p>Fetching</p>
-					{#if instanceRule.fetch}
-						<IconCheck size="var(--fs-md)" />
-					{:else}
-						<IconX size="var(--fs-md)" />
-					{/if}
-				</div>
-				<div
-					class={'state ' + instanceRule.return}
-					title="Whether or not to will return content to this instance"
-				>
-					<p>Returning</p>
-					{#if instanceRule.return}
-						<IconCheck size="var(--fs-md)" />
-					{:else}
-						<IconX size="var(--fs-md)" />
-					{/if}
-				</div>
+
+		<div class="btm">
+			<div
+				class={'state ' + instanceRule.sensitive}
+				title="Whether or not users from this instance will be marked as sensitive"
+			>
+				<p>Sensitive</p>
+				{#if instanceRule.sensitive}
+					<IconCheck size="var(--fs-md)" />
+				{:else}
+					<IconX size="var(--fs-md)" />
+				{/if}
 			</div>
-		{:else}
-			<div class="btm">
-				<div
-					class={'state ' + instanceRule.sensitive}
-					title="Whether or not users from this instance will be marked as sensitive"
-				>
-					<p>Sensitive</p>
-					<Toggle checked={instanceRule.sensitive} />
-				</div>
-				<div
-					class={'state ' + instanceRule.deliver}
-					title="Whether or not activities wil be delivered to this instance"
-				>
-					<p>Delivering</p>
-					<Toggle checked={instanceRule.deliver} />
-				</div>
-				<div
-					class={'state ' + instanceRule.accept}
-					title="Whether or not activities will be accepted from this instance"
-				>
-					<p>Accepting</p>
-					<Toggle checked={instanceRule.accept} />
-				</div>
-				<div
-					class={'state ' + instanceRule.fetch}
-					title="Whether or not to try fetching content from this instance"
-				>
-					<p>Fetching</p>
-					<Toggle checked={instanceRule.fetch} />
-				</div>
-				<div
-					class={'state ' + instanceRule.return}
-					title="Whether or not to will return content to this instance"
-				>
-					<p>Returning</p>
-					<Toggle checked={instanceRule.return} />
-				</div>
+			<div
+				class={'state ' + instanceRule.deliver}
+				title="Whether or not activities wil be delivered to this instance"
+			>
+				<p>Delivering</p>
+				{#if instanceRule.deliver}
+					<IconCheck size="var(--fs-md)" />
+				{:else}
+					<IconX size="var(--fs-md)" />
+				{/if}
 			</div>
-		{/if}
+			<div
+				class={'state ' + instanceRule.accept}
+				title="Whether or not activities will be accepted from this instance"
+			>
+				<p>Accepting</p>
+				{#if instanceRule.accept}
+					<IconCheck size="var(--fs-md)" />
+				{:else}
+					<IconX size="var(--fs-md)" />
+				{/if}
+			</div>
+			<div
+				class={'state ' + instanceRule.fetch}
+				title="Whether or not to try fetching content from this instance"
+			>
+				<p>Fetching</p>
+				{#if instanceRule.fetch}
+					<IconCheck size="var(--fs-md)" />
+				{:else}
+					<IconX size="var(--fs-md)" />
+				{/if}
+			</div>
+			<div
+				class={'state ' + instanceRule.return}
+				title="Whether or not to will return content to this instance"
+			>
+				<p>Returning</p>
+				{#if instanceRule.return}
+					<IconCheck size="var(--fs-md)" />
+				{:else}
+					<IconX size="var(--fs-md)" />
+				{/if}
+			</div>
+		</div>
 	</div>
 {/if}
 

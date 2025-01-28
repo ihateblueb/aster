@@ -1,3 +1,0 @@
-# Instance Actors
-
-An instance actor is typically a proxy user used to do actions on behalf of users of an instance. This can be for privacy, or for when determining what user should fetch something isn't possible. When Aster sends get requests to other instances, it will almost always sign it. If a specific user is requesting the get, it'll be signed as them. This allows the instance to fetch notes that only that user should be allowed to see. If the user cannot be determined, like from a random note lookup, then it will fall back to the instance actor, which is unable to see everything but can still sign requests.

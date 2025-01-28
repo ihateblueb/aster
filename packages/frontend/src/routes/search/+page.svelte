@@ -15,10 +15,23 @@
 </PageHeader>
 
 <PageWrapper>
-	<Input
-		wide
-		nm
-		placeholder="Search by ID, url, handle, or keyword..."
-		bind:value
-	/>
+	<div class="top">
+		<Input
+			wide
+			nm
+			placeholder="Search by ID, url, handle, or keyword..."
+			bind:value
+		/>
+		<Button nm>Go</Button>
+	</div>
 </PageWrapper>
+
+<style lang="scss">
+	.top {
+		display: flex;
+		align-items: center;
+		box-sizing: border-box;
+		width: 100%;
+		gap: 10px;
+	}
+</style>

@@ -55,40 +55,6 @@
 				</Button>
 			</div>
 		</div>
-
-		<Modal bind:this={modal}>
-			<svelte:fragment slot="text">
-				<h2>Add federation rule</h2>
-			</svelte:fragment>
-
-			<Input label="Host" placeholder="example.com" wide></Input>
-			<p>
-				Hosts will be truncated to only include the base domain (eg.
-				some.example.com becomes example.com)
-			</p>
-			<br />
-			<Input
-				label="Content warning"
-				placeholder="untagged sensitive media"
-				wide
-			></Input>
-			<p>
-				This content warning will be put on every incoming note that
-				doesn't already have one.
-			</p>
-			<br />
-			<Toggle label="Mark all media as sensitive" />
-			<Toggle label="Deliver activities" />
-			<Toggle label="Accept activies" />
-			<Toggle label="Fetch objects" />
-			<Toggle label="Return objects" />
-
-			<svelte:fragment slot="buttons">
-				<Button accent>Add</Button>
-				<Button on:click={() => modal.close()}>Cancel</Button>
-			</svelte:fragment>
-		</Modal>
-
 		<div class="btm">
 			{#each newData as newInstanceRule}
 				<InstanceRuleCard instanceRule={newInstanceRule} />
@@ -99,6 +65,36 @@
 		</div>
 	{/if}
 </PageWrapper>
+
+<Modal bind:this={modal}>
+	<svelte:fragment slot="text">
+		<h2>Add federation rule</h2>
+	</svelte:fragment>
+
+	<Input label="Host" placeholder="example.com" wide></Input>
+	<p>
+		Hosts will be truncated to only include the base domain (e.g.
+		some.example.com becomes example.com)
+	</p>
+	<br />
+	<Input label="Content warning" placeholder="untagged sensitive media" wide
+	></Input>
+	<p>
+		This content warning will be put on every incoming note that doesn't
+		already have one.
+	</p>
+	<br />
+	<Toggle label="Mark all media and users as sensitive" />
+	<Toggle label="Deliver activities" />
+	<Toggle label="Accept activies" />
+	<Toggle label="Fetch objects" />
+	<Toggle label="Return objects" />
+
+	<svelte:fragment slot="buttons">
+		<Button accent>Add</Button>
+		<Button on:click={() => modal.close()}>Cancel</Button>
+	</svelte:fragment>
+</Modal>
 
 <style lang="scss" scoped>
 	.top {
