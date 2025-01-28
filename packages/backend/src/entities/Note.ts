@@ -11,6 +11,7 @@ import typeorm, {
 } from 'typeorm';
 
 import { NoteLike } from './NoteLike.js';
+import { NoteReact } from './NoteReact.js';
 import { Poll } from './Poll.js';
 import { User } from './User.js';
 
@@ -85,10 +86,6 @@ export class Note {
 	@Column({ array: true, nullable: true })
 	attachments: string;
 
-	/*
-		TODO (later): add emojis relation for emojis in post content
-	*/
-
 	@Column({ array: true, select: false, nullable: true })
 	likeIds: string;
 
@@ -98,6 +95,16 @@ export class Note {
 	})
 	@JoinColumn({ name: 'likeIds' })
 	likes: typeorm.Relation<NoteLike>;
+
+	@Column({ array: true, select: false, nullable: true })
+	reactionIds: string;
+
+	@OneToMany(() => NoteReact, (noteReact) => noteReact.note, {
+		onDelete: 'CASCADE',
+		nullable: true
+	})
+	@JoinColumn({ name: 'reactionIds' })
+	reactions: typeorm.Relation<NoteReact>;
 
 	@Column({ array: true, select: false, nullable: true })
 	repeatIds: string;

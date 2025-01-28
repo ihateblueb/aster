@@ -17,6 +17,7 @@ type Visibility = 'public' | 'unlisted' | 'followers' | 'direct';
 type RelationshipType = 'follow' | 'block' | 'mute';
 type NotificationType =
 	| 'like'
+	| 'react'
 	| 'repeat'
 	| 'mention'
 	| 'follow'

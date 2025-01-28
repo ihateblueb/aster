@@ -61,6 +61,12 @@ class NoteService {
 			.leftJoin('note_likes.user', 'likes_user')
 			.addSelect(UserMini('likes_user'))
 
+			//reactions
+			.leftJoinAndSelect('note.reactions', 'note_reactions')
+			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
+			.leftJoin('note_reactions.user', 'reactions_user')
+			.addSelect(UserMini('reactions_user'))
+
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.getOne();
@@ -112,6 +118,12 @@ class NoteService {
 			.leftJoinAndSelect('note.likes', 'note_like')
 			.leftJoin('note_like.user', 'like_user')
 			.addSelect(UserMini('like_user'))
+
+			//reactions
+			.leftJoinAndSelect('note.reactions', 'note_reactions')
+			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
+			.leftJoin('note_reactions.user', 'reactions_user')
+			.addSelect(UserMini('reactions_user'))
 
 			.where(where)
 			.orWhere(orWhere ?? where)

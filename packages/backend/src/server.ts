@@ -56,7 +56,7 @@ fastify
 	.register(cors)
 	.register(cookie)
 	.register(ratelimit, {
-		max: 100,
+		max: 500,
 		timeWindow: '1 minute'
 	})
 	.register(websocket)

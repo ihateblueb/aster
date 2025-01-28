@@ -3,7 +3,6 @@ import typeorm, {
 	Entity,
 	JoinColumn,
 	ManyToOne,
-	OneToOne,
 	PrimaryColumn
 } from 'typeorm';
 
@@ -32,15 +31,19 @@ export class NoteReact {
 	emojiId: string;
 
 	@ManyToOne(() => Emoji, (emoji) => emoji, {
-		onDelete: 'CASCADE'
+		onDelete: 'CASCADE',
+		nullable: true
 	})
-	@JoinColumn({ name: 'Emoji' })
+	@JoinColumn({ name: 'emojiId' })
 	emoji: typeorm.Relation<Emoji>;
+
+	@Column({ nullable: true })
+	content: string;
 
 	@Column({ select: false })
 	noteId: string;
 
-	@OneToOne(() => Note, (note) => note, {
+	@ManyToOne(() => Note, (note) => note.reactions, {
 		onDelete: 'CASCADE'
 	})
 	@JoinColumn({ name: 'noteId' })
