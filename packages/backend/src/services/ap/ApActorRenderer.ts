@@ -13,59 +13,53 @@ class ApActorRenderer {
 			type: user.automated ? 'Service' : 'Person',
 
 			id: user.apId,
-
-			preferredUsername: user.username,
-			name: user.displayName,
-			url: ConfigService.url.href + '@' + user.username,
-
-			summary: user.bio,
-			_misskey_summary: user.bio,
-
-			'vcard:bday': user.birthday,
-			'vcard:Address': user.location,
-
-			sensitive: user.sensitive,
-			discoverable: user.discoverable,
-			manuallyApprovesFollowers: user.locked,
-			noindex: !user.indexable,
-			isCat: user.isCat,
-			speakAsCat: user.speakAsCat,
-
-			icon: user.avatar
-				? ApImageRenderer.render(
-						user.avatar,
-						user.sensitive,
-						user.avatarAlt
-					)
-				: undefined,
-			image: user.banner
-				? ApImageRenderer.render(
-						user.banner,
-						user.sensitive,
-						user.bannerAlt
-					)
-				: undefined,
-
-			inbox: user.inbox,
-			outbox: user.outbox,
-			sharedInbox: ConfigService.url.href + 'inbox',
-			endpoints: {
-				sharedInbox: ConfigService.url.href + 'inbox'
-			},
-
-			attachment: [],
-
-			followers: user.followersUrl,
-			following: user.followingUrl,
-
-			publicKey: ApKeyRenderer.render(user.apId, user.publicKey)
+			url: ConfigService.url.href + '@' + user.username
 		};
 
-		if (user.pronouns)
-			actor.attachment.push({
-				type: 'Pronouns',
-				name: user.pronouns
-			});
+		actor['preferredUsername'] = user.username;
+		if (user.displayName) actor['name'] = user.displayName;
+
+		if (user.avatar)
+			actor['icon'] = ApImageRenderer.render(
+				user.avatar,
+				user.sensitive,
+				user.avatarAlt
+			);
+		if (user.banner)
+			actor['image'] = ApImageRenderer.render(
+				user.banner,
+				user.sensitive,
+				user.bannerAlt
+			);
+
+		if (user.bio) {
+			actor['summary'] = user.bio;
+			actor['_misskey_summary'] = user.bio;
+		}
+
+		actor['sensitive'] = user.sensitive;
+		actor['discoverable'] = user.discoverable;
+		actor['manuallyApprovesFollowers'] = user.locked;
+		actor['noindex'] = !user.indexable;
+		actor['isCat'] = user.isCat;
+		actor['speakAsCat'] = user.speakAsCat;
+
+		if (user.birthday) actor['vcard:bday'] = user.birthday;
+		if (user.location) actor['vcard:Address'] = user.location;
+
+		if (user.pronouns) actor['pancakes:pronouns'] = user.pronouns;
+
+		actor['inbox'] = user.inbox;
+		actor['outbox'] = user.outbox;
+		actor['sharedInbox'] = ConfigService.url.href + 'inbox';
+		actor['endpoints'] = {
+			sharedInbox: ConfigService.url.href + 'inbox'
+		};
+
+		actor['followers'] = user.followersUrl;
+		actor['following'] = user.followingUrl;
+
+		actor['publicKey'] = ApKeyRenderer.render(user.apId, user.publicKey);
 
 		return actor;
 	}
