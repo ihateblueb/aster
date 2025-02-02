@@ -18,22 +18,25 @@
 	if (localstore.get('uncollapseCws') === 'true') cwOpen = true;
 </script>
 
+{#snippet noteAttachments(attachments)}
+	{#if attachments && attachments.length > 0}
+		<div
+			class={'attachments' + (attachments.length > 1 ? ' multiple' : '')}
+		>
+			{#each attachments as attachment}
+				<NoteAttachment {attachment} />
+			{/each}
+		</div>
+	{/if}
+{/snippet}
+
 {#snippet noteContent(data)}
 	<Mfm
 		content={data.content}
 		emojis={data.emojis}
 		on:click={() => (!expanded ? goto('/notes/' + data.id) : () => {})}
 	/>
-	{#if note.attachments && note.attachments.length > 0}
-		<div
-			class={'attachments' +
-				(note.attachments.length > 1 ? ' multiple' : '')}
-		>
-			{#each note.attachments as attachment}
-				<NoteAttachment {attachment} />
-			{/each}
-		</div>
-	{/if}
+	{@render noteAttachments(data.attachments)}
 {/snippet}
 
 {#snippet renderNote(data, quote)}
@@ -56,11 +59,15 @@
 					Replying to
 					<a
 						href={'/@' +
-							note.user.username +
-							(note.user.local ? '' : '@' + note.user.host)}
+							note.replyingTo.user.username +
+							(note.replyingTo.user.local
+								? ''
+								: '@' + note.replyingTo.user.host)}
 						>{'@' +
-							note.user.username +
-							(note.user.local ? '' : '@' + note.user.host)}
+							note.replyingTo.user.username +
+							(note.replyingTo.user.local
+								? ''
+								: '@' + note.replyingTo.user.host)}
 					</a>
 				</p>
 			{/if}

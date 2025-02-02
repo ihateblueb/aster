@@ -27,7 +27,7 @@ export class NoteReact {
 	@JoinColumn({ name: 'userId' })
 	user: typeorm.Relation<User>;
 
-	@Column({ select: false })
+	@Column({ select: false, nullable: true })
 	emojiId: string;
 
 	@ManyToOne(() => Emoji, (emoji) => emoji, {
