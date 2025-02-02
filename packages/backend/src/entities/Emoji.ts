@@ -13,13 +13,13 @@ export class Emoji {
 	@PrimaryColumn({ unique: true })
 	id: string;
 
-	@PrimaryColumn({ unique: true })
+	@Column({ unique: true })
 	apId: string;
 
-	@PrimaryColumn()
+	@Column()
 	shortcode: string;
 
-	@PrimaryColumn()
+	@Column()
 	host: string;
 
 	@Column({ select: false })
