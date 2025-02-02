@@ -2,6 +2,8 @@
 	import {
 		IconBug,
 		IconDental,
+		IconMoodPlus,
+		IconMoodSmile,
 		IconRepeat,
 		IconStar,
 		IconUserPlus
@@ -28,6 +30,8 @@
 		<IconBug size="var(--fs-lg)" color="var(--ac1)" />
 	{:else if notification.type === 'like'}
 		<IconStar size="var(--fs-lg)" color="var(--like)" />
+	{:else if notification.type === 'react'}
+		<IconMoodPlus size="var(--fs-lg)" color="var(--ac1)" />
 	{:else if notification.type === 'repeat'}
 		<IconRepeat size="var(--fs-lg)" color="var(--repeat" />
 	{:else if notification.type === 'acceptedFollow'}
@@ -53,6 +57,8 @@
 		Debug
 	{:else if notification.type === 'like'}
 		{@render name(notification?.from)} liked your note
+	{:else if notification.type === 'react'}
+		{@render name(notification?.from)} reacted to your note
 	{:else if notification.type === 'repeat'}
 		{@render name(notification?.from)} repeated your note
 	{:else if notification.type === 'acceptedFollow'}

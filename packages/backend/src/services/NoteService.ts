@@ -64,6 +64,7 @@ class NoteService {
 			//reactions
 			.leftJoinAndSelect('note.reactions', 'note_reactions')
 			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
+			.leftJoinAndSelect('reactions_emoji.file', 'reactions_emoji_file')
 			.leftJoin('note_reactions.user', 'reactions_user')
 			.addSelect(UserMini('reactions_user'))
 
@@ -122,6 +123,7 @@ class NoteService {
 			//reactions
 			.leftJoinAndSelect('note.reactions', 'note_reactions')
 			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
+			.leftJoinAndSelect('reactions_emoji.file', 'reactions_emoji_file')
 			.leftJoin('note_reactions.user', 'reactions_user')
 			.addSelect(UserMini('reactions_user'))
 

@@ -78,6 +78,34 @@
 	);
 </script>
 
+{#if note.reactions && note.reactions.length > 0}
+	<div class="reactions">
+		{#each note.reactions as reaction}
+			<div
+				class="reaction"
+				title={reaction.emoji
+					? reaction.emoji.host
+						? ':' +
+							reaction.emoji.shortcode +
+							'@' +
+							reaction.emoji.host +
+							':'
+						: ':' + reaction.emoji.shortcode + ':'
+					: reaction.content}
+			>
+				<span class="content">
+					{#if reaction.content}
+						{reaction.content}
+					{:else}
+						<img src={reaction?.emoji?.file?.src} />
+					{/if}
+				</span>
+				<span class="counter">{reaction.users.length}</span>
+			</div>
+		{/each}
+	</div>
+{/if}
+
 <footer>
 	<div class={'item' + (self ? '' : ' loggedOut')}>
 		<button on:click={() => reply()}>
@@ -212,6 +240,37 @@
 </Dropdown>
 
 <style lang="scss" scoped>
+	.reactions {
+		display: flex;
+		gap: 8px;
+		margin-bottom: 10px;
+		overflow-x: scroll;
+
+		.reaction {
+			display: flex;
+			align-items: center;
+			gap: 6px;
+
+			background: var(--bg4-25);
+			padding: 6px 8px;
+			border-radius: var(--br-md);
+			transition: 0.1s;
+
+			&:hover {
+				background: var(--bg4-50);
+			}
+
+			.content {
+				img {
+					height: 1.4rem !important;
+				}
+			}
+			.counter {
+				font-size: var(--fs-sm);
+			}
+		}
+	}
+
 	footer {
 		display: flex;
 		flex-direction: row;

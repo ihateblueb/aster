@@ -29,7 +29,7 @@
 	Copy handle
 </DropdownItem>
 {#if !user.local}
-	<DropdownItem to={user.apId}>
+	<DropdownItem to={user.apId} newTab>
 		<IconExternalLink size="var(--fs-lg)" />
 		View on remote
 	</DropdownItem>

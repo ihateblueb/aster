@@ -38,6 +38,27 @@ class NoteBuilder {
 			note['emojis'] = emojis;
 		}
 
+		if (note && note.reactions) {
+			let reactions: ObjectLiteral[] = [];
+
+			for (const reaction of note.reactions) {
+				if (reactions.some((e) => e.emoji.id === reaction.emoji.id)) {
+					reactions[
+						reactions.findIndex(
+							(e) => e.emoji.id === reaction.emoji.id
+						)
+					].users.push(reaction.user);
+				} else {
+					reactions.push({
+						emoji: reaction.emoji,
+						users: [reaction.user]
+					});
+				}
+			}
+
+			note['reactions'] = reactions;
+		}
+
 		if (note.replyingTo)
 			note.replyingTo = await this.build(note.replyingTo);
 

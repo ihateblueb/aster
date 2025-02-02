@@ -96,9 +96,12 @@
 							note.user.username +
 							(note.user.local ? '' : '@' + note.user.host)}
 					>
-						{note.user.displayName
-							? note.user.displayName
-							: note.user.username}
+						<Mfm
+							simple
+							content={note.user.displayName
+								? note.user.displayName
+								: note.user.username}
+						/>
 					</a> repeated
 				</span>
 			</div>

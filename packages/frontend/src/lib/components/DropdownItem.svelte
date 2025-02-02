@@ -1,12 +1,12 @@
 <script lang="ts">
-	let { to = '', danger = false, warn = false } = $props();
+	let { to = '', newTab = false, danger = false, warn = false } = $props();
 
 	let dropdownItemClass =
 		'dropdownItem' + (danger ? ' danger' : '') + (warn ? ' warn' : '');
 </script>
 
 {#if to && to.length > 0}
-	<a class={dropdownItemClass} href={to}>
+	<a class={dropdownItemClass} href={to} target={newTab ? '_blank' : ''}>
 		<slot></slot>
 	</a>
 {:else}
