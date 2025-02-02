@@ -14,6 +14,7 @@
 	import Report from '$lib/components/Report.svelte';
 	import DriveFile from '$lib/components/DriveFile.svelte';
 	import ws from '$lib/websocket.svelte';
+	import localstore from '$lib/localstore';
 
 	let {
 		type,
@@ -38,6 +39,14 @@
 			return lastPage ? lastPage.at(-1).createdAt : undefined;
 		}
 	});
+
+	function infiniteLoading(e) {
+		const observer = new IntersectionObserver(async (entries) => {
+			if (entries[0].isIntersecting) $query.fetchNextPage();
+		});
+
+		observer.observe(e);
+	}
 
 	let additionalNotes: any[] = $state([]);
 
@@ -120,15 +129,20 @@
 	{/each}
 
 	<div class="fetchMore">
-		<Button centered on:click={() => $query.fetchNextPage()}>
-			{#if $query.isFetching}
-				<Loading size="var(--fs-lg)" />
-			{:else if $query.hasNextPage}
-				Load More
-			{:else}
-				No more
-			{/if}
-		</Button>
+		{#if !localstore.get('fetchMoreOnScroll')}
+			<Button centered on:click={() => $query.fetchNextPage()}>
+				{#if $query.isFetchingNextPage}
+					<Loading size="var(--fs-lg)" massive={false} />
+				{:else if $query.hasNextPage}
+					Load More
+				{:else}
+					No more
+				{/if}
+			</Button>
+		{:else}
+			<div use:infiniteLoading></div>
+			<Loading size="var(--fs-lg)" massive={false} />
+		{/if}
 	</div>
 {/if}
 
@@ -144,6 +158,7 @@
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		min-height: 75px;
 		padding: 8px;
 	}
 </style>

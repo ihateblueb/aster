@@ -57,18 +57,22 @@
 				<p class="replyingToUser">
 					<IconArrowBackUp size="var(--fs-lg)" />
 					Replying to
-					<a
-						href={'/@' +
-							note.replyingTo.user.username +
-							(note.replyingTo.user.local
-								? ''
-								: '@' + note.replyingTo.user.host)}
-						>{'@' +
-							note.replyingTo.user.username +
-							(note.replyingTo.user.local
-								? ''
-								: '@' + note.replyingTo.user.host)}
-					</a>
+					{#if data.user.id === data.replyingTo.user.id}
+						self
+					{:else}
+						<a
+							href={'/@' +
+								note.replyingTo.user.username +
+								(note.replyingTo.user.local
+									? ''
+									: '@' + note.replyingTo.user.host)}
+							>{'@' +
+								note.replyingTo.user.username +
+								(note.replyingTo.user.local
+									? ''
+									: '@' + note.replyingTo.user.host)}
+						</a>
+					{/if}
 				</p>
 			{/if}
 			{@render noteContent(data)}
