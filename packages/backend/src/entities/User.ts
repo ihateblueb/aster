@@ -50,6 +50,9 @@ export class User {
 	@Column({ nullable: true })
 	bio: string;
 
+	@Column({ type: 'jsonb', array: true, nullable: true })
+	metadata: string;
+
 	@Column({ nullable: true })
 	pronouns: string;
 
