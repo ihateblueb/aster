@@ -16,6 +16,9 @@ export class Emoji {
 	@Column({ unique: true })
 	apId: string;
 
+	@Column({ nullable: true })
+	category: string;
+
 	@Column()
 	shortcode: string;
 
