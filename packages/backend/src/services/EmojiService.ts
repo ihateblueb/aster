@@ -10,12 +10,21 @@ class EmojiService {
 			.getOne();
 	}
 
-	public async getMany(where: where) {
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		orderDirection?: 'ASC' | 'DESC',
+		orWhere?: where
+	) {
 		return await db
 			.getRepository('emoji')
 			.createQueryBuilder('emoji')
 			.leftJoinAndSelect('emoji.file', 'file')
 			.where(where)
+			.orWhere(orWhere ?? where)
+			.take(take)
+			.orderBy(order, orderDirection)
 			.getMany();
 	}
 }
