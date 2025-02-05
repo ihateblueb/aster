@@ -1,6 +1,8 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
+import EmojiService from '../../../../services/EmojiService.js';
+
 export default plugin(async (fastify) => {
 	const schema = {
 		tags: ['Admin'],
@@ -25,7 +27,17 @@ export default plugin(async (fastify) => {
 		async (req, reply) => {
 			if (!req.auth.user.admin) return reply.status(403).send();
 
-			return reply.status(501).send();
+			return await EmojiService.create(
+				req.body.shortcode,
+				req.body.file,
+				req.body.category
+			).then((e) => {
+				if (e.error)
+					return reply.status(e.status).send({
+						message: e.message
+					});
+				return reply.status(201).send(e?.emoji);
+			});
 		}
 	);
 });

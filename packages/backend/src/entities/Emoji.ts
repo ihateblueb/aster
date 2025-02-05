@@ -22,7 +22,7 @@ export class Emoji {
 	@Column()
 	shortcode: string;
 
-	@Column()
+	@Column({ nullable: true })
 	host: string;
 
 	@Column({ select: false })
