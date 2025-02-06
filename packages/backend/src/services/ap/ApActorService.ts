@@ -57,7 +57,7 @@ class ApActorService {
 	): Promise<Partial<ObjectLiteral>> {
 		// todo: make more tolerant of weird responses.
 		let user = base ?? {
-			host: new URL(body.id).host
+			host: punycode.toASCII(reduceSubdomain(new URL(body.id).host))
 		};
 
 		if (!body.id) throw new Error('no apId present');

@@ -11,7 +11,7 @@
 
 	import { scale } from 'svelte/transition';
 
-	let { width = '200px' } = $props();
+	let { emoji = false, width = '200px' } = $props();
 
 	let dialog: undefined | HTMLDialogElement = $state();
 	let target: undefined | null | EventTarget = $state();
@@ -70,7 +70,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 {#if show}
 	<dialog
-		class="dropdown"
+		class={'dropdown' + (emoji ? ' emoji' : '')}
 		style={'top:' +
 			top +
 			'px;left:' +
@@ -116,6 +116,11 @@
 			display: flex;
 			flex-direction: column;
 			align-items: center;
+		}
+
+		&.emoji {
+			width: 300px !important;
+			padding: 0px;
 		}
 	}
 

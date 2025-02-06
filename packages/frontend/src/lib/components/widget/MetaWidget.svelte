@@ -6,6 +6,7 @@
 		queryKey: ['meta'],
 		retry: false,
 		refetchOnWindowFocus: false,
+		staleTime: 60000,
 		queryFn: async () => await getMeta()
 	});
 </script>

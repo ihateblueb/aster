@@ -23,8 +23,10 @@
 	import DropdownItem from './DropdownItem.svelte';
 	import playSound from '$lib/sounds.js';
 	import NoteAttachment from '$lib/components/NoteAttachment.svelte';
+	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
 
 	let addDropdown: undefined | Dropdown = $state();
+	let emojiDropdown: undefined | Dropdown = $state();
 	let visibilityDropdown: undefined | Dropdown = $state();
 
 	// self state
@@ -232,7 +234,12 @@
 			>
 				<IconPlus size="var(--fs-lg)" />
 			</Button>
-			<Button transparent centered nm>
+			<Button
+				transparent
+				centered
+				nm
+				on:click={(e) => emojiDropdown.open(e)}
+			>
 				<IconMoodSmile size="var(--fs-lg)" />
 			</Button>
 		</div>
@@ -294,6 +301,12 @@
 		<IconChartBar size="var(--fs-lg)" />
 		Add poll
 	</DropdownItem>
+</Dropdown>
+
+<Dropdown bind:this={emojiDropdown} emoji>
+	<EmojiDropdown
+		on:emojiSelected={(e) => (note.content += ':' + e.detail + ':')}
+	/>
 </Dropdown>
 
 <style lang="scss" scoped>

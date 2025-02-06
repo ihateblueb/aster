@@ -1,6 +1,7 @@
 import getUser from '$lib/api/user/get';
 import store from '$lib/store';
 import localstore from '$lib/localstore';
+import getEmojis from '$lib/api/emojis/get';
 
 export const prerender = false;
 export const ssr = false;
@@ -30,8 +31,16 @@ if (self) {
 	}
 }
 
-/*
-	todo: key events
-	`p` should toggle compose modal
-	`r`	should toggle viewRefresh store
-*/
+try {
+	getEmojis()
+		.then((emojis) => {
+			localstore.set('emojis', JSON.stringify(emojis));
+		})
+		.catch((err) => {
+			console.log('failed to fetch new emojis');
+			console.error(err);
+		});
+} catch (err) {
+	console.log('failed to update emojis');
+	console.error(err);
+}

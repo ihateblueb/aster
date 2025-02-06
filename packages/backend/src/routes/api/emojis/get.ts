@@ -2,6 +2,7 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { IsNull, LessThan } from 'typeorm';
 
+import EmojiBuilder from '../../../services/builders/EmojiBuilder.js';
 import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
 import TimelineService from '../../../services/TimelineService.js';
@@ -33,8 +34,11 @@ export default plugin(async (fastify) => {
 			if (req.auth.user && req.auth.user.admin && req.query.remote)
 				where = {};
 
-			return await EmojiService.getMany(where).then((e) => {
-				if (e && e.length > 0) return reply.status(200).send(e);
+			return await EmojiService.getMany(where).then(async (e) => {
+				if (e && e.length > 0)
+					return reply
+						.status(200)
+						.send(await EmojiBuilder.categorize(e));
 				return reply.status(204).send();
 			});
 		}

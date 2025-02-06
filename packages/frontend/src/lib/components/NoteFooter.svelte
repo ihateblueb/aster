@@ -27,6 +27,7 @@
 	import { page } from '$app/state';
 	import likeNote from '$lib/api/note/like.js';
 	import playSound from '$lib/sounds.js';
+	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
 
 	let self: any = $state();
 	function updateSelf() {
@@ -183,7 +184,9 @@
 </Dropdown>
 
 <!-- React Dropdown -->
-<Dropdown bind:this={reactDropdown}>React dropdown will be here</Dropdown>
+<Dropdown bind:this={reactDropdown} emoji>
+	<EmojiDropdown />
+</Dropdown>
 
 <!-- More Dropdown -->
 <Dropdown bind:this={moreDropdown}>

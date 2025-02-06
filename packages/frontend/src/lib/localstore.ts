@@ -14,6 +14,8 @@ let defaults = {
 	self: undefined,
 	token: undefined,
 
+	emojis: undefined,
+
 	defaultVisibility: 'public',
 
 	sidebarLeft: {
