@@ -15,6 +15,7 @@
 	import DriveFile from '$lib/components/DriveFile.svelte';
 	import ws from '$lib/websocket.svelte';
 	import localstore from '$lib/localstore';
+	import EmojiCard from '$lib/components/EmojiCard.svelte';
 
 	let {
 		type,
@@ -22,6 +23,7 @@
 		select = false,
 		queryKey,
 		queryFn,
+		noScroll = false,
 		query = $bindable(),
 		timeline = $bindable()
 	} = $props();
@@ -123,27 +125,31 @@
 					<Report report={object} />
 				{:else if type === 'drive'}
 					<DriveFile file={object} {select} />
+				{:else if type === 'emoji'}
+					<EmojiCard emoji={object} />
 				{/if}
 			</div>
 		{/each}
 	{/each}
 
-	<div class="fetchMore">
-		{#if !localstore.get('fetchMoreOnScroll')}
-			<Button centered on:click={() => $query.fetchNextPage()}>
-				{#if $query.isFetchingNextPage}
-					<Loading size="var(--fs-lg)" massive={false} />
-				{:else if $query.hasNextPage}
-					Load More
-				{:else}
-					No more
-				{/if}
-			</Button>
-		{:else}
-			<div use:infiniteLoading></div>
-			<Loading size="var(--fs-lg)" massive={false} />
-		{/if}
-	</div>
+	{#if !noScroll}
+		<div class="fetchMore">
+			{#if !localstore.get('fetchMoreOnScroll')}
+				<Button centered on:click={() => $query.fetchNextPage()}>
+					{#if $query.isFetchingNextPage}
+						<Loading size="var(--fs-lg)" massive={false} />
+					{:else if $query.hasNextPage}
+						Load More
+					{:else}
+						No more
+					{/if}
+				</Button>
+			{:else}
+				<div use:infiniteLoading></div>
+				<Loading size="var(--fs-lg)" massive={false} />
+			{/if}
+		</div>
+	{/if}
 {/if}
 
 <style lang="scss">

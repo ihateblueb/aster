@@ -57,14 +57,6 @@ class TimelineService {
 				orWhere,
 				andWhere
 			);
-		if (type === 'emoji')
-			timelineObjects = await EmojiService.getMany(
-				where,
-				take,
-				order,
-				orderDirection,
-				orWhere
-			);
 
 		return this.sort(timelineObjects, take);
 	}

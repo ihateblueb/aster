@@ -12,10 +12,7 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				remote: { type: 'string', nullable: true }, // admin only
-				since: { type: 'string', nullable: true },
-				take: { type: 'number', nullable: true },
-				reverse: { type: 'boolean', nullable: true }
+				remote: { type: 'string', nullable: true } // admin only
 			}
 		}
 	} as const;
@@ -36,25 +33,7 @@ export default plugin(async (fastify) => {
 			if (req.auth.user && req.auth.user.admin && req.query.remote)
 				where = {};
 
-			let take;
-			let orderDirection;
-
-			if (req.query.since) where['createdAt'] = LessThan(req.query.since);
-			if (req.query.take) take = Number(req.query.take);
-			if (req.query.reverse) orderDirection = 'ASC';
-
-			take =
-				take <= ConfigService.timeline.maxObjects
-					? take
-					: ConfigService.timeline.maxObjects;
-
-			return await TimelineService.get(
-				'emoji',
-				where,
-				take,
-				'emoji.createdAt',
-				orderDirection ? orderDirection : 'DESC'
-			).then((e) => {
+			return await EmojiService.getMany(where).then((e) => {
 				if (e && e.length > 0) return reply.status(200).send(e);
 				return reply.status(204).send();
 			});
