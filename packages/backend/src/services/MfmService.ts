@@ -25,6 +25,19 @@ class MfmService {
 		return mentions;
 	}
 
+	public extractEmojis(content: string) {
+		let parse = this.parse(content);
+		let mentions = [];
+
+		for (let node of parse) {
+			if (node.type === 'emojiCode' && node.props.name) {
+				mentions.push(node.props.name);
+			}
+		}
+
+		return mentions;
+	}
+
 	// turn  mentions from remote with no host into mentions usable here
 	public localize(content: string, host: string) {
 		let parse = this.parse(content);

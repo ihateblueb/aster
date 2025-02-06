@@ -1,10 +1,12 @@
-import { ObjectLiteral } from 'typeorm';
+import { In, ObjectLiteral } from 'typeorm';
 
 import context from '../../static/context.js';
 import DriveService from '../DriveService.js';
+import EmojiService from '../EmojiService.js';
 import MfmService from '../MfmService.js';
 import UserService from '../UserService.js';
 import ApDocumentRenderer from './ApDocumentRenderer.js';
+import ApEmojiRenderer from './ApEmojiRenderer.js';
 import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
@@ -67,6 +69,7 @@ class ApNoteRenderer {
 				});
 		}
 
+		// todo: fetch files in bulk
 		if (note.attachments) {
 			for (let attachment of note.attachments) {
 				let file = await DriveService.get({ id: attachment });
@@ -78,6 +81,20 @@ class ApNoteRenderer {
 							file.type,
 							file.alt,
 							file.sensitive
+						)
+					);
+			}
+		}
+
+		if (note.emojis) {
+			let emojis = await EmojiService.getMany({ id: In(note.emojis) });
+			for (let emoji of emojis) {
+				if (emoji)
+					apNote.tag.push(
+						ApEmojiRenderer.render(
+							emoji.apId,
+							emoji.shortcode,
+							emoji.file.src
 						)
 					);
 			}

@@ -1,4 +1,4 @@
-import { ObjectLiteral } from 'typeorm';
+import { In, IsNull, ObjectLiteral } from 'typeorm';
 
 import db from '../utils/database.js';
 import UserMini from '../utils/entities/UserMini.js';
@@ -12,7 +12,9 @@ import ApNoteRenderer from './ap/ApNoteRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import DriveService from './DriveService.js';
+import EmojiService from './EmojiService.js';
 import IdService from './IdService.js';
+import MfmService from './MfmService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
@@ -236,7 +238,8 @@ class NoteService {
 			content: SanitizerService.sanitize(content),
 			visibility: visibility,
 			createdAt: new Date().toISOString(),
-			attachments: []
+			attachments: [],
+			emojis: []
 		};
 
 		let replyingToNote: ObjectLiteral;
@@ -313,6 +316,15 @@ class NoteService {
 
 				note.attachments.push(file.id);
 			}
+		}
+
+		if (author.local) {
+			let emojis = MfmService.extractEmojis(note.content);
+			let foundEmojis = await EmojiService.getMany({
+				shortcode: In(emojis),
+				host: IsNull()
+			});
+			note.emojis = foundEmojis.map((emoji) => emoji.id);
 		}
 
 		const result = await db
