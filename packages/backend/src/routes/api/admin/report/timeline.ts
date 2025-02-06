@@ -22,7 +22,7 @@ export default plugin(async (fastify) => {
 	fastify.get<{
 		Querystring: FromSchema<typeof schema.querystring>;
 	}>(
-		'/api/reports',
+		'/api/admin/reports',
 		{
 			schema: schema,
 			preHandler: fastify.auth([fastify.requireAuth])

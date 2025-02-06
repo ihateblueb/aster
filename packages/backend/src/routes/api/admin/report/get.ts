@@ -18,7 +18,7 @@ export default plugin(async (fastify) => {
 	fastify.get<{
 		Params: FromSchema<typeof schema.params>;
 	}>(
-		'/api/report/:id',
+		'/api/admin/report/:id',
 		{
 			schema: schema,
 			preHandler: fastify.auth([fastify.requireAuth])

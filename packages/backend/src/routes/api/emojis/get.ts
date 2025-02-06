@@ -1,11 +1,9 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
-import { IsNull, LessThan } from 'typeorm';
+import { IsNull } from 'typeorm';
 
 import EmojiBuilder from '../../../services/builders/EmojiBuilder.js';
-import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
-import TimelineService from '../../../services/TimelineService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -13,7 +11,8 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				remote: { type: 'string', nullable: true } // admin only
+				remote: { type: 'boolean', nullable: true }, // admin only
+				categorize: { type: 'boolean', nullable: true, default: true }
 			}
 		}
 	} as const;
@@ -38,7 +37,11 @@ export default plugin(async (fastify) => {
 				if (e && e.length > 0)
 					return reply
 						.status(200)
-						.send(await EmojiBuilder.categorize(e));
+						.send(
+							req.query.categorize
+								? await EmojiBuilder.categorize(e)
+								: e
+						);
 				return reply.status(204).send();
 			});
 		}

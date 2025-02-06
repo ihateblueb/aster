@@ -1,7 +1,7 @@
 <script>
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
-	import getEmojis from '$lib/api/emojis/get';
+	import getEmojisUncategorized from '$lib/api/emojis/getUncategorized';
 
 	let query = $state();
 </script>
@@ -10,7 +10,7 @@
 	<Timeline
 		type="emoji"
 		queryKey="admin_emoji"
-		queryFn={getEmojis}
+		queryFn={getEmojisUncategorized}
 		noScroll
 		bind:query
 	/>
