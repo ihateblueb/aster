@@ -77,8 +77,9 @@ export default plugin(async (fastify) => {
 				},
 				updated
 			).then(async () => {
-				const newFile = await DriveService.get({ id: file.id });
-				return reply.status(200).send(newFile);
+				return reply
+					.status(200)
+					.send(await DriveService.get({ id: file.id }));
 			});
 		}
 	);

@@ -36,4 +36,7 @@ export class Emoji {
 
 	@Column()
 	createdAt: string;
+
+	@Column({ nullable: true })
+	updatedAt: string;
 }

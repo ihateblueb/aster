@@ -254,6 +254,7 @@
 			background: var(--bg4-25);
 			padding: 6px 8px;
 			border-radius: var(--br-md);
+			box-shadow: var(--funky-effect);
 			transition: 0.1s;
 
 			&:hover {

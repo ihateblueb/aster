@@ -48,7 +48,11 @@
 		class="name"
 		href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
 	>
-		<Mfm simple content={user.displayName ?? user.username} />
+		<Mfm
+			simple
+			content={user.displayName ?? user.username}
+			emojis={user.emojis}
+		/>
 	</a>
 {/snippet}
 

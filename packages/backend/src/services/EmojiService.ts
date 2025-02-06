@@ -1,3 +1,5 @@
+import { ObjectLiteral } from 'typeorm';
+
 import db from '../utils/database.js';
 import ConfigService from './ConfigService.js';
 import DriveService from './DriveService.js';
@@ -29,6 +31,14 @@ class EmojiService {
 			.take(take)
 			.orderBy(order, orderDirection)
 			.getMany();
+	}
+
+	public async update(where: where, entity: Partial<ObjectLiteral>) {
+		return await db.getRepository('emoji').update(where, entity);
+	}
+
+	public async delete(where: where) {
+		return await db.getRepository('emoji').delete(where);
 	}
 
 	public async create(shortcode: string, file: string, category?: string) {

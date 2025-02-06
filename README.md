@@ -7,6 +7,7 @@ Aster is a work in progress federated social networking software.
 - Notes can quote other notes
 - Notes can include up to 12 attachments
 - Notes can contain MFM, a markdown used by Misskey that allows for a lot of customization.
+- Notes can have emoji reactions added to them
 - More advanced instance moderation, no "blocked" or "silenced"
     - Every note from an instance can have a specified content warning applied to it
     - Every user from an instance can be marked sensitive automatically

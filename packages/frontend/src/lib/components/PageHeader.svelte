@@ -10,7 +10,7 @@
 
 	let showBack = $state(false);
 
-	if (page.url.pathname !== '/' && history.length > 2) showBack = true;
+	if (page.url.pathname !== '/') showBack = true;
 </script>
 
 <svelte:head>
