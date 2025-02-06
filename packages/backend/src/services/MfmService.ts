@@ -13,7 +13,7 @@ class MfmService {
 	}
 
 	public extractMentions(content: string) {
-		let parse = this.parse(content);
+		let parse = this.parse(content, true);
 		let mentions = [];
 
 		for (let node of parse) {
@@ -26,7 +26,7 @@ class MfmService {
 	}
 
 	public extractEmojis(content: string) {
-		let parse = this.parse(content);
+		let parse = this.parse(content, true);
 		let mentions = [];
 
 		for (let node of parse) {
@@ -38,6 +38,7 @@ class MfmService {
 		return mentions;
 	}
 
+	// todo: this doesnt work past one level
 	// turn  mentions from remote with no host into mentions usable here
 	public localize(content: string, host: string) {
 		let parse = this.parse(content);

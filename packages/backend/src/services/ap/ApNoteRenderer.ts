@@ -69,6 +69,20 @@ class ApNoteRenderer {
 				});
 		}
 
+		if (note.emojis) {
+			let emojis = await EmojiService.getMany({ id: In(note.emojis) });
+			for (let emoji of emojis) {
+				if (emoji)
+					apNote.tag.push(
+						ApEmojiRenderer.render(
+							emoji.apId,
+							emoji.shortcode,
+							emoji.file.src
+						)
+					);
+			}
+		}
+
 		// todo: fetch files in bulk
 		if (note.attachments) {
 			for (let attachment of note.attachments) {
@@ -81,20 +95,6 @@ class ApNoteRenderer {
 							file.type,
 							file.alt,
 							file.sensitive
-						)
-					);
-			}
-		}
-
-		if (note.emojis) {
-			let emojis = await EmojiService.getMany({ id: In(note.emojis) });
-			for (let emoji of emojis) {
-				if (emoji)
-					apNote.tag.push(
-						ApEmojiRenderer.render(
-							emoji.apId,
-							emoji.shortcode,
-							emoji.file.src
 						)
 					);
 			}

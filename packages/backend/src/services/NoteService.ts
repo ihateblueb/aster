@@ -299,7 +299,14 @@ class NoteService {
 			}
 		}
 
-		console.log(attachments);
+		if (author.local) {
+			let emojis = MfmService.extractEmojis(note.content);
+			let foundEmojis = await EmojiService.getMany({
+				shortcode: In(emojis),
+				host: IsNull()
+			});
+			note.emojis = foundEmojis.map((emoji) => emoji.id);
+		}
 
 		if (attachments && attachments.length > 0) {
 			for (const attachment of attachments) {
@@ -316,15 +323,6 @@ class NoteService {
 
 				note.attachments.push(file.id);
 			}
-		}
-
-		if (author.local) {
-			let emojis = MfmService.extractEmojis(note.content);
-			let foundEmojis = await EmojiService.getMany({
-				shortcode: In(emojis),
-				host: IsNull()
-			});
-			note.emojis = foundEmojis.map((emoji) => emoji.id);
 		}
 
 		const result = await db
