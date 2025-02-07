@@ -14,8 +14,7 @@ class LikeProcessor {
 		if (!note) return false;
 
 		if (body._misskey_content) {
-			logger.warn('like', 'appears to be a react. tag:');
-			console.log(body.tag);
+			logger.warn('like', 'appears to be a react.');
 		}
 
 		return await LikeService.create(note.id, actor.id, false, body.id)

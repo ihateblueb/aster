@@ -1,11 +1,14 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
+import { In, IsNull } from 'typeorm';
 
 import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
 import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
 import UserBuilder from '../../../services/builders/UserBuilder.js';
 import ConfigService from '../../../services/ConfigService.js';
+import EmojiService from '../../../services/EmojiService.js';
+import MfmService from '../../../services/MfmService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
@@ -190,6 +193,16 @@ export default plugin(async (fastify) => {
 						updated['admin'] = false;
 					}
 				}
+			}
+
+			if (user.local) {
+				let emojis = MfmService.extractEmojis(user.displayName);
+				emojis.concat(MfmService.extractEmojis(user.bio));
+				let foundEmojis = await EmojiService.getMany({
+					shortcode: In(emojis),
+					host: IsNull()
+				});
+				updated['emojis'] = foundEmojis.map((emoji) => emoji.id);
 			}
 
 			return await UserService.update(
