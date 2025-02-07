@@ -314,6 +314,7 @@
 		.top {
 			margin-bottom: 10px;
 		}
+
 		.replyBox,
 		.quoteBox {
 			.top {
@@ -343,6 +344,7 @@
 		.quoteBox {
 			margin-top: 10px;
 		}
+
 		.btm,
 		.top {
 			display: flex;

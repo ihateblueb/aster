@@ -53,7 +53,7 @@
 	on:change={(e) => changeToggle('catSpeak', e.target?.checked)}
 />
 <Switch
-	label="Render more than basic formatting"
+	label="Render advanced formatting"
 	checked={value('renderAdvancedMfm')}
 	on:change={(e) => changeToggle('renderAdvancedMfm', e.target?.checked)}
 />

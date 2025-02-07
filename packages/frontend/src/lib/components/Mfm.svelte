@@ -21,6 +21,10 @@
 {#snippet renderChild(object)}
 	{#if object.type === 'text'}
 		{@html object.props.text.replace(/(\r\n|\n|\r)/g, '\n')}
+	{:else if object.type === 'link'}
+		<a href={object.props.url ?? '#'}>
+			{@render renderChildren(object.children)}
+		</a>
 	{:else if object.type === 'bold'}
 		<b>
 			{@render renderChildren(object.children)}
@@ -493,7 +497,7 @@
 		.mfm-customEmoji {
 			display: inline;
 			vertical-align: middle;
-			height: 2rem;
+			height: 2em;
 			transition: 0.1s;
 
 			&:hover {
