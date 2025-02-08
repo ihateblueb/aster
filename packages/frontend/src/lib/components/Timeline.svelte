@@ -63,20 +63,15 @@
 				message = JSON.parse(e.data);
 			} catch {}
 
-			console.log(
-				'add to tl ',
-				message &&
-					message.type === 'timeline:add' &&
-					message.timeline === timeline &&
-					message.note
-			);
-
-			if (
+			let addToTl =
 				message &&
 				message.type === 'timeline:add' &&
 				message.timeline === timeline &&
-				message.note
-			) {
+				message.note;
+
+			console.log('add to tl ', addToTl);
+
+			if (addToTl) {
 				console.log('[' + queryKey + '] received ws note');
 				additionalNotes.unshift(message.note);
 			}
@@ -105,10 +100,6 @@
 			<Note {note} />
 		</div>
 	{/each}
-
-	{#if additionalNotes.length > 0}
-		<div>Additional</div>
-	{/if}
 
 	{#each $query.data.pages as results}
 		{#each results as object}
@@ -165,6 +156,16 @@
 {/if}
 
 <style lang="scss">
+	.additional {
+		width: 100%;
+		box-sizing: border-box;
+		padding: 12px 14px;
+
+		color: var(--tx3);
+		font-style: italic;
+		text-align: center;
+	}
+
 	.scroller {
 		height: 100%;
 		width: 100%;

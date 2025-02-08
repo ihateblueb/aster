@@ -15,8 +15,8 @@
 	class={'noteSimple' + (nobg ? ' nobg' : '') + (nomargin ? ' nomargin' : '')}
 >
 	<div class="header">
+		<Avatar user={note.user} size="25px" small />
 		<div class="left">
-			<Avatar user={note.user} size="25px" small />
 			<span>
 				<a
 					href={'/@' +
@@ -97,10 +97,6 @@
 			align-items: center;
 			gap: 10px;
 			margin-bottom: 5px;
-
-			white-space: nowrap;
-			text-overflow: ellipsis;
-			overflow: hidden;
 
 			.left {
 				display: flex;

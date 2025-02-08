@@ -1,12 +1,18 @@
 <script>
 	import localstore from '$lib/localstore';
 
-	let { user, size = '45px', small = false, large = false } = $props();
+	let {
+		user,
+		size = '45px',
+		small = false,
+		large = false,
+		link = true
+	} = $props();
 
 	let rounded = localstore.get('useRoundedAvatars') === 'true';
 </script>
 
-<a href={'/@' + user.username + (user.local ? '' : '@' + user.host)}>
+{#snippet image()}
 	<img
 		class={'avatar' +
 			(rounded ? ' rounded' : '') +
@@ -25,7 +31,20 @@
 			<div class="earRight"></div>
 		</div>
 	{/if}
-</a>
+{/snippet}
+
+{#if link}
+	<a
+		class="avatarWrapper"
+		href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
+	>
+		{@render image()}
+	</a>
+{:else}
+	<div class="avatarWrapper">
+		{@render image()}
+	</div>
+{/if}
 
 <style lang="scss" scoped>
 	/*
@@ -33,7 +52,7 @@
 	 * https://github.com/misskey-dev/misskey/blob/develop/packages/frontend/src/components/global/MkAvatar.vue
 	 */
 
-	a {
+	.avatarWrapper {
 		position: relative;
 		display: flex;
 		align-items: center;

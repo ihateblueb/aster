@@ -149,7 +149,7 @@
 <div class="compose">
 	<div class="top">
 		<div class="left">
-			<Avatar user={self} size="35px" />
+			<Avatar user={self} size="35px" link={false} />
 		</div>
 		<div class="right">
 			<Button
@@ -353,7 +353,6 @@
 			.left {
 				display: flex;
 				align-items: center;
-				overflow-x: scroll;
 				flex-grow: 1;
 			}
 			.right {
