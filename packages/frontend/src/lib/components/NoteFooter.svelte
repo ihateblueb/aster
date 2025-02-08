@@ -6,6 +6,7 @@
 		IconBookmark,
 		IconCopy,
 		IconDots,
+		IconExternalLink,
 		IconInfoCircle,
 		IconLink,
 		IconPencil,
@@ -45,8 +46,16 @@
 	let didILike = $state(false);
 	let didIReact = $state(false);
 
+	if (self) {
+		//todo: doesnt work on repeats
+
+		didIRepeat = note?.repeats?.some((e) => e?.user?.id === self?.id);
+		didILike = note?.likes?.some((e) => e?.user?.id === self?.id);
+	}
+
 	function reply() {
 		store.draft_replyingTo.set(note?.id);
+		store.showCompose.set(true);
 	}
 	function repeat() {
 		if (!didIRepeat) playSound('newNote');
@@ -209,15 +218,23 @@
 	</DropdownItem>
 	<DropdownItem
 		on:click={() =>
-			navigator.clipboard.writeText(page.url.href + 'notes/' + note.id)}
+			navigator.clipboard.writeText(
+				note.user.local ? note.apId : page.url.href + 'notes/' + note.id
+			)}
 	>
 		<IconLink size="var(--fs-lg)" />
 		<span>Copy link</span>
 	</DropdownItem>
-	<DropdownItem on:click={() => navigator.clipboard.writeText(note.apId)}>
-		<IconLink size="var(--fs-lg)" />
-		<span>Copy link (origin)</span>
-	</DropdownItem>
+	{#if !note.user.local}
+		<DropdownItem on:click={() => navigator.clipboard.writeText(note.apId)}>
+			<IconLink size="var(--fs-lg)" />
+			<span>Copy link (origin)</span>
+		</DropdownItem>
+		<DropdownItem to={note.apId} newTab>
+			<IconExternalLink size="var(--fs-lg)" />
+			View on remote
+		</DropdownItem>
+	{/if}
 	<DropdownDivider />
 	<DropdownItem>
 		<IconBellOff size="var(--fs-lg)" />

@@ -1,10 +1,13 @@
 <script lang="ts">
 	import {
+		IconBox,
 		IconChartBubble,
+		IconCheckbox,
 		IconDotsVertical,
 		IconHome,
 		IconPlanet,
 		IconReload,
+		IconToggleLeft,
 		IconUsers
 	} from '@tabler/icons-svelte';
 
@@ -19,6 +22,7 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import ws from '$lib/websocket.svelte';
+	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
 
 	let query: any = $state();
 

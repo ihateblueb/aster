@@ -35,8 +35,8 @@ let defaults = {
 
 	liveUpdateTimelines: true,
 	fetchMoreOnScroll: true,
-	animatedMfm: false,
 	renderAdvancedMfm: true,
+	animatedMfm: false,
 	catSpeak: true,
 	uncollapseCws: false,
 	hideAllMedia: false,

@@ -48,11 +48,6 @@
 	on:change={(e) => changeToggle('fetchMoreOnScroll', e.target?.checked)}
 />
 <Switch
-	label="Enable cat speak"
-	checked={value('catSpeak')}
-	on:change={(e) => changeToggle('catSpeak', e.target?.checked)}
-/>
-<Switch
 	label="Render advanced formatting"
 	checked={value('renderAdvancedMfm')}
 	on:change={(e) => changeToggle('renderAdvancedMfm', e.target?.checked)}
@@ -61,6 +56,11 @@
 	label="Enable animated MFM"
 	checked={value('animatedMfm')}
 	on:change={(e) => changeToggle('animatedMfm', e.target?.checked)}
+/>
+<Switch
+	label="Enable cat speak"
+	checked={value('catSpeak')}
+	on:change={(e) => changeToggle('catSpeak', e.target?.checked)}
 />
 <Switch
 	label="Always collapse content warnings"

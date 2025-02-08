@@ -3,8 +3,9 @@
 	import { page } from '$app/state';
 	import IconWrapper from '$lib/components/IconWrapper.svelte';
 	import { goto } from '$app/navigation';
+	import Mfm from '$lib/components/Mfm.svelte';
 
-	let { title } = $props();
+	let { title, emojis = undefined } = $props();
 
 	console.log(page);
 
@@ -30,7 +31,11 @@
 		<div class="icon">
 			<slot name="icon" />
 		</div>
-		{title}
+		{#if emojis}
+			<Mfm simple content={title} {emojis} />
+		{:else}
+			{title}
+		{/if}
 	</div>
 	<div class="right">
 		<slot />

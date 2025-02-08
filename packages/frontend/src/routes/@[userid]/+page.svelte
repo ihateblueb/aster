@@ -32,8 +32,11 @@
 	import getUserRelationship from '$lib/api/user/relationship.js';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import UserDropdown from '$lib/components/dropdowns/UserDropdown.svelte';
+	import Tab from '$lib/components/Tab.svelte';
 
 	let props = $props();
+
+	let tab = $state('overview');
 
 	console.log(props.data);
 
@@ -69,6 +72,7 @@
 				? $query.data.username
 				: 'User'
 		: 'User'}
+	emojis={$query?.data?.emojis}
 >
 	<svelte:fragment slot="icon">
 		{#if $query.isSuccess}
@@ -82,138 +86,159 @@
 		{/if}
 	</svelte:fragment>
 
+	<Tab
+		title="Overview"
+		selected={tab === 'overview'}
+		on:click={() => (tab = 'overview')}
+	/>
+	<Tab
+		title="Media"
+		selected={tab === 'media'}
+		on:click={() => (tab = 'media')}
+	/>
+	<Tab
+		title="Likes"
+		selected={tab === 'likes'}
+		on:click={() => (tab = 'likes')}
+	/>
+	<hr class="vertical" />
 	<Button header on:click={(e) => dropdown.open(e)}>
 		<IconDotsVertical size="var(--fs-lg)" />
 	</Button>
 </PageHeader>
 
 <PageWrapper tl>
-	{#if $query.isLoading}
-		<Loading />
-	{:else if $query.isError}
-		<Error
-			status={$query.error.status}
-			message={$query.error.message}
-			server={Boolean($query.error.status)}
-			retry={() => $query.refetch()}
-		/>
-	{:else if $query.isSuccess}
-		{#if show}
-			<div class="header">
-				<img
-					class="banner"
-					src={$query.data.banner ??
-						'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg=='}
-					alt={$query.data.bannerAlt}
-				/>
-				<div class="float">
-					<div class="left">
-						<Avatar large size="65px" user={$query.data} />
-						<div class="names">
-							<p class="top">
-								<Mfm
-									simple
-									content={$query.data.displayName
-										? $query.data.displayName
-										: $query.data.username}
-									emojis={$query.data.emojis}
-								/>
+	{#if tab === 'overview'}
+		{#if $query.isLoading}
+			<Loading />
+		{:else if $query.isError}
+			<Error
+				status={$query.error.status}
+				message={$query.error.message}
+				server={Boolean($query.error.status)}
+				retry={() => $query.refetch()}
+			/>
+		{:else if $query.isSuccess}
+			{#if show}
+				<div class="header">
+					<img
+						class="banner"
+						src={$query.data.banner ??
+							'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiPjwvc3ZnPg=='}
+						alt={$query.data.bannerAlt}
+					/>
+					<div class="float">
+						<div class="left">
+							<Avatar large size="65px" user={$query.data} />
+							<div class="names">
+								<p class="top">
+									<Mfm
+										simple
+										content={$query.data.displayName
+											? $query.data.displayName
+											: $query.data.username}
+										emojis={$query.data.emojis}
+									/>
 
-								{#if $relationshipQuery.isSuccess && $relationshipQuery.data}
-									{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
-										<span class="relationship">
-											<IconArrowsLeftRight
-												size="var(--fs-md)"
-											/>
-											Mutuals
-										</span>
-									{:else if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type !== 'follow' && !$relationshipQuery.data.from?.pending}
-										<span class="relationship">
-											<IconArrowLeft
-												size="var(--fs-md)"
-											/>
-											Following
-										</span>
-									{:else if $relationshipQuery.data.to?.type !== 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
-										<span class="relationship">
-											<IconArrowRight
-												size="var(--fs-md)"
-											/>
-											Follows you
-										</span>
+									{#if $relationshipQuery.isSuccess && $relationshipQuery.data}
+										{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
+											<span class="relationship">
+												<IconArrowsLeftRight
+													size="var(--fs-md)"
+												/>
+												Mutuals
+											</span>
+										{:else if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type !== 'follow' && !$relationshipQuery.data.from?.pending}
+											<span class="relationship">
+												<IconArrowLeft
+													size="var(--fs-md)"
+												/>
+												Following
+											</span>
+										{:else if $relationshipQuery.data.to?.type !== 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
+											<span class="relationship">
+												<IconArrowRight
+													size="var(--fs-md)"
+												/>
+												Follows you
+											</span>
+										{/if}
 									{/if}
-								{/if}
-							</p>
-							<p class="bottom">
-								@{$query.data
-									.username}{#if !$query.data.local}@{$query
-										.data.host}{/if}
-							</p>
+								</p>
+								<p class="bottom">
+									@{$query.data
+										.username}{#if !$query.data.local}@{$query
+											.data.host}{/if}
+								</p>
+							</div>
+						</div>
+						<div class="right">
+							<FollowButton
+								user={$query.data}
+								query={relationshipQuery}
+							/>
 						</div>
 					</div>
-					<div class="right">
-						<FollowButton
-							user={$query.data}
-							query={relationshipQuery}
-						/>
-					</div>
 				</div>
-			</div>
-			<div class="lower">
-				<p class="description">
-					{#if $query.data.bio}
-						<Mfm
-							content={$query.data.bio}
-							emojis={$query.data.emojis}
-						/>
-					{:else}
-						<span class="missing"
-							>This user hasn't written a bio yet.</span
-						>
+				<div class="lower">
+					<p class="description">
+						{#if $query.data.bio}
+							<Mfm
+								content={$query.data.bio}
+								emojis={$query.data.emojis}
+							/>
+						{:else}
+							<span class="missing"
+								>This user hasn't written a bio yet.</span
+							>
+						{/if}
+					</p>
+					{#if $query.data.pronouns || $query.data.birthday || $query.data.location}
+						<div class="pairs">
+							{#if $query.data.pronouns}
+								<p class="pair">
+									<span class="key">
+										<IconMessageCircleUser
+											size="var(--fs-lg)"
+										/>
+									</span>
+									<span class="val"
+										>{$query.data.pronouns}</span
+									>
+								</p>
+							{/if}
+							{#if $query.data.birthday}
+								<p class="pair">
+									<span class="key">
+										<IconCake size="var(--fs-lg)" />
+									</span>
+									<span class="val">
+										{new Date(
+											$query.data.birthday
+										).toLocaleString(undefined, {
+											month: 'long',
+											day: 'numeric',
+											year: 'numeric'
+										})}
+									</span>
+								</p>
+							{/if}
+							{#if $query.data.location}
+								<p class="pair">
+									<span class="key">
+										<IconMapPin size="var(--fs-lg)" />
+									</span>
+									<span class="val"
+										>{$query.data.location}</span
+									>
+								</p>
+							{/if}
+						</div>
 					{/if}
-				</p>
-				{#if $query.data.pronouns || $query.data.birthday || $query.data.location}
-					<div class="pairs">
-						{#if $query.data.pronouns}
-							<p class="pair">
-								<span class="key">
-									<IconMessageCircleUser
-										size="var(--fs-lg)"
-									/>
-								</span>
-								<span class="val">{$query.data.pronouns}</span>
-							</p>
-						{/if}
-						{#if $query.data.birthday}
-							<p class="pair">
-								<span class="key">
-									<IconCake size="var(--fs-lg)" />
-								</span>
-								<span class="val">
-									{new Date(
-										$query.data.birthday
-									).toLocaleString(undefined, {
-										month: 'long',
-										day: 'numeric',
-										year: 'numeric'
-									})}
-								</span>
-							</p>
-						{/if}
-						{#if $query.data.location}
-							<p class="pair">
-								<span class="key">
-									<IconMapPin size="var(--fs-lg)" />
-								</span>
-								<span class="val">{$query.data.location}</span>
-							</p>
-						{/if}
-					</div>
-				{/if}
-				<p class="joinedOn">
-					Joined {new Date($query.data.createdAt).toLocaleTimeString(
-						undefined,
-						{
+					<p class="joinedOn">
+						Joined {new Date(
+							$query.data.createdAt
+						).toLocaleTimeString(undefined, {
 							weekday: 'long',
 							month: 'long',
 							day: 'numeric',
@@ -221,58 +246,62 @@
 							hour: 'numeric',
 							minute: '2-digit',
 							second: '2-digit'
-						}
-					)}
-				</p>
-				<div class="counts">
-					<span class="count">
-						<b>{$query?.data?.stats?.noteCount ?? 0}</b> notes
-					</span>
-					<span class="count">
-						<b>{$query?.data?.stats?.followingCount ?? 0}</b> following
-					</span>
-					<span class="count">
-						<b>{$query?.data?.stats?.followersCount ?? 0}</b> followers
-					</span>
-				</div>
-			</div>
-		{:else}
-			<div class="sensitive">
-				<div class="top">
-					<p>This user's profile may be sensitive.</p>
-				</div>
-				<div class="mid">
-					{#if $query.data.bio}
-						<Mfm
-							content={$query.data.bio}
-							emojis={$query.data.emojis}
-						/>
-					{:else}
-						<span class="missing">
-							This user hasn't written a bio yet.
+						})}
+					</p>
+					<div class="counts">
+						<span class="count">
+							<b>{$query?.data?.stats?.noteCount ?? 0}</b> notes
 						</span>
-					{/if}
-				</div>
-				<div class="btm">
-					<Toggle label="Don't ask again for this user" />
-					<div class="btns">
-						<Button danger>
-							<IconBan size="var(--fs-lg)" />
-							Block
-						</Button>
-						<Button danger>
-							<IconVolumeOff size="var(--fs-lg)" />
-							Mute
-						</Button>
-						<Button
-							on:click={() => {
-								show = true;
-							}}>Continue</Button
-						>
+						<span class="count">
+							<b>{$query?.data?.stats?.followingCount ?? 0}</b> following
+						</span>
+						<span class="count">
+							<b>{$query?.data?.stats?.followersCount ?? 0}</b> followers
+						</span>
 					</div>
 				</div>
-			</div>
+			{:else}
+				<div class="sensitive">
+					<div class="top">
+						<p>This user's profile may be sensitive.</p>
+					</div>
+					<div class="mid">
+						{#if $query.data.bio}
+							<Mfm
+								content={$query.data.bio}
+								emojis={$query.data.emojis}
+							/>
+						{:else}
+							<span class="missing">
+								This user hasn't written a bio yet.
+							</span>
+						{/if}
+					</div>
+					<div class="btm">
+						<Toggle label="Don't ask again for this user" />
+						<div class="btns">
+							<Button danger>
+								<IconBan size="var(--fs-lg)" />
+								Block
+							</Button>
+							<Button danger>
+								<IconVolumeOff size="var(--fs-lg)" />
+								Mute
+							</Button>
+							<Button
+								on:click={() => {
+									show = true;
+								}}>Continue</Button
+							>
+						</div>
+					</div>
+				</div>
+			{/if}
 		{/if}
+	{:else if tab === 'media'}
+		<p>{$query.data.username}'s media</p>
+	{:else if tab === 'likes'}
+		<p>{$query.data.username}'s likes</p>
 	{/if}
 </PageWrapper>
 
