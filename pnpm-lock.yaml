@@ -87,9 +87,6 @@ importers:
       '@scalar/fastify-api-reference':
         specifier: ^1.25.106
         version: 1.25.106
-      '@types/os-utils':
-        specifier: ^0.0.4
-        version: 0.0.4
       bcryptjs:
         specifier: ^2.4.3
         version: 2.4.3
@@ -141,9 +138,6 @@ importers:
       nanoid:
         specifier: ^5.0.9
         version: 5.0.9
-      os-utils:
-        specifier: ^0.0.14
-        version: 0.0.14
       pg:
         specifier: ^8.13.1
         version: 8.13.1
@@ -162,9 +156,6 @@ importers:
       secure-json-parse:
         specifier: ^3.0.2
         version: 3.0.2
-      systeminformation:
-        specifier: ^5.25.11
-        version: 5.25.11
       typeorm:
         specifier: ^0.3.20
         version: 0.3.20(ioredis@5.4.2)(pg@8.13.1)(redis@4.7.0)
@@ -1517,9 +1508,6 @@ packages:
 
   '@types/node@22.13.0':
     resolution: {integrity: sha512-ClIbNe36lawluuvq3+YYhnIN2CELi+6q8NpnM7PYp4hBn/TatfboPgVSm2rwKRfnV2M+Ty9GWDFI64KEe+kysA==}
-
-  '@types/os-utils@0.0.4':
-    resolution: {integrity: sha512-TdQ/6GHzq8YMsDOXHfit8sDD1VjLnqC61sI7ICocwREw/68V5C/bjex+/Jya3XRD3FgGyj6fhTqhbVrXeh8UJg==}
 
   '@types/qs@6.9.18':
     resolution: {integrity: sha512-kK7dgTYDyGqS+e2Q4aK9X3D7q234CIZ1Bv0q/7Z5IwRDoADNU81xXJK/YVyLbLTZCoIwUoDoffFeF+p/eIklAA==}
@@ -3154,9 +3142,6 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  os-utils@0.0.14:
-    resolution: {integrity: sha512-ajB8csaHLBvJOYsHJkp8YdO2FvlBbf/ZxaYQwXXRDyQ84UoE+uTuLXxqd0shekXMX6Qr/pt/DDyLMRAMsgfWzg==}
-
   p-cancelable@3.0.0:
     resolution: {integrity: sha512-mlVgR3PGuzlo0MmTdk4cXqXWlwQDLnONTAg6sm62XkMJEiRxN3GL3SffkYvqwonbkJBcrI7Uvv5Zh9yjvn2iUw==}
     engines: {node: '>=12.20'}
@@ -3931,12 +3916,6 @@ packages:
 
   symbol-tree@3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
-
-  systeminformation@5.25.11:
-    resolution: {integrity: sha512-jI01fn/t47rrLTQB0FTlMCC+5dYx8o0RRF+R4BPiUNsvg5OdY0s9DKMFmJGrx5SwMZQ4cag0Gl6v8oycso9b/g==}
-    engines: {node: '>=8.0.0'}
-    os: [darwin, linux, win32, freebsd, openbsd, netbsd, sunos, android]
-    hasBin: true
 
   tar-stream@3.1.7:
     resolution: {integrity: sha512-qJj60CXt7IU1Ffyc3NJMjh6EkuCFej46zUqJ4J7pqYlThyd9bO0XBTmcOIhSzZJVWfsLks0+nle/j538YAW9RQ==}
@@ -5501,8 +5480,6 @@ snapshots:
   '@types/node@22.13.0':
     dependencies:
       undici-types: 6.20.0
-
-  '@types/os-utils@0.0.4': {}
 
   '@types/qs@6.9.18': {}
 
@@ -7343,8 +7320,6 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  os-utils@0.0.14: {}
-
   p-cancelable@3.0.0: {}
 
   p-limit@3.1.0:
@@ -8091,8 +8066,6 @@ snapshots:
       zimmerframe: 1.1.2
 
   symbol-tree@3.2.4: {}
-
-  systeminformation@5.25.11: {}
 
   tar-stream@3.1.7:
     dependencies:
