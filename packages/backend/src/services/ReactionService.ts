@@ -105,10 +105,11 @@ class ReactionService {
 								)
 							);
 
+							/*
 							await ApDeliverService.deliverToFollowers(
 								activity,
 								user.id
-							);
+							);*/
 						}
 
 						return {
@@ -153,10 +154,12 @@ class ReactionService {
 							note.apId
 						);
 
+						/*
 						await ApDeliverService.deliverToFollowers(
 							activity,
 							user.id
 						);
+						*/
 					}
 
 					await NotificationService.create(

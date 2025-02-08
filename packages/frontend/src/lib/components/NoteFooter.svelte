@@ -21,13 +21,14 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
-	import repeatNote from '$lib/api/note/repeat.js';
-	import localstore from '$lib/localstore.js';
-	import deleteNote from '$lib/api/note/delete.js';
+	import repeatNote from '$lib/api/note/repeat';
+	import localstore from '$lib/localstore';
+	import deleteNote from '$lib/api/note/delete';
 	import { page } from '$app/state';
-	import likeNote from '$lib/api/note/like.js';
-	import playSound from '$lib/sounds.js';
+	import likeNote from '$lib/api/note/like';
+	import playSound from '$lib/sounds';
 	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
+	import reactNote from '$lib/api/note/react';
 
 	let self: any = $state();
 	function updateSelf() {
@@ -42,6 +43,7 @@
 
 	let didIRepeat = $state(false);
 	let didILike = $state(false);
+	let didIReact = $state(false);
 
 	function reply() {
 		store.draft_replyingTo.set(note?.id);
@@ -63,7 +65,13 @@
 			didILike = !didILike;
 		});
 	}
-	function react() {}
+	function react(emoji: string) {
+		if (!didIReact) playSound('interact');
+		if (didIReact) playSound('uninteract');
+		reactNote(note?.id, emoji).then(() => {
+			didIReact = !didIReact;
+		});
+	}
 
 	let repeatDropdown: Dropdown;
 	let reactDropdown: Dropdown;
@@ -83,7 +91,7 @@
 	<div class="reactions">
 		{#each note.reactions as reaction}
 			<div
-				class="reaction"
+				class={'reaction'}
 				title={reaction.emoji
 					? reaction.emoji.host
 						? ':' +
@@ -185,7 +193,7 @@
 
 <!-- React Dropdown -->
 <Dropdown bind:this={reactDropdown} emoji>
-	<EmojiDropdown />
+	<EmojiDropdown on:emojiSelected={(e) => react(e.detail)} />
 </Dropdown>
 
 <!-- More Dropdown -->
@@ -271,6 +279,12 @@
 			}
 			.counter {
 				font-size: var(--fs-sm);
+				user-select: none;
+			}
+
+			&.reacted {
+				color: var(--ac1);
+				background: var(--ac1-25);
 			}
 		}
 	}

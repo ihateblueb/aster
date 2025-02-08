@@ -51,6 +51,7 @@ class NoteBuilder {
 				} else {
 					reactions.push({
 						emoji: reaction.emoji,
+						content: reaction.content,
 						users: [reaction.user]
 					});
 				}

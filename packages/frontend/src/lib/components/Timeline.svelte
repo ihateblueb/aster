@@ -52,10 +52,12 @@
 
 	let additionalNotes: any[] = $state([]);
 
-	if (ws && ws.readyState === ws.OPEN && queryKey === 'timeline') {
-		ws.send(`sub timeline:${timeline}`);
+	if (ws && queryKey === 'timeline') {
+		ws.addEventListener('open', () => {
+			ws?.send(`sub timeline:${timeline}`);
+		});
 
-		ws.onmessage = (e) => {
+		ws.addEventListener('message', (e) => {
 			let message;
 			try {
 				message = JSON.parse(e.data);
@@ -78,7 +80,7 @@
 				console.log('[' + queryKey + '] received ws note');
 				additionalNotes.unshift(message.note);
 			}
-		};
+		});
 	}
 </script>
 

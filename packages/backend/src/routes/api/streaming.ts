@@ -2,7 +2,6 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
 import AuthService from '../../services/AuthService.js';
-import WebsocketService from '../../services/WebsocketService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -26,12 +25,14 @@ export default plugin(async (fastify) => {
 		async (socket, req) => {
 			const auth = await AuthService.verify(req.query.token);
 
-			socket.send(
-				JSON.stringify({
-					type: 'greet',
-					user: auth.error ? undefined : auth.user.id
-				})
-			);
+			socket.on('open', () => {
+				socket.send(
+					JSON.stringify({
+						type: 'greet',
+						user: auth.error ? undefined : auth.user.id
+					})
+				);
+			});
 
 			let subscriptions = [];
 
@@ -49,6 +50,8 @@ export default plugin(async (fastify) => {
 
 				socket.send(JSON.stringify({ type: 'echo', data: content }));
 			});
+
+			socket.on('close', () => {});
 		}
 	);
 });
