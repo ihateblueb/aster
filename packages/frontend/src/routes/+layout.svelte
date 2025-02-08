@@ -98,6 +98,7 @@
 	{#if loggedIn}
 		<Modal
 			wide
+			singleSlot
 			smallerPadding
 			afterClose={() => store.showDrive.set(false)}
 			bind:this={drive}
@@ -106,6 +107,7 @@
 		</Modal>
 		<Modal
 			wide
+			singleSlot
 			afterClose={() => store.showCompose.set(false)}
 			bind:this={compose}
 		>

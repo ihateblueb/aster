@@ -10,6 +10,7 @@
 	let {
 		wide = false,
 		smallerPadding = false,
+		singleSlot = false,
 		afterClose = () => {}
 	} = $props();
 
@@ -45,15 +46,21 @@
 			onclose={() => close()}
 			transition:scale={{ duration: 180, start: 0.85 }}
 		>
-			<div class="text">
-				<slot name="text"></slot>
-			</div>
-			<div class="slot">
-				<slot></slot>
-			</div>
-			<div class="buttons">
-				<slot name="buttons"></slot>
-			</div>
+			{#if singleSlot}
+				<div class="slot">
+					<slot></slot>
+				</div>
+			{:else}
+				<div class="text">
+					<slot name="text"></slot>
+				</div>
+				<div class="slot">
+					<slot></slot>
+				</div>
+				<div class="buttons">
+					<slot name="buttons"></slot>
+				</div>
+			{/if}
 		</dialog>
 		<div
 			class="backdrop"

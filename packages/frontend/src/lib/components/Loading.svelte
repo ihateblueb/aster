@@ -1,7 +1,7 @@
 <script>
 	import { IconLoader2 } from '@tabler/icons-svelte';
 
-	let { size = '38px', color = 'var(--tx1)', massive = true } = $props();
+	let { size = '32px', color = 'var(--tx1)', massive = true } = $props();
 </script>
 
 <div
@@ -44,6 +44,6 @@
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
-		animation: loading 1.25s infinite;
+		animation: loading 0.5s infinite linear;
 	}
 </style>

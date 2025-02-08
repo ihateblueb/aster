@@ -36,7 +36,7 @@
 		getNextPageParam: (lastPage) => {
 			console.log(
 				'[' + queryKey + '] lastTlObj',
-				lastPage.at(-1).createdAt
+				lastPage?.at(-1).createdAt
 			);
 			return lastPage ? lastPage.at(-1).createdAt : undefined;
 		}
@@ -106,6 +106,10 @@
 		</div>
 	{/each}
 
+	{#if additionalNotes.length > 0}
+		<div>Additional</div>
+	{/if}
+
 	{#each $query.data.pages as results}
 		{#each results as object}
 			<div
@@ -137,18 +141,24 @@
 	{#if !noScroll}
 		<div class="fetchMore">
 			{#if !localstore.get('fetchMoreOnScroll')}
-				<Button centered on:click={() => $query.fetchNextPage()}>
-					{#if $query.isFetchingNextPage}
+				{#if $query.isFetchingNextPage}
+					<Button centered on:click={() => $query.fetchNextPage()}>
 						<Loading size="var(--fs-lg)" massive={false} />
-					{:else if $query.hasNextPage}
-						Load More
-					{:else}
-						No more
-					{/if}
-				</Button>
+					</Button>
+				{:else if $query.hasNextPage}
+					<Button centered on:click={() => $query.fetchNextPage()}>
+						Load more
+					</Button>
+				{:else}
+					No more
+				{/if}
 			{:else}
 				<div use:infiniteLoading></div>
-				<Loading size="var(--fs-lg)" massive={false} />
+				{#if $query.hasNextPage}
+					<Loading size="var(--fs-lg)" massive={false} />
+				{:else}
+					No more
+				{/if}
 			{/if}
 		</div>
 	{/if}
