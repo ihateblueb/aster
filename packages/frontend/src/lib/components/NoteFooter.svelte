@@ -2,6 +2,7 @@
 	import {
 		IconAlertCircle,
 		IconArrowBackUp,
+		IconArrowBackUpDouble,
 		IconBellOff,
 		IconBookmark,
 		IconCopy,
@@ -130,7 +131,11 @@
 	<div class={'item' + (self ? '' : ' loggedOut')}>
 		<button on:click={() => reply()}>
 			<span class="icon">
-				<IconArrowBackUp size="20px" />
+				{#if note.replyingTo}
+					<IconArrowBackUpDouble size="20px" />
+				{:else}
+					<IconArrowBackUp size="20px" />
+				{/if}
 			</span>
 			{#if note.replies && note.replies.length > 0}
 				<span class="counter">{note.replies.length}</span>

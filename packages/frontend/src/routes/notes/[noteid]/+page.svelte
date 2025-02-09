@@ -12,13 +12,14 @@
 	import UserCard from '$lib/components/UserCard.svelte';
 	import queryClient from '$lib/queryclient.js';
 	import getNoteContext from '$lib/api/note/context.js';
+	import Button from '$lib/components/Button.svelte';
+	import { navigating } from '$app/state';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 
 	let props = $props();
 
 	console.log(props.data);
-
-	if (props.data.noteid) queryClient.clear();
+	queryClient.clear();
 
 	const query = createQuery({
 		queryKey: ['note'],
@@ -65,7 +66,9 @@
 		/>
 	{:else if $query.isSuccess}
 		{#if $query.data.replyingTo}
-			<Note note={$query.data.replyingTo} />
+			<div class="ancestor">
+				<NoteSimple nobg note={$query.data.replyingTo} />
+			</div>
 		{/if}
 		<Note note={$query.data} expanded />
 		<div class="tabs">
@@ -106,18 +109,52 @@
 						retry={() => $contextQuery.refetch()}
 					/>
 				{:else if $contextQuery.isSuccess}
-					{#if $contextQuery.data && $contextQuery.data.length >= 1}
-						{#snippet thread(note, depth)}
-							<div>{depth}</div>
-							<Note {note} />
-							{#each note.replies as reply}
-								{@render thread(reply, depth + 1)}
+					{#if $contextQuery.data && $contextQuery.data.length > 0}
+						{#snippet renderReplies(replies, depth)}
+							{#each replies as reply}
+								<div class="replies">
+									<div class="level">
+										{#if depth > 1}
+											<div class="threadLine"></div>
+											{#if depth > 2}
+												<div class="threadLine"></div>
+												{#if depth > 3}
+													<div
+														class="threadLine"
+													></div>
+													{#if depth > 4}
+														<div
+															class="threadLine"
+														></div>
+														{#if depth > 5}
+															<div
+																class="threadLine"
+															></div>
+														{/if}
+													{/if}
+												{/if}
+											{/if}
+										{/if}
+										<div class="note">
+											<Note note={reply} />
+										</div>
+									</div>
+									{#if depth <= 5}
+										{@render renderReplies(
+											reply?.replies,
+											depth + 1
+										)}
+										{#if depth === 5}
+											<Button to={'/notes/' + reply.id}>
+												Continue reading thread...
+											</Button>
+										{/if}
+									{/if}
+								</div>
 							{/each}
 						{/snippet}
 
-						{#each $contextQuery.data as note}
-							{@render thread(note, 1)}
-						{/each}
+						{@render renderReplies($contextQuery.data, 1)}
 					{:else}
 						No replies
 					{/if}
@@ -159,6 +196,9 @@
 </PageWrapper>
 
 <style lang="scss" scoped>
+	.ancestor {
+		padding: 14px;
+	}
 	.tabs {
 		display: flex;
 		align-items: center;
@@ -184,6 +224,22 @@
 			&:hover {
 				border-radius: var(--br-md);
 				background-color: var(--bg3-25);
+			}
+		}
+
+		.replies {
+			.level {
+				display: flex;
+
+				.threadLine {
+					box-sizing: border-box;
+					margin-right: 10px;
+					border-left: 1px solid var(--bg4);
+				}
+
+				.note {
+					flex-grow: 1;
+				}
 			}
 		}
 	}

@@ -5,6 +5,7 @@
 	import Mfm from '$lib/components/Mfm.svelte';
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
+	import { IconPaperclip } from '@tabler/icons-svelte';
 
 	let { note, nobg = false, nomargin = false } = $props();
 
@@ -23,9 +24,13 @@
 						note.user.username +
 						(note.user.local ? '' : '@' + note.user.host)}
 				>
-					{note.user.displayName
-						? note.user.displayName
-						: note.user.username}
+					<Mfm
+						simple
+						content={note.user.displayName
+							? note.user.displayName
+							: note.user.username}
+						emojis={note.user.emojis}
+					/>
 				</a>
 				<a
 					class="handle"
@@ -40,11 +45,25 @@
 			</span>
 		</div>
 		<div class="right">
-			<Time time={note.createdAt} />
+			<Time time={note.createdAt} to={'/notes/' + note.id} />
 			<Visibility visibility={note.visibility} />
 		</div>
 	</div>
 	<div class="body">
+		{#snippet renderBody()}
+			<Mfm
+				content={note.content}
+				on:click={() => goto('/notes/' + note.id)}
+			/>
+
+			{#if note.attachments && note.attachments.length > 0}
+				<p class="attachments">
+					<IconPaperclip size="var(--fs-md)" />
+					{note.attachments.length} attachments
+				</p>
+			{/if}
+		{/snippet}
+
 		{#if note.cw}
 			<div class={'cw' + (cwOpen ? ' open' : '')}>
 				<span>{note.cw}</span>
@@ -53,17 +72,10 @@
 				</Button>
 			</div>
 			{#if cwOpen}
-				<Mfm
-					content={note.content}
-					on:click={() => goto('/notes/' + note.id)}
-				/>
+				{@render renderBody()}
 			{/if}
 		{:else}
-			<Mfm
-				content={note.content}
-				simple
-				on:click={() => goto('/notes/' + note.id)}
-			/>
+			{@render renderBody()}
 		{/if}
 	</div>
 </div>
@@ -140,6 +152,15 @@
 				&.open {
 					margin-bottom: 5px;
 				}
+			}
+
+			.attachments {
+				display: flex;
+				align-items: center;
+				gap: 4px;
+
+				margin-top: 4px;
+				color: var(--tx3);
 			}
 		}
 	}

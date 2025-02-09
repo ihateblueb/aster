@@ -2,8 +2,9 @@ import { ObjectLiteral } from 'typeorm';
 
 import NoteService from '../NoteService.js';
 import VisibilityService from '../VisibilityService.js';
+import NoteBuilder from './NoteBuilder.js';
 
-class NoteBuilder {
+class ContextBuilder {
 	public async build(note: GenericId, depth: number, as?: GenericId) {
 		let replies: ObjectLiteral[] = [];
 
@@ -23,11 +24,11 @@ class NoteBuilder {
 				continue;
 
 			reply.replies = await this.build(reply.id, depth);
-			replies.push(reply);
+			replies.push(await NoteBuilder.build(reply));
 		}
 
 		return replies;
 	}
 }
 
-export default new NoteBuilder();
+export default new ContextBuilder();
