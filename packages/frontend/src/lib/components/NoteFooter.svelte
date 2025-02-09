@@ -47,8 +47,6 @@
 	let didIReact = $state(false);
 
 	if (self) {
-		//todo: doesnt work on repeats
-
 		didIRepeat = note?.repeats?.some((e) => e?.user?.id === self?.id);
 		didILike = note?.likes?.some((e) => e?.user?.id === self?.id);
 	}
@@ -99,8 +97,12 @@
 {#if note.reactions && note.reactions.length > 0}
 	<div class="reactions">
 		{#each note.reactions as reaction}
+			{@const didIReactHere = reaction?.users?.some(
+				(e) => e?.id === self?.id
+			)}
+
 			<div
-				class={'reaction'}
+				class={'reaction' + (didIReactHere ? ' reacted' : '')}
 				title={reaction.emoji
 					? reaction.emoji.host
 						? ':' +

@@ -11,6 +11,8 @@
 	import Tab from '$lib/components/Tab.svelte';
 	import UserCard from '$lib/components/UserCard.svelte';
 	import queryClient from '$lib/queryclient.js';
+	import getNoteContext from '$lib/api/note/context.js';
+	import NoteSimple from '$lib/components/NoteSimple.svelte';
 
 	let props = $props();
 
@@ -22,6 +24,12 @@
 		queryKey: ['note'],
 		retry: false,
 		queryFn: async () => await getNote(props.data.noteid)
+	});
+
+	const contextQuery = createQuery({
+		queryKey: ['context'],
+		retry: false,
+		queryFn: async () => await getNoteContext(props.data.noteid)
 	});
 
 	let selectedTab = $state('replies');
@@ -88,12 +96,31 @@
 		</div>
 		<div class="bottom">
 			{#if selectedTab === 'replies'}
-				{#if $query.data.replies && $query.data.replies.length >= 1}
-					{#each $query.data.replies as reply}
-						reply
-					{/each}
-				{:else}
-					<p>Nobody's replied to this yet.</p>
+				{#if $contextQuery.isLoading}
+					<Loading />
+				{:else if $contextQuery.isError}
+					<Error
+						status={$contextQuery.error.status}
+						message={$contextQuery.error.message}
+						server={Boolean($contextQuery.error.status)}
+						retry={() => $contextQuery.refetch()}
+					/>
+				{:else if $contextQuery.isSuccess}
+					{#if $contextQuery.data && $contextQuery.data.length >= 1}
+						{#snippet thread(note, depth)}
+							<div>{depth}</div>
+							<Note {note} />
+							{#each note.replies as reply}
+								{@render thread(reply, depth + 1)}
+							{/each}
+						{/snippet}
+
+						{#each $contextQuery.data as note}
+							{@render thread(note, 1)}
+						{/each}
+					{:else}
+						No replies
+					{/if}
 				{/if}
 			{:else if selectedTab === 'repeats'}
 				{#if $query.data.repeats && $query.data.repeats.length >= 1}

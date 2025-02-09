@@ -1,6 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
+import ContextBuilder from '../../../services/builders/ContextBuilder.js';
 import NoteBuilder from '../../../services/builders/NoteBuilder.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
@@ -20,7 +21,7 @@ export default plugin(async (fastify) => {
 	fastify.get<{
 		Params: FromSchema<typeof schema.params>;
 	}>(
-		'/api/note/:id',
+		'/api/note/:id/context',
 		{
 			schema: schema,
 			preHandler: fastify.auth([fastify.optionalAuth])
@@ -48,7 +49,7 @@ export default plugin(async (fastify) => {
 			)
 				return reply.status(404).send();
 
-			return await NoteBuilder.build(note);
+			return await ContextBuilder.build(note.id, 0, req.auth.user?.id);
 		}
 	);
 });

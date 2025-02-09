@@ -14,17 +14,10 @@ class VisibilityService {
 
 			if (note.replyingTo) {
 				if (
-					await RelationshipService.isBlocking(
+					!(await RelationshipService.canInteract(
 						note.replyingTo.user.id,
 						as
-					)
-				)
-					return false;
-				if (
-					await RelationshipService.isBlocking(
-						as,
-						note.replyingTo.user.id
-					)
+					))
 				)
 					return false;
 			}
