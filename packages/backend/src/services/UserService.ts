@@ -7,7 +7,6 @@ import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApBiteRenderer from './ap/ApBiteRenderer.js';
 import ApBlockRenderer from './ap/ApBlockRenderer.js';
-import ApDeliverService from './ap/ApDeliverService.js';
 import ApFollowRenderer from './ap/ApFollowRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';

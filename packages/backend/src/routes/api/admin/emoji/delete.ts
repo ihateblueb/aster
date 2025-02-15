@@ -1,7 +1,6 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import DriveService from '../../../../services/DriveService.js';
 import EmojiService from '../../../../services/EmojiService.js';
 
 export default plugin(async (fastify) => {

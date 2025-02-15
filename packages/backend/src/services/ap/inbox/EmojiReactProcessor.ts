@@ -1,4 +1,3 @@
-import LikeService from '../../LikeService.js';
 import ReactionService from '../../ReactionService.js';
 import ApActorService from '../ApActorService.js';
 import ApEmojiService from '../ApEmojiService.js';

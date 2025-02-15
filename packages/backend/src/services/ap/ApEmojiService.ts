@@ -1,6 +1,5 @@
 import { ObjectLiteral } from 'typeorm';
 
-import { DriveFile } from '../../entities/DriveFile.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import DriveService from '../DriveService.js';

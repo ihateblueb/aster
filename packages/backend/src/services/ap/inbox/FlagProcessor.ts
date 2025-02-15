@@ -1,4 +1,3 @@
-import logger from '../../../utils/logger.js';
 import NoteService from '../../NoteService.js';
 import ReportService from '../../ReportService.js';
 import UserService from '../../UserService.js';

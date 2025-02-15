@@ -1,8 +1,6 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ConfigService from '../../../../services/ConfigService.js';
-import DriveService from '../../../../services/DriveService.js';
 import EmojiService from '../../../../services/EmojiService.js';
 import SanitizerService from '../../../../services/SanitizerService.js';
 

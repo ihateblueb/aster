@@ -3,11 +3,8 @@ import { FromSchema } from 'json-schema-to-ts';
 
 import ApAnnounceRenderer from '../../../services/ap/ApAnnounceRenderer.js';
 import ApCreateRenderer from '../../../services/ap/ApCreateRenderer.js';
-import ApLikeRenderer from '../../../services/ap/ApLikeRenderer.js';
 import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
-import ConfigService from '../../../services/ConfigService.js';
-import LikeService from '../../../services/LikeService.js';
 import NoteService from '../../../services/NoteService.js';
 
 export default plugin(async (fastify) => {

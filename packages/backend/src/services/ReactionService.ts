@@ -3,7 +3,6 @@ import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApDeliverService from './ap/ApDeliverService.js';
 import ApEmojiReactRenderer from './ap/ApEmojiReactRenderer.js';
-import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import EmojiService from './EmojiService.js';

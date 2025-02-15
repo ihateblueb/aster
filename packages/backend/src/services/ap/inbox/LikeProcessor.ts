@@ -1,4 +1,3 @@
-import logger from '../../../utils/logger.js';
 import LikeService from '../../LikeService.js';
 import ReactionService from '../../ReactionService.js';
 import ApActorService from '../ApActorService.js';

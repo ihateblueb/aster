@@ -1,7 +1,6 @@
 import * as punycode from 'node:punycode';
 
 import crypto from 'crypto';
-import { ObjectLiteral } from 'typeorm';
 
 import pkg from '../../../../../package.json' with { type: 'json' };
 import db from '../../utils/database.js';

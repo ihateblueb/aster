@@ -1,11 +1,9 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApLikeRenderer from '../../services/ap/ApLikeRenderer.js';
-import ConfigService from '../../services/ConfigService.js';
-import LikeService from '../../services/LikeService.js';
-import ReactionService from '../../services/ReactionService.js';
 import ApEmojiReactRenderer from '../../services/ap/ApEmojiReactRenderer.js';
+import ConfigService from '../../services/ConfigService.js';
+import ReactionService from '../../services/ReactionService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {

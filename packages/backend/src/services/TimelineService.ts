@@ -1,7 +1,6 @@
 import { ObjectLiteral } from 'typeorm';
 
 import DriveService from './DriveService.js';
-import EmojiService from './EmojiService.js';
 import NoteBuilder from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';

@@ -5,7 +5,6 @@ import AuthService from '../../../services/AuthService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import UserService from '../../../services/UserService.js';
 import locale from '../../../utils/locale.js';
-import logger from '../../../utils/logger.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
