@@ -18,15 +18,18 @@ class EmojiReactRenderer {
 			type: 'EmojiReact',
 			id: id,
 			actor: ConfigService.url.href + 'users/' + actor,
-			object: object
+			object: object,
+			content: emoji ? emoji.shortcode : content
 		};
 
 		if (emoji)
 			apEmojiReact['tag'] = [
-				ApEmojiRenderer.render(emoji.id, emoji.shortcode, emoji.url)
+				ApEmojiRenderer.render(
+					emoji.id,
+					emoji.shortcode,
+					emoji.file.src
+				)
 			];
-
-		if (content) apEmojiReact['content'] = content;
 
 		return apEmojiReact;
 	}
