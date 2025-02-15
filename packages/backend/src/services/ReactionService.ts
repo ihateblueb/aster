@@ -2,9 +2,11 @@ import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ApDeliverService from './ap/ApDeliverService.js';
+import ApEmojiReactRenderer from './ap/ApEmojiReactRenderer.js';
 import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
+import EmojiService from './EmojiService.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
@@ -66,6 +68,7 @@ class ReactionService {
 
 		const user = await UserService.get({ id: as });
 		const note = await NoteService.get({ id: noteId });
+		const emoji = await EmojiService.get({ id: emojiId });
 
 		if (
 			(user.local || note.user.local) &&
@@ -94,22 +97,21 @@ class ReactionService {
 					.then(async () => {
 						if (user.local) {
 							const activity = ApUndoRenderer.render(
-								// todo: ApEmojiReactRenderer
-								// ignoring for now since local reacts arent possible yet
-								ApLikeRenderer.render(
+								ApEmojiReactRenderer.render(
 									ConfigService.url.href +
 										'react/' +
 										existingReact.id,
 									user.id,
-									note.apId
+									note.apId,
+									emoji,
+									content
 								)
 							);
 
-							/*
 							await ApDeliverService.deliverToFollowers(
 								activity,
 								user.id
-							);*/
+							);
 						}
 
 						return {
@@ -146,20 +148,18 @@ class ReactionService {
 				.insert(react)
 				.then(async () => {
 					if (user.local) {
-						// todo: ApEmojiReactRenderer
-						// ignoring for now since local reacts arent possible yet
-						const activity = ApLikeRenderer.render(
+						const activity = ApEmojiReactRenderer.render(
 							ConfigService.url.href + 'react/' + react.id,
 							user.id,
-							note.apId
+							note.apId,
+							emoji,
+							content
 						);
 
-						/*
 						await ApDeliverService.deliverToFollowers(
 							activity,
 							user.id
 						);
-						*/
 					}
 
 					await NotificationService.create(
