@@ -16,7 +16,7 @@ class EmojiReactRenderer {
 			'@context': context,
 
 			type: 'EmojiReact',
-			id: ConfigService.url.href + 'react/' + id,
+			id: id,
 			actor: ConfigService.url.href + 'users/' + actor,
 			object: object
 		};

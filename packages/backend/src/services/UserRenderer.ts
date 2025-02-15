@@ -1,11 +1,10 @@
 import { In, ObjectLiteral } from 'typeorm';
 
 import EmojiService from './EmojiService.js';
-import NoteService from './NoteService.js';
-import RelationshipService from './RelationshipService.js';
 
 class UserRenderer {
 	public async build(user: ObjectLiteral) {
+		// TODO: cache
 		if (user && user.emojis) {
 			let emojis: ObjectLiteral[] = [];
 
@@ -21,7 +20,8 @@ class UserRenderer {
 			user['emojis'] = emojis;
 		}
 
-		user['stats'] = {
+		/* adds ~200ms
+		* user['stats'] = {
 			noteCount: await NoteService.count({
 				user: { id: user.id }
 			}),
@@ -30,6 +30,7 @@ class UserRenderer {
 			followersCount: (await RelationshipService.getFollowers(user.id))
 				.length
 		};
+		* */
 
 		return user;
 	}

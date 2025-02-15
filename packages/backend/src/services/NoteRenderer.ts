@@ -2,11 +2,11 @@ import { In, ObjectLiteral } from 'typeorm';
 
 import DriveService from './DriveService.js';
 import EmojiService from './EmojiService.js';
-import UserBuilder from './UserRenderer.js';
+import UserRenderer from './UserRenderer.js';
 
 class NoteRenderer {
 	public async build(note: ObjectLiteral) {
-		if (note.user) note.user = await UserBuilder.build(note.user);
+		if (note.user) note.user = await UserRenderer.build(note.user);
 
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];

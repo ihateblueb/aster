@@ -10,6 +10,7 @@
 		IconExternalLink,
 		IconInfoCircle,
 		IconLink,
+		IconMinus,
 		IconPencil,
 		IconPlus,
 		IconQuote,
@@ -50,6 +51,13 @@
 	if (self) {
 		didIRepeat = note?.repeats?.some((e) => e?.user?.id === self?.id);
 		didILike = note?.likes?.some((e) => e?.user?.id === self?.id);
+
+		if (note.reactions) {
+			for (let reaction of note.reactions) {
+				if (reaction?.users?.some((e) => e?.id === self?.id))
+					didIReact = true;
+			}
+		}
 	}
 
 	function reply() {
@@ -79,6 +87,9 @@
 		reactNote(note?.id, emoji).then(() => {
 			didIReact = !didIReact;
 		});
+	}
+	function removeReaction() {
+		react('');
 	}
 
 	let repeatDropdown: Dropdown;
@@ -180,11 +191,19 @@
 		</button>
 	</div>
 	<div class={'item' + (self ? '' : ' loggedOut')}>
-		<button on:click={(e) => reactDropdown.open(e)}>
-			<span class="icon">
-				<IconPlus size="20px" />
-			</span>
-		</button>
+		{#if didIReact}
+			<button on:click={() => removeReaction()}>
+				<span class="icon">
+					<IconMinus size="20px" />
+				</span>
+			</button>
+		{:else}
+			<button on:click={(e) => reactDropdown.open(e)}>
+				<span class="icon">
+					<IconPlus size="20px" />
+				</span>
+			</button>
+		{/if}
 	</div>
 	<div class="item">
 		<button on:click={(e) => moreDropdown.open(e)}>
