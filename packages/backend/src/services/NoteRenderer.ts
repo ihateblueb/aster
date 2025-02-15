@@ -49,7 +49,11 @@ class NoteRenderer {
 						)
 					].users.push(reaction.user);
 				} else if (
-					reactions.some((e) => e.content === reaction.content)
+					reactions.some(
+						(e) =>
+							e.content === reaction.content &&
+							reaction.emoji === undefined
+					)
 				) {
 					reactions[
 						reactions.findIndex(
