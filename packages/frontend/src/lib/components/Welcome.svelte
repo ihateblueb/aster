@@ -97,7 +97,7 @@
 				margin-top: 10px;
 				width: 100%;
 
-				overflow-y: scroll;
+				overflow-y: auto;
 				flex-grow: 1;
 
 				.missing {
@@ -138,7 +138,7 @@
 			box-sizing: border-box;
 
 			padding: 25px;
-			overflow-y: scroll;
+			overflow-y: auto;
 		}
 	}
 
@@ -146,7 +146,7 @@
 	@media (max-width: 850px) {
 		.welcome {
 			flex-direction: column;
-			overflow-y: scroll;
+			overflow-y: auto;
 
 			.first {
 				width: 100%;
@@ -179,7 +179,7 @@
 				background: var(--bg2);
 				border-radius: var(--br-lg) var(--br-lg) 0 0;
 				padding: 8px;
-				overflow-y: scroll;
+				overflow-y: auto;
 			}
 		}
 	}

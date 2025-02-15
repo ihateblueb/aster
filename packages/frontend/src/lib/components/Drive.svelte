@@ -80,7 +80,7 @@
 
 		.body {
 			height: 500px;
-			overflow-y: scroll;
+			overflow-y: auto;
 
 			padding: 0 6px;
 		}

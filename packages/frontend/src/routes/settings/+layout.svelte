@@ -97,7 +97,7 @@
 	.subheader {
 		display: flex;
 		align-items: center;
-		overflow-x: scroll;
+		overflow-x: auto;
 
 		gap: 8px;
 		height: 50px;

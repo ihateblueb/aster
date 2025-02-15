@@ -67,7 +67,7 @@
 			padding: 0 12px;
 			height: calc((100vh - (38px + (12px * 2))));
 
-			overflow-y: scroll;
+			overflow-y: auto;
 			overflow-x: hidden;
 
 			.top {

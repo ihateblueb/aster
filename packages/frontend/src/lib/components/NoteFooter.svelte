@@ -60,6 +60,8 @@
 		}
 	}
 
+	let hideCounters = $state(localstore.get('hideInteractionCounters'));
+
 	function reply() {
 		store.draft_replyingTo.set(note?.id);
 		store.showCompose.set(true);
@@ -132,7 +134,9 @@
 						<img src={reaction?.emoji?.file?.src} />
 					{/if}
 				</span>
-				<span class="counter">{reaction.users.length}</span>
+				{#if !hideCounters}
+					<span class="counter">{reaction.users.length}</span>
+				{/if}
 			</div>
 		{/each}
 	</div>
@@ -149,7 +153,9 @@
 				{/if}
 			</span>
 			{#if note.replies && note.replies.length > 0}
-				<span class="counter">{note.replies.length}</span>
+				{#if !hideCounters}
+					<span class="counter">{note.replies.length}</span>
+				{/if}
 			{/if}
 		</button>
 	</div>
@@ -170,7 +176,9 @@
 				{/if}
 			</span>
 			{#if note.repeats && note.repeats.length > 0}
-				<span class="counter">{note.repeats.length}</span>
+				{#if !hideCounters}
+					<span class="counter">{note.repeats.length}</span>
+				{/if}
 			{/if}
 		</button>
 	</div>
@@ -186,7 +194,9 @@
 				{/if}
 			</span>
 			{#if note.likes && note.likes.length > 0}
-				<span class="counter">{note.likes.length}</span>
+				{#if !hideCounters}
+					<span class="counter">{note.likes.length}</span>
+				{/if}
 			{/if}
 		</button>
 	</div>
@@ -298,7 +308,7 @@
 		display: flex;
 		gap: 8px;
 		margin-bottom: 10px;
-		overflow-x: scroll;
+		overflow-x: auto;
 
 		.reaction {
 			display: flex;

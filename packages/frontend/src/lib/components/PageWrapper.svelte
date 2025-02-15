@@ -33,7 +33,7 @@
 
 		padding: var(--padding);
 		height: calc(var(--viewHeight) - var(--removed));
-		overflow-y: scroll;
+		overflow-y: auto;
 
 		background: var(--bg2);
 		border-radius: var(--br-lg) var(--br-lg) 0 0;

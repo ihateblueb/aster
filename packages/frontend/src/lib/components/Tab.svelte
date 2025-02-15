@@ -25,6 +25,8 @@
 		height: 50px;
 		width: max-content;
 
+		cursor: pointer;
+
 		&.short {
 			height: 45px;
 		}

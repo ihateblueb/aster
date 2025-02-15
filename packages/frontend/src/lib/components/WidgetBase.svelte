@@ -35,7 +35,7 @@
 
 		max-width: 325px;
 		max-height: 400px;
-		overflow-y: scroll;
+		overflow-y: auto;
 
 		padding: 12px 16px;
 

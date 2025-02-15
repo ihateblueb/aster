@@ -73,6 +73,14 @@
 	on:change={(e) => changeToggle('hideAllMedia', e.target?.checked)}
 />
 <br />
+<h2>Wellness</h2>
+<Switch
+	label="Hide interaction counters on notes"
+	checked={value('hideInteractionCounters')}
+	on:change={(e) =>
+		changeToggle('hideInteractionCounters', e.target?.checked)}
+/>
+<br />
 <h2>Debug</h2>
 <Switch
 	label="Debug mode"

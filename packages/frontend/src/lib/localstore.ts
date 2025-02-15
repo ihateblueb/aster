@@ -41,6 +41,8 @@ let defaults = {
 	uncollapseCws: false,
 	hideAllMedia: false,
 
+	hideInteractionCounters: false,
+
 	enableSounds: true,
 	soundVolume: 0.25
 };
