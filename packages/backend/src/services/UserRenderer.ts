@@ -1,10 +1,10 @@
 import { In, ObjectLiteral } from 'typeorm';
 
-import EmojiService from '../EmojiService.js';
-import NoteService from '../NoteService.js';
-import RelationshipService from '../RelationshipService.js';
+import EmojiService from './EmojiService.js';
+import NoteService from './NoteService.js';
+import RelationshipService from './RelationshipService.js';
 
-class UserBuilder {
+class UserRenderer {
 	public async build(user: ObjectLiteral) {
 		if (user && user.emojis) {
 			let emojis: ObjectLiteral[] = [];
@@ -47,4 +47,4 @@ class UserBuilder {
 	}
 }
 
-export default new UserBuilder();
+export default new UserRenderer();

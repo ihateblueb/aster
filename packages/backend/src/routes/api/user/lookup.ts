@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import UserBuilder from '../../../services/builders/UserBuilder.js';
+import UserBuilder from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 
 export default plugin(async (fastify) => {

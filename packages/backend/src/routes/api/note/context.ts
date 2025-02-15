@@ -1,8 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ContextBuilder from '../../../services/builders/ContextBuilder.js';
-import NoteBuilder from '../../../services/builders/NoteBuilder.js';
+import ContextBuilder from '../../../services/ContextRenderer.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 

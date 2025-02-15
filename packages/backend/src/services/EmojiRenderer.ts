@@ -1,6 +1,6 @@
 import { ObjectLiteral } from 'typeorm';
 
-class EmojiBuilder {
+class EmojiRenderer {
 	public async categorize(data: ObjectLiteral[]) {
 		let categorized: ObjectLiteral = {};
 
@@ -14,4 +14,4 @@ class EmojiBuilder {
 	}
 }
 
-export default new EmojiBuilder();
+export default new EmojiRenderer();

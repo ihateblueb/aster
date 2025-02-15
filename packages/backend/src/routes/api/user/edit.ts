@@ -5,11 +5,11 @@ import { In, IsNull } from 'typeorm';
 import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
 import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
-import UserBuilder from '../../../services/builders/UserBuilder.js';
 import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
 import MfmService from '../../../services/MfmService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
+import UserBuilder from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 

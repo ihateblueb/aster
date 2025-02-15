@@ -1,10 +1,10 @@
 import { ObjectLiteral } from 'typeorm';
 
-import NoteService from '../NoteService.js';
-import VisibilityService from '../VisibilityService.js';
-import NoteBuilder from './NoteBuilder.js';
+import NoteBuilder from './NoteRenderer.js';
+import NoteService from './NoteService.js';
+import VisibilityService from './VisibilityService.js';
 
-class ContextBuilder {
+class ContextRenderer {
 	public async build(note: GenericId, depth: number, as?: GenericId) {
 		let replies: ObjectLiteral[] = [];
 
@@ -31,4 +31,4 @@ class ContextBuilder {
 	}
 }
 
-export default new ContextBuilder();
+export default new ContextRenderer();

@@ -1,10 +1,10 @@
 import { In, ObjectLiteral } from 'typeorm';
 
-import DriveService from '../DriveService.js';
-import EmojiService from '../EmojiService.js';
-import UserBuilder from './UserBuilder.js';
+import DriveService from './DriveService.js';
+import EmojiService from './EmojiService.js';
+import UserBuilder from './UserRenderer.js';
 
-class NoteBuilder {
+class NoteRenderer {
 	public async build(note: ObjectLiteral) {
 		if (note.user) note.user = await UserBuilder.build(note.user);
 
@@ -81,4 +81,4 @@ class NoteBuilder {
 	}
 }
 
-export default new NoteBuilder();
+export default new NoteRenderer();

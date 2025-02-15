@@ -2,7 +2,7 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { IsNull } from 'typeorm';
 
-import EmojiBuilder from '../../../services/builders/EmojiBuilder.js';
+import EmojiBuilder from '../../../services/EmojiRenderer.js';
 import EmojiService from '../../../services/EmojiService.js';
 
 export default plugin(async (fastify) => {
