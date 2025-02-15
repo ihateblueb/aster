@@ -11,8 +11,8 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				remote: { type: 'boolean', nullable: true }, // admin only
-				categorize: { type: 'boolean', nullable: true, default: true }
+				remote: { type: ['boolean', 'null'] }, // admin only
+				categorize: { type: ['boolean', 'null'], default: true }
 			}
 		}
 	} as const;

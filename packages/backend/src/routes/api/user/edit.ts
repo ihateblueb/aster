@@ -19,29 +19,55 @@ export default plugin(async (fastify) => {
 		params: {
 			type: 'object',
 			properties: {
-				id: { type: 'string', nullable: true }
+				id: { type: ['string', 'null'] }
 			}
 		},
 		body: {
 			type: 'object',
 			properties: {
-				username: { type: 'string', nullable: true },
-				displayName: { type: 'string', nullable: true },
-				locked: { type: 'boolean', nullable: true },
-				indexable: { type: 'boolean', nullable: true },
-				automated: { type: 'boolean', nullable: true },
-				sensitive: { type: 'boolean', nullable: true },
-				bio: { type: 'string', nullable: true },
-				pronouns: { type: 'string', nullable: true },
-				location: { type: 'string', nullable: true },
-				birthday: { type: 'string', nullable: true },
-				isCat: { type: 'boolean', nullable: true },
-				speakAsCat: { type: 'boolean', nullable: true },
-				avatar: { type: 'string', nullable: true },
-				avatarAlt: { type: 'string', nullable: true },
-				banner: { type: 'string', nullable: true },
-				bannerAlt: { type: 'string', nullable: true },
-				admin: { type: 'boolean', nullable: true }
+				displayName: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.displayName
+				},
+				locked: { type: ['boolean', 'null'] },
+				indexable: { type: ['boolean', 'null'] },
+				automated: { type: ['boolean', 'null'] },
+				sensitive: { type: ['boolean', 'null'] },
+				bio: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.bio
+				},
+				pronouns: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.pronouns
+				},
+				location: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.location
+				},
+				birthday: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.birthday
+				},
+				isCat: { type: ['boolean', 'null'] },
+				speakAsCat: { type: ['boolean', 'null'] },
+				avatar: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.hard.url
+				},
+				avatarAlt: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.alt
+				},
+				banner: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.hard.url
+				},
+				bannerAlt: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.alt
+				},
+				admin: { type: ['boolean', 'null'] }
 			}
 		}
 	} as const;
@@ -71,6 +97,7 @@ export default plugin(async (fastify) => {
 			let updated = {};
 
 			/*
+			* Potential problems with Mastodon
 			* if (
 				req.body.username &&
 				req.body.username.length <= ConfigService.limits.soft.username
@@ -79,14 +106,15 @@ export default plugin(async (fastify) => {
 					req.body.username
 				);*/
 
-			if (
-				req.body.displayName &&
-				req.body.displayName.length <=
-					ConfigService.limits.soft.displayName
-			)
-				updated['displayName'] = SanitizerService.sanitize(
-					req.body.displayName
-				);
+			if ('displayName' in req.body) {
+				if (req.body.displayName) {
+					updated['displayName'] = SanitizerService.sanitize(
+						req.body.displayName
+					);
+				} else {
+					updated['displayName'] = null;
+				}
+			}
 
 			if ('locked' in req.body) {
 				updated['locked'] = !!req.body.locked;
@@ -104,82 +132,109 @@ export default plugin(async (fastify) => {
 				updated['sensitive'] = !!req.body.sensitive;
 			}
 
-			if (
-				req.body.bio &&
-				req.body.bio.length <= ConfigService.limits.soft.bio
-			)
-				updated['bio'] = SanitizerService.sanitize(req.body.bio);
+			if ('bio' in req.body) {
+				if (req.body.bio) {
+					updated['bio'] = SanitizerService.sanitize(req.body.bio);
+				} else {
+					updated['bio'] = null;
+				}
+			}
 
-			if (
-				req.body.pronouns &&
-				req.body.pronouns.length <= ConfigService.limits.soft.pronouns
-			)
-				updated['pronouns'] = SanitizerService.sanitize(
-					req.body.pronouns
-				);
+			if ('pronouns' in req.body) {
+				if (req.body.pronouns) {
+					updated['pronouns'] = SanitizerService.sanitize(
+						req.body.pronouns
+					);
+				} else {
+					updated['pronouns'] = null;
+				}
+			}
 
-			if (
-				req.body.location &&
-				req.body.location.length <= ConfigService.limits.soft.location
-			)
-				updated['location'] = SanitizerService.sanitize(
-					req.body.location
-				);
+			if ('location' in req.body) {
+				if (req.body.location) {
+					updated['location'] = SanitizerService.sanitize(
+						req.body.location
+					);
+				} else {
+					updated['location'] = null;
+				}
+			}
 
-			if (
-				req.body.birthday &&
-				ValidationService.validDate(req.body.birthday) &&
-				req.body.birthday.length <= ConfigService.limits.soft.birthday
-			)
-				updated['birthday'] = SanitizerService.sanitize(
-					new Date(req.body.birthday).toISOString()
-				);
+			if ('birthday' in req.body) {
+				if (req.body.birthday) {
+					if (ValidationService.validDate(req.body.birthday)) {
+						updated['birthday'] = SanitizerService.sanitize(
+							req.body.birthday
+						);
+					} else {
+						return reply.status(400).send({
+							message: 'Birthday is invalid'
+						});
+					}
+				} else {
+					updated['birthday'] = null;
+				}
+			}
 
 			if ('isCat' in req.body) {
-				if (req.body.isCat) {
-					updated['isCat'] = true;
-				} else {
-					updated['isCat'] = false;
-				}
+				updated['isCat'] = !!req.body.isCat;
 			}
 
 			if ('speakAsCat' in req.body) {
-				if (req.body.speakAsCat) {
-					updated['speakAsCat'] = true;
+				updated['speakAsCat'] = !!req.body.speakAsCat;
+			}
+
+			if ('avatar' in req.body) {
+				if (req.body.avatar) {
+					if (ValidationService.validUrl(req.body.avatar)) {
+						updated['avatar'] = SanitizerService.sanitize(
+							req.body.avatar
+						);
+					} else {
+						return reply.status(400).send({
+							message: 'avatar url is invalid'
+						});
+					}
 				} else {
-					updated['speakAsCat'] = false;
+					updated['avatar'] = null;
 				}
 			}
 
-			if (
-				req.body.avatar &&
-				ValidationService.validUrl(req.body.avatar) &&
-				req.body.avatar.length <= ConfigService.limits.hard.url
-			)
-				updated['avatar'] = SanitizerService.sanitize(req.body.avatar);
+			if ('avatarAlt' in req.body) {
+				if (req.body.avatarAlt) {
+					updated['avatarAlt'] = SanitizerService.sanitize(
+						req.body.avatarAlt
+					);
+				} else {
+					updated['avatarAlt'] = null;
+				}
+			}
 
-			if (
-				req.body.avatarAlt &&
-				req.body.avatarAlt.length <= ConfigService.limits.soft.alt
-			)
-				updated['avatarAlt'] = SanitizerService.sanitize(
-					req.body.avatarAlt
-				);
+			if ('banner' in req.body) {
+				if (req.body.banner) {
+					if (ValidationService.validUrl(req.body.banner)) {
+						updated['banner'] = SanitizerService.sanitize(
+							req.body.banner
+						);
+					} else {
+						return reply.status(400).send({
+							message: 'banner url is invalid'
+						});
+					}
+				} else {
+					updated['banner'] = null;
+				}
+			}
 
-			if (
-				req.body.banner &&
-				ValidationService.validUrl(req.body.banner) &&
-				req.body.banner.length <= ConfigService.limits.hard.url
-			)
-				updated['banner'] = SanitizerService.sanitize(req.body.banner);
-
-			if (
-				req.body.bannerAlt &&
-				req.body.bannerAlt.length <= ConfigService.limits.soft.alt
-			)
-				updated['bannerAlt'] = SanitizerService.sanitize(
-					req.body.bannerAlt
-				);
+			if ('bannerAlt' in req.body) {
+				if (req.body.bannerAlt) {
+					updated['bannerAlt'] = SanitizerService.sanitize(
+						req.body.bannerAlt
+					);
+				} else {
+					updated['bannerAlt'] = null;
+				}
+			}
 
 			updated['updatedAt'] = new Date().toISOString();
 
@@ -187,21 +242,21 @@ export default plugin(async (fastify) => {
 
 			if (req.auth.user.admin) {
 				if ('admin' in req.body) {
-					if (req.body.admin) {
-						updated['admin'] = true;
-					} else {
-						updated['admin'] = false;
-					}
+					updated['admin'] = !!req.body.admin;
 				}
 			}
 
 			if (user.local) {
-				let emojis = MfmService.extractEmojis(user.displayName);
-				emojis.concat(MfmService.extractEmojis(user.bio));
+				let emojis: any[] = [];
+				if (user.displayName)
+					emojis.concat(MfmService.extractEmojis(user.displayName));
+				if (user.bio) emojis.concat(MfmService.extractEmojis(user.bio));
+
 				let foundEmojis = await EmojiService.getMany({
 					shortcode: In(emojis),
 					host: IsNull()
 				});
+
 				updated['emojis'] = foundEmojis.map((emoji) => emoji.id);
 			}
 

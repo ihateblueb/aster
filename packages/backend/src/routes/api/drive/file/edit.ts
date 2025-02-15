@@ -4,6 +4,7 @@ import { FromSchema } from 'json-schema-to-ts';
 import ConfigService from '../../../../services/ConfigService.js';
 import DriveService from '../../../../services/DriveService.js';
 import SanitizerService from '../../../../services/SanitizerService.js';
+import ValidationService from '../../../../services/ValidationService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -18,9 +19,15 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				src: { type: 'string', nullable: true },
-				alt: { type: 'string', nullable: true },
-				sensitive: { type: 'boolean', nullable: true }
+				src: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.hard.url
+				},
+				alt: {
+					type: ['string', 'null'],
+					maxLength: ConfigService.limits.soft.alt
+				},
+				sensitive: { type: ['boolean', 'null'] }
 			}
 		}
 	} as const;
@@ -47,24 +54,32 @@ export default plugin(async (fastify) => {
 
 			let updated = {};
 
-			if (
-				req.body.src &&
-				req.body.src.length <= ConfigService.limits.hard.url
-			)
-				updated['src'] = SanitizerService.sanitize(req.body.src);
+			if ('src' in req.body) {
+				if (req.body.src) {
+					if (ValidationService.validUrl(req.body.src)) {
+						updated['src'] = SanitizerService.sanitize(
+							req.body.src
+						);
+					} else {
+						return reply.status(400).send({
+							message: 'src url is invalid'
+						});
+					}
+				} else {
+					updated['src'] = null;
+				}
+			}
 
-			if (
-				req.body.alt &&
-				req.body.alt.length <= ConfigService.limits.soft.alt
-			)
-				updated['alt'] = SanitizerService.sanitize(req.body.alt);
+			if ('alt' in req.body) {
+				if (req.body.alt) {
+					updated['alt'] = SanitizerService.sanitize(req.body.alt);
+				} else {
+					updated['alt'] = null;
+				}
+			}
 
 			if ('sensitive' in req.body) {
-				if (req.body.sensitive) {
-					updated['sensitive'] = true;
-				} else {
-					updated['sensitive'] = false;
-				}
+				updated['sensitive'] = !!req.body.sensitive;
 			}
 
 			updated['updatedAt'] = new Date().toISOString();

@@ -11,11 +11,11 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				since: { type: 'string', nullable: true },
+				since: { type: ['string', 'null'] },
 				take: { type: 'number', nullable: true },
-				reverse: { type: 'boolean', nullable: true },
-				mentions: { type: 'boolean', nullable: true },
-				direct: { type: 'boolean', nullable: true }
+				reverse: { type: ['boolean', 'null'] },
+				mentions: { type: ['boolean', 'null'] },
+				direct: { type: ['boolean', 'null'] }
 			}
 		}
 	} as const;

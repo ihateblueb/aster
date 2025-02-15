@@ -9,9 +9,9 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				shortcode: { type: 'string', nullable: true },
-				category: { type: 'string', nullable: true },
-				file: { type: 'string', nullable: true }
+				shortcode: { type: ['string', 'null'] },
+				category: { type: ['string', 'null'] },
+				file: { type: ['string', 'null'] }
 			}
 		}
 	} as const;

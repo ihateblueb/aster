@@ -17,9 +17,9 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				shortcode: { type: 'string', nullable: true },
-				category: { type: 'string', nullable: true },
-				file: { type: 'string', nullable: true }
+				shortcode: { type: ['string', 'null'], maxLength: 500 },
+				category: { type: ['string', 'null'], maxLength: 500 },
+				file: { type: ['string', 'null'], maxLength: 500 }
 			}
 		}
 	} as const;
@@ -42,18 +42,33 @@ export default plugin(async (fastify) => {
 
 			let updated = {};
 
-			if (req.body.shortcode && req.body.shortcode.length <= 500)
-				updated['shortcode'] = SanitizerService.sanitize(
-					req.body.shortcode
-				);
+			if ('shortcode' in req.body) {
+				if (req.body.shortcode) {
+					updated['shortcode'] = SanitizerService.sanitize(
+						req.body.shortcode
+					);
+				} else {
+					updated['shortcode'] = null;
+				}
+			}
 
-			if (req.body.category && req.body.category.length <= 500)
-				updated['category'] = SanitizerService.sanitize(
-					req.body.category
-				);
+			if ('category' in req.body) {
+				if (req.body.category) {
+					updated['category'] = SanitizerService.sanitize(
+						req.body.category
+					);
+				} else {
+					updated['category'] = null;
+				}
+			}
 
-			if (req.body.file && req.body.file.length <= 500)
-				updated['file'] = SanitizerService.sanitize(req.body.file);
+			if ('file' in req.body) {
+				if (req.body.file) {
+					updated['file'] = SanitizerService.sanitize(req.body.file);
+				} else {
+					updated['file'] = null;
+				}
+			}
 
 			updated['updatedAt'] = new Date().toISOString();
 

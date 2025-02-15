@@ -13,10 +13,10 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				since: { type: 'string', nullable: true },
+				since: { type: ['string', 'null'] },
 				take: { type: 'number', nullable: true },
-				reverse: { type: 'boolean', nullable: true },
-				local: { type: 'boolean', nullable: true }
+				reverse: { type: ['boolean', 'null'] },
+				local: { type: ['boolean', 'null'] }
 			}
 		}
 	} as const;

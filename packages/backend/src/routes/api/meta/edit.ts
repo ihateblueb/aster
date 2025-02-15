@@ -10,10 +10,10 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				name: { type: 'string', nullable: true },
-				description: { type: 'string', nullable: true },
-				maintainer: { type: 'string', nullable: true },
-				maintainerEmail: { type: 'string', nullable: true }
+				name: { type: ['string', 'null'] },
+				description: { type: ['string', 'null'] },
+				maintainer: { type: ['string', 'null'] },
+				maintainerEmail: { type: ['string', 'null'] }
 			}
 		}
 	} as const;
@@ -31,18 +31,33 @@ export default plugin(async (fastify) => {
 
 			let updated = {};
 
-			if (req.body.name)
-				updated['name'] = SanitizerService.sanitize(req.body.name);
+			if ('name' in req.body) {
+				if (req.body.name) {
+					updated['name'] = SanitizerService.sanitize(req.body.name);
+				} else {
+					updated['name'] = null;
+				}
+			}
 
-			if (req.body.description)
-				updated['description'] = SanitizerService.sanitize(
-					req.body.description
-				);
+			if ('description' in req.body) {
+				if (req.body.description) {
+					updated['description'] = SanitizerService.sanitize(
+						req.body.description
+					);
+				} else {
+					updated['description'] = null;
+				}
+			}
 
-			if (req.body.maintainer)
-				updated['maintainer'] = SanitizerService.sanitize(
-					req.body.maintainer
-				);
+			if ('maintainer' in req.body) {
+				if (req.body.maintainer) {
+					updated['maintainer'] = SanitizerService.sanitize(
+						req.body.maintainer
+					);
+				} else {
+					updated['maintainer'] = null;
+				}
+			}
 
 			return await MetaService.update(updated).then(async () => {
 				return reply.status(200).send(await MetaService.get(true));

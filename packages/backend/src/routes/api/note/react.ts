@@ -18,7 +18,7 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				emoji: { type: 'string', nullable: true }
+				emoji: { type: ['string', 'null'] }
 			}
 		}
 	} as const;

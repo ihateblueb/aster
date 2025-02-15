@@ -12,9 +12,15 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				username: { type: 'string' },
-				password: { type: 'string' },
-				invite: { type: 'string', nullable: true }
+				username: {
+					type: 'string',
+					maxLength: ConfigService.limits.soft.username
+				},
+				password: {
+					type: 'string',
+					maxLength: ConfigService.limits.soft.password
+				},
+				invite: { type: ['string', 'null'] }
 			},
 			required: ['username', 'password']
 		}

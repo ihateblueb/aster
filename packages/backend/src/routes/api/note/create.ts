@@ -9,11 +9,11 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				cw: { type: 'string', nullable: true },
-				content: { type: 'string', nullable: true },
-				visibility: { type: 'string', nullable: true },
-				repeat: { type: 'string', nullable: true },
-				replyingTo: { type: 'string', nullable: true },
+				cw: { type: ['string', 'null'] },
+				content: { type: ['string', 'null'] },
+				visibility: { type: ['string', 'null'] },
+				repeat: { type: ['string', 'null'] },
+				replyingTo: { type: ['string', 'null'] },
 				attachments: {
 					type: 'array',
 					nullable: true,

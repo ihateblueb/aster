@@ -9,7 +9,7 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				token: { type: 'string', nullable: true }
+				token: { type: ['string', 'null'] }
 			}
 		}
 	} as const;

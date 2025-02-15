@@ -16,7 +16,7 @@ export default plugin(async (fastify) => {
 		body: {
 			type: 'object',
 			properties: {
-				visibility: { type: 'string', nullable: true }
+				visibility: { type: ['string', 'null'] }
 			}
 		}
 	} as const;

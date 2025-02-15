@@ -13,12 +13,12 @@ export default plugin(async (fastify) => {
 				type: 'object',
 				properties: {
 					host: { type: 'string' },
-					cw: { type: 'string', nullable: true },
-					sensitive: { type: 'boolean', nullable: true },
-					deliver: { type: 'boolean', nullable: true },
-					accept: { type: 'boolean', nullable: true },
-					fetch: { type: 'boolean', nullable: true },
-					return: { type: 'boolean', nullable: true }
+					cw: { type: ['string', 'null'] },
+					sensitive: { type: ['boolean', 'null'] },
+					deliver: { type: ['boolean', 'null'] },
+					accept: { type: ['boolean', 'null'] },
+					fetch: { type: ['boolean', 'null'] },
+					return: { type: ['boolean', 'null'] }
 				}
 			}
 		}
