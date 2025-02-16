@@ -39,7 +39,7 @@ export default defineConfig({
 				target: apiurl,
 				changeOrigin: true
 			},
-			'/queue': {
+			'/admin/queue': {
 				target: apiurl,
 				changeOrigin: true
 			},

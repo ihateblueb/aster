@@ -11,6 +11,8 @@ build
 *.gif
 *.jpg
 *.jpeg
+*.wav
+*.mp3
 .npmrc
 .env
 .editorconfig
@@ -27,3 +29,4 @@ pnpm-lock.yaml
 devenv.lock
 devenv.nix
 .envrc
+.DS_store
