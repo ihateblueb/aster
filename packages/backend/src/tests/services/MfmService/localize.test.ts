@@ -5,15 +5,35 @@ import MfmService from '../../../services/MfmService.js';
 
 test('mention with no host is given host when localized', () => {
 	expect(
-		MfmService.localize('@user @user@false.example.com', 'example.com')
-	).toBe('@user@example.com @user@false.example.com');
+		MfmService.localize('@user @user@second.example.com', 'example.com')
+	).toBe('@user@example.com @user@second.example.com');
 });
 
 test('mention with local host has host removed when localized', () => {
 	expect(
 		MfmService.localize(
-			'@user@' + ConfigService.url.host + ' @user@false.example.com',
+			'@user@' + ConfigService.url.host + ' @user@second.example.com',
 			'example.com'
 		)
-	).toBe('@user @user@false.example.com');
+	).toBe('@user @user@user.example.com');
+});
+
+test('deep mention with no host is given host when localized', () => {
+	expect(
+		MfmService.localize(
+			'$[x2 $[x2 @user @user@second.example.com]]',
+			'example.com'
+		)
+	).toBe('$[x2 $[x2 @user@example.com @user@second.example.com]]');
+});
+
+test('deep mention with local host has host removed when localized', () => {
+	expect(
+		MfmService.localize(
+			'$[x2 $[x2 @user@' +
+				ConfigService.url.host +
+				' @user@second.example.com]]',
+			'example.com'
+		)
+	).toBe('$[x2 $[x2 @user @user@second.example.com]]');
 });

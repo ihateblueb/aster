@@ -16,6 +16,8 @@
 
 	let cwOpen = $state(false);
 	if (localstore.get('uncollapseCws') === 'true') cwOpen = true;
+
+	let noteHeight = $state(0);
 </script>
 
 {#snippet noteAttachments(attachments)}
@@ -83,7 +85,7 @@
 	<NoteFooter note={data} />
 {/snippet}
 
-<article class={expanded ? 'expanded' : ''}>
+<article bind:clientHeight={noteHeight} class={expanded ? 'expanded' : ''}>
 	{#if note.repeat && !note.content}
 		<div class="repeatHeader">
 			<div class="left">
