@@ -34,12 +34,12 @@ export default plugin(async (fastify) => {
 
 			return reply.status(200).send({
 				to: await RelationshipService.get({
-					to: { id: req.auth.user.id },
-					from: { id: req.params.id }
-				}),
-				from: await RelationshipService.get({
 					to: { id: req.params.id },
 					from: { id: req.auth.user.id }
+				}),
+				from: await RelationshipService.get({
+					to: { id: req.auth.user.id },
+					from: { id: req.params.id }
 				})
 			});
 		}
