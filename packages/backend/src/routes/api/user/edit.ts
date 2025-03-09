@@ -9,7 +9,7 @@ import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
 import MfmService from '../../../services/MfmService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
-import UserBuilder from '../../../services/UserRenderer.js';
+import UserRenderer from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 
@@ -279,7 +279,9 @@ export default plugin(async (fastify) => {
 					);
 				}
 
-				return reply.status(200).send(await UserBuilder.build(newUser));
+				return reply
+					.status(200)
+					.send(await UserRenderer.render(newUser));
 			});
 		}
 	);

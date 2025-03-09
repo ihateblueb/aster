@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ContextBuilder from '../../../services/ContextRenderer.js';
+import ContextRenderer from '../../../services/ContextRenderer.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 
@@ -48,7 +48,7 @@ export default plugin(async (fastify) => {
 			)
 				return reply.status(404).send();
 
-			return await ContextBuilder.build(note.id, 0, req.auth.user?.id);
+			return await ContextRenderer.render(note.id, 0, req.auth.user?.id);
 		}
 	);
 });

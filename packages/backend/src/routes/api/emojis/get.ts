@@ -2,7 +2,7 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { IsNull } from 'typeorm';
 
-import EmojiBuilder from '../../../services/EmojiRenderer.js';
+import EmojiRenderer from '../../../services/EmojiRenderer.js';
 import EmojiService from '../../../services/EmojiService.js';
 
 export default plugin(async (fastify) => {
@@ -39,7 +39,7 @@ export default plugin(async (fastify) => {
 						.status(200)
 						.send(
 							req.query.categorize
-								? await EmojiBuilder.categorize(e)
+								? await EmojiRenderer.categorize(e)
 								: e
 						);
 				return reply.status(204).send();

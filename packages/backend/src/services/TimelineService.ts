@@ -1,8 +1,9 @@
 import { ObjectLiteral } from 'typeorm';
 
 import DriveService from './DriveService.js';
-import NoteBuilder from './NoteRenderer.js';
+import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
+import NotificationRenderer from './NotificationRenderer.js';
 import NotificationService from './NotificationService.js';
 import ReportService from './ReportService.js';
 
@@ -19,7 +20,7 @@ class TimelineService {
 		let timelineObjects;
 
 		if (type === 'note')
-			timelineObjects = await NoteBuilder.buildMany(
+			timelineObjects = await NoteRenderer.renderMany(
 				await NoteService.getMany(
 					where,
 					take,
@@ -30,13 +31,15 @@ class TimelineService {
 				)
 			);
 		if (type === 'notification')
-			timelineObjects = await NotificationService.getMany(
-				where,
-				take,
-				order,
-				orderDirection,
-				orWhere,
-				andWhere
+			timelineObjects = await NotificationRenderer.renderMany(
+				await NotificationService.getMany(
+					where,
+					take,
+					order,
+					orderDirection,
+					orWhere,
+					andWhere
+				)
 			);
 		if (type === 'report')
 			timelineObjects = await ReportService.getMany(

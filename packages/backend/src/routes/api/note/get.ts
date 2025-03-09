@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import NoteBuilder from '../../../services/NoteRenderer.js';
+import NoteRenderer from '../../../services/NoteRenderer.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 
@@ -48,7 +48,7 @@ export default plugin(async (fastify) => {
 			)
 				return reply.status(404).send();
 
-			return await NoteBuilder.build(note);
+			return await NoteRenderer.render(note);
 		}
 	);
 });

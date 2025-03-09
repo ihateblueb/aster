@@ -3,7 +3,7 @@ import { In, ObjectLiteral } from 'typeorm';
 import EmojiService from './EmojiService.js';
 
 class UserRenderer {
-	public async build(user: ObjectLiteral) {
+	public async render(user: ObjectLiteral) {
 		// TODO: cache
 		if (user && user.emojis) {
 			let emojis: ObjectLiteral[] = [];
@@ -35,16 +35,16 @@ class UserRenderer {
 		return user;
 	}
 
-	public async buildMany(users: ObjectLiteral[]) {
-		let built: ObjectLiteral[] = [];
+	public async renderMany(users: ObjectLiteral[]) {
+		let rendered: ObjectLiteral[] = [];
 
 		for (const user of users) {
-			await this.build(user).then((e) => {
-				if (e) built.push(e);
+			await this.render(user).then((e) => {
+				if (e) rendered.push(e);
 			});
 		}
 
-		return built;
+		return rendered;
 	}
 }
 

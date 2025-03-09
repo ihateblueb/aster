@@ -5,8 +5,8 @@ import EmojiService from './EmojiService.js';
 import UserRenderer from './UserRenderer.js';
 
 class NoteRenderer {
-	public async build(note: ObjectLiteral) {
-		if (note.user) note.user = await UserRenderer.build(note.user);
+	public async render(note: ObjectLiteral) {
+		if (note.user) note.user = await UserRenderer.render(note.user);
 
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];
@@ -73,23 +73,23 @@ class NoteRenderer {
 		}
 
 		if (note.replyingTo)
-			note.replyingTo = await this.build(note.replyingTo);
+			note.replyingTo = await this.render(note.replyingTo);
 
-		if (note.repeat) note.repeat = await this.build(note.repeat);
+		if (note.repeat) note.repeat = await this.render(note.repeat);
 
 		return note;
 	}
 
-	public async buildMany(notes: ObjectLiteral[]) {
-		let built: ObjectLiteral[] = [];
+	public async renderMany(notes: ObjectLiteral[]) {
+		let rendered: ObjectLiteral[] = [];
 
 		for (const note of notes) {
-			await this.build(note).then((e) => {
-				if (e) built.push(e);
+			await this.render(note).then((e) => {
+				if (e) rendered.push(e);
 			});
 		}
 
-		return built;
+		return rendered;
 	}
 }
 

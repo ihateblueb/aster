@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import UserBuilder from '../../../services/UserRenderer.js';
+import UserRenderer from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 
 export default plugin(async (fastify) => {
@@ -38,7 +38,7 @@ export default plugin(async (fastify) => {
 			if (!user || !user.activated || user.suspended)
 				return reply.status(404).send();
 
-			return await UserBuilder.build(user);
+			return await UserRenderer.render(user);
 		}
 	);
 });
