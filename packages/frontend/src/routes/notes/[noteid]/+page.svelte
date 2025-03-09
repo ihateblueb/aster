@@ -22,13 +22,13 @@
 	queryClient.clear();
 
 	const query = createQuery({
-		queryKey: ['note'],
+		queryKey: ['note_' + props.data.noteid],
 		retry: false,
 		queryFn: async () => await getNote(props.data.noteid)
 	});
 
 	const contextQuery = createQuery({
-		queryKey: ['context'],
+		queryKey: ['context_' + props.data.noteid],
 		retry: false,
 		queryFn: async () => await getNoteContext(props.data.noteid)
 	});
@@ -38,6 +38,14 @@
 	function updateTab(tab: string) {
 		selectedTab = tab;
 	}
+
+	$effect(() => {
+		if (props.data.noteid !== $query.data?.id) {
+			$query.refetch();
+			$contextQuery.refetch();
+			selectedTab = 'replies';
+		}
+	});
 </script>
 
 <PageHeader
