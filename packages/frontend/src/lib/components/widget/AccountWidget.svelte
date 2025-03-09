@@ -40,6 +40,7 @@
 			user={self}
 			size={(innerWidth.current ?? 0) > 1355 ? '40px' : '50px'}
 			large={!((innerWidth.current ?? 0) > 1355)}
+			link={false}
 		/>
 		<span class="names">
 			<span class="top">

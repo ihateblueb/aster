@@ -59,7 +59,7 @@
 			{#if note.attachments && note.attachments.length > 0}
 				<p class="attachments">
 					<IconPaperclip size="var(--fs-md)" />
-					{note.attachments.length} attachments
+					{note.attachments.length} attachment{#if note.attachments.length > 1}s{/if}
 				</p>
 			{/if}
 		{/snippet}

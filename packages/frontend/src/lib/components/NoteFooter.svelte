@@ -306,6 +306,7 @@
 <style lang="scss" scoped>
 	.reactions {
 		display: flex;
+		align-items: center;
 		gap: 8px;
 		margin-bottom: 10px;
 		overflow-x: auto;
@@ -326,6 +327,9 @@
 			}
 
 			.content {
+				display: flex;
+				align-items: center;
+
 				img {
 					height: 1.4rem !important;
 				}
