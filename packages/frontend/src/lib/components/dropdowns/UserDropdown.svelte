@@ -18,29 +18,36 @@
 	let reportModal: undefined | Modal = $state();
 	let blockModal: undefined | Modal = $state();
 
-	let { user } = $props();
+	let { query } = $props();
 </script>
 
 <DropdownItem
 	on:click={() =>
-		navigator.clipboard.writeText('@' + user.username + '@' + user.host)}
+		navigator.clipboard.writeText(
+			'@' + query.data.username + '@' + query.data.host
+		)}
 >
 	<IconAt size="18px" />
 	Copy handle
 </DropdownItem>
-{#if !user.local}
-	<DropdownItem to={user.apId} newTab>
+{#if !query.data.local}
+	<DropdownItem to={query.data.apId} newTab>
 		<IconExternalLink size="18px" />
 		View on remote
 	</DropdownItem>
-	<DropdownItem on:click={() => refetchUser(user.id)}>
+	<DropdownItem
+		on:click={() =>
+			refetchUser(query.data.id).then(() => {
+				query.refetch();
+			})}
+	>
 		<IconRefresh size="18px" />
 		Refetch from remote
 	</DropdownItem>
 {/if}
 
 <DropdownDivider />
-<DropdownItem on:click={() => biteUser(user.id)}>
+<DropdownItem on:click={() => biteUser(query.data.id)}>
 	<IconDental size="18px" />
 	Bite
 </DropdownItem>

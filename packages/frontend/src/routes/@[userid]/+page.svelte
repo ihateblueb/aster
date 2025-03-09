@@ -40,10 +40,8 @@
 
 	console.log(props.data);
 
-	if (props.data.userid) queryClient.clear();
-
 	const query = createQuery({
-		queryKey: ['user'],
+		queryKey: ['user_' + props.data.userid],
 		retry: false,
 		queryFn: async () => await lookupUser('@' + props.data.userid)
 	});
@@ -59,6 +57,13 @@
 	let show = $state(true);
 	query.subscribe((e) => {
 		if (e.data?.sensitive) show = false;
+	});
+
+	$effect(() => {
+		if (props.data.noteid !== $query.data?.id) {
+			$query.refetch();
+			$relationshipQuery.refetch();
+		}
 	});
 
 	let dropdown: Dropdown;
@@ -300,7 +305,7 @@
 </PageWrapper>
 
 <Dropdown bind:this={dropdown}>
-	<UserDropdown user={$query.data} />
+	<UserDropdown query={$query} />
 </Dropdown>
 
 <style lang="scss" scoped>
