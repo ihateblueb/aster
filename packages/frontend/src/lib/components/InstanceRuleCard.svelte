@@ -42,15 +42,15 @@
 			<div class="end">
 				<Button nm on:click={() => toggleEdit()}>
 					{#if editing}
-						<IconCheck size="var(--fs-lg)" />
+						<IconCheck size="18px" />
 						<span class="label">Save</span>
 					{:else}
-						<IconPencil size="var(--fs-lg)" />
+						<IconPencil size="18px" />
 						<span class="label">Edit</span>
 					{/if}
 				</Button>
 				<Button nm on:click={() => deleteRule()}>
-					<IconX size="var(--fs-lg)" />
+					<IconX size="18px" />
 					<span class="label">Delete</span>
 				</Button>
 			</div>
@@ -63,9 +63,9 @@
 			>
 				<p>Sensitive</p>
 				{#if instanceRule.sensitive}
-					<IconCheck size="var(--fs-md)" />
+					<IconCheck size="14px" />
 				{:else}
-					<IconX size="var(--fs-md)" />
+					<IconX size="14px" />
 				{/if}
 			</div>
 			<div
@@ -74,9 +74,9 @@
 			>
 				<p>Delivering</p>
 				{#if instanceRule.deliver}
-					<IconCheck size="var(--fs-md)" />
+					<IconCheck size="14px" />
 				{:else}
-					<IconX size="var(--fs-md)" />
+					<IconX size="14px" />
 				{/if}
 			</div>
 			<div
@@ -85,9 +85,9 @@
 			>
 				<p>Accepting</p>
 				{#if instanceRule.accept}
-					<IconCheck size="var(--fs-md)" />
+					<IconCheck size="14px" />
 				{:else}
-					<IconX size="var(--fs-md)" />
+					<IconX size="14px" />
 				{/if}
 			</div>
 			<div
@@ -96,9 +96,9 @@
 			>
 				<p>Fetching</p>
 				{#if instanceRule.fetch}
-					<IconCheck size="var(--fs-md)" />
+					<IconCheck size="14px" />
 				{:else}
-					<IconX size="var(--fs-md)" />
+					<IconX size="14px" />
 				{/if}
 			</div>
 			<div
@@ -107,9 +107,9 @@
 			>
 				<p>Returning</p>
 				{#if instanceRule.return}
-					<IconCheck size="var(--fs-md)" />
+					<IconCheck size="14px" />
 				{:else}
-					<IconX size="var(--fs-md)" />
+					<IconX size="14px" />
 				{/if}
 			</div>
 		</div>

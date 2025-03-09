@@ -24,18 +24,18 @@
 	>
 		<span class="content">
 			{#if $query.isLoading}
-				<Loading size="var(--fs-lg)" />
+				<Loading size="18px" />
 			{:else if $query.data?.to?.type === 'follow' && !$query.data?.to?.pending}
-				<IconUserMinus size="var(--fs-lg)" />
+				<IconUserMinus size="18px" />
 				<span class="label">Unfollow</span>
 			{:else if $query.data?.to?.type === 'follow' && $query.data?.to?.pending}
-				<IconUserMinus size="var(--fs-lg)" />
+				<IconUserMinus size="18px" />
 				<span class="label">Cancel request</span>
 			{:else if user.locked}
-				<IconUserPlus size="var(--fs-lg)" />
+				<IconUserPlus size="18px" />
 				<span class="label">Follow request</span>
 			{:else}
-				<IconUserPlus size="var(--fs-lg)" />
+				<IconUserPlus size="18px" />
 				<span class="label">Follow</span>
 			{/if}
 		</span>

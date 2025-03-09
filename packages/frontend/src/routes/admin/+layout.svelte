@@ -15,7 +15,7 @@
 
 <PageHeader title="Dashboard">
 	<svelte:fragment slot="icon">
-		<IconDashboard size="var(--fs-lg)" />
+		<IconDashboard size="18px" />
 	</svelte:fragment>
 	<Tab
 		selected={selectedTab === 0}

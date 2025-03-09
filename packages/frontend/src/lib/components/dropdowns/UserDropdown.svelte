@@ -25,35 +25,35 @@
 	on:click={() =>
 		navigator.clipboard.writeText('@' + user.username + '@' + user.host)}
 >
-	<IconAt size="var(--fs-lg)" />
+	<IconAt size="18px" />
 	Copy handle
 </DropdownItem>
 {#if !user.local}
 	<DropdownItem to={user.apId} newTab>
-		<IconExternalLink size="var(--fs-lg)" />
+		<IconExternalLink size="18px" />
 		View on remote
 	</DropdownItem>
 	<DropdownItem on:click={() => refetchUser(user.id)}>
-		<IconRefresh size="var(--fs-lg)" />
+		<IconRefresh size="18px" />
 		Refetch from remote
 	</DropdownItem>
 {/if}
 
 <DropdownDivider />
 <DropdownItem on:click={() => biteUser(user.id)}>
-	<IconDental size="var(--fs-lg)" />
+	<IconDental size="18px" />
 	Bite
 </DropdownItem>
 <DropdownDivider />
 <DropdownItem danger>
-	<IconBan size="var(--fs-lg)" />
+	<IconBan size="18px" />
 	Block
 </DropdownItem>
 <DropdownItem danger>
-	<IconVolumeOff size="var(--fs-lg)" />
+	<IconVolumeOff size="18px" />
 	Mute
 </DropdownItem>
 <DropdownItem danger>
-	<IconFlag size="var(--fs-lg)" />
+	<IconFlag size="18px" />
 	Report
 </DropdownItem>

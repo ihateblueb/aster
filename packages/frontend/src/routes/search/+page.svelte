@@ -10,7 +10,7 @@
 
 <PageHeader title="Search">
 	<svelte:fragment slot="icon">
-		<IconSearch size="var(--fs-lg)" />
+		<IconSearch size="18px" />
 	</svelte:fragment>
 </PageHeader>
 

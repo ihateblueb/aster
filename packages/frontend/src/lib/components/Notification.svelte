@@ -27,19 +27,19 @@
 
 {#snippet icon()}
 	{#if notification.type === 'debug'}
-		<IconBug size="var(--fs-lg)" color="var(--ac1)" />
+		<IconBug size="18px" color="var(--ac1)" />
 	{:else if notification.type === 'like'}
-		<IconStar size="var(--fs-lg)" color="var(--like)" />
+		<IconStar size="18px" color="var(--like)" />
 	{:else if notification.type === 'react'}
-		<IconMoodPlus size="var(--fs-lg)" color="var(--ac1)" />
+		<IconMoodPlus size="18px" color="var(--ac1)" />
 	{:else if notification.type === 'repeat'}
-		<IconRepeat size="var(--fs-lg)" color="var(--repeat" />
+		<IconRepeat size="18px" color="var(--repeat" />
 	{:else if notification.type === 'acceptedFollow'}
-		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
+		<IconUserPlus size="18px" color="var(--ac1)" />
 	{:else if notification.type === 'follow'}
-		<IconUserPlus size="var(--fs-lg)" color="var(--ac1)" />
+		<IconUserPlus size="18px" color="var(--ac1)" />
 	{:else if notification.type === 'bite'}
-		<IconDental size="var(--fs-lg)" color="var(--ac1)" />
+		<IconDental size="18px" color="var(--ac1)" />
 	{/if}
 {/snippet}
 

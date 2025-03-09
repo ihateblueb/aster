@@ -227,11 +227,11 @@
 <!-- Repeat Dropdown -->
 <Dropdown bind:this={repeatDropdown}>
 	<DropdownItem on:click={() => repeat()}>
-		<IconRepeat size="var(--fs-lg)" />
+		<IconRepeat size="18px" />
 		<span>Repeat</span>
 	</DropdownItem>
 	<DropdownItem on:click={() => quote()}>
-		<IconQuote size="var(--fs-lg)" />
+		<IconQuote size="18px" />
 		<span>Quote</span>
 	</DropdownItem>
 </Dropdown>
@@ -244,12 +244,12 @@
 <!-- More Dropdown -->
 <Dropdown bind:this={moreDropdown}>
 	<DropdownItem to={'/notes/' + note.id}>
-		<IconInfoCircle size="var(--fs-lg)" />
+		<IconInfoCircle size="18px" />
 		<span>Details</span>
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem on:click={() => navigator.clipboard.writeText(note.content)}>
-		<IconCopy size="var(--fs-lg)" />
+		<IconCopy size="18px" />
 		<span>Copy content</span>
 	</DropdownItem>
 	<DropdownItem
@@ -258,46 +258,46 @@
 				note.user.local ? note.apId : page.url.href + 'notes/' + note.id
 			)}
 	>
-		<IconLink size="var(--fs-lg)" />
+		<IconLink size="18px" />
 		<span>Copy link</span>
 	</DropdownItem>
 	{#if !note.user.local}
 		<DropdownItem on:click={() => navigator.clipboard.writeText(note.apId)}>
-			<IconLink size="var(--fs-lg)" />
+			<IconLink size="18px" />
 			<span>Copy link (origin)</span>
 		</DropdownItem>
 		<DropdownItem to={note.apId} newTab>
-			<IconExternalLink size="var(--fs-lg)" />
+			<IconExternalLink size="18px" />
 			View on remote
 		</DropdownItem>
 	{/if}
 	<DropdownDivider />
 	<DropdownItem>
-		<IconBellOff size="var(--fs-lg)" />
+		<IconBellOff size="18px" />
 		<span>Mute thread</span>
 	</DropdownItem>
 	<DropdownItem>
-		<IconBookmark size="var(--fs-lg)" />
+		<IconBookmark size="18px" />
 		<span>Bookmark</span>
 	</DropdownItem>
 	<DropdownItem>
-		<IconAlertCircle size="var(--fs-lg)" />
+		<IconAlertCircle size="18px" />
 		<span>Report</span>
 	</DropdownItem>
 	{#if note.user.id === self.id}
 		<DropdownDivider />
 		<DropdownItem>
-			<IconPencil size="var(--fs-lg)" />
+			<IconPencil size="18px" />
 			<span>Edit</span>
 		</DropdownItem>
 		<DropdownItem danger on:click={() => moreDelete()}>
-			<IconTrash size="var(--fs-lg)" />
+			<IconTrash size="18px" />
 			<span>Delete</span>
 		</DropdownItem>
 	{:else if self.admin}
 		<DropdownDivider />
 		<DropdownItem danger on:click={() => moreDelete()}>
-			<IconTrash size="var(--fs-lg)" />
+			<IconTrash size="18px" />
 			<span>Delete</span>
 		</DropdownItem>
 	{/if}

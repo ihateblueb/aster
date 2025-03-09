@@ -30,7 +30,7 @@
 <div class="drive">
 	<div class="header">
 		<div class="left">
-			<IconCloud size="var(--fs-lg)" />
+			<IconCloud size="18px" />
 			Drive
 		</div>
 		<div class="right">
@@ -43,7 +43,7 @@
 				bind:this={fileInput}
 			/>
 			<Button transparent nm on:click={() => fileInput.click()}>
-				<IconPlus size="var(--fs-lg)" />
+				<IconPlus size="18px" />
 			</Button>
 		</div>
 	</div>

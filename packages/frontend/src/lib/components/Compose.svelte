@@ -173,7 +173,7 @@
 						: '@' + replyingToNote.user.host}
 				</p>
 				<button class="nobg" on:click={() => clearReply()}>
-					<IconX size="var(--fs-lg)" />
+					<IconX size="18px" />
 				</button>
 			</div>
 			<NoteSimple note={replyingToNote} />
@@ -201,7 +201,7 @@
 						class="removeAttachment"
 						on:click={() => removeAttachment(attachment.id)}
 					>
-						<IconX size="var(--fs-lg)" />
+						<IconX size="18px" />
 					</button>
 				</NoteAttachment>
 			{/each}
@@ -217,7 +217,7 @@
 						: '@' + quotingNote.user.host}
 				</p>
 				<button class="nobg" on:click={() => clearQuote()}>
-					<IconX size="var(--fs-lg)" />
+					<IconX size="18px" />
 				</button>
 			</div>
 			<NoteSimple note={quotingNote} />
@@ -232,7 +232,7 @@
 				nm
 				on:click={(e) => addDropdown.open(e)}
 			>
-				<IconPlus size="var(--fs-lg)" />
+				<IconPlus size="18px" />
 			</Button>
 			<Button
 				transparent
@@ -240,7 +240,7 @@
 				nm
 				on:click={(e) => emojiDropdown.open(e)}
 			>
-				<IconMoodSmile size="var(--fs-lg)" />
+				<IconMoodSmile size="18px" />
 			</Button>
 		</div>
 		<div class="right">
@@ -257,7 +257,7 @@
 	<DropdownItem on:click={() => setVisibility('public')}>
 		<div class="visibilityOption">
 			<p>
-				<IconWorld size="var(--fs-lg)" />
+				<IconWorld size="18px" />
 				Public
 			</p>
 			<p>Shown on all timelines</p>
@@ -266,7 +266,7 @@
 	<DropdownItem on:click={() => setVisibility('unlisted')}>
 		<div class="visibilityOption">
 			<p>
-				<IconHome size="var(--fs-lg)" />
+				<IconHome size="18px" />
 				Unlisted
 			</p>
 			<p>Only shown on the home timeline of followers</p>
@@ -275,7 +275,7 @@
 	<DropdownItem on:click={() => setVisibility('followers')}>
 		<div class="visibilityOption">
 			<p>
-				<IconLock size="var(--fs-lg)" />
+				<IconLock size="18px" />
 				Followers
 			</p>
 			<p>Only shown to your followers</p>
@@ -284,7 +284,7 @@
 	<DropdownItem on:click={() => setVisibility('direct')}>
 		<div class="visibilityOption">
 			<p>
-				<IconMail size="var(--fs-lg)" />
+				<IconMail size="18px" />
 				Direct
 			</p>
 			<p>Only shown to those mentioned</p>
@@ -294,11 +294,11 @@
 
 <Dropdown bind:this={addDropdown}>
 	<DropdownItem on:click={() => store.showDrive.set(true)}>
-		<IconPaperclip size="var(--fs-lg)" />
+		<IconPaperclip size="18px" />
 		Add file
 	</DropdownItem>
 	<DropdownItem>
-		<IconChartBar size="var(--fs-lg)" />
+		<IconChartBar size="18px" />
 		Add poll
 	</DropdownItem>
 </Dropdown>

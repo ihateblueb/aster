@@ -16,7 +16,7 @@
 			<div class="float">
 				<div class="left">
 					<button on:click={() => (show = !show)}>
-						<IconEyeOff size="var(--fs-lg)" />
+						<IconEyeOff size="18px" />
 					</button>
 				</div>
 				<div class="right">

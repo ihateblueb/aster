@@ -77,12 +77,12 @@
 	<svelte:fragment slot="icon">
 		{#if $query.isSuccess}
 			{#if $query.data && $query.data.avatar}
-				<Avatar small size="var(--fs-lg)" user={$query.data} />
+				<Avatar small size="18px" user={$query.data} />
 			{:else}
-				<IconUserCircle size="var(--fs-lg)" />
+				<IconUserCircle size="18px" />
 			{/if}
 		{:else}
-			<IconUserCircle size="var(--fs-lg)" />
+			<IconUserCircle size="18px" />
 		{/if}
 	</svelte:fragment>
 
@@ -103,7 +103,7 @@
 	/>
 	<hr class="vertical" />
 	<Button header on:click={(e) => dropdown.open(e)}>
-		<IconDotsVertical size="var(--fs-lg)" />
+		<IconDotsVertical size="18px" />
 	</Button>
 </PageHeader>
 
@@ -144,22 +144,18 @@
 										{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
 											<span class="relationship">
 												<IconArrowsLeftRight
-													size="var(--fs-md)"
+													size="14px"
 												/>
 												Mutuals
 											</span>
 										{:else if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type !== 'follow' && !$relationshipQuery.data.from?.pending}
 											<span class="relationship">
-												<IconArrowLeft
-													size="var(--fs-md)"
-												/>
+												<IconArrowLeft size="14px" />
 												Following
 											</span>
 										{:else if $relationshipQuery.data.to?.type !== 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
 											<span class="relationship">
-												<IconArrowRight
-													size="var(--fs-md)"
-												/>
+												<IconArrowRight size="14px" />
 												Follows you
 											</span>
 										{/if}
@@ -198,9 +194,7 @@
 							{#if $query.data.pronouns}
 								<p class="pair">
 									<span class="key">
-										<IconMessageCircleUser
-											size="var(--fs-lg)"
-										/>
+										<IconMessageCircleUser size="18px" />
 									</span>
 									<span class="val"
 										>{$query.data.pronouns}</span
@@ -210,7 +204,7 @@
 							{#if $query.data.birthday}
 								<p class="pair">
 									<span class="key">
-										<IconCake size="var(--fs-lg)" />
+										<IconCake size="18px" />
 									</span>
 									<span class="val">
 										{new Date(
@@ -226,7 +220,7 @@
 							{#if $query.data.location}
 								<p class="pair">
 									<span class="key">
-										<IconMapPin size="var(--fs-lg)" />
+										<IconMapPin size="18px" />
 									</span>
 									<span class="val"
 										>{$query.data.location}</span
@@ -281,11 +275,11 @@
 						<Toggle label="Don't ask again for this user" />
 						<div class="btns">
 							<Button danger>
-								<IconBan size="var(--fs-lg)" />
+								<IconBan size="18px" />
 								Block
 							</Button>
 							<Button danger>
-								<IconVolumeOff size="var(--fs-lg)" />
+								<IconVolumeOff size="18px" />
 								Mute
 							</Button>
 							<Button

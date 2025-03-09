@@ -28,7 +28,7 @@
 				nm
 				to="/"
 			>
-				<IconHome size="var(--fs-lg)" />
+				<IconHome size="18px" />
 				Home
 			</Button>
 			<Button
@@ -38,7 +38,7 @@
 				nm
 				to="/notifications"
 			>
-				<IconBell size="var(--fs-lg)" />
+				<IconBell size="18px" />
 				Notifications
 			</Button>
 			<Button
@@ -48,7 +48,7 @@
 				nm
 				to="/follow-requests"
 			>
-				<IconUserPlus size="var(--fs-lg)" />
+				<IconUserPlus size="18px" />
 				Follow requests
 			</Button>
 			<hr />
@@ -59,7 +59,7 @@
 				nm
 				to="/search"
 			>
-				<IconSearch size="var(--fs-lg)" />
+				<IconSearch size="18px" />
 				Search
 			</Button>
 			<Button
@@ -69,7 +69,7 @@
 				nm
 				to="/explore"
 			>
-				<IconHash size="var(--fs-lg)" />
+				<IconHash size="18px" />
 				Explore
 			</Button>
 			<hr />
@@ -80,7 +80,7 @@
 				nm
 				to="/drive"
 			>
-				<IconCloud size="var(--fs-lg)" />
+				<IconCloud size="18px" />
 				Drive
 			</Button>
 			<Button
@@ -90,7 +90,7 @@
 				nm
 				to="/bookmarks"
 			>
-				<IconBookmark size="var(--fs-lg)" />
+				<IconBookmark size="18px" />
 				Bookmarks
 			</Button>
 			<hr />
@@ -101,7 +101,7 @@
 				nm
 				to="/settings"
 			>
-				<IconSettings size="var(--fs-lg)" />
+				<IconSettings size="18px" />
 				Settings
 			</Button>
 			<Button
@@ -111,7 +111,7 @@
 				nm
 				to="/admin"
 			>
-				<IconDashboard size="var(--fs-lg)" />
+				<IconDashboard size="18px" />
 				Dashboard
 			</Button>
 		</div>
@@ -124,7 +124,7 @@
 				nm
 				to="/"
 			>
-				<IconHome size="var(--fs-lg)" />
+				<IconHome size="18px" />
 			</Button>
 			<Button
 				circle
@@ -133,7 +133,7 @@
 				nm
 				to="/notifications"
 			>
-				<IconBell size="var(--fs-lg)" />
+				<IconBell size="18px" />
 			</Button>
 			<Button
 				circle
@@ -142,7 +142,7 @@
 				nm
 				to="/follow-requests"
 			>
-				<IconUserPlus size="var(--fs-lg)" />
+				<IconUserPlus size="18px" />
 			</Button>
 			<hr />
 			<Button
@@ -152,7 +152,7 @@
 				nm
 				to="/search"
 			>
-				<IconSearch size="var(--fs-lg)" />
+				<IconSearch size="18px" />
 			</Button>
 			<Button
 				circle
@@ -161,7 +161,7 @@
 				nm
 				to="/explore"
 			>
-				<IconHash size="var(--fs-lg)" />
+				<IconHash size="18px" />
 			</Button>
 			<hr />
 			<Button
@@ -171,7 +171,7 @@
 				nm
 				to="/drive"
 			>
-				<IconCloud size="var(--fs-lg)" />
+				<IconCloud size="18px" />
 			</Button>
 			<Button
 				circle
@@ -180,7 +180,7 @@
 				nm
 				to="/bookmarks"
 			>
-				<IconBookmark size="var(--fs-lg)" />
+				<IconBookmark size="18px" />
 			</Button>
 			<hr />
 			<Button
@@ -190,7 +190,7 @@
 				nm
 				to="/settings"
 			>
-				<IconSettings size="var(--fs-lg)" />
+				<IconSettings size="18px" />
 			</Button>
 			<Button
 				circle
@@ -199,7 +199,7 @@
 				nm
 				to="/admin"
 			>
-				<IconDashboard size="var(--fs-lg)" />
+				<IconDashboard size="18px" />
 			</Button>
 		</div>
 	{/if}

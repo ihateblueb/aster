@@ -15,7 +15,7 @@
 
 	{#if retry}
 		<Button rounded on:click={retry}>
-			<IconReload size="var(--fs-lg)" />
+			<IconReload size="18px" />
 			Retry
 		</Button>
 	{/if}

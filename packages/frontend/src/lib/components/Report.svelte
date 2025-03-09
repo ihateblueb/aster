@@ -27,7 +27,7 @@
 					userDropdown ? userDropdown.open(e) : undefined;
 			}}
 		>
-			<IconDotsVertical size="var(--fs-lg)" />
+			<IconDotsVertical size="18px" />
 		</Button>
 	</div>
 {/snippet}

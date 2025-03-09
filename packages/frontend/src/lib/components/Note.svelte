@@ -89,7 +89,7 @@
 	{#if note.repeat && !note.content}
 		<div class="repeatHeader">
 			<div class="left">
-				<IconRepeat size="var(--fs-lg)" color="var(--tx2)" />
+				<IconRepeat size="18px" color="var(--tx2)" />
 				<Avatar user={note.user} size="25px" small />
 				<span>
 					<a

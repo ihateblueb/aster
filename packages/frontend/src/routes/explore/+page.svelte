@@ -6,7 +6,7 @@
 
 <PageHeader title="Explore">
 	<svelte:fragment slot="icon">
-		<IconHash size="var(--fs-lg)" />
+		<IconHash size="18px" />
 	</svelte:fragment>
 </PageHeader>
 

@@ -50,7 +50,7 @@
 		: 'Note'}
 >
 	<svelte:fragment slot="icon">
-		<IconNote size="var(--fs-lg)" />
+		<IconNote size="18px" />
 	</svelte:fragment>
 </PageHeader>
 

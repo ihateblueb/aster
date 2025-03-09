@@ -6,7 +6,7 @@
 
 <PageHeader title="Bookmarks">
 	<svelte:fragment slot="icon">
-		<IconBookmark size="var(--fs-lg)" />
+		<IconBookmark size="18px" />
 	</svelte:fragment>
 </PageHeader>
 

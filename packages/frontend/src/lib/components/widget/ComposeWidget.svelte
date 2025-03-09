@@ -13,7 +13,7 @@
 </div>
 <div class="btn">
 	<Button accent circle nm on:click={() => store.showCompose.set(true)}>
-		<IconPencil size="var(--fs-lg)" />
+		<IconPencil size="18px" />
 	</Button>
 </div>
 

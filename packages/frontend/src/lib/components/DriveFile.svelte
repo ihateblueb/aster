@@ -51,7 +51,7 @@
 	{#if !select}
 		<div class="right">
 			<Button transparent>
-				<IconDotsVertical size="var(--fs-lg)" />
+				<IconDotsVertical size="18px" />
 			</Button>
 		</div>
 	{/if}

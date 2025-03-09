@@ -29,7 +29,7 @@
 
 <PageHeader title="Drive">
 	<svelte:fragment slot="icon">
-		<IconCloud size="var(--fs-lg)" />
+		<IconCloud size="18px" />
 	</svelte:fragment>
 
 	<input
@@ -41,7 +41,7 @@
 		bind:this={fileInput}
 	/>
 	<Button header on:click={() => fileInput.click()}>
-		<IconPlus size="var(--fs-lg)" />
+		<IconPlus size="18px" />
 	</Button>
 </PageHeader>
 

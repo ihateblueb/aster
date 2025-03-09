@@ -65,48 +65,48 @@
 	<Mfm content={inputtest}></Mfm>
 
 	<Button on:click={(e) => userDropdown.open(e)}>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (default)
 	</Button>
 
 	<Button primary>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (primary)
 	</Button>
 	<Button secondary>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (secondary)
 	</Button>
 	<Button tertiary>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (tertiary)
 	</Button>
 	<Button quaternary>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (quaternary)
 	</Button>
 	<Button accent>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (accent)
 	</Button>
 	<Button success>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (success)
 	</Button>
 	<Button warn>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (warn)
 	</Button>
 	<Button danger>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (danger)
 	</Button>
 	<Button rounded>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (rounded)
 	</Button>
 	<Button wide>
-		<IconCube size="var(--fs-lg)" />
+		<IconCube size="18px" />
 		Sample Button (wide)
 	</Button>
 

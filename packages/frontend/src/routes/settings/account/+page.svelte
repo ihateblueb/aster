@@ -50,7 +50,7 @@
 	<div class="left"></div>
 	<div class="right">
 		<Button on:click={() => update()}>
-			<IconDeviceFloppy size="var(--fs-lg)" />
+			<IconDeviceFloppy size="18px" />
 			Save
 		</Button>
 	</div>

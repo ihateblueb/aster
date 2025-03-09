@@ -56,18 +56,18 @@
 >
 	<svelte:fragment slot="icon">
 		{#if timeline === 'home'}
-			<IconHome size="var(--fs-lg)" />
+			<IconHome size="18px" />
 		{:else if timeline === 'local'}
-			<IconUsers size="var(--fs-lg)" />
+			<IconUsers size="18px" />
 		{:else if timeline === 'bubble'}
-			<IconChartBubble size="var(--fs-lg)" />
+			<IconChartBubble size="18px" />
 		{:else if timeline === 'public'}
-			<IconPlanet size="var(--fs-lg)" />
+			<IconPlanet size="18px" />
 		{/if}
 	</svelte:fragment>
 	<Tab selected={timeline === 'home'} on:click={() => updateTimeline('home')}>
 		<IconHome
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'home' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
@@ -76,7 +76,7 @@
 		on:click={() => updateTimeline('local')}
 	>
 		<IconUsers
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'local' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
@@ -85,7 +85,7 @@
 		on:click={() => updateTimeline('bubble')}
 	>
 		<IconChartBubble
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'bubble' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
@@ -94,13 +94,13 @@
 		on:click={() => updateTimeline('public')}
 	>
 		<IconPlanet
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'public' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
 	<hr class="vertical" />
 	<Button header on:click={(e) => dropdown.open(e)}>
-		<IconDotsVertical size="var(--fs-lg)" />
+		<IconDotsVertical size="18px" />
 	</Button>
 </PageHeader>
 
@@ -116,7 +116,7 @@
 
 <Dropdown bind:this={dropdown}>
 	<DropdownItem on:click={() => $query.refetch()}>
-		<IconReload size="var(--fs-lg)" />
+		<IconReload size="18px" />
 		Refresh timeline
 	</DropdownItem>
 </Dropdown>

@@ -11,7 +11,7 @@
 <div class="box">
 	<WidgetBase header tl>
 		<svelte:fragment slot="header">
-			<IconBell size="var(--fs-lg)" />
+			<IconBell size="18px" />
 			Notifications
 		</svelte:fragment>
 

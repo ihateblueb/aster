@@ -134,7 +134,7 @@
 			{#if !localstore.get('fetchMoreOnScroll')}
 				{#if $query.isFetchingNextPage}
 					<Button centered on:click={() => $query.fetchNextPage()}>
-						<Loading size="var(--fs-lg)" massive={false} />
+						<Loading size="18px" massive={false} />
 					</Button>
 				{:else if $query.hasNextPage}
 					<Button centered on:click={() => $query.fetchNextPage()}>
@@ -146,7 +146,7 @@
 			{:else}
 				<div use:infiniteLoading></div>
 				{#if $query.hasNextPage}
-					<Loading size="var(--fs-lg)" massive={false} />
+					<Loading size="18px" massive={false} />
 				{:else}
 					No more
 				{/if}

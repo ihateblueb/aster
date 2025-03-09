@@ -60,11 +60,11 @@
 	<div class="accountWidget">
 		<div class="btns">
 			<Button to="/login" accent centered wide nm>
-				<IconLogin size="var(--fs-lg)" />
+				<IconLogin size="18px" />
 				Login
 			</Button>
 			<Button to="/register" secondary centered wide nm>
-				<IconUserPlus size="var(--fs-lg)" />
+				<IconUserPlus size="18px" />
 				Register
 			</Button>
 		</div>
@@ -75,11 +75,11 @@
 	<DropdownItem
 		to={'/@' + self.username + (self.local ? '' : '@' + self.host)}
 	>
-		<IconUser size="var(--fs-lg)" />
+		<IconUser size="18px" />
 		Profile
 	</DropdownItem>
 	<DropdownItem to="/logout" danger>
-		<IconLogout size="var(--fs-lg)" />
+		<IconLogout size="18px" />
 		Logout
 	</DropdownItem>
 </Dropdown>

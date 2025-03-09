@@ -23,7 +23,7 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div class="back" on:click={() => goto('/')} role="button" tabindex="0">
 			<IconWrapper>
-				<IconArrowLeft size="var(--fs-md)" />
+				<IconArrowLeft size="14px" />
 			</IconWrapper>
 		</div>
 	{/if}

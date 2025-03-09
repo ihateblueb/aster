@@ -34,7 +34,7 @@
 
 <WidgetBase header>
 	<svelte:fragment slot="header">
-		<IconCode size="var(--fs-lg)" />
+		<IconCode size="18px" />
 		Development
 	</svelte:fragment>
 

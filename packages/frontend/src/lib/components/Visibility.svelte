@@ -11,13 +11,13 @@
 
 <div class="visibility">
 	{#if visibility === 'public'}
-		<IconWorld size="var(--fs-lg)" />
+		<IconWorld size="18px" />
 	{:else if visibility === 'unlisted'}
-		<IconHome size="var(--fs-lg)" />
+		<IconHome size="18px" />
 	{:else if visibility === 'followers'}
-		<IconLock size="var(--fs-lg)" />
+		<IconLock size="18px" />
 	{:else if visibility === 'direct'}
-		<IconMail size="var(--fs-lg)" />
+		<IconMail size="18px" />
 	{/if}
 </div>
 

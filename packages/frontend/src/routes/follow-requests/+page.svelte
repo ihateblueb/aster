@@ -6,7 +6,7 @@
 
 <PageHeader title="Follow requests">
 	<svelte:fragment slot="icon">
-		<IconUserPlus size="var(--fs-lg)" />
+		<IconUserPlus size="18px" />
 	</svelte:fragment>
 </PageHeader>
 

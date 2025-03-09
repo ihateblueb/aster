@@ -50,7 +50,7 @@
 			</div>
 			<div class="right">
 				<Button nm on:click={() => modal.open()}>
-					<IconPlus size="var(--fs-lg)" />
+					<IconPlus size="18px" />
 					Add Rule
 				</Button>
 			</div>

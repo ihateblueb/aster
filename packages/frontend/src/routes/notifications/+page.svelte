@@ -37,12 +37,12 @@
 
 <PageHeader title="Notifications">
 	<svelte:fragment slot="icon">
-		<IconBell size="var(--fs-lg)" />
+		<IconBell size="18px" />
 	</svelte:fragment>
 
 	<Tab selected={timeline === ''} on:click={() => updateTimeline('')}>
 		<IconBell
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === '' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
@@ -51,7 +51,7 @@
 		on:click={() => updateTimeline('mentions')}
 	>
 		<IconAt
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'mentions' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>
@@ -60,7 +60,7 @@
 		on:click={() => updateTimeline('direct')}
 	>
 		<IconMail
-			size="var(--fs-lg)"
+			size="18px"
 			color={timeline === 'direct' ? 'var(--ac1)' : 'var(--tx2)'}
 		/>
 	</Tab>

@@ -50,11 +50,11 @@
 			{/if}
 			<div class="buttons">
 				<Button accent centered wide to="/login">
-					<IconLogin size="var(--fs-lg)" />
+					<IconLogin size="18px" />
 					Login
 				</Button>
 				<Button centered wide to="/register">
-					<IconUserPlus size="var(--fs-lg)" />
+					<IconUserPlus size="18px" />
 					Register
 				</Button>
 			</div>
