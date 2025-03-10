@@ -53,6 +53,7 @@
 		{#snippet renderBody()}
 			<Mfm
 				content={note.content}
+				emojis={note.emojis}
 				on:click={() => goto('/notes/' + note.id)}
 			/>
 
