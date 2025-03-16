@@ -1,23 +1,26 @@
 <script lang="ts">
 	import { innerWidth } from 'svelte/reactivity/window';
+	import Boundary from '$lib/components/Boundary.svelte';
 
 	let { transparent = false, tl = false, header = false } = $props();
 </script>
 
-<div>
-	{#if header && (innerWidth.current ?? 0) > 1355}
-		<div class="header">
-			<slot name="header"></slot>
+<Boundary>
+	<div>
+		{#if header && (innerWidth.current ?? 0) > 1355}
+			<div class="header">
+				<slot name="header"></slot>
+			</div>
+		{/if}
+		<div
+			class={'widget' +
+				(transparent ? ' transparent' : '') +
+				(tl ? ' tl' : '')}
+		>
+			<slot />
 		</div>
-	{/if}
-	<div
-		class={'widget' +
-			(transparent ? ' transparent' : '') +
-			(tl ? ' tl' : '')}
-	>
-		<slot />
 	</div>
-</div>
+</Boundary>
 
 <style lang="scss" scoped>
 	.header {

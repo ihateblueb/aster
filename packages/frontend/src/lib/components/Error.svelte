@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { IconReload } from '@tabler/icons-svelte';
+	import { IconBug, IconReload } from '@tabler/icons-svelte';
 
 	let { status = 0, message = '', server = false, retry } = $props();
 </script>
@@ -9,16 +9,24 @@
 	{#if server}
 		<h1>{status}</h1>
 	{:else}
-		<h1>Uh oh!</h1>
+		<h1>Something went wrong</h1>
 	{/if}
 	<p>{message}</p>
 
-	{#if retry}
-		<Button rounded on:click={retry}>
-			<IconReload size="18px" />
-			Retry
-		</Button>
-	{/if}
+	<div class="btns">
+		{#if retry}
+			<Button rounded on:click={retry}>
+				<IconReload size="18px" />
+				Retry
+			</Button>
+		{/if}
+		{#if !server}
+			<Button rounded to="https://github.com/ihateblueb/aster/issues">
+				<IconBug size="18px" />
+				Report issue
+			</Button>
+		{/if}
+	</div>
 </div>
 
 <style lang="scss" scoped>
@@ -28,6 +36,9 @@
 		justify-content: center;
 		flex-direction: column;
 		gap: 10px;
+
+		padding: 0 20px;
+		box-sizing: border-box;
 		height: 100%;
 		width: 100%;
 
@@ -38,6 +49,11 @@
 		p {
 			font-size: var(--fs-lg);
 			line-height: 1;
+		}
+
+		.btns {
+			display: flex;
+			gap: 10px;
 		}
 	}
 </style>

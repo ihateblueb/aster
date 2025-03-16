@@ -1,4 +1,6 @@
 <script lang="ts">
+	import Boundary from '$lib/components/Boundary.svelte';
+
 	let { nm = false, tl = false, centered = false } = $props();
 </script>
 
@@ -8,7 +10,9 @@
 		(tl ? ' tl' : '') +
 		(centered ? ' centered' : '')}
 >
-	<slot></slot>
+	<Boundary>
+		<slot />
+	</Boundary>
 </div>
 
 <style lang="scss" scoped>

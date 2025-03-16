@@ -14,6 +14,8 @@
 	import { shortcut } from '@svelte-put/shortcut';
 	import Drive from '$lib/components/Drive.svelte';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
+	import Error from '$lib/components/Error.svelte';
+	import Boundary from '$lib/components/Boundary.svelte';
 
 	let loggedIn = $state(false);
 	if (localstore.getParsed('token')) loggedIn = true;
@@ -80,59 +82,69 @@
 	onshortcut={onShortcut}
 />
 
-<QueryClientProvider client={queryClient}>
-	<SvelteQueryDevtools />
+<Boundary>
+	<QueryClientProvider client={queryClient}>
+		<SvelteQueryDevtools />
 
-	{#if activeRequests > 0}
-		<div class="activeRequests">
-			<Loading size="24px" color="var(--ac1)" massive={false} />
+		{#if activeRequests > 0}
+			<div class="activeRequests">
+				<Loading size="24px" color="var(--ac1)" massive={false} />
+			</div>
+		{/if}
+
+		<div class="notifications">
+			{#each notifications as notification}
+				<Notification {notification} floating />
+			{/each}
 		</div>
-	{/if}
 
-	<div class="notifications">
-		{#each notifications as notification}
-			<Notification {notification} floating />
-		{/each}
-	</div>
+		{#if loggedIn}
+			<Modal
+				wide
+				singleSlot
+				smallerPadding
+				afterClose={() => store.showDrive.set(false)}
+				bind:this={drive}
+			>
+				<Drive />
+			</Modal>
+			<Modal
+				wide
+				singleSlot
+				afterClose={() => store.showCompose.set(false)}
+				bind:this={compose}
+			>
+				<Compose />
+			</Modal>
+		{/if}
 
-	{#if loggedIn}
-		<Modal
-			wide
-			singleSlot
-			smallerPadding
-			afterClose={() => store.showDrive.set(false)}
-			bind:this={drive}
-		>
-			<Drive />
-		</Modal>
-		<Modal
-			wide
-			singleSlot
-			afterClose={() => store.showCompose.set(false)}
-			bind:this={compose}
-		>
-			<Compose />
-		</Modal>
-	{/if}
+		<!-- main ui -->
 
-	<!-- main ui -->
+		<Boundary>
+			{#if loggedIn}
+				<PageSidebar left />
+			{/if}
+		</Boundary>
 
-	{#if loggedIn}
-		<PageSidebar left />
-	{/if}
+		<Boundary>
+			{#if loggedIn || !(page.url.pathname === '/')}
+				<main>
+					<Boundary>
+						<slot />
+					</Boundary>
+				</main>
+			{:else if !loggedIn && page.url.pathname === '/'}
+				<Welcome />
+			{/if}
+		</Boundary>
 
-	{#if loggedIn || !(page.url.pathname === '/')}
-		<main>
-			<slot />
-		</main>
-	{:else if !loggedIn && page.url.pathname === '/'}
-		<Welcome />
-	{/if}
-
-	{#if loggedIn}
-		<PageSidebar right />
-	{/if}
-</QueryClientProvider>
+		<Boundary>
+			{#if loggedIn}
+				<PageSidebar right />
+			{/if}
+		</Boundary>
+	</QueryClientProvider>
+</Boundary>
 
 <style lang="scss" global>
 	@use '../app.scss';
