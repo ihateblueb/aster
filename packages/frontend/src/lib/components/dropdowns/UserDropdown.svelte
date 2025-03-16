@@ -5,6 +5,7 @@
 		IconDental,
 		IconExternalLink,
 		IconFlag,
+		IconLink,
 		IconPencil,
 		IconRefresh,
 		IconVolumeOff
@@ -15,6 +16,7 @@
 	import biteUser from '$lib/api/user/bite.js';
 	import refetchUser from '$lib/api/user/refetch.js';
 	import localstore from '$lib/localstore.js';
+	import { page } from '$app/state';
 
 	let reportModal: undefined | Modal = $state();
 	let blockModal: undefined | Modal = $state();
@@ -43,6 +45,16 @@
 >
 	<IconAt size="18px" />
 	Copy handle
+</DropdownItem>
+<!-- TODO: wrong -->
+<DropdownItem
+	on:click={() =>
+		navigator.clipboard.writeText(
+			query.data.local ? page.url.href : query.data.apId
+		)}
+>
+	<IconLink size="18px" />
+	<span>Copy link</span>
 </DropdownItem>
 
 {#if !isLocal}

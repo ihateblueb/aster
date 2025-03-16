@@ -249,6 +249,7 @@
 		<IconCopy size="18px" />
 		<span>Copy content</span>
 	</DropdownItem>
+	<!-- TODO: wrong -->
 	<DropdownItem
 		on:click={() =>
 			navigator.clipboard.writeText(

@@ -31,7 +31,10 @@
 	query = createInfiniteQuery({
 		queryKey: [queryKey],
 		retry: false,
-		queryFn: async ({ pageParam }) => await queryFn(timeline, pageParam),
+		queryFn: async ({ pageParam }) =>
+			timeline
+				? await queryFn(timeline, pageParam)
+				: await queryFn(pageParam),
 		initialPageParam: undefined,
 		getNextPageParam: (lastPage) => {
 			console.log(
