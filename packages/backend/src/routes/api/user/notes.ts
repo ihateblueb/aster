@@ -40,7 +40,7 @@ export default plugin(async (fastify) => {
 		async (req, reply) => {
 			let where = {
 				user: { id: req.params.id },
-				replyingTo: IsNull(),
+				replyingTo: { id: IsNull() },
 				visibility: In(['public', 'unlisted'])
 			};
 
