@@ -5,29 +5,21 @@
 
 	const dispatch = createEventDispatcher();
 
-	let emojis = localstore.get('emojis');
-	let parsedEmojis = $state();
+	let emojis = localstore.getParsed('emojis');
 	let query = $state();
-
-	try {
-		parsedEmojis = JSON.parse(emojis);
-	} catch (err) {
-		console.log(err);
-		console.log('failed to parse emojis');
-	}
 </script>
 
 <div class="emojiDropdown">
 	<div class="search">
 		<Input placeholder="Search..." bind:value={query} nm wide />
 	</div>
-	{#if parsedEmojis}
-		{#each Object.keys(parsedEmojis) as category}
+	{#if emojis}
+		{#each Object.keys(emojis) as category}
 			<div class="header">
 				<p>{category}</p>
 			</div>
 			<div class="body">
-				{#each parsedEmojis[category] as emoji}
+				{#each emojis[category] as emoji}
 					{#if !query || (query && emoji.shortcode.startsWith(query))}
 						<button
 							onclick={() =>

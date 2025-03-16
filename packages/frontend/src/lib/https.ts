@@ -48,7 +48,7 @@ class https {
 			method: 'GET',
 			headers: auth
 				? {
-						Authorization: 'Bearer ' + localstore.get('token')
+						Authorization: 'Bearer ' + localstore.getParsed('token')
 					}
 				: {}
 		});
@@ -59,7 +59,7 @@ class https {
 		await this.start();
 
 		let headers: any = {
-			Authorization: 'Bearer ' + localstore.get('token')
+			Authorization: 'Bearer ' + localstore.getParsed('token')
 		};
 		if (body) headers['content-type'] = 'application/json';
 
@@ -77,7 +77,7 @@ class https {
 		let req = await fetch(url, {
 			method: 'POST',
 			headers: {
-				Authorization: 'Bearer ' + localstore.get('token')
+				Authorization: 'Bearer ' + localstore.getParsed('token')
 			},
 			body: body
 		});
@@ -88,7 +88,7 @@ class https {
 		await this.start();
 
 		let headers: any = {
-			Authorization: 'Bearer ' + localstore.get('token')
+			Authorization: 'Bearer ' + localstore.getParsed('token')
 		};
 		if (body) headers['content-type'] = 'application/json';
 
@@ -106,7 +106,7 @@ class https {
 		let req = await fetch(url, {
 			method: 'DELETE',
 			headers: {
-				Authorization: 'Bearer ' + localstore.get('token')
+				Authorization: 'Bearer ' + localstore.getParsed('token')
 			}
 		});
 

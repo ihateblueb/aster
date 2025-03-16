@@ -12,35 +12,24 @@ store.appReload.subscribe((e) => {
 	}
 });
 
-let self = localstore.get('self');
+let self = localstore.getParsed('self');
 
 if (self) {
-	try {
-		self = JSON.parse(self);
-		getUser(self.id)
-			.then((self) => {
-				localstore.set('self', JSON.stringify(self));
-			})
-			.catch((err) => {
-				console.log('failed to fetch new self');
-				console.error(err);
-			});
-	} catch (err) {
-		console.log('failed to parse self json when attempting to update self');
-		console.error(err);
-	}
-}
-
-try {
-	getEmojis()
-		.then((emojis) => {
-			localstore.set('emojis', JSON.stringify(emojis));
+	getUser(self.id)
+		.then((self) => {
+			localstore.set('self', JSON.stringify(self));
 		})
 		.catch((err) => {
-			console.log('failed to fetch new emojis');
+			console.log('failed to fetch new self');
 			console.error(err);
 		});
-} catch (err) {
-	console.log('failed to update emojis');
-	console.error(err);
 }
+
+getEmojis()
+	.then((emojis) => {
+		localstore.set('emojis', JSON.stringify(emojis));
+	})
+	.catch((err) => {
+		console.log('failed to fetch new emojis');
+		console.error(err);
+	});

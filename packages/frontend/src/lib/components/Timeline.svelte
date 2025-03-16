@@ -131,7 +131,7 @@
 
 	{#if !noScroll}
 		<div class="fetchMore">
-			{#if !localstore.get('fetchMoreOnScroll')}
+			{#if !localstore.getParsed('fetchMoreOnScroll')}
 				{#if $query.isFetchingNextPage}
 					<Button centered on:click={() => $query.fetchNextPage()}>
 						<Loading size="18px" massive={false} />

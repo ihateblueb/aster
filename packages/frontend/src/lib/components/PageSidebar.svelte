@@ -12,8 +12,8 @@
 
 	let widgets = $state(undefined);
 
-	if (left) widgets = localstore.get('sidebarLeft');
-	if (right) widgets = localstore.get('sidebarRight');
+	if (left) widgets = localstore.getParsed('sidebarLeft');
+	if (right) widgets = localstore.getParsed('sidebarRight');
 </script>
 
 {#snippet component(type)}

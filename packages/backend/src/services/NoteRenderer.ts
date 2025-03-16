@@ -42,10 +42,12 @@ class NoteRenderer {
 			let reactions: ObjectLiteral[] = [];
 
 			for (const reaction of note.reactions) {
+				console.log(reaction);
+
 				if (reactions.some((e) => e.emoji?.id === reaction.emoji?.id)) {
 					reactions[
 						reactions.findIndex(
-							(e) => e.emoji.id === reaction.emoji.id
+							(e) => e.emoji?.id === reaction.emoji?.id
 						)
 					].users.push(reaction.user);
 				} else if (

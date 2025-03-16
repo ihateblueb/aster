@@ -16,7 +16,7 @@
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 
 	let loggedIn = $state(false);
-	if (localstore.get('token')) loggedIn = true;
+	if (localstore.getParsed('token')) loggedIn = true;
 
 	let compose: undefined | Modal = $state(undefined);
 	let drive: undefined | Modal = $state(undefined);

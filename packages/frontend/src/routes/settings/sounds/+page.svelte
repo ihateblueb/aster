@@ -2,29 +2,12 @@
 	import Switch from '$lib/components/Toggle.svelte';
 	import localstore from '$lib/localstore.js';
 	import Slider from '$lib/components/Slider.svelte';
-
-	function change(key: string, val: string) {
-		console.log('set:', key, val);
-		localstore.set(key, val);
-	}
-
-	function value(key: string): boolean {
-		let toReturn = localstore.get(key);
-		console.log('get:', key, Boolean(toReturn));
-		return Boolean(toReturn);
-	}
-
-	function numberValue(key: string): number {
-		let toReturn = localstore.get(key);
-		console.log('get:', key, Number(toReturn));
-		return Number(toReturn);
-	}
 </script>
 
 <Switch
 	label="Enable sounds"
-	checked={value('enableSounds')}
-	on:change={(e) => change('enableSounds', e.target?.checked)}
+	checked={localstore.getParsed('enableSounds')}
+	on:change={(e) => localstore.set('enableSounds', e.target?.checked)}
 />
 
 <Slider
@@ -32,6 +15,6 @@
 	min={0}
 	max={1}
 	step={0.05}
-	value={numberValue('soundVolume')}
-	on:change={(e) => change('soundVolume', e.target?.value)}
+	value={localstore.getParsed('soundVolume')}
+	on:change={(e) => localstore.set('soundVolume', e.target?.value)}
 />

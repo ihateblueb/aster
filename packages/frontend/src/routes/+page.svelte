@@ -27,7 +27,7 @@
 	let query: any = $state();
 
 	let timeline: string = $state('home');
-	timeline = localstore.get('homeTab');
+	timeline = localstore.getParsed('homeTab');
 
 	function updateTimeline(to: string) {
 		if (ws) ws.send(`unsub timeline:${timeline}`);

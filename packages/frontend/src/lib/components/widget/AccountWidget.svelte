@@ -15,21 +15,11 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 
-	let self: any = $state();
-
+	let self = $state();
 	function updateSelf() {
-		let grabbedSelf = localstore.get('self');
-
-		if (grabbedSelf) {
-			self = JSON.parse(grabbedSelf);
-		}
+		self = localstore.getParsed('self');
 	}
-
 	updateSelf();
-
-	store.selfRefresh.subscribe((e) => {
-		updateSelf();
-	});
 
 	let dropdown: Dropdown;
 </script>

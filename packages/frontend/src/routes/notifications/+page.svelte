@@ -12,20 +12,15 @@
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import localstore from '$lib/localstore';
-	import { createInfiniteQuery, createQuery } from '@tanstack/svelte-query';
-	import Error from '$lib/components/Error.svelte';
 	import Tab from '$lib/components/Tab.svelte';
-	import Loading from '$lib/components/Loading.svelte';
-	import Button from '$lib/components/Button.svelte';
 	import queryclient from '$lib/queryclient.js';
 	import getNotifications from '$lib/api/notifications/get.js';
-	import Notification from '$lib/components/Notification.svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
 
 	let query: any = $state();
 
 	let timeline: string = $state('');
-	timeline = localstore.get('notificationsTab');
+	timeline = localstore.getParsed('notificationsTab');
 
 	function updateTimeline(to: string) {
 		timeline = to;

@@ -9,7 +9,7 @@
 		link = true
 	} = $props();
 
-	let rounded = localstore.get('useRoundedAvatars') === 'true';
+	let rounded = localstore.getParsed('useRoundedAvatars');
 </script>
 
 {#snippet image()}

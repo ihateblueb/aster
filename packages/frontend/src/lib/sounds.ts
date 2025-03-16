@@ -15,8 +15,8 @@ import meow5 from '$lib/sounds/meow_5.wav';
 import meow6 from '$lib/sounds/meow_6.wav';
 
 export default function playSound(type: SoundType) {
-	let enabled = Boolean(localstore.get('enableSounds'));
-	let volume = localstore.get('soundVolume');
+	let enabled = localstore.getParsed('enableSounds');
+	let volume = localstore.getParsed('soundVolume');
 
 	let one = new Audio(meow1);
 	let two = new Audio(meow2);

@@ -33,12 +33,9 @@
 	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
 	import reactNote from '$lib/api/note/react';
 
-	let self: any = $state();
+	let self = $state();
 	function updateSelf() {
-		let grabbedSelf = localstore.get('self');
-		if (grabbedSelf) {
-			self = JSON.parse(grabbedSelf);
-		}
+		self = localstore.getParsed('self');
 	}
 	updateSelf();
 

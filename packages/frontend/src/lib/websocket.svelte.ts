@@ -1,9 +1,9 @@
 import localstore from '$lib/localstore';
 
 let loggedIn = $state(false);
-if (localstore.get('token')) loggedIn = true;
+if (localstore.getParsed('token')) loggedIn = true;
 
-let wsUrl = '/api/streaming?token=' + localstore.get('token');
+let wsUrl = '/api/streaming?token=' + localstore.getParsed('token');
 let ws: undefined | WebSocket = undefined;
 
 if (loggedIn) {

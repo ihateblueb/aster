@@ -15,7 +15,7 @@
 	let { note, expanded = false } = $props();
 
 	let cwOpen = $state(false);
-	if (localstore.get('uncollapseCws') === 'true') cwOpen = true;
+	if (localstore.getParsed('uncollapseCws')) cwOpen = true;
 
 	let noteHeight = $state(0);
 </script>

@@ -7,7 +7,7 @@
 
 	let show = $state(true);
 	if (attachment.sensitive) show = false;
-	if (localstore.get('hideAllMedia') === 'true') show = false;
+	if (localstore.getParsed('hideAllMedia')) show = false;
 </script>
 
 {#if attachment}

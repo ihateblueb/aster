@@ -31,12 +31,9 @@
 
 	// self state
 
-	let self: any = $state({});
+	let self = $state();
 	function updateSelf() {
-		let grabbedSelf = localstore.get('self');
-		if (grabbedSelf) {
-			self = JSON.parse(grabbedSelf);
-		}
+		self = localstore.getParsed('self');
 	}
 	updateSelf();
 
@@ -61,7 +58,7 @@
 	let attachments: string[] = $state([]);
 
 	function resetVisibility() {
-		note.visibility = localstore.get('defaultVisibility');
+		note.visibility = localstore.getParsed('defaultVisibility');
 	}
 
 	function resetNote() {

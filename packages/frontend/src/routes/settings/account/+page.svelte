@@ -10,19 +10,9 @@
 	let self: any = $state();
 	let newSelf: any = $state();
 
-	updateSelf();
-	fetchSelf();
-
 	function updateSelf() {
-		let rawSelf = localstore.get('self');
-		if (rawSelf) {
-			try {
-				self = JSON.parse(rawSelf);
-				newSelf = JSON.parse(rawSelf);
-			} catch (err) {
-				console.error(err);
-			}
-		}
+		self = localstore.getParsed('self');
+		newSelf = self;
 	}
 
 	function fetchSelf() {
@@ -36,6 +26,9 @@
 				console.error(err);
 			});
 	}
+
+	updateSelf();
+	fetchSelf();
 
 	async function update() {
 		console.log(self, newSelf);
