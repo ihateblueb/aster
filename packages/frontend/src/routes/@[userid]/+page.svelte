@@ -23,6 +23,8 @@
 		IconUserPlus,
 		IconVolumeOff
 	} from '@tabler/icons-svelte';
+	import { fly } from 'svelte/transition';
+	import { backOut } from 'svelte/easing';
 	import lookupUser from '$lib/api/user/lookup.js';
 	import Button from '$lib/components/Button.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
@@ -33,6 +35,9 @@
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import UserDropdown from '$lib/components/dropdowns/UserDropdown.svelte';
 	import Tab from '$lib/components/Tab.svelte';
+	import getTimeline from '$lib/api/timeline.js';
+	import Timeline from '$lib/components/Timeline.svelte';
+	import getUserNotes from '$lib/api/user/notes.js';
 
 	let props = $props();
 
@@ -59,10 +64,14 @@
 		if (e.data?.sensitive) show = false;
 	});
 
+	let timelineQuery;
+
 	$effect(() => {
 		if (props.data.noteid !== $query.data?.id) {
 			$query.refetch();
 			$relationshipQuery.refetch();
+			$relationshipQuery.refetch();
+			$timelineQuery?.refetch();
 		}
 	});
 
@@ -259,6 +268,16 @@
 						</span>
 					</div>
 				</div>
+
+				<div class="timeline">
+					<Timeline
+						type="note"
+						queryKey={'user_' + $query.data.id + '_timeline'}
+						queryFn={getUserNotes}
+						timeline={$query.data.id}
+						bind:query={timelineQuery}
+					/>
+				</div>
 			{:else}
 				<div class="sensitive">
 					<div class="top">
@@ -309,6 +328,10 @@
 </Dropdown>
 
 <style lang="scss" scoped>
+	.timeline {
+		padding: 12px 0;
+	}
+
 	.sensitive {
 		display: flex;
 		align-items: center;
