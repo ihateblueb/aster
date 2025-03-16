@@ -2,10 +2,10 @@
 	import {
 		IconAt,
 		IconBan,
-		IconCopy,
 		IconDental,
 		IconExternalLink,
 		IconFlag,
+		IconPencil,
 		IconRefresh,
 		IconVolumeOff
 	} from '@tabler/icons-svelte';
@@ -14,12 +14,26 @@
 	import DropdownDivider from '../DropdownDivider.svelte';
 	import biteUser from '$lib/api/user/bite.js';
 	import refetchUser from '$lib/api/user/refetch.js';
+	import localstore from '$lib/localstore.js';
 
 	let reportModal: undefined | Modal = $state();
 	let blockModal: undefined | Modal = $state();
 
+	let self = localstore.getParsed('self');
+
 	let { query } = $props();
+
+	let isLocal = query.data.local;
+	let isSelf = query.data.id === self?.id;
 </script>
+
+{#if isSelf}
+	<DropdownItem to="/settings/account">
+		<IconPencil size="18px" />
+		Edit profile
+	</DropdownItem>
+	<DropdownDivider />
+{/if}
 
 <DropdownItem
 	on:click={() =>
@@ -30,7 +44,8 @@
 	<IconAt size="18px" />
 	Copy handle
 </DropdownItem>
-{#if !query.data.local}
+
+{#if !isLocal}
 	<DropdownItem to={query.data.apId} newTab>
 		<IconExternalLink size="18px" />
 		View on remote
@@ -46,21 +61,23 @@
 	</DropdownItem>
 {/if}
 
-<DropdownDivider />
-<DropdownItem on:click={() => biteUser(query.data.id)}>
-	<IconDental size="18px" />
-	Bite
-</DropdownItem>
-<DropdownDivider />
-<DropdownItem danger>
-	<IconBan size="18px" />
-	Block
-</DropdownItem>
-<DropdownItem danger>
-	<IconVolumeOff size="18px" />
-	Mute
-</DropdownItem>
-<DropdownItem danger>
-	<IconFlag size="18px" />
-	Report
-</DropdownItem>
+{#if !isSelf}
+	<DropdownDivider />
+	<DropdownItem on:click={() => biteUser(query.data.id)}>
+		<IconDental size="18px" />
+		Bite
+	</DropdownItem>
+	<DropdownDivider />
+	<DropdownItem danger>
+		<IconBan size="18px" />
+		Block
+	</DropdownItem>
+	<DropdownItem danger>
+		<IconVolumeOff size="18px" />
+		Mute
+	</DropdownItem>
+	<DropdownItem danger>
+		<IconFlag size="18px" />
+		Report
+	</DropdownItem>
+{/if}
