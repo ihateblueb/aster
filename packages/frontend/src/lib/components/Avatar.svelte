@@ -13,19 +13,21 @@
 </script>
 
 {#snippet image()}
-	<img
-		class={'avatar' +
-			(rounded ? ' rounded' : '') +
-			(user.sensitive ? ' blurred' : '') +
-			(small ? ' small' : '') +
-			(large ? ' large' : '')}
-		style={`height:${size};width:${size};`}
-		src={user?.avatar ?? '/fallback/avatar.png'}
-		alt={user?.avatarAlt}
-		on:error={(e) => {
-			if (e && e.target) e.target.src = '/fallback/avatar.png';
-		}}
-	/>
+	<div class="imageWrapper">
+		<img
+			class={'avatar' +
+				(rounded ? ' rounded' : '') +
+				(user.sensitive ? ' blurred' : '') +
+				(small ? ' small' : '') +
+				(large ? ' large' : '')}
+			style={`height:${size};width:${size};`}
+			src={user?.avatar ?? '/fallback/avatar.png'}
+			alt={user?.avatarAlt}
+			on:error={(e) => {
+				if (e && e.target) e.target.src = '/fallback/avatar.png';
+			}}
+		/>
+	</div>
 	{#if user.isCat}
 		<div class="ears">
 			<div class="earLeft"></div>
@@ -36,13 +38,13 @@
 
 {#if link}
 	<a
-		class="avatarWrapper"
+		class="avatarCtn"
 		href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
 	>
 		{@render image()}
 	</a>
 {:else}
-	<div class="avatarWrapper">
+	<div class="avatarCtn">
 		{@render image()}
 	</div>
 {/if}
@@ -53,47 +55,57 @@
 	 * https://github.com/misskey-dev/misskey/blob/develop/packages/frontend/src/components/global/MkAvatar.vue
 	 */
 
-	.avatarWrapper {
+	.avatarCtn {
 		position: relative;
 		display: flex;
 		align-items: center;
 
 		width: min-content;
 		border-radius: var(--br-md);
-		overflow: clip;
 
 		color: var(--tx1);
 
-		.avatar {
-			position: relative;
-			display: flex;
-			align-items: center;
+		.imageWrapper {
+			position: inherit;
+			display: inherit;
+			align-items: inherit;
 
-			object-fit: cover;
+			overflow: clip;
+			width: min-content;
 			border-radius: var(--br-md);
-			user-select: none;
 
-			z-index: 2;
+			color: var(--tx1);
 
-			&.rounded {
-				border-radius: 100%;
-			}
+			.avatar {
+				position: inherit;
+				display: inherit;
+				align-items: inherit;
 
-			&.blurred {
-				filter: blur(15px);
-				transition: 0.1s;
+				object-fit: cover;
+				user-select: none;
 
-				&:hover {
-					filter: none;
+				z-index: 2;
+
+				&.rounded {
+					border-radius: 100%;
 				}
-			}
 
-			&.small {
-				border-radius: var(--br-sm);
-			}
+				&.blurred {
+					filter: blur(15px);
+					transition: 0.1s;
 
-			&.large {
-				border-radius: var(--br-lg);
+					&:hover {
+						filter: none;
+					}
+				}
+
+				&.small {
+					border-radius: var(--br-sm);
+				}
+
+				&.large {
+					border-radius: var(--br-lg);
+				}
 			}
 		}
 
