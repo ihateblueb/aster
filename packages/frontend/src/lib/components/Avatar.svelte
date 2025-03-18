@@ -16,6 +16,7 @@
 	<img
 		class={'avatar' +
 			(rounded ? ' rounded' : '') +
+			(user.sensitive ? ' blurred' : '') +
 			(small ? ' small' : '') +
 			(large ? ' large' : '')}
 		style={`height:${size};width:${size};`}
@@ -59,6 +60,7 @@
 
 		width: min-content;
 		border-radius: var(--br-md);
+		overflow: clip;
 
 		color: var(--tx1);
 
@@ -75,6 +77,15 @@
 
 			&.rounded {
 				border-radius: 100%;
+			}
+
+			&.blurred {
+				filter: blur(15px);
+				transition: 0.1s;
+
+				&:hover {
+					filter: none;
+				}
 			}
 
 			&.small {

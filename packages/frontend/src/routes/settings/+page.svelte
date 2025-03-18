@@ -64,6 +64,12 @@
 	checked={localstore.getParsed('hideAllMedia')}
 	on:change={(e) => localstore.set('hideAllMedia', e.target?.checked)}
 />
+<Switch
+	label="Blur avatars of users marked sensitive"
+	checked={localstore.getParsed('blurSensitiveUserAvatars')}
+	on:change={(e) =>
+		localstore.set('blurSensitiveUserAvatars', e.target?.checked)}
+/>
 <br />
 <h2>Wellness</h2>
 <Switch

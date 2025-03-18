@@ -11,6 +11,7 @@ export default function UserMini(alias?: string) {
 		alias + 'banner',
 		alias + 'bannerAlt',
 		alias + 'isCat',
+		alias + 'sensitive',
 		alias + 'local',
 		alias + 'pronouns'
 	];

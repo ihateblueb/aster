@@ -377,6 +377,18 @@
 		margin: -8px -8px 0 -8px;
 		overflow: hidden;
 
+		&::before {
+			position: absolute;
+			content: '';
+
+			width: 100%;
+			height: 100%;
+			left: 0;
+			top: 0;
+
+			box-shadow: inset 0 0 50px var(--bg2);
+		}
+
 		&::after {
 			position: absolute;
 			content: '';

@@ -112,6 +112,10 @@ let defaults = {
 		type: 'boolean',
 		value: false
 	},
+	blurSensitiveUserAvatars: {
+		type: 'boolean',
+		value: true
+	},
 
 	hideInteractionCounters: {
 		type: 'boolean',
