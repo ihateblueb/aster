@@ -13,13 +13,15 @@
 </script>
 
 {#snippet image()}
-	<div class="imageWrapper">
+	<div
+		class={'imageWrapper' +
+			(small ? ' small' : '') +
+			(large ? ' large' : '')}
+	>
 		<img
 			class={'avatar' +
 				(rounded ? ' rounded' : '') +
-				(user.sensitive ? ' blurred' : '') +
-				(small ? ' small' : '') +
-				(large ? ' large' : '')}
+				(user?.sensitive ? ' blurred' : '')}
 			style={`height:${size};width:${size};`}
 			src={user?.avatar ?? '/fallback/avatar.png'}
 			alt={user?.avatarAlt}
@@ -70,11 +72,22 @@
 			display: inherit;
 			align-items: inherit;
 
+			color: var(--tx1);
+
 			overflow: clip;
 			width: min-content;
+
 			border-radius: var(--br-md);
 
-			color: var(--tx1);
+			&.rounded {
+				border-radius: 100%;
+			}
+			&.small {
+				border-radius: var(--br-sm);
+			}
+			&.large {
+				border-radius: var(--br-lg);
+			}
 
 			.avatar {
 				position: inherit;
@@ -86,9 +99,7 @@
 
 				z-index: 2;
 
-				&.rounded {
-					border-radius: 100%;
-				}
+				border-radius: inherit;
 
 				&.blurred {
 					filter: blur(15px);
@@ -97,14 +108,6 @@
 					&:hover {
 						filter: none;
 					}
-				}
-
-				&.small {
-					border-radius: var(--br-sm);
-				}
-
-				&.large {
-					border-radius: var(--br-lg);
 				}
 			}
 		}
