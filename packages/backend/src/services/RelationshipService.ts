@@ -2,13 +2,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
-import ApAcceptRenderer from './ap/ApAcceptRenderer.js';
-import ApActorService from './ap/ApActorService.js';
-import ApRejectRenderer from './ap/ApRejectRenderer.js';
 import IdService from './IdService.js';
-import NotificationService from './NotificationService.js';
-import QueueService from './QueueService.js';
-import UserService from './UserService.js';
 
 class RelationshipService {
 	public async get(where: where) {
@@ -50,10 +44,11 @@ class RelationshipService {
 		pending: boolean,
 		responseActivity?: GenericId
 	) {
+		const id = IdService.generate();
 		return await db
 			.getRepository('relationship')
 			.insert({
-				id: IdService.generate(),
+				id: id,
 				toId: to,
 				fromId: from,
 				type: type,
@@ -62,12 +57,11 @@ class RelationshipService {
 				createdAt: new Date().toISOString()
 			})
 			.then(() => {
-				return true;
+				return this.get({ id: id });
 			})
 			.catch((err) => {
 				console.log(err);
-				logger.error('inbox', 'failed to insert relationship');
-				return false;
+				logger.error('relationship', 'failed to insert relationship');
 			});
 	}
 
@@ -155,156 +149,6 @@ class RelationshipService {
 		)
 			return false;
 		return true;
-	}
-
-	public async acceptFollow(
-		id: GenericId,
-		to: GenericId,
-		from: Inbox,
-		body: ApObject
-	) {
-		const deliver = ApAcceptRenderer.render(id, to, body);
-
-		return await QueueService.deliver
-			.add(IdService.generate(), {
-				as: to,
-				inbox: from,
-				body: deliver
-			})
-			.then(() => {
-				return true;
-			})
-			.catch(() => {
-				return false;
-			});
-	}
-
-	public async rejectFollow(
-		id: GenericId,
-		to: GenericId,
-		from: GenericId,
-		body
-	) {
-		const deliver = ApRejectRenderer.render(id, to, body);
-
-		return await QueueService.deliver
-			.add(IdService.generate(), {
-				as: to,
-				inbox: from,
-				body: deliver
-			})
-			.then(() => {
-				return true;
-			})
-			.catch(() => {
-				return false;
-			});
-	}
-
-	// ApRelationshipService?
-	public async registerFollow(body: ApObject) {
-		const to = await UserService.get({ apId: body.object });
-		if (!to) return false;
-
-		const from = await ApActorService.get(body.actor);
-		if (!from) return false;
-
-		const alreadyFollowing = await this.get({
-			to: { id: to.id },
-			from: { id: from.id }
-		});
-
-		if (
-			alreadyFollowing &&
-			!alreadyFollowing.pending &&
-			alreadyFollowing.type === 'follow'
-		) {
-			// accept anyway, already exists to us!
-			logger.warn('follow', 'follow already exists and isnt pending');
-			await this.acceptFollow(
-				alreadyFollowing.id,
-				to.id,
-				from.inbox,
-				body
-			);
-
-			return true;
-		}
-
-		if (to.locked) {
-			const id = IdService.generate();
-			const aId = IdService.generate();
-
-			const insertedActivity = await db
-				.getRepository('activity')
-				.insert({
-					id: aId,
-					activity: JSON.stringify(body),
-					createdAt: new Date().toISOString()
-				})
-				.then(() => {
-					return true;
-				})
-				.catch((err) => {
-					console.log(err);
-					logger.error(
-						'inbox',
-						'failed to insert follow request activity'
-					);
-				});
-
-			if (!insertedActivity) return false;
-
-			const insertedRelationship = await this.create(
-				to.id,
-				from.id,
-				'follow',
-				true,
-				aId
-			)
-				.then(() => {
-					return true;
-				})
-				.catch((err) => {
-					console.log(err);
-					logger.error('inbox', 'failed to insert relationship');
-					return false;
-				});
-
-			if (!insertedRelationship) return false;
-
-			await NotificationService.create(
-				to.id,
-				from.id,
-				'follow',
-				undefined,
-				undefined,
-				id
-			);
-
-			return true;
-		} else {
-			const id = IdService.generate();
-
-			await this.create(to.id, from.id, 'follow', false).catch((err) => {
-				console.log(err);
-				logger.error('inbox', 'failed to insert relationship');
-				throw new Error('failed to insert relationship');
-			});
-
-			await NotificationService.create(
-				to.id,
-				from.id,
-				'follow',
-				undefined,
-				undefined,
-				id
-			);
-
-			await this.acceptFollow(id, to.id, from.inbox, body);
-
-			return true;
-		}
 	}
 }
 
