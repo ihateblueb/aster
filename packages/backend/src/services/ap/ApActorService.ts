@@ -69,20 +69,22 @@ class ApActorService {
 		if (!body.preferredUsername)
 			throw new Error('no preferredUsername present');
 
+		const host = new URL(body.id).host;
+
 		user['username'] = SanitizerService.sanitize(body.preferredUsername);
 
 		if (body.name)
 			user['displayName'] = SanitizerService.sanitize(
-				MfmService.localize(body.name, user.host)
+				MfmService.localize(body.name, host)
 			);
 
 		if (body.summary)
 			user['bio'] = SanitizerService.sanitize(
-				MfmService.localize(body.summary, user.host)
+				MfmService.localize(body.summary, host)
 			);
 		if (body._misskey_summary)
 			user['bio'] = SanitizerService.sanitize(
-				MfmService.localize(body._misskey_summary, user.host)
+				MfmService.localize(body._misskey_summary, host)
 			);
 
 		if (body['vcard:Address'])
