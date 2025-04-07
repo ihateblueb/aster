@@ -1,5 +1,5 @@
-import RelationshipService from '../../RelationshipService.js';
 import UserService from '../../UserService.js';
+import ApRelationshipService from '../ApRelationshipService.js';
 
 class FollowProcessor {
 	public async process(body: ApObject): Promise<boolean> {
@@ -10,7 +10,7 @@ class FollowProcessor {
 		if (!object) return false;
 		if (!object.local) return false;
 
-		return await RelationshipService.registerFollow(body);
+		return await ApRelationshipService.registerFollow(body);
 	}
 }
 
