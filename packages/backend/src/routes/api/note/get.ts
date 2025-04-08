@@ -59,6 +59,16 @@ export default plugin(async (fastify) => {
 					note.replyingTo = undefined;
 			}
 
+			if (note.repeat) {
+				let canISeeRepeat = await VisibilityService.canISee(
+					note.repeat,
+					req.auth.user?.id
+				);
+
+				if (!canISeeRepeat)
+					note.repeat = undefined;
+			}
+
 			return await NoteRenderer.render(note);
 		}
 	);
