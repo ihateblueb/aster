@@ -19,6 +19,7 @@
 		IconMessageCircleUser,
 		IconPin,
 		IconPlus,
+		IconRobot,
 		IconUserCircle,
 		IconUserPlus,
 		IconVolumeOff
@@ -153,6 +154,12 @@
 											: $query.data.username}
 										emojis={$query.data.emojis}
 									/>
+
+									<span class="indicators">
+										{#if $query.data.automated}
+											<IconRobot size="18px" />
+										{/if}
+									</span>
 
 									{#if $relationshipQuery.isSuccess && $relationshipQuery.data}
 										{#if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}

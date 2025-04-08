@@ -1,18 +1,28 @@
 import plugin from 'fastify-plugin';
+import { FromSchema } from 'json-schema-to-ts';
 
 export default plugin(async (fastify) => {
-    const schema = {
-        tags: ['Follow Requests']
-    } as const;
+	const schema = {
+		tags: ['Follow Requests'],
+		params: {
+			type: 'object',
+			properties: {
+				id: { type: 'string' }
+			},
+			required: ['id']
+		}
+	} as const;
 
-    fastify.post(
-        '/api/follow-requests/accept',
-        {
-            schema: schema
-        },
-        async (req, reply) => {
-            // array body
-            return reply.status(501).send();
-        }
-    );
+	fastify.post<{
+		Params: FromSchema<typeof schema.params>;
+	}>(
+		'/api/follow-request/:id/accept',
+		{
+			schema: schema,
+			preHandler: fastify.auth([fastify.requireAuth])
+		},
+		async (req, reply) => {
+			return reply.status(501).send();
+		}
+	);
 });

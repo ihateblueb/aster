@@ -1,6 +1,6 @@
 {
 	"name": "aster",
-	"version": "2025.2.16-pre",
+	"version": "2025.4.7-dev",
 	"module": "true",
 	"license": "AGPL-3.0",
 	"private": true,

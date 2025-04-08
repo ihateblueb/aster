@@ -7,6 +7,7 @@ import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import EmojiService from './EmojiService.js';
 import IdService from './IdService.js';
+import LikeService from './LikeService.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 import UserService from './UserService.js';
@@ -80,6 +81,33 @@ class ReactionService {
 				status: 404,
 				message: locale.note.notFound
 			};
+
+		const likeEquivalent = [
+			'⭐️',
+			'❤',
+			'💟',
+			'♥️',
+			'❤️',
+			'🧡',
+			'💛',
+			'💚',
+			'💙',
+			'💜',
+			'🩷',
+			'🤍',
+			'🩶',
+			'🩵',
+			'🤎'
+		];
+
+		if (content && likeEquivalent.includes(content)) {
+			return LikeService.create(noteId, as, toggle, apId).then((e) => {
+				return {
+					status: e.status,
+					message: 'Skipped react: ' + e.message.toLowerCase()
+				};
+			});
+		}
 
 		const existingReact = await this.get({
 			user: { id: user.id },

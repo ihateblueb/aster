@@ -16,6 +16,32 @@ export default plugin(async (fastify) => {
 		}
 	} as const;
 
+	const reqHandler = async (req, reply) => {
+		if (!ApValidationService.validBody(req.body))
+			return reply.status(400).send();
+
+		const apvs = await ApValidationService.validSignature(
+			req,
+			String(req.body.type)
+		);
+
+		if (apvs.pretendToProcess) return reply.status(202).send();
+		if (apvs.blocked) return reply.status(403).send();
+		if (!apvs.valid) return reply.status(401).send();
+
+		if (apvs.valid)
+			return await QueueService.inbox
+				.add(
+					(req.body.type.toLowerCase() ?? 'unknown') +
+						'::' +
+						IdService.generate(),
+					req.body
+				)
+				.then(() => {
+					return reply.status(202).send();
+				});
+	};
+
 	fastify.post<{
 		Body: FromSchema<typeof schema.body>;
 	}>(
@@ -23,30 +49,17 @@ export default plugin(async (fastify) => {
 		{
 			schema: schema
 		},
-		async (req, reply) => {
-			if (!ApValidationService.validBody(req.body))
-				return reply.status(400).send();
+		reqHandler
+	);
 
-			const apvs = await ApValidationService.validSignature(
-				req,
-				String(req.body.type)
-			);
-
-			if (apvs.pretendToProcess) return reply.status(202).send();
-			if (apvs.blocked) return reply.status(403).send();
-			if (!apvs.valid) return reply.status(401).send();
-
-			if (apvs.valid)
-				return await QueueService.inbox
-					.add(
-						(req.body.type.toLowerCase() ?? 'unknown') +
-							'::' +
-							IdService.generate(),
-						req.body
-					)
-					.then(() => {
-						return reply.status(202).send();
-					});
-		}
+	// :id not in schema because we ignore it anyway
+	fastify.post<{
+		Body: FromSchema<typeof schema.body>;
+	}>(
+		'/users/:id/inbox',
+		{
+			schema: schema
+		},
+		reqHandler
 	);
 });

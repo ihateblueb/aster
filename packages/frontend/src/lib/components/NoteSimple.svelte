@@ -89,6 +89,9 @@
 		margin-bottom: 10px;
 		transition: 0.1s;
 
+		width: 100%;
+		box-sizing: border-box;
+
 		&:hover {
 			background-color: var(--bg3-50);
 		}

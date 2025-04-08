@@ -6,7 +6,8 @@
 		IconMoodSmile,
 		IconRepeat,
 		IconStar,
-		IconUserPlus
+		IconUserPlus,
+		IconUserQuestion
 	} from '@tabler/icons-svelte';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
@@ -21,6 +22,9 @@
 		scale,
 		slide
 	} from 'svelte/transition';
+	import Button from '$lib/components/Button.svelte';
+	import acceptFollowRequest from '$lib/api/follow-requests/accept.js';
+	import rejectFollowRequest from '$lib/api/follow-requests/reject.js';
 
 	let { notification, floating = false, small = false } = $props();
 </script>
@@ -37,7 +41,11 @@
 	{:else if notification.type === 'acceptedFollow'}
 		<IconUserPlus size="18px" color="var(--ac1)" />
 	{:else if notification.type === 'follow'}
-		<IconUserPlus size="18px" color="var(--ac1)" />
+		{#if notification?.relationship?.pending}
+			<IconUserQuestion size="18px" color="var(--ac1)" />
+		{:else}
+			<IconUserPlus size="18px" color="var(--ac1)" />
+		{/if}
 	{:else if notification.type === 'bite'}
 		<IconDental size="18px" color="var(--ac1)" />
 	{/if}
@@ -68,7 +76,11 @@
 	{:else if notification.type === 'acceptedFollow'}
 		{@render name(notification?.from)} accepted your follow request
 	{:else if notification.type === 'follow'}
-		{@render name(notification?.from)} followed you
+		{#if notification?.relationship?.pending}
+			{@render name(notification?.from)} requested to follow you
+		{:else}
+			{@render name(notification?.from)} followed you
+		{/if}
 	{:else if notification.type === 'bite' && !notification.note}
 		{@render name(notification?.from)} bit you
 	{:else if notification.type === 'bite' && notification.note}
@@ -104,6 +116,25 @@
 			{:else}
 				<NoteSimple note={notification.note} nomargin />
 			{/if}
+		</div>
+	{/if}
+	{#if notification?.relationship?.pending}
+		<div class="body">
+			<Button
+				accent
+				nm
+				on:click={() =>
+					acceptFollowRequest(notification.relationship.id)}
+			>
+				Accept
+			</Button>
+			<Button
+				nm
+				on:click={() =>
+					rejectFollowRequest(notification.relationship.id)}
+			>
+				Reject
+			</Button>
 		</div>
 	{/if}
 </div>
@@ -148,6 +179,9 @@
 		}
 
 		.body {
+			display: flex;
+			gap: 10px;
+
 			margin-top: 10px;
 		}
 

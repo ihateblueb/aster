@@ -26,7 +26,8 @@ export default plugin(async (fastify) => {
 		async (req, reply) => {
 			return await UserService.follow(
 				req.params.id,
-				req.auth.user.id
+				req.auth.user.id,
+				true
 			).then((e) => {
 				return reply.status(e.status).send({ message: e.message });
 			});

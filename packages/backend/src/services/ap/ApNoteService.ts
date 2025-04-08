@@ -222,7 +222,7 @@ class ApNoteService {
 			}
 		}
 
-		if (body.tag && body.tag.length > 0) {
+		if (body.tag && Array.isArray(body.tag)) {
 			for (const tag of body.tag) {
 				if (tag.type === 'Emoji' && tag.id) {
 					let emoji = await ApEmojiService.get(tag.id);

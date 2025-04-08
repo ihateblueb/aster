@@ -158,6 +158,13 @@ class NoteService {
 				await ApAnnounceRenderer.render(note, note.repeat.apId)
 			);
 
+			if (!note.user.local)
+				await ApDeliverService.deliverToInboxes(
+					undo,
+					[note.user.inbox],
+					note.user.id
+				);
+
 			await ApDeliverService.deliverToFollowers(undo, note.user.id);
 		} else if (note.user.local) {
 			const del = ApDeleteRenderer.render(
@@ -353,6 +360,13 @@ class NoteService {
 					newNote,
 					repeatedNote.apId
 				);
+
+				if (!repeatedNote.user.local)
+					await ApDeliverService.deliverToInboxes(
+						announce,
+						[repeatedNote.user.inbox],
+						user
+					);
 
 				await ApDeliverService.deliverToFollowers(announce, user);
 			} else if (newNote.user.local) {

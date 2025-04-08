@@ -17,7 +17,12 @@ class RelationshipService {
 			.getOne();
 	}
 
-	public async getMany(where: where) {
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		direction?: 'ASC' | 'DESC'
+	) {
 		return await db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship')
@@ -26,6 +31,8 @@ class RelationshipService {
 			.leftJoinAndSelect('relationship.from', 'from')
 
 			.where(where)
+			.take(take)
+			.orderBy(order, direction)
 			.getMany();
 	}
 
@@ -141,8 +148,7 @@ class RelationshipService {
 		);
 	}
 
-	// todo: rename eitherBlocking
-	public async canInteract(to: GenericId, from: GenericId) {
+	public async eitherBlocking(to: GenericId, from: GenericId) {
 		if (
 			(await this.isBlocking(to, from)) ||
 			(await this.isBlocking(from, to))

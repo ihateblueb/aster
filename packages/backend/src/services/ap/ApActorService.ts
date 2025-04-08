@@ -166,7 +166,7 @@ class ApActorService {
 
 		user['emojis'] = [];
 
-		if (body.tag) {
+		if (body.tag && Array.isArray(body.tag)) {
 			for (const tag of body.tag) {
 				if (tag.type === 'Emoji' && tag.id) {
 					let emoji = await ApEmojiService.get(tag.id);

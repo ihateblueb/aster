@@ -1,16 +1,16 @@
-import db from "../../utils/database.js";
-import logger from "../../utils/logger.js";
-import IdService from "../IdService.js";
-import NotificationService from "../NotificationService.js";
-import QueueService from "../QueueService.js";
-import RelationshipService from "../RelationshipService.js";
-import UserService from "../UserService.js";
-import ApAcceptRenderer from "./ApAcceptRenderer.js";
-import ApActorService from "./ApActorService.js";
-import ApRejectRenderer from "./ApRejectRenderer.js";
+import db from '../../utils/database.js';
+import logger from '../../utils/logger.js';
+import IdService from '../IdService.js';
+import NotificationService from '../NotificationService.js';
+import QueueService from '../QueueService.js';
+import RelationshipService from '../RelationshipService.js';
+import UserService from '../UserService.js';
+import ApAcceptRenderer from './ApAcceptRenderer.js';
+import ApActorService from './ApActorService.js';
+import ApRejectRenderer from './ApRejectRenderer.js';
 
 class ApRelationshipService {
-    public async acceptFollow(
+	public async acceptFollow(
 		id: GenericId,
 		to: GenericId,
 		from: Inbox,
@@ -53,7 +53,7 @@ class ApRelationshipService {
 				return false;
 			});
 	}
-	
+
 	public async registerFollow(body: ApObject) {
 		const to = await UserService.get({ apId: body.object });
 		if (!to) return false;
@@ -91,7 +91,8 @@ class ApRelationshipService {
 				.getRepository('activity')
 				.insert({
 					id: aId,
-					activity: JSON.stringify(body),
+					apId: body.id,
+					content: JSON.stringify(body),
 					createdAt: new Date().toISOString()
 				})
 				.then(() => {
@@ -113,7 +114,7 @@ class ApRelationshipService {
 				'follow',
 				true,
 				aId
-			)
+			);
 
 			if (!insertedRelationship) return false;
 
@@ -123,14 +124,19 @@ class ApRelationshipService {
 				'follow',
 				undefined,
 				undefined,
-                insertedRelationship.id
+				insertedRelationship.id
 			);
 
 			return true;
 		} else {
 			const id = IdService.generate();
 
-			await RelationshipService.create(to.id, from.id, 'follow', false).catch((err) => {
+			await RelationshipService.create(
+				to.id,
+				from.id,
+				'follow',
+				false
+			).catch((err) => {
 				console.log(err);
 				logger.error('inbox', 'failed to insert relationship');
 				throw new Error('failed to insert relationship');

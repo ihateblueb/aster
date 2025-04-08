@@ -5,6 +5,7 @@ import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import NotificationRenderer from './NotificationRenderer.js';
 import NotificationService from './NotificationService.js';
+import RelationshipService from './RelationshipService.js';
 import ReportService from './ReportService.js';
 
 class TimelineService {
@@ -58,6 +59,13 @@ class TimelineService {
 				orderDirection,
 				orWhere,
 				andWhere
+			);
+		if (type === 'relationship')
+			timelineObjects = await RelationshipService.getMany(
+				where,
+				take,
+				order,
+				orderDirection
 			);
 
 		return this.sort(timelineObjects, take);
