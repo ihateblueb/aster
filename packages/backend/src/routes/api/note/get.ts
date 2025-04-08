@@ -48,6 +48,17 @@ export default plugin(async (fastify) => {
 			)
 				return reply.status(404).send();
 
+			// todo: test
+			if (note.replyingTo) {
+				let canISeeReply = await VisibilityService.canISee(
+					note.replyingTo,
+					req.auth.user?.id
+				);
+
+				if (!canISeeReply)
+					note.replyingTo = undefined;
+			}
+
 			return await NoteRenderer.render(note);
 		}
 	);
