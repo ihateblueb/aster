@@ -28,10 +28,12 @@ Aster is a work in progress federated social networking software.
 Aster is **not** ready for production. If you use it in production, good luck!
 
 ### Prerequisites
+
 - PostgreSQL (find minimum version)
-- Redis (find minimum version) or DragonflyDB (find minimum version) 
+- Redis (find minimum version) or DragonflyDB (find minimum version)
 
 ### Installation
+
 - Install dependencies with `pnpm i`
 - Copy config from `config/example.yaml` to `config/production.yaml`
 - Update config so that the URL, postgres, and redis connection are right

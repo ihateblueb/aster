@@ -76,9 +76,9 @@ class ModeratedInstanceService {
 		 * postgres function that reduces the host like the moderated instance service
 		 * does. look into how to do that with typeorm because that is probably the ideal
 		 * way to do it.
-		 * 
+		 *
 		 * 4: another way
-		 * system queue for alterting broken relationships. every relationship gets a job, 
+		 * system queue for alterting broken relationships. every relationship gets a job,
 		 * cache a list of the blocked hosts, reduce hosts and check against list, alert if
 		 * needed and then delete the relationships.
 		 *

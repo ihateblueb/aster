@@ -2,6 +2,7 @@ import { ObjectLiteral } from 'typeorm';
 
 import db from '../utils/database.js';
 import logger from '../utils/logger.js';
+import ApRelationshipService from './ap/ApRelationshipService.js';
 import IdService from './IdService.js';
 
 class RelationshipService {
@@ -155,6 +156,57 @@ class RelationshipService {
 		)
 			return false;
 		return true;
+	}
+
+	public async acceptFollow(id: GenericId) {
+		const relationship = await this.get({ id: id });
+
+		if (!relationship)
+			return {
+				error: true,
+				status: 404,
+				message: 'Not found'
+			};
+
+		await this.update(
+			{
+				id: id
+			},
+			{
+				pending: false
+			}
+		);
+
+		// todo: both accept and reject fix relationship.activity not being there, needs to be fetched by the string id value
+
+		ApRelationshipService.acceptFollow(
+			relationship.to.id,
+			relationship.from.inbox,
+			relationship.activity
+		);
+	}
+
+	public async rejectFollow(id: GenericId) {
+		const relationship = await this.get({ id: id });
+
+		if (!relationship)
+			return {
+				error: true,
+				status: 404,
+				message: 'Not found'
+			};
+
+		await this.delete(
+			{
+				id: id
+			}
+		);
+
+		ApRelationshipService.rejectFollow(
+			relationship.to.id,
+			relationship.from.inbox,
+			relationship.activity
+		);
 	}
 }
 

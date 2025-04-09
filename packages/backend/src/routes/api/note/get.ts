@@ -55,8 +55,7 @@ export default plugin(async (fastify) => {
 					req.auth.user?.id
 				);
 
-				if (!canISeeReply)
-					note.replyingTo = undefined;
+				if (!canISeeReply) note.replyingTo = undefined;
 			}
 
 			if (note.repeat) {
@@ -65,8 +64,7 @@ export default plugin(async (fastify) => {
 					req.auth.user?.id
 				);
 
-				if (!canISeeRepeat)
-					note.repeat = undefined;
+				if (!canISeeRepeat) note.repeat = undefined;
 			}
 
 			return await NoteRenderer.render(note);

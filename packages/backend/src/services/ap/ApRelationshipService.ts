@@ -10,12 +10,8 @@ import ApActorService from './ApActorService.js';
 import ApRejectRenderer from './ApRejectRenderer.js';
 
 class ApRelationshipService {
-	public async acceptFollow(
-		id: GenericId,
-		to: GenericId,
-		from: Inbox,
-		body: ApObject
-	) {
+	public async acceptFollow(to: GenericId, from: Inbox, body: ApObject) {
+		const id = IdService.generate();
 		const deliver = ApAcceptRenderer.render(id, to, body);
 
 		return await QueueService.deliver
@@ -32,12 +28,8 @@ class ApRelationshipService {
 			});
 	}
 
-	public async rejectFollow(
-		id: GenericId,
-		to: GenericId,
-		from: GenericId,
-		body
-	) {
+	public async rejectFollow(to: GenericId, from: GenericId, body) {
+		const id = IdService.generate();
 		const deliver = ApRejectRenderer.render(id, to, body);
 
 		return await QueueService.deliver
@@ -129,9 +121,7 @@ class ApRelationshipService {
 
 			return true;
 		} else {
-			const id = IdService.generate();
-
-			await RelationshipService.create(
+			const insertedRelationship = await RelationshipService.create(
 				to.id,
 				from.id,
 				'follow',
@@ -142,16 +132,18 @@ class ApRelationshipService {
 				throw new Error('failed to insert relationship');
 			});
 
+			if (!insertedRelationship) return false;
+
 			await NotificationService.create(
 				to.id,
 				from.id,
 				'follow',
 				undefined,
 				undefined,
-				id
+				insertedRelationship.id
 			);
 
-			await this.acceptFollow(id, to.id, from.inbox, body);
+			await this.acceptFollow(to.id, from.inbox, body);
 
 			return true;
 		}
