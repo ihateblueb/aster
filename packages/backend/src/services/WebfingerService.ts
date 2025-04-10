@@ -2,7 +2,7 @@ import logger from '../utils/logger.js';
 import ApResolver from './ap/ApResolver.js';
 
 class WebfingerService {
-    // todo: finish
+	// todo: finish
 	public async lookup(handle: string) {
 		// @user@example.com
 		const splitHandle = handle.split('@');
@@ -25,7 +25,7 @@ class WebfingerService {
 					e.type === 'application/ld+json')
 		);
 
-        console.log(found)
+		console.log(found);
 	}
 }
 
