@@ -196,11 +196,9 @@ class RelationshipService {
 				message: 'Not found'
 			};
 
-		await this.delete(
-			{
-				id: id
-			}
-		);
+		await this.delete({
+			id: id
+		});
 
 		ApRelationshipService.rejectFollow(
 			relationship.to.id,
