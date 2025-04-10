@@ -9,7 +9,11 @@ import UserService from '../UserService.js';
 import ValidationService from '../ValidationService.js';
 
 class ApResolver {
-	public async resolveSigned(apId: ApId, as?: GenericId) {
+	public async resolveSigned(
+		apId: ApId,
+		as?: GenericId,
+		contentType?: string
+	) {
 		if (!ValidationService.validUrl(apId)) return;
 
 		if (
@@ -42,7 +46,9 @@ class ApResolver {
 			method: 'GET',
 			headers: {
 				'User-Agent': `${pkg.name}/${pkg.version}`,
-				Accept: 'application/activity+json, application/ld+json',
+				Accept:
+					contentType ??
+					'application/activity+json, application/ld+json',
 				Algorithm: 'rsa-sha256',
 				Date: sendDate,
 				Signature: signatureHeader
@@ -63,7 +69,7 @@ class ApResolver {
 			});
 	}
 
-	public async resolve(apId: ApId): Promise<object | boolean> {
+	public async resolve(apId: ApId, contentType?: string) {
 		if (!ValidationService.validUrl(apId)) return;
 
 		if (
@@ -79,7 +85,9 @@ class ApResolver {
 			method: 'GET',
 			headers: {
 				'User-Agent': `Aster/${pkg.version}`,
-				Accept: 'application/activity+json, application/ld+json'
+				Accept:
+					contentType ??
+					'application/activity+json, application/ld+json'
 			}
 		});
 
