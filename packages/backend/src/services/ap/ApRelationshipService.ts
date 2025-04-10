@@ -28,7 +28,7 @@ class ApRelationshipService {
 			});
 	}
 
-	public async rejectFollow(to: GenericId, from: GenericId, body) {
+	public async rejectFollow(to: GenericId, from: GenericId, body: ApObject) {
 		const id = IdService.generate();
 		const deliver = ApRejectRenderer.render(id, to, body);
 
@@ -65,18 +65,12 @@ class ApRelationshipService {
 		) {
 			// accept anyway, already exists to us!
 			logger.warn('follow', 'follow already exists and isnt pending');
-			await this.acceptFollow(
-				alreadyFollowing.id,
-				to.id,
-				from.inbox,
-				body
-			);
+			await this.acceptFollow(to.id, from.inbox, body);
 
 			return true;
 		}
 
 		if (to.locked) {
-			const id = IdService.generate();
 			const aId = IdService.generate();
 
 			const insertedActivity = await db

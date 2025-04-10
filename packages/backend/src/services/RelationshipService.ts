@@ -6,16 +6,23 @@ import ApRelationshipService from './ap/ApRelationshipService.js';
 import IdService from './IdService.js';
 
 class RelationshipService {
-	public async get(where: where) {
-		return await db
+	public async get(where: where, includeActivityForResponse?: boolean) {
+		let queryBuilder = db
 			.getRepository('relationship')
-			.createQueryBuilder('relationship')
+			.createQueryBuilder('relationship');
 
+		queryBuilder
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
+			.where(where);
 
-			.where(where)
-			.getOne();
+		if (includeActivityForResponse)
+			queryBuilder.leftJoinAndSelect(
+				'relationship.activityForResponse',
+				'activityForResponse'
+			);
+
+		return await queryBuilder.getOne();
 	}
 
 	public async getMany(
@@ -159,7 +166,7 @@ class RelationshipService {
 	}
 
 	public async acceptFollow(id: GenericId) {
-		const relationship = await this.get({ id: id });
+		const relationship = await this.get({ id: id }, true);
 
 		if (!relationship)
 			return {
@@ -167,6 +174,19 @@ class RelationshipService {
 				status: 404,
 				message: 'Not found'
 			};
+
+		if (!relationship.pending)
+			return {
+				error: true,
+				status: 400,
+				message: 'Relationship not pending'
+			};
+
+		await ApRelationshipService.acceptFollow(
+			relationship.to.id,
+			relationship.from.inbox,
+			relationship.activityForResponse
+		);
 
 		await this.update(
 			{
@@ -177,17 +197,15 @@ class RelationshipService {
 			}
 		);
 
-		// todo: both accept and reject fix relationship.activity not being there, needs to be fetched by the string id value
-
-		ApRelationshipService.acceptFollow(
-			relationship.to.id,
-			relationship.from.inbox,
-			relationship.activity
-		);
+		return {
+			error: false,
+			status: 200,
+			message: 'Accepted follow request'
+		};
 	}
 
 	public async rejectFollow(id: GenericId) {
-		const relationship = await this.get({ id: id });
+		const relationship = await this.get({ id: id }, true);
 
 		if (!relationship)
 			return {
@@ -196,17 +214,28 @@ class RelationshipService {
 				message: 'Not found'
 			};
 
-		await this.delete(
-			{
-				id: id
-			}
-		);
+		if (!relationship.pending)
+			return {
+				error: true,
+				status: 400,
+				message: 'Relationship not pending'
+			};
 
-		ApRelationshipService.rejectFollow(
+		await ApRelationshipService.rejectFollow(
 			relationship.to.id,
 			relationship.from.inbox,
-			relationship.activity
+			relationship.activityForResponse
 		);
+
+		await this.delete({
+			id: id
+		});
+
+		return {
+			error: false,
+			status: 200,
+			message: 'Rejected follow request'
+		};
 	}
 }
 

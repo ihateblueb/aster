@@ -1,6 +1,8 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
+import RelationshipService from '../../../services/RelationshipService.js';
+
 export default plugin(async (fastify) => {
 	const schema = {
 		tags: ['Follow Requests'],
@@ -22,7 +24,13 @@ export default plugin(async (fastify) => {
 			preHandler: fastify.auth([fastify.requireAuth])
 		},
 		async (req, reply) => {
-			return reply.status(501).send();
+			return await RelationshipService.rejectFollow(req.params.id).then(
+				(e) => {
+					return reply.status(e.status).send({
+						message: e.message
+					});
+				}
+			);
 		}
 	);
 });
