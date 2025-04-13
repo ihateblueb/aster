@@ -452,12 +452,14 @@ class NoteService {
 
 		if (!canISee)
 			return {
+				error: true,
 				status: 404,
 				message: 'Note not found'
 			};
 
 		if (note.visibility === 'direct' || note.visibility === 'followers')
 			return {
+				error: true,
 				status: 403,
 				message: 'Cannot repeat'
 			};

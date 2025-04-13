@@ -45,14 +45,14 @@ export class Relationship {
 	 * only saved if neccesary
 	 */
 	@Column({ select: false, nullable: true })
-	activityForResponseId: string | null;
+	activityForResponseId: string;
 
 	@OneToOne(() => Activity, (activity) => activity, {
 		onDelete: 'CASCADE',
 		nullable: true
 	})
 	@JoinColumn({ name: 'activityForResponseId' })
-	activityForResponse: typeorm.Relation<Activity> | null;
+	activityForResponse: typeorm.Relation<Activity>;
 
 	@Column()
 	createdAt: string;

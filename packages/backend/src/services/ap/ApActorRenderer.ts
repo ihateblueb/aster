@@ -47,8 +47,6 @@ class ApActorRenderer {
 		if (user.birthday) actor['vcard:bday'] = user.birthday;
 		if (user.location) actor['vcard:Address'] = user.location;
 
-		if (user.pronouns) actor['pancakes:pronouns'] = user.pronouns;
-
 		actor['inbox'] = user.inbox;
 		actor['outbox'] = user.outbox;
 		actor['sharedInbox'] = ConfigService.url.href + 'inbox';

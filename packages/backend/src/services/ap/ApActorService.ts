@@ -10,6 +10,7 @@ import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
 import SanitizerService from '../SanitizerService.js';
+import TimeService from '../TimeService.js';
 import UserService from '../UserService.js';
 import ApEmojiService from './ApEmojiService.js';
 import ApResolver from './ApResolver.js';
@@ -20,11 +21,15 @@ class ApActorService {
 		const actor = await UserService.get({ apId: apId });
 
 		if (actor) {
-			// if actorUpdatedAt greater than an hour ago
-			/*
-			if (Number(new Date(actor.updatedAt)) > Date.now() - 1000 * 60 * 60)
+			if (
+				TimeService.isTimeAgo(
+					new Date(actor.updatedAt),
+					TimeService.day
+				)
+			) {
+				logger.debug('actor', 'refetching actor ' + actor.apId);
 				return await this.refetch(apId);
-			*/
+			}
 
 			return actor;
 		}
@@ -53,7 +58,8 @@ class ApActorService {
 
 	public async actorToUser(
 		body: ApObject,
-		base?: ObjectLiteral
+		base?: ObjectLiteral,
+		notInitial?: boolean
 	): Promise<Partial<ObjectLiteral>> {
 		// todo: make more tolerant of weird responses.
 		let user = base ?? {
@@ -116,7 +122,9 @@ class ApActorService {
 			/* ignore */
 		}
 
-		if (!user.createdAt) user['createdAt'] = new Date().toISOString();
+		if (!notInitial) {
+			if (!user.createdAt) user['createdAt'] = new Date().toISOString();
+		}
 
 		/* avatar */
 		if (body.icon && body.icon.url)
@@ -219,9 +227,13 @@ class ApActorService {
 	public async update(body: ApObject) {
 		if (!ApValidationService.validBody(body)) return false;
 
-		let updatedUser = await this.actorToUser(body, {
-			updatedAt: new Date().toISOString()
-		});
+		let updatedUser = await this.actorToUser(
+			body,
+			{
+				updatedAt: new Date().toISOString()
+			},
+			true
+		);
 
 		await db
 			.getRepository('user')

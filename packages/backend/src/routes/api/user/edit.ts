@@ -37,10 +37,6 @@ export default plugin(async (fastify) => {
 					type: ['string', 'null'],
 					maxLength: ConfigService.limits.soft.bio
 				},
-				pronouns: {
-					type: ['string', 'null'],
-					maxLength: ConfigService.limits.soft.pronouns
-				},
 				location: {
 					type: ['string', 'null'],
 					maxLength: ConfigService.limits.soft.location
@@ -137,16 +133,6 @@ export default plugin(async (fastify) => {
 					updated['bio'] = SanitizerService.sanitize(req.body.bio);
 				} else {
 					updated['bio'] = null;
-				}
-			}
-
-			if ('pronouns' in req.body) {
-				if (req.body.pronouns) {
-					updated['pronouns'] = SanitizerService.sanitize(
-						req.body.pronouns
-					);
-				} else {
-					updated['pronouns'] = null;
 				}
 			}
 

@@ -54,9 +54,6 @@ export class User {
 	metadata: string;
 
 	@Column({ nullable: true })
-	pronouns: string;
-
-	@Column({ nullable: true })
 	location: string;
 
 	@Column({ nullable: true })
@@ -80,13 +77,8 @@ export class User {
 	@Column({ nullable: true })
 	bannerAlt: string;
 
-	@Column({ type: 'jsonb', nullable: true })
-	metadata: string;
-
 	@Column({ array: true, nullable: true })
 	emojis: string;
-
-	// TODO (later): add emojis relation for emojis in displayname, bio, or metadata
 
 	@Column()
 	createdAt: string;

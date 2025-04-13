@@ -210,18 +210,8 @@
 							>
 						{/if}
 					</p>
-					{#if $query.data.pronouns || $query.data.birthday || $query.data.location}
+					{#if $query.data.birthday || $query.data.location}
 						<div class="pairs">
-							{#if $query.data.pronouns}
-								<p class="pair">
-									<span class="key">
-										<IconMessageCircleUser size="18px" />
-									</span>
-									<span class="val"
-										>{$query.data.pronouns}</span
-									>
-								</p>
-							{/if}
 							{#if $query.data.birthday}
 								<p class="pair">
 									<span class="key">

@@ -68,12 +68,6 @@
 	</div>
 	<div class="right">
 		<Input
-			label="Pronouns"
-			placeholder={self.pronouns}
-			bind:value={newSelf.pronouns}
-			wide
-		/>
-		<Input
 			label="Location"
 			placeholder={self.location}
 			bind:value={newSelf.location}
