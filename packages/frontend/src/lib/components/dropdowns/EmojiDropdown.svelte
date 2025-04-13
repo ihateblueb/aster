@@ -36,6 +36,10 @@
 				{/each}
 			</div>
 		{/each}
+	{:else}
+		<div class="emptyBody">
+			<p>No emojis!</p>
+		</div>
 	{/if}
 </div>
 
@@ -83,6 +87,12 @@
 					object-fit: contain;
 				}
 			}
+		}
+		.emptyBody {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			padding: 24px;
 		}
 	}
 </style>

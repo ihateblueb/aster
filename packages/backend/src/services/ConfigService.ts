@@ -173,7 +173,7 @@ class ConfigService {
 
 	public timeline = new (class TimelineConfig {
 		public maxObjects: number =
-			NumberMinMax(parsedConfig.timeline.maxObjects, 1, 100) ?? 45;
+			NumberMinMax(parsedConfig.timeline.maxObjects, 1, 100) ?? 25;
 	})();
 
 	public logging = new (class LoggingConfig {

@@ -2,6 +2,7 @@
 	import {
 		IconAt,
 		IconBan,
+		IconCopy,
 		IconDental,
 		IconExternalLink,
 		IconFlag,
@@ -56,8 +57,13 @@
 	<IconLink size="18px" />
 	<span>Copy link</span>
 </DropdownItem>
+<DropdownItem on:click={() => navigator.clipboard.writeText(query.data.id)}>
+	<IconCopy size="18px" />
+	<span>Copy ID</span>
+</DropdownItem>
 
 {#if !isLocal}
+	<DropdownDivider />
 	<DropdownItem to={query.data.apId} newTab>
 		<IconExternalLink size="18px" />
 		View on remote

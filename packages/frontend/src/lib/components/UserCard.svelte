@@ -1,6 +1,7 @@
 <script>
 	import Avatar from '$lib/components/Avatar.svelte';
 	import Time from '$lib/components/Time.svelte';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	let { user, time = undefined } = $props();
 </script>
@@ -12,7 +13,11 @@
 			class="top"
 			href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
 		>
-			{user.displayName ? user.displayName : user.username}
+			<Mfm
+				content={user.displayName ? user.displayName : user.username}
+				emojis={user.emojis}
+				simple
+			/>
 		</a>
 		<a
 			class="bottom"

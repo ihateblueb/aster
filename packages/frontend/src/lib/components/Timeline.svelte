@@ -16,6 +16,7 @@
 	import ws from '$lib/websocket.svelte';
 	import localstore from '$lib/localstore';
 	import EmojiCard from '$lib/components/EmojiCard.svelte';
+	import FollowRequest from '$lib/components/FollowRequest.svelte';
 
 	let {
 		type,
@@ -127,6 +128,8 @@
 					<DriveFile file={object} {select} />
 				{:else if type === 'emoji'}
 					<EmojiCard emoji={object} />
+				{:else if type === 'followRequest'}
+					<FollowRequest followRequest={object} />
 				{/if}
 			</div>
 		{/each}
