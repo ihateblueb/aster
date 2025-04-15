@@ -7,6 +7,7 @@
 		IconLogin,
 		IconLogout,
 		IconReload,
+		IconTrash,
 		IconUser,
 		IconUserPlus
 	} from '@tabler/icons-svelte';
@@ -14,6 +15,7 @@
 	import Mfm from '../Mfm.svelte';
 	import Dropdown from '$lib/components/Dropdown.svelte';
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let self = $state();
 	function updateSelf() {
@@ -51,11 +53,11 @@
 		<div class="btns">
 			<Button to="/login" accent centered wide nm>
 				<IconLogin size="18px" />
-				Login
+				<LocalizedString id="login" />
 			</Button>
 			<Button to="/register" secondary centered wide nm>
 				<IconUserPlus size="18px" />
-				Register
+				<LocalizedString id="register" />
 			</Button>
 		</div>
 	</div>
@@ -66,11 +68,11 @@
 		to={'/@' + self.username + (self.local ? '' : '@' + self.host)}
 	>
 		<IconUser size="18px" />
-		Profile
+		<LocalizedString id="profile" />
 	</DropdownItem>
 	<DropdownItem to="/logout" danger>
 		<IconLogout size="18px" />
-		Logout
+		<LocalizedString id="logout" />
 	</DropdownItem>
 </Dropdown>
 

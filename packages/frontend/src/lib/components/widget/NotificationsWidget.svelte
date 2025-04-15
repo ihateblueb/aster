@@ -1,9 +1,10 @@
 <script lang="ts">
 	import WidgetBase from '../WidgetBase.svelte';
-	import { IconBell } from '@tabler/icons-svelte';
+	import { IconBell, IconTrash } from '@tabler/icons-svelte';
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getNotifications from '$lib/api/notifications/get.js';
 	import Compose from '$lib/components/Compose.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let query: any = $state();
 </script>
@@ -12,7 +13,7 @@
 	<WidgetBase header tl>
 		<svelte:fragment slot="header">
 			<IconBell size="18px" />
-			Notifications
+			<LocalizedString id="notifications" />
 		</svelte:fragment>
 
 		<Timeline

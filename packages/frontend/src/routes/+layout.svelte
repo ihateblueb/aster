@@ -1,4 +1,8 @@
 <script lang="ts">
+	import translations from '$lib/translations';
+
+	console.log('ftl translations', translations._messages);
+
 	import PageSidebar from '$lib/components/PageSidebar.svelte';
 	import queryClient from '$lib/queryclient';
 	import { QueryClientProvider } from '@tanstack/svelte-query';

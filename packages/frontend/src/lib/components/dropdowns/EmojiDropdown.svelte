@@ -2,6 +2,9 @@
 	import localstore from '$lib/localstore';
 	import Input from '$lib/components/Input.svelte';
 	import { createEventDispatcher } from 'svelte';
+	import localizedString from '$lib/localizedString';
+	import { IconTrash } from '@tabler/icons-svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	const dispatch = createEventDispatcher();
 
@@ -11,7 +14,12 @@
 
 <div class="emojiDropdown">
 	<div class="search">
-		<Input placeholder="Search..." bind:value={query} nm wide />
+		<Input
+			placeholder={localizedString('searchbar')}
+			bind:value={query}
+			nm
+			wide
+		/>
 	</div>
 	{#if emojis}
 		{#each Object.keys(emojis) as category}
@@ -38,7 +46,9 @@
 		{/each}
 	{:else}
 		<div class="emptyBody">
-			<p>No emojis!</p>
+			<p>
+				<LocalizedString id="no-emojis-found" />
+			</p>
 		</div>
 	{/if}
 </div>

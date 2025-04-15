@@ -25,6 +25,7 @@
 	import Button from '$lib/components/Button.svelte';
 	import acceptFollowRequest from '$lib/api/follow-requests/accept.js';
 	import rejectFollowRequest from '$lib/api/follow-requests/reject.js';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let { notification, floating = false, small = false } = $props();
 </script>
@@ -64,9 +65,10 @@
 	</a>
 {/snippet}
 
+<!-- todo: localization -->
 {#snippet title()}
 	{#if notification.type === 'debug'}
-		Debug
+		<LocalizedString id="debug" />
 	{:else if notification.type === 'like'}
 		{@render name(notification?.from)} liked your note
 	{:else if notification.type === 'react'}
@@ -126,14 +128,14 @@
 				on:click={() =>
 					acceptFollowRequest(notification.relationship.id)}
 			>
-				Accept
+				<LocalizedString id="accept" />
 			</Button>
 			<Button
 				nm
 				on:click={() =>
 					rejectFollowRequest(notification.relationship.id)}
 			>
-				Reject
+				<LocalizedString id="reject" />
 			</Button>
 		</div>
 	{/if}

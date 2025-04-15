@@ -4,6 +4,8 @@
 	import acceptFollowRequest from '$lib/api/follow-requests/accept';
 	import rejectFollowRequest from '$lib/api/follow-requests/reject';
 	import Button from '$lib/components/Button.svelte';
+	import { IconTrash } from '@tabler/icons-svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let { followRequest } = $props();
 
@@ -49,7 +51,7 @@
 						() => (show = false)
 					)}
 			>
-				Accept
+				<LocalizedString id="accept" />
 			</Button>
 			<Button
 				nm
@@ -58,7 +60,7 @@
 						() => (show = false)
 					)}
 			>
-				Reject
+				<LocalizedString id="reject" />
 			</Button>
 		</div>
 	</div>

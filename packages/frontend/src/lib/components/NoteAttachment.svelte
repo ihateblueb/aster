@@ -1,7 +1,8 @@
 <script>
-	import { IconEyeOff } from '@tabler/icons-svelte';
+	import { IconEyeOff, IconTrash } from '@tabler/icons-svelte';
 	import Button from '$lib/components/Button.svelte';
 	import localstore from '$lib/localstore';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let { attachment, small = false } = $props();
 
@@ -40,7 +41,9 @@
 			{/if}
 		{:else}
 			<div class="hidden">
-				<Button thin on:click={() => (show = !show)}>Show media</Button>
+				<Button thin on:click={() => (show = !show)}>
+					<LocalizedString id="show-media" />
+				</Button>
 			</div>
 		{/if}
 	</div>

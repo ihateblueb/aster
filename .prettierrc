@@ -2,7 +2,8 @@
 	"plugins": [
 		"prettier-plugin-svelte",
 		"prettier-plugin-sh",
-		"prettier-plugin-ini"
+		"prettier-plugin-ini",
+		"@desmos/prettier-plugin-fluent"
 	],
 	"trailingComma": "none",
 	"tabWidth": 4,

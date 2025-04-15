@@ -24,6 +24,8 @@
 	import playSound from '$lib/sounds.js';
 	import NoteAttachment from '$lib/components/NoteAttachment.svelte';
 	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
+	import localizedString from '$lib/localizedString.js';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let addDropdown: undefined | Dropdown = $state();
 	let emojiDropdown: undefined | Dropdown = $state();
@@ -164,10 +166,17 @@
 		<div class="replyBox">
 			<div class="top">
 				<p>
-					Replying to @{replyingToNote.user.username}{replyingToNote
-						.user.local
-						? ''
-						: '@' + replyingToNote.user.host}
+					<LocalizedString
+						id="replying-to"
+						args={{
+							handle:
+								'@' +
+								replyingToNote.user.username +
+								(replyingToNote.user.local
+									? ''
+									: '@' + replyingToNote.user.host)
+						}}
+					/>
 				</p>
 				<button class="nobg" on:click={() => clearReply()}>
 					<IconX size="18px" />
@@ -177,8 +186,16 @@
 		</div>
 	{/if}
 
-	<Input placeholder="Content warning" bind:value={note.cw} wide></Input>
-	<Input placeholder="What's going on?" bind:value={note.content} wide big
+	<Input
+		placeholder={localizedString('content-warning')}
+		bind:value={note.cw}
+		wide
+	></Input>
+	<Input
+		placeholder={localizedString('whats-going-on')}
+		bind:value={note.content}
+		wide
+		big
 	></Input>
 
 	{#if attachments && attachments.length > 0}
@@ -209,9 +226,17 @@
 		<div class="quoteBox">
 			<div class="top">
 				<p>
-					Quoting @{quotingNote.user.username}{quotingNote.user.local
-						? ''
-						: '@' + quotingNote.user.host}
+					<LocalizedString
+						id="quoting"
+						args={{
+							handle:
+								'@' +
+								quotingNote.user.username +
+								(quotingNote.user.local
+									? ''
+									: '@' + quotingNote.user.host)
+						}}
+					/>
 				</p>
 				<button class="nobg" on:click={() => clearQuote()}>
 					<IconX size="18px" />
@@ -244,8 +269,10 @@
 			<Button
 				accent={note.content.length >= 1}
 				nm
-				on:click={async () => await post()}>Post</Button
+				on:click={async () => await post()}
 			>
+				<LocalizedString id="post" />
+			</Button>
 		</div>
 	</div>
 </div>
@@ -255,36 +282,44 @@
 		<div class="visibilityOption">
 			<p>
 				<IconWorld size="18px" />
-				Public
+				<LocalizedString id="public" />
 			</p>
-			<p>Shown on all timelines</p>
+			<p>
+				<LocalizedString id="public-desc" />
+			</p>
 		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => setVisibility('unlisted')}>
 		<div class="visibilityOption">
 			<p>
 				<IconHome size="18px" />
-				Unlisted
+				<LocalizedString id="unlisted" />
 			</p>
-			<p>Only shown on the home timeline of followers</p>
+			<p>
+				<LocalizedString id="unlisted-desc" />
+			</p>
 		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => setVisibility('followers')}>
 		<div class="visibilityOption">
 			<p>
 				<IconLock size="18px" />
-				Followers
+				<LocalizedString id="followers" />
 			</p>
-			<p>Only shown to your followers</p>
+			<p>
+				<LocalizedString id="followers-desc" />
+			</p>
 		</div>
 	</DropdownItem>
 	<DropdownItem on:click={() => setVisibility('direct')}>
 		<div class="visibilityOption">
 			<p>
 				<IconMail size="18px" />
-				Direct
+				<LocalizedString id="direct" />
 			</p>
-			<p>Only shown to those mentioned</p>
+			<p>
+				<LocalizedString id="direct-desc" />
+			</p>
 		</div>
 	</DropdownItem>
 </Dropdown>
@@ -292,11 +327,11 @@
 <Dropdown bind:this={addDropdown}>
 	<DropdownItem on:click={() => store.showDrive.set(true)}>
 		<IconPaperclip size="18px" />
-		Add file
+		<LocalizedString id="add-file" />
 	</DropdownItem>
 	<DropdownItem>
 		<IconChartBar size="18px" />
-		Add poll
+		<LocalizedString id="add-poll" />
 	</DropdownItem>
 </Dropdown>
 

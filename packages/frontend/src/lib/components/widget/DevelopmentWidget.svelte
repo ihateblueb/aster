@@ -4,7 +4,8 @@
 	import { goto } from '$app/navigation';
 	import Input from '../Input.svelte';
 	import Button from '../Button.svelte';
-	import { IconCode } from '@tabler/icons-svelte';
+	import { IconCode, IconTrash } from '@tabler/icons-svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let ckey: undefined | String = $state();
 	let cval: undefined | String = $state();
@@ -35,7 +36,7 @@
 <WidgetBase header>
 	<svelte:fragment slot="header">
 		<IconCode size="18px" />
-		Development
+		<LocalizedString id="development" />
 	</svelte:fragment>
 
 	<b>cookie setter</b>

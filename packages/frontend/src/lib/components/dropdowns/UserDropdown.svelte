@@ -9,6 +9,7 @@
 		IconLink,
 		IconPencil,
 		IconRefresh,
+		IconTrash,
 		IconVolumeOff
 	} from '@tabler/icons-svelte';
 	import DropdownItem from '../DropdownItem.svelte';
@@ -18,6 +19,7 @@
 	import refetchUser from '$lib/api/user/refetch.js';
 	import localstore from '$lib/localstore.js';
 	import { page } from '$app/state';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let reportModal: undefined | Modal = $state();
 	let blockModal: undefined | Modal = $state();
@@ -33,7 +35,7 @@
 {#if isSelf}
 	<DropdownItem to="/settings/account">
 		<IconPencil size="18px" />
-		Edit profile
+		<LocalizedString id="edit-profile" />
 	</DropdownItem>
 	<DropdownDivider />
 {/if}
@@ -45,7 +47,7 @@
 		)}
 >
 	<IconAt size="18px" />
-	Copy handle
+	<LocalizedString id="copy-handle" />
 </DropdownItem>
 <!-- TODO: wrong -->
 <DropdownItem
@@ -55,18 +57,18 @@
 		)}
 >
 	<IconLink size="18px" />
-	<span>Copy link</span>
+	<LocalizedString id="copy-link" />
 </DropdownItem>
 <DropdownItem on:click={() => navigator.clipboard.writeText(query.data.id)}>
 	<IconCopy size="18px" />
-	<span>Copy ID</span>
+	<LocalizedString id="copy-id" />
 </DropdownItem>
 
 {#if !isLocal}
 	<DropdownDivider />
 	<DropdownItem to={query.data.apId} newTab>
 		<IconExternalLink size="18px" />
-		View on remote
+		<LocalizedString id="view-on-remote" />
 	</DropdownItem>
 	<DropdownItem
 		on:click={() =>
@@ -75,7 +77,7 @@
 			})}
 	>
 		<IconRefresh size="18px" />
-		Refetch from remote
+		<LocalizedString id="refetch-from-remote" />
 	</DropdownItem>
 {/if}
 
@@ -83,19 +85,19 @@
 	<DropdownDivider />
 	<DropdownItem on:click={() => biteUser(query.data.id)}>
 		<IconDental size="18px" />
-		Bite
+		<LocalizedString id="bite" />
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem danger>
 		<IconBan size="18px" />
-		Block
+		<LocalizedString id="block" />
 	</DropdownItem>
 	<DropdownItem danger>
 		<IconVolumeOff size="18px" />
-		Mute
+		<LocalizedString id="mute" />
 	</DropdownItem>
 	<DropdownItem danger>
 		<IconFlag size="18px" />
-		Report
+		<LocalizedString id="report" />
 	</DropdownItem>
 {/if}

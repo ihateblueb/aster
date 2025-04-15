@@ -1,9 +1,10 @@
 <script>
-	import { IconCloud, IconPlus } from '@tabler/icons-svelte';
+	import { IconCloud, IconPlus, IconTrash } from '@tabler/icons-svelte';
 	import Button from '$lib/components/Button.svelte';
 	import upload from '$lib/api/upload';
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getDrive from '$lib/api/drive/get';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let query = $state();
 
@@ -31,7 +32,7 @@
 	<div class="header">
 		<div class="left">
 			<IconCloud size="18px" />
-			Drive
+			<LocalizedString id="drive" />
 		</div>
 		<div class="right">
 			<input

@@ -6,13 +6,14 @@
 	import Button from '$lib/components/Button.svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import localizedString from '$lib/localizedString';
 
 	let selectedTab = 0;
 
 	if (page.route.id?.startsWith('/settings/account')) selectedTab = 1;
 </script>
 
-<PageHeader title="Settings">
+<PageHeader title={localizedString('settings')}>
 	<svelte:fragment slot="icon">
 		<IconSettings size="18px" />
 	</svelte:fragment>
@@ -22,7 +23,7 @@
 			selectedTab = 0;
 			goto('/settings');
 		}}
-		title="Client"
+		title={localizedString('client')}
 	></Tab>
 	<Tab
 		selected={selectedTab === 1}
@@ -30,7 +31,7 @@
 			selectedTab = 1;
 			goto('/settings/account');
 		}}
-		title="Account"
+		title={localizedString('account')}
 	></Tab>
 </PageHeader>
 
@@ -43,7 +44,7 @@
 					selectedTab = 0;
 					goto('/settings');
 				}}
-				title="General"
+				title={localizedString('general')}
 			></Tab>
 			<Tab
 				selected={page.route.id === '/settings/themes'}
@@ -51,7 +52,7 @@
 					selectedTab = 0;
 					goto('/settings/themes');
 				}}
-				title="Themes"
+				title={localizedString('themes')}
 			></Tab>
 			<Tab
 				selected={page.route.id === '/settings/sounds'}
@@ -59,7 +60,7 @@
 					selectedTab = 0;
 					goto('/settings/sounds');
 				}}
-				title="Sounds"
+				title={localizedString('sounds')}
 			></Tab>
 		{:else}
 			<Tab
@@ -68,7 +69,7 @@
 					selectedTab = 1;
 					goto('/settings/account');
 				}}
-				title="General"
+				title={localizedString('general')}
 			></Tab>
 			<Tab
 				selected={page.route.id === '/settings/account/privacy'}
@@ -76,7 +77,7 @@
 					selectedTab = 1;
 					goto('/settings/account/privacy');
 				}}
-				title="Privacy"
+				title={localizedString('privacy')}
 			></Tab>
 			<Tab
 				selected={page.route.id === '/settings/account/security'}
@@ -84,7 +85,7 @@
 					selectedTab = 1;
 					goto('/settings/account/security');
 				}}
-				title="Security"
+				title={localizedString('security')}
 			></Tab>
 		{/if}
 	</div>

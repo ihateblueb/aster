@@ -10,6 +10,7 @@
 		IconToggleLeft,
 		IconUsers
 	} from '@tabler/icons-svelte';
+	import translations from '$lib/translations';
 
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import PageHeader from '$lib/components/PageHeader.svelte';
@@ -23,6 +24,7 @@
 	import DropdownItem from '$lib/components/DropdownItem.svelte';
 	import ws from '$lib/websocket.svelte';
 	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let query: any = $state();
 
@@ -45,13 +47,13 @@
 
 <PageHeader
 	title={timeline === 'home'
-		? 'Home'
+		? translations.getMessage('home')?.value
 		: timeline === 'local'
-			? 'Local'
+			? translations.getMessage('local')?.value
 			: timeline === 'bubble'
-				? 'Bubble'
+				? translations.getMessage('bubble')?.value
 				: timeline === 'public'
-					? 'Public'
+					? translations.getMessage('public')?.value
 					: 'Unknown'}
 >
 	<svelte:fragment slot="icon">
@@ -117,6 +119,6 @@
 <Dropdown bind:this={dropdown}>
 	<DropdownItem on:click={() => $query.refetch()}>
 		<IconReload size="18px" />
-		Refresh timeline
+		<LocalizedString id="refresh-timeline" />
 	</DropdownItem>
 </Dropdown>

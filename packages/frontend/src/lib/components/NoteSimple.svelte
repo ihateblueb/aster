@@ -6,6 +6,7 @@
 	import { goto } from '$app/navigation';
 	import Button from '$lib/components/Button.svelte';
 	import { IconPaperclip } from '@tabler/icons-svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let { note, nobg = false, nomargin = false } = $props();
 
@@ -60,7 +61,10 @@
 			{#if note.attachments && note.attachments.length > 0}
 				<p class="attachments">
 					<IconPaperclip size="14px" />
-					{note.attachments.length} attachment{#if note.attachments.length > 1}s{/if}
+					<LocalizedString
+						id="attachment-count"
+						args={{ count: note.attachments.length }}
+					/>
 				</p>
 			{/if}
 		{/snippet}
@@ -69,7 +73,11 @@
 			<div class={'cw' + (cwOpen ? ' open' : '')}>
 				<span>{note.cw}</span>
 				<Button thin nm on:click={() => (cwOpen = !cwOpen)}>
-					{!cwOpen ? 'Show content' : 'Hide content'}
+					{#if cwOpen}
+						<LocalizedString id="hide-content" />
+					{:else}
+						<LocalizedString id="show-content" />
+					{/if}
 				</Button>
 			</div>
 			{#if cwOpen}

@@ -4,11 +4,13 @@
 	import PageHeader from '$lib/components/PageHeader.svelte';
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 	import { IconSearch } from '@tabler/icons-svelte';
+	import localizedString from '$lib/localizedString';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let value = $state('');
 </script>
 
-<PageHeader title="Search">
+<PageHeader title={localizedString('search')}>
 	<svelte:fragment slot="icon">
 		<IconSearch size="18px" />
 	</svelte:fragment>
@@ -19,10 +21,12 @@
 		<Input
 			wide
 			nm
-			placeholder="Search by ID, url, handle, or keyword..."
+			placeholder={localizedString('search-prompt')}
 			bind:value
 		/>
-		<Button nm>Go</Button>
+		<Button nm>
+			<LocalizedString id="go" />
+		</Button>
 	</div>
 </PageWrapper>
 

@@ -20,6 +20,7 @@
 		IconPin,
 		IconPlus,
 		IconRobot,
+		IconTrash,
 		IconUserCircle,
 		IconUserPlus,
 		IconVolumeOff
@@ -39,6 +40,8 @@
 	import getTimeline from '$lib/api/timeline.js';
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getUserNotes from '$lib/api/user/notes.js';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
+	import localizedString from '$lib/localizedString';
 
 	let props = $props();
 
@@ -85,8 +88,8 @@
 			? $query.data.displayName
 			: $query.data.username
 				? $query.data.username
-				: 'User'
-		: 'User'}
+				: localizedString('user')
+		: localizedString('user')}
 	emojis={$query?.data?.emojis}
 >
 	<svelte:fragment slot="icon">
@@ -102,17 +105,17 @@
 	</svelte:fragment>
 
 	<Tab
-		title="Overview"
+		title={localizedString('overview')}
 		selected={tab === 'overview'}
 		on:click={() => (tab = 'overview')}
 	/>
 	<Tab
-		title="Media"
+		title={localizedString('media')}
 		selected={tab === 'media'}
 		on:click={() => (tab = 'media')}
 	/>
 	<Tab
-		title="Likes"
+		title={localizedString('likes')}
 		selected={tab === 'likes'}
 		on:click={() => (tab = 'likes')}
 	/>
@@ -167,17 +170,21 @@
 												<IconArrowsLeftRight
 													size="14px"
 												/>
-												Mutuals
+												<LocalizedString id="mutuals" />
 											</span>
 										{:else if $relationshipQuery.data.to?.type === 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type !== 'follow' && !$relationshipQuery.data.from?.pending}
 											<span class="relationship">
 												<IconArrowLeft size="14px" />
-												Following
+												<LocalizedString
+													id="you-follow"
+												/>
 											</span>
 										{:else if $relationshipQuery.data.to?.type !== 'follow' && !$relationshipQuery.data.to?.pending && $relationshipQuery.data.from?.type === 'follow' && !$relationshipQuery.data.from?.pending}
 											<span class="relationship">
 												<IconArrowRight size="14px" />
-												Follows you
+												<LocalizedString
+													id="follows-you"
+												/>
 											</span>
 										{/if}
 									{/if}
@@ -205,9 +212,9 @@
 								emojis={$query.data.emojis}
 							/>
 						{:else}
-							<span class="missing"
-								>This user hasn't written a bio yet.</span
-							>
+							<span class="missing">
+								<LocalizedString id="no-bio-written" />
+							</span>
 						{/if}
 					</p>
 					{#if $query.data.birthday || $query.data.location}
@@ -241,27 +248,39 @@
 						</div>
 					{/if}
 					<p class="joinedOn">
-						Joined {new Date(
-							$query.data.createdAt
-						).toLocaleTimeString(undefined, {
-							weekday: 'long',
-							month: 'long',
-							day: 'numeric',
-							year: 'numeric',
-							hour: 'numeric',
-							minute: '2-digit',
-							second: '2-digit'
-						})}
+						<LocalizedString
+							id="joined-at"
+							args={{
+								date: new Date($query.data.createdAt)
+							}}
+						/>
 					</p>
 					<div class="counts">
 						<span class="count">
-							<b>{$query?.data?.stats?.noteCount ?? 0}</b> notes
+							<LocalizedString
+								id="note-count"
+								args={{
+									count: $query?.data?.stats?.noteCount ?? 0
+								}}
+							/>
 						</span>
 						<span class="count">
-							<b>{$query?.data?.stats?.followingCount ?? 0}</b> following
+							<LocalizedString
+								id="following-count"
+								args={{
+									count:
+										$query?.data?.stats?.followingCount ?? 0
+								}}
+							/>
 						</span>
 						<span class="count">
-							<b>{$query?.data?.stats?.followersCount ?? 0}</b> followers
+							<LocalizedString
+								id="followers-count"
+								args={{
+									count:
+										$query?.data?.stats?.followersCount ?? 0
+								}}
+							/>
 						</span>
 					</div>
 				</div>

@@ -15,6 +15,8 @@
 	import Button from '$lib/components/Button.svelte';
 	import { navigating } from '$app/state';
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
+	import localizedString from '$lib/localizedString';
 
 	let props = $props();
 
@@ -52,10 +54,14 @@
 	title={$query.data
 		? $query.data.user
 			? $query.data.user.displayName
-				? 'Note by ' + $query.data.user.displayName
-				: 'Note by ' + $query.data.user.username
-			: 'Note'
-		: 'Note'}
+				? localizedString('note-by', {
+						name: $query.data.user.displayName
+					})
+				: localizedString('note-by', {
+						name: $query.data.user.username
+					})
+			: localizedString('note')
+		: localizedString('note')}
 >
 	<svelte:fragment slot="icon">
 		<IconNote size="18px" />
@@ -82,25 +88,25 @@
 				selected={selectedTab === 'replies'}
 				on:click={() => updateTab('replies')}
 			>
-				Replies
+				<LocalizedString id="replies" />
 			</Tab>
 			<Tab
 				selected={selectedTab === 'repeats'}
 				on:click={() => updateTab('repeats')}
 			>
-				Repeats
+				<LocalizedString id="repeats" />
 			</Tab>
 			<Tab
 				selected={selectedTab === 'likes'}
 				on:click={() => updateTab('likes')}
 			>
-				Likes
+				<LocalizedString id="likes" />
 			</Tab>
 			<Tab
 				selected={selectedTab === 'reactions'}
 				on:click={() => updateTab('reactions')}
 			>
-				Reactions
+				<LocalizedString id="reactions" />
 			</Tab>
 		</div>
 		<div class="bottom">
@@ -163,7 +169,7 @@
 						{@render renderReplies($contextQuery.data, 1)}
 					{:else}
 						<div class="nothingHere">
-							<p>Nobody's replied to this yet.</p>
+							<LocalizedString id="nobody-replied-yet" />
 						</div>
 					{/if}
 				{/if}
@@ -181,7 +187,7 @@
 					{/each}
 				{:else}
 					<div class="nothingHere">
-						<p>Nobody's repeated this yet.</p>
+						<LocalizedString id="nobody-repeated-yet" />
 					</div>
 				{/if}
 			{:else if selectedTab === 'likes'}
@@ -191,7 +197,7 @@
 					{/each}
 				{:else}
 					<div class="nothingHere">
-						<p>Nobody's liked this yet.</p>
+						<LocalizedString id="nobody-liked-yet" />
 					</div>
 				{/if}
 			{:else if selectedTab === 'reactions'}
@@ -201,7 +207,7 @@
 					{/each}
 				{:else}
 					<div class="nothingHere">
-						<p>Nobody's reacted to this yet.</p>
+						<LocalizedString id="nobody-reacted-yet" />
 					</div>
 				{/if}
 			{/if}

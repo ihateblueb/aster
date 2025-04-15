@@ -9,9 +9,11 @@
 		IconHome,
 		IconSearch,
 		IconSettings,
+		IconTrash,
 		IconUserPlus
 	} from '@tabler/icons-svelte';
 	import { page } from '$app/state';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let innerWidth: number;
 </script>
@@ -29,7 +31,7 @@
 				to="/"
 			>
 				<IconHome size="18px" />
-				Home
+				<LocalizedString id="home" />
 			</Button>
 			<Button
 				accentLight={page.url.pathname === '/notifications'}
@@ -39,7 +41,7 @@
 				to="/notifications"
 			>
 				<IconBell size="18px" />
-				Notifications
+				<LocalizedString id="notifications" />
 			</Button>
 			<Button
 				accentLight={page.url.pathname === '/follow-requests'}
@@ -49,7 +51,7 @@
 				to="/follow-requests"
 			>
 				<IconUserPlus size="18px" />
-				Follow requests
+				<LocalizedString id="follow-requests" />
 			</Button>
 			<hr />
 			<Button
@@ -60,7 +62,7 @@
 				to="/search"
 			>
 				<IconSearch size="18px" />
-				Search
+				<LocalizedString id="search" />
 			</Button>
 			<Button
 				accentLight={page.url.pathname === '/explore'}
@@ -70,7 +72,7 @@
 				to="/explore"
 			>
 				<IconHash size="18px" />
-				Explore
+				<LocalizedString id="explore" />
 			</Button>
 			<hr />
 			<Button
@@ -81,7 +83,7 @@
 				to="/drive"
 			>
 				<IconCloud size="18px" />
-				Drive
+				<LocalizedString id="drive" />
 			</Button>
 			<Button
 				accentLight={page.url.pathname === '/bookmarks'}
@@ -91,7 +93,7 @@
 				to="/bookmarks"
 			>
 				<IconBookmark size="18px" />
-				Bookmarks
+				<LocalizedString id="bookmarks" />
 			</Button>
 			<hr />
 			<Button
@@ -102,7 +104,7 @@
 				to="/settings"
 			>
 				<IconSettings size="18px" />
-				Settings
+				<LocalizedString id="settings" />
 			</Button>
 			<Button
 				accentLight={page.url.pathname.startsWith('/admin')}
@@ -112,7 +114,7 @@
 				to="/admin"
 			>
 				<IconDashboard size="18px" />
-				Dashboard
+				<LocalizedString id="dashboard" />
 			</Button>
 		</div>
 	{:else}

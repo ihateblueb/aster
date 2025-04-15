@@ -1,5 +1,5 @@
-import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
+import { sveltekit } from '@sveltejs/kit/vite';
 import dynamicImport from 'vite-plugin-dynamic-import';
 import optimizeTabler from './vite-plugin-optimize-tabler.js';
 
@@ -51,6 +51,7 @@ export default defineConfig({
 			}
 		}
 	},
+	assetsInclude: ['**/*.ftl'],
 	css: {
 		preprocessorOptions: {}
 	}

@@ -17,6 +17,7 @@
 	import localstore from '$lib/localstore';
 	import EmojiCard from '$lib/components/EmojiCard.svelte';
 	import FollowRequest from '$lib/components/FollowRequest.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let {
 		type,
@@ -147,7 +148,7 @@
 						Load more
 					</Button>
 				{:else}
-					No more
+					<LocalizedString id="no-more" />
 				{/if}
 			{:else}
 				<div use:infiniteLoading></div>

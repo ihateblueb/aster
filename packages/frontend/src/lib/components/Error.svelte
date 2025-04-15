@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Button from '$lib/components/Button.svelte';
-	import { IconBug, IconReload } from '@tabler/icons-svelte';
+	import { IconBug, IconReload, IconUserPlus } from '@tabler/icons-svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let { status = 0, message = '', server = false, retry } = $props();
 </script>
@@ -9,7 +10,9 @@
 	{#if server}
 		<h1>{status}</h1>
 	{:else}
-		<h1>Something went wrong</h1>
+		<h1>
+			<LocalizedString id="something-went-wrong" />
+		</h1>
 	{/if}
 	<p>{message}</p>
 
@@ -17,13 +20,13 @@
 		{#if retry}
 			<Button rounded on:click={retry}>
 				<IconReload size="18px" />
-				Retry
+				<LocalizedString id="retry" />
 			</Button>
 		{/if}
 		{#if !server}
 			<Button rounded to="https://github.com/ihateblueb/aster/issues">
 				<IconBug size="18px" />
-				Report issue
+				<LocalizedString id="report-issue" />
 			</Button>
 		{/if}
 	</div>

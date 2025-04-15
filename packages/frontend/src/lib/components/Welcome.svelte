@@ -11,6 +11,7 @@
 	import Note from '$lib/components/Note.svelte';
 	import getMeta from '$lib/api/meta/get.js';
 	import Timeline from '$lib/components/Timeline.svelte';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	const meta = createQuery({
 		queryKey: ['meta'],
@@ -33,7 +34,7 @@
 					<Mfm content={$meta.data.description} />
 				{:else}
 					<p class="missing">
-						There's nothing written about this instance yet.
+						<LocalizedString id="no-instance-description" />
 					</p>
 				{/if}
 			{/if}
@@ -42,7 +43,9 @@
 		<div class="bottom">
 			{#if $meta.data}
 				<div class="admin">
-					<p>Instance administrated by</p>
+					<p>
+						<LocalizedString id="administrated-by" />
+					</p>
 					{#each $meta.data.admins as admin}
 						<UserCard user={admin} />
 					{/each}
@@ -51,11 +54,11 @@
 			<div class="buttons">
 				<Button accent centered wide to="/login">
 					<IconLogin size="18px" />
-					Login
+					<LocalizedString id="login" />
 				</Button>
 				<Button centered wide to="/register">
 					<IconUserPlus size="18px" />
-					Register
+					<LocalizedString id="register" />
 				</Button>
 			</div>
 		</div>

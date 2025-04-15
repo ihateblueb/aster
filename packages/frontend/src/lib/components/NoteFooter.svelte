@@ -32,6 +32,7 @@
 	import playSound from '$lib/sounds';
 	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
 	import reactNote from '$lib/api/note/react';
+	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
 	let self = $state();
 	function updateSelf() {
@@ -225,11 +226,11 @@
 <Dropdown bind:this={repeatDropdown}>
 	<DropdownItem on:click={() => repeat()}>
 		<IconRepeat size="18px" />
-		<span>Repeat</span>
+		<LocalizedString id="repeat" />
 	</DropdownItem>
 	<DropdownItem on:click={() => quote()}>
 		<IconQuote size="18px" />
-		<span>Quote</span>
+		<LocalizedString id="quote" />
 	</DropdownItem>
 </Dropdown>
 
@@ -242,12 +243,12 @@
 <Dropdown bind:this={moreDropdown}>
 	<DropdownItem to={'/notes/' + note.id}>
 		<IconInfoCircle size="18px" />
-		<span>Details</span>
+		<LocalizedString id="details" />
 	</DropdownItem>
 	<DropdownDivider />
 	<DropdownItem on:click={() => navigator.clipboard.writeText(note.content)}>
 		<IconCopy size="18px" />
-		<span>Copy content</span>
+		<LocalizedString id="copy-content" />
 	</DropdownItem>
 	<!-- TODO: wrong -->
 	<DropdownItem
@@ -257,46 +258,46 @@
 			)}
 	>
 		<IconLink size="18px" />
-		<span>Copy link</span>
+		<LocalizedString id="copy-link" />
 	</DropdownItem>
 	{#if !note.user.local}
 		<DropdownItem on:click={() => navigator.clipboard.writeText(note.apId)}>
 			<IconLink size="18px" />
-			<span>Copy link (origin)</span>
+			<LocalizedString id="copy-link-origin" />
 		</DropdownItem>
 		<DropdownItem to={note.apId} newTab>
 			<IconExternalLink size="18px" />
-			View on remote
+			<LocalizedString id="view-on-remote" />
 		</DropdownItem>
 	{/if}
 	<DropdownDivider />
 	<DropdownItem>
 		<IconBellOff size="18px" />
-		<span>Mute thread</span>
+		<LocalizedString id="mute-thread" />
 	</DropdownItem>
 	<DropdownItem>
 		<IconBookmark size="18px" />
-		<span>Bookmark</span>
+		<LocalizedString id="bookmark" />
 	</DropdownItem>
 	<DropdownItem>
 		<IconAlertCircle size="18px" />
-		<span>Report</span>
+		<LocalizedString id="report" />
 	</DropdownItem>
 	{#if note.user.id === self.id}
 		<DropdownDivider />
 		<DropdownItem>
 			<IconPencil size="18px" />
-			<span>Edit</span>
+			<LocalizedString id="edit" />
 		</DropdownItem>
 		<DropdownItem danger on:click={() => moreDelete()}>
 			<IconTrash size="18px" />
-			<span>Delete</span>
+			<LocalizedString id="delete" />
 		</DropdownItem>
 	{:else if self.admin}
 		<DropdownDivider />
 		<DropdownItem danger on:click={() => moreDelete()}>
 			<IconTrash size="18px" />
-			<span>Delete</span>
+			<LocalizedString id="delete" />
 		</DropdownItem>
 	{/if}
 </Dropdown>
