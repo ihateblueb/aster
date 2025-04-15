@@ -64,7 +64,7 @@
 
 <PageWrapper tl>
 	{#if $query.isLoading}
-		<Loading />
+		<Loading massive />
 	{:else if $query.isError}
 		<Error
 			status={$query.error.status}
@@ -74,9 +74,7 @@
 		/>
 	{:else if $query.isSuccess}
 		{#if $query.data.replyingTo}
-			<div class="ancestor">
-				<NoteSimple nobg note={$query.data.replyingTo} />
-			</div>
+			<Note note={$query.data.replyingTo} />
 		{/if}
 		<Note note={$query.data} expanded />
 		<div class="tabs">
@@ -164,7 +162,9 @@
 
 						{@render renderReplies($contextQuery.data, 1)}
 					{:else}
-						No replies
+						<div class="nothingHere">
+							<p>Nobody's replied to this yet.</p>
+						</div>
 					{/if}
 				{/if}
 			{:else if selectedTab === 'repeats'}
@@ -180,7 +180,9 @@
 						{/if}
 					{/each}
 				{:else}
-					<p>Nobody's repeated this yet.</p>
+					<div class="nothingHere">
+						<p>Nobody's repeated this yet.</p>
+					</div>
 				{/if}
 			{:else if selectedTab === 'likes'}
 				{#if $query.data.likes && $query.data.likes.length >= 1}
@@ -188,7 +190,9 @@
 						<UserCard user={like.user} time={like.createdAt} />
 					{/each}
 				{:else}
-					<p>Nobody's liked this yet.</p>
+					<div class="nothingHere">
+						<p>Nobody's liked this yet.</p>
+					</div>
 				{/if}
 			{:else if selectedTab === 'reactions'}
 				{#if $query.data.reactions && $query.data.reactions.length >= 1}
@@ -196,7 +200,9 @@
 						<UserCard user={react.user} time={react.createdAt} />
 					{/each}
 				{:else}
-					<p>Nobody's reacted to this yet.</p>
+					<div class="nothingHere">
+						<p>Nobody's reacted to this yet.</p>
+					</div>
 				{/if}
 			{/if}
 		</div>
@@ -225,6 +231,20 @@
 	.bottom {
 		margin-top: 8px;
 
+		.nothingHere {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			box-sizing: border-box;
+			padding: 25px 0;
+			height: 100%;
+			width: 100%;
+
+			p {
+				color: var(--tx3);
+			}
+		}
+
 		.userCard {
 			padding: 16px;
 			transition: 0.1s;
@@ -242,7 +262,7 @@
 				.threadLine {
 					box-sizing: border-box;
 					margin-right: 10px;
-					border-left: 1px solid var(--bg4);
+					border-left: 2px solid var(--bg4);
 				}
 
 				.note {
