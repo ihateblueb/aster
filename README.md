@@ -29,8 +29,13 @@ Aster is **not** ready for production. If you use it in production, good luck!
 
 ### Prerequisites
 
-- PostgreSQL (find minimum version)
-- Redis (find minimum version) or DragonflyDB (find minimum version)
+- Node (todo: find minimum version)
+- pnpm
+- yarn
+- PostgreSQL (todo: find minimum version)
+- Redis (todo: find minimum version) or DragonflyDB (todo: find minimum version)
+
+Use latest available unless otherwise noted. 
 
 ### Installation
 
