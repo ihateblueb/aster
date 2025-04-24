@@ -42,9 +42,11 @@ class CacheService {
 		return await this.client.set(
 			ConfigService.redis.prefix + 'asterCache_' + key,
 			val,
-			{
-				EX: expire
-			}
+			expire
+				? {
+						EX: expire
+					}
+				: {}
 		);
 	}
 }

@@ -56,7 +56,7 @@ export default defineConfig({
 			'/ping': {
 				target: apiurl,
 				changeOrigin: true
-			},
+			}
 		}
 	},
 	assetsInclude: ['**/*.ftl'],
