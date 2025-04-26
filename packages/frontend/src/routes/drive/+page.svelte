@@ -6,6 +6,7 @@
 	import upload from '$lib/api/upload';
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getDrive from '$lib/api/drive/get';
+	import localizedString from '$lib/localizedString';
 
 	let query = $state();
 
@@ -27,7 +28,7 @@
 	}
 </script>
 
-<PageHeader title="Drive">
+<PageHeader title={localizedString('drive')}>
 	<svelte:fragment slot="icon">
 		<IconCloud size="18px" />
 	</svelte:fragment>

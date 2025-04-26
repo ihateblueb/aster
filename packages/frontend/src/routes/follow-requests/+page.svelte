@@ -6,6 +6,7 @@
 	import localstore from '$lib/localstore.js';
 	import queryclient from '$lib/queryclient.js';
 	import getFollowRequests from '$lib/api/follow-requests/get.js';
+	import localizedString from '$lib/localizedString';
 
 	let query: any = $state();
 
@@ -15,7 +16,7 @@
 	}
 </script>
 
-<PageHeader title="Follow requests">
+<PageHeader title={localizedString('follow-requests')}>
 	<svelte:fragment slot="icon">
 		<IconUserPlus size="18px" />
 	</svelte:fragment>

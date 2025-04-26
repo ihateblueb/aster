@@ -16,6 +16,7 @@
 	import queryclient from '$lib/queryclient.js';
 	import getNotifications from '$lib/api/notifications/get.js';
 	import Timeline from '$lib/components/Timeline.svelte';
+	import localizedString from '$lib/localizedString';
 
 	let query: any = $state();
 
@@ -30,7 +31,7 @@
 	}
 </script>
 
-<PageHeader title="Notifications">
+<PageHeader title={localizedString('notifications')}>
 	<svelte:fragment slot="icon">
 		<IconBell size="18px" />
 	</svelte:fragment>

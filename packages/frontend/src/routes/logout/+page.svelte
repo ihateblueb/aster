@@ -5,6 +5,7 @@
 	import store from '$lib/store';
 	import { goto } from '$app/navigation';
 	import Loading from '$lib/components/Loading.svelte';
+	import localizedString from '$lib/localizedString';
 
 	localstore.delete('token');
 	localstore.delete('self');
@@ -14,7 +15,7 @@
 	goto('/').then(() => store.appReload.set(true));
 </script>
 
-<PageHeader title="Logout"></PageHeader>
+<PageHeader title={localizedString('logout')}></PageHeader>
 
 <PageWrapper centered>
 	<Loading />

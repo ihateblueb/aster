@@ -8,6 +8,7 @@
 	import store from '$lib/store';
 	import { goto } from '$app/navigation';
 	import getUser from '$lib/api/user/get';
+	import localizedString from '$lib/localizedString';
 
 	let error = $state(false);
 	let errorMsg = $state('');
@@ -45,7 +46,7 @@
 	}
 </script>
 
-<PageHeader title="Login"></PageHeader>
+<PageHeader title={localizedString('login')}></PageHeader>
 
 <PageWrapper centered>
 	<div class="ctn">

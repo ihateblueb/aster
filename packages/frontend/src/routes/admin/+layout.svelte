@@ -4,6 +4,7 @@
 	import { goto } from '$app/navigation';
 	import { IconDashboard, IconSettings } from '@tabler/icons-svelte';
 	import Tab from '$lib/components/Tab.svelte';
+	import localizedString from '$lib/localizedString';
 
 	let selectedTab = 0;
 	if (page.route.id?.startsWith('/admin/general')) selectedTab = 1;
@@ -13,7 +14,7 @@
 	if (page.route.id?.startsWith('/admin/reports')) selectedTab = 5;
 </script>
 
-<PageHeader title="Dashboard">
+<PageHeader title={localizedString('dashboard')}>
 	<svelte:fragment slot="icon">
 		<IconDashboard size="18px" />
 	</svelte:fragment>
