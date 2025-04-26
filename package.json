@@ -24,7 +24,7 @@
 		"format": "pnpm lint-fix-be && prettier --config .prettierrc --ignore-path .prettierignore '**' --write",
 		"lint-be": "pnpm --filter=backend lint",
 		"lint-fix-be": "pnpm --filter=backend lint --fix",
-		"migrate": "pnpm build-be && pnpm --filter=backend migrate",
+		"migrate": "pnpm build-be && pnpm cli clearCache && pnpm --filter=backend migrate",
 		"revert": "pnpm build-be && pnpm -filter=backend revert",
 		"pull": "git pull && git submodule update --init --recursive ",
 		"cli": "pnpm run --filter=backend cli",
