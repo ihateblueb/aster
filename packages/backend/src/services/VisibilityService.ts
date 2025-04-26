@@ -6,6 +6,7 @@ class VisibilityService {
 	public async canISee(note: ObjectLiteral, as?: string) {
 		if (!note || !note.visibility) return false;
 
+		if (note.user.id === as) return true;
 		if (['public', 'unlisted'].includes(note.visibility)) return true;
 
 		if (as) {

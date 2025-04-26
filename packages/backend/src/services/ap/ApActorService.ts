@@ -102,9 +102,7 @@ class ApActorService {
 				user['birthday'] = new Date(
 					body['vcard:birthday']
 				).toISOString();
-		} catch (_) {
-			/* ignore */
-		}
+		} catch (_) {}
 
 		if (body.sensitive) user['sensitive'] = true;
 		if (moderatedInstance && !moderatedInstance.sensitive)

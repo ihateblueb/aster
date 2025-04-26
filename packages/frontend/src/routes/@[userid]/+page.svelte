@@ -251,7 +251,9 @@
 						<LocalizedString
 							id="joined-at"
 							args={{
-								date: new Date($query.data.createdAt)
+								date: new Date(
+									$query.data.createdAt ?? Date.now()
+								)
 							}}
 						/>
 					</p>

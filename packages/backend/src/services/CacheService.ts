@@ -50,7 +50,7 @@ class CacheService {
 	}
 
 	public async del(key: string | string[]) {
-		logger.debug('cache', 'deleting ' + (this.keyPrefix + key));
+		logger.debug('cache', 'deleting ' + key);
 		return await this.client.del(key);
 	}
 
@@ -60,7 +60,7 @@ class CacheService {
 
 		while (true) {
 			const result = await this.client.scan(cursor, {
-				MATCH: match,
+				MATCH: this.keyPrefix + match,
 				COUNT: 100
 			});
 
@@ -75,6 +75,7 @@ class CacheService {
 
 	public async scanAndDel(match: string) {
 		let keys = await this.scan(match);
+		console.log('kkeu ', keys);
 		return keys && keys.length > 0 ? await this.del(keys) : 0;
 	}
 

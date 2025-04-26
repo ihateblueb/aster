@@ -16,12 +16,7 @@ class ContextRenderer {
 		});
 
 		for (const reply of notes) {
-			if (
-				(reply.visibility === 'followers' ||
-					reply.visibility === 'direct') &&
-				!(await VisibilityService.canISee(reply, as))
-			)
-				continue;
+			if (!(await VisibilityService.canISee(reply, as))) continue;
 
 			reply.replies = await this.render(reply.id, depth);
 			replies.push(await NoteRenderer.render(reply));

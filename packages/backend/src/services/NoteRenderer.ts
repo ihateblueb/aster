@@ -5,7 +5,15 @@ import EmojiService from './EmojiService.js';
 import UserRenderer from './UserRenderer.js';
 
 class NoteRenderer {
-	public async render(note: ObjectLiteral) {
+	public async render(note: ObjectLiteral, skipCache?: boolean) {
+		/*
+		const cacheKey = 'note_render_' + note.id;
+		const cached = !skipCache
+			? await CacheService.get(cacheKey)
+			: undefined;
+
+		if (cached && !skipCache) return JSON.parse(cached);*/
+
 		if (note.user) note.user = await UserRenderer.render(note.user);
 
 		if (note.likes) {
@@ -99,14 +107,19 @@ class NoteRenderer {
 
 		if (note.repeat) note.repeat = await this.render(note.repeat);
 
+		/*
+		if (!cached && !skipCache)
+			await CacheService.set(cacheKey, JSON.stringify(note));
+			*/
+
 		return note;
 	}
 
-	public async renderMany(notes: ObjectLiteral[]) {
+	public async renderMany(notes: ObjectLiteral[], skipCache?: boolean) {
 		let rendered: ObjectLiteral[] = [];
 
 		for (const note of notes) {
-			await this.render(note).then((e) => {
+			await this.render(note, skipCache).then((e) => {
 				if (e) rendered.push(e);
 			});
 		}
