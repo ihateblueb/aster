@@ -48,6 +48,14 @@ export default defineConfig({
 			'/manifest.json': {
 				target: apiurl,
 				changeOrigin: true
+			},
+			'/metrics': {
+				target: apiurl,
+				changeOrigin: true
+			},
+			'/ping': {
+				target: apiurl,
+				changeOrigin: true
 			}
 		}
 	},

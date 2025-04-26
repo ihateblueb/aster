@@ -1,10 +1,16 @@
 import { In, ObjectLiteral } from 'typeorm';
 
+import CacheService from './CacheService.js';
 import EmojiService from './EmojiService.js';
 
 class UserRenderer {
-	public async render(user: ObjectLiteral) {
-		// TODO: cache
+	public async render(user: ObjectLiteral, skipCache?: boolean) {
+		// todo: test
+		const cacheKey = 'user_render_' + user.id;
+		const cached = await CacheService.get(cacheKey);
+
+		if (cached && !skipCache) return JSON.parse(cached);
+
 		if (user && user.emojis) {
 			let emojis: ObjectLiteral[] = [];
 
@@ -31,6 +37,9 @@ class UserRenderer {
 				.length
 		};
 		* */
+
+		if (!cached && !skipCache)
+			await CacheService.set(cacheKey, JSON.stringify(user));
 
 		return user;
 	}
