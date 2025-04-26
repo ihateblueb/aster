@@ -50,9 +50,13 @@
 		didIRepeat = note?.repeats?.some((e) => e?.user?.id === self?.id);
 		didILike = note?.likes?.some((e) => e?.user?.id === self?.id);
 
-		if (note.reactions) {
+		if (note.reactions && note.reactions.length > 0) {
 			for (let reaction of note.reactions) {
-				if (reaction?.users?.some((e) => e?.id === self?.id))
+				if (
+					reaction?.users &&
+					reaction?.users.length > 0 &&
+					reaction?.users?.some((e) => e?.id === self?.id)
+				)
 					didIReact = true;
 			}
 		}
@@ -109,9 +113,10 @@
 {#if note.reactions && note.reactions.length > 0}
 	<div class="reactions">
 		{#each note.reactions as reaction}
-			{@const didIReactHere = reaction?.users?.some(
-				(e) => e?.id === self?.id
-			)}
+			{@const didIReactHere =
+				reaction?.users && reaction?.users.length > 0
+					? reaction?.users?.some((e) => e?.id === self?.id)
+					: false}
 
 			<div
 				class={'reaction' + (didIReactHere ? ' reacted' : '')}

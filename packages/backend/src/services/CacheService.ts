@@ -21,26 +21,25 @@ const client = await redis
 
 class CacheService {
 	public client = client;
+	public keyPrefix: string = ConfigService.redis.prefix + 'asterCache_';
+
 	public async get(key: string) {
-		logger.debug(
-			'cache',
-			'getting ' + (ConfigService.redis.prefix + 'asterCache_' + key)
-		);
-		return await this.client.get(
-			ConfigService.redis.prefix + 'asterCache_' + key
-		);
+		logger.debug('cache', 'getting ' + this.keyPrefix + key);
+		return await this.client.get(this.keyPrefix + key);
 	}
+
 	public async set(key: string, val: string, expire?: number) {
 		logger.debug(
 			'cache',
 			'setting ' +
-				(ConfigService.redis.prefix + 'asterCache_' + key) +
+				(this.keyPrefix + key) +
 				' to ' +
 				val +
 				(expire ? ' expiring in ' + expire : '')
 		);
+
 		return await this.client.set(
-			ConfigService.redis.prefix + 'asterCache_' + key,
+			this.keyPrefix + key,
 			val,
 			expire
 				? {
@@ -48,6 +47,40 @@ class CacheService {
 					}
 				: {}
 		);
+	}
+
+	public async del(key: string | string[]) {
+		logger.debug('cache', 'deleting ' + (this.keyPrefix + key));
+		return await this.client.del(key);
+	}
+
+	public async scan(match: string) {
+		let cursor = 0;
+		let keys = [];
+
+		while (true) {
+			const result = await this.client.scan(cursor, {
+				MATCH: match,
+				COUNT: 100
+			});
+
+			cursor = result.cursor;
+			keys.push(...result.keys);
+
+			if (cursor === 0) break;
+		}
+
+		return keys;
+	}
+
+	public async scanAndDel(match: string) {
+		let keys = await this.scan(match);
+		return await this.del(keys);
+	}
+
+	public async clear() {
+		const match = this.keyPrefix + '*';
+		return await this.scanAndDel(match);
 	}
 }
 

@@ -6,6 +6,7 @@ import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
 import tryUrl from '../../utils/tryUrl.js';
+import CacheService from '../CacheService.js';
 import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
@@ -248,7 +249,11 @@ class ApActorService {
 				logger.error('ap', 'failed to update remote user');
 			});
 
-		return await UserService.get({ apId: body.id });
+		const user = await UserService.get({ apId: body.id });
+
+		await CacheService.scanAndDel('user*' + user.id);
+
+		return user;
 	}
 }
 

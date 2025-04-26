@@ -8,26 +8,19 @@ class NoteRenderer {
 	public async render(note: ObjectLiteral) {
 		if (note.user) note.user = await UserRenderer.render(note.user);
 
-		/* todo: verify this isnt trash, this seems like it will be inefficient 
-				 but i want these to be rendered.
-				 maybe this is a good time for a render cache on users that gets
-				 cleared only when needed.
-
-				 it may be smart to create a test for rendering these with varying
-				 complexity
-				 
 		if (note.likes) {
 			for (const like of note.likes) {
-				if (like.user) like['user'] = UserRenderer.render(like.user)
+				if (like.user)
+					like['user'] = await UserRenderer.render(like.user);
 			}
 		}
 
 		if (note.repeats) {
 			for (const repeat of note.repeats) {
-				if (repeat.user) repeat['user'] = UserRenderer.render(repeat.user)
+				if (repeat.user)
+					repeat['user'] = await UserRenderer.render(repeat.user);
 			}
 		}
-		 */
 
 		if (note && note.attachments) {
 			let attachments: ObjectLiteral[] = [];

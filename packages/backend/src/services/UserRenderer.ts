@@ -2,12 +2,15 @@ import { In, ObjectLiteral } from 'typeorm';
 
 import CacheService from './CacheService.js';
 import EmojiService from './EmojiService.js';
+import NoteService from './NoteService.js';
+import RelationshipService from './RelationshipService.js';
 
 class UserRenderer {
 	public async render(user: ObjectLiteral, skipCache?: boolean) {
-		// todo: test
 		const cacheKey = 'user_render_' + user.id;
-		const cached = await CacheService.get(cacheKey);
+		const cached = !skipCache
+			? await CacheService.get(cacheKey)
+			: undefined;
 
 		if (cached && !skipCache) return JSON.parse(cached);
 
@@ -26,8 +29,7 @@ class UserRenderer {
 			user['emojis'] = emojis;
 		}
 
-		/* adds ~200ms
-		* user['stats'] = {
+		user['stats'] = {
 			noteCount: await NoteService.count({
 				user: { id: user.id }
 			}),
@@ -36,7 +38,6 @@ class UserRenderer {
 			followersCount: (await RelationshipService.getFollowers(user.id))
 				.length
 		};
-		* */
 
 		if (!cached && !skipCache)
 			await CacheService.set(cacheKey, JSON.stringify(user));

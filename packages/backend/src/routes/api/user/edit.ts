@@ -5,6 +5,7 @@ import { In, IsNull } from 'typeorm';
 import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
 import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
+import CacheService from '../../../services/CacheService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
 import MfmService from '../../../services/MfmService.js';
@@ -253,6 +254,8 @@ export default plugin(async (fastify) => {
 				updated
 			).then(async () => {
 				const newUser = await UserService.get({ id: user.id });
+
+				await CacheService.scanAndDel('user*' + user.id);
 
 				if (user.local) {
 					let activity = ApUpdateRenderer.render(
