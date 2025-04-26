@@ -11,11 +11,12 @@ program
 	.version('0.8.0');
 
 program
-	.command('cacheClear')
+	.command('cache clear')
 	.description('removes all cached renders')
 	.action(async () => {
 		logger.info('cache', 'clearing cache');
 		await CacheService.clear();
+		process.exit(0);
 	});
 
 program.parse();

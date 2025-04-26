@@ -75,7 +75,7 @@ class CacheService {
 
 	public async scanAndDel(match: string) {
 		let keys = await this.scan(match);
-		return await this.del(keys);
+		return keys && keys.length > 0 ? await this.del(keys) : 0;
 	}
 
 	public async clear() {
