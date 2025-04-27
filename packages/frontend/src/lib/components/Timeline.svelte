@@ -27,7 +27,11 @@
 		queryFn,
 		noScroll = false,
 		query = $bindable(),
-		timeline = $bindable()
+		timeline = $bindable(),
+		additional = $bindable({
+			notes: [],
+			notifications: []
+		})
 	} = $props();
 
 	query = createInfiniteQuery({
@@ -55,8 +59,6 @@
 		observer.observe(e);
 	}
 
-	let additionalNotes: any[] = $state([]);
-
 	if (ws && queryKey === 'timeline') {
 		ws.addEventListener('open', () => {
 			ws?.send(`sub timeline:${timeline}`);
@@ -74,11 +76,31 @@
 				message.timeline === timeline &&
 				message.note;
 
-			console.log('add to tl ', addToTl);
-
 			if (addToTl) {
 				console.log('[' + queryKey + '] received ws note');
-				additionalNotes.unshift(message.note);
+				additional.notes.unshift(message.note);
+			}
+		});
+	}
+
+	if (
+		ws &&
+		(queryKey === 'notifications' || queryKey === 'notifications-widget')
+	) {
+		ws.addEventListener('message', (e) => {
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
+
+			let addToTl =
+				message &&
+				message.type === 'notification:add' &&
+				message.notification;
+
+			if (addToTl) {
+				console.log('[' + queryKey + '] received ws notification');
+				additional.notifications.unshift(message.notification);
 			}
 		});
 	}
@@ -94,7 +116,7 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
-	{#each additionalNotes as note}
+	{#each additional.notes as note}
 		<div
 			in:fly|global={{
 				y: -10,
@@ -103,6 +125,17 @@
 			}}
 		>
 			<Note {note} />
+		</div>
+	{/each}
+	{#each additional.notifications as notification}
+		<div
+			in:fly|global={{
+				y: -10,
+				duration: 350,
+				easing: backOut
+			}}
+		>
+			<Notification {notification} />
 		</div>
 	{/each}
 

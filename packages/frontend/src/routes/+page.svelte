@@ -26,7 +26,10 @@
 	import DropdownDivider from '$lib/components/DropdownDivider.svelte';
 	import LocalizedString from '$lib/components/LocalizedString.svelte';
 
+	const defaultAdditionalState = { notes: [] };
+
 	let query: any = $state();
+	let additional: any = $state(defaultAdditionalState);
 
 	let timeline: string = $state('home');
 	timeline = localstore.getParsed('homeTab');
@@ -36,8 +39,7 @@
 		timeline = to;
 		if (ws) ws.send(`sub timeline:${timeline}`);
 		localstore.set('homeTab', to);
-
-		// clear timeline
+		additional = defaultAdditionalState;
 		queryclient.clear();
 		$query.refetch();
 	}
@@ -113,6 +115,7 @@
 		queryFn={getTimeline}
 		bind:timeline
 		bind:query
+		bind:additional
 	/>
 </PageWrapper>
 
