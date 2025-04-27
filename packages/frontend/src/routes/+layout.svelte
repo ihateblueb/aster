@@ -20,6 +20,7 @@
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
 	import Error from '$lib/components/Error.svelte';
 	import Boundary from '$lib/components/Boundary.svelte';
+	import ws from '$lib/websocket.svelte.js';
 
 	let loggedIn = $state(false);
 	if (localstore.getParsed('token')) loggedIn = true;
@@ -40,6 +41,22 @@
 		if (e && drive && loggedIn) await drive.open();
 		if (!e && drive) drive.close();
 	});
+
+	if (ws) {
+		ws.addEventListener('message', (e) => {
+			let message;
+			try {
+				message = JSON.parse(e.data);
+			} catch {}
+
+			let addToNotifs =
+				message &&
+				message.type === 'notification:add' &&
+				message.notification;
+
+			if (addToNotifs) addNotification(message.notification);
+		});
+	}
 
 	let notifications: any[] = $state([]);
 

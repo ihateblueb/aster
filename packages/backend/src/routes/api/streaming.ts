@@ -2,6 +2,7 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
 import AuthService from '../../services/AuthService.js';
+import WebsocketService from '../../services/WebsocketService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -24,6 +25,8 @@ export default plugin(async (fastify) => {
 		},
 		async (socket, req) => {
 			const auth = await AuthService.verify(req.query.token);
+
+			if (auth.error) socket.close();
 
 			socket.on('open', () => {
 				socket.send(
@@ -49,6 +52,25 @@ export default plugin(async (fastify) => {
 					);
 
 				socket.send(JSON.stringify({ type: 'echo', data: content }));
+			});
+
+			WebsocketService.userEmitter.on(auth.user.id, (e) => {
+				socket.send(JSON.stringify(e));
+			});
+
+			WebsocketService.globalEmitter.on('timeline:local', (e) => {
+				if (subscriptions.includes('timeline:local'))
+					socket.send(JSON.stringify(e));
+			});
+
+			WebsocketService.globalEmitter.on('timeline:bubble', (e) => {
+				if (subscriptions.includes('timeline:bubble'))
+					socket.send(JSON.stringify(e));
+			});
+
+			WebsocketService.globalEmitter.on('timeline:public', (e) => {
+				if (subscriptions.includes('timeline:public'))
+					socket.send(JSON.stringify(e));
 			});
 
 			socket.on('close', () => {});
