@@ -38,7 +38,7 @@
 		queryKey: [queryKey],
 		retry: false,
 		queryFn: async ({ pageParam }) =>
-			timeline
+			timeline || timeline === ''
 				? await queryFn(timeline, pageParam)
 				: await queryFn(pageParam),
 		initialPageParam: undefined,
