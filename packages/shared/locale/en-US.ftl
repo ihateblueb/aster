@@ -224,3 +224,4 @@ wellness = Wellness
 whats-going-on = What's going on?
 years-ago = { $number }y
 you-follow = You follow
+invites = Invites
