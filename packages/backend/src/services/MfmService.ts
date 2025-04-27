@@ -1,4 +1,5 @@
 import * as mfm from 'mfm-js';
+import { MfmNode } from 'mfm-js';
 
 import ConfigService from './ConfigService.js';
 
@@ -21,10 +22,10 @@ class MfmService {
 	}
 
 	public extractMentions(content: string) {
-		let parse = this.parse(content, true);
+		let parse = this.parse(content, false);
 		let mentions = [];
 
-		this.iterateAndRun(parse, (node) => {
+		this.iterateAndRun(parse, (node: MfmNode) => {
 			if (node.type === 'mention' && node.props.acct) {
 				mentions.push(node.props.acct);
 			}

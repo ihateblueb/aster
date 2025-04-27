@@ -7,7 +7,7 @@
 	import Notification from '$lib/components/Notification.svelte';
 	import Note from '$lib/components/Note.svelte';
 
-	import { fly } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 	import { backOut } from 'svelte/easing';
 
 	import NoteSimple from '$lib/components/NoteSimple.svelte';
