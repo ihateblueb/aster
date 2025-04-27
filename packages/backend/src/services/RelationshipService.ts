@@ -6,7 +6,7 @@ import ApRelationshipService from './ap/ApRelationshipService.js';
 import IdService from './IdService.js';
 
 class RelationshipService {
-	public async get(where: where, includeActivityForResponse?: boolean) {
+	public async get(where: where) {
 		let queryBuilder = db
 			.getRepository('relationship')
 			.createQueryBuilder('relationship');
@@ -15,12 +15,6 @@ class RelationshipService {
 			.leftJoinAndSelect('relationship.to', 'to')
 			.leftJoinAndSelect('relationship.from', 'from')
 			.where(where);
-
-		if (includeActivityForResponse)
-			queryBuilder.leftJoinAndSelect(
-				'relationship.activityForResponse',
-				'activityForResponse'
-			);
 
 		return await queryBuilder.getOne();
 	}
@@ -57,7 +51,7 @@ class RelationshipService {
 		from: GenericId,
 		type: RelationshipType,
 		pending: boolean,
-		responseActivity?: GenericId
+		responseActivity?: ApId
 	) {
 		const id = IdService.generate();
 		return await db
@@ -68,7 +62,7 @@ class RelationshipService {
 				fromId: from,
 				type: type,
 				pending: pending,
-				responseActivityId: responseActivity,
+				activityForResponseId: responseActivity,
 				createdAt: new Date().toISOString()
 			})
 			.then(() => {
@@ -166,7 +160,7 @@ class RelationshipService {
 	}
 
 	public async acceptFollow(id: GenericId) {
-		const relationship = await this.get({ id: id }, true);
+		const relationship = await this.get({ id: id });
 
 		if (!relationship)
 			return {
@@ -185,7 +179,7 @@ class RelationshipService {
 		await ApRelationshipService.acceptFollow(
 			relationship.to.id,
 			relationship.from.inbox,
-			relationship.activityForResponse
+			relationship.activityForResponseId
 		);
 
 		await this.update(
@@ -205,7 +199,7 @@ class RelationshipService {
 	}
 
 	public async rejectFollow(id: GenericId) {
-		const relationship = await this.get({ id: id }, true);
+		const relationship = await this.get({ id: id });
 
 		if (!relationship)
 			return {
@@ -224,7 +218,7 @@ class RelationshipService {
 		await ApRelationshipService.rejectFollow(
 			relationship.to.id,
 			relationship.from.inbox,
-			relationship.activityForResponse
+			relationship.activityForResponseId
 		);
 
 		await this.delete({

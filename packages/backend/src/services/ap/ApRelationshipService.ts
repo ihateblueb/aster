@@ -1,4 +1,3 @@
-import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import IdService from '../IdService.js';
 import NotificationService from '../NotificationService.js';
@@ -10,9 +9,13 @@ import ApActorService from './ApActorService.js';
 import ApRejectRenderer from './ApRejectRenderer.js';
 
 class ApRelationshipService {
-	public async acceptFollow(to: GenericId, from: Inbox, body: ApObject) {
+	public async acceptFollow(
+		to: GenericId,
+		from: Inbox,
+		apId: ApObject | ApId
+	) {
 		const id = IdService.generate();
-		const deliver = ApAcceptRenderer.render(id, to, body);
+		const deliver = ApAcceptRenderer.render(id, to, apId);
 
 		return await QueueService.deliver
 			.add(IdService.generate(), {
@@ -28,9 +31,9 @@ class ApRelationshipService {
 			});
 	}
 
-	public async rejectFollow(to: GenericId, from: GenericId, body: ApObject) {
+	public async rejectFollow(to: GenericId, from: GenericId, apId: ApId) {
 		const id = IdService.generate();
-		const deliver = ApRejectRenderer.render(id, to, body);
+		const deliver = ApRejectRenderer.render(id, to, apId);
 
 		return await QueueService.deliver
 			.add(IdService.generate(), {
@@ -71,35 +74,14 @@ class ApRelationshipService {
 		}
 
 		if (to.locked) {
-			const aId = IdService.generate();
-
-			const insertedActivity = await db
-				.getRepository('activity')
-				.insert({
-					id: aId,
-					apId: body.id,
-					content: JSON.stringify(body),
-					createdAt: new Date().toISOString()
-				})
-				.then(() => {
-					return true;
-				})
-				.catch((err) => {
-					console.log(err);
-					logger.error(
-						'inbox',
-						'failed to insert follow request activity'
-					);
-				});
-
-			if (!insertedActivity) return false;
+			console.log(body.id);
 
 			const insertedRelationship = await RelationshipService.create(
 				to.id,
 				from.id,
 				'follow',
 				true,
-				aId
+				body.id
 			);
 
 			if (!insertedRelationship) return false;
@@ -137,7 +119,7 @@ class ApRelationshipService {
 				insertedRelationship.id
 			);
 
-			await this.acceptFollow(to.id, from.inbox, body);
+			await this.acceptFollow(to.id, from.inbox, body.id);
 
 			return true;
 		}

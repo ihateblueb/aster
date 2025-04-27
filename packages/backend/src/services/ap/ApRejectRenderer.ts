@@ -5,7 +5,7 @@ class ApRejectRenderer {
 	public render(
 		id: GenericId,
 		actor: GenericId,
-		activity: ApObject
+		activity: ApObject | ApId
 	): ApObject {
 		return {
 			'@context': context,

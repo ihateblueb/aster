@@ -3,11 +3,9 @@ import typeorm, {
 	Entity,
 	JoinColumn,
 	ManyToOne,
-	OneToOne,
 	PrimaryColumn
 } from 'typeorm';
 
-import { Activity } from './Activity.js';
 import { User } from './User.js';
 
 @Entity()
@@ -41,18 +39,8 @@ export class Relationship {
 	@Column({ default: false })
 	pending: boolean;
 
-	/* the id of the Activity that was sent
-	 * only saved if neccesary
-	 */
-	@Column({ select: false, nullable: true })
+	@Column({ nullable: true })
 	activityForResponseId: string;
-
-	@OneToOne(() => Activity, (activity) => activity, {
-		onDelete: 'CASCADE',
-		nullable: true
-	})
-	@JoinColumn({ name: 'activityForResponseId' })
-	activityForResponse: typeorm.Relation<Activity>;
 
 	@Column()
 	createdAt: string;

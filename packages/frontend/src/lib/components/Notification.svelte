@@ -99,7 +99,8 @@
 	class={'notification' +
 		(small ? ' small' : '') +
 		(floating ? ' floating' : '')}
-	transition:fly={{ x: floating ? 250 : 0 }}
+	in:fly={{ x: floating ? 250 : 0 }}
+	out:fade={{ duration: floating ? 250 : 0 }}
 >
 	<div class="top">
 		<div class="left">
@@ -196,8 +197,10 @@
 			background-color: var(--bg4-25);
 			backdrop-filter: blur(var(--blur-md));
 
-			max-width: 250px;
-			min-width: 200px;
+			width: 100%;
+			max-width: 350px;
+			min-width: 275px;
+			box-sizing: border-box;
 
 			.body {
 				margin-top: 2px;

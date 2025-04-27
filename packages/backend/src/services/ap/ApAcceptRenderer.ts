@@ -1,5 +1,3 @@
-import { ObjectLiteral } from 'typeorm';
-
 import context from '../../static/context.js';
 import ConfigService from '../ConfigService.js';
 
@@ -7,7 +5,7 @@ class ApAcceptRenderer {
 	public render(
 		id: GenericId,
 		actor: GenericId,
-		activity: ObjectLiteral
+		activity: ApObject | ApId
 	): ApObject {
 		return {
 			'@context': context,
