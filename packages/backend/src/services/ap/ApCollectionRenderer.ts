@@ -7,10 +7,10 @@ class ApCollectionRenderer {
 		return {
 			'@context': context,
 
-			id: ConfigService.url.href + base,
-			type: 'Collection',
-			totalItems: items.length,
-			items: items
+			'id': ConfigService.url.href + base,
+			'type': 'Collection',
+			'totalItems': items.length,
+			'items': items
 		};
 	}
 }

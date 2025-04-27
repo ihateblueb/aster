@@ -7,9 +7,9 @@ class ApUndoRenderer {
 		let undo = {
 			'@context': context,
 
-			type: 'Undo',
-			id: ConfigService.url.href + 'activities/' + IdService.generate(),
-			object: object
+			'type': 'Undo',
+			'id': ConfigService.url.href + 'activities/' + IdService.generate(),
+			'object': object
 		};
 
 		if (object.actor) undo['actor'] = object.actor;

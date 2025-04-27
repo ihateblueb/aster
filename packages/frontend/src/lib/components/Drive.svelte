@@ -5,9 +5,10 @@
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getDrive from '$lib/api/drive/get';
 	import LocalizedString from '$lib/components/LocalizedString.svelte';
+	import addAlert from '$lib/addAlert.js';
+	import localizedString from '$lib/localizedString.js';
 
 	let query = $state();
-
 	let fileInput = $state();
 
 	async function onInputChange(e) {
@@ -22,9 +23,24 @@
 
 		console.log(formData);
 
-		await upload(formData);
-
-		if (query) $query.refetch();
+		await upload(formData)
+			.then(() => {
+				addAlert({
+					type: 'system',
+					text: localizedString('uploaded-files', {
+						count: e.target.files.length
+					})
+				});
+				if (query) $query.refetch();
+			})
+			.catch((err) => {
+				addAlert({
+					type: 'system',
+					text: localizedString('upload-failed', {
+						error: err.message
+					})
+				});
+			});
 	}
 </script>
 

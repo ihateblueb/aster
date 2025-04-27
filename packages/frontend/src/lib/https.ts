@@ -27,7 +27,7 @@ class https {
 
 		let apiRes = undefined;
 		try {
-			apiRes = await res.json();
+			apiRes = (await res.json()) ?? undefined;
 		} catch {}
 
 		if (!res.ok)

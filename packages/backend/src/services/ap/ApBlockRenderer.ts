@@ -6,10 +6,10 @@ class ApBlockRenderer {
 		return {
 			'@context': context,
 
-			type: 'Block',
-			id: ConfigService.url.href + 'activities/' + id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: object
+			'type': 'Block',
+			'id': ConfigService.url.href + 'activities/' + id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': object
 		};
 	}
 }

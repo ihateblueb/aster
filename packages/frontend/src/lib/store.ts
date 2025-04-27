@@ -11,6 +11,7 @@ const activeRequests = writable(0);
 const draft_replyingTo = writable('');
 const draft_repeat = writable('');
 
+const alerts: Writable<any[]> = writable([]);
 const selectedFiles: Writable<any[]> = writable([]);
 
 class Store {
@@ -25,6 +26,7 @@ class Store {
 	public draft_replyingTo = draft_replyingTo;
 	public draft_repeat = draft_repeat;
 
+	public alerts = alerts;
 	public selectedFiles = selectedFiles;
 }
 

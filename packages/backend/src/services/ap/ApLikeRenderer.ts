@@ -6,10 +6,10 @@ class ApLikeRenderer {
 		return {
 			'@context': context,
 
-			type: 'Like',
-			id: id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: object
+			'type': 'Like',
+			'id': id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': object
 		};
 	}
 }

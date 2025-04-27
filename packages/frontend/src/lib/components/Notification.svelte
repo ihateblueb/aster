@@ -92,6 +92,8 @@
 		{@render name(notification?.from)} bit your note
 	{:else if notification.type === 'mention'}
 		{@render name(notification?.from)} mentioned you
+	{:else if notification.type === 'system'}
+		{notification?.text}
 	{/if}
 {/snippet}
 

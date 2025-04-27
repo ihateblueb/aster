@@ -13,14 +13,13 @@
 	import Compose from '$lib/components/Compose.svelte';
 	import Welcome from '$lib/components/Welcome.svelte';
 	import Loading from '$lib/components/Loading.svelte';
-	import playSound from '$lib/sounds.js';
 	import Notification from '$lib/components/Notification.svelte';
 	import { shortcut } from '@svelte-put/shortcut';
 	import Drive from '$lib/components/Drive.svelte';
 	import { SvelteQueryDevtools } from '@tanstack/svelte-query-devtools';
-	import Error from '$lib/components/Error.svelte';
 	import Boundary from '$lib/components/Boundary.svelte';
 	import ws from '$lib/websocket.svelte.js';
+	import addAlert from '$lib/addAlert.js';
 
 	let loggedIn = $state(false);
 	if (localstore.getParsed('token')) loggedIn = true;
@@ -31,6 +30,11 @@
 	let activeRequests = $state(0);
 	store.activeRequests.subscribe((e) => {
 		activeRequests = e;
+	});
+
+	let alerts: any = $state([]);
+	store.alerts.subscribe((e) => {
+		alerts = e;
 	});
 
 	store.showCompose.subscribe(async (e) => {
@@ -54,21 +58,8 @@
 				message.type === 'notification:add' &&
 				message.notification;
 
-			if (addToNotifs) addNotification(message.notification);
+			if (addToNotifs) addAlert(message.notification, true);
 		});
-	}
-
-	let notifications: any[] = $state([]);
-
-	function addNotification(object: any) {
-		if (!object.id) return;
-
-		notifications.push(object);
-		playSound('notification');
-
-		setTimeout(() => {
-			notifications = notifications.filter((e) => e.id !== object.id);
-		}, 5000);
 	}
 
 	function onShortcut(event) {
@@ -105,6 +96,12 @@
 
 <Boundary>
 	<QueryClientProvider client={queryClient}>
+		<div class="notifications">
+			{#each alerts as notification}
+				<Notification {notification} floating />
+			{/each}
+		</div>
+
 		<SvelteQueryDevtools />
 
 		{#if activeRequests > 0}
@@ -112,12 +109,6 @@
 				<Loading size="24px" color="var(--ac1)" massive={false} />
 			</div>
 		{/if}
-
-		<div class="notifications">
-			{#each notifications as notification}
-				<Notification {notification} floating />
-			{/each}
-		</div>
 
 		{#if loggedIn}
 			<Modal
@@ -187,7 +178,7 @@
 
 		overflow: hidden;
 
-		z-index: 10;
+		z-index: 1000;
 		padding: 12px;
 	}
 </style>

@@ -26,6 +26,7 @@
 	import EmojiDropdown from '$lib/components/dropdowns/EmojiDropdown.svelte';
 	import localizedString from '$lib/localizedString.js';
 	import LocalizedString from '$lib/components/LocalizedString.svelte';
+	import addAlert from '$lib/addAlert.js';
 
 	let addDropdown: undefined | Dropdown = $state();
 	let emojiDropdown: undefined | Dropdown = $state();
@@ -80,6 +81,10 @@
 		if (note.content.length >= 1) {
 			await createNote(note).then(() => {
 				playSound('newNote');
+				addAlert({
+					type: 'system',
+					text: 'Note created'
+				});
 				resetNote();
 			});
 		}

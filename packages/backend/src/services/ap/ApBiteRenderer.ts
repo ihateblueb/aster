@@ -9,11 +9,11 @@ class ApBiteRenderer {
 		return {
 			'@context': context,
 
-			type: 'Bite',
-			id: ConfigService.url.href + 'activities/' + id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			published: new Date().toISOString(),
-			target: object
+			'type': 'Bite',
+			'id': ConfigService.url.href + 'activities/' + id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'published': new Date().toISOString(),
+			'target': object
 		};
 	}
 }

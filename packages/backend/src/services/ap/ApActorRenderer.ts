@@ -10,10 +10,10 @@ class ApActorRenderer {
 		let actor = {
 			'@context': context,
 
-			type: user.automated ? 'Service' : 'Person',
+			'type': user.automated ? 'Service' : 'Person',
 
-			id: user.apId,
-			url: ConfigService.url.href + '@' + user.username
+			'id': user.apId,
+			'url': ConfigService.url.href + '@' + user.username
 		};
 
 		actor['preferredUsername'] = user.username;

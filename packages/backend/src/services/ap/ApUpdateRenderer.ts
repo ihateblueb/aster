@@ -7,9 +7,9 @@ class ApUpdateRenderer {
 		return {
 			'@context': context,
 
-			type: 'Update',
-			id: ConfigService.url.href + 'activities/' + IdService.generate(),
-			object: object
+			'type': 'Update',
+			'id': ConfigService.url.href + 'activities/' + IdService.generate(),
+			'object': object
 		};
 	}
 }

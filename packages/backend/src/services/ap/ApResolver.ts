@@ -46,12 +46,12 @@ class ApResolver {
 			method: 'GET',
 			headers: {
 				'User-Agent': `${pkg.name}/${pkg.version}`,
-				Accept:
+				'Accept':
 					contentType ??
 					'application/activity+json, application/ld+json',
-				Algorithm: 'rsa-sha256',
-				Date: sendDate,
-				Signature: signatureHeader
+				'Algorithm': 'rsa-sha256',
+				'Date': sendDate,
+				'Signature': signatureHeader
 			}
 		})
 			.then((e) => {
@@ -85,7 +85,7 @@ class ApResolver {
 			method: 'GET',
 			headers: {
 				'User-Agent': `Aster/${pkg.version}`,
-				Accept:
+				'Accept':
 					contentType ??
 					'application/activity+json, application/ld+json'
 			}

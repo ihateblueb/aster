@@ -208,6 +208,12 @@ unmute = Unmute
 unmute-thread = Unmute thread
 unmuted = Unmuted
 updated-at = Updated at { DATETIME($date, day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric") }
+uploaded-files =
+	{ $count ->
+		[one] Uploaded file
+		*[other] Uploaded { $count } files
+	}
+upload-failed = Upload failed: { $error }
 use-rounded-avatars = Use rounded avatars
 use-system-font = Use system font
 user = User

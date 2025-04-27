@@ -7,10 +7,10 @@ class ApOrderedCollectionRenderer {
 		return {
 			'@context': context,
 
-			id: ConfigService.url.href + base,
-			type: 'OrderedCollection',
-			totalItems: items.length,
-			items: items
+			'id': ConfigService.url.href + base,
+			'type': 'OrderedCollection',
+			'totalItems': items.length,
+			'items': items
 		};
 	}
 }

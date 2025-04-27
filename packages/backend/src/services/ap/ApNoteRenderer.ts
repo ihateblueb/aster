@@ -14,27 +14,27 @@ class ApNoteRenderer {
 		let apNote = {
 			'@context': context,
 
-			type: 'Note',
-			id: note.apId,
+			'type': 'Note',
+			'id': note.apId,
 
-			actor: note.user.apId,
-			attributedTo: note.user.apId,
+			'actor': note.user.apId,
+			'attributedTo': note.user.apId,
 
-			sensitive: Boolean(note.cw),
+			'sensitive': Boolean(note.cw),
 
-			summary: note.cw,
-			_misskey_summary: note.cw,
-			content: note.content,
-			_misskey_content: note.content,
+			'summary': note.cw,
+			'_misskey_summary': note.cw,
+			'content': note.content,
+			'_misskey_content': note.content,
 
-			attachment: [],
-			tag: [],
+			'attachment': [],
+			'tag': [],
 
-			published: note.createdAt,
+			'published': note.createdAt,
 
-			visibility: note.visibility,
-			to: [],
-			cc: []
+			'visibility': note.visibility,
+			'to': [],
+			'cc': []
 		};
 
 		if (note.replyingTo) {

@@ -6,10 +6,10 @@ class ApFollowRenderer {
 		return {
 			'@context': context,
 
-			type: 'Follow',
-			id: ConfigService.url.href + 'activities/' + id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: object
+			'type': 'Follow',
+			'id': ConfigService.url.href + 'activities/' + id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': object
 		};
 	}
 }

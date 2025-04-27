@@ -7,6 +7,7 @@
 	import Timeline from '$lib/components/Timeline.svelte';
 	import getDrive from '$lib/api/drive/get';
 	import localizedString from '$lib/localizedString';
+	import addAlert from '$lib/addAlert.js';
 
 	let query = $state();
 
@@ -24,7 +25,24 @@
 
 		console.log(formData);
 
-		await upload(formData);
+		await upload(formData)
+			.then(() => {
+				addAlert({
+					type: 'system',
+					text: localizedString('uploaded-files', {
+						count: e.target.files.length
+					})
+				});
+				if (query) $query.refetch();
+			})
+			.catch((err) => {
+				addAlert({
+					type: 'system',
+					text: localizedString('upload-failed', {
+						error: err.message
+					})
+				});
+			});
 	}
 </script>
 

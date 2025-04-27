@@ -5,10 +5,10 @@ class ApCreateRenderer {
 		return {
 			'@context': context,
 
-			type: 'Create',
-			id: note.id + '/activity',
-			actor: note.actor,
-			object: note
+			'type': 'Create',
+			'id': note.id + '/activity',
+			'actor': note.actor,
+			'object': note
 		};
 	}
 }

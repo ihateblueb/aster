@@ -15,11 +15,11 @@ class EmojiReactRenderer {
 		let apEmojiReact = {
 			'@context': context,
 
-			type: 'EmojiReact',
-			id: id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: object,
-			content: emoji ? emoji.shortcode : content
+			'type': 'EmojiReact',
+			'id': id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': object,
+			'content': emoji ? emoji.shortcode : content
 		};
 
 		if (emoji)

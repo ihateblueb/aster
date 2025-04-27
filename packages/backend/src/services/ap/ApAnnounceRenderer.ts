@@ -11,13 +11,13 @@ class ApAnnounceRenderer {
 		let announce = {
 			'@context': context,
 
-			type: 'Announce',
-			id: note.apId + '/activity',
-			actor: note.user.apId,
-			object: activity,
-			published: new Date().toISOString(),
+			'type': 'Announce',
+			'id': note.apId + '/activity',
+			'actor': note.user.apId,
+			'object': activity,
+			'published': new Date().toISOString(),
 
-			visibility: note.visibility
+			'visibility': note.visibility
 		};
 
 		const tocc = await ApVisibilityService.render(note.user.id, announce);

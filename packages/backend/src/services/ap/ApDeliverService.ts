@@ -95,12 +95,12 @@ class ApDeliverService {
 			headers: {
 				'Content-Type': 'application/activity+json',
 				'User-Agent': `${pkg.name}/${pkg.version}`,
-				Accept: 'application/activity+json',
-				Host: inboxUrl.host,
-				Date: sendDate,
-				Algorithm: 'rsa-sha256',
-				Digest: `SHA-256=${digest}`,
-				Signature: signatureHeader
+				'Accept': 'application/activity+json',
+				'Host': inboxUrl.host,
+				'Date': sendDate,
+				'Algorithm': 'rsa-sha256',
+				'Digest': `SHA-256=${digest}`,
+				'Signature': signatureHeader
 			},
 			body: JSON.stringify(data.body)
 		})

@@ -10,10 +10,10 @@ class ApAcceptRenderer {
 		return {
 			'@context': context,
 
-			type: 'Accept',
-			id: ConfigService.url.href + 'activities/' + id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: activity
+			'type': 'Accept',
+			'id': ConfigService.url.href + 'activities/' + id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': activity
 		};
 	}
 }

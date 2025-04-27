@@ -10,10 +10,10 @@ class ApRejectRenderer {
 		return {
 			'@context': context,
 
-			type: 'Reject',
-			id: ConfigService.url.href + 'activities/' + id,
-			actor: ConfigService.url.href + 'users/' + actor,
-			object: activity
+			'type': 'Reject',
+			'id': ConfigService.url.href + 'activities/' + id,
+			'actor': ConfigService.url.href + 'users/' + actor,
+			'object': activity
 		};
 	}
 }
