@@ -12,6 +12,7 @@ const inbox = new Worker(
 	},
 	{
 		connection: redis,
+		prefix: ConfigService.redis.prefix + ':queue',
 		concurrency: ConfigService.queue.inbox.concurrency
 	}
 );
@@ -23,6 +24,7 @@ const deliver = new Worker(
 	},
 	{
 		connection: redis,
+		prefix: ConfigService.redis.prefix + ':queue',
 		concurrency: ConfigService.queue.deliver.concurrency
 	}
 );
@@ -34,6 +36,7 @@ const backfill = new Worker(
 	},
 	{
 		connection: redis,
+		prefix: ConfigService.redis.prefix + ':queue',
 		concurrency: ConfigService.queue.backfill.concurrency
 	}
 );

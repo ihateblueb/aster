@@ -5,8 +5,6 @@ const connection = {
 	port: ConfigService.redis.port
 };
 
-if (ConfigService.redis.prefix)
-	connection['keyPrefix'] = ConfigService.redis.prefix;
 if (ConfigService.redis.database)
 	connection['db'] = ConfigService.redis.database;
 if (ConfigService.redis.user) connection['username'] = ConfigService.redis.user;

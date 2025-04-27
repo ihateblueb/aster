@@ -5,6 +5,7 @@ import ConfigService from './ConfigService.js';
 
 const inbox = new Queue('{inbox}', {
 	connection: redis,
+	prefix: ConfigService.redis.prefix + ':queue',
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
@@ -18,6 +19,7 @@ const inbox = new Queue('{inbox}', {
 
 const deliver = new Queue('{deliver}', {
 	connection: redis,
+	prefix: ConfigService.redis.prefix + ':queue',
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,
@@ -31,6 +33,7 @@ const deliver = new Queue('{deliver}', {
 
 const backfill = new Queue('{backfill}', {
 	connection: redis,
+	prefix: ConfigService.redis.prefix + ':queue',
 	defaultJobOptions: {
 		removeOnComplete: false,
 		removeOnFail: false,

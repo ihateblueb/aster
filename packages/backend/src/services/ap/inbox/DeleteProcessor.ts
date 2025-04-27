@@ -1,4 +1,5 @@
 import logger from '../../../utils/logger.js';
+import CacheService from '../../CacheService.js';
 import NoteService from '../../NoteService.js';
 import UserService from '../../UserService.js';
 
@@ -11,6 +12,7 @@ class DeleteProcessor {
 		if (user && actor.host === user.host) {
 			logger.debug('delete', 'deleting user');
 			await UserService.delete({ apId: apId });
+			await CacheService.scanAndDel('user*' + user.id);
 			return true;
 		}
 
