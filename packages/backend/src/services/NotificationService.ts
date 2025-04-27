@@ -76,6 +76,8 @@ class NotificationService {
 		user?: GenericId,
 		relationship?: GenericId
 	) {
+		console.log('nbotifnote ' + note);
+
 		const sender = await UserService.get({ id: from });
 		const recipient = await UserService.get({ id: to });
 

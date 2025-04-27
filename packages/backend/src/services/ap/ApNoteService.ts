@@ -10,6 +10,7 @@ import DriveService from '../DriveService.js';
 import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
+import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import SanitizerService from '../SanitizerService.js';
@@ -222,6 +223,8 @@ class ApNoteService {
 			}
 		}
 
+		let localMentionedIds: GenericId[] = [];
+
 		if (body.tag && Array.isArray(body.tag)) {
 			for (const tag of body.tag) {
 				if (tag.type === 'Emoji' && tag.id) {
@@ -234,8 +237,13 @@ class ApNoteService {
 							if (e) note.emojis.push(e.id);
 						});
 					}
-				} else if (tag.type === 'Mention') {
-					// todo: create mention notif
+				} else if (tag.type === 'Mention' && tag.href) {
+					const mentionedUser = await UserService.get({
+						apId: tag.href
+					});
+
+					if (mentionedUser && mentionedUser.local)
+						localMentionedIds.push(mentionedUser.id);
 				}
 			}
 		}
@@ -247,6 +255,15 @@ class ApNoteService {
 				console.log(err);
 				logger.error('ap', 'failed to insert remote note');
 			});
+
+		for (const localMentionedId of localMentionedIds) {
+			await NotificationService.create(
+				localMentionedId,
+				author.id,
+				'mention',
+				note.id
+			);
+		}
 
 		const grabbedNote = await NoteService.get({ id: id });
 

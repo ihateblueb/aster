@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {
+		IconAt,
 		IconBug,
 		IconDental,
 		IconMoodPlus,
@@ -49,6 +50,8 @@
 		{/if}
 	{:else if notification.type === 'bite'}
 		<IconDental size="18px" color="var(--ac1)" />
+	{:else if notification.type === 'mention'}
+		<IconAt size="18px" color="var(--ac1)" />
 	{/if}
 {/snippet}
 
@@ -87,6 +90,8 @@
 		{@render name(notification?.from)} bit you
 	{:else if notification.type === 'bite' && notification.note}
 		{@render name(notification?.from)} bit your note
+	{:else if notification.type === 'mention'}
+		{@render name(notification?.from)} mentioned you
 	{/if}
 {/snippet}
 
