@@ -26,7 +26,6 @@ export default plugin(async (fastify) => {
 		Params: FromSchema<typeof schema.params>;
 		Body: FromSchema<typeof schema.body>;
 	}>(
-		// todo: revisit old routes, decide whether or not to camel case or dash
 		'/api/user/:id/reset-password',
 		{
 			schema: schema,
