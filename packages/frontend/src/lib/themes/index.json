@@ -1,0 +1,18 @@
+{
+	"wisteria": {
+		"name": "Wisteria",
+		"colorScheme": "light"
+	},
+	"mi-cherry": {
+		"name": "Misskey Cherry",
+		"colorScheme": "light"
+	},
+	"purpura": {
+		"name": "Purpura",
+		"colorScheme": "dark"
+	},
+	"mi-botanical": {
+		"name": "Misskey Botanical",
+		"colorScheme": "dark"
+	}
+}

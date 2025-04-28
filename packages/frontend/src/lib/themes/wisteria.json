@@ -1,0 +1,19 @@
+{
+	"bg1": "#f7f3ff",
+	"bg2": "#efebfa",
+	"bg3": "#ccc5db",
+	"bg4": "#b8afcc",
+
+	"tx1": "#000000",
+	"tx2": "#0f0a15",
+	"tx3": "#191220",
+
+	"ac1": "#865fdf",
+
+	"success": "#38b84d",
+	"warn": "#e39244",
+	"danger": "#dc3d30",
+
+	"like": "#eda437",
+	"repeat": "#3eca55"
+}

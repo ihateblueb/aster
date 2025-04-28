@@ -1,112 +1,6 @@
 @import url('$lib/fonts/inter.css');
 
 :root {
-	$bg1: #140e1b;
-	$bg2: #1a1423;
-	$bg3: #261e37;
-	$bg4: #3f325a;
-
-	$tx1: #f3efff;
-	$tx2: #d8cdf1;
-	$tx3: #9688bd;
-
-	$ac1: #865fdf;
-
-	$success: #38b84d;
-	$warn: #e39244;
-	$danger: #e65448;
-
-	$repeat: #3eca55;
-	$like: #eda437;
-
-	/*
-		colors
-	*/
-
-	// background
-
-	--bg1: #{$bg1};
-	--bg2: #{$bg2};
-	--bg3: #{$bg3};
-	--bg4: #{$bg4};
-
-	--bg1-25: #{rgba($bg1, 0.25)};
-	--bg2-25: #{rgba($bg2, 0.25)};
-	--bg3-25: #{rgba($bg3, 0.25)};
-	--bg4-25: #{rgba($bg4, 0.25)};
-
-	--bg1-50: #{rgba($bg1, 0.5)};
-	--bg2-50: #{rgba($bg2, 0.5)};
-	--bg3-50: #{rgba($bg3, 0.5)};
-	--bg4-50: #{rgba($bg4, 0.5)};
-
-	--bg1-75: #{rgba($bg1, 0.75)};
-	--bg2-75: #{rgba($bg2, 0.75)};
-	--bg3-75: #{rgba($bg3, 0.75)};
-	--bg4-75: #{rgba($bg4, 0.75)};
-
-	--bg1-99: #{rgba($bg1, 0.99)};
-	--bg2-99: #{rgba($bg2, 0.99)};
-	--bg3-99: #{rgba($bg3, 0.99)};
-	--bg4-99: #{rgba($bg4, 0.99)};
-
-	// text
-
-	--tx1: #{$tx1};
-	--tx2: #{$tx2};
-	--tx3: #{$tx3};
-
-	--tx1-25: #{rgba($tx1, 0.25)};
-	--tx2-25: #{rgba($tx2, 0.25)};
-	--tx3-25: #{rgba($tx3, 0.25)};
-
-	--tx1-50: #{rgba($tx1, 0.5)};
-	--tx2-50: #{rgba($tx2, 0.5)};
-	--tx3-50: #{rgba($tx3, 0.5)};
-
-	--tx1-75: #{rgba($tx1, 0.75)};
-	--tx2-75: #{rgba($tx2, 0.75)};
-	--tx3-75: #{rgba($tx3, 0.75)};
-
-	// accent
-
-	--ac1: #{$ac1};
-	--ac1-25: #{rgba($ac1, 0.25)};
-	--ac1-50: #{rgba($ac1, 0.5)};
-	--ac1-75: #{rgba($ac1, 0.75)};
-
-	--success: #{$success};
-	--success-25: #{rgba($success, 0.25)};
-	--success-50: #{rgba($success, 0.5)};
-	--success-75: #{rgba($success, 0.75)};
-
-	--warn: #{$warn};
-	--warn-25: #{rgba($warn, 0.25)};
-	--warn-50: #{rgba($warn, 0.5)};
-	--warn-75: #{rgba($warn, 0.75)};
-
-	--danger: #{$danger};
-	--danger-25: #{rgba($danger, 0.25)};
-	--danger-50: #{rgba($danger, 0.5)};
-	--danger-75: #{rgba($danger, 0.75)};
-
-	--repeat: #{$repeat};
-	--repeat-05: #{rgba($repeat, 0.1)};
-	--repeat-25: #{rgba($repeat, 0.25)};
-	--repeat-50: #{rgba($repeat, 0.5)};
-	--repeat-75: #{rgba($repeat, 0.75)};
-
-	--like: #{$like};
-	--like-05: #{rgba($like, 0.1)};
-	--like-25: #{rgba($like, 0.25)};
-	--like-50: #{rgba($like, 0.5)};
-	--like-75: #{rgba($like, 0.75)};
-
-	/*
-		measurements
-	*/
-
-	// border radius
 	--br-mn: 0px;
 	--br-xxs: 2px;
 	--br-xs: 4px;
@@ -117,7 +11,6 @@
 	--br-xxl: 18px;
 	--br-mx: 99999px;
 
-	// font
 	--fs-xxs: 8px;
 	--fs-xs: 10px;
 	--fs-sm: 12px;
@@ -129,17 +22,12 @@
 	--font: Inter, serif;
 	--font-features: 'cv05', 'cv08';
 
-	/*
-		misc
-	*/
-
 	--blur-xs: 2px;
 	--blur-sm: 4px;
 	--blur-md: 8px;
 	--blur-lg: 12px;
 	--blur-xl: 20px;
 
-	// trying rem? maybe it'll help the effect looking drastically different on some screens
 	--funky-effect:
 		inset 0 -0.1rem 2.5px #00000020, inset 0 0.035rem 1px #ffffff05,
 		inset 0 0.055rem 2.5px #ffffff05;
@@ -149,6 +37,7 @@ html {
 	font-family: var(--font);
 	font-feature-settings: var(--font-features);
 	font-size: var(--fs-md);
+	background-color: var(--bg1);
 	color: var(--tx2);
 }
 

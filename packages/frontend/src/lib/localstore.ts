@@ -25,11 +25,19 @@ let defaults = {
 	},
 	colorScheme: {
 		type: 'string',
-		value: ''
+		value: 'light'
 	},
-	theme: {
+	adjustColorSchemeToBrowser: {
+		type: 'boolean',
+		value: true
+	},
+	themeLight: {
 		type: 'string',
-		value: ''
+		value: 'wisteria'
+	},
+	themeDark: {
+		type: 'string',
+		value: 'purpura'
 	},
 
 	self: {

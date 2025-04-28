@@ -3,6 +3,7 @@ import { writable, type Writable } from 'svelte/store';
 const appReload = writable(false);
 const selfRefresh = writable(false);
 const viewRefresh = writable(false);
+const themeRefresh = writable(false);
 
 const showCompose = writable(false);
 const showDrive = writable(false);
@@ -18,6 +19,7 @@ class Store {
 	public appReload = appReload; // full browser reload
 	public selfRefresh = selfRefresh; // refresh self widgets
 	public viewRefresh = viewRefresh; // refresh widgets, timeline, note or user page component
+	public themeRefresh = themeRefresh; // refresh theme
 
 	public showCompose = showCompose;
 	public showDrive = showDrive;
