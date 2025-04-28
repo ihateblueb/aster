@@ -505,6 +505,10 @@ class UserService {
 			};
 		}
 	}
+
+	public async resetPassword(username: string, newPassword: string) {
+		return;
+	}
 }
 
 export default new UserService();

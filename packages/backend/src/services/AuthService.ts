@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import IdService from './IdService.js';
+import TimeService from './TimeService.js';
 
 class AuthService {
 	public async generateToken(user: GenericId) {
@@ -61,6 +62,19 @@ class AuthService {
 				error: true,
 				status: 403,
 				message: locale.user.notActivated
+			};
+
+		// ~6 months
+		if (
+			TimeService.isTimeAgo(
+				new Date(grabbedToken.createdAt),
+				TimeService.week * 26
+			)
+		)
+			return {
+				error: true,
+				status: 403,
+				message: 'Token expired'
 			};
 
 		return {
