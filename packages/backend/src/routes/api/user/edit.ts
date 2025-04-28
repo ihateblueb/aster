@@ -83,10 +83,7 @@ export default plugin(async (fastify) => {
 				id: req.params.id ?? req.auth.user.id
 			});
 
-			if (!user)
-				return reply.status(404).send({
-					message: 'Not found'
-				});
+			if (!user) return reply.status(404).send();
 
 			if (user.id !== req.auth.user.id && !req.auth.user.admin)
 				return reply.status(403).send();

@@ -36,6 +36,9 @@ export default plugin(async (fastify) => {
 
 			if (!user) return reply.status(404).send();
 
+			if (user.id !== req.auth.user.id && !req.auth.user.admin)
+				return reply.status(403).send();
+
 			return await UserService.resetPassword(
 				user.id,
 				req.body.password
