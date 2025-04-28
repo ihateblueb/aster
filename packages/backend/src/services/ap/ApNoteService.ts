@@ -10,6 +10,7 @@ import DriveService from '../DriveService.js';
 import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
+import NoteRenderer from '../NoteRenderer.js';
 import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
@@ -275,7 +276,7 @@ class ApNoteService {
 			WebsocketService.userEmitter.emit(follower.id, {
 				type: 'timeline:add',
 				timeline: 'home',
-				note: grabbedNote
+				note: await NoteRenderer.render(grabbedNote)
 			});
 		}
 
@@ -287,14 +288,14 @@ class ApNoteService {
 				WebsocketService.globalEmitter.emit('timeline:bubble', {
 					type: 'timeline:add',
 					timeline: 'bubble',
-					note: grabbedNote
+					note: await NoteRenderer.render(grabbedNote)
 				});
 			}
 
 			WebsocketService.globalEmitter.emit('timeline:public', {
 				type: 'timeline:add',
 				timeline: 'public',
-				note: grabbedNote
+				note: await NoteRenderer.render(grabbedNote)
 			});
 		}
 
@@ -320,6 +321,8 @@ class ApNoteService {
 				console.log(err);
 				logger.error('ap', 'failed to update remote note');
 			});
+
+		// todo: websocket timeline:update
 
 		return await NoteService.get({ apId: body.id });
 	}

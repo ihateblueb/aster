@@ -15,6 +15,7 @@ import DriveService from './DriveService.js';
 import EmojiService from './EmojiService.js';
 import IdService from './IdService.js';
 import MfmService from './MfmService.js';
+import NoteRenderer from './NoteRenderer.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import SanitizerService from './SanitizerService.js';
@@ -340,7 +341,9 @@ class NoteService {
 					error: false,
 					status: 201,
 					message: locale.note.created,
-					note: await this.get({ id: note.id })
+					note: await NoteRenderer.render(
+						await this.get({ id: note.id })
+					)
 				};
 			})
 			.catch((e) => {
@@ -394,29 +397,39 @@ class NoteService {
 				WebsocketService.userEmitter.emit(follower.id, {
 					type: 'timeline:add',
 					timeline: 'home',
-					note: await this.get({ id: note.id })
+					note: await NoteRenderer.render(
+						await this.get({ id: note.id })
+					)
 				});
 			}
 
-			WebsocketService.globalEmitter.emit('timeline:local', {
-				type: 'timeline:add',
-				timeline: 'local',
-				note: await this.get({ id: note.id })
-			});
-
-			if (ConfigService.bubbleTimeline.enabled) {
-				WebsocketService.globalEmitter.emit('timeline:bubble', {
+			if (note.visibility === 'public') {
+				WebsocketService.globalEmitter.emit('timeline:local', {
 					type: 'timeline:add',
-					timeline: 'bubble',
-					note: await this.get({ id: note.id })
+					timeline: 'local',
+					note: await NoteRenderer.render(
+						await this.get({ id: note.id })
+					)
+				});
+
+				if (ConfigService.bubbleTimeline.enabled) {
+					WebsocketService.globalEmitter.emit('timeline:bubble', {
+						type: 'timeline:add',
+						timeline: 'bubble',
+						note: await NoteRenderer.render(
+							await this.get({ id: note.id })
+						)
+					});
+				}
+
+				WebsocketService.globalEmitter.emit('timeline:public', {
+					type: 'timeline:add',
+					timeline: 'public',
+					note: await NoteRenderer.render(
+						await this.get({ id: note.id })
+					)
 				});
 			}
-
-			WebsocketService.globalEmitter.emit('timeline:public', {
-				type: 'timeline:add',
-				timeline: 'public',
-				note: await this.get({ id: note.id })
-			});
 		}
 
 		if (repeat && repeatedNote) {

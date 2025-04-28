@@ -6,6 +6,7 @@ import ApLikeRenderer from './ap/ApLikeRenderer.js';
 import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
+import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 import UserService from './UserService.js';
@@ -109,7 +110,10 @@ class LikeService {
 
 						return {
 							status: 200,
-							message: 'Removed like'
+							message: 'Removed like',
+							note: await NoteRenderer.render(
+								await NoteService.get(note.id)
+							)
 						};
 					})
 					.catch((err) => {
@@ -122,7 +126,10 @@ class LikeService {
 			} else {
 				return {
 					status: 409,
-					message: 'Like already exists'
+					message: 'Like already exists',
+					note: await NoteRenderer.render(
+						await NoteService.get(note.id)
+					)
 				};
 			}
 		} else {
@@ -160,7 +167,10 @@ class LikeService {
 
 					return {
 						status: 201,
-						message: 'Added like'
+						message: 'Added like',
+						note: await NoteRenderer.render(
+							await NoteService.get(note.id)
+						)
 					};
 				})
 				.catch((err) => {

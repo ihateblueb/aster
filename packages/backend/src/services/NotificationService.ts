@@ -4,6 +4,7 @@ import db from '../utils/database.js';
 import UserMini from '../utils/entities/UserMini.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
+import NotificationRenderer from './NotificationRenderer.js';
 import RelationshipService from './RelationshipService.js';
 import UserService from './UserService.js';
 import WebsocketService from './WebsocketService.js';
@@ -152,7 +153,9 @@ class NotificationService {
 			.then(async () => {
 				WebsocketService.userEmitter.emit(to, {
 					type: 'notification:add',
-					notification: await this.get({ id: id })
+					notification: await NotificationRenderer.render(
+						await this.get({ id: id })
+					)
 				});
 				return true;
 			});
