@@ -3,6 +3,9 @@ import { ObjectLiteral } from 'typeorm';
 import db from '../utils/database.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
+import NotificationService from './NotificationService.js';
+import SanitizerService from './SanitizerService.js';
+import UserService from './UserService.js';
 
 class ReportService {
 	public async get(where: where) {
@@ -58,15 +61,33 @@ class ReportService {
 		apId?: ApId
 	) {
 		const id = IdService.generate();
-		return await db.getRepository('report').insert({
+
+		await db.getRepository('report').insert({
 			id: id,
 			apId: apId ?? ConfigService.url.href + 'report/' + id,
 			fromId: from,
-			content: content,
+			content: SanitizerService.sanitize(content),
 			userId: user,
 			noteId: note,
 			createdAt: new Date().toISOString()
 		});
+
+		const admins = await UserService.getMany({ admin: true });
+		const instanceActor = await UserService.get({
+			username: 'instanceactor'
+		});
+
+		for (const admin of admins) {
+			await NotificationService.create(
+				admin.id,
+				instanceActor.id,
+				'report',
+				undefined,
+				undefined,
+				undefined,
+				id
+			);
+		}
 	}
 }
 

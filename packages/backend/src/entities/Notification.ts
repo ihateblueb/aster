@@ -8,6 +8,7 @@ import typeorm, {
 
 import { Note } from './Note.js';
 import { Relationship } from './Relationship.js';
+import { Report } from './Report.js';
 import { User } from './User.js';
 
 @Entity()
@@ -68,4 +69,13 @@ export class Notification {
 	})
 	@JoinColumn({ name: 'relationshipId' })
 	relationship: typeorm.Relation<Relationship>;
+
+	@Column({ select: false, nullable: true })
+	reportId: string;
+
+	@ManyToOne(() => Report, (report) => report, {
+		onDelete: 'CASCADE'
+	})
+	@JoinColumn({ name: 'reportId' })
+	report: typeorm.Relation<Report>;
 }

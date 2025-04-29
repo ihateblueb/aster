@@ -6,6 +6,7 @@ import IdService from './IdService.js';
 import NoteService from './NoteService.js';
 import NotificationRenderer from './NotificationRenderer.js';
 import RelationshipService from './RelationshipService.js';
+import ReportService from './ReportService.js';
 import UserService from './UserService.js';
 import WebsocketService from './WebsocketService.js';
 
@@ -75,7 +76,8 @@ class NotificationService {
 		type: NotificationType,
 		note?: GenericId,
 		user?: GenericId,
-		relationship?: GenericId
+		relationship?: GenericId,
+		report?: GenericId
 	) {
 		console.log('nbotifnote ' + note);
 
@@ -124,23 +126,33 @@ class NotificationService {
 			createdAt: new Date().toISOString()
 		};
 
-		if (note) {
-			const grabbedNote = await NoteService.get({ id: note });
-			if (grabbedNote) notification['noteId'] = grabbedNote.id;
-		}
-
-		if (user) {
-			const grabbedUser = await UserService.get({ id: user });
-			if (grabbedUser) notification['userId'] = grabbedUser.id;
-		}
-
-		if (relationship) {
-			const grabbedRelationship = await RelationshipService.get({
-				id: relationship
+		if (note)
+			await NoteService.get({
+				id: note
+			}).then((e) => {
+				if (e) notification['noteId'] = e.id;
 			});
-			if (grabbedRelationship)
-				notification['relationshipId'] = grabbedRelationship.id;
-		}
+
+		if (user)
+			await UserService.get({
+				id: user
+			}).then((e) => {
+				if (e) notification['userId'] = e.id;
+			});
+
+		if (relationship)
+			await RelationshipService.get({
+				id: relationship
+			}).then((e) => {
+				if (e) notification['relationshipId'] = e.id;
+			});
+
+		if (report)
+			await ReportService.get({
+				id: report
+			}).then((e) => {
+				if (e) notification['reportId'] = e.id;
+			});
 
 		console.log(notification);
 
