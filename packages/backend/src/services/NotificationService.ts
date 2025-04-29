@@ -151,7 +151,7 @@ class NotificationService {
 				console.log(err);
 			})
 			.then(async () => {
-				WebsocketService.userEmitter.emit(to, {
+				await WebsocketService.publish(to, {
 					type: 'notification:add',
 					notification: await NotificationRenderer.render(
 						await this.get({ id: id })

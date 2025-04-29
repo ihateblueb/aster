@@ -275,12 +275,12 @@ WorkerService.backfill.on('failed', (job) => {
 async function shutdown() {
 	logger.info('exit', 'shutting down');
 
-	WebsocketService.globalEmitter.removeAllListeners();
-	WebsocketService.userEmitter.removeAllListeners();
-	logger.debug('exit', 'websocket events closed');
-
 	fastify.server.closeAllConnections();
 	logger.debug('exit', 'http server closed');
+
+	await WebsocketService.publisher.disconnect();
+	await WebsocketService.subscriber.disconnect();
+	logger.debug('exit', 'websocket publisher and subscriber disconnected');
 
 	await WorkerService.inbox.close();
 	await WorkerService.deliver.close();
