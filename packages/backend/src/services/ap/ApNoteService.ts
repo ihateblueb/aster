@@ -272,12 +272,14 @@ class ApNoteService {
 			author.id
 		);
 
-		for (const follower of localFollowers) {
-			WebsocketService.userEmitter.emit(follower.id, {
-				type: 'timeline:add',
-				timeline: 'home',
-				note: await NoteRenderer.render(grabbedNote)
-			});
+		if (grabbedNote.visibility !== 'direct') {
+			for (const follower of localFollowers) {
+				await WebsocketService.publish(follower.from.id, {
+					type: 'timeline:add',
+					timeline: 'home',
+					note: await NoteRenderer.render(grabbedNote)
+				});
+			}
 		}
 
 		if (grabbedNote.visibility === 'public') {
@@ -285,14 +287,14 @@ class ApNoteService {
 				ConfigService.bubbleTimeline.enabled &&
 				ConfigService.bubbleTimeline.instances.includes(author.host)
 			) {
-				WebsocketService.globalEmitter.emit('timeline:bubble', {
+				await WebsocketService.publish('timeline:bubble', {
 					type: 'timeline:add',
 					timeline: 'bubble',
 					note: await NoteRenderer.render(grabbedNote)
 				});
 			}
 
-			WebsocketService.globalEmitter.emit('timeline:public', {
+			await WebsocketService.publish('timeline:public', {
 				type: 'timeline:add',
 				timeline: 'public',
 				note: await NoteRenderer.render(grabbedNote)

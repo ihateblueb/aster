@@ -54,26 +54,27 @@ export default plugin(async (fastify) => {
 				socket.send(JSON.stringify({ type: 'echo', data: content }));
 			});
 
-			WebsocketService.userEmitter.on(auth.user.id, (e) => {
-				socket.send(JSON.stringify(e));
+			await WebsocketService.subscribe(auth.user.id, (msg) => {
+				socket.send(msg);
+			});
+			await WebsocketService.subscribe('timeline:local', (msg) => {
+				if (subscriptions.includes('timeline:local')) socket.send(msg);
+			});
+			await WebsocketService.subscribe('timeline:bubble', (msg) => {
+				if (subscriptions.includes('timeline:bubble')) socket.send(msg);
+			});
+			await WebsocketService.subscribe('timeline:public', (msg) => {
+				if (subscriptions.includes('timeline:public')) socket.send(msg);
 			});
 
-			WebsocketService.globalEmitter.on('timeline:local', (e) => {
-				if (subscriptions.includes('timeline:local'))
-					socket.send(JSON.stringify(e));
+			socket.on('close', () => {
+				WebsocketService.subscriber.unsubscribe([
+					auth.user.id,
+					'timeline:local',
+					'timeline:bubble',
+					'timeline:public'
+				]);
 			});
-
-			WebsocketService.globalEmitter.on('timeline:bubble', (e) => {
-				if (subscriptions.includes('timeline:bubble'))
-					socket.send(JSON.stringify(e));
-			});
-
-			WebsocketService.globalEmitter.on('timeline:public', (e) => {
-				if (subscriptions.includes('timeline:public'))
-					socket.send(JSON.stringify(e));
-			});
-
-			socket.on('close', () => {});
 		}
 	);
 });

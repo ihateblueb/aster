@@ -382,19 +382,16 @@ class NoteService {
 		}
 
 		if (note.visibility !== 'direct') {
-			const localFollowers = await RelationshipService.getMany({
-				to: { id: user },
-				from: { local: true },
-				type: 'follow',
-				pending: false
-			});
+			const localFollowers = await RelationshipService.getFollowers(
+				author.id
+			);
 
 			localFollowers.push({
-				id: user
+				from: { id: user }
 			});
 
 			for (const follower of localFollowers) {
-				WebsocketService.userEmitter.emit(follower.id, {
+				await WebsocketService.publish(follower.from.id, {
 					type: 'timeline:add',
 					timeline: 'home',
 					note: await NoteRenderer.render(
@@ -404,7 +401,7 @@ class NoteService {
 			}
 
 			if (note.visibility === 'public') {
-				WebsocketService.globalEmitter.emit('timeline:local', {
+				await WebsocketService.publish('timeline:local', {
 					type: 'timeline:add',
 					timeline: 'local',
 					note: await NoteRenderer.render(
@@ -413,7 +410,7 @@ class NoteService {
 				});
 
 				if (ConfigService.bubbleTimeline.enabled) {
-					WebsocketService.globalEmitter.emit('timeline:bubble', {
+					await WebsocketService.publish('timeline:bubble', {
 						type: 'timeline:add',
 						timeline: 'bubble',
 						note: await NoteRenderer.render(
@@ -422,7 +419,7 @@ class NoteService {
 					});
 				}
 
-				WebsocketService.globalEmitter.emit('timeline:public', {
+				await WebsocketService.publish('timeline:public', {
 					type: 'timeline:add',
 					timeline: 'public',
 					note: await NoteRenderer.render(

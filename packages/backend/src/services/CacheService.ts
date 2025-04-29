@@ -21,7 +21,9 @@ const client = await redis
 
 class CacheService {
 	public client = client;
-	public keyPrefix: string = ConfigService.redis.prefix + ':cache:';
+	public keyPrefix: string = ConfigService.redis.prefix
+		? ConfigService.redis.prefix + ':cache:'
+		: 'cache:';
 
 	public async get(key: string) {
 		logger.debug('cache', 'getting ' + this.keyPrefix + key);

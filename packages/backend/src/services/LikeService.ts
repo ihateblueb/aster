@@ -112,7 +112,7 @@ class LikeService {
 							status: 200,
 							message: 'Removed like',
 							note: await NoteRenderer.render(
-								await NoteService.get(note.id)
+								await NoteService.get({ id: note.id })
 							)
 						};
 					})
@@ -128,7 +128,7 @@ class LikeService {
 					status: 409,
 					message: 'Like already exists',
 					note: await NoteRenderer.render(
-						await NoteService.get(note.id)
+						await NoteService.get({ id: note.id })
 					)
 				};
 			}
@@ -169,7 +169,7 @@ class LikeService {
 						status: 201,
 						message: 'Added like',
 						note: await NoteRenderer.render(
-							await NoteService.get(note.id)
+							await NoteService.get({ id: note.id })
 						)
 					};
 				})
