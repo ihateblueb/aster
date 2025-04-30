@@ -56,9 +56,13 @@ database:
     user: 'aster'
     pass:
 
+# redis or dragonflydb
 redis:
     host: localhost
     port: 6379
+    # recommended, keeps redis instance better organized and avoids
+    # collision with other services.
+    # eg aster
     prefix:
     database:
     user:

@@ -8,8 +8,7 @@
 	import PageWrapper from '$lib/components/PageWrapper.svelte';
 
 	let selectedTab = 0;
-	if (page.route.id?.startsWith('/admin/settings')) selectedTab = 1;
-	if (page.route.id?.startsWith('/admin/moderation')) selectedTab = 2;
+	if (page.route.id?.startsWith('/admin/moderation')) selectedTab = 1;
 </script>
 
 <PageHeader title={localizedString('dashboard')}>
@@ -22,20 +21,12 @@
 			selectedTab = 0;
 			goto('/admin');
 		}}
-		title="Overview"
+		title="General"
 	></Tab>
 	<Tab
 		selected={selectedTab === 1}
 		on:click={() => {
 			selectedTab = 1;
-			goto('/admin/settings');
-		}}
-		title="Settings"
-	></Tab>
-	<Tab
-		selected={selectedTab === 2}
-		on:click={() => {
-			selectedTab = 2;
 			goto('/admin/moderation');
 		}}
 		title="Moderation"
@@ -44,14 +35,22 @@
 
 <PageWrapper>
 	<div class="subheader">
-		{#if selectedTab === 1}
+		{#if selectedTab === 0}
+			<Tab
+				selected={page.route.id === '/admin'}
+				on:click={() => {
+					selectedTab = 0;
+					goto('/admin');
+				}}
+				title={localizedString('overview')}
+			></Tab>
 			<Tab
 				selected={page.route.id === '/admin/settings'}
 				on:click={() => {
 					selectedTab = 0;
 					goto('/admin/settings');
 				}}
-				title={localizedString('general')}
+				title={localizedString('settings')}
 			></Tab>
 			<Tab
 				selected={page.route.id === '/admin/settings/emoji'}
@@ -61,11 +60,11 @@
 				}}
 				title={localizedString('emoji')}
 			></Tab>
-		{:else if selectedTab === 2}
+		{:else if selectedTab === 1}
 			<Tab
 				selected={page.route.id === '/admin/settings/users'}
 				on:click={() => {
-					selectedTab = 0;
+					selectedTab = 1;
 					goto('/admin/settings/users');
 				}}
 				title={localizedString('users')}
@@ -73,7 +72,7 @@
 			<Tab
 				selected={page.route.id === '/admin/settings/invites'}
 				on:click={() => {
-					selectedTab = 0;
+					selectedTab = 1;
 					goto('/admin/settings/invites');
 				}}
 				title={localizedString('invites')}
@@ -81,7 +80,7 @@
 			<Tab
 				selected={page.route.id === '/admin/settings/rules'}
 				on:click={() => {
-					selectedTab = 0;
+					selectedTab = 1;
 					goto('/admin/settings/rules');
 				}}
 				title={localizedString('rules')}
@@ -89,7 +88,7 @@
 			<Tab
 				selected={page.route.id === '/admin/settings/policies'}
 				on:click={() => {
-					selectedTab = 0;
+					selectedTab = 1;
 					goto('/admin/settings/policies');
 				}}
 				title={localizedString('policies')}
@@ -97,7 +96,7 @@
 			<Tab
 				selected={page.route.id === '/admin/settings/reports'}
 				on:click={() => {
-					selectedTab = 0;
+					selectedTab = 1;
 					goto('/admin/settings/reports');
 				}}
 				title={localizedString('reports')}

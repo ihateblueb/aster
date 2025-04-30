@@ -18,10 +18,7 @@
 	import Timeline from '$lib/components/Timeline.svelte';
 	import localizedString from '$lib/localizedString';
 
-	const defaultAdditionalState = { notifications: [] };
-
 	let query: any = $state();
-	let additional: any = $state(defaultAdditionalState);
 
 	let timeline: string = $state('');
 	timeline = localstore.getParsed('notificationsTab');
@@ -29,7 +26,6 @@
 	function updateTimeline(to: string) {
 		timeline = to;
 		localstore.set('notificationsTab', to);
-		additional = defaultAdditionalState;
 		queryclient.clear();
 		$query.refetch();
 	}
@@ -73,6 +69,5 @@
 		queryFn={getNotifications}
 		bind:timeline
 		bind:query
-		bind:additional
 	/>
 </PageWrapper>

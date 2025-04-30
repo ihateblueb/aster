@@ -19,7 +19,7 @@ if (loggedIn) {
 		setTimeout(() => {
 			console.log('[ws] attempting reconnect...');
 			ws = new WebSocket(wsUrl);
-		}, 1000);
+		}, 5000);
 	});
 
 	ws.addEventListener('error', (e) => {

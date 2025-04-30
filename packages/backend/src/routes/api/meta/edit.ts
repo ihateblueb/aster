@@ -59,8 +59,20 @@ export default plugin(async (fastify) => {
 				}
 			}
 
+			if ('maintainerEmail' in req.body) {
+				if (req.body.maintainerEmail) {
+					updated['maintainerEmail'] = SanitizerService.sanitize(
+						req.body.maintainerEmail
+					);
+				} else {
+					updated['maintainerEmail'] = null;
+				}
+			}
+
 			return await MetaService.update(updated).then(async () => {
-				return reply.status(200).send(await MetaService.get(true));
+				return reply
+					.status(200)
+					.send(await MetaService.get(false, true));
 			});
 		}
 	);

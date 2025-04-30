@@ -1,5 +1,8 @@
 <script lang="ts">
-	import { createInfiniteQuery } from '@tanstack/svelte-query';
+	import {
+		createInfiniteQuery,
+		createMutation
+	} from '@tanstack/svelte-query';
 
 	import Error from '$lib/components/Error.svelte';
 	import Button from '$lib/components/Button.svelte';
@@ -27,11 +30,7 @@
 		queryFn,
 		noScroll = false,
 		query = $bindable(),
-		timeline = $bindable(),
-		additional = $bindable({
-			notes: [],
-			notifications: []
-		})
+		timeline = $bindable()
 	} = $props();
 
 	query = createInfiniteQuery({
@@ -51,6 +50,11 @@
 		}
 	});
 
+	const mutation = createMutation({
+		mutationFn: (value: any) => $query.data.pages[0].unshift(value),
+		onSuccess: () => {}
+	});
+
 	function infiniteLoading(e) {
 		const observer = new IntersectionObserver(async (entries) => {
 			if (entries[0].isIntersecting) $query.fetchNextPage();
@@ -59,10 +63,16 @@
 		observer.observe(e);
 	}
 
-	if (ws && queryKey === 'timeline') {
-		ws.addEventListener('open', () => {
-			ws?.send(`sub timeline:${timeline}`);
-		});
+	if (
+		ws &&
+		(queryKey === 'timeline' ||
+			queryKey === 'notifications' ||
+			queryKey === 'notifications-widget')
+	) {
+		if (queryKey === 'timeline')
+			ws.addEventListener('open', () => {
+				ws?.send(`sub timeline:${timeline}`);
+			});
 
 		ws.addEventListener('message', (e) => {
 			let message;
@@ -71,36 +81,27 @@
 			} catch {}
 
 			let addToTl =
+				queryKey === 'timeline' &&
 				message &&
 				message.type === 'timeline:add' &&
 				message.timeline === timeline &&
 				message.note;
 
-			if (addToTl) {
-				console.log('[' + queryKey + '] received ws note');
-				additional.notes.unshift(message.note);
-			}
-		});
-	}
-
-	if (
-		ws &&
-		(queryKey === 'notifications' || queryKey === 'notifications-widget')
-	) {
-		ws.addEventListener('message', (e) => {
-			let message;
-			try {
-				message = JSON.parse(e.data);
-			} catch {}
-
-			let addToTl =
+			let addToNotifs =
+				(queryKey === 'notifications' ||
+					queryKey === 'notifications-widget') &&
 				message &&
 				message.type === 'notification:add' &&
 				message.notification;
 
 			if (addToTl) {
+				console.log('[' + queryKey + '] received ws note');
+				$mutation.mutate(message.note);
+			}
+
+			if (addToNotifs) {
 				console.log('[' + queryKey + '] received ws notification');
-				additional.notifications.unshift(message.notification);
+				$mutation.mutate(message.notification);
 			}
 		});
 	}
@@ -116,29 +117,6 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
-	{#each additional.notes as note}
-		<div
-			in:fly|global={{
-				y: -10,
-				duration: 350,
-				easing: backOut
-			}}
-		>
-			<Note {note} />
-		</div>
-	{/each}
-	{#each additional.notifications as notification}
-		<div
-			in:fly|global={{
-				y: -10,
-				duration: 350,
-				easing: backOut
-			}}
-		>
-			<Notification {notification} />
-		</div>
-	{/each}
-
 	{#each $query.data.pages as results}
 		{#each results as object}
 			<div
