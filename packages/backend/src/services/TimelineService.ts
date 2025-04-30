@@ -3,7 +3,7 @@ import { ObjectLiteral } from 'typeorm';
 import DriveService from './DriveService.js';
 import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
-import NotificationRenderer from './renderers/NotificationRenderer.js';
+import NotificationRenderer from './NotificationRenderer.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import ReportService from './ReportService.js';

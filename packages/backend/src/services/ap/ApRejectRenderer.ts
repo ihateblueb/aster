@@ -1,7 +1,7 @@
-import context from '../../../static/context.js';
-import ConfigService from '../../ConfigService.js';
+import context from '../../static/context.js';
+import ConfigService from '../ConfigService.js';
 
-class ApAcceptRenderer {
+class ApRejectRenderer {
 	public render(
 		id: GenericId,
 		actor: GenericId,
@@ -10,7 +10,7 @@ class ApAcceptRenderer {
 		return {
 			'@context': context,
 
-			'type': 'Accept',
+			'type': 'Reject',
 			'id': ConfigService.url.href + 'activities/' + id,
 			'actor': ConfigService.url.href + 'users/' + actor,
 			'object': activity
@@ -18,4 +18,4 @@ class ApAcceptRenderer {
 	}
 }
 
-export default new ApAcceptRenderer();
+export default new ApRejectRenderer();

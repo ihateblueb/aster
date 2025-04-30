@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApActorRenderer from '../../../services/ap/renderers/ApActorRenderer.js';
+import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import UserService from '../../../services/UserService.js';
 
 export default plugin(async (fastify) => {

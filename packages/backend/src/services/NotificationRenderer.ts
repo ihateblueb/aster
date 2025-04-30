@@ -1,7 +1,7 @@
 import { ObjectLiteral } from 'typeorm';
 
 import NoteRenderer from './NoteRenderer.js';
-import UserRenderer from '../UserRenderer.js';
+import UserRenderer from './UserRenderer.js';
 
 class NotificationRenderer {
 	public async render(notification: ObjectLiteral) {

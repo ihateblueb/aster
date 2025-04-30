@@ -1,4 +1,4 @@
-import context from '../../../static/context.js';
+import context from '../../static/context.js';
 
 class ApCreateRenderer {
 	public render(note: ApObject): ApObject {

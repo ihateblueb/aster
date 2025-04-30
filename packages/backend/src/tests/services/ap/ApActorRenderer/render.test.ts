@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
 
-import ApActorRenderer from '../../../../services/ap/renderers/ApActorRenderer.js';
+import ApActorRenderer from '../../../../services/ap/ApActorRenderer.js';
 import UserService from '../../../../services/UserService.js';
 import db from '../../../../utils/database.js';
 

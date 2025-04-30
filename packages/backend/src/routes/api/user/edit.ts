@@ -2,9 +2,9 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { In, IsNull } from 'typeorm';
 
-import ApActorRenderer from '../../../services/ap/renderers/ApActorRenderer.js';
+import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
-import ApUpdateRenderer from '../../../services/ap/renderers/ApUpdateRenderer.js';
+import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
 import CacheService from '../../../services/CacheService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';

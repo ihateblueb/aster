@@ -1,13 +1,13 @@
 import { In, ObjectLiteral } from 'typeorm';
 
-import context from '../../../static/context.js';
-import DriveService from '../../DriveService.js';
-import EmojiService from '../../EmojiService.js';
-import MfmService from '../../MfmService.js';
-import UserService from '../../UserService.js';
+import context from '../../static/context.js';
+import DriveService from '../DriveService.js';
+import EmojiService from '../EmojiService.js';
+import MfmService from '../MfmService.js';
+import UserService from '../UserService.js';
 import ApDocumentRenderer from './ApDocumentRenderer.js';
 import ApEmojiRenderer from './ApEmojiRenderer.js';
-import ApVisibilityService from '../ApVisibilityService.js';
+import ApVisibilityService from './ApVisibilityService.js';
 
 class ApNoteRenderer {
 	public async render(note: ObjectLiteral): Promise<ApObject> {
