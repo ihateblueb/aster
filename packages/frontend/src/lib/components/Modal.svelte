@@ -72,7 +72,7 @@
 
 <style lang="scss" scoped>
 	.modalCtn {
-		position: absolute;
+		position: fixed;
 
 		width: 100%;
 		height: 100%;
@@ -82,7 +82,7 @@
 		top: 0;
 		left: 0;
 
-		z-index: 10;
+		z-index: 100;
 
 		.modal {
 			display: flex;
@@ -150,6 +150,7 @@
 			height: 100%;
 
 			pointer-events: auto;
+			z-index: 99;
 
 			background-color: #00000050;
 			backdrop-filter: blur(var(--blur-sm));

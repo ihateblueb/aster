@@ -14,6 +14,7 @@
 		rounded = false,
 		centered = false,
 		nav = false,
+		more = false,
 		circle = false,
 		wide = false,
 		thin = false,
@@ -35,6 +36,7 @@
 		(transparent ? ' transparent' : '') +
 		(rounded ? ' rounded' : '') +
 		(nav ? ' nav' : '') +
+		(more ? ' more' : '') +
 		(circle ? ' circle' : '') +
 		(centered ? ' centered' : '') +
 		(wide ? ' wide' : '') +
@@ -212,6 +214,16 @@
 			&:hover {
 				color: var(--ac1);
 				background: var(--ac1-25);
+				box-shadow: var(--funky-effect);
+			}
+		}
+		&.more {
+			box-shadow: none;
+			background: none;
+			transition: 0.1s;
+
+			&:hover {
+				background: var(--bg3);
 				box-shadow: var(--funky-effect);
 			}
 		}

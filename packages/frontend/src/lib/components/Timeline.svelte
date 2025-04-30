@@ -44,7 +44,7 @@
 		getNextPageParam: (lastPage) => {
 			console.log(
 				'[' + queryKey + '] lastTlObj',
-				lastPage?.at(-1).createdAt
+				lastPage?.at(-1)?.createdAt
 			);
 			return lastPage ? lastPage.at(-1).createdAt : undefined;
 		}
