@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApEmojiReactRenderer from '../../services/ap/ApEmojiReactRenderer.js';
+import ApEmojiReactRenderer from '../../services/ap/renderers/ApEmojiReactRenderer.js';
 import ConfigService from '../../services/ConfigService.js';
 import ReactionService from '../../services/ReactionService.js';
 

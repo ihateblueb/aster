@@ -1,5 +1,5 @@
-import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
+import context from '../../../static/context.js';
+import ConfigService from '../../ConfigService.js';
 
 class ApDeleteRenderer {
 	public render(id: GenericId, actor: GenericId, object: ApObject): ApObject {

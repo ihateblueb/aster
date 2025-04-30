@@ -1,6 +1,6 @@
-import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
-import IdService from '../IdService.js';
+import context from '../../../static/context.js';
+import ConfigService from '../../ConfigService.js';
+import IdService from '../../IdService.js';
 
 class ApUpdateRenderer {
 	public render(object: ApObject): ApObject {

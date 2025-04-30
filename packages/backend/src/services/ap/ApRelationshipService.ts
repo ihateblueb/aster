@@ -4,9 +4,9 @@ import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
-import ApAcceptRenderer from './ApAcceptRenderer.js';
+import ApAcceptRenderer from './renderers/ApAcceptRenderer.js';
 import ApActorService from './ApActorService.js';
-import ApRejectRenderer from './ApRejectRenderer.js';
+import ApRejectRenderer from './renderers/ApRejectRenderer.js';
 
 class ApRelationshipService {
 	public async acceptFollow(
