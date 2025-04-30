@@ -25,4 +25,7 @@ export class Instance {
 
 	@Column({ nullable: true })
 	maintainerEmail: string;
+
+	@Column({ default: true })
+	deliverActivities: boolean;
 }
