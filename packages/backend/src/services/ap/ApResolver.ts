@@ -84,7 +84,7 @@ class ApResolver {
 		const request = await fetch(apId, {
 			method: 'GET',
 			headers: {
-				'User-Agent': `Aster/${pkg.version}`,
+				'User-Agent': `${pkg.name}/${pkg.version}`,
 				'Accept':
 					contentType ??
 					'application/activity+json, application/ld+json'
