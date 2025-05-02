@@ -20,8 +20,19 @@ class UserService {
 		return await db.getRepository('user').findOne({ where: where });
 	}
 
-	public async getMany(where: where) {
-		return await db.getRepository('user').find({ where: where });
+	public async getMany(
+		where: where,
+		take?: number,
+		order?: string,
+		direction?: 'ASC' | 'DESC'
+	) {
+		return await db
+			.getRepository('user')
+			.createQueryBuilder('user')
+			.where(where)
+			.take(take)
+			.orderBy(order, direction)
+			.getMany();
 	}
 
 	public async getPrivate(where: where) {

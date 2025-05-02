@@ -9,7 +9,9 @@ export default plugin(async (fastify) => {
 		querystring: {
 			type: 'object',
 			properties: {
-				query: { type: 'string' }
+				query: { type: 'string' },
+				since: { type: ['string', 'null'] },
+				take: { type: 'number', nullable: true }
 			},
 			required: ['query']
 		}
@@ -26,7 +28,9 @@ export default plugin(async (fastify) => {
 		async (req, reply) => {
 			return await SearchService.search(
 				req.query.query,
-				req.auth.user.id
+				req.auth.user.id,
+				req.query.since,
+				req.query.take
 			).then((e) => {
 				return reply.status(200).send(e);
 			});

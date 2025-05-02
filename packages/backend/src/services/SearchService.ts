@@ -1,9 +1,13 @@
-import { ILike, ObjectLiteral } from 'typeorm';
+import { Equal, ILike, LessThan, ObjectLiteral } from 'typeorm';
 
 import deduplicate from '../utils/deduplicate.js';
 import logger from '../utils/logger.js';
+import mergeObjects from '../utils/mergeObjects.js';
+import ConfigService from './ConfigService.js';
+import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
+import UserRenderer from './UserRenderer.js';
 import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
 import WebfingerService from './WebfingerService.js';
@@ -13,7 +17,9 @@ class SearchService {
 		const splitHandle = query.split('@');
 
 		let where = {
-			username: splitHandle[1]
+			username: Equal(splitHandle[1]),
+			activated: true,
+			suspended: false
 		};
 
 		if (splitHandle[2]) where['host'] = splitHandle[2];
@@ -30,7 +36,12 @@ class SearchService {
 		return false;
 	}
 
-	public async search(query: string, as: string) {
+	public async search(
+		query: string,
+		as: string,
+		since?: string,
+		take?: number
+	) {
 		let result = {
 			redirect: false,
 			results: []
@@ -46,6 +57,19 @@ class SearchService {
 			redirect: boolean,
 			check: 'blocking' | 'canISee'
 		) {
+			async function pushResult(item) {
+				result.redirect = redirect;
+				result.results.push({
+					type: type,
+					object:
+						type === 'user'
+							? await UserRenderer.render(item)
+							: type === 'note'
+								? await NoteRenderer.render(item)
+								: item
+				});
+			}
+
 			if (check === 'blocking') {
 				for (const item of items) {
 					if (
@@ -53,52 +77,117 @@ class SearchService {
 							item?.id,
 							as
 						))
-					) {
-						result.redirect = redirect;
-						result.results.push({
-							type: type,
-							object: item
-						});
-					}
+					)
+						await pushResult(item);
 				}
 			} else if (check === 'canISee') {
 				for (const item of items) {
-					if (await VisibilityService.canISee(item, as)) {
-						result.redirect = redirect;
-						result.results.push({
-							type: type,
-							object: item
-						});
-					}
+					if (await VisibilityService.canISee(item, as))
+						await pushResult(item);
 				}
 			}
+		}
+
+		function Fuzzy(query: string) {
+			return ILike(`%${query.replaceAll('-', '%')}%`);
+		}
+
+		take =
+			take <= ConfigService.timeline.maxObjects && take > 0
+				? take
+				: ConfigService.timeline.maxObjects;
+
+		let createdAt = undefined;
+		if (since) createdAt = LessThan(since);
+
+		function appendCreatedAt(object: object) {
+			return createdAt
+				? mergeObjects(object, {
+						createdAt: createdAt
+					})
+				: object;
 		}
 
 		await this.lookup(query).then(async (e) => {
 			if (e) await addToResults([e], 'user', true, 'blocking');
 		});
 
-		await UserService.getMany({ id: query }).then(async (e) => {
+		await UserService.getMany(
+			appendCreatedAt({
+				id: query,
+				activated: true,
+				suspended: false,
+				createdAt: createdAt
+			}),
+			take,
+			'user.createdAt',
+			'DESC'
+		).then(async (e) => {
 			await addToResults(e, 'user', true, 'blocking');
 		});
-		await UserService.getMany({ apId: query }).then(async (e) => {
+		await UserService.getMany(
+			appendCreatedAt({
+				apId: query,
+				activated: true,
+				suspended: false
+			}),
+			take,
+			'user.createdAt',
+			'DESC'
+		).then(async (e) => {
 			await addToResults(e, 'user', true, 'blocking');
 		});
-		await UserService.getMany({ username: ILike(query) }).then(
-			async (e) => {
-				await addToResults(e, 'user', false, 'blocking');
-			}
-		);
-		await UserService.getMany({ displayName: ILike(query) }).then(
-			async (e) => {
-				await addToResults(e, 'user', false, 'blocking');
-			}
-		);
+		await UserService.getMany(
+			appendCreatedAt({
+				username: Fuzzy(query),
+				activated: true,
+				suspended: false
+			}),
+			take,
+			'user.createdAt',
+			'DESC'
+		).then(async (e) => {
+			await addToResults(e, 'user', false, 'blocking');
+		});
+		await UserService.getMany(
+			appendCreatedAt({
+				displayName: Fuzzy(query),
+				activated: true,
+				suspended: false
+			}),
+			take,
+			'user.createdAt',
+			'DESC'
+		).then(async (e) => {
+			await addToResults(e, 'user', false, 'blocking');
+		});
 
-		await NoteService.getMany({ id: query }).then(async (e) => {
+		await NoteService.getMany(
+			appendCreatedAt({
+				id: query,
+				user: {
+					activated: true,
+					suspended: false
+				}
+			}),
+			take,
+			'note.createdAt',
+			'DESC'
+		).then(async (e) => {
 			await addToResults(e, 'note', true, 'canISee');
 		});
-		await NoteService.getMany({ apId: query }).then(async (e) => {
+		await NoteService.getMany(
+			appendCreatedAt({
+				apId: query,
+				user: {
+					activated: true,
+					suspended: false
+				}
+			}),
+			take,
+			'note.createdAt',
+			'DESC'
+		).then(async (e) => {
 			await addToResults(e, 'note', true, 'canISee');
 		});
 
