@@ -154,9 +154,14 @@ class RelationshipService {
 		if (
 			(await this.isBlocking(to, from)) ||
 			(await this.isBlocking(from, to))
-		)
-			return false;
-		return true;
+		) {
+			logger.debug(
+				'relationship',
+				'eitherBlocking ' + to + ' ' + from + ' true'
+			);
+			return true;
+		}
+		return false;
 	}
 
 	public async acceptFollow(id: GenericId) {

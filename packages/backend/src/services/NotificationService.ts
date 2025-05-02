@@ -79,8 +79,6 @@ class NotificationService {
 		relationship?: GenericId,
 		report?: GenericId
 	) {
-		console.log('nbotifnote ' + note);
-
 		const sender = await UserService.get({ id: from });
 		const recipient = await UserService.get({ id: to });
 
@@ -107,9 +105,7 @@ class NotificationService {
 				message: 'Cannot send notification to non-local user'
 			};
 
-		if (
-			!(await RelationshipService.eitherBlocking(recipient.id, sender.id))
-		)
+		if (await RelationshipService.eitherBlocking(recipient.id, sender.id))
 			return {
 				error: true,
 				message: 'Cannot interact with this user'

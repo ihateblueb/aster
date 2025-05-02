@@ -6,11 +6,12 @@ if (localstore.getParsed('token')) loggedIn = true;
 let wsUrl = '/api/streaming?token=' + localstore.getParsed('token');
 let ws: undefined | WebSocket = undefined;
 
-if (loggedIn) {
+function connect() {
 	ws = new WebSocket(wsUrl);
 
-	ws.addEventListener('open', (e) => {
-		console.log('[ws] opened connection');
+	ws.addEventListener('error', (e) => {
+		console.log('[ws] connection errored');
+		ws?.close();
 	});
 
 	ws.addEventListener('close', (e) => {
@@ -18,13 +19,15 @@ if (loggedIn) {
 
 		setTimeout(() => {
 			console.log('[ws] attempting reconnect...');
-			ws = new WebSocket(wsUrl);
+			connect();
 		}, 5000);
 	});
+}
 
-	ws.addEventListener('error', (e) => {
-		console.log('[ws] connection errored');
-	});
+// todo: seperate event system layer before that communicates with this here
+
+if (loggedIn) {
+	connect();
 }
 
 export default ws;

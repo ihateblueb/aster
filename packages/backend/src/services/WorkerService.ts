@@ -32,7 +32,7 @@ const deliver = new Worker(
 const backfill = new Worker(
 	'{backfill}',
 	async (job) => {
-		throw new Error('processing not implemented');
+		return;
 	},
 	{
 		connection: redis,

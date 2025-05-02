@@ -1,4 +1,5 @@
 import logger from '../utils/logger.js';
+import ApActorService from './ap/ApActorService.js';
 import ApResolver from './ap/ApResolver.js';
 
 class WebfingerService {
@@ -6,13 +7,9 @@ class WebfingerService {
 	public async lookup(handle: string) {
 		// @user@example.com
 		const splitHandle = handle.split('@');
+		const url = `https://${splitHandle[2]}/.well-known/webfinger?resource=acct:${splitHandle[1]}@${splitHandle[2]}`;
 
-		logger.debug(
-			'webfinger',
-			'splitHandle 0: ' + splitHandle[0] + ' 1: ' + splitHandle[1]
-		);
-
-		const url = `https://${splitHandle[1]}/.well-known/webfinger?resource=acct:@${splitHandle[0]}`;
+		logger.debug('webfinger', 'looking up ' + url);
 
 		const res = await ApResolver.resolve(url, 'application/jrd+json');
 
@@ -24,8 +21,10 @@ class WebfingerService {
 				(e.type === 'application/activity+json' ||
 					e.type === 'application/ld+json')
 		);
+		const foundHref = found?.href;
 
-		console.log(found);
+		if (foundHref) return await ApActorService.get(foundHref);
+		return false;
 	}
 }
 

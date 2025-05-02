@@ -1,8 +1,10 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
+import { ObjectLiteral } from 'typeorm';
 
 import UserRenderer from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
+import WebfingerService from '../../../services/WebfingerService.js';
 
 export default plugin(async (fastify) => {
 	const schema = {
@@ -33,7 +35,11 @@ export default plugin(async (fastify) => {
 			if (splitHandle[2]) where['host'] = splitHandle[2];
 			if (!splitHandle[2]) where['local'] = true;
 
-			const user = await UserService.get(where);
+			let user: boolean | ObjectLiteral = await UserService.get(where);
+			if (!user && splitHandle[2])
+				user = await WebfingerService.lookup(
+					`@${splitHandle[1]}@${splitHandle[2]}`
+				);
 
 			if (!user || !user.activated || user.suspended)
 				return reply.status(404).send();

@@ -81,7 +81,7 @@ class ApResolver {
 			return false;
 		}
 
-		const request = await fetch(apId, {
+		return await fetch(apId, {
 			method: 'GET',
 			headers: {
 				'User-Agent': `${pkg.name}/${pkg.version}`,
@@ -89,17 +89,23 @@ class ApResolver {
 					contentType ??
 					'application/activity+json, application/ld+json'
 			}
-		});
-
-		if (request.ok) {
-			return request.json();
-		} else {
-			logger.error(
-				'resolver',
-				'failed request to ' + apId + 'with status ' + request.status
-			);
-			return false;
-		}
+		})
+			.then((e) => {
+				logger.debug(
+					'resolver',
+					'fetched ' + apId + ' unauthenticated'
+				);
+				return e.json();
+			})
+			.catch((reason) => {
+				logger.error(
+					'resolver',
+					'failed request to ' +
+						apId +
+						' with status ' +
+						reason?.status
+				);
+			});
 	}
 }
 
