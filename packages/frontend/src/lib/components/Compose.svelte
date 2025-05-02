@@ -5,6 +5,8 @@
 	import localstore from '$lib/localstore';
 	import {
 		IconChartBar,
+		IconEye,
+		IconEyeOff,
 		IconHome,
 		IconLock,
 		IconMail,
@@ -27,6 +29,7 @@
 	import localizedString from '$lib/localizedString.js';
 	import LocalizedString from '$lib/components/LocalizedString.svelte';
 	import addAlert from '$lib/addAlert.js';
+	import Mfm from '$lib/components/Mfm.svelte';
 
 	let addDropdown: undefined | Dropdown = $state();
 	let emojiDropdown: undefined | Dropdown = $state();
@@ -39,6 +42,8 @@
 		self = localstore.getParsed('self');
 	}
 	updateSelf();
+
+	let emojis = localstore.getParsed('emojis');
 
 	// note state
 
@@ -148,6 +153,8 @@
 		store.selectedFiles.update((e) => e.filter((f) => f.id !== id));
 		attachments = attachments.filter((f) => f !== id);
 	}
+
+	let showPreview = $state(false);
 </script>
 
 <div class="compose">
@@ -156,6 +163,18 @@
 			<Avatar user={self} size="35px" link={false} />
 		</div>
 		<div class="right">
+			<Button
+				transparent
+				centered
+				nm
+				on:click={() => (showPreview = !showPreview)}
+			>
+				{#if showPreview}
+					<IconEyeOff size="18px" />
+				{:else}
+					<IconEye size="18px" />
+				{/if}
+			</Button>
 			<Button
 				transparent
 				centered
@@ -281,6 +300,12 @@
 		</div>
 	</div>
 </div>
+
+{#if showPreview}
+	<div class="preview">
+		<Mfm content={note?.content} {emojis} />
+	</div>
+{/if}
 
 <Dropdown bind:this={visibilityDropdown}>
 	<DropdownItem on:click={() => setVisibility('public')}>
@@ -436,5 +461,12 @@
 		&:hover {
 			color: var(--danger-50);
 		}
+	}
+
+	.preview {
+		margin-top: 10px;
+		background-color: var(--bg3-50);
+		border-radius: var(--br-md);
+		padding: 10px;
 	}
 </style>
