@@ -20,7 +20,7 @@ class ApRelationshipService {
 
 		await CacheService.scanAndDel('user*' + to);
 
-		const fromUser = await UserService.get({ from: from });
+		const fromUser = await UserService.get({ id: from });
 		if (fromUser) await ApActorService.refetch(fromUser?.apId);
 
 		return await QueueService.deliver
