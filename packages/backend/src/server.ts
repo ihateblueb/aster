@@ -186,6 +186,7 @@ fastify
 
 			let auth = await AuthService.verify(req.cookies.authorization);
 			if (auth.error) throw new Error(auth.message);
+			if (!auth.user.admin) reply.status(403).send();
 		}
 	})
 	.addHook('onResponse', (req, reply, done) => {
