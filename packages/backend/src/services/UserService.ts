@@ -52,6 +52,10 @@ class UserService {
 		return await db.getRepository('user').update(where, entity);
 	}
 
+	public async updatePrivate(where: where, entity: Partial<ObjectLiteral>) {
+		return await db.getRepository('user_private').update(where, entity);
+	}
+
 	public async delete(where: where) {
 		return await db.getRepository('user').delete(where);
 	}
@@ -517,8 +521,44 @@ class UserService {
 		}
 	}
 
-	public async resetPassword(username: string, newPassword: string) {
-		return;
+	public async resetPassword(userId: GenericId, newPassword: string) {
+		const user = await this.get({ id: userId });
+
+		if (!user || !user.activated || user.suspended)
+			return {
+				error: true,
+				status: 404,
+				message: 'Not found'
+			};
+
+		if (newPassword.length <= 6)
+			return {
+				error: true,
+				status: 400,
+				message: locale.user.registration.passwordTooShort
+			};
+
+		if (newPassword.length > ConfigService.limits.soft.password)
+			return {
+				error: true,
+				status: 400,
+				message: locale.user.registration.passwordTooLong
+			};
+
+		const salt = bcrypt.genSaltSync(12);
+		const hash = bcrypt.hashSync(newPassword, salt);
+
+		const userPrivate = {
+			password: hash
+		};
+
+		await this.updatePrivate({ user: user.id }, userPrivate);
+
+		return {
+			error: false,
+			status: 200,
+			message: 'Reset password'
+		};
 	}
 }
 

@@ -43,8 +43,7 @@ export default plugin(async (fastify) => {
 				user.id,
 				req.body.password
 			).then((e) => {
-				if (e) return reply.status(200).send(e);
-				return reply.status(500).send();
+				return reply.status(200).send(e);
 			});
 		}
 	);
