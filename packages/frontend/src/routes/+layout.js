@@ -90,7 +90,7 @@ if (browser) {
 		}
 	});
 
-	await updateColorScheme();
+	updateColorScheme();
 	updateSelf();
 	updateEmojis();
 }
