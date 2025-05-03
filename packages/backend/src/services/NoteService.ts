@@ -24,53 +24,61 @@ import VisibilityService from './VisibilityService.js';
 import WebsocketService from './WebsocketService.js';
 
 class NoteService {
+	public createQueryBuilder() {
+		return (
+			db
+				.getRepository('note')
+				.createQueryBuilder('note')
+				.leftJoinAndSelect('note.user', 'user')
+
+				//reply
+				.leftJoinAndSelect('note.replyingTo', 'replyingTo')
+				.leftJoinAndSelect('replyingTo.user', 'replyingTo_user')
+
+				.leftJoinAndSelect('replyingTo.repeat', 'replyingTo_repeat')
+				.leftJoin('replyingTo_repeat.user', 'replyingTo_repeat_user')
+				.addSelect(UserMini('replyingTo_repeat_user'))
+
+				.leftJoinAndSelect('replyingTo.repeats', 'replyingTo_repeats')
+				.leftJoin('replyingTo_repeats.user', 'replyingTo_repeats_user')
+				.addSelect(UserMini('replyingTo_repeats_user'))
+
+				.leftJoinAndSelect('replyingTo.likes', 'replyingTo_likes')
+				.leftJoin('replyingTo_likes.user', 'replyingTo_likes_user')
+				.addSelect(UserMini('replyingTo_likes_user'))
+
+				// repeat
+				.leftJoinAndSelect('note.repeat', 'repeat')
+
+				.leftJoin('repeat.user', 'repeat_user')
+				.addSelect(UserMini('repeat_user'))
+
+				.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
+				.leftJoinAndSelect('repeat.likes', 'repeat_likes')
+
+				.leftJoinAndSelect('note.repeats', 'repeats')
+				.leftJoin('repeats.user', 'repeats_user')
+				.addSelect(UserMini('repeats_user'))
+
+				//likes
+				.leftJoinAndSelect('note.likes', 'note_likes')
+				.leftJoin('note_likes.user', 'likes_user')
+				.addSelect(UserMini('likes_user'))
+
+				//reactions
+				.leftJoinAndSelect('note.reactions', 'note_reactions')
+				.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
+				.leftJoinAndSelect(
+					'reactions_emoji.file',
+					'reactions_emoji_file'
+				)
+				.leftJoin('note_reactions.user', 'reactions_user')
+				.addSelect(UserMini('reactions_user'))
+		);
+	}
+
 	public async get(where: where, orWhere?: where) {
-		return await db
-			.getRepository('note')
-			.createQueryBuilder('note')
-			.leftJoinAndSelect('note.user', 'user')
-
-			//reply
-			.leftJoinAndSelect('note.replyingTo', 'replyingTo')
-			.leftJoinAndSelect('replyingTo.user', 'replyingTo_user')
-
-			.leftJoinAndSelect('replyingTo.repeat', 'replyingTo_repeat')
-			.leftJoin('replyingTo_repeat.user', 'replyingTo_repeat_user')
-			.addSelect(UserMini('replyingTo_repeat_user'))
-
-			.leftJoinAndSelect('replyingTo.repeats', 'replyingTo_repeats')
-			.leftJoin('replyingTo_repeats.user', 'replyingTo_repeats_user')
-			.addSelect(UserMini('replyingTo_repeats_user'))
-
-			.leftJoinAndSelect('replyingTo.likes', 'replyingTo_likes')
-			.leftJoin('replyingTo_likes.user', 'replyingTo_likes_user')
-			.addSelect(UserMini('replyingTo_likes_user'))
-
-			// repeat
-			.leftJoinAndSelect('note.repeat', 'repeat')
-
-			.leftJoin('repeat.user', 'repeat_user')
-			.addSelect(UserMini('repeat_user'))
-
-			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
-			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
-
-			.leftJoinAndSelect('note.repeats', 'repeats')
-			.leftJoin('repeats.user', 'repeats_user')
-			.addSelect(UserMini('repeats_user'))
-
-			//likes
-			.leftJoinAndSelect('note.likes', 'note_likes')
-			.leftJoin('note_likes.user', 'likes_user')
-			.addSelect(UserMini('likes_user'))
-
-			//reactions
-			.leftJoinAndSelect('note.reactions', 'note_reactions')
-			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
-			.leftJoinAndSelect('reactions_emoji.file', 'reactions_emoji_file')
-			.leftJoin('note_reactions.user', 'reactions_user')
-			.addSelect(UserMini('reactions_user'))
-
+		return await this.createQueryBuilder()
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.getOne();
@@ -84,52 +92,7 @@ class NoteService {
 		orWhere?: where,
 		andWhere?: where
 	) {
-		return await db
-			.getRepository('note')
-			.createQueryBuilder('note')
-			.leftJoinAndSelect('note.user', 'user')
-
-			//reply
-			.leftJoinAndSelect('note.replyingTo', 'replyingTo')
-			.leftJoinAndSelect('replyingTo.user', 'replyingTo_user')
-
-			.leftJoinAndSelect('replyingTo.repeat', 'replyingTo_repeat')
-			.leftJoin('replyingTo_repeat.user', 'replyingTo_repeat_user')
-			.addSelect(UserMini('replyingTo_repeat_user'))
-
-			.leftJoinAndSelect('replyingTo.repeats', 'replyingTo_repeats')
-			.leftJoin('replyingTo_repeats.user', 'replyingTo_repeats_user')
-			.addSelect(UserMini('replyingTo_repeats_user'))
-
-			.leftJoinAndSelect('replyingTo.likes', 'replyingTo_likes')
-			.leftJoin('replyingTo_likes.user', 'replyingTo_likes_user')
-			.addSelect(UserMini('replyingTo_likes_user'))
-
-			// repeat
-			.leftJoinAndSelect('note.repeat', 'repeat')
-
-			.leftJoin('repeat.user', 'repeat_user')
-			.addSelect(UserMini('repeat_user'))
-
-			.leftJoinAndSelect('repeat.repeats', 'repeat_repeats')
-			.leftJoinAndSelect('repeat.likes', 'repeat_likes')
-
-			.leftJoinAndSelect('note.repeats', 'repeats')
-			.leftJoin('repeats.user', 'repeats_user')
-			.addSelect(UserMini('repeats_user'))
-
-			//likes
-			.leftJoinAndSelect('note.likes', 'note_like')
-			.leftJoin('note_like.user', 'like_user')
-			.addSelect(UserMini('like_user'))
-
-			//reactions
-			.leftJoinAndSelect('note.reactions', 'note_reactions')
-			.leftJoinAndSelect('note_reactions.emoji', 'reactions_emoji')
-			.leftJoinAndSelect('reactions_emoji.file', 'reactions_emoji_file')
-			.leftJoin('note_reactions.user', 'reactions_user')
-			.addSelect(UserMini('reactions_user'))
-
+		return await this.createQueryBuilder()
 			.where(where)
 			.orWhere(orWhere ?? where)
 			.andWhere(andWhere ?? where)

@@ -1,5 +1,6 @@
 import { Equal, ILike, LessThan, ObjectLiteral } from 'typeorm';
 
+import db from '../utils/database.js';
 import deduplicate from '../utils/deduplicate.js';
 import logger from '../utils/logger.js';
 import mergeObjects from '../utils/mergeObjects.js';
@@ -7,6 +8,7 @@ import ConfigService from './ConfigService.js';
 import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
+import TimelineService from './TimelineService.js';
 import UserRenderer from './UserRenderer.js';
 import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
@@ -49,6 +51,11 @@ class SearchService {
 
 		if (!query || query.length < 0) return result;
 
+		let queries: string[] = [];
+
+		query = query.replaceAll('*', '%').replaceAll('%', '');
+		queries = query.split(',');
+
 		logger.debug('search', 'query: ' + query);
 
 		async function addToResults(
@@ -89,7 +96,7 @@ class SearchService {
 		}
 
 		function Fuzzy(query: string) {
-			return ILike(`%${query.replaceAll('-', '%')}%`);
+			return ILike(`%${query}%`);
 		}
 
 		take =
@@ -112,88 +119,103 @@ class SearchService {
 			if (e) await addToResults([e], 'user', true, 'blocking');
 		});
 
-		await UserService.getMany(
-			appendCreatedAt({
-				id: query,
-				activated: true,
-				suspended: false,
-				createdAt: createdAt
-			}),
-			take,
-			'user.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'user', true, 'blocking');
-		});
-		await UserService.getMany(
-			appendCreatedAt({
-				apId: query,
-				activated: true,
-				suspended: false
-			}),
-			take,
-			'user.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'user', true, 'blocking');
-		});
-		await UserService.getMany(
-			appendCreatedAt({
-				username: Fuzzy(query),
-				activated: true,
-				suspended: false
-			}),
-			take,
-			'user.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'user', false, 'blocking');
-		});
-		await UserService.getMany(
-			appendCreatedAt({
-				displayName: Fuzzy(query),
-				activated: true,
-				suspended: false
-			}),
-			take,
-			'user.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'user', false, 'blocking');
-		});
+		for (const query of queries) {
+			await db
+				.getRepository('user')
+				.createQueryBuilder('user')
+				.where(
+					appendCreatedAt({
+						id: query,
+						activated: true,
+						suspended: false
+					})
+				)
+				.orWhere(
+					appendCreatedAt({
+						apId: query,
+						activated: true,
+						suspended: false
+					})
+				)
+				.take(take)
+				.orderBy('user.createdAt', 'DESC')
+				.getMany()
+				.then(async (e) => {
+					await addToResults(e, 'user', true, 'blocking');
+				});
 
-		await NoteService.getMany(
-			appendCreatedAt({
-				id: query,
-				user: {
-					activated: true,
-					suspended: false
-				}
-			}),
-			take,
-			'note.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'note', true, 'canISee');
-		});
-		await NoteService.getMany(
-			appendCreatedAt({
-				apId: query,
-				user: {
-					activated: true,
-					suspended: false
-				}
-			}),
-			take,
-			'note.createdAt',
-			'DESC'
-		).then(async (e) => {
-			await addToResults(e, 'note', true, 'canISee');
-		});
+			await db
+				.getRepository('user')
+				.createQueryBuilder('user')
+				.orWhere(
+					appendCreatedAt({
+						username: Fuzzy(query),
+						activated: true,
+						suspended: false
+					})
+				)
+				.orWhere(
+					appendCreatedAt({
+						displayName: Fuzzy(query),
+						activated: true,
+						suspended: false
+					})
+				)
+				.take(take)
+				.orderBy('user.createdAt', 'DESC')
+				.getMany()
+				.then(async (e) => {
+					await addToResults(e, 'user', false, 'blocking');
+				});
+
+			await NoteService.createQueryBuilder()
+				.where(
+					appendCreatedAt({
+						id: query,
+						user: {
+							activated: true,
+							suspended: false
+						}
+					})
+				)
+				.orWhere(
+					appendCreatedAt({
+						apId: query,
+						user: {
+							activated: true,
+							suspended: false
+						}
+					})
+				)
+				.take(take)
+				.orderBy('note.createdAt', 'DESC')
+				.getMany()
+				.then(async (e) => {
+					await addToResults(e, 'note', true, 'canISee');
+				});
+
+			await NoteService.createQueryBuilder()
+				.where(
+					appendCreatedAt({
+						content: Fuzzy(query),
+						user: {
+							activated: true,
+							suspended: false
+						}
+					})
+				)
+				.take(take)
+				.orderBy('note.createdAt', 'DESC')
+				.getMany()
+				.then(async (e) => {
+					await addToResults(e, 'note', false, 'canISee');
+				});
+		}
 
 		// todo: text search
 
 		result.results = deduplicate(result.results, ['object', 'id']);
+		result.results = TimelineService.sort(result.results, take);
 
 		return result;
 	}

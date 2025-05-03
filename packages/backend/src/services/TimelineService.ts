@@ -77,9 +77,7 @@ class TimelineService {
 				Number(new Date(y.createdAt)) - Number(new Date(x.createdAt))
 		);
 
-		if (timeline.length > take) {
-			timeline.length = take;
-		}
+		if (timeline.length > take) timeline.length = take;
 
 		//if (timeline.length > 1) return undefined;
 

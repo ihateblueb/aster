@@ -1,4 +1,5 @@
 import logger from '../../utils/logger.js';
+import CacheService from '../CacheService.js';
 import IdService from '../IdService.js';
 import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
@@ -16,6 +17,11 @@ class ApRelationshipService {
 	) {
 		const id = IdService.generate();
 		const deliver = ApAcceptRenderer.render(id, to, apId);
+
+		await CacheService.scanAndDel('user*' + to);
+
+		const fromUser = await UserService.get({ from: from });
+		if (fromUser) await ApActorService.refetch(fromUser?.apId);
 
 		return await QueueService.deliver
 			.add(IdService.generate(), {

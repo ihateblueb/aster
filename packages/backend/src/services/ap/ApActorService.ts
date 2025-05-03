@@ -51,6 +51,8 @@ class ApActorService {
 		console.log(resolvedActor);
 
 		if (!resolvedActor) return false;
+		if (resolvedActor?.error === 'Gone')
+			await UserService.delete({ apId: apId });
 		if (!['Person', 'Service', 'Application'].includes(resolvedActor.type))
 			return false;
 
