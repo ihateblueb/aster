@@ -1,8 +1,8 @@
 import { ObjectLiteral } from 'typeorm';
 
+import NoteService from '../services/NoteService.js';
+import VisibilityService from '../services/VisibilityService.js';
 import NoteRenderer from './NoteRenderer.js';
-import NoteService from './NoteService.js';
-import VisibilityService from './VisibilityService.js';
 
 class ContextRenderer {
 	public async render(note: GenericId, depth: number, as?: GenericId) {

@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import NoteRenderer from '../../../services/NoteRenderer.js';
+import NoteRenderer from '../../../renderers/NoteRenderer.js';
 import NoteService from '../../../services/NoteService.js';
 import VisibilityService from '../../../services/VisibilityService.js';
 

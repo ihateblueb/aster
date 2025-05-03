@@ -1,9 +1,9 @@
 import { In, ObjectLiteral } from 'typeorm';
 
-import CacheService from './CacheService.js';
-import EmojiService from './EmojiService.js';
-import NoteService from './NoteService.js';
-import RelationshipService from './RelationshipService.js';
+import CacheService from '../services/CacheService.js';
+import EmojiService from '../services/EmojiService.js';
+import NoteService from '../services/NoteService.js';
+import RelationshipService from '../services/RelationshipService.js';
 
 class UserRenderer {
 	public async render(user: ObjectLiteral, skipCache?: boolean) {

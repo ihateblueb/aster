@@ -1,3 +1,5 @@
+import ApAcceptRenderer from '../../renderers/ap/ApAcceptRenderer.js';
+import ApRejectRenderer from '../../renderers/ap/ApRejectRenderer.js';
 import logger from '../../utils/logger.js';
 import CacheService from '../CacheService.js';
 import IdService from '../IdService.js';
@@ -5,9 +7,7 @@ import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';
 import UserService from '../UserService.js';
-import ApAcceptRenderer from './ApAcceptRenderer.js';
 import ApActorService from './ApActorService.js';
-import ApRejectRenderer from './ApRejectRenderer.js';
 
 class ApRelationshipService {
 	public async acceptFollow(

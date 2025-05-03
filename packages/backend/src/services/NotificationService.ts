@@ -1,10 +1,10 @@
 import { ObjectLiteral } from 'typeorm';
 
+import NotificationRenderer from '../renderers/NotificationRenderer.js';
 import db from '../utils/database.js';
 import UserMini from '../utils/entities/UserMini.js';
 import IdService from './IdService.js';
 import NoteService from './NoteService.js';
-import NotificationRenderer from './NotificationRenderer.js';
 import RelationshipService from './RelationshipService.js';
 import ReportService from './ReportService.js';
 import UserService from './UserService.js';

@@ -13,4 +13,7 @@ export class Meta {
 
 	@Column({ nullable: true })
 	maintainerEmail: string;
+
+	@Column({ type: 'jsonb', nullable: true })
+	manifestOverride: string;
 }

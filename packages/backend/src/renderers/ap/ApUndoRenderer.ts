@@ -1,6 +1,6 @@
+import ConfigService from '../../services/ConfigService.js';
+import IdService from '../../services/IdService.js';
 import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
-import IdService from '../IdService.js';
 
 class ApUndoRenderer {
 	public render(object: ApObject): ApObject {

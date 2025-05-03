@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApNoteRenderer from '../../../services/ap/ApNoteRenderer.js';
+import ApNoteRenderer from '../../../renderers/ap/ApNoteRenderer.js';
 import AuthorizedFetchService from '../../../services/AuthorizedFetchService.js';
 import NoteService from '../../../services/NoteService.js';
 

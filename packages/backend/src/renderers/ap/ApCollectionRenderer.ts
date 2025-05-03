@@ -1,5 +1,5 @@
+import ConfigService from '../../services/ConfigService.js';
 import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
 
 // todo: pagination
 class ApCollectionRenderer {

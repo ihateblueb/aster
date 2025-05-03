@@ -1,7 +1,7 @@
 import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 
-import ApLikeRenderer from '../../services/ap/ApLikeRenderer.js';
+import ApLikeRenderer from '../../renderers/ap/ApLikeRenderer.js';
 import ConfigService from '../../services/ConfigService.js';
 import LikeService from '../../services/LikeService.js';
 

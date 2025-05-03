@@ -1,15 +1,15 @@
 import { Equal, ILike, LessThan, ObjectLiteral } from 'typeorm';
 
+import NoteRenderer from '../renderers/NoteRenderer.js';
+import UserRenderer from '../renderers/UserRenderer.js';
 import db from '../utils/database.js';
 import deduplicate from '../utils/deduplicate.js';
 import logger from '../utils/logger.js';
 import mergeObjects from '../utils/mergeObjects.js';
 import ConfigService from './ConfigService.js';
-import NoteRenderer from './NoteRenderer.js';
 import NoteService from './NoteService.js';
 import RelationshipService from './RelationshipService.js';
 import TimelineService from './TimelineService.js';
-import UserRenderer from './UserRenderer.js';
 import UserService from './UserService.js';
 import VisibilityService from './VisibilityService.js';
 import WebfingerService from './WebfingerService.js';

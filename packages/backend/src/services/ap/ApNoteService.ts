@@ -2,6 +2,7 @@ import punycode from 'node:punycode';
 
 import { In, ObjectLiteral } from 'typeorm';
 
+import NoteRenderer from '../../renderers/NoteRenderer.js';
 import db from '../../utils/database.js';
 import logger from '../../utils/logger.js';
 import reduceSubdomain from '../../utils/reduceSubdomain.js';
@@ -10,7 +11,6 @@ import DriveService from '../DriveService.js';
 import IdService from '../IdService.js';
 import MfmService from '../MfmService.js';
 import ModeratedInstanceService from '../ModeratedInstanceService.js';
-import NoteRenderer from '../NoteRenderer.js';
 import NotificationService from '../NotificationService.js';
 import QueueService from '../QueueService.js';
 import RelationshipService from '../RelationshipService.js';

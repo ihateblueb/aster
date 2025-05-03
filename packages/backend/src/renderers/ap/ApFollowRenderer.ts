@@ -1,12 +1,12 @@
+import ConfigService from '../../services/ConfigService.js';
 import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
 
-class ApBlockRenderer {
+class ApFollowRenderer {
 	public render(id: GenericId, actor: GenericId, object: ApId): ApObject {
 		return {
 			'@context': context,
 
-			'type': 'Block',
+			'type': 'Follow',
 			'id': ConfigService.url.href + 'activities/' + id,
 			'actor': ConfigService.url.href + 'users/' + actor,
 			'object': object
@@ -14,4 +14,4 @@ class ApBlockRenderer {
 	}
 }
 
-export default new ApBlockRenderer();
+export default new ApFollowRenderer();

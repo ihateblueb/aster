@@ -2,7 +2,7 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { ObjectLiteral } from 'typeorm';
 
-import UserRenderer from '../../../services/UserRenderer.js';
+import UserRenderer from '../../../renderers/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 import WebfingerService from '../../../services/WebfingerService.js';
 

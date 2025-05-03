@@ -2,15 +2,15 @@ import plugin from 'fastify-plugin';
 import { FromSchema } from 'json-schema-to-ts';
 import { In, IsNull } from 'typeorm';
 
-import ApActorRenderer from '../../../services/ap/ApActorRenderer.js';
+import ApActorRenderer from '../../../renderers/ap/ApActorRenderer.js';
+import ApUpdateRenderer from '../../../renderers/ap/ApUpdateRenderer.js';
+import UserRenderer from '../../../renderers/UserRenderer.js';
 import ApDeliverService from '../../../services/ap/ApDeliverService.js';
-import ApUpdateRenderer from '../../../services/ap/ApUpdateRenderer.js';
 import CacheService from '../../../services/CacheService.js';
 import ConfigService from '../../../services/ConfigService.js';
 import EmojiService from '../../../services/EmojiService.js';
 import MfmService from '../../../services/MfmService.js';
 import SanitizerService from '../../../services/SanitizerService.js';
-import UserRenderer from '../../../services/UserRenderer.js';
 import UserService from '../../../services/UserService.js';
 import ValidationService from '../../../services/ValidationService.js';
 

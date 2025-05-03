@@ -7,22 +7,33 @@ import { browser } from '$app/environment';
 export const prerender = false;
 export const ssr = false;
 
+async function updateColorScheme() {
+	window
+		.matchMedia('(prefers-color-scheme: dark)')
+		.addEventListener('change', (event) => {
+			let colorScheme = event.matches ? 'dark' : 'light';
+
+			if (localstore.getParsed('adjustColorSchemeToBrowser')) {
+				console.log('colorScheme change detected, now ' + colorScheme);
+				localstore.set('colorScheme', colorScheme);
+				updateTheme();
+			}
+		});
+}
+
 async function updateTheme() {
 	let colorScheme = localstore.getParsed('colorScheme');
 	let themeName =
 		colorScheme === 'light'
-			? localstore.getParsed('themeLight')
-			: localstore.getParsed('themeDark');
+			? (localstore.getParsed('themeLight') ??
+				localstore.defaults.themeLight.value)
+			: (localstore.getParsed('themeDark') ??
+				localstore.defaults.themeDark.value);
+
+	console.log('themeName: ' + themeName);
 
 	let style = '';
-	let theme = await import('$lib/themes/' + themeName).catch(async () => {
-		return await import(
-			'$lib/themes/' +
-				(colorScheme === 'light'
-					? localstore.defaults.themeLight.value
-					: localstore.defaults.themeDark.value)
-		);
-	});
+	let theme = await import('$lib/themes/' + themeName);
 	let keys = Object.keys(theme);
 
 	function createColorOpacities(key) {
@@ -68,33 +79,23 @@ function updateEmojis() {
 }
 
 if (browser) {
-	window
-		.matchMedia('(prefers-color-scheme: dark)')
-		.addEventListener('change', (event) => {
-			let colorScheme = event.matches ? 'dark' : 'light';
-
-			if (localstore.getParsed('adjustColorSchemeToBrowser')) {
-				console.log('colorScheme change detected, now ' + colorScheme);
-				localstore.set('colorScheme', colorScheme);
-				updateTheme();
-			}
-		});
-
 	store.appReload.subscribe((e) => {
 		if (e) location.reload();
 	});
 
-	store.themeRefresh.subscribe((e) => {
+	store.themeRefresh.subscribe(async (e) => {
 		if (e) {
-			updateTheme();
+			await updateTheme();
 			store.themeRefresh.set(false);
 		}
 	});
 
+	await updateColorScheme();
 	updateSelf();
 	updateEmojis();
 }
 
 export async function load({}) {
+	await updateColorScheme();
 	await updateTheme();
 }

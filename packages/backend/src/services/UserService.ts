@@ -2,13 +2,13 @@ import bcrypt from 'bcryptjs';
 import crypto from 'crypto';
 import { ObjectLiteral } from 'typeorm';
 
+import ApBiteRenderer from '../renderers/ap/ApBiteRenderer.js';
+import ApBlockRenderer from '../renderers/ap/ApBlockRenderer.js';
+import ApFollowRenderer from '../renderers/ap/ApFollowRenderer.js';
+import ApUndoRenderer from '../renderers/ap/ApUndoRenderer.js';
 import db from '../utils/database.js';
 import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
-import ApBiteRenderer from './ap/ApBiteRenderer.js';
-import ApBlockRenderer from './ap/ApBlockRenderer.js';
-import ApFollowRenderer from './ap/ApFollowRenderer.js';
-import ApUndoRenderer from './ap/ApUndoRenderer.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
 import NotificationService from './NotificationService.js';

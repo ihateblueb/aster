@@ -1,7 +1,7 @@
 import { ObjectLiteral } from 'typeorm';
 
+import ConfigService from '../../services/ConfigService.js';
 import context from '../../static/context.js';
-import ConfigService from '../ConfigService.js';
 import ApEmojiRenderer from './ApEmojiRenderer.js';
 
 class EmojiReactRenderer {
