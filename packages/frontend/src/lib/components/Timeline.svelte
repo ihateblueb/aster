@@ -21,6 +21,7 @@
 	import EmojiCard from '$lib/components/EmojiCard.svelte';
 	import FollowRequest from '$lib/components/FollowRequest.svelte';
 	import LocalizedString from '$lib/components/LocalizedString.svelte';
+	import UserCard from '$lib/components/UserCard.svelte';
 
 	let {
 		type,
@@ -142,6 +143,10 @@
 					<EmojiCard emoji={object} />
 				{:else if type === 'followRequest'}
 					<FollowRequest followRequest={object} />
+				{:else if type === 'user'}
+					<UserCard user={object} />
+				{:else if type === 'userAdmin'}
+					<UserCard user={object} admin />
 				{/if}
 			</div>
 		{/each}

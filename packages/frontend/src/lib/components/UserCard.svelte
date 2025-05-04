@@ -3,26 +3,24 @@
 	import Time from '$lib/components/Time.svelte';
 	import Mfm from '$lib/components/Mfm.svelte';
 
-	let { user, time = undefined } = $props();
+	let { user, time = undefined, admin = false } = $props();
+
+	let link = admin
+		? '/admin/moderation/users/' + user.id
+		: '/@' + (user.username + (user.local ? '' : '@' + user.host));
 </script>
 
 <div class="userCard">
 	<Avatar {user} size="35px" />
 	<div class="names">
-		<a
-			class="top"
-			href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
-		>
+		<a class="top" href={link}>
 			<Mfm
 				content={user.displayName ? user.displayName : user.username}
 				emojis={user.emojis}
 				simple
 			/>
 		</a>
-		<a
-			class="bottom"
-			href={'/@' + user.username + (user.local ? '' : '@' + user.host)}
-		>
+		<a class="bottom" href={link}>
 			@{user.username}{#if !user.local}
 				<span class="host">@{user.host}</span>
 			{/if}

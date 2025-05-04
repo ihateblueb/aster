@@ -62,42 +62,42 @@
 			></Tab>
 		{:else if selectedTab === 1}
 			<Tab
-				selected={page.route.id === '/admin/settings/users'}
+				selected={page.route.id.startsWith('/admin/moderation/users')}
 				on:click={() => {
 					selectedTab = 1;
-					goto('/admin/settings/users');
+					goto('/admin/moderation/users');
 				}}
 				title={localizedString('users')}
 			></Tab>
 			<Tab
-				selected={page.route.id === '/admin/settings/invites'}
+				selected={page.route.id === '/admin/moderation/invites'}
 				on:click={() => {
 					selectedTab = 1;
-					goto('/admin/settings/invites');
+					goto('/admin/moderation/invites');
 				}}
 				title={localizedString('invites')}
 			></Tab>
 			<Tab
-				selected={page.route.id === '/admin/settings/rules'}
+				selected={page.route.id === '/admin/moderation/rules'}
 				on:click={() => {
 					selectedTab = 1;
-					goto('/admin/settings/rules');
+					goto('/admin/moderation/rules');
 				}}
 				title={localizedString('rules')}
 			></Tab>
 			<Tab
-				selected={page.route.id === '/admin/settings/policies'}
+				selected={page.route.id === '/admin/moderation/policies'}
 				on:click={() => {
 					selectedTab = 1;
-					goto('/admin/settings/policies');
+					goto('/admin/moderation/policies');
 				}}
 				title={localizedString('policies')}
 			></Tab>
 			<Tab
-				selected={page.route.id === '/admin/settings/reports'}
+				selected={page.route.id === '/admin/moderation/reports'}
 				on:click={() => {
 					selectedTab = 1;
-					goto('/admin/settings/reports');
+					goto('/admin/moderation/reports');
 				}}
 				title={localizedString('reports')}
 			></Tab>

@@ -1,12 +1,16 @@
 import { ObjectLiteral } from 'typeorm';
 
+import InviteRenderer from '../renderers/InviteRenderer.js';
 import NoteRenderer from '../renderers/NoteRenderer.js';
 import NotificationRenderer from '../renderers/NotificationRenderer.js';
+import UserRenderer from '../renderers/UserRenderer.js';
 import DriveService from './DriveService.js';
+import InviteService from './InviteService.js';
 import NoteService from './NoteService.js';
 import NotificationService from './NotificationService.js';
 import RelationshipService from './RelationshipService.js';
 import ReportService from './ReportService.js';
+import UserService from './UserService.js';
 
 class TimelineService {
 	public async get(
@@ -20,6 +24,10 @@ class TimelineService {
 	) {
 		let timelineObjects;
 
+		if (type === 'user')
+			timelineObjects = await UserRenderer.renderMany(
+				await UserService.getMany(where, take, order, orderDirection)
+			);
 		if (type === 'note')
 			timelineObjects = await NoteRenderer.renderMany(
 				await NoteService.getMany(
@@ -66,6 +74,10 @@ class TimelineService {
 				take,
 				order,
 				orderDirection
+			);
+		if (type === 'invite')
+			timelineObjects = await InviteRenderer.renderMany(
+				await InviteService.getMany(where, take, order, orderDirection)
 			);
 
 		return this.sort(timelineObjects, take);

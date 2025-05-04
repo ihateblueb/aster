@@ -11,6 +11,7 @@ import locale from '../utils/locale.js';
 import logger from '../utils/logger.js';
 import ConfigService from './ConfigService.js';
 import IdService from './IdService.js';
+import InviteService from './InviteService.js';
 import NotificationService from './NotificationService.js';
 import QueueService from './QueueService.js';
 import RelationshipService from './RelationshipService.js';
@@ -345,40 +346,15 @@ class UserService {
 		const id = IdService.generate();
 		const privateId = IdService.generate();
 
-		if (invite) {
-			const grabbedInvite = await db.getRepository('invite').findOne({
-				where: {
-					invite: invite
-				}
-			});
-
-			if (grabbedInvite) {
-				if (!grabbedInvite.usedBy) {
-					await db.getRepository('invite').update(
-						{
-							where: {
-								id: grabbedInvite.id
-							}
-						},
-						{
-							usedBy: id
-						}
-					);
-				} else {
+		if (invite)
+			await InviteService.use(invite, id).then((e) => {
+				if (e.error)
 					return {
 						error: true,
-						status: 400,
-						message: locale.user.registration.inviteAlreadyUsed
+						status: e.status,
+						message: e.message
 					};
-				}
-			} else {
-				return {
-					error: true,
-					status: 400,
-					message: locale.user.registration.inviteDoesntExist
-				};
-			}
-		}
+			});
 
 		const salt = bcrypt.genSaltSync(12);
 		const hash = bcrypt.hashSync(password, salt);

@@ -112,6 +112,7 @@ insufficient-permissions = Insufficient permissions
 invite-invalid = Invite invalid
 invite-required = Invite required
 invites = Invites
+invite = Invite
 joined-at = Joined { DATETIME($date, day: "numeric", month: "long", year: "numeric", hour: "numeric", minute: "numeric") }
 like = Like
 liked-your-note = { $name } liked your note
