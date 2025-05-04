@@ -27,7 +27,7 @@
 	const query = createQuery({
 		queryKey: ['emoji'],
 		retry: false,
-		queryFn: async () => getEmojis()
+		queryFn: async () => (await getEmojis()) ?? {}
 	});
 
 	const emptyEmoji = {
@@ -66,65 +66,67 @@
 		retry={() => $query.refetch()}
 	/>
 {:else if $query.isSuccess}
-	<Modal bind:this={modal}>
-		<svelte:fragment slot="text">
-			<h1>
-				<LocalizedString id="create-emoji" />
-			</h1>
-		</svelte:fragment>
-
-		<div class="previews">
-			<div class="preview black">
-				<img src={emojiFile?.src} />
-			</div>
-			<div class="preview">
-				<img src={emojiFile?.src} />
-			</div>
-			<div class="preview white">
-				<img src={emojiFile?.src} />
-			</div>
-		</div>
-
-		<Input
-			wide
-			label={localizedString('shortcode')}
-			bind:value={newEmoji.shortcode}
-		/>
-		<Input
-			wide
-			label={localizedString('category')}
-			bind:value={newEmoji.category}
-		/>
-		<br />
-		<Button on:click={() => store.showDrive.set(true)}>
-			<IconPaperclip size="18px" />
-			<LocalizedString id="add-file" />
-		</Button>
-
-		<svelte:fragment slot="buttons">
-			<Button accent on:click={create}>
-				<LocalizedString id="create" />
-			</Button>
-			<Button on:click={() => modal?.close()}>
-				<LocalizedString id="cancel" />
-			</Button>
-		</svelte:fragment>
-	</Modal>
-
 	<Button on:click={() => modal?.open()}>
 		<IconPlus size="18px" />
 		<LocalizedString id="add" />
 	</Button>
 
-	{#each Object.keys($query.data) as category}
-		<details open>
-			<summary><b>{category}</b></summary>
+	{#if $query.data}
+		<Modal bind:this={modal}>
+			<svelte:fragment slot="text">
+				<h1>
+					<LocalizedString id="create-emoji" />
+				</h1>
+			</svelte:fragment>
 
-			{#each $query.data[category] as emoji}
-				<EmojiCard {emoji} />
-			{/each}
-		</details>
-	{/each}
+			<div class="previews">
+				<div class="preview black">
+					<img src={emojiFile?.src} />
+				</div>
+				<div class="preview">
+					<img src={emojiFile?.src} />
+				</div>
+				<div class="preview white">
+					<img src={emojiFile?.src} />
+				</div>
+			</div>
+
+			<Input
+				wide
+				label={localizedString('shortcode')}
+				bind:value={newEmoji.shortcode}
+			/>
+			<Input
+				wide
+				label={localizedString('category')}
+				bind:value={newEmoji.category}
+			/>
+			<br />
+			<Button on:click={() => store.showDrive.set(true)}>
+				<IconPaperclip size="18px" />
+				<LocalizedString id="add-file" />
+			</Button>
+
+			<svelte:fragment slot="buttons">
+				<Button accent on:click={create}>
+					<LocalizedString id="create" />
+				</Button>
+				<Button on:click={() => modal?.close()}>
+					<LocalizedString id="cancel" />
+				</Button>
+			</svelte:fragment>
+		</Modal>
+
+		{#each Object.keys($query.data) as category}
+			<details open>
+				<summary><b>{category}</b></summary>
+
+				{#each $query.data[category] as emoji}
+					<EmojiCard {emoji} />
+				{/each}
+			</details>
+		{/each}
+	{/if}
 {/if}
 
 <style lang="scss">
