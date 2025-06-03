@@ -1,3 +1,5 @@
+# Currently being rewritten in Kotlin, see https://github.com/ihateblueb/aster-kt
+
 # Aster
 
 Aster is a work in progress federated social networking software.
